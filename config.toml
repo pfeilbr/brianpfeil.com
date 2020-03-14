@@ -10,7 +10,8 @@ googleAnalytics = "UA-610553-4"
 unsafe= true
 
 [params]
-  description = "..."
+  description = "---"
+  customCss = ["css/custom.css"]
 
 [Menus]
   main = [
