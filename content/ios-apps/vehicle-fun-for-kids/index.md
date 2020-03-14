@@ -1,5 +1,10 @@
++++
+author = "Brian Pfeil"
+layout = "page"
 
-  # Vehicle Fun for Kids
++++
+
+# Vehicle Fun for Kids
   
   <p><img src="images/Icon-72@2x.png" alt="" /></p>
 

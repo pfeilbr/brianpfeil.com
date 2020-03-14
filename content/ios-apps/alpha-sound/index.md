@@ -1,3 +1,9 @@
++++
+author = "Brian Pfeil"
+layout = "page"
+
++++
+
 # Alpha Sound
 
 <p><img src="/ios-apps/alpha-sound/images/app-icon-alt-d-114x114.png" alt="" /></p>
