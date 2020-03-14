@@ -5,6 +5,7 @@ description = ""
 draft = false
 slug = "about"
 title = "About"
+layout = "page"
 
 +++
 

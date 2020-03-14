@@ -2,4 +2,19 @@ baseURL = "https://brianpfeil.com/"
 disablePathToLower = true
 languageCode = "en-us"
 title = "Brian Pfeil"
-theme = "ananke"
+theme = "hyde"
+
+googleAnalytics = "UA-610553-4"
+
+[markup.goldmark.renderer]
+unsafe= true
+
+[params]
+  description = "..."
+
+[Menus]
+  main = [
+      {Name = "about", URL = "/about/"},
+      {Name = "projects", URL = "/projects/"},
+      {Name = "github", URL = "https://github.com/pfeilbr/"}
+  ]

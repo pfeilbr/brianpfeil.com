@@ -12,7 +12,7 @@ title = "Minotes"
 
 
 
-<img src="/ios-apps/minotes/images/Icon-72@2x.png" width="125px">
+<img src="images/Icon-72@2x.png" width="125px">
 
 There are many choices for notes apps out in the App Store.  So many that it'd be a couple days effort just to look into and evaluate them all.  Everything from the built-in simple Notes app to the feature packed [Evernote](http://evernote.com/).  A notes app is one of those utility apps that gets a lot of mileage like mail and weather.  Something with high usage you want the most efficient and streamlined app.  It's also something that becomes personal and people get attached to.
 
@@ -23,10 +23,9 @@ Preferences around typography and text size is something that is really needed i
 It's an opinionated app built with my specific needs in mind.  It's doesn't try to appeal to all users univerally, but if you like simple purpose built apps, check it out.
 
 <div>
-	<img src="/ios-apps/minotes/images/iOS Simulator Screen shot Jun 12, 2013 1.42.50 PM.png" width="150px"></img>
-    <img src="/ios-apps/minotes/images/iOS Simulator Screen shot Jun 12, 2013 1.43.08 PM.png" width="150px"></img>
-
-<img src="/ios-apps/minotes/images/iOS Simulator Screen shot Jun 12, 2013 1.43.25 PM.png" width="150px"></img>
+	<img src="images/1.png" width="150px"></img>
+    <img src="images/2.png" width="150px"></img>
+    <img src="images/3.png" width="150px"></img>
 </div>
 
 <a href="http://minote.net" target="_blank">Minotes Product Page</a>

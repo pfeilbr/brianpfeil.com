@@ -78,7 +78,7 @@ Example of developing and deploying a [dockerized]((https://www.docker.com/)) [N
 
 **Output**
 
-![](http://note.io/1ETb45Y)
+![](images/image1.png)
 
 
 ## Deploying Updates
@@ -100,7 +100,7 @@ Example of developing and deploying a [dockerized]((https://www.docker.com/)) [N
 
 **Output**
 
-![](http://note.io/1FFQXuL)
+![](images/image2.png)
 
 ## Establish Interactive Bash Shell in Running Docker Container
 
@@ -124,4 +124,4 @@ Example of developing and deploying a [dockerized]((https://www.docker.com/)) [N
 
 **Example Session with Output**
 
-![](http://note.io/1CYSlIH)
+![](images/image3.png)

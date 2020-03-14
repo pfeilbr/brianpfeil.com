@@ -42,9 +42,6 @@ dead simple, and available everywhere. I'd never have an excuse not to get somet
 
 My solution is to send an email to a special "todo" email address where the subject would be the todo item, the email would be processed, and the item added to my to-do list text file in dropbox.
 
-<img width="250px" src="https://img.skitch.com/20111120-xtcdk3fesj6cipmcrbn3u4nr7t.png"></img>
-<img width="250px" src="https://img.skitch.com/20111120-qu73ib3nb8endrfssewsp7tmjf.png"></img>
-
 [Google App Engine] lets you run web apps on Google infrastructure for free, and they offer a way to receive and process email. Dropbox provides a [Dropbox Python SDK] to get at your files, which is works out nicely since Python is the primary language used for App Engine development.
 
 You can take a look at the [Google App Engine Receiving Email Documentation], but the gist of it is that an email sent to `NAME@APP.appspotmail.com` will

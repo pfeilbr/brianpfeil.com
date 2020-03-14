@@ -2,9 +2,10 @@
 author = "Brian Pfeil"
 date = 2000-01-12T05:00:00Z
 description = ""
-draft = false
+draft = true
 slug = "software"
 title = "Software"
+layout = "page"
 
 +++
 

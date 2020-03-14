@@ -31,27 +31,27 @@ recommend enough* the online tutorials, workbooks, and documentation at
 
 Our app will contain Contact and Account data.  We'll use Apex Web Service methods to provide the data.  We can get all our Contacts with the following:
 
-{% codeblock lang:java %}
+```java
 webService static List<Contact> getContacts() {
 	ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(
 		Database.getQueryLocator(
         	[select id, name, lastname, firstname, title, department, phone, email from Contact]));
     return (List<Contact>)setCon.getRecords();
 }
-{% endcodeblock %}
+```
 
 Next we need to call the web service method from the client code.  We'll use the force.com ajax apex javascript libraries to access our data.  Add these script references to your page `<head>` section.
 
-{% codeblock lang:html %}
+```html
 <script src="/soap/ajax/15.0/connection.js"></script>
 <script src="/soap/ajax/15.0/apex.js"></script>
-{% endcodeblock %}
+```
 
 To call the web service method from JavaScript we use this simple one-liner.
 
-{% codeblock lang:js %}
+```js
 var contacts = sforce.apex.execute("MyWebService", "getContacts", {});
-{% endcodeblock %}
+```
 
 ## Building the UI ##
 
@@ -63,17 +63,17 @@ turn off the default stylesheets, header, and navigation elements your
 `apex:page` element should set the corresponding attributes, and should look
 similar to the following:
 
-{% codeblock lang:html %}
+```html
 <apex:page showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/html">
-{% endcodeblock %}
+```
 
 Now we'll add in the jQuery Mobile references.
 
-{% codeblock lang:html %}
+```html
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
 <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
-{% endcodeblock %}
+```
 
 The beauty of jQuery Mobile is that all you have to do is markup your html
 with the correct attributes to get a mobile UI. You don't need to write any
@@ -87,7 +87,7 @@ To minimize the amount of html we embed in our JavaScript, we're going to use
 as we usually would, and to leave placeholders for the pieces we want to
 replace. Here's an example of a template used to generate a list page.
 
-{% codeblock lang:html %}
+```html
 <script id="object-list-page-template" type="text/x-jquery-tmpl">
 
 <div data-role="page" id="${type}-list-page" data-url='${type}-list-page'>
@@ -112,14 +112,13 @@ replace. Here's an example of a template used to generate a list page.
 </div>
 
 </script>
-
-{% endcodeblock %}
+```
 
 The things wrapped in `${}` are replaced with the values.  The way we use the template is by calling the `$.tmpl` method.
 
-{% codeblock lang:js %}
+```js
 var $page = $('#object-list-page-template').tmpl(data);
-{% endcodeblock %}
+```
 
 jQuery Templates are very powerful, and really help with the maintainability of your code.  Check out the [documentation](http://api.jquery.com/jQuery.template/) to learn more.
 
