@@ -2,7 +2,13 @@ baseURL = "https://brianpfeil.com/"
 disablePathToLower = true
 languageCode = "en-us"
 title = "Brian Pfeil"
-theme = "hyde"
+#theme = "hyde"
+theme = "beautifulhugo"
+
+pygmentsStyle = "trac"
+pygmentsUseClasses = true
+pygmentsCodeFences = true
+pygmentsCodefencesGuessSyntax = true
 
 googleAnalytics = "UA-610553-4"
 
@@ -10,12 +16,27 @@ googleAnalytics = "UA-610553-4"
 unsafe= true
 
 [params]
-  description = "---"
+  description = ""
   customCss = ["css/custom.css"]
+
+  subtitle = ""
+  mainSections = ["post","posts"]
+  #logo = "img/avatar-icon.png" # Expecting square dimensions
+  favicon = "img/favicon.ico"
+  # dateFormat = "January 2, 2006"
+  commit = false
+  rss = true
+  comments = true
+  #readingTime = true
+  #wordCount = true
+  useHLJS = true
+  socialShare = true
+  delayDisqus = true
+  showRelatedPosts = true  
 
 [Menus]
   main = [
       {Name = "about", URL = "/about/"},
-      {Name = "projects", URL = "/projects/"},
-      {Name = "github", URL = "https://github.com/pfeilbr/"}
+      {Name = "posts", URL = "/"},
+      {Name = "projects", URL = "/projects/"}
   ]

@@ -31,5 +31,5 @@ It's an opinionated app built with my specific needs in mind.  It's doesn't try 
 <a href="http://minote.net" target="_blank">Minotes Product Page</a>
 
 <a href="https://itunes.apple.com/us/app/minotes/id648015483?ls=1&mt=8" target="_blank">
-<img src="/assets/app-store-badge-200x100.png" width="125px">
+<img src="images/app-store-badge-200x100.png" width="125px">
 </a>

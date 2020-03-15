@@ -19,18 +19,14 @@ This article will show you the steps to run [elasticsearch](https://www.elastic.
 ## Initial Deployment
 
 1. Modify `Dockerrun.aws.json` for your needs.
-
 	> [Dockerrun.aws.json](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker_image.html#create_deploy_docker_image_dockerrun) reference
-
-2. Commit changes to repo
-
-	```
+1. Commit changes to repo
+	```sh
 	$ git commit -a -m "changes"
 	```
-
 	> assumes `Dockerrun.aws.json` has already been added to repo.  if not, `git add .`
 
-3. Create eb app
+1. Create eb app
 
 	```
 	$ eb init # populate details
@@ -38,7 +34,7 @@ This article will show you the steps to run [elasticsearch](https://www.elastic.
 
 	> NOTE: select Docker.  Populate all details
 
-4. Create environment for app
+1. Create environment for app
 
 	```
 	$ eb create dev-env
