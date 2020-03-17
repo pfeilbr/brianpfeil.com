@@ -8,6 +8,10 @@ printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
 # Build the project.
 hugo # if using a theme, replace with `hugo -t <YOURTHEME>`
 
+# generate service worker
+# see https://developers.google.com/web/tools/workbox/guides/generate-service-worker/cli
+workbox generateSW workbox-config.js
+
 # Go To Public folder
 pushd public
 
