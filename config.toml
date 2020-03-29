@@ -38,5 +38,6 @@ unsafe= true
   main = [
       {Name = "about", URL = "/about/"},
       {Name = "posts", URL = "/"},
-      {Name = "projects", URL = "/projects/"}
+      {Name = "projects", URL = "/projects/"},
+      {Name = "notes", URL = "/notes/"}
   ]
