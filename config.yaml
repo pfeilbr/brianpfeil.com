@@ -19,21 +19,20 @@ markup:
 params:
   description: ""
   customCss: ["css/custom.css"]
-
   subtitle: ""
   mainSections: ["post", "posts"]
-  #logo = "img/avatar-icon.png" # Expecting square dimensions
-  favicon: "img/favicon.ico"
-  # dateFormat: "January 2, 2006"
+  #favicon: "img/favicon.ico"
   commit: false
   rss: true
   comments: true
-  #readingTime: true
-  #wordCount: true
   useHLJS: true
   socialShare: true
   delayDisqus: true
   showRelatedPosts: true
+  #logo = "img/avatar-icon.png" # Expecting square dimensions
+  # dateFormat: "January 2, 2006"
+  #readingTime: true
+  #wordCount: true
 
 Menus:
   main:
