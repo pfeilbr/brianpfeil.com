@@ -8,4 +8,4 @@ image: ""
 tags: ["notes"]
 ---
 
-* [AWS Services](../post/aws-services)
+notes on various topics

@@ -1,0 +1,51 @@
+baseURL: "https://brianpfeil.com/"
+disablePathToLower: true
+languageCode: "en-us"
+title: "Brian Pfeil"
+theme: "beautifulhugo"
+
+pygmentsStyle: "trac"
+pygmentsUseClasses: true
+pygmentsCodeFences: true
+pygmentsCodefencesGuessSyntax: true
+
+googleAnalytics: "UA-610553-4"
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  description: ""
+  customCss: ["css/custom.css"]
+
+  subtitle: ""
+  mainSections: ["post", "posts"]
+  #logo = "img/avatar-icon.png" # Expecting square dimensions
+  favicon: "img/favicon.ico"
+  # dateFormat: "January 2, 2006"
+  commit: false
+  rss: true
+  comments: true
+  #readingTime: true
+  #wordCount: true
+  useHLJS: true
+  socialShare: true
+  delayDisqus: true
+  showRelatedPosts: true
+
+Menus:
+  main:
+    - Name: "about"
+      URL: "/about/"
+      weight: 10
+    - Name: "posts"
+      URL: "/"
+      weight: 20
+    - Name: "projects"
+      URL: "/projects/"
+      weight: 30
+    - Name: "notes"
+      URL: "/notes/"
+      weight: 40
