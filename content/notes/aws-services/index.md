@@ -73,9 +73,11 @@ tags: ["aws"]
     - [Service Catalog](#service-catalog)
     - [Config](#config)
     - [CloudWatch Logs](#cloudwatch-logs)
+        - [Resources](#resources)
     - [CloudWatch Events](#cloudwatch-events)
     - [CloudWatch Insights](#cloudwatch-insights)
     - [CloudWatch Metrics](#cloudwatch-metrics)
+        - [Resources](#resources-1)
     - [CloudWatch Alarms](#cloudwatch-alarms)
     - [CloudTrail](#cloudtrail)
 - [Developer Tools](#developer-tools)
@@ -383,6 +385,11 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 
 * centralize the logs from all of your systems, applications, and AWS services that you use, in a single, highly scalable service
 
+#### Resources
+
+* [CloudWatch Metric Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html) - define custom metrics based on a pattern matched to log streams in a log group.
+* [Simplified Time-Series Analysis with Amazon CloudWatch Contributor Insights](https://aws.amazon.com/blogs/aws/simplified-time-series-analysis-with-amazon-cloudwatch-contributor-insights/) - generate metrics from CWL data (JSON or CLF formats)
+
 ### CloudWatch Events
 
 * cron triggers
@@ -394,6 +401,10 @@ query log groups
 ### CloudWatch Metrics
 
 * A metric represents a time-ordered set of data points that are published to CloudWatch
+
+#### Resources
+
+* [Building an Amazon CloudWatch Dashboard Outside of the AWS Management Console](https://aws.amazon.com/blogs/devops/building-an-amazon-cloudwatch-dashboard-outside-of-the-aws-management-console/) - display CloudWatch dashboard outside of AWS Console.  You specify the dashboard in JSON and it returns a binary image
 
 ### CloudWatch Alarms
 
