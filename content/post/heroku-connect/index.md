@@ -7,6 +7,7 @@ draft = false
 slug = "heroku-connect"
 tags = ["heroku"]
 title = "Heroku Connect"
+summary = "leverage SQL along with all the industry standard SQL tools to access to your salesforce data"
 
 +++
 

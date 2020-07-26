@@ -8,6 +8,7 @@ draft = false
 slug = "cross-platform-desktop-apps-with-nw-js"
 tags = ["javascript", "nodejs", "desktop", "nw.js"]
 title = "Cross-platform Desktop Apps with NW.js"
+summary = "use the power and ease of NodeJS to create cross-platform desktop apps"
 
 +++
 

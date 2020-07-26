@@ -7,6 +7,7 @@ draft = false
 slug = "automatic-network-location"
 tags = ["mac", "network"]
 title = "Automatic Network Location"
+summary = "simplify networking regardless of location"
 
 +++
 

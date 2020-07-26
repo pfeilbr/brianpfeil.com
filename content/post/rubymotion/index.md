@@ -7,6 +7,7 @@ draft = false
 slug = "rubymotion"
 tags = ["ruby"]
 title = "RubyMotion"
+summary = "leverage your Ruby skills to build native iOS apps"
 
 +++
 

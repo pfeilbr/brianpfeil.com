@@ -7,6 +7,7 @@ draft = false
 slug = "react-native-initial-thoughts"
 tags = ["javascript", "ios", "react", "react native"]
 title = "React Native - Initial Thoughts"
+summary = "leverage React for building iOS and Android apps"
 
 +++
 

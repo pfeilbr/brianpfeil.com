@@ -7,6 +7,7 @@ draft = false
 slug = "hosting-static-sites-on-heroku"
 tags = ["web", "heroku"]
 title = "Hosting Static Sites on Heroku"
+summary = "easy git push deployment of static sites on Heroku"
 
 +++
 

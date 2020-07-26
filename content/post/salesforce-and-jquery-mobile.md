@@ -7,6 +7,7 @@ draft = false
 slug = "salesforce-and-jquery-mobile"
 tags = ["salesforce", "jquery", "mobile"]
 title = "Salesforce and jQuery Mobile"
+summary = "create custom mobile UIs on top of salesforce data with jQuery Mobile"
 
 +++
 

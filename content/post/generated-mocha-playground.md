@@ -1,0 +1,35 @@
++++
+author = "Brian Pfeil"
+categories = ["JavaScript", "playground"]
+date = 2015-09-22
+description = ""
+summary = "learning Mocha"
+draft = false
+slug = "mocha"
+tags = ["mocha","github",]
+title = "Mocha"
+repoFullName = "pfeilbr/mocha-playground"
+repoHTMLURL = "https://github.com/pfeilbr/mocha-playground"
+truncated = true
+
++++
+
+
+## [Mocha](http://mochajs.org/) Playground
+
+Area to learn and explore the [Mocha](http://mochajs.org/) JavaScript test framework
+
+### Install Mocha
+
+    $ npm install -g mocha
+
+### Install THIS and dependencies
+
+Clone repo then
+
+    $ npm install
+
+### Run Tests
+
+    $ mocha
+

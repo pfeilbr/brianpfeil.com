@@ -7,6 +7,7 @@ draft = false
 slug = "minotes"
 tags = ["ios", "app"]
 title = "Minotes"
+summary = "a clean, simple, minimal iOS notes app"
 
 +++
 

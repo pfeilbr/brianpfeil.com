@@ -4,6 +4,8 @@ languageCode: "en-us"
 title: "Brian Pfeil"
 theme: "beautifulhugo"
 
+paginate: 10
+
 pygmentsStyle: "trac"
 pygmentsUseClasses: true
 pygmentsCodeFences: true
@@ -30,9 +32,11 @@ params:
   delayDisqus: true
   showRelatedPosts: true
   #logo = "img/avatar-icon.png" # Expecting square dimensions
-  # dateFormat: "January 2, 2006"
+  #dateFormat: "January 2, 2006"
+  dateFormat: "2006-01-02"
   #readingTime: true
   #wordCount: true
+  hideAuthor: true
 
 Menus:
   main:
@@ -48,3 +52,33 @@ Menus:
     - Name: "notes"
       URL: "/notes/"
       weight: 40
+
+author:
+  name: "Brian Pfeil"
+  website: "brianpfeil.com"
+  github: "pfeilbr"
+  twitter: "pfeilbr"
+  stackoverflow: "users/29148/pfeilbr"
+  # gitlab = "username"
+  # bitbucket = "username"
+  # twitter = "username"
+  # reddit = "username"
+  # linkedin = "username"
+  # xing = "username"
+  # stackoverflow = "users/XXXXXXX/username"
+  # snapchat = "username"
+  # instagram = "username"
+  # youtube = "user/username" # or channel/channelname
+  # soundcloud = "username"
+  # spotify = "username"
+  # bandcamp = "username"
+  # itchio = "username"
+  # vk = "username"
+  # paypal = "username"
+  # telegram = "username"
+  # 500px = "username"
+  # codepen = "username"
+  # mastodon = "url"
+  # kaggle = "username"
+  # weibo = "username"
+  # slack = "username"

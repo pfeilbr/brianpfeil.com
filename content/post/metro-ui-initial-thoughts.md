@@ -7,6 +7,7 @@ draft = false
 slug = "metro-ui-initial-thoughts"
 tags = ["windows", "win8", "metro"]
 title = "Metro UI: Initial Thoughts"
+summary = "slick new UI overhaul for Windows"
 
 +++
 

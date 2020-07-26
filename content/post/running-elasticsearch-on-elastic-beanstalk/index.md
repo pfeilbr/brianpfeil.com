@@ -8,6 +8,7 @@ draft = false
 slug = "running-elasticsearch-on-elastic-beanstalk"
 tags = ["docker", "elastic beanstalk", "aws", "elastic search"]
 title = "Running Elasticsearch on AWS Elastic Beanstalk"
+summary = "eliminate the need to manage a server by running Elasticsearch on the AWS Elastic Beanstalk PaaS"
 
 +++
 

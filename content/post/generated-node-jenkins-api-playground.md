@@ -1,0 +1,29 @@
++++
+author = "Brian Pfeil"
+categories = ["JavaScript", "playground"]
+date = 2018-10-18
+description = ""
+summary = "learning Node Jenkins API"
+draft = false
+slug = "node-jenkins-api"
+tags = ["jenkins","github",]
+title = "Node Jenkins API"
+repoFullName = "pfeilbr/node-jenkins-api-playground"
+repoHTMLURL = "https://github.com/pfeilbr/node-jenkins-api-playground"
+truncated = true
+
++++
+
+
+project to learn [node-jenkins](https://github.com/silas/node-jenkins)
+
+## Install
+
+* `npm install jenkins`
+* copy `.env.sample` to `.env` and update with *"your"* values
+
+## Run Examples
+
+`node index.js`
+
+> shows getting details of `job` and `building a job`

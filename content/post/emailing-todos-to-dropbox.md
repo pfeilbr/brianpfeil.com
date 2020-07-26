@@ -7,6 +7,7 @@ draft = false
 slug = "emailing-todos-to-dropbox"
 tags = ["productivity", "dropbox", "appengine"]
 title = "Emailing Todos to Dropbox"
+summary = "allow universal access to your TODOs by storing them in dropbox via email"
 
 +++
 

@@ -1,0 +1,27 @@
++++
+author = "Brian Pfeil"
+categories = ["JavaScript", "playground"]
+date = 2015-03-30
+description = ""
+summary = "learning Es6"
+draft = false
+slug = "es6"
+tags = ["github",]
+title = "Es6"
+repoFullName = "pfeilbr/es6-playground"
+repoHTMLURL = "https://github.com/pfeilbr/es6-playground"
+truncated = true
+
++++
+
+
+Area to learn and experiment with [ECMAScript 6](https://people.mozilla.org/~jorendorff/es6-draft.html) using the [Babel](https://babeljs.io/)
+JavaScript compiler.
+
+## Running
+
+    $ npm install
+
+Edit `app.js`
+
+    $ node index.js

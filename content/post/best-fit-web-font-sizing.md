@@ -7,6 +7,7 @@ draft = false
 slug = "best-fit-web-font-sizing"
 tags = ["html", "javascript", "fonts"]
 title = "Best Fit Web Font Sizing"
+summary = "dynamically size web font based on available space"
 
 +++
 

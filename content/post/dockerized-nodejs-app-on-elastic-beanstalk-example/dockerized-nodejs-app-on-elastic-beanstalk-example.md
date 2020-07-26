@@ -7,6 +7,7 @@ draft = false
 slug = "dockerized-nodejs-app-on-elastic-beanstalk-example"
 tags = ["nodejs", "docker", "elastic beanstalk", "aws"]
 title = "Dockerized Node.js App on Elastic Beanstalk Example"
+summary = "better your developer workflow with Docker + NodeJS"
 
 +++
 

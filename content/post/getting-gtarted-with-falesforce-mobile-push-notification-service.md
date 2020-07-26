@@ -4,9 +4,10 @@ categories = ["salesforce", "mobile"]
 date = 2013-12-11T22:11:00Z
 description = ""
 draft = true
-slug = "getting-gtarted-with-falesforce-mobile-push-notification-service"
+slug = "getting-started-with-salesforce-mobile-push-notification-service"
 tags = ["salesforce", "mobile"]
-title = "Getting Gtarted with Salesforce Mobile Push Notification Service"
+title = "Getting Started with Salesforce Mobile Push Notification Service"
+summary = "Salesforce introduced the Mobile push notifications Developer Preview with Dreamforce 13"
 
 +++
 

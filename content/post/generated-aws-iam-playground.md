@@ -1,0 +1,18 @@
++++
+author = "Brian Pfeil"
+categories = ["TypeScript", "playground"]
+date = 2018-02-08
+description = ""
+summary = "learning AWS Iam"
+draft = false
+slug = "aws-iam"
+tags = ["aws","iam","github",]
+title = "AWS Iam"
+repoFullName = "pfeilbr/aws-iam-playground"
+repoHTMLURL = "https://github.com/pfeilbr/aws-iam-playground"
+truncated = true
+
++++
+
+
+`serverless-project-policy-templates/` - serverless project policy templates for the various roles (admin, support, lambda, apigateway).  they aim to isolate permissions by matching resources against a project prefix

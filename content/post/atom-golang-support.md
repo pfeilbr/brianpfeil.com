@@ -7,6 +7,7 @@ draft = false
 slug = "atom-golang-support"
 tags = ["golang", "atom"]
 title = "Atom Golang Setup"
+summary = "Atom and Golang, a perfect match"
 
 +++
 

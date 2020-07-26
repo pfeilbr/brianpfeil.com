@@ -7,6 +7,7 @@ draft = false
 slug = "concurrent-downloader-in-go"
 tags = ["golang", "concurrency"]
 title = "Concurrent Downloader in Go"
+summary = "example of Go's first class concurrency support"
 
 +++
 
