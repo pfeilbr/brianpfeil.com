@@ -9,6 +9,7 @@ layout = "page"
 
 +++
 
+<div id="avatar"></div>
 
 Hi, I'm Brian Pfeil. I'm a developer passionate about technology, and building things. This is my personal blog where I sometimes write about those and other interests.
 

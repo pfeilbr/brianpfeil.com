@@ -10,8 +10,18 @@
 {{ if .Params.bigimg }}{{ $.Scratch.Set "bigimg" .Params.bigimg }}{{ end }}
 {{ end }}
 {{ $bigimg := $.Scratch.Get "bigimg" }}
+
 {{ $title := $.Scratch.Get "title" }}
+{{ if eq $title "Brian Pfeil" }}
+{{ $title = "Posts" }}
+{{ end }}
+
+
+
 {{ $subtitle := $.Scratch.Get "subtitle" }}
+
+
+
 
 {{ if or $bigimg $title }}
 {{ if $bigimg }}
@@ -55,7 +65,11 @@
             {{ if eq .Type "list" }}
             <h1>{{ if .Data.Singular }}#{{ end }}{{ .Title }}</h1>
             {{ else }}
+
+            <!-- page title displayed here -->
             <h1>{{ with $title }}{{.}}{{ else }}<br />{{ end }}</h1>
+
+
             {{ end }}
             {{ if ne .Type "post" }}
 
