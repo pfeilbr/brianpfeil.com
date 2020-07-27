@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["aws",]
+categories = ["aws"]
 date = 2020-03-29T09:40:13-04:00
 description = ""
 draft = false
@@ -12,7 +12,6 @@ summary = "short descriptions for key AWS Services"
 +++
 
 > A quick reference for key AWS services and what they do
-
 
 <!-- TOC -->
 
