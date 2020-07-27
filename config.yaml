@@ -49,9 +49,9 @@ Menus:
     - Name: "projects"
       URL: "/projects/"
       weight: 30
-    - Name: "notes"
-      URL: "/notes/"
-      weight: 40
+    # - Name: "notes"
+    #   URL: "/notes/"
+    #   weight: 40
 
 author:
   name: "Brian Pfeil"
