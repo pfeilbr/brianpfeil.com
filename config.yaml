@@ -19,9 +19,10 @@ markup:
       unsafe: true
 
 params:
-  description: ""
+  homeTitle: "Brian Pfeil"
+  subtitle: "a personal blog"
+  description: "Personal blog by Brian Pfeil"
   customCss: ["css/custom.css"]
-  subtitle: ""
   mainSections: ["post", "posts"]
   #favicon: "img/favicon.ico"
   commit: false

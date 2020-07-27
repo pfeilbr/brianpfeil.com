@@ -8,22 +8,54 @@
         <ul class="list-inline text-center footer-links">
           {{ range .Site.Data.beautifulhugo.social.social_icons }}
           {{- if isset $.Site.Author .id }}
-          <li>
+          <!-- <li>
             <a href="{{ printf .url (index $.Site.Author .id) }}" title="{{ .title }}">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="{{ .icon }} fa-stack-1x fa-inverse"></i>
               </span>
             </a>
-          </li>
+          </li> -->
           {{- end -}}
           {{ end }}
           {{ if .Site.Params.rss }}
-          <li>
+          <!-- <li>
             <a href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" title="RSS">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li> -->
+          <li>
+            <a href="https://twitter.com/pfeilbr" title="twitter">
+              <span class="">
+                twitter
+              </span>
+            </a>
+          </li>
+
+          <li>
+            <a href="https://github.com/pfeilbr" title="github">
+              <span class="">
+                github
+              </span>
+            </a>
+          </li>
+
+          <li>
+            <a href="https://stackoverflow.com/users/29148/pfeilbr" title="stackoverflow">
+              <span class="">
+                stackoverflow
+              </span>
+            </a>
+          </li>
+
+
+          <li>
+            <a href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" title="RSS">
+              <span class="">
+                rss
               </span>
             </a>
           </li>
