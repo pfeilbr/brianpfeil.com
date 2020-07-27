@@ -50,6 +50,10 @@ Menus:
     - Name: "projects"
       URL: "/projects/"
       weight: 30
+    - Name: "tags"
+      URL: "/tags/"
+      weight: 40
+
     # - Name: "notes"
     #   URL: "/notes/"
     #   weight: 40
