@@ -20,7 +20,12 @@
   {{ end }}
 
   {{ if .Params.repoHTMLURL }}
-  &nbsp;&nbsp;<a href="{{ .Params.repoHTMLURL }}" target="_blank"><i class="fab fa-github fa-sm"></i></a>&nbsp;
+  &nbsp;&nbsp;
+  <a href="{{ .Params.repoHTMLURL }}" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;
+    {{ if eq .Kind "page" }}
+    {{ .Params.repoFullName }}
+    {{ end }}
+  </a>&nbsp;
   {{ end }}
 
 
