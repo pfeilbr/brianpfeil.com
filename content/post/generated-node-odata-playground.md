@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/node-odata-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/node-odata-playground</a>
+
 ## node-odata-playground
 
 This is an example of a custom OData 4.0 provider that can be consumed by
@@ -61,4 +63,6 @@ Using `brian.pfeil.1@gmail.com` salesforce org.
 **Filter Criteria / Where Clause**
 
 ![](http://static-content-01.s3-website-us-east-1.amazonaws.com/SoqlX___Brian_Pfeil__brian_pfeil_1_gmail_com_on_na15__and_node-odata-playground_—_node_custom-odata-provider-example_js_—_80×24_and_custom-odata-provider-example_js_—__Users_pfeilbr_Dropbox_mac01_Users_brianpfeil_projects_node-odata-playgro_1C9B5794.png)
+
+
 

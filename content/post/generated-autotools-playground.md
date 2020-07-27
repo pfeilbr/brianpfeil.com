@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/autotools-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/autotools-playground</a>
+
 
 learn Autotools
 
@@ -53,3 +55,5 @@ make install
 
 * [The magic behind configure, make, make install](https://robots.thoughtbot.com/the-magic-behind-configure-make-make-install)
 * [Using Autotools](https://developer.gnome.org/anjuta-build-tutorial/stable/create-autotools.html.en)
+
+

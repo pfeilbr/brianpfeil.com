@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/azure-cosmos-js-sdk-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-cosmos-js-sdk-playground</a>
+
 
 learn [azure cosmos db javascript sdk](https://github.com/azure/azure-cosmos-js).
 
@@ -34,3 +36,5 @@ learn [azure cosmos db javascript sdk](https://github.com/azure/azure-cosmos-js)
 1. copy `.env.sample` to `.env` and populate with your information from **Keys**
 ![](https://www.evernote.com/l/AAG3s-Zs6VRIPa7fvjL6KuMP03bCj8nDKhYB/image.png)
 1. run `npm start`
+
+

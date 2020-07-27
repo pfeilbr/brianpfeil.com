@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/jsforce-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jsforce-playground</a>
+
 
 Area to learn and play with [JSForce](http://jsforce.github.io/).  [index.js]() contains the code.
 
@@ -45,4 +47,6 @@ $ ./node_modules/.bin/babel-node sharing-rules-operations.js
 ```sh
 $ DEBUG=account* nodemon -e js account-fetcher.js
 ```
+
+
 

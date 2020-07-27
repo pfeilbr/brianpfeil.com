@@ -14,8 +14,12 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/heroku-deploy-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/heroku-deploy-playground</a>
+
 
 To learn and experiment with various heroku deployment options such as github and dropbox
+
+
 
 
 

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/s3-website-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/s3-website-playground</a>
+
 
 learn [s3-website](https://github.com/klaemo/s3-website) npm module
 
@@ -36,3 +38,5 @@ open http://com.brianpfeil.s3-website-playground.site01.s3-website-us-east-1.ama
 # NOTE: using `./node_modules/s3-website/s3-website.js` to avoid global install and
 # doesn't work with `npx` because of https://www.evernote.com/l/AAH8gou8OCZKF6rfnqA2Tom3BU7c0xuFTM0B/image.png
 ```
+
+

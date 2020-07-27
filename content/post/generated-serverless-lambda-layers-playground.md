@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/serverless-lambda-layers-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-lambda-layers-playground</a>
+
 
 learn lambda layers with serverless framework
 
@@ -43,4 +45,6 @@ npm run sls -- invoke --function hello --log
 
 * [serverless docs | AWS - Layers](https://serverless.com/framework/docs/providers/aws/guide/layers/)
 * [Part 2 — Create Lambda Layers with Serverless Framework and Offline support](https://medium.com/appgambit/part-2-create-lambda-layers-with-serverless-framework-and-offline-support-ad2a5a8dabfb)
+
+
 

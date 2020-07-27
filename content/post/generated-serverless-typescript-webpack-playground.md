@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/serverless-typescript-webpack-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-typescript-webpack-playground</a>
+
 
 project to learn/explore [serverless](https://serverless.com/) + [typescript](https://www.typescriptlang.org/) + [webpack](https://webpack.js.org/)
 
@@ -57,3 +59,5 @@ curl -d '{"key1":"value1", "key2":"value2"}' -H "Content-Type: application/json"
     yarn add @types/node --dev
     yarn add @types/async --dev
     ```
+
+

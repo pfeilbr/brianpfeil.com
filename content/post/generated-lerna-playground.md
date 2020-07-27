@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/lerna-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/lerna-playground</a>
+
 
 learn [lerna](https://lernajs.io/) *A tool for managing JavaScript projects with multiple packages*
 
@@ -53,3 +55,5 @@ touch index.js
 # run client
 node index.js
 ```
+
+

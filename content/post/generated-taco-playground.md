@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/taco-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/taco-playground</a>
+
 
 learn and experiment with [TACO](http://taco.tools/) (Tools for [Apache Cordova](https://cordova.apache.org/))
 
@@ -61,4 +63,6 @@ Livereload issue
 
 * to start specific iOS simulator version see <http://stackoverflow.com/questions/22310526/cordova-start-specific-ios-emulator-image>
 * live debug by attaching to simulator via safari dev tools ![](http://static-content-01.s3-website-us-east-1.amazonaws.com/Screenshot_5_20_16__1_35_PM_1CEF826B.png)
+
+
 

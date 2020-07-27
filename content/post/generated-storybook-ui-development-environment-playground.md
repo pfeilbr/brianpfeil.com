@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/storybook-ui-development-environment-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/storybook-ui-development-environment-playground</a>
+
 
 learn [Storybook](https://storybook.js.org/) UI Development Environment
 
@@ -21,4 +23,6 @@ learn [Storybook](https://storybook.js.org/) UI Development Environment
 
 * add stories to `src/components/*.stories.js`
 * run storybook via `npm run storybook`
+
+
 

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-service-catalog-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-service-catalog-playground</a>
+
 
 learn [aws service catalog](https://aws.amazon.com/servicecatalog/)
 
@@ -102,3 +104,5 @@ S3 static website hosting routing rules added (the update)
 * [aws-samples/aws-service-catalog-reference-architectures](https://github.com/aws-samples/aws-service-catalog-reference-architectures)
 * [AWS Service Catalog - Getting Started](https://www.youtube.com/watch?v=A9kKy6WhqVA&t=318s)
 * [AWS re:Invent 2018: Streamlining Application Development with AWS Service Catalog (DEV328)](https://www.youtube.com/watch?v=jvAAiWxYQwg)
+
+

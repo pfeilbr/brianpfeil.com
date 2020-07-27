@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/cognito-federated-to-salesforce-and-s3-presigned-url-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/cognito-federated-to-salesforce-and-s3-presigned-url-playground</a>
+
 
 ## Login with Cognito Federated to Salesforce Example
 
@@ -45,5 +47,7 @@ aws s3 cp index.html s3://pfeil-static-site-01/index.html
 * see [`index.js`](index.js)
 * `node index.js` outputs pre-signed url. (uses ~/.aws/credentials and pre-signed URL generated under that users context/permission)
 * PUT / upload file to S3 via `curl -X PUT -T hello.txt -L '<pre-signed url>'`
+
+
 
 

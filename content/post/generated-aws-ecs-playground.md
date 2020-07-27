@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-ecs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-ecs-playground</a>
+
 
 learn [AWS ECS](https://aws.amazon.com/documentation/ecs/)
 
@@ -84,4 +86,6 @@ ecs-cli down --force
 * [Configuring the Amazon ECS CLI](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_Configuration.html)
 * [Amazon ECS CLI Tutorial](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_tutorial.html)
 * [Dockerizing a Node.js web app](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/)
+
+
 

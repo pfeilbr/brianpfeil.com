@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-cloudfront-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cloudfront-playground</a>
+
 
 steps to create a cloudfront distribution from s3 bucket with static website hosting turned on
 
@@ -30,3 +32,5 @@ steps to create a cloudfront distribution from s3 bucket with static website hos
     ![](https://www.evernote.com/l/AAGgnPPYq-9Iv6RBI8rP9cEBmt8qOzq2BvEB/image.png)
 
 5. view content via friendly CNAME URL and cloudfront dist URL ![](https://www.evernote.com/l/AAFmBADWlBBNt5W6TVktvBMvo89jSKT6NSIB/image.png)
+
+

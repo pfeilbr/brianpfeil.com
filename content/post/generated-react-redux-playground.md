@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/react-redux-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-redux-playground</a>
+
 
 learn and experiment with
 
@@ -36,4 +38,6 @@ learn and experiment with
 - [index.js](index.js) - entry point
 - [main.css](main.css) - styles
 - [webpack.config.js](webpack.config.js) - webpack config
+
+
 

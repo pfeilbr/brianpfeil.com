@@ -14,6 +14,10 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/lua-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/lua-playground</a>
+
 
 learn and experiment with the Lua programming language
+
+
 

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-glue-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-glue-playground</a>
+
 
 learn and experiment with [aws glue](https://aws.amazon.com/glue/)
 
@@ -50,4 +52,6 @@ see [`scripts/example-notebook-script-01.py`](scripts/example-notebook-script-01
 1. create SageMaker notebook
     > SageMaker notebook works just like Zepplin notebook, but less setup steps.
 1. open SageMaker notebook and past in code from [`scripts/example-notebook-script-01.py`](scripts/example-notebook-script-01.py)
+
+
 

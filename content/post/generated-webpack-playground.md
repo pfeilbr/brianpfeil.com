@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/webpack-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/webpack-playground</a>
+
 
 A project to learn and experiment with the [webpack](http://webpack.github.io/) module bundler.
 
@@ -57,3 +59,5 @@ demonstrates the usage of
 * ng-cache loader for views and partials
 
 ---
+
+

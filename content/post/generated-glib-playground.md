@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/glib-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/glib-playground</a>
+
 
 learn [GNOME | GLib](https://wiki.gnome.org/Projects/GLib)
 
@@ -46,3 +48,5 @@ cmake .. && make
 * [Manage C data using the GLib collections](https://developer.ibm.com/tutorials/l-glib/)
 * [GNOME | GLib](https://wiki.gnome.org/Projects/GLib)
 * [GNOME/glib](https://github.com/GNOME/glib) repo
+
+

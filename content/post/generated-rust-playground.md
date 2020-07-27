@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/rust-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/rust-playground</a>
+
 
 learn [Rust](https://www.rust-lang.org/) programming language
 
@@ -33,4 +35,6 @@ nodemon --exec "RUSTFLAGS=\"$RUSTFLAGS -A dead_code\" cargo run" src/main.rs
 
 * [The Rust Programming Language book](https://doc.rust-lang.org/stable/book/)
 * [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+
+
 

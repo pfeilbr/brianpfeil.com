@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-transcribe-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-transcribe-playground</a>
+
 
 learn [aws transcribe](https://aws.amazon.com/transcribe/) speech to text service
 
@@ -28,4 +30,6 @@ npm install
 # run
 npm start
 ```
+
+
 

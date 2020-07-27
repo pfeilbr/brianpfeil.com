@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-polly-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-polly-playground</a>
+
 
 learn [aws polly]() text-to-speech (TTS)
 
@@ -31,3 +33,5 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({ IdentityPoolId: '<
 ```sh
 open polly.html
 ```
+
+

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-fargate-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-fargate-playground</a>
+
 
 learn [AWS Fargate](https://aws.amazon.com/fargate/)
 
@@ -29,3 +31,5 @@ aws ecs run-task --task-definition "fargate-001" --launch-type "FARGATE" --netwo
 # * "securityGroups": must allow outbund traffic
 # * make sure log group is already created
 ```
+
+

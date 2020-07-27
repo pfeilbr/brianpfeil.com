@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/boto-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/boto-playground</a>
+
 
 learn and experiment with [Boto 3 / AWS SDK for Python](https://github.com/boto/boto3) 
 
@@ -47,3 +49,5 @@ python s3-example.py
 # exit virtualenv / deactivate
 deactivate
 ```
+
+

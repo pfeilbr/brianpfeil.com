@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/flexbox-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/flexbox-playground</a>
+
 
 Project to learn and experiment with the [CSS3 Flexbox](http://www.w3.org/TR/css3-flexbox/) layout module.
 
@@ -23,4 +25,6 @@ Project to learn and experiment with the [CSS3 Flexbox](http://www.w3.org/TR/css
 
 * [A Visual Guide to CSS3 Flexbox Properties](https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties)
 * [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+
+
 

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/jenkins-pipeline-github-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jenkins-pipeline-github-playground</a>
+
 
 learn and experiment with [Jenkins](https://jenkins.io/) automation server.
 
@@ -40,3 +42,5 @@ open http://localhost:8080/job/projects/job/jenkins-pipeline-github-playground/c
 ![](https://www.evernote.com/l/AAFl1l5ijGFFD5WUJ1KIb92nGhraFE8BGrYB/image.png)
 
 ![](https://www.evernote.com/l/AAFTJAUh76BI8KSjPLEhgfJIfFcBdACzSGYB/image.png)
+
+

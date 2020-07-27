@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/alexa-skills-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/alexa-skills-playground</a>
+
 
 ## [sage](skills/sage) skill
 
@@ -237,3 +239,5 @@ IntentRequest Payload Example (full)
     }
 }
 ```
+
+

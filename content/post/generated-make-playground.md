@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/make-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/make-playground</a>
+
 
 learn [make](https://www.gnu.org/software/make/manual/make.html)
 
@@ -27,3 +29,5 @@ learn [make](https://www.gnu.org/software/make/manual/make.html)
 # run `make` whenever Makefile changes
 fswatch -o Makefile | xargs -n1 -I{} make
 ```
+
+

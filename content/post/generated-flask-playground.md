@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/flask-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/flask-playground</a>
+
 # flask-playground
 
 learn [flask](https://www.palletsprojects.com/p/flask/), the python web application framework
@@ -45,3 +47,5 @@ python client.py
 chmod +x load-test.sh
 ./load-test.sh
 ```
+
+

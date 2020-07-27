@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/serverless-python-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-python-playground</a>
+
 
 experiment with the [serverless framework](https://serverless.com/framework/) using python
 
@@ -66,3 +68,5 @@ sls invoke -f numpy --log
 # cleanup
 sls remove
 ```
+
+

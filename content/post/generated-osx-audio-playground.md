@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/osx-audio-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/osx-audio-playground</a>
+
 
 Playground to learn the various audio frameworks and APIs
 
@@ -22,3 +24,5 @@ Playground to learn the various audio frameworks and APIs
 `server/`
 
 contains a node server (websocket) that the playground code interacts with
+
+

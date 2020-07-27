@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-cognito-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cognito-playground</a>
+
 
 **Table of Contents**
 
@@ -219,4 +221,6 @@ Code grant returned
 User created in User Pool
 
 ![](https://www.evernote.com/l/AAF7KCSeBahBpYqBZBeVYVEULJ_m9xF-NIwB/image.png)
+
+
 

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-ecr-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-ecr-playground</a>
+
 
 * learn Amazon Elastic Container Registry
 * [Docker Basics for Amazon ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-basics.html) tutorial
@@ -37,3 +39,5 @@ docker tag hello-world 529276214230.dkr.ecr.us-east-1.amazonaws.com/hello-world
 $(aws ecr get-login --no-include-email)
 docker push 529276214230.dkr.ecr.us-east-1.amazonaws.com/hello-world
 ```
+
+

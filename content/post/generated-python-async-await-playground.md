@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/python-async-await-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/python-async-await-playground</a>
+
 
 learn [python async await](https://docs.python.org/3/library/asyncio-task.html)
 
@@ -26,3 +28,5 @@ learn [python async await](https://docs.python.org/3/library/asyncio-task.html)
 1. git clone
 1. pipenv install
 1. pipenv run python main.py
+
+

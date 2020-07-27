@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/http-live-streaming-hls-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/http-live-streaming-hls-playground</a>
+
 
 example of creating an HTTP Live Stream video stream from an h.264 video file.
 
@@ -43,4 +45,6 @@ open http://localhost:8000/
 * [How can I play a m3u8 (file) video using the HTML5 <video> element?](https://stackoverflow.com/questions/41014197/how-can-i-play-a-m3u8-file-video-using-the-html5-video-element)
 * [sample-videos.com](https://www.sample-videos.com/)
 * [HTTP Live Streaming](https://en.wikipedia.org/wiki/HTTP_Live_Streaming)
+
+
 

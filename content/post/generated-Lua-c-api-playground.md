@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/Lua-c-api-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/Lua-c-api-playground</a>
+
 
 learn and experiment with [Lua C API](https://www.lua.org/manual/5.3/#api)
 
@@ -26,3 +28,5 @@ see [Lua-c-api-playground/main.cpp](Lua-c-api-playground/main.cpp)
 ![](https://www.evernote.com/l/AAFsRcTOjdtLgJy3ALariLx7RGl_TKAfYzAB/image.png)
 
 ![](https://www.evernote.com/l/AAHVh3E76RlO1JPdiaVZXEAtsiNhGrU20PEB/image.png)
+
+

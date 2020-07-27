@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/karma-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/karma-playground</a>
+
 
 Project to learn and experiment with the Karma javascript test runner.  Karma runs your javascript tests in multiple browsers.
 
@@ -76,3 +78,5 @@ Project to learn and experiment with the Karma javascript test runner.  Karma ru
 	> You'll see Chrome or the browsers you chose start
 
 ![](http://note.io/1FdGfLE)
+
+

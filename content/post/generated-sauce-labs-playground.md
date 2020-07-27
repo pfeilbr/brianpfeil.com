@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/sauce-labs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/sauce-labs-playground</a>
+
 
 Playground to learn, explore, and play with [Sauce Labs](https://saucelabs.com)
 
@@ -34,3 +36,5 @@ Bypasses almost all tutorial steps because they've been completed
 
 Example Test Run Output Screenshot
 ![Example Test Run Output Screenshot](http://note.io/15PU4jY)
+
+

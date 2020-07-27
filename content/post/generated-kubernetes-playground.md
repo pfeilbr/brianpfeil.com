@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/kubernetes-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/kubernetes-playground</a>
+
 
 learn kubernetes.  based on tutorial at <http://kubernetes.io/docs/tutorials/kubernetes-basics>
 
@@ -112,4 +114,6 @@ $ kubectl cluster-info
 ```
 
 ![](http://static-content-01.s3-website-us-east-1.amazonaws.com/1__kubectl_proxy__kubectl__1DB53603.png)
+
+
 

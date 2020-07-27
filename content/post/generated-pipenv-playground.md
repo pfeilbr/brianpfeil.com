@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/pipenv-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/pipenv-playground</a>
+
 
 learn [pipenv](https://github.com/pypa/pipenv)
 
@@ -57,3 +59,5 @@ pipenv run jupyter notebook
 pipenv install jupyterlab
 pipenv run jupyter lab
 ```
+
+

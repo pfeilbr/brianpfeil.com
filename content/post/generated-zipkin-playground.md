@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/zipkin-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/zipkin-playground</a>
+
 
 learn [zipkin](https://zipkin.io/) the distributed tracing system
 
@@ -150,3 +152,5 @@ view JSON trace data by clickint the `[JSON]` button
   }
 ]
 ```
+
+

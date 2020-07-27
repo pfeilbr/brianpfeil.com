@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/imagenet-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/imagenet-playground</a>
+
 
 project to explore [ImageNet](http://www.image-net.org/) image data for ML applications
 
@@ -22,3 +24,5 @@ project to explore [ImageNet](http://www.image-net.org/) image data for ML appli
 run jupyter notebook via `kjupyter` command
 
 see [imagenet-classify.ipynb]()
+
+

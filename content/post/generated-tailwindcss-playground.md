@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/tailwindcss-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/tailwindcss-playground</a>
+
 
 learn [tailwindcss](https://tailwindcss.com/)
 
@@ -95,4 +97,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
 

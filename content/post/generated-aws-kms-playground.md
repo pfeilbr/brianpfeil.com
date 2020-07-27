@@ -14,7 +14,11 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-kms-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-kms-playground</a>
+
 
 learn how to use kms to encrypt and decrypt data
 
 see [`index.js`](index.js)
+
+

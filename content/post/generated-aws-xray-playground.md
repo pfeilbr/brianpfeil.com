@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-xray-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-xray-playground</a>
+
 
 learn [AWS X-Ray](https://docs.aws.amazon.com/xray/)
 
@@ -49,3 +51,5 @@ npm run dev
 
 * [aws/aws-xray-sdk-node](https://github.com/aws/aws-xray-sdk-node)
 * [aws/aws-xray-sdk-node/blob/master/packages/core/README.md](https://github.com/aws/aws-xray-sdk-node/blob/master/packages/core/README.md)
+
+

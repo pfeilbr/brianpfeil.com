@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/react-router-4-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-router-4-playground</a>
+
 
 project to learn and experiment with [react-router](https://reacttraining.com/react-router/) 4
 
@@ -31,3 +33,5 @@ $ yarn start
 ```sh
 $ yarn upgrade react react-dom react-redux react-router react-router-dom react-router-redux redux react-scripts
 ```
+
+

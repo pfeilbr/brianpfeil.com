@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-codepipeline-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-codepipeline-playground</a>
+
 
 learn [AWS CodePipeline](https://aws.amazon.com/codepipeline/)
 
@@ -34,3 +36,5 @@ CodeBuild gives you a amz linux server and you can run whatever you want.  This 
 ```js
 node scripts/get-pipeline.js > /pipeline-definition-export.json
 ```
+
+

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/gitlab-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/gitlab-playground</a>
+
 
 learn gitlab. Uses [GitLab CE Docker image](https://hub.docker.com/r/gitlab/gitlab-ce/) to run locally
 
@@ -61,4 +63,6 @@ Container Logs via Kitematic UI
 
 Project view
 ![](https://www.evernote.com/l/AAEuFGfKNfxALLJSmQZ0GC7DCox1cV1MwqUB/image.png)
+
+
 

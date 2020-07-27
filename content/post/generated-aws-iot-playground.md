@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-iot-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-iot-playground</a>
+
 
 learn and experiment with [AWS IoT](https://aws.amazon.com/documentation/iot/)
 
@@ -25,3 +27,5 @@ copy `.env.template` to `.env` and populate with your values
 **Object Hierarchy**
 
 thing -> certificate -> policy
+
+

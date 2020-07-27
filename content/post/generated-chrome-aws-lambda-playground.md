@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/chrome-aws-lambda-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/chrome-aws-lambda-playground</a>
+
 
 learn the [chrome-aws-lambda](https://github.com/alixaxel/chrome-aws-lambda) package for use with aws lambda via [serverless framework](https://serverless.com/framework/)
 
@@ -28,3 +30,5 @@ example with <https://twitter.com>
 <https://SERVICE_ENDPOINT/dev/webpagescreenshot?url=https://twitter.com>
 
 ![](https://www.evernote.com/l/AAHuFLMzBhxOPrQx75otGHiArogvSLyRtKwB/image.png)
+
+

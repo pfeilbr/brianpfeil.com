@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/spark-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/spark-playground</a>
+
 
 Project to learn and experiment with the [Spark](https://spark.apache.org) cluster computing system.
 
@@ -35,4 +37,6 @@ spark installed at `~/dev/spark-2.2.0-bin-hadoop2.7` and is part of `PATH` in `.
 ## Resources
 
 * [Spark Documentation](https://spark.apache.org/docs/latest/)
+
+
 

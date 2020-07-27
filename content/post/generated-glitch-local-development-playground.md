@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/glitch-local-development-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/glitch-local-development-playground</a>
+
 =================
 
 Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
@@ -40,4 +42,6 @@ Made by [Glitch](https://glitch.com/)
 -------------------
 
 \ ゜o゜)ノ
+
+
 

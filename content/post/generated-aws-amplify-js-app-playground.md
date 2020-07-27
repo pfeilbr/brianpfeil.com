@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-amplify-js-app-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-amplify-js-app-playground</a>
+
 
 * learn [AWS Amplify Framework](https://aws-amplify.github.io/)
 * getting started walkthrough @ <https://aws-amplify.github.io/docs/js/start?ref=amplify-js-btn&platform=purejs>
@@ -37,3 +39,5 @@ amplify add hosting
 amplify publish
 amplify status
 ```
+
+

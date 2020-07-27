@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/v8-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/v8-playground</a>
+
 
 Project to learn and experiment with the [V8](https://developers.google.com/v8/) javascript engine.
 
@@ -38,3 +40,5 @@ The v8 include files were copied from `v8/include` to `v8-includes`
 ## Resources
 
 * [Google V8 Docs](https://developers.google.com/v8/)
+
+

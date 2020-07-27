@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/google-test-cpp-test-framework-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/google-test-cpp-test-framework-playground</a>
+
 
 learn [googletest](https://github.com/google/googletest) / [gtest](https://github.com/google/googletest) C++ test framework
 
@@ -33,3 +35,5 @@ cmake ..
 make
 make install
 ```
+
+

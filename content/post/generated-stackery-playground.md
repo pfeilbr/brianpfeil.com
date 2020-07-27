@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/stackery-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/stackery-playground</a>
+
 
 learn [stackery](https://www.stackery.io).  Project based on [Stackery Quickstart NodeJS](https://docs.stackery.io/docs/quickstart/quickstart-nodejs/).
 
@@ -76,3 +78,5 @@ Roles created during one time setup
 
 * [Stackery Quickstart NodeJS](https://docs.stackery.io/docs/quickstart/quickstart-nodejs/)
 * [Stackery Documentation](https://docs.stackery.io)
+
+

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-rekognition-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-rekognition-playground</a>
+
 
 learn [AWS Rekognition](https://docs.aws.amazon.com/rekognition/)
 
@@ -3854,3 +3856,5 @@ aws rekognition get-label-detection  --job-id "2c9b387607977af21c0839f177bf7034c
     }
 }
 ```
+
+

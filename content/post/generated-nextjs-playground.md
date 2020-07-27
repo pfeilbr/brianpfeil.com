@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/nextjs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nextjs-playground</a>
+
 
 Learn [Next.js](https://github.com/zeit/next.js), a small framework for server-rendered universal JavaScript webapps, built on top of React, Webpack and Babel
 
@@ -22,4 +24,6 @@ Learn [Next.js](https://github.com/zeit/next.js), a small framework for server-r
 ```sh
 $ npm run dev
 ```
+
+
 

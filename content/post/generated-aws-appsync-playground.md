@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-appsync-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-appsync-playground</a>
+
 
 learn and experiment with [AWS AppSync](https://aws.amazon.com/appsync/)
 
@@ -53,3 +55,5 @@ learn and experiment with [AWS AppSync](https://aws.amazon.com/appsync/)
 * [gabehollombe-aws/react-graphql-amplify-blog-post](https://github.com/gabehollombe-aws/react-graphql-amplify-blog-post)
 * [serverless-appsync-plugin](https://github.com/sid88in/serverless-appsync-plugin)
     * [example service](https://github.com/sid88in/serverless-appsync-plugin/tree/master/example)
+
+

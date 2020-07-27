@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/gradle-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/gradle-playground</a>
+
 
 Project to learn and explore the [gradle](https://gradle.org/) build automation tool.
 
@@ -86,4 +88,6 @@ mainClassName = 'Main'
 ```
 
 ![](http://static-content-01.s3-website-us-east-1.amazonaws.com//command-line-app_—_bash_—_80×24_1B8E0B91.png)
+
+
 

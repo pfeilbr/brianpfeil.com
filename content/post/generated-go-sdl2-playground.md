@@ -14,9 +14,13 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/go-sdl2-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/go-sdl2-playground</a>
+
 
 learn [go-sdl2](https://github.com/veandco/go-sdl2), the SDL2 wrapped for Go users
 
 ## Resources
 
 * [veandco/go-sdl2-examples](https://github.com/veandco/go-sdl2-examples)
+
+

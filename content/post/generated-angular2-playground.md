@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/angular2-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/angular2-playground</a>
+
 
 Project to learn and experiment with [Angular2](http://angular.io)
 
@@ -24,4 +26,6 @@ $ npm install
 $ npm start
 ```
 make changes and page will live reload
+
+
 

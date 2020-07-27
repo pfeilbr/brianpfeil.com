@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/cordova-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/cordova-playground</a>
+
 
 Project to learn and experiment with [Apache Cordova](https://cordova.apache.org/)
 
@@ -101,3 +103,5 @@ www/js/index.js
 * [Cordova | iOS Whitelisting](https://cordova.apache.org/docs/en/3.6.0/guide/appdev/whitelist/index.html#link-4)
 * [Christophe Coenraets | Apache Cordova Tutorial](https://ccoenraets.github.io/cordova-tutorial/index.html)
 * [Fix iOS 9 App Transport Security Issues In Apache Cordova](https://blog.nraboy.com/2015/10/fix-ios-9-app-transport-security-issues-in-apache-cordova/)
+
+

@@ -14,6 +14,10 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/azure-nodejs-arm-resources-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-nodejs-arm-resources-playground</a>
+
 
 manipulate azure resources (deployments, etc.) programmatically via nodejs
+
+
 

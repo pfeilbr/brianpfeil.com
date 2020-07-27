@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-cognito-developer-authenticated-identities-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cognito-developer-authenticated-identities-playground</a>
+
 
 learn [Developer Authenticated Identities (Identity Pools)](https://docs.aws.amazon.com/cognito/latest/developerguide/developer-authenticated-identities.html)
 
@@ -93,3 +95,5 @@ learn [Developer Authenticated Identities (Identity Pools)](https://docs.aws.ama
 
 * [Developer Authenticated Identities (Identity Pools)](https://docs.aws.amazon.com/cognito/latest/developerguide/developer-authenticated-identities.html)
 * [Understanding Amazon Cognito Authentication Part 2: Developer Authenticated Identities](https://aws.amazon.com/blogs/mobile/understanding-amazon-cognito-authentication-part-2-developer-authenticated-identities/)
+
+

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/serverless-framework-full-lifecycle-with-dashboard-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-framework-full-lifecycle-with-dashboard-playground</a>
+
 # serverless-framework-full-lifecycle-with-dashboard-playground
 
 learn and understand how [Serverless Framework – Now, Full Lifecycle](https://serverless.com/blog/serverless-now-full-lifecycle/) works.  This allows serverless to instrument code, send cloudwatch logs to the serverless SaaS.  This allows serverless to provide the [Serverless Dashboard](https://serverless.com/framework/docs/dashboard/) features
@@ -161,3 +163,5 @@ Send notifications (e.g. email)
 ## Resources
 
 * [reddit | Serverless Framework now supports full lifecycle on AWS](https://www.reddit.com/r/aws/comments/cghxro/serverless_framework_now_supports_full_lifecycle/)
+
+

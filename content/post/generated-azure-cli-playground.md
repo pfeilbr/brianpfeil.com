@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/azure-cli-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-cli-playground</a>
+
 
 azure cli usage examples
 
@@ -99,3 +101,5 @@ az role definition list | jq '.[].description'
 # list storage account
 az storage account list | jq '.[].name'
 ```
+
+

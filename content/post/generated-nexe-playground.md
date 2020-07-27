@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/nexe-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nexe-playground</a>
+
 
 Learn and experiment with [nexe](https://github.com/jaredallard/nexe)
 
@@ -47,4 +49,6 @@ $ nexe
 
 # output is ./main.nex, which is specified in the nexe.output property
 ```
+
+
 

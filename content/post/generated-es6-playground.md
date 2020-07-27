@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/es6-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/es6-playground</a>
+
 
 Area to learn and experiment with [ECMAScript 6](https://people.mozilla.org/~jorendorff/es6-draft.html) using the [Babel](https://babeljs.io/)
 JavaScript compiler.
@@ -25,3 +27,5 @@ JavaScript compiler.
 Edit `app.js`
 
     $ node index.js
+
+

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/azure-pipelines-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-pipelines-playground</a>
+
 
 learn [azure pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=azure-devops)
 
@@ -552,4 +554,6 @@ AWS::WAFv2::WebACL
               ExcludedRules: []
 
 ```
+
+
 

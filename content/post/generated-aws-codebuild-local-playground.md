@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-codebuild-local-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-codebuild-local-playground</a>
+
 
 ## Resources
 
@@ -36,5 +38,7 @@ cd basic-01
 codebuild_build.sh -i 'aws/codebuild/standard:2.0' -a 'artifact-output' -c
 
 ```
+
+
 
 

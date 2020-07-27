@@ -14,6 +14,10 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/node-google-cloud-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/node-google-cloud-playground</a>
+
 
 * [Speech API](speech/README.md)
+
+
 

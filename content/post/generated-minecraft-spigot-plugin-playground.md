@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/minecraft-spigot-plugin-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/minecraft-spigot-plugin-playground</a>
+
 
 Learn plugin development for the [spigot](https://www.spigotmc.org/) minecraft server.
 
@@ -59,3 +61,5 @@ cd ./minecraft-spigot-server
 ## Resources
 
 * <https://www.spigotmc.org/wiki/intellij-debug-your-plugin/>
+
+

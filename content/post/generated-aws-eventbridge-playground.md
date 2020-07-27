@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-eventbridge-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-eventbridge-playground</a>
+
 
 learn [AWS EventBridge](https://aws.amazon.com/eventbridge/)
 
@@ -25,3 +27,5 @@ aws events put-events --entries file://sample-events/my-custom-app-events.json
 ## Resources
 
 * <https://github.com/jbesw/s3-to-lambda/blob/master/eventbridge/README.md> - examples using `AWS::Events::Rule` in SAM to map event sources to targets (e.g. lambda, kinesis, etc.)
+
+

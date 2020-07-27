@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/intellij-maven-app-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/intellij-maven-app-playground</a>
+
 
 example of IntelliJ Maven App
 
@@ -33,3 +35,5 @@ mvn package
 # run jar
 java -jar ./target/app01-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
+
+

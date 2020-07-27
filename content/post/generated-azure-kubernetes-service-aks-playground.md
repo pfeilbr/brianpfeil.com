@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/azure-kubernetes-service-aks-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-kubernetes-service-aks-playground</a>
+
 
 learn azure kubernetes service
 
@@ -51,3 +53,5 @@ az group delete --name "pfeilbr-aks-01" --yes --no-wait
 ```
 
 ![](https://www.evernote.com/l/AAHFfcVhlCJNT5rYgPkVTwZ4NL5x57QaNd0B/image.png)
+
+

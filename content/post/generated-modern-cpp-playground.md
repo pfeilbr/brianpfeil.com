@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/modern-cpp-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/modern-cpp-playground</a>
+
 
 based on [nesteruk/ModernCpp](https://github.com/nesteruk/ModernCpp)
 
@@ -32,3 +34,5 @@ build and run on file contents change (live reload)
 
 # edit and save `playground.cpp` for live reload
 ```
+
+

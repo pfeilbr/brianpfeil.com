@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-serverless-application-repository-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-serverless-application-repository-playground</a>
+
 
 learn [AWS Serverless Application Repository](https://docs.aws.amazon.com/en_pv/serverlessrepo)
 
@@ -109,3 +111,5 @@ curl "$TEMPLATE_URL"
 aws serverlessrepo delete-application --application-id "$APP_ID"
 
 ```
+
+

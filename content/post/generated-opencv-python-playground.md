@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/opencv-python-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/opencv-python-playground</a>
+
 
 code is split between jupyter notebook(s) and python (.py) files
 
@@ -39,4 +41,6 @@ python opencv-webcam.py
 
 example run screenshot
 ![](https://www.evernote.com/l/AAEIScL_DhlHx7ZaJPGL_aa5di-WK_tHsKMB/image.png)
+
+
 

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-sam-local-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-sam-local-playground</a>
+
 
 learn [aws-sam-local](https://github.com/awslabs/aws-sam-local)
 
@@ -66,3 +68,5 @@ sam deploy --template-file packaged.yaml --stack-name api-event-source-v1 --capa
 ### Resources
 
 * [AWS Serverless Application Model (AWS SAM) Documentation](https://docs.aws.amazon.com/serverless-application-model/index.html)
+
+

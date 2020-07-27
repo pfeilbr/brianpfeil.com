@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/serverless-plugin-cloudfront-lambda-edge-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-plugin-cloudfront-lambda-edge-playground</a>
+
 
 learn [silvermine/serverless-plugin-cloudfront-lambda-edge](https://github.com/silvermine/serverless-plugin-cloudfront-lambda-edge)
 
@@ -185,3 +187,5 @@ see [Determining the Lambda@Edge Region](https://docs.aws.amazon.com/AmazonCloud
 ```
 $(node ./scripts/get-stack-property.js )
 ```
+
+

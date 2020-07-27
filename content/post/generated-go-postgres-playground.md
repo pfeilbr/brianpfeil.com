@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/go-postgres-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/go-postgres-playground</a>
+
 
 playground for go [lib/pq](http://godoc.org/github.com/lib/pq) package
 
@@ -24,3 +26,5 @@ playground for go [lib/pq](http://godoc.org/github.com/lib/pq) package
 ### Running
 
 	go run main.go
+
+

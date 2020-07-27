@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/deep-and-machine-learning-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/deep-and-machine-learning-playground</a>
+
 
 docker image + jupyter notebook UI for learning and experimenting with deep and machine learning.
 
@@ -51,4 +53,6 @@ docker commit 5b4a6fb7117b pfeilbr/deep-and-machine-learning:v2
 # e.g.
 docker push pfeilbr/deep-and-machine-learning:v2
 ```
+
+
 

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/confluence-api-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/confluence-api-playground</a>
+
 
 * [Confluence Cloud REST API Reference](https://docs.atlassian.com/confluence/REST/latest/)
 
@@ -31,4 +33,6 @@ GET https://share.merck.com/rest/api/content?spaceKey=SHAR&title=Account+360&exp
 GET https://share.merck.com/rest/api/user?username=pfeilbr
 
 ```
+
+
 

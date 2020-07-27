@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-sdk-cpp-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-sdk-cpp-playground</a>
+
 
 learn [aws-sdk-app](https://github.com/aws/aws-sdk-cpp) C++ SDK
 
@@ -52,3 +54,5 @@ cmake .. && make
 * `/usr/local/lib/cmake/AWSSDK` - cmake modules
 * `/usr/local/include` - headers installed
 * `/usr/local/lib` - libraries installed (e.g. libaws-cpp-sdk-core.dylib)
+
+

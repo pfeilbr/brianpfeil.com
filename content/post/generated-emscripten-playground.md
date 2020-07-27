@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/emscripten-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/emscripten-playground</a>
+
 
 learn and experiment with [emscripten](http://kripken.github.io/emscripten-site/)
 
@@ -43,4 +45,6 @@ $ node output/hello_world.js
 # NOTE: overwrites
 $ emcc hello_world.c -o output/hello.html
 ```
+
+
 

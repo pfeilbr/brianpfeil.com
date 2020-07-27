@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/react-async-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-async-playground</a>
+
 
 learn [React Async](https://docs.react-async.com/), a React component and hook for declarative promise resolution and data fetching
 
@@ -89,4 +91,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
 

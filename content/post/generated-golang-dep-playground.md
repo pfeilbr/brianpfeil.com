@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/golang-dep-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/golang-dep-playground</a>
+
 
 project to learn to use [dep](https://golang.github.io/dep/) the dependency management tool for [go](https://golang.org/)
 
@@ -28,3 +30,5 @@ dep ensure
 
 # can always run `dep ensure` to sync everything up
 ```
+
+

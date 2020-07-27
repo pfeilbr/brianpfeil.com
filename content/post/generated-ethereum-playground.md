@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/ethereum-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/ethereum-playground</a>
+
 
 learn and experiment with [Ethereum](https://www.ethereum.org/) decentralized blockchain based platform
 
@@ -68,4 +70,6 @@ geth --testnet console
 
 * [Web3 JavaScript Ðapp API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
 * [web3.js](https://github.com/ethereum/web3.js) npm module
+
+
 

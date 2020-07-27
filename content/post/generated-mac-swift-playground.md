@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/mac-swift-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/mac-swift-playground</a>
+
 
 <div style="clear: both"></div>
 
@@ -42,3 +44,5 @@ XCPShowView(identifier: String, view: NSView)
 ```
 
 Display the provided view in the view pane with the identifier as the title
+
+

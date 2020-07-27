@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/kue-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/kue-playground</a>
+
 
 Playground for learning / playing with [Kue](https://github.com/learnboost/kue).  Kue is a priority job queue for node.
 
@@ -24,3 +26,5 @@ Playground for learning / playing with [Kue](https://github.com/learnboost/kue).
 	node index.js -m create # run job creator in another terminal
 
 View the Kue web ui at <http://localhost:3000>
+
+

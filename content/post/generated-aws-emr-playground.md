@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-emr-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-emr-playground</a>
+
 
 examples of using aws-emr. hive, pig, spark, etc.
 
@@ -49,3 +51,5 @@ LOCATION 's3://com.brianpfeil.scratch/emr/dynamodb/export/table/log/';
 -- import csv data from s3 into dynamodb table
 INSERT OVERWRITE TABLE hiveLogTable SELECT * FROM s3_import;
 ```
+
+

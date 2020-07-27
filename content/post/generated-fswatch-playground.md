@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/fswatch-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/fswatch-playground</a>
+
 
 * learn [fswatch](http://emcrisostomo.github.io/fswatch/) file change monitor
 * github @ [emcrisostomo/fswatch](https://github.com/emcrisostomo/fswatch)
@@ -31,4 +33,6 @@ fswatch -0 .
 # print file path information for each changed file on separate line
 fswatch -0 . | xargs -0 -n 1 -I {} echo {}
 ```
+
+
 

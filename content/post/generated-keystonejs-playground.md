@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/keystonejs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/keystonejs-playground</a>
+
 
 Learn and experiment with [KeystoneJS](http://keystonejs.com/)
 
@@ -38,4 +40,6 @@ $ node keystone.js
 
 	Email: brian.pfeil@gmail.com
 	Password: admin
+
+
 

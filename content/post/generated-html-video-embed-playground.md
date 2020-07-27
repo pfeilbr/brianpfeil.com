@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/html-video-embed-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/html-video-embed-playground</a>
+
 
 Project to learn and experiment with various HTML video players
 
@@ -30,3 +32,5 @@ e.g. <http://localhost:8000/test-screencast-jwplayer.html>
 
 * [JW Player](http://www.jwplayer.com/)
 * [Video.js](http://www.videojs.com/)
+
+

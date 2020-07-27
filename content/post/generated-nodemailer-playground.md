@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/nodemailer-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nodemailer-playground</a>
+
 
 Playground for exploring the use of [Nodemailer](http://www.nodemailer.com/) to send email
 
@@ -23,4 +25,6 @@ Update `index.js` with email password before running.
 
 	npm install
 	npm start OR node index.js
+
+
 

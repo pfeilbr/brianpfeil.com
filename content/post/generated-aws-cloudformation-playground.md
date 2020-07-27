@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-cloudformation-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cloudformation-playground</a>
+
 
 learn [aws cloudformation](https://aws.amazon.com/cloudformation/)
 
@@ -64,3 +66,5 @@ aws cloudformation delete-stack --stack-name dynamic-references-ssm-secrets-stac
 
 * [CloudFormation Custom Resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html)
 * [CloudFormation Macros](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html)
+
+

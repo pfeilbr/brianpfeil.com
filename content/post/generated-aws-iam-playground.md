@@ -14,5 +14,9 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-iam-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-iam-playground</a>
+
 
 `serverless-project-policy-templates/` - serverless project policy templates for the various roles (admin, support, lambda, apigateway).  they aim to isolate permissions by matching resources against a project prefix
+
+

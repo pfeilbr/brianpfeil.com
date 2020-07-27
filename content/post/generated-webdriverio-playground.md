@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/webdriverio-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/webdriverio-playground</a>
+
 
 # Running Selenium Standalone Server (Preferred / lighter weight)
 
@@ -57,4 +59,6 @@ var options = {
 ```
 
 see [`index.js`](index.js)
+
+
 

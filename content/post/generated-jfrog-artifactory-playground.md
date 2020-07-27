@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/jfrog-artifactory-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jfrog-artifactory-playground</a>
+
 
 learn [JFrog Artifactory](https://jfrog.com/artifactory/)
 
@@ -71,4 +73,6 @@ docker run --name artifactory -d -p 8081:8081 docker.bintray.io/jfrog/artifactor
 # open Artifactory UI in browser
 open http://localhost:8081
 ```
+
+
 

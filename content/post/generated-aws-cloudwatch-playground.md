@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-cloudwatch-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cloudwatch-playground</a>
+
 
 ## CloudWatch Metrics
 
@@ -89,4 +91,6 @@ aws logs get-query-results --query-id 'c9b7d9e8-b32f-486d-a436-6ce43db8d54c'
     ]
 }
 ```
+
+
 

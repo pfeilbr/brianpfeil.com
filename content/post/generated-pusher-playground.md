@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/pusher-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/pusher-playground</a>
+
 
 learn [pusher](https://pusher.com)
 
@@ -27,3 +29,5 @@ https://jsbin.com/modutol/edit?html,js,output
 node index.js
 # this will cause alert with message in client web browser
 ```
+
+

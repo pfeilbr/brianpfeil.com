@@ -14,9 +14,13 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/azure-nodejs-arm-storage-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-nodejs-arm-storage-playground</a>
+
 
 manipulate azure storage accounts programmatically via nodejs
 
 ## Resources
 
 - [Azure Storage modules for Node.js](https://docs.microsoft.com/en-us/javascript/api/overview/azure/storage?view=azure-node-latest)
+
+

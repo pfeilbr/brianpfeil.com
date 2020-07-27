@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/phaser-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/phaser-playground</a>
+
 
 project to learn the [Phaser](http://phaser.io/) HTML5 game framework
 
@@ -30,4 +32,6 @@ Play @ <https://pfeilbr.github.io/phaser-playground/>
 # start live reload server
 live-server
 ```
+
+
 

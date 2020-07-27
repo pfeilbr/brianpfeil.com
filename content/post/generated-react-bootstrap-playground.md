@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/react-bootstrap-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-bootstrap-playground</a>
+
 
 ## Available Scripts
 
@@ -81,4 +83,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
 

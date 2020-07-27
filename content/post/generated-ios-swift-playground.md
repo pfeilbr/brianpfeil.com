@@ -14,6 +14,10 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/ios-swift-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/ios-swift-playground</a>
+
 
 Scratchpad to learn and explore swift
+
+
 

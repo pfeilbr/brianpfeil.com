@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-interactive-video-service-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-interactive-video-service-playground</a>
+
 
 * learn [Amazon Interactive Video Service](https://aws.amazon.com/ivs/)
 * based on [Getting Started with Amazon Interactive Video Service](https://docs.aws.amazon.com/ivs/latest/userguide/GSIVS.html)
@@ -45,4 +47,6 @@ ffmpeg -re -stream_loop -1 -i $VIDEO_FILEPATH -r 30 -c:v libx264 -pix_fmt yuv420
 * [Introducing Amazon Interactive Video Service (Amazon IVS)](https://aws.amazon.com/about-aws/whats-new/2020/07/introducing-amazon-ivs/)
 * [Amazon Interactive Video Service – Add Live Video to Your Apps and Websites](https://aws.amazon.com/blogs/aws/amazon-interactive-video-service-add-live-video-to-your-apps-and-websites/)
 * [Amazon Interactive Video | Docs](https://docs.aws.amazon.com/ivs/latest/userguide/what-is.html)
+
+
 

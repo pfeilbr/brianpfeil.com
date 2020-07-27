@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/goreleaser-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/goreleaser-playground</a>
+
 
 learn [GoReleaser](https://goreleaser.com/) release automation tool for Go projects.
 
@@ -37,3 +39,5 @@ goreleaser --snapshot --rm-dist
 goreleaser
 
 ```
+
+

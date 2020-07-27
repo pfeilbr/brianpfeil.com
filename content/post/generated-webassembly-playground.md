@@ -14,4 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/webassembly-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/webassembly-playground</a>
+
+
+
 

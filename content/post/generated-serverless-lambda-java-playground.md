@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/serverless-lambda-java-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-lambda-java-playground</a>
+
 
 [serverless framework](https://serverless.com/) + [lambda java](https://docs.aws.amazon.com/lambda/latest/dg/java-programming-model.html)
 
@@ -41,3 +43,5 @@ sls invoke --function hello --data '{"msg": "hello"}' --log
 ## Resources
 
 * [How to create a REST API in Java using DynamoDB and Serverless](https://serverless.com/blog/how-to-create-a-rest-api-in-java-using-dynamodb-and-serverless/)
+
+

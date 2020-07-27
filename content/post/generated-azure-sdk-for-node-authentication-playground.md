@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/azure-sdk-for-node-authentication-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-sdk-for-node-authentication-playground</a>
+
 
 learn authentication methods for azure sdk for nodejs
 
@@ -34,3 +36,5 @@ learn authentication methods for azure sdk for nodejs
     navigate to **Portal | Azure Active Directory | App registrations**
     create new client secret if needed OR use existing
     ![](https://www.evernote.com/l/AAHlB4MduMBFjadlw1JlXT6hfMVn5OBBSIwB/image.png)
+
+

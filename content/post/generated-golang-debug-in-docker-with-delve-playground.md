@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/golang-debug-in-docker-with-delve-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/golang-debug-in-docker-with-delve-playground</a>
+
 
 based on [Debugging Go using Delve, Docker and VS Code](https://medium.com/@kaperys/delve-into-docker-d6c92be2f823) post
 
@@ -26,3 +28,5 @@ make run # or make build first
 ## Resources
 
 * [dlv debug](https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_debug.md) cli docs
+
+

@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/node-coveralls-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/node-coveralls-playground</a>
+
 
 # node-coveralls-playground
 
@@ -44,4 +46,6 @@ $ istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec &&
 ```
 
 > You can view the raw coverage output in the `./coverage` directory.
+
+
 

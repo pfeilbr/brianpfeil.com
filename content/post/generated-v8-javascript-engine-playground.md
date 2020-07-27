@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/v8-javascript-engine-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/v8-javascript-engine-playground</a>
+
 
 project to learn and develop with [V8](https://developers.google.com/v8/)
 
@@ -84,5 +86,7 @@ project to learn and develop with [V8](https://developers.google.com/v8/)
 > `${workspaceFolder}` is `v8` root directory
 
 ![](https://www.evernote.com/l/AAHCxYreY3BNyI56b_VU9HUCWfwMfOt8BsYB/image.png)
+
+
 
 

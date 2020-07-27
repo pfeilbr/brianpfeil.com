@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/go-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/go-playground</a>
+
 
 A set of example [Go](http://golang.org/) programs for learning
 
@@ -30,4 +32,6 @@ e.g.
 ## Resources
 
 * [Go Documentation](http://golang.org/doc/)
+
+
 

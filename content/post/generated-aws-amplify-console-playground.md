@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-amplify-console-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-amplify-console-playground</a>
+
 
 learn [AWS Amplify Console](https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html)
 
@@ -50,3 +52,5 @@ App running on custom domain <https://amplify-master.minote.net/>
 
 * [Amplify Console | Getting Started](https://aws.amazon.com/amplify/console/getting-started/)
 * [aws-amplify/amplify-console](https://github.com/aws-amplify/amplify-console)
+
+

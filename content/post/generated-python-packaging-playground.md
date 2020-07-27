@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/python-packaging-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/python-packaging-playground</a>
+
 
 learn python packaging via [Packaging Python Projects](https://packaging.python.org/tutorials/packaging-projects/)
 
@@ -60,3 +62,5 @@ echo -e "import example_pkg_pfeilbr\nprint(example_pkg_pfeilbr.name)" | python
 This is a simple example package. You can use
 [Github-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
 to write your content.
+
+

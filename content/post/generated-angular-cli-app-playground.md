@@ -14,6 +14,10 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/angular-cli-app-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/angular-cli-app-playground</a>
+
 
 learn and experiment with [angular-cli](https://github.com/angular/angular-cli)
+
+
 

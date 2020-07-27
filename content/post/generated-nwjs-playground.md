@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/nwjs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nwjs-playground</a>
+
 
 # [NW.js](http://nwjs.io) playground
 
@@ -73,3 +75,5 @@ nw .
 	```bash
 	cp ../nwjs-playground.nw /Applications/myapp.app/Contents/Resources/app.nw
 	```
+
+

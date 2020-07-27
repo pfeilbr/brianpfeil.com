@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/azure-js-cognitive-services-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-js-cognitive-services-playground</a>
+
 
 learn [azure cognitive services](https://docs.microsoft.com/en-us/azure/cognitive-services/)
 
@@ -41,4 +43,6 @@ learn [azure cognitive services](https://docs.microsoft.com/en-us/azure/cognitiv
 1. `COGNITIVE_SERVICES_KEY`
     ![](https://www.evernote.com/l/AAHdTNN4abtGmq5ZKgwh2vD6uOURbM6mhHwB/image.png)
 1. run `npm start`
+
+
 

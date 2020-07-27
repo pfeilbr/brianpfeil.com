@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/wordpress-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/wordpress-playground</a>
+
 
 learn and experiment with all things [WordPress](https://wordpress.com/) and [WordPress VIP](https://wpvip.com/) (aka Enterprise WordPress)
 
@@ -137,3 +139,5 @@ define( 'VIP_MAINTENANCE_MODE', false );
 * [Automattic/vip-go-mu-plugins](https://github.com/Automattic/vip-go-mu-plugins) - The development repo for mu-plugins used on the VIP Go platform.
 * [Automattic/vip-go-mu-plugins-built](https://github.com/Automattic/vip-go-mu-plugins-built) - The generated repo for mu-plugins used on the VIP Go platform
 * [Theme Handbook / Advanced Theme Topics / Child Themes](https://developer.wordpress.org/themes/advanced-topics/child-themes/)
+
+

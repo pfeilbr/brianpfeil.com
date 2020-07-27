@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/jupyter-kernel-gateway-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jupyter-kernel-gateway-playground</a>
+
 
 learn [Jupyter Kernel Gateway](https://jupyter-kernel-gateway.readthedocs.io/en/latest/index.html)
 
@@ -52,3 +54,5 @@ docker push pfeilbr/jupyter-kernel-gateway
 ### Screenshots
 
 ![](https://www.evernote.com/l/AAHBAoPzt9NOyLDDhg90a4FkOcrCBAs7vz4B/image.png)
+
+

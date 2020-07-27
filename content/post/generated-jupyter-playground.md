@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/jupyter-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jupyter-playground</a>
+
 
 learn and experiment with [jupyter](http://jupyter.org/) notebooks
 
@@ -80,3 +82,5 @@ ijsinstall
 ![](https://www.evernote.com/l/AAFzQ-qoH-dIc5661TFz2RRk2hIekySeDs0B/image.png)
 
 ![](https://www.evernote.com/l/AAG5nUlw2dBIgqnqNfJyuJ6Gc7DZoo-EbaUB/image.png)
+
+

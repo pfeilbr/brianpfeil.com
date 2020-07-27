@@ -19,14 +19,11 @@
   {{ end }}
   {{ end }}
 
-  {{ if .Params.repoHTMLURL }}
+  <!-- {{ if .Params.repoHTMLURL }}
   &nbsp;&nbsp;
-  <a href="{{ .Params.repoHTMLURL }}" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;
-    {{ if eq .Kind "page" }}
-    {{ .Params.repoFullName }}
-    {{ end }}
+  <a href="{{ .Params.repoHTMLURL }}" target="_blank"><i class="fab fa-github fa-sm"></i>
   </a>&nbsp;
-  {{ end }}
+  {{ end }} -->
 
 
   {{- if .Site.Params.staticman -}}

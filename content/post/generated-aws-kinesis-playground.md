@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-kinesis-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-kinesis-playground</a>
+
 
 learn [aws kinesis](https://aws.amazon.com/documentation/kinesis/)
 
@@ -40,6 +42,8 @@ learn [aws kinesis](https://aws.amazon.com/documentation/kinesis/)
 
 7. view event in lambda cloudwatch logs
 ![](http://static-screenshots-01.s3-website-us-east-1.amazonaws.com/CloudWatch_Management_Console_1F1EA4E8.png)
+
+
 
 
 

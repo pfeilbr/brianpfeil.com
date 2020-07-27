@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/googletest-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/googletest-playground</a>
+
 
 learn [Googletest](https://github.com/google/googletest), Google Testing and Mocking Framework with CMake
 
@@ -64,3 +66,5 @@ popd
 # list command line options
 ./build/tst/app_tst --help
 ```
+
+

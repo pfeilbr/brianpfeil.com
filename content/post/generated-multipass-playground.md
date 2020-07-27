@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/multipass-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/multipass-playground</a>
+
 
 learn [multipass](https://multipass.run/) - command line interface to launch, manage and generally fiddle about with instances of Linux
 
@@ -65,3 +67,5 @@ multipass delete capital-tapir
 # purge all deleted instances permanently
 multipass purge
 ```
+
+

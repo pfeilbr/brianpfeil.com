@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/go-modules-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/go-modules-playground</a>
+
 
 learn using [golang modules](https://blog.golang.org/using-go-modules)
 
@@ -31,3 +33,5 @@ fswatch -o . | xargs -n1 -I{} go test -v ./...
 # run main on change
 fswatch -o . | xargs -n1 -I{} go run main.go
 ```
+
+

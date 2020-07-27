@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/python-2.x-websocket-client-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/python-2.x-websocket-client-playground</a>
+
 
 learn python [websocket-client](https://github.com/websocket-client/websocket-client) module
 
@@ -42,3 +44,5 @@ python client.py
 example run
 
 ![](https://www.evernote.com/l/AAFaIvf7mthMmJO0Q4o62USTYJES2wvIXCsB/image.png)
+
+

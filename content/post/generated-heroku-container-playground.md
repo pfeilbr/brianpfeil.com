@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/heroku-container-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/heroku-container-playground</a>
+
 
 Learn heroku container support.  Based on Heroku [Container Registry and Runtime](https://devcenter.heroku.com/articles/container-registry-and-runtime) article
 
@@ -50,4 +52,6 @@ heroku open --app stormy-badlands-73151
 # build and push
 heroku container:push web --app stormy-badlands-73151
 ```
+
+
 

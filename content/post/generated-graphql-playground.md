@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/graphql-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/graphql-playground</a>
+
 
 project to learn and experiment with [graphql](https://graphql.org/) using [Apollo](https://www.apollographql.com/)
 
@@ -75,4 +77,6 @@ subscriptiion push over websocket
 
 
 ```
+
+
 

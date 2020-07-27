@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/bref-php-lambda-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/bref-php-lambda-playground</a>
+
 
 learn [bref](https://bref.sh/), deploy and run serverless PHP applications
 
@@ -46,3 +48,5 @@ serverless invoke --function "function" --data '{"name": "foo"}'
 ## Resources
 
 * [bref | Installation](https://bref.sh/docs/installation.html)
+
+

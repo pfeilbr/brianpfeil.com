@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/apex-lambda-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/apex-lambda-playground</a>
+
 
 learn [Apex](http://apex.run/) serverless architecture
 
@@ -34,4 +36,6 @@ echo -n '{"q": "heroku"}' | apex invoke search
 curl -i -F name=test -F filedata=@README.md https://UPDATEME.execute-api.us-east-1.amazonaws.com/prod/playground_api-gateway
 
 ```
+
+
 

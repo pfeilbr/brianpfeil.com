@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/neo4j-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/neo4j-playground</a>
+
 
 learn [neo4j](https://neo4j.com) graph database
 
@@ -80,4 +82,6 @@ neo4j stop
 ## Resources
 
 * [neo4j documentation](https://neo4j.com/docs/)
+
+
 

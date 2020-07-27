@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/php-lambda-layer-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/php-lambda-layer-playground</a>
+
 
 learn [stackery/php-lambda-layer](https://github.com/stackery/php-lambda-layer) for running PHP on lambda
 
@@ -52,3 +54,5 @@ make delete
 * [aws-samples/php-examples-for-aws-lambda](https://github.com/aws-samples/php-examples-for-aws-lambda) - github repo for article.
 * [AWS Lambda Custom Runtime for PHP: A Practical Example](https://aws.amazon.com/blogs/apn/aws-lambda-custom-runtime-for-php-a-practical-example/) - *older article, but covers low level details*
 * [AWS SDK for PHP](https://aws.amazon.com/sdk-for-php/)
+
+

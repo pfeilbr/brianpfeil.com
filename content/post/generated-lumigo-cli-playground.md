@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/lumigo-cli-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/lumigo-cli-playground</a>
+
 
 learn [lumigo-CLI](https://github.com/lumigo-io/lumigo-cli), A collection of helpful commands for working with AWS Lambda.
 
@@ -33,3 +35,5 @@ lumigo-cli s3-select-batch \
 # list Lambda functions in ALL regions
 lumigo-cli list-lambda
 ```
+
+

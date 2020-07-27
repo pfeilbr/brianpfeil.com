@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/drawio-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/drawio-playground</a>
+
 
 learn and store [draw.io](https://www.draw.io) templates
 
@@ -32,5 +34,7 @@ exported aws-scratchpad @ [`aws-scratchpad-panel-export.xml`](aws-scratchpad-pan
 > You can export the scratchpad as a draw.io library from that dialog, if you want to store it more permanently or share it with others.
 
 ![](https://www.evernote.com/l/AAEj5E_oRE9CRL2afXZfgTbWXtbIGEuNzloB/image.png)
+
+
 
 

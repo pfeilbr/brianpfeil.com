@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/node-jenkins-api-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/node-jenkins-api-playground</a>
+
 
 project to learn [node-jenkins](https://github.com/silas/node-jenkins)
 
@@ -27,3 +29,5 @@ project to learn [node-jenkins](https://github.com/silas/node-jenkins)
 `node index.js`
 
 > shows getting details of `job` and `building a job`
+
+

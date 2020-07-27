@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/aws-api-gateway-websockets-serverless-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-api-gateway-websockets-serverless-playground</a>
+
 
 *update 2019-10-03*: websocket events are now "natively supported in serverless framework" no longer need to use `serverless-websockets-plugin`.  see <https://serverless.com/framework/docs/providers/aws/events/websocket/>
 
@@ -27,3 +29,5 @@ learn AWS API Gateway Websockets with [serverless framework](https://serverless.
 * [serverless-websockets-plugin/example](https://github.com/serverless/serverless-websockets-plugin/tree/master/example)
 * [Control Access to a WebSocket API in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-control-access.html)
 * [API Gateway Limits for Configuring and Running a WebSocket API](https://docs.aws.amazon.com/apigateway/latest/developerguide/limits.html#apigateway-execution-service-websocket-limits-table)
+
+

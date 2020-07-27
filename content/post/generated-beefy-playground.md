@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/beefy-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/beefy-playground</a>
+
 
 Learn and experiment with [Beefy](http://didact.us/beefy/), which makes working with [Browserify](http://browserify.org/) a little nicer.
 
@@ -35,3 +37,5 @@ Learn and experiment with [Beefy](http://didact.us/beefy/), which makes working 
   ```
 
 ![](http://didact.us/beefy/cows.jpg)
+
+

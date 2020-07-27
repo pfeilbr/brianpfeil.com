@@ -14,6 +14,8 @@ truncated = true
 
 +++
 
+<a href="https://github.com/pfeilbr/heroku-node-worker-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/heroku-node-worker-playground</a>
+
 
 example of running a long lived worker process on heroku that is not a web app/server
 
@@ -65,3 +67,5 @@ heroku ps:scale worker=1
 
 * [Background Jobs in Node.js with Redis](https://devcenter.heroku.com/articles/node-redis-workers)
 * [Run Non-web Java Dynos on Heroku](https://devcenter.heroku.com/articles/run-non-web-java-processes-on-heroku)
+
+
