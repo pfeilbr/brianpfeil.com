@@ -1,6 +1,11 @@
 # [brianpfeil.com](https://brianpfeil.com)
 
-personal website @ [brianpfeil.com](https://brianpfeil.com)
+## Description
+
+* personal website @ [brianpfeil.com](https://brianpfeil.com)
+* this [`personal-website`](.) repo contains the hugo content and configuration
+* [`public`](public) directory is a submodule @ <https://github.com/pfeilbr/pfeilbr.github.com> where all static web content is published and hosted using [github pages](https://pages.github.com/).
+* [`themes/beautifulhugo`](themes/beautifulhugo) directory is the base hugo theme. It's a submodule @ https://github.com/halogenica/beautifulhugo.  The submodule allows for pulling in updates from this base theme.
 
 ## Key Files and Directories
 
@@ -27,3 +32,7 @@ open http://localhost:1313/
 `./build-and-publish.sh`
 
 > runs hugo to generate site into [`public`](public), commits and pushes all changes to the [`public`](public) submodule.
+
+> NOTE: this script does not commit changes to this [`personal-website`](.) repo
+
+## 
