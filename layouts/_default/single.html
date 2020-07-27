@@ -41,7 +41,7 @@
         {{ end }}
       </article>
 
-      <!-- {{ if ne .Type "page" }}
+      {{ if ne .Type "page" }}
       <ul class="pager blog-pager">
         {{ if .PrevInSection }}
         <li class="previous">
@@ -56,7 +56,7 @@
         </li>
         {{ end }}
       </ul>
-      {{ end }} -->
+      {{ end }}
 
 
       {{ if (.Params.comments) | or (and (or (not (isset .Params "comments")) (eq .Params.comments nil)) (and .Site.Params.comments (ne .Type "page"))) }}
