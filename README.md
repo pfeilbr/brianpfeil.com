@@ -35,4 +35,12 @@ open http://localhost:1313/
 
 > NOTE: this script does not commit changes to this [`personal-website`](.) repo
 
-## 
+## Commit and Push Source Content Changes
+
+commit hugo content and configuration changes for this [`personal-website`](.) repo.
+
+```sh
+git add .
+git commit -a -m "updates"
+git push origin master
+```
