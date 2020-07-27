@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2018-11-13
 description = ""
-summary = "experimenting with AWS Amplify Js App"
+summary = "learning AWS Amplify Js App"
 draft = false
 slug = "aws-amplify-js-app"
 tags = ["aws","amplify","js","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-amplify-js-app-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-amplify-js-app-playground</a>
+-->
 
 
 * learn [AWS Amplify Framework](https://aws-amplify.github.io/)

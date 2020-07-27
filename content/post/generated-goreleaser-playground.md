@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2020-04-16
 description = ""
-summary = "experimenting with Goreleaser"
+summary = "learning Goreleaser"
 draft = false
 slug = "goreleaser"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/goreleaser-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/goreleaser-playground</a>
+-->
 
 
 learn [GoReleaser](https://goreleaser.com/) release automation tool for Go projects.

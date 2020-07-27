@@ -37,7 +37,7 @@ open http://localhost:1313/
 
 ## Commit and Push Source Content Changes
 
-commit hugo content and configuration changes for this [`personal-website`](.) repo.
+commit hugo content and configuration changes for *this* [`personal-website`](.) repo.
 
 ```sh
 git add .

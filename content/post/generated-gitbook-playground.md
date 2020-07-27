@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2016-05-20
 description = ""
-summary = "experimenting with Gitbook"
+summary = "learning Gitbook"
 draft = false
 slug = "gitbook"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/gitbook-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/gitbook-playground</a>
+-->
 
 
 [GitBook Toolchain Documentation](http://toolchain.gitbook.com/)

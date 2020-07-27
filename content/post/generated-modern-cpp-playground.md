@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["C++", "playground"]
 date = 2018-09-24
 description = ""
-summary = "experimenting with Modern Cpp"
+summary = "learning Modern Cpp"
 draft = false
 slug = "modern-cpp"
 tags = ["cpp","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/modern-cpp-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/modern-cpp-playground</a>
+-->
 
 
 based on [nesteruk/ModernCpp](https://github.com/nesteruk/ModernCpp)

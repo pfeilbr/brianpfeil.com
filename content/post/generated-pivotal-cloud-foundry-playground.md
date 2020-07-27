@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-01-31
 description = ""
-summary = "experimenting with Pivotal Cloud Foundry"
+summary = "learning Pivotal Cloud Foundry"
 draft = false
 slug = "pivotal-cloud-foundry"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/pivotal-cloud-foundry-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/pivotal-cloud-foundry-playground</a>
+-->
 
 
 learn [Pivotal Cloud Foundry](https://pivotal.io/platform)

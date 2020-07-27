@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-08-14
 description = ""
-summary = "experimenting with AWS CloudFormation"
+summary = "learning AWS CloudFormation"
 draft = false
 slug = "aws-cloudformation"
 tags = ["aws","cloudformation","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-cloudformation-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cloudformation-playground</a>
+-->
 
 
 learn [aws cloudformation](https://aws.amazon.com/cloudformation/)

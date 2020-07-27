@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/typescript-node-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/typescript-node-playground</a>
+-->
 
 
 example app showing how to setup and develop a typescript based node app using the [typings TypeScript Definition Manager](https://github.com/typings/typings)

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2014-06-12
 description = ""
-summary = "experimenting with Jsforce"
+summary = "learning Jsforce"
 draft = false
 slug = "jsforce"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/jsforce-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jsforce-playground</a>
+-->
 
 
 Area to learn and play with [JSForce](http://jsforce.github.io/).  [index.js]() contains the code.

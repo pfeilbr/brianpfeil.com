@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2018-02-10
 description = ""
-summary = "experimenting with AWS Iot"
+summary = "learning AWS Iot"
 draft = false
 slug = "aws-iot"
 tags = ["aws","iot","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-iot-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-iot-playground</a>
+-->
 
 
 learn and experiment with [AWS IoT](https://aws.amazon.com/documentation/iot/)

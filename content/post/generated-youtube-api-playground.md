@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/youtube-api-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/youtube-api-playground</a>
+-->
 
 
 learn [youtube api](https://developers.google.com/youtube/v3/) using node.js

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["PHP", "playground"]
 date = 2020-07-13
 description = ""
-summary = "experimenting with Bref PHP Lambda"
+summary = "learning Bref PHP Lambda"
 draft = false
 slug = "bref-php-lambda"
 tags = ["php","lambda","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/bref-php-lambda-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/bref-php-lambda-playground</a>
+-->
 
 
 learn [bref](https://bref.sh/), deploy and run serverless PHP applications

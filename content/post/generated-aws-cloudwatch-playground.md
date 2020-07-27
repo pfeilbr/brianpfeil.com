@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2017-05-21
 description = ""
-summary = "experimenting with AWS Cloudwatch"
+summary = "learning AWS Cloudwatch"
 draft = false
 slug = "aws-cloudwatch"
 tags = ["aws","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-cloudwatch-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cloudwatch-playground</a>
+-->
 
 
 ## CloudWatch Metrics

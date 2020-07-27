@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-04-05
 description = ""
-summary = "experimenting with Nexe"
+summary = "learning Nexe"
 draft = false
 slug = "nexe"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/nexe-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nexe-playground</a>
+-->
 
 
 Learn and experiment with [nexe](https://github.com/jaredallard/nexe)

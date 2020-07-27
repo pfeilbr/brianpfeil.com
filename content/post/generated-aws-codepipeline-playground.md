@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2018-12-20
 description = ""
-summary = "experimenting with AWS Codepipeline"
+summary = "learning AWS Codepipeline"
 draft = false
 slug = "aws-codepipeline"
 tags = ["aws","codepipeline","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-codepipeline-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-codepipeline-playground</a>
+-->
 
 
 learn [AWS CodePipeline](https://aws.amazon.com/codepipeline/)

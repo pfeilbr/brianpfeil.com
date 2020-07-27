@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2017-05-21
 description = ""
-summary = "experimenting with AWS Cognito"
+summary = "learning AWS Cognito"
 draft = false
 slug = "aws-cognito"
 tags = ["aws","cognito","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-cognito-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cognito-playground</a>
+-->
 
 
 **Table of Contents**

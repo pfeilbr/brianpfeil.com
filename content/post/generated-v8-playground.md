@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/v8-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/v8-playground</a>
+-->
 
 
 Project to learn and experiment with the [V8](https://developers.google.com/v8/) javascript engine.

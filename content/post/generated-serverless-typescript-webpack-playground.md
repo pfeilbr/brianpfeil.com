@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2017-07-11
 description = ""
-summary = "experimenting with Serverless Typescript Webpack"
+summary = "learning Serverless Typescript Webpack"
 draft = false
 slug = "serverless-typescript-webpack"
 tags = ["serverless","typescript","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/serverless-typescript-webpack-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-typescript-webpack-playground</a>
+-->
 
 
 project to learn/explore [serverless](https://serverless.com/) + [typescript](https://www.typescriptlang.org/) + [webpack](https://webpack.js.org/)

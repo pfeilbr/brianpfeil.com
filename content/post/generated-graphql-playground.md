@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2018-04-30
 description = ""
-summary = "experimenting with Graphql"
+summary = "learning Graphql"
 draft = false
 slug = "graphql"
 tags = ["graphql","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/graphql-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/graphql-playground</a>
+-->
 
 
 project to learn and experiment with [graphql](https://graphql.org/) using [Apollo](https://www.apollographql.com/)

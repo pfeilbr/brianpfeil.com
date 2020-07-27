@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2014-06-13
 description = ""
-summary = "experimenting with Kue"
+summary = "learning Kue"
 draft = false
 slug = "kue"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/kue-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/kue-playground</a>
+-->
 
 
 Playground for learning / playing with [Kue](https://github.com/learnboost/kue).  Kue is a priority job queue for node.

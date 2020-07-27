@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2020-06-17
 description = ""
-summary = "experimenting with Serverless Golang"
+summary = "learning Serverless Golang"
 draft = false
 slug = "serverless-golang"
 tags = ["serverless","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/serverless-golang-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-golang-playground</a>
+-->
 
 
 see [myservice/README.md](myservice/README.md) for build and deploy steps

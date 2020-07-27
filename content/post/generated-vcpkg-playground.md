@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/vcpkg-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/vcpkg-playground</a>
+-->
 
 
 learn [vcpkg](https://github.com/Microsoft/vcpkg) C++ package manager

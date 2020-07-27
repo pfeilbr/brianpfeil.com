@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-12-29
 description = ""
-summary = "experimenting with React Bootstrap"
+summary = "learning React Bootstrap"
 draft = false
 slug = "react-bootstrap"
 tags = ["react","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/react-bootstrap-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-bootstrap-playground</a>
+-->
 
 
 ## Available Scripts

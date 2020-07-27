@@ -19,11 +19,15 @@
   {{ end }}
   {{ end }}
 
-  <!-- {{ if .Params.repoHTMLURL }}
+  {{ $isListing := .Scratch.Get "isListing" }}
+  {{ if ne $isListing true }}
+  {{ if .Params.repoHTMLURL }}
   &nbsp;&nbsp;
-  <a href="{{ .Params.repoHTMLURL }}" target="_blank"><i class="fab fa-github fa-sm"></i>
+  <a href="{{ .Params.repoHTMLURL }}" class="repo-link" target=" _blank"><i class="fab fa-github fa-sm"></i>
+    {{ .Params.repoFullName }}
   </a>&nbsp;
-  {{ end }} -->
+  {{ end }}
+  {{ end }}
 
 
   {{- if .Site.Params.staticman -}}

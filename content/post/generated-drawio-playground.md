@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-08-26
 description = ""
-summary = "experimenting with Drawio"
+summary = "learning Drawio"
 draft = false
 slug = "drawio"
 tags = ["drawio","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/drawio-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/drawio-playground</a>
+-->
 
 
 learn and store [draw.io](https://www.draw.io) templates

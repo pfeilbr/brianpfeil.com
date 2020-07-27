@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2018-02-03
 description = ""
-summary = "experimenting with AWS Emr"
+summary = "learning AWS Emr"
 draft = false
 slug = "aws-emr"
 tags = ["aws","emr","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-emr-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-emr-playground</a>
+-->
 
 
 examples of using aws-emr. hive, pig, spark, etc.

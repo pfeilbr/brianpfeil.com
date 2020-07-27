@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Jupyter Notebook", "playground"]
 date = 2017-09-24
 description = ""
-summary = "experimenting with Deep And Machine Learning"
+summary = "learning Deep And Machine Learning"
 draft = false
 slug = "deep-and-machine-learning"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/deep-and-machine-learning-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/deep-and-machine-learning-playground</a>
+-->
 
 
 docker image + jupyter notebook UI for learning and experimenting with deep and machine learning.

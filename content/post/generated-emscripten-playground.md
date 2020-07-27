@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["C", "playground"]
 date = 2016-06-02
 description = ""
-summary = "experimenting with Emscripten"
+summary = "learning Emscripten"
 draft = false
 slug = "emscripten"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/emscripten-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/emscripten-playground</a>
+-->
 
 
 learn and experiment with [emscripten](http://kripken.github.io/emscripten-site/)

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-05-13
 description = ""
-summary = "experimenting with Azure Js Cognitive Services"
+summary = "learning Azure Js Cognitive Services"
 draft = false
 slug = "azure-js-cognitive-services"
 tags = ["azure","js","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/azure-js-cognitive-services-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-js-cognitive-services-playground</a>
+-->
 
 
 learn [azure cognitive services](https://docs.microsoft.com/en-us/azure/cognitive-services/)

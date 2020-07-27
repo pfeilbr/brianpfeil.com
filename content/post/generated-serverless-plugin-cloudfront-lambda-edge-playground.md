@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["CSS", "playground"]
 date = 2019-09-10
 description = ""
-summary = "experimenting with Serverless Plugin CloudFront Lambda Edge"
+summary = "learning Serverless Plugin CloudFront Lambda Edge"
 draft = false
 slug = "serverless-plugin-cloudfront-lambda-edge"
 tags = ["serverless","cloudfront","lambda","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/serverless-plugin-cloudfront-lambda-edge-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-plugin-cloudfront-lambda-edge-playground</a>
+-->
 
 
 learn [silvermine/serverless-plugin-cloudfront-lambda-edge](https://github.com/silvermine/serverless-plugin-cloudfront-lambda-edge)

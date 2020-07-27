@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/strapi-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/strapi-playground</a>
+-->
 
 
 learn [strapi](https://strapi.io/), the open-source headless CMS

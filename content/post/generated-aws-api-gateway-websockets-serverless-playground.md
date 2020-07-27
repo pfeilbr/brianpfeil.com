@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-01-08
 description = ""
-summary = "experimenting with AWS API Gateway Websockets Serverless"
+summary = "learning AWS API Gateway Websockets Serverless"
 draft = false
 slug = "aws-api-gateway-websockets-serverless"
 tags = ["aws","serverless","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-api-gateway-websockets-serverless-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-api-gateway-websockets-serverless-playground</a>
+-->
 
 
 *update 2019-10-03*: websocket events are now "natively supported in serverless framework" no longer need to use `serverless-websockets-plugin`.  see <https://serverless.com/framework/docs/providers/aws/events/websocket/>

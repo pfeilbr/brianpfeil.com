@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2017-08-26
 description = ""
-summary = "experimenting with Scribbletune"
+summary = "learning Scribbletune"
 draft = false
 slug = "scribbletune"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/scribbletune-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/scribbletune-playground</a>
+-->
 
 
 learn [Scribbletune](https://github.com/walmik/scribbletune).  Generate musical patterns with JavaScript and export as MIDI files using Node.js

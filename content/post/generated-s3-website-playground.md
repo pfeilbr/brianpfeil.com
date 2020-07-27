@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["HTML", "playground"]
 date = 2017-08-17
 description = ""
-summary = "experimenting with S3 Website"
+summary = "learning S3 Website"
 draft = false
 slug = "s3-website"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/s3-website-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/s3-website-playground</a>
+-->
 
 
 learn [s3-website](https://github.com/klaemo/s3-website) npm module

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-01-19
 description = ""
-summary = "experimenting with Jupyter Kernel Gateway"
+summary = "learning Jupyter Kernel Gateway"
 draft = false
 slug = "jupyter-kernel-gateway"
 tags = ["jupyter","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/jupyter-kernel-gateway-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jupyter-kernel-gateway-playground</a>
+-->
 
 
 learn [Jupyter Kernel Gateway](https://jupyter-kernel-gateway.readthedocs.io/en/latest/index.html)

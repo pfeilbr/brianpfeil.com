@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-09-29
 description = ""
-summary = "experimenting with Node Coveralls"
+summary = "learning Node Coveralls"
 draft = false
 slug = "node-coveralls"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/node-coveralls-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/node-coveralls-playground</a>
+-->
 
 
 # node-coveralls-playground

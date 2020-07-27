@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-05-10
 description = ""
-summary = "experimenting with Azure Nodejs Arm Storage"
+summary = "learning Azure Nodejs Arm Storage"
 draft = false
 slug = "azure-nodejs-arm-storage"
 tags = ["azure","nodejs","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/azure-nodejs-arm-storage-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-nodejs-arm-storage-playground</a>
+-->
 
 
 manipulate azure storage accounts programmatically via nodejs

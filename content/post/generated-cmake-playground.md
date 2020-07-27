@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["CMake", "playground"]
 date = 2018-09-20
 description = ""
-summary = "experimenting with Cmake"
+summary = "learning Cmake"
 draft = false
 slug = "cmake"
 tags = ["cmake","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/cmake-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/cmake-playground</a>
+-->
 
 
 project to learn [CMake](https://cmake.org/)

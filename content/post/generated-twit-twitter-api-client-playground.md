@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/twit-twitter-api-client-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/twit-twitter-api-client-playground</a>
+-->
 
 
 learn [twit](https://github.com/ttezel/twit), the Twitter API Client for node.  Supports both the REST and Streaming API.

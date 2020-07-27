@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Swift", "playground"]
 date = 2014-07-13
 description = ""
-summary = "experimenting with Ios Swift"
+summary = "learning Ios Swift"
 draft = false
 slug = "ios-swift"
 tags = ["ios","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/ios-swift-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/ios-swift-playground</a>
+-->
 
 
 Scratchpad to learn and explore swift

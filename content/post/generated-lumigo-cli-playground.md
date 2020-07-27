@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2020-07-17
 description = ""
-summary = "experimenting with Lumigo CLI"
+summary = "learning Lumigo CLI"
 draft = false
 slug = "lumigo-cli"
 tags = ["cli","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/lumigo-cli-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/lumigo-cli-playground</a>
+-->
 
 
 learn [lumigo-CLI](https://github.com/lumigo-io/lumigo-cli), A collection of helpful commands for working with AWS Lambda.

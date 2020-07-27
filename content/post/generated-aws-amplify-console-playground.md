@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["CSS", "playground"]
 date = 2019-09-09
 description = ""
-summary = "experimenting with AWS Amplify Console"
+summary = "learning AWS Amplify Console"
 draft = false
 slug = "aws-amplify-console"
 tags = ["aws","amplify","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-amplify-console-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-amplify-console-playground</a>
+-->
 
 
 learn [AWS Amplify Console](https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html)

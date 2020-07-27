@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2017-01-17
 description = ""
-summary = "experimenting with Ethereum"
+summary = "learning Ethereum"
 draft = false
 slug = "ethereum"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/ethereum-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/ethereum-playground</a>
+-->
 
 
 learn and experiment with [Ethereum](https://www.ethereum.org/) decentralized blockchain based platform

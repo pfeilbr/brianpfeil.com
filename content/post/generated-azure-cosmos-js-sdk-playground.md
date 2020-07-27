@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-05-08
 description = ""
-summary = "experimenting with Azure Cosmos Js SDK"
+summary = "learning Azure Cosmos Js SDK"
 draft = false
 slug = "azure-cosmos-js-sdk"
 tags = ["azure","js","sdk","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/azure-cosmos-js-sdk-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-cosmos-js-sdk-playground</a>
+-->
 
 
 learn [azure cosmos db javascript sdk](https://github.com/azure/azure-cosmos-js).

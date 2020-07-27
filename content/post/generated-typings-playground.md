@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/typings-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/typings-playground</a>
+-->
 
 
 learn and experiment with TypeScript typings

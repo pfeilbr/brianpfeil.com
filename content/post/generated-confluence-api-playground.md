@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2017-04-04
 description = ""
-summary = "experimenting with Confluence API"
+summary = "learning Confluence API"
 draft = false
 slug = "confluence-api"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/confluence-api-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/confluence-api-playground</a>
+-->
 
 
 * [Confluence Cloud REST API Reference](https://docs.atlassian.com/confluence/REST/latest/)

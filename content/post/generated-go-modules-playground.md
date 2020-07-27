@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2020-01-15
 description = ""
-summary = "experimenting with Go Modules"
+summary = "learning Go Modules"
 draft = false
 slug = "go-modules"
 tags = ["go","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/go-modules-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/go-modules-playground</a>
+-->
 
 
 learn using [golang modules](https://blog.golang.org/using-go-modules)

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2018-10-22
 description = ""
-summary = "experimenting with Dynogels"
+summary = "learning Dynogels"
 draft = false
 slug = "dynogels"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/dynogels-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/dynogels-playground</a>
+-->
 
 
 learn [dynogels](https://github.com/clarkie/dynogels) - DynamoDB data mapper for node.js

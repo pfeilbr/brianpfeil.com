@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/spark-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/spark-playground</a>
+-->
 
 
 Project to learn and experiment with the [Spark](https://spark.apache.org) cluster computing system.

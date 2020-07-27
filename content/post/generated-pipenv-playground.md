@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Python", "playground"]
 date = 2019-08-07
 description = ""
-summary = "experimenting with Pipenv"
+summary = "learning Pipenv"
 draft = false
 slug = "pipenv"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/pipenv-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/pipenv-playground</a>
+-->
 
 
 learn [pipenv](https://github.com/pypa/pipenv)

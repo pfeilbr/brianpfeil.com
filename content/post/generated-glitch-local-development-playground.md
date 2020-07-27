@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-02-20
 description = ""
-summary = "experimenting with Glitch Local Development"
+summary = "learning Glitch Local Development"
 draft = false
 slug = "glitch-local-development"
 tags = ["glitch","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/glitch-local-development-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/glitch-local-development-playground</a>
+-->
 
 =================
 

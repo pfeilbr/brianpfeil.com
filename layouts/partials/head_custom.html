@@ -1,0 +1,3 @@
+{{range $relativePath := .Site.Params.customCss }}
+<link rel="stylesheet" href="{{ $relativePath | absURL }}" />
+{{end}}

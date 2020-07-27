@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-12-06
 description = ""
-summary = "experimenting with Apex Lambda"
+summary = "learning Apex Lambda"
 draft = false
 slug = "apex-lambda"
 tags = ["apex","lambda","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/apex-lambda-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/apex-lambda-playground</a>
+-->
 
 
 learn [Apex](http://apex.run/) serverless architecture

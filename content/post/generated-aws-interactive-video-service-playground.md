@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2020-07-16
 description = ""
-summary = "experimenting with AWS Interactive Video Service"
+summary = "learning AWS Interactive Video Service"
 draft = false
 slug = "aws-interactive-video-service"
 tags = ["aws","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-interactive-video-service-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-interactive-video-service-playground</a>
+-->
 
 
 * learn [Amazon Interactive Video Service](https://aws.amazon.com/ivs/)

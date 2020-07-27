@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2018-09-02
 description = ""
-summary = "experimenting with Lerna"
+summary = "learning Lerna"
 draft = false
 slug = "lerna"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/lerna-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/lerna-playground</a>
+-->
 
 
 learn [lerna](https://lernajs.io/) *A tool for managing JavaScript projects with multiple packages*

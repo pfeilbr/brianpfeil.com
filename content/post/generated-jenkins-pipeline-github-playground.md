@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2018-05-30
 description = ""
-summary = "experimenting with Jenkins Pipeline Github"
+summary = "learning Jenkins Pipeline Github"
 draft = false
 slug = "jenkins-pipeline-github"
 tags = ["jenkins","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/jenkins-pipeline-github-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jenkins-pipeline-github-playground</a>
+-->
 
 
 learn and experiment with [Jenkins](https://jenkins.io/) automation server.

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2017-09-09
 description = ""
-summary = "experimenting with Jupyter"
+summary = "learning Jupyter"
 draft = false
 slug = "jupyter"
 tags = ["jupyter","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/jupyter-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jupyter-playground</a>
+-->
 
 
 learn and experiment with [jupyter](http://jupyter.org/) notebooks

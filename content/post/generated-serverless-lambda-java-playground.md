@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Java", "playground"]
 date = 2019-10-27
 description = ""
-summary = "experimenting with Serverless Lambda Java"
+summary = "learning Serverless Lambda Java"
 draft = false
 slug = "serverless-lambda-java"
 tags = ["serverless","lambda","java","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/serverless-lambda-java-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-lambda-java-playground</a>
+-->
 
 
 [serverless framework](https://serverless.com/) + [lambda java](https://docs.aws.amazon.com/lambda/latest/dg/java-programming-model.html)

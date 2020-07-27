@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-05-14
 description = ""
-summary = "experimenting with Azure CLI"
+summary = "learning Azure CLI"
 draft = false
 slug = "azure-cli"
 tags = ["azure","cli","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/azure-cli-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-cli-playground</a>
+-->
 
 
 azure cli usage examples

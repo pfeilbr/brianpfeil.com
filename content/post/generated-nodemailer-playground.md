@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2014-12-06
 description = ""
-summary = "experimenting with Nodemailer"
+summary = "learning Nodemailer"
 draft = false
 slug = "nodemailer"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/nodemailer-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nodemailer-playground</a>
+-->
 
 
 Playground for exploring the use of [Nodemailer](http://www.nodemailer.com/) to send email

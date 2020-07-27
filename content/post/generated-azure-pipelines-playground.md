@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["CSS", "playground"]
 date = 2020-02-26
 description = ""
-summary = "experimenting with Azure Pipelines"
+summary = "learning Azure Pipelines"
 draft = false
 slug = "azure-pipelines"
 tags = ["azure","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/azure-pipelines-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-pipelines-playground</a>
+-->
 
 
 learn [azure pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/?view=azure-devops)

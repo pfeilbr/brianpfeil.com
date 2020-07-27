@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-09-26
 description = ""
-summary = "experimenting with AWS Cognito Developer Authenticated Identities"
+summary = "learning AWS Cognito Developer Authenticated Identities"
 draft = false
 slug = "aws-cognito-developer-authenticated-identities"
 tags = ["aws","cognito","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-cognito-developer-authenticated-identities-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cognito-developer-authenticated-identities-playground</a>
+-->
 
 
 learn [Developer Authenticated Identities (Identity Pools)](https://docs.aws.amazon.com/cognito/latest/developerguide/developer-authenticated-identities.html)

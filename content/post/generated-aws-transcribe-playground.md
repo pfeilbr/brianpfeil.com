@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-07-30
 description = ""
-summary = "experimenting with AWS Transcribe"
+summary = "learning AWS Transcribe"
 draft = false
 slug = "aws-transcribe"
 tags = ["aws","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-transcribe-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-transcribe-playground</a>
+-->
 
 
 learn [aws transcribe](https://aws.amazon.com/transcribe/) speech to text service

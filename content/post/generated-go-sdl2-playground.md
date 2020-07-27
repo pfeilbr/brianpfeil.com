@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2020-01-13
 description = ""
-summary = "experimenting with Go Sdl2"
+summary = "learning Go Sdl2"
 draft = false
 slug = "go-sdl2"
 tags = ["go","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/go-sdl2-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/go-sdl2-playground</a>
+-->
 
 
 learn [go-sdl2](https://github.com/veandco/go-sdl2), the SDL2 wrapped for Go users

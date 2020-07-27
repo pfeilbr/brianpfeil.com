@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2019-02-11
 description = ""
-summary = "experimenting with React Hooks"
+summary = "learning React Hooks"
 draft = false
 slug = "react-hooks"
 tags = ["react","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/react-hooks-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-hooks-playground</a>
+-->
 
 
 learn [React Hooks](https://reactjs.org/docs/hooks-intro.html) introduced in React 16.8

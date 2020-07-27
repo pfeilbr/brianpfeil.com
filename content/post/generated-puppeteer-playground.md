@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2017-08-22
 description = ""
-summary = "experimenting with Puppeteer"
+summary = "learning Puppeteer"
 draft = false
 slug = "puppeteer"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/puppeteer-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/puppeteer-playground</a>
+-->
 
 
 learn [puppeteer](https://github.com/GoogleChrome/puppeteer)

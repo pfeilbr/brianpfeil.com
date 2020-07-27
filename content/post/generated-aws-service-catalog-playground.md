@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-09-10
 description = ""
-summary = "experimenting with AWS Service Catalog"
+summary = "learning AWS Service Catalog"
 draft = false
 slug = "aws-service-catalog"
 tags = ["aws","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-service-catalog-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-service-catalog-playground</a>
+-->
 
 
 learn [aws service catalog](https://aws.amazon.com/servicecatalog/)

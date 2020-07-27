@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-10-15
 description = ""
-summary = "experimenting with Cordova"
+summary = "learning Cordova"
 draft = false
 slug = "cordova"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/cordova-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/cordova-playground</a>
+-->
 
 
 Project to learn and experiment with [Apache Cordova](https://cordova.apache.org/)

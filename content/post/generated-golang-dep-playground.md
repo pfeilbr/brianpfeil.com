@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2018-02-03
 description = ""
-summary = "experimenting with Golang Dep"
+summary = "learning Golang Dep"
 draft = false
 slug = "golang-dep"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/golang-dep-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/golang-dep-playground</a>
+-->
 
 
 project to learn to use [dep](https://golang.github.io/dep/) the dependency management tool for [go](https://golang.org/)

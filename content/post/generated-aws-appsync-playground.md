@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2018-06-09
 description = ""
-summary = "experimenting with AWS Appsync"
+summary = "learning AWS Appsync"
 draft = false
 slug = "aws-appsync"
 tags = ["aws","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-appsync-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-appsync-playground</a>
+-->
 
 
 learn and experiment with [AWS AppSync](https://aws.amazon.com/appsync/)

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-02-15
 description = ""
-summary = "experimenting with Nwjs"
+summary = "learning Nwjs"
 draft = false
 slug = "nwjs"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/nwjs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nwjs-playground</a>
+-->
 
 
 # [NW.js](http://nwjs.io) playground

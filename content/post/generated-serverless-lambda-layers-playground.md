@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-09-18
 description = ""
-summary = "experimenting with Serverless Lambda Layers"
+summary = "learning Serverless Lambda Layers"
 draft = false
 slug = "serverless-lambda-layers"
 tags = ["serverless","lambda","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/serverless-lambda-layers-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-lambda-layers-playground</a>
+-->
 
 
 learn lambda layers with serverless framework

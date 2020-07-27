@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/taco-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/taco-playground</a>
+-->
 
 
 learn and experiment with [TACO](http://taco.tools/) (Tools for [Apache Cordova](https://cordova.apache.org/))

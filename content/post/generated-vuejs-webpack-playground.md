@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/vuejs-webpack-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/vuejs-webpack-playground</a>
+-->
 
 
 > A Vue.js project

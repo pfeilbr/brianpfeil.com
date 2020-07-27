@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2017-11-11
 description = ""
-summary = "experimenting with AWS Ecs"
+summary = "learning AWS Ecs"
 draft = false
 slug = "aws-ecs"
 tags = ["aws","ecs","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/aws-ecs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-ecs-playground</a>
+-->
 
 
 learn [AWS ECS](https://aws.amazon.com/documentation/ecs/)

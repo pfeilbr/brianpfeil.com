@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Python", "playground"]
 date = 2019-08-07
 description = ""
-summary = "experimenting with Python Packaging"
+summary = "learning Python Packaging"
 draft = false
 slug = "python-packaging"
 tags = ["python","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/python-packaging-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/python-packaging-playground</a>
+-->
 
 
 learn python packaging via [Packaging Python Projects](https://packaging.python.org/tutorials/packaging-projects/)

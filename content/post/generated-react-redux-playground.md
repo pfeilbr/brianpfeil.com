@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-05-04
 description = ""
-summary = "experimenting with React Redux"
+summary = "learning React Redux"
 draft = false
 slug = "react-redux"
 tags = ["react","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/react-redux-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-redux-playground</a>
+-->
 
 
 learn and experiment with

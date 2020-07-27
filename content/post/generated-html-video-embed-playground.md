@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["HTML", "playground"]
 date = 2015-05-12
 description = ""
-summary = "experimenting with Html Video Embed"
+summary = "learning Html Video Embed"
 draft = false
 slug = "html-video-embed"
 tags = ["html","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/html-video-embed-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/html-video-embed-playground</a>
+-->
 
 
 Project to learn and experiment with various HTML video players

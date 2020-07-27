@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Python", "playground"]
 date = 2017-10-30
 description = ""
-summary = "experimenting with Boto"
+summary = "learning Boto"
 draft = false
 slug = "boto"
 tags = ["boto","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/boto-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/boto-playground</a>
+-->
 
 
 learn and experiment with [Boto 3 / AWS SDK for Python](https://github.com/boto/boto3) 

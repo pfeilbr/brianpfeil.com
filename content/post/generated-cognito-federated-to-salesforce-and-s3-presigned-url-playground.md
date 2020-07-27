@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["HTML", "playground"]
 date = 2019-06-13
 description = ""
-summary = "experimenting with Cognito Federated To Salesforce And S3 Presigned Url"
+summary = "learning Cognito Federated To Salesforce And S3 Presigned Url"
 draft = false
 slug = "cognito-federated-to-salesforce-and-s3-presigned-url"
 tags = ["cognito","salesforce","github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/cognito-federated-to-salesforce-and-s3-presigned-url-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/cognito-federated-to-salesforce-and-s3-presigned-url-playground</a>
+-->
 
 
 ## Login with Cognito Federated to Salesforce Example

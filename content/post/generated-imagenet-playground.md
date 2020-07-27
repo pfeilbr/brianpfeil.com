@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Jupyter Notebook", "playground"]
 date = 2018-01-31
 description = ""
-summary = "experimenting with Imagenet"
+summary = "learning Imagenet"
 draft = false
 slug = "imagenet"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/imagenet-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/imagenet-playground</a>
+-->
 
 
 project to explore [ImageNet](http://www.image-net.org/) image data for ML applications

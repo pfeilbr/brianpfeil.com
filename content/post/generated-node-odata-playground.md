@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-03-18
 description = ""
-summary = "experimenting with Node Odata"
+summary = "learning Node Odata"
 draft = false
 slug = "node-odata"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/node-odata-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/node-odata-playground</a>
+-->
 
 ## node-odata-playground
 

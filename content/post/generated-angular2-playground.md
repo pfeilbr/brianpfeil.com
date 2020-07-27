@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2016-01-13
 description = ""
-summary = "experimenting with Angular2"
+summary = "learning Angular2"
 draft = false
 slug = "angular2"
 tags = ["github",]
@@ -14,7 +14,9 @@ truncated = true
 
 +++
 
+<!--
 <a href="https://github.com/pfeilbr/angular2-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/angular2-playground</a>
+-->
 
 
 Project to learn and experiment with [Angular2](http://angular.io)
