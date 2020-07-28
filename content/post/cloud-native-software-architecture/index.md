@@ -2,7 +2,7 @@
 title = "Cloud Native Software Architecture"
 slug = "cloud-native-software-architecture"
 author = "Brian Pfeil"
-date = "2020-07-28"
+date = "2020-07-18"
 lastmod = "2020-07-28"
 draft = false
 categories = ["architecture", "cloud"]
