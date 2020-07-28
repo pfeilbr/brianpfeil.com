@@ -29,7 +29,7 @@ open http://localhost:1313/
 
 ## Build and Publish
 
-`./build-and-publish.sh`
+`site publish`
 
 > runs hugo to generate site into [`public`](public), commits and pushes all changes to the [`public`](public) submodule.
 
@@ -44,3 +44,8 @@ git add .
 git commit -a -m "updates"
 git push origin master
 ```
+
+## [`site`](site) script
+
+* a script for authoring and publishing site content
+* after script updates run `make install-site-script` to install to `~/bin`
