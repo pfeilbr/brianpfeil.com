@@ -23,11 +23,13 @@
 
   {{ if .Params.tags }}
   {{ $length := (len .Params.tags) }}
+  {{ $zeroBasedLength := sub $length 1 }}
   {{ if ne $length 0 }}
   <span class="blog-tags">
   </span>&nbsp;&bull;&nbsp;</span>
-{{ range .Params.tags }}
-<a href="{{ $.Site.LanguagePrefix | absURL }}/tags/{{ . | urlize }}/">{{ . }}</a>&nbsp;
+{{ range $i, $e := .Params.tags }}
+<a href="{{ $.Site.LanguagePrefix | absURL }}/tags/{{ . | urlize }}/">{{ $e }}</a>
+{{ if ne $i $zeroBasedLength }},{{ end }}
 {{ end }}
 </span>
 {{ end }}
