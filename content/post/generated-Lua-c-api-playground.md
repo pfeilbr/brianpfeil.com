@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["C++", "playground"]
 date = 2018-07-24
 description = ""
-summary = "experimenting with Lua C API"
+summary = "learn Lua C API"
 draft = false
 slug = "lua-c-api"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/Lua-c-api-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/Lua-c-api-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/Lua-c-api-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/Lua-c-api-playground</a>
+</div>
 
 
 learn and experiment with [Lua C API](https://www.lua.org/manual/5.3/#api)

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-10-14
 description = ""
-summary = "experimenting with AWS Serverless Application Repository"
+summary = "learn AWS Serverless Application Repository"
 draft = false
 slug = "aws-serverless-application-repository"
 tags = ["aws","serverless","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-serverless-application-repository-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-serverless-application-repository-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-serverless-application-repository-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-serverless-application-repository-playground</a>
+</div>
 
 
 learn [AWS Serverless Application Repository](https://docs.aws.amazon.com/en_pv/serverlessrepo)

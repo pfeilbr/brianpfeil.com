@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/terraform-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/terraform-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/terraform-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/terraform-playground</a>
+</div>
 
 
 learn and experiment with [Terraform](https://www.terraform.io/)

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Swift", "playground"]
 date = 2014-06-05
 description = ""
-summary = "experimenting with Mac Swift"
+summary = "learn Mac Swift"
 draft = false
 slug = "mac-swift"
 tags = ["mac","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/mac-swift-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/mac-swift-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/mac-swift-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/mac-swift-playground</a>
+</div>
 
 
 <div style="clear: both"></div>

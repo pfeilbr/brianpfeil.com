@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-05-10
 description = ""
-summary = "experimenting with Python 2.X WebSocket Client"
+summary = "learning Python 2.X WebSocket Client"
 draft = false
 slug = "python-2.x-websocket-client"
 tags = ["python","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/python-2.x-websocket-client-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/python-2.x-websocket-client-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/python-2.x-websocket-client-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/python-2.x-websocket-client-playground</a>
+</div>
 
 
 learn python [websocket-client](https://github.com/websocket-client/websocket-client) module

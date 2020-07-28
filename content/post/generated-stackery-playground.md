@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/stackery-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/stackery-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/stackery-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/stackery-playground</a>
+</div>
 
 
 learn [stackery](https://www.stackery.io).  Project based on [Stackery Quickstart NodeJS](https://docs.stackery.io/docs/quickstart/quickstart-nodejs/).

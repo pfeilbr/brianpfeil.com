@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2017-07-29
 description = ""
-summary = "experimenting with React Router 4"
+summary = "learning React Router 4"
 draft = false
 slug = "react-router-4"
 tags = ["react","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/react-router-4-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-router-4-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/react-router-4-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-router-4-playground</a>
+</div>
 
 
 project to learn and experiment with [react-router](https://reacttraining.com/react-router/) 4

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2019-09-03
 description = ""
-summary = "experimenting with AWS Delivlib"
+summary = "learn AWS Delivlib"
 draft = false
 slug = "aws-delivlib"
 tags = ["aws","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-delivlib-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-delivlib-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-delivlib-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-delivlib-playground</a>
+</div>
 
 
 learn [aws-delivlib](https://github.com/awslabs/aws-delivlib), which is a library that leverages [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) for defining continuous pipelines for building, testing and publishing code libraries through AWS CodeBuild and AWS CodePipeline.  

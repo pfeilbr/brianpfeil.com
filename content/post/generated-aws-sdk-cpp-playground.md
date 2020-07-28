@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["C++", "playground"]
 date = 2018-09-25
 description = ""
-summary = "experimenting with AWS SDK CPP"
+summary = "learn AWS SDK CPP"
 draft = false
 slug = "aws-sdk-cpp"
 tags = ["aws","sdk","cpp","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-sdk-cpp-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-sdk-cpp-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-sdk-cpp-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-sdk-cpp-playground</a>
+</div>
 
 
 learn [aws-sdk-app](https://github.com/aws/aws-sdk-cpp) C++ SDK

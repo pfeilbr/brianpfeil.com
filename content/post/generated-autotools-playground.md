@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["M4", "playground"]
 date = 2018-10-10
 description = ""
-summary = "experimenting with Autotools"
+summary = "learn Autotools"
 draft = false
 slug = "autotools"
 tags = ["autotools","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/autotools-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/autotools-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/autotools-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/autotools-playground</a>
+</div>
 
 
 learn Autotools

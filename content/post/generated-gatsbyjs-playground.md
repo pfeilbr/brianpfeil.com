@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["CSS", "playground"]
 date = 2019-03-09
 description = ""
-summary = "experimenting with GatsbyJS"
+summary = "learn GatsbyJS"
 draft = false
 slug = "gatsbyjs"
 tags = ["gatsbyjs","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/gatsbyjs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/gatsbyjs-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/gatsbyjs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/gatsbyjs-playground</a>
+</div>
 
 
 learn [Gatsby](https://www.gatsbyjs.org)

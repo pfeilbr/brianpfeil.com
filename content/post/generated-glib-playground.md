@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["C", "playground"]
 date = 2019-11-11
 description = ""
-summary = "experimenting with GLib"
+summary = "learn GLib"
 draft = false
 slug = "glib"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/glib-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/glib-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/glib-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/glib-playground</a>
+</div>
 
 
 learn [GNOME | GLib](https://wiki.gnome.org/Projects/GLib)

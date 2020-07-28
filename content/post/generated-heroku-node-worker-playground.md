@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["HTML", "playground"]
 date = 2020-07-13
 description = ""
-summary = "experimenting with Heroku Node Worker"
+summary = "learn Heroku Node Worker"
 draft = false
 slug = "heroku-node-worker"
 tags = ["heroku","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/heroku-node-worker-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/heroku-node-worker-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/heroku-node-worker-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/heroku-node-worker-playground</a>
+</div>
 
 
 example of running a long lived worker process on heroku that is not a web app/server

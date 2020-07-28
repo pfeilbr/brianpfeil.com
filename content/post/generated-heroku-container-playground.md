@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-11-04
 description = ""
-summary = "experimenting with Heroku Container"
+summary = "learn Heroku Container"
 draft = false
 slug = "heroku-container"
 tags = ["heroku","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/heroku-container-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/heroku-container-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/heroku-container-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/heroku-container-playground</a>
+</div>
 
 
 Learn heroku container support.  Based on Heroku [Container Registry and Runtime](https://devcenter.heroku.com/articles/container-registry-and-runtime) article

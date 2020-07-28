@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Shell", "playground"]
 date = 2020-02-10
 description = ""
-summary = "experimenting with Bash Script Date and Time"
+summary = "learn Bash Script Date and Time"
 draft = false
 slug = "bash-script-date-and-time"
 tags = ["bash","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/bash-script-date-and-time-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/bash-script-date-and-time-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/bash-script-date-and-time-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/bash-script-date-and-time-playground</a>
+</div>
 
 
 examples of working with formatted dates in bash including time operations such as adding time

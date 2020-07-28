@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-08-05
 description = ""
-summary = "experimenting with Neo4j"
+summary = "learn Neo4j"
 draft = false
 slug = "neo4j"
 tags = ["neo4j","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/neo4j-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/neo4j-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/neo4j-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/neo4j-playground</a>
+</div>
 
 
 learn [neo4j](https://neo4j.com) graph database

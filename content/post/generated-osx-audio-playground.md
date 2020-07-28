@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Swift", "playground"]
 date = 2015-09-15
 description = ""
-summary = "experimenting with OSX Audio"
+summary = "learning OSX Audio"
 draft = false
 slug = "osx-audio"
 tags = ["osx","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/osx-audio-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/osx-audio-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/osx-audio-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/osx-audio-playground</a>
+</div>
 
 
 Playground to learn the various audio frameworks and APIs

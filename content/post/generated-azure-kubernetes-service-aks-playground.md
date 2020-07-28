@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-05-18
 description = ""
-summary = "experimenting with Azure Kubernetes Service AKS"
+summary = "learn Azure Kubernetes Service AKS"
 draft = false
 slug = "azure-kubernetes-service-aks"
 tags = ["azure","kubernetes","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/azure-kubernetes-service-aks-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-kubernetes-service-aks-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/azure-kubernetes-service-aks-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-kubernetes-service-aks-playground</a>
+</div>
 
 
 learn azure kubernetes service

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-08-20
 description = ""
-summary = "experimenting with Serverless Framework Full Lifecycle With Dashboard"
+summary = "learning Serverless Framework Full Lifecycle With Dashboard"
 draft = false
 slug = "serverless-framework-full-lifecycle-with-dashboard"
 tags = ["serverless","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/serverless-framework-full-lifecycle-with-dashboard-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-framework-full-lifecycle-with-dashboard-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/serverless-framework-full-lifecycle-with-dashboard-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-framework-full-lifecycle-with-dashboard-playground</a>
+</div>
 
 # serverless-framework-full-lifecycle-with-dashboard-playground
 

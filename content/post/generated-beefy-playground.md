@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-10-16
 description = ""
-summary = "experimenting with Beefy"
+summary = "learn Beefy"
 draft = false
 slug = "beefy"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/beefy-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/beefy-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/beefy-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/beefy-playground</a>
+</div>
 
 
 Learn and experiment with [Beefy](http://didact.us/beefy/), which makes working with [Browserify](http://browserify.org/) a little nicer.

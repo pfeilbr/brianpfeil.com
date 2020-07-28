@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2020-03-19
 description = ""
-summary = "experimenting with React Async"
+summary = "learning React Async"
 draft = false
 slug = "react-async"
 tags = ["react","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/react-async-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-async-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/react-async-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/react-async-playground</a>
+</div>
 
 
 learn [React Async](https://docs.react-async.com/), a React component and hook for declarative promise resolution and data fetching

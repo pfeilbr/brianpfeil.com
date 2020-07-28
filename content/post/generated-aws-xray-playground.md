@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-08-13
 description = ""
-summary = "experimenting with AWS XRay"
+summary = "learn AWS XRay"
 draft = false
 slug = "aws-xray"
 tags = ["aws","xray","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-xray-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-xray-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-xray-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-xray-playground</a>
+</div>
 
 
 learn [AWS X-Ray](https://docs.aws.amazon.com/xray/)

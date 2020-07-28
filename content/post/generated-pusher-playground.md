@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2017-10-21
 description = ""
-summary = "experimenting with Pusher"
+summary = "learning Pusher"
 draft = false
 slug = "pusher"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/pusher-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/pusher-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/pusher-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/pusher-playground</a>
+</div>
 
 
 learn [pusher](https://pusher.com)

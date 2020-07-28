@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/wordpress-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/wordpress-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/wordpress-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/wordpress-playground</a>
+</div>
 
 
 learn and experiment with all things [WordPress](https://wordpress.com/) and [WordPress VIP](https://wpvip.com/) (aka Enterprise WordPress)

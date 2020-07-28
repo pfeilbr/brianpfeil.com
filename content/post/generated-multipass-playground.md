@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2020-02-09
 description = ""
-summary = "experimenting with Multipass"
+summary = "learn Multipass"
 draft = false
 slug = "multipass"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/multipass-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/multipass-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/multipass-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/multipass-playground</a>
+</div>
 
 
 learn [multipass](https://multipass.run/) - command line interface to launch, manage and generally fiddle about with instances of Linux

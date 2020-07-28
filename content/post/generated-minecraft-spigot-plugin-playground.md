@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Java", "playground"]
 date = 2017-10-29
 description = ""
-summary = "experimenting with Minecraft Spigot Plugin"
+summary = "learn Minecraft Spigot Plugin"
 draft = false
 slug = "minecraft-spigot-plugin"
 tags = ["minecraft","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/minecraft-spigot-plugin-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/minecraft-spigot-plugin-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/minecraft-spigot-plugin-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/minecraft-spigot-plugin-playground</a>
+</div>
 
 
 Learn plugin development for the [spigot](https://www.spigotmc.org/) minecraft server.

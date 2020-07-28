@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-07-03
 description = ""
-summary = "experimenting with AWS Codebuild Local"
+summary = "learn AWS Codebuild Local"
 draft = false
 slug = "aws-codebuild-local"
 tags = ["aws","codebuild","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-codebuild-local-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-codebuild-local-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-codebuild-local-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-codebuild-local-playground</a>
+</div>
 
 
 ## Resources

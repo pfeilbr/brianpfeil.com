@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-10-18
 description = ""
-summary = "experimenting with Kubernetes"
+summary = "learn Kubernetes"
 draft = false
 slug = "kubernetes"
 tags = ["kubernetes","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/kubernetes-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/kubernetes-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/kubernetes-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/kubernetes-playground</a>
+</div>
 
 
 learn kubernetes.  based on tutorial at <http://kubernetes.io/docs/tutorials/kubernetes-basics>

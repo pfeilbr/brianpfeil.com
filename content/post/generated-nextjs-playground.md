@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-11-01
 description = ""
-summary = "experimenting with NextJS"
+summary = "learn NextJS"
 draft = false
 slug = "nextjs"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/nextjs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nextjs-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/nextjs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nextjs-playground</a>
+</div>
 
 
 Learn [Next.js](https://github.com/zeit/next.js), a small framework for server-rendered universal JavaScript webapps, built on top of React, Webpack and Babel

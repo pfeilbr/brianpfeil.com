@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2017-07-18
 description = ""
-summary = "experimenting with AWS Kinesis"
+summary = "learn AWS Kinesis"
 draft = false
 slug = "aws-kinesis"
 tags = ["aws","kinesis","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-kinesis-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-kinesis-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-kinesis-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-kinesis-playground</a>
+</div>
 
 
 learn [aws kinesis](https://aws.amazon.com/documentation/kinesis/)

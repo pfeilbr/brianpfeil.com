@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["HTML", "playground"]
 date = 2015-10-15
 description = ""
-summary = "experimenting with Flexbox"
+summary = "learn Flexbox"
 draft = false
 slug = "flexbox"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/flexbox-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/flexbox-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/flexbox-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/flexbox-playground</a>
+</div>
 
 
 Project to learn and experiment with the [CSS3 Flexbox](http://www.w3.org/TR/css3-flexbox/) layout module.

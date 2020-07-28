@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Python", "playground"]
 date = 2017-11-10
 description = ""
-summary = "experimenting with Serverless Python"
+summary = "learning Serverless Python"
 draft = false
 slug = "serverless-python"
 tags = ["serverless","python","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/serverless-python-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-python-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/serverless-python-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/serverless-python-playground</a>
+</div>
 
 
 experiment with the [serverless framework](https://serverless.com/framework/) using python

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2018-12-05
 description = ""
-summary = "experimenting with JFrog Artifactory"
+summary = "learn JFrog Artifactory"
 draft = false
 slug = "jfrog-artifactory"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/jfrog-artifactory-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jfrog-artifactory-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/jfrog-artifactory-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jfrog-artifactory-playground</a>
+</div>
 
 
 learn [JFrog Artifactory](https://jfrog.com/artifactory/)

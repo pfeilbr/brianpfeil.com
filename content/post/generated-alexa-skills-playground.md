@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2018-05-17
 description = ""
-summary = "experimenting with Alexa Skills"
+summary = "learn Alexa Skills"
 draft = false
 slug = "alexa-skills"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/alexa-skills-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/alexa-skills-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/alexa-skills-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/alexa-skills-playground</a>
+</div>
 
 
 ## [sage](skills/sage) skill

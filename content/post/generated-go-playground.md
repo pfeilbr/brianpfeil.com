@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2013-12-31
 description = ""
-summary = "experimenting with Go"
+summary = "learn Go"
 draft = false
 slug = "go"
 tags = ["go","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/go-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/go-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/go-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/go-playground</a>
+</div>
 
 
 A set of example [Go](http://golang.org/) programs for learning

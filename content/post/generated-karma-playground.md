@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-02-15
 description = ""
-summary = "experimenting with Karma"
+summary = "learn Karma"
 draft = false
 slug = "karma"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/karma-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/karma-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/karma-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/karma-playground</a>
+</div>
 
 
 Project to learn and experiment with the Karma javascript test runner.  Karma runs your javascript tests in multiple browsers.

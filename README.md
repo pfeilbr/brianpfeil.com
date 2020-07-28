@@ -20,8 +20,8 @@
 ## Local Development
 
 ```sh
-# live reload on change.  NOTE: post with draft=true will be displayed
-hugo server -D
+# live reload on change.
+hugo server --watch --disableFastRender --forceSyncStatic --buildDrafts
 
 # visit local site
 open http://localhost:1313/

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["C++", "playground"]
 date = 2018-09-25
 description = ""
-summary = "experimenting with Google Test CPP Test Framework"
+summary = "learn Google Test CPP Test Framework"
 draft = false
 slug = "google-test-cpp-test-framework"
 tags = ["google","cpp","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/google-test-cpp-test-framework-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/google-test-cpp-test-framework-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/google-test-cpp-test-framework-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/google-test-cpp-test-framework-playground</a>
+</div>
 
 
 learn [googletest](https://github.com/google/googletest) / [gtest](https://github.com/google/googletest) C++ test framework

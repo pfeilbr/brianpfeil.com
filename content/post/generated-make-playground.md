@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Makefile", "playground"]
 date = 2020-01-13
 description = ""
-summary = "experimenting with Make"
+summary = "learn Make"
 draft = false
 slug = "make"
 tags = ["make","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/make-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/make-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/make-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/make-playground</a>
+</div>
 
 
 learn [make](https://www.gnu.org/software/make/manual/make.html)

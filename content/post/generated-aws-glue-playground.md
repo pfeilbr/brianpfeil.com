@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-07-09
 description = ""
-summary = "experimenting with AWS Glue"
+summary = "learn AWS Glue"
 draft = false
 slug = "aws-glue"
 tags = ["aws","glue","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-glue-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-glue-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-glue-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-glue-playground</a>
+</div>
 
 
 learn and experiment with [aws glue](https://aws.amazon.com/glue/)

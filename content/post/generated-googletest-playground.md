@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["C++", "playground"]
 date = 2020-01-02
 description = ""
-summary = "experimenting with Googletest"
+summary = "learn Googletest"
 draft = false
 slug = "googletest"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/googletest-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/googletest-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/googletest-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/googletest-playground</a>
+</div>
 
 
 learn [Googletest](https://github.com/google/googletest), Google Testing and Mocking Framework with CMake

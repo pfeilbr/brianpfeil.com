@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2018-06-06
 description = ""
-summary = "experimenting with JSON Schema"
+summary = "learn JSON Schema"
 draft = false
 slug = "json-schema"
 tags = ["json","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/json-schema-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/json-schema-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/json-schema-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/json-schema-playground</a>
+</div>
 
 
 project to learn [JSON schema](http://json-schema.org/)

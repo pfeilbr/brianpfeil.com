@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-10-20
 description = ""
-summary = "experimenting with KeystoneJS"
+summary = "learn KeystoneJS"
 draft = false
 slug = "keystonejs"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/keystonejs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/keystonejs-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/keystonejs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/keystonejs-playground</a>
+</div>
 
 
 Learn and experiment with [KeystoneJS](http://keystonejs.com/)

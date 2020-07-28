@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-09-18
 description = ""
-summary = "experimenting with Gitlab"
+summary = "learn Gitlab"
 draft = false
 slug = "gitlab"
 tags = ["gitlab","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/gitlab-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/gitlab-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/gitlab-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/gitlab-playground</a>
+</div>
 
 
 learn gitlab. Uses [GitLab CE Docker image](https://hub.docker.com/r/gitlab/gitlab-ce/) to run locally

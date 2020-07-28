@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["HTML", "playground"]
 date = 2020-03-23
 description = ""
-summary = "experimenting with HTTP Live Streaming HLS"
+summary = "learn HTTP Live Streaming HLS"
 draft = false
 slug = "http-live-streaming-hls"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/http-live-streaming-hls-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/http-live-streaming-hls-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/http-live-streaming-hls-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/http-live-streaming-hls-playground</a>
+</div>
 
 
 example of creating an HTTP Live Stream video stream from an h.264 video file.

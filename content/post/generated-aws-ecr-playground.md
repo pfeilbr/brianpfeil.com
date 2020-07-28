@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Dockerfile", "playground"]
 date = 2018-11-13
 description = ""
-summary = "experimenting with AWS ECR"
+summary = "learn AWS ECR"
 draft = false
 slug = "aws-ecr"
 tags = ["aws","ecr","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-ecr-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-ecr-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-ecr-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-ecr-playground</a>
+</div>
 
 
 * learn Amazon Elastic Container Registry

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2020-05-19
 description = ""
-summary = "experimenting with AWS Eventbridge"
+summary = "learn AWS Eventbridge"
 draft = false
 slug = "aws-eventbridge"
 tags = ["aws","eventbridge","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-eventbridge-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-eventbridge-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-eventbridge-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-eventbridge-playground</a>
+</div>
 
 
 learn [AWS EventBridge](https://aws.amazon.com/eventbridge/)

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-09-23
 description = ""
-summary = "experimenting with Heroku Docker"
+summary = "learn Heroku Docker"
 draft = false
 slug = "heroku-docker"
 tags = ["heroku","docker","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/heroku-docker-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/heroku-docker-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/heroku-docker-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/heroku-docker-playground</a>
+</div>
 
 
 ![](http://static-content-01.s3-website-us-east-1.amazonaws.com/1__pfeilbr_ifa102990____projects_heroku-container-playground__zsh__and_README_md_—__Users_pfeilbr_projects_heroku-docker-playground_1DCCBC2B.png)

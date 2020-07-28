@@ -6,13 +6,13 @@
       <article role="main" class="blog-post">
         {{ .Content }}
 
-        {{ if .Params.tags }}
+        <!-- {{ if .Params.tags }}
         <div class="blog-tags">
           {{ range .Params.tags }}
           <a href="{{ $.Site.LanguagePrefix | absURL }}/tags/{{ . | urlize }}/">{{ . }}</a>&nbsp;
           {{ end }}
         </div>
-        {{ end }}
+        {{ end }} -->
 
         <!-- {{ if $.Param "socialShare" }}
         <hr />
@@ -22,6 +22,20 @@
           </div>
         </section>
         {{ end }} -->
+
+        <hr />
+
+        <section id="social-share">
+          <div class="list-inline footer-links text-center">
+            <a href="//twitter.com/share?url={{ .Permalink }}&amp;text={{ .Title }}&amp;via={{ .Site.Author.twitter }}"
+              target="_blank" title="Share on Twitter">Discuss on Twitter</a>
+          </div>
+        </section>
+
+
+
+
+
 
         {{ if .Site.Params.showRelatedPosts }}
         {{ range first 1 (where (where .Site.Pages ".Params.tags" "intersect" .Params.tags) "Permalink" "!=" .Permalink) }}

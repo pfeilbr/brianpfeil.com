@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2017-08-17
 description = ""
-summary = "experimenting with AWS CloudFront"
+summary = "learn AWS CloudFront"
 draft = false
 slug = "aws-cloudfront"
 tags = ["aws","cloudfront","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-cloudfront-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cloudfront-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-cloudfront-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-cloudfront-playground</a>
+</div>
 
 
 steps to create a cloudfront distribution from s3 bucket with static website hosting turned on

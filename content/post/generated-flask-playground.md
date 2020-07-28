@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Python", "playground"]
 date = 2020-02-15
 description = ""
-summary = "experimenting with Flask"
+summary = "learn Flask"
 draft = false
 slug = "flask"
 tags = ["flask","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/flask-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/flask-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/flask-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/flask-playground</a>
+</div>
 
 # flask-playground
 

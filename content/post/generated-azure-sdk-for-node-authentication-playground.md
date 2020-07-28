@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-05-10
 description = ""
-summary = "experimenting with Azure SDK For Node Authentication"
+summary = "learn Azure SDK For Node Authentication"
 draft = false
 slug = "azure-sdk-for-node-authentication"
 tags = ["azure","sdk","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/azure-sdk-for-node-authentication-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-sdk-for-node-authentication-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/azure-sdk-for-node-authentication-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-sdk-for-node-authentication-playground</a>
+</div>
 
 
 learn authentication methods for azure sdk for nodejs

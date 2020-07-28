@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-07-10
 description = ""
-summary = "experimenting with AWS Fargate"
+summary = "learn AWS Fargate"
 draft = false
 slug = "aws-fargate"
 tags = ["aws","fargate","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-fargate-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-fargate-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-fargate-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-fargate-playground</a>
+</div>
 
 
 learn [AWS Fargate](https://aws.amazon.com/fargate/)

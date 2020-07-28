@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Java", "playground"]
 date = 2019-08-14
 description = ""
-summary = "experimenting with Intellij Maven App"
+summary = "learn Intellij Maven App"
 draft = false
 slug = "intellij-maven-app"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/intellij-maven-app-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/intellij-maven-app-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/intellij-maven-app-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/intellij-maven-app-playground</a>
+</div>
 
 
 example of IntelliJ Maven App

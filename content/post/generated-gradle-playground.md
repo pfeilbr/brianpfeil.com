@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Java", "playground"]
 date = 2015-08-26
 description = ""
-summary = "experimenting with Gradle"
+summary = "learn Gradle"
 draft = false
 slug = "gradle"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/gradle-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/gradle-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/gradle-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/gradle-playground</a>
+</div>
 
 
 Project to learn and explore the [gradle](https://gradle.org/) build automation tool.

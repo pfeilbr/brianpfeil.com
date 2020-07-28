@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-08-16
 description = ""
-summary = "experimenting with AWS SAM Local"
+summary = "learn AWS SAM Local"
 draft = false
 slug = "aws-sam-local"
 tags = ["aws","sam","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-sam-local-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-sam-local-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-sam-local-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-sam-local-playground</a>
+</div>
 
 
 learn [aws-sam-local](https://github.com/awslabs/aws-sam-local)

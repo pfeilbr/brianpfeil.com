@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-08-02
 description = ""
-summary = "experimenting with Phaser"
+summary = "learning Phaser"
 draft = false
 slug = "phaser"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/phaser-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/phaser-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/phaser-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/phaser-playground</a>
+</div>
 
 
 project to learn the [Phaser](http://phaser.io/) HTML5 game framework

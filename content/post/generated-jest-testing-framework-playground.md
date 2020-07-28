@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2019-02-23
 description = ""
-summary = "experimenting with Jest Testing Framework"
+summary = "learn Jest Testing Framework"
 draft = false
 slug = "jest-testing-framework"
 tags = ["jest","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/jest-testing-framework-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jest-testing-framework-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/jest-testing-framework-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/jest-testing-framework-playground</a>
+</div>
 
 
 

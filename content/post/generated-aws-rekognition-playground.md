@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-07-08
 description = ""
-summary = "experimenting with AWS Rekognition"
+summary = "learn AWS Rekognition"
 draft = false
 slug = "aws-rekognition"
 tags = ["aws","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-rekognition-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-rekognition-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-rekognition-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-rekognition-playground</a>
+</div>
 
 
 learn [AWS Rekognition](https://docs.aws.amazon.com/rekognition/)

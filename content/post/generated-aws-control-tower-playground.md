@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["<nil>", "playground"]
 date = 2019-10-17
 description = ""
-summary = "experimenting with AWS Control Tower"
+summary = "learn AWS Control Tower"
 draft = false
 slug = "aws-control-tower"
 tags = ["aws","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-control-tower-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-control-tower-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-control-tower-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-control-tower-playground</a>
+</div>
 
 
 learn [AWS Control Tower](https://aws.amazon.com/controltower/)

@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-05-15
 description = ""
-summary = "experimenting with Azure Nodejs ARM Resources"
+summary = "learn Azure Nodejs ARM Resources"
 draft = false
 slug = "azure-nodejs-arm-resources"
 tags = ["azure","nodejs","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/azure-nodejs-arm-resources-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-nodejs-arm-resources-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/azure-nodejs-arm-resources-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/azure-nodejs-arm-resources-playground</a>
+</div>
 
 
 manipulate azure resources (deployments, etc.) programmatically via nodejs

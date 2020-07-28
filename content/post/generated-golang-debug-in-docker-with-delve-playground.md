@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2019-06-24
 description = ""
-summary = "experimenting with Golang Debug In Docker With Delve"
+summary = "learn Golang Debug In Docker With Delve"
 draft = false
 slug = "golang-debug-in-docker-with-delve"
 tags = ["docker","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/golang-debug-in-docker-with-delve-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/golang-debug-in-docker-with-delve-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/golang-debug-in-docker-with-delve-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/golang-debug-in-docker-with-delve-playground</a>
+</div>
 
 
 based on [Debugging Go using Delve, Docker and VS Code](https://medium.com/@kaperys/delve-into-docker-d6c92be2f823) post

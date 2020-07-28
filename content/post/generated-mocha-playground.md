@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-09-22
 description = ""
-summary = "experimenting with Mocha"
+summary = "learn Mocha"
 draft = false
 slug = "mocha"
 tags = ["mocha","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/mocha-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/mocha-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/mocha-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/mocha-playground</a>
+</div>
 
 
 ## [Mocha](http://mochajs.org/) Playground

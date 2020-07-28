@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-07-24
 description = ""
-summary = "experimenting with Chrome AWS Lambda"
+summary = "learn Chrome AWS Lambda"
 draft = false
 slug = "chrome-aws-lambda"
 tags = ["chrome","aws","lambda","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/chrome-aws-lambda-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/chrome-aws-lambda-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/chrome-aws-lambda-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/chrome-aws-lambda-playground</a>
+</div>
 
 
 learn the [chrome-aws-lambda](https://github.com/alixaxel/chrome-aws-lambda) package for use with aws lambda via [serverless framework](https://serverless.com/framework/)

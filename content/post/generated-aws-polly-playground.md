@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["HTML", "playground"]
 date = 2019-09-06
 description = ""
-summary = "experimenting with AWS Polly"
+summary = "learn AWS Polly"
 draft = false
 slug = "aws-polly"
 tags = ["aws","polly","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/aws-polly-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-polly-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-polly-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-polly-playground</a>
+</div>
 
 
 learn [aws polly]() text-to-speech (TTS)

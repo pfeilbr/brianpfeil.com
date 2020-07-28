@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Makefile", "playground"]
 date = 2020-07-02
 description = ""
-summary = "experimenting with PHP Lambda Layer"
+summary = "learning PHP Lambda Layer"
 draft = false
 slug = "php-lambda-layer"
 tags = ["php","lambda","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/php-lambda-layer-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/php-lambda-layer-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/php-lambda-layer-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/php-lambda-layer-playground</a>
+</div>
 
 
 learn [stackery/php-lambda-layer](https://github.com/stackery/php-lambda-layer) for running PHP on lambda

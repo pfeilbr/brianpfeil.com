@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Jupyter Notebook", "playground"]
 date = 2018-01-31
 description = ""
-summary = "experimenting with OpenCV Python"
+summary = "learning OpenCV Python"
 draft = false
 slug = "opencv-python"
 tags = ["opencv","python","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/opencv-python-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/opencv-python-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/opencv-python-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/opencv-python-playground</a>
+</div>
 
 
 code is split between jupyter notebook(s) and python (.py) files

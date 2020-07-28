@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Shell", "playground"]
 date = 2019-01-29
 description = ""
-summary = "experimenting with fswatch"
+summary = "learn fswatch"
 draft = false
 slug = "fswatch"
 tags = ["playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/fswatch-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/fswatch-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/fswatch-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/fswatch-playground</a>
+</div>
 
 
 * learn [fswatch](http://emcrisostomo.github.io/fswatch/) file change monitor

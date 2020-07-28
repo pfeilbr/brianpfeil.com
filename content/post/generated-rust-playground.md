@@ -3,7 +3,7 @@ author = "Brian Pfeil"
 categories = ["Rust", "playground"]
 date = 2018-12-21
 description = ""
-summary = "experimenting with Rust"
+summary = "learning Rust"
 draft = false
 slug = "rust"
 tags = ["rust","playground",]
@@ -14,9 +14,9 @@ truncated = true
 
 +++
 
-<!--
-<a href="https://github.com/pfeilbr/rust-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/rust-playground</a>
--->
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/rust-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/rust-playground</a>
+</div>
 
 
 learn [Rust](https://www.rust-lang.org/) programming language
