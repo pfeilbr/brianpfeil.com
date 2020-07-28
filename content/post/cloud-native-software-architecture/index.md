@@ -7,11 +7,11 @@ lastmod = "2020-07-28"
 draft = false
 categories = ["architecture", "cloud"]
 tags = ["architecture", "cloud"]
-summary = "A cheatsheet/reference for cloud native software architecture"
+summary = "A personal cheatsheet/reference for cloud native software architecture"
 
 +++
 
-A cheatsheet/reference for cloud native software architecture.
+A personal cheatsheet/reference for cloud native software architecture.
 
 **architecture**
 
@@ -177,7 +177,7 @@ limits / isolates tenants in a multi-tenant system so they don't negatively impa
 
 ## Resources
 
-### Books (*oreilly.com*)
+### Books ([*oreilly.com*](https://learning.oreilly.com))
 
 * [Fundamentals of Software Architecture](https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/)
 * [Clean Architecture: A Craftsman's Guide to Software Structure and Design, First Edition](https://learning.oreilly.com/library/view/clean-architecture-a/9780134494272/)
