@@ -38,6 +38,8 @@ covers the key considerations and configuration options for the *most common* AW
 
 ### Relevant Patterns
 
+common cloud native patterns to consider in the context of serverless architectures <u>of scale</u>
+
 * event sourcing
 * circuit breaker - trip circuit to prevent downstream systems overload
 * [load shedding](https://aws.amazon.com/builders-library/using-load-shedding-to-avoid-overload/) - prevent backlog buildup
@@ -50,6 +52,7 @@ covers the key considerations and configuration options for the *most common* AW
 
 * synchronous vs asynchronous vs poll based (poll based is sync) - impacts automatic retries, stuck messages due to poison message, etc.
   * see [Understanding the Different Ways to Invoke Lambda Functions](https://aws.amazon.com/blogs/architecture/understanding-the-different-ways-to-invoke-lambda-functions/)
+* if lambda is strictly a glue passthrough for API Gateway to call a backend AWS service, look to use [API Gateway Service Proxies](https://lumigo.io/blog/the-why-when-and-how-of-api-gateway-service-proxies/) to remove lambda.  simpler/cheaper/etc.
 * memory
 * DLQ
 * lambda destinations (only for async invokes)
