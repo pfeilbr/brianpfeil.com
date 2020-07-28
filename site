@@ -4,6 +4,7 @@
 set -e
 
 SITE_DIRECTORY_PATH=~/projects/personal-website
+POST_DIRECTORY_PATH="${SITE_DIRECTORY_PATH}/content/post"
 
 display_usage() {
     echo -e "site (personal website) tool\n"
@@ -11,7 +12,7 @@ display_usage() {
     echo -e "\t$ site [COMMAND]\n"
     echo -e "COMMANDS"
     echo -e "\tsite publish [-m commit_message]"
-    echo -e "\tsite new POST_NAME"
+    echo -e "\tsite post [-t title]"
 }
 
 # if less than two arguments supplied, display usage 
@@ -45,6 +46,15 @@ while (( "$#" )); do
         exit 1
       fi
       ;;
+    -t|--title)
+      if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
+        TITLE=$2
+        shift 2
+      else
+        echo "Error: Argument for $1 is missing" >&2
+        exit 1
+      fi
+      ;;      
     -*|--*=) # unsupported flags
       echo "Error: Unsupported flag $1" >&2
       exit 1
@@ -63,7 +73,8 @@ CMD="${1}"
 # echo "${CMD}"
 # echo "MY_FLAG=${MY_FLAG}"
 # echo "MY_FLAG_ARG=${MY_FLAG_ARG}"
-echo "MESSAGE=${MESSAGE}"
+# echo "MESSAGE=${MESSAGE}"
+echo "TITLE=${TITLE}"
 
 publish() {
 	printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
@@ -105,10 +116,38 @@ publish() {
 	popd
 }
 
+slugify() {
+  echo "$1" | iconv -t ascii//TRANSLIT | sed -E 's/[~\^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+\|-+$//g' | sed -E 's/^-+//g' | sed -E 's/-+$//g' | tr A-Z a-z
+}
+
+post() {
+  local title="$1"
+  echo "${title}"
+  local slug=$(slugify "${title}")
+  echo "${slug}"
+
+  local post_file_directory_path="${POST_DIRECTORY_PATH}/${slug}"
+  local post_file_path="${post_file_directory_path}/index.md"
+
+  if [ -d "${post_file_directory_path}" ]
+  then
+      echo "post directory \"${post_file_directory_path}\" exists.  please choose a different post name"
+      exit 1
+  else
+    mkdir -p "${post_file_directory_path}"
+  fi
+
+  echo "${post_file_path}"
+  hugo new "${post_file_path}"
+}
+
 case "${CMD}" in
 publish)
 	publish
 	;;
+post)
+  post "${TITLE}"
+  ;;
 *) # preserve positional arguments
 	echo -e "unsupported command \"${CMD}\"\n\n"
 	display_usage
