@@ -19,7 +19,11 @@ truncated = true
 </div>
 
 
-learn [lumigo-CLI](https://github.com/lumigo-io/lumigo-cli), A collection of helpful commands for working with AWS Lambda.
+[lumigo-CLI](https://github.com/lumigo-io/lumigo-cli) to a command line tool that contains a collection of helpful commands for working with AWS Lambda and the serverless AWS services it integrates with.
+
+It's an invaluable tool for serverless development on AWS.  It contains commands that let you work with individual services line sending messages to SNS, SQS, and Kinesis.  Tailing changes to CloudWatch Logs, DynamoDB, Kinesis, EventBridge, SNS, SQS.  Automatically tune lambda for the optimal memory configuration, measure lambda cold starts.
+
+Easy to install via global npm package (`npm install lumigo-cli -g`).
 
 ## Example Usage
 
