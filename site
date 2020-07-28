@@ -10,7 +10,7 @@ display_usage() {
     echo -e "USAGE"
     echo -e "\t$ site [COMMAND]\n"
     echo -e "COMMANDS"
-    echo -e "\tsite publish"
+    echo -e "\tsite publish -m COMMENT"
     echo -e "\tsite new POST_NAME"
 }
 
@@ -36,9 +36,9 @@ while (( "$#" )); do
       MY_FLAG=0
       shift
       ;;
-    -b|--my-flag-with-argument)
+    -m|--message)
       if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
-        MY_FLAG_ARG=$2
+        MESSAGE=$2
         shift 2
       else
         echo "Error: Argument for $1 is missing" >&2
@@ -63,9 +63,12 @@ CMD="${1}"
 # echo "${CMD}"
 # echo "MY_FLAG=${MY_FLAG}"
 # echo "MY_FLAG_ARG=${MY_FLAG_ARG}"
+echo "MESSAGE=${MESSAGE}"
 
 publish() {
 	printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
+
+  MESSAGE="${MESSAGE:-updates}"
 
 	pushd "${SITE_DIRECTORY_PATH}"
 
@@ -93,6 +96,12 @@ publish() {
 	git push origin master
 
 	popd
+
+  # top-level repo
+  git add .
+  git commit -m "${MESSAGE}"
+  git push origin master
+
 	popd
 }
 
