@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# If a command fails then the deploy stops
+set -e
+
+SITE_DIRECTORY_PATH=~/projects/personal-website
+
+display_usage() {
+    echo -e "site (personal website) tool\n"
+    echo -e "USAGE"
+    echo -e "\t$ site [COMMAND]\n"
+    echo -e "COMMANDS"
+    echo -e "\tsite publish"
+    echo -e "\tsite new POST_NAME"
+}
+
+# if less than two arguments supplied, display usage 
+if [  $# -le 0 ] 
+then 
+    display_usage
+    exit 1
+fi 
+ 
+# check whether user had supplied -h or --help . If yes display usage 
+if [[ ( $# == "--help") ||  $# == "-h" ]] 
+then 
+    display_usage
+    exit 0
+fi 
+
+PARAMS=""
+
+while (( "$#" )); do
+  case "$1" in
+    -a|--my-boolean-flag)
+      MY_FLAG=0
+      shift
+      ;;
+    -b|--my-flag-with-argument)
+      if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
+        MY_FLAG_ARG=$2
+        shift 2
+      else
+        echo "Error: Argument for $1 is missing" >&2
+        exit 1
+      fi
+      ;;
+    -*|--*=) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      exit 1
+      ;;
+    *) # preserve positional arguments
+      PARAMS="$PARAMS $1"
+      shift
+      ;;
+  esac
+done
+# set positional arguments in their proper place
+eval set -- "$PARAMS"
+
+CMD="${1}"
+
+# echo "${CMD}"
+# echo "MY_FLAG=${MY_FLAG}"
+# echo "MY_FLAG_ARG=${MY_FLAG_ARG}"
+
+publish() {
+	printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
+
+	pushd "${SITE_DIRECTORY_PATH}"
+
+	# Build the project.
+	hugo # if using a theme, replace with `hugo -t <YOURTHEME>`
+
+	# generate service worker
+	# see https://developers.google.com/web/tools/workbox/guides/generate-service-worker/cli
+	workbox generateSW workbox-config.js
+
+	# Go To Public folder
+	pushd public
+
+	# Add changes to git.
+	git add .
+
+	# Commit changes.
+	msg="rebuilding site $(date)"
+	if [ -n "$*" ]; then
+		msg="$*"
+	fi
+	git commit -m "$msg"
+
+	# Push source and build repos.
+	git push origin master
+
+	popd
+	popd
+}
+
+case "${CMD}" in
+publish)
+	publish
+	;;
+*) # preserve positional arguments
+	echo -e "unsupported command \"${CMD}\"\n\n"
+	display_usage
+    exit 1
+	;;
+esac
+
