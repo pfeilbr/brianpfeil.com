@@ -4,6 +4,7 @@
 set -e
 
 SITE_DIRECTORY_PATH=~/projects/personal-website
+SITE_CONFIG_FILE_PATH="${SITE_DIRECTORY_PATH}/config.yaml"
 POST_DIRECTORY_PATH="${SITE_DIRECTORY_PATH}/content/post"
 
 display_usage() {
@@ -74,7 +75,7 @@ CMD="${1}"
 # echo "MY_FLAG=${MY_FLAG}"
 # echo "MY_FLAG_ARG=${MY_FLAG_ARG}"
 # echo "MESSAGE=${MESSAGE}"
-echo "TITLE=${TITLE}"
+# echo "TITLE=${TITLE}"
 
 publish() {
 	printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
@@ -121,11 +122,9 @@ slugify() {
 }
 
 post() {
+  pushd "${SITE_DIRECTORY_PATH}"
   local title="$1"
-  echo "${title}"
   local slug=$(slugify "${title}")
-  echo "${slug}"
-
   local post_file_directory_path="${POST_DIRECTORY_PATH}/${slug}"
   local post_file_path="${post_file_directory_path}/index.md"
 
@@ -135,10 +134,13 @@ post() {
       exit 1
   else
     mkdir -p "${post_file_directory_path}"
+    mkdir -p "${post_file_directory_path}/images"
   fi
 
-  echo "${post_file_path}"
-  hugo new "${post_file_path}"
+  hugo new "${post_file_path}" --config "${SITE_CONFIG_FILE_PATH}"
+
+  echo -e "\n\npost file created at ${post_file_path}\n\n"
+  popd
 }
 
 case "${CMD}" in
