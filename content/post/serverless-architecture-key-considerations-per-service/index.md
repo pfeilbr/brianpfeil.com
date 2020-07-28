@@ -11,7 +11,8 @@ summary = "Key considerations and configuration options per service for a server
 
 +++
 
-Key considerations and configuration options per service for a serverless architecture.
+A serverless architecture is "typically" composed of many services.  The following 
+covers the key considerations and configuration options for the *most common* AWS services leveraged for serverless architectures.
 
 ---
 
@@ -47,7 +48,8 @@ Key considerations and configuration options per service for a serverless archit
 
 ### [Lambda](https://aws.amazon.com/lambda/)
 
-* synchronous vs asynchronous vs poll based (poll based is sync)
+* synchronous vs asynchronous vs poll based (poll based is sync) - impacts automatic retries, stuck messages due to poison message, etc.
+  * see [Understanding the Different Ways to Invoke Lambda Functions](https://aws.amazon.com/blogs/architecture/understanding-the-different-ways-to-invoke-lambda-functions/)
 * memory
 * DLQ
 * lambda destinations (only for async invokes)
