@@ -10,7 +10,7 @@ display_usage() {
     echo -e "USAGE"
     echo -e "\t$ site [COMMAND]\n"
     echo -e "COMMANDS"
-    echo -e "\tsite publish -m COMMENT"
+    echo -e "\tsite publish [-m commit_message]"
     echo -e "\tsite new POST_NAME"
 }
 
@@ -90,7 +90,7 @@ publish() {
 	if [ -n "$*" ]; then
 		msg="$*"
 	fi
-	git commit -m "$msg"
+	git commit -a -m "$msg"
 
 	# Push source and build repos.
 	git push origin master
@@ -99,7 +99,7 @@ publish() {
 
   # top-level repo
   git add .
-  git commit -m "${MESSAGE}"
+  git commit -a -m "${MESSAGE}"
   git push origin master
 
 	popd

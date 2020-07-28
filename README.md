@@ -29,21 +29,11 @@ open http://localhost:1313/
 
 ## Build and Publish
 
-`site publish`
+`site publish [-m commit_message]`
 
-> runs hugo to generate site into [`public`](public), commits and pushes all changes to the [`public`](public) submodule.
-
-> NOTE: this script does not commit changes to this [`personal-website`](.) repo
-
-## Commit and Push Source Content Changes
-
-commit hugo content and configuration changes for *this* [`personal-website`](.) repo.
-
-```sh
-git add .
-git commit -a -m "updates"
-git push origin master
-```
+* runs hugo to generate site into [`public`](public)
+* commits and pushes all changes to the [`public`](public) submodule.
+* commits and pushes all changes to *this* [`personal-website`](.) top-level repo.
 
 ## [`site`](site) script
 
