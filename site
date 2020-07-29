@@ -14,6 +14,8 @@ display_usage() {
     echo -e "COMMANDS"
     echo -e "\tsite publish [-m commit_message]"
     echo -e "\tsite post [-t title]"
+    echo -e "\tsite generate-posts-from-repos"
+    
 }
 
 # if less than two arguments supplied, display usage 
@@ -143,12 +145,21 @@ post() {
   popd
 }
 
+generatePostsFromRepos() {
+  pushd ~/projects/create-blog-post-from-repo
+  create-blog-post-from-repo -command="generate-markdown-post-files" -user="pfeilbr" -destination-directory="${POST_DIRECTORY_PATH}" -cache -debug
+  popd
+}
+
 case "${CMD}" in
 publish)
 	publish
 	;;
 post)
   post "${TITLE}"
+  ;;
+generate-posts-from-repos)
+  generatePostsFromRepos
   ;;
 *) # preserve positional arguments
 	echo -e "unsupported command \"${CMD}\"\n\n"

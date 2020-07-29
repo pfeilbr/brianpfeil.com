@@ -1,5 +1,5 @@
 +++
-title = "Serverless Architecture: Key Considerations per Service"
+title = "Serverless Architecture: Key Service Considerations"
 slug = "serverless-architecture-key-considerations-per-service"
 author = "Brian Pfeil"
 date = "2020-07-20"
@@ -7,7 +7,7 @@ lastmod = "2020-07-28"
 draft = false
 categories = ["architecture", "aws", "serverless"]
 tags = ["architecture", "aws", "serverless"]
-summary = "Key considerations and configuration options per service for a serverless architecture"
+summary = "Key service considerations and configuration options for a serverless architecture"
 
 +++
 
