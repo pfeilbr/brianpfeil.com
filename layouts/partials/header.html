@@ -67,7 +67,19 @@
             {{ else }}
 
             <!-- page title displayed here -->
+            {{ if .IsHome }}
+            <!-- <h1>{{ with $title }}{{.}}{{ else }}<br />{{ end }}</h1> -->
+            <div id="avatar" class="home-page"></div>
+            <h4>Personal blog by <a href="https://twitter.com/pfeilbr" title="twitter">
+                <span class="home-page-title-link">
+                  Brian Pfeil
+                </span>
+              </a></h4>
+
+            {{ else }}
             <h1>{{ with $title }}{{.}}{{ else }}<br />{{ end }}</h1>
+            {{ end }}
+
 
 
             {{ end }}

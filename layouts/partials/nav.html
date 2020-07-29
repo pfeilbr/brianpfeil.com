@@ -7,7 +7,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+
+      {{ if .IsHome }}
+      <!-- don't show website title on home page -->
+      {{else}}
       <a class="navbar-brand" href="{{ "" | absLangURL }}">{{ .Site.Title }}</a>
+      <!-- <a class="navbar-brand" href="{{ "" | absLangURL }}">HOME</a> -->
+      {{end}}
     </div>
 
     <div class="collapse navbar-collapse" id="main-navbar">
