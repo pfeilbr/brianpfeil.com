@@ -8,8 +8,14 @@ draft = false
 categories = ["aws", "sam", "lambda"]
 tags = ["aws", "sam", "lambda"]
 summary = "Running lambda locally with SAM in the lambda role security context"
+repoFullName = "pfeilbr/aws-sam-golang-playground"
+repoHTMLURL = "https://github.com/pfeilbr/aws-sam-golang-playground"
 
 +++
+
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/aws-sam-golang-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/aws-sam-golang-playground</a>
+</div>
 
 [AWS Serverless Application Model](https://aws.amazon.com/serverless/sam/) (SAM) allows you to develop and test your lambda backed API Gateway endpoints locally via [sam local start-api](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-local-start-api.html).  By default, your function is invoked with the default credentials you have configured for the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).  If your function accesses other AWS services, it may encounter permission issues.  It's ideal to have your lambda run under as close to the same security context locally as it would when deployed.  In the example below, lambda sends a message to a SQS worker queue.  The permissions for the queue are configured to allow the lambda role to send a message to it.  The following details how to achieve this.
 
