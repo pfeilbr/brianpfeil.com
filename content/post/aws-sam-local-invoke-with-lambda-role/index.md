@@ -126,7 +126,7 @@ We've seen how to run a lambda locally with the same security context as when de
 
 One point to note, you must have the AWS resources your lambda is interacting with provisioned.  For example, the SQS queue must exist.  SAM does not provide a locally running SQS service.
 
-For more on Go + SAM + Lambda be sure to check out the AWS [GO SERVERLESS!](https://golang.serverlessworkshops.io/) workshop by AWS Serverless Developer Advocate [Rob Sutter](https://twitter.com/rts_rob).
+The [source](https://github.com/pfeilbr/aws-sam-golang-playground) for this example is written in Go, which has a great workflow.  Our focus wasn't on the code, but if you want more **Go + SAM + Lambda** be sure to check out the AWS [GO SERVERLESS!](https://golang.serverlessworkshops.io/) workshop by AWS Serverless Developer Advocate [Rob Sutter](https://twitter.com/rts_rob).  It covers the details and workflow of using Go with SAM.
 
 
 
