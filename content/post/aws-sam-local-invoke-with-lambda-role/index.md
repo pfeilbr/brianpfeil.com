@@ -122,7 +122,7 @@ curl -X POST http://127.0.0.1:3000/job -d '{"name": "my job"}'
 
 ### Conclusion
 
-We've seen how to run a lambda locally with the same security context as when deployed.  SAM provides a great development workflow to allow quick iterations.  The local environment provided via docker tries to be as true to AWS itself, but you should always test a fully deployed solution.
+We've seen how to run a lambda locally with the same security context as when deployed.  SAM provides a great development workflow to allow quick iterations.  The local environment provided via docker tries to be as true to the AWS environment, but you should test with the real services as early as possible.
 
 One point to note, you must have the AWS resources your lambda is interacting with provisioned.  For example, the SQS queue must exist.  SAM does not provide a locally running SQS service.
 
