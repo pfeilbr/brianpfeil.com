@@ -4,6 +4,8 @@
     // dark mode toggle
     (() => {
 
+        DarkReader.setFetchMethod(window.fetch)
+
         const DARK_MODE_ENABLED_KEY = "DARK_MODE_ENABLED_KEY"
 
         const enabledIcon = document.getElementById("dark-mode-enabled-icon")
