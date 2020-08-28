@@ -46,10 +46,13 @@ This infrastructure provisioning and deployment pipeline performs an atomic depl
 ## Infrastructure Provisioning Steps
 
 1. manually create a [public route 53 hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/AboutHZWorkingWith.html) for your domain name (e.g. `mydomain.com`)
-2. update `DOMAIN_NAME` parameter in [`./run.sh`](./run.sh) with the hosted zone name 
-3. provision aws resources `./run.sh deploy-infrastructure`
-4. Check [ACM in AWS Console](https://console.aws.amazon.com/acm/home) to confirm Certificate validation via DNS validation has completed.  May need to add [DNS validation records to route 53 hosted zone](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html).
-5. update pipeline variables
+1. update `DOMAIN_NAME` parameter in [`./run.sh`](./run.sh) with the hosted zone name 
+1. provision aws resources `./run.sh deploy-infrastructure`
+1. Check [ACM in AWS Console](https://console.aws.amazon.com/acm/home) to confirm Certificate validation via DNS validation has completed.  May need to add [DNS validation records to route 53 hosted zone](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html).
+1. update audience in SAML IdP with UserPool Id
+      ![](https://www.evernote.com/l/AAGYDJvggAlODYZ1Dd5r-HFdJ04NixRSO28B/image.png)
+1. update `client_id` in [`frontend/public/login/index.html`](frontend/public/login/index.html)
+1. update pipeline variables
     * REGION - *default is us-east-1*
     * STACK_NAME - defined in [`./run.sh`](./run.sh)
     * AWS_ACCESS_KEY_ID - `AccessKey` output in `./tmp/${STACK_NAME}-outputs.json`
@@ -153,6 +156,146 @@ output
 ### cognito logout url
 
 <https://allthecloudbits.auth.us-east-1.amazoncognito.com/logout?response_type=token&client_id=3al3r1fatr213ndvp2uoqcfgi9&redirect_uri=https://allthecloudbits.com/login/logout.html>
+
+
+### CloudFront `/api/` origin backed by API Gateway endpoint with Cognito UserPool Authorizer
+
+echos incoming lambda proxy request event
+
+```sh
+ID_TOKEN='eyJraWQiOiJ2V2ltUXRzdXpRUUFUWUc5UGNZcjlLK1BJa25PaEhoZEZGMHE1YlVGWVMwPSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoicWVKQVBYVDV0N3BoOXBkMUR4WDdvQSIsInN1YiI6IjE0MDFiZjYwLWNhYjUtNGFjNy1iMDBhLTM1NDM2N2Q1ZjgyNiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLWVhc3QtMV95S05rUUVrS2FfYXV0aDAiXSwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV95S05rUUVrS2EiLCJjb2duaXRvOnVzZXJuYW1lIjoiYXV0aDBfYXV0aDB8NWYzMjliNGY3M2VkYzEwMDNkNWY1ZDczIiwibm9uY2UiOiItbm9FRmtnT1dVMG1ob2FYWnFldWJzb2JrVzZPY3lFRmRZenQ0TFBlWUk0MHB5SGFuQS1sZzZYV3VoaW9TWllvT1AyXzhYZzZMYS1ZLTg3eTlHa3BJYzczTnJIeWs1X2V2SlRlOXEzX1Rkb0pUYnIzaFFKU05NbDl0ZjRKZHgzb3ZhYlg4RklzUmc5SkdxVThyTEt4VFZKa2NXZzJDZ3hDMjFQRXBDSkZDMUEiLCJhdWQiOiIxanR0NHZhNmo5a2duODRoMW42bjU2czVjdCIsImlkZW50aXRpZXMiOlt7InVzZXJJZCI6ImF1dGgwfDVmMzI5YjRmNzNlZGMxMDAzZDVmNWQ3MyIsInByb3ZpZGVyTmFtZSI6ImF1dGgwIiwicHJvdmlkZXJUeXBlIjoiU0FNTCIsImlzc3VlciI6InVybjpzdmMuYXV0aDAuY29tIiwicHJpbWFyeSI6InRydWUiLCJkYXRlQ3JlYXRlZCI6IjE1OTg0MDM3MjY0NjcifV0sInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNTk4NDA0MjMzLCJleHAiOjE1OTg0MDc4MzMsImlhdCI6MTU5ODQwNDIzMywiZW1haWwiOiJ1c2VyMDFAZXhhbXBsZS5jb20ifQ.I2PKtMjfWANBuu8eybZ_EegFEQ-D7cfCD2VyHnlHFzs_CoxthugBICI_ayMdyYhsd1FXqztbrzZIy9q2eDPh1IyaIH_s2cFBiRLCcZF-P1ULd8T9xsPqoZDEbxH_gg7u6YZYBVuLo53bNTCrC9p1pSxAUyzUa68BjZyTHSf3GEW06wJqE84e1lsyQX0qE_I1IGmYZOgq1rJCsYKwQqV9KmdZBMMEOhKizN4_Nm42LTY5frTzKPgUNIuyXaPWF2Uns1MdIoM9SoI1SnYZckgrAVlh_0U-wNu6BHhK4mpYBo90HelskOWiLzJvRqgotsfMeCgAhVNtbq7v1L2K-fHadg'
+
+curl -H "Authorization: Bearer ${ID_TOKEN}" "https://allthecloudbits.com/api/"
+```
+
+output
+```json
+{
+    "resource": "/{proxy+}",
+    "path": "/api/",
+    "httpMethod": "GET",
+    "headers": {
+        "Authorization": "Bearer eyJraWQiOiJ2V2ltUXRzdXpRUUFUWUc5UGNZcjlLK1BJa25PaEhoZEZGMHE1YlVGWVMwPSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoicWVKQVBYVDV0N3BoOXBkMUR4WDdvQSIsInN1YiI6IjE0MDFiZjYwLWNhYjUtNGFjNy1iMDBhLTM1NDM2N2Q1ZjgyNiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLWVhc3QtMV95S05rUUVrS2FfYXV0aDAiXSwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV95S05rUUVrS2EiLCJjb2duaXRvOnVzZXJuYW1lIjoiYXV0aDBfYXV0aDB8NWYzMjliNGY3M2VkYzEwMDNkNWY1ZDczIiwibm9uY2UiOiItbm9FRmtnT1dVMG1ob2FYWnFldWJzb2JrVzZPY3lFRmRZenQ0TFBlWUk0MHB5SGFuQS1sZzZYV3VoaW9TWllvT1AyXzhYZzZMYS1ZLTg3eTlHa3BJYzczTnJIeWs1X2V2SlRlOXEzX1Rkb0pUYnIzaFFKU05NbDl0ZjRKZHgzb3ZhYlg4RklzUmc5SkdxVThyTEt4VFZKa2NXZzJDZ3hDMjFQRXBDSkZDMUEiLCJhdWQiOiIxanR0NHZhNmo5a2duODRoMW42bjU2czVjdCIsImlkZW50aXRpZXMiOlt7InVzZXJJZCI6ImF1dGgwfDVmMzI5YjRmNzNlZGMxMDAzZDVmNWQ3MyIsInByb3ZpZGVyTmFtZSI6ImF1dGgwIiwicHJvdmlkZXJUeXBlIjoiU0FNTCIsImlzc3VlciI6InVybjpzdmMuYXV0aDAuY29tIiwicHJpbWFyeSI6InRydWUiLCJkYXRlQ3JlYXRlZCI6IjE1OTg0MDM3MjY0NjcifV0sInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNTk4NDA0MjMzLCJleHAiOjE1OTg0MDc4MzMsImlhdCI6MTU5ODQwNDIzMywiZW1haWwiOiJ1c2VyMDFAZXhhbXBsZS5jb20ifQ.I2PKtMjfWANBuu8eybZ_EegFEQ-D7cfCD2VyHnlHFzs_CoxthugBICI_ayMdyYhsd1FXqztbrzZIy9q2eDPh1IyaIH_s2cFBiRLCcZF-P1ULd8T9xsPqoZDEbxH_gg7u6YZYBVuLo53bNTCrC9p1pSxAUyzUa68BjZyTHSf3GEW06wJqE84e1lsyQX0qE_I1IGmYZOgq1rJCsYKwQqV9KmdZBMMEOhKizN4_Nm42LTY5frTzKPgUNIuyXaPWF2Uns1MdIoM9SoI1SnYZckgrAVlh_0U-wNu6BHhK4mpYBo90HelskOWiLzJvRqgotsfMeCgAhVNtbq7v1L2K-fHadg",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "US",
+        "Host": "9t5xagyya6.execute-api.us-east-1.amazonaws.com",
+        "User-Agent": "Amazon CloudFront",
+        "Via": "1.1 f452d023faa737bf8fd4899df4e76a45.cloudfront.net (CloudFront), 1.1 66114286e54efb82c700272100713f2f.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "zOP5ckCI6uBtPDKtf-4Cmnm518dfz3TJh7gAyF0kECi2UQWPS5-poQ==",
+        "X-Amzn-Trace-Id": "Root=1-5f45bf55-30c7890880da73106bac3728",
+        "X-Forwarded-For": "100.11.117.63, 70.132.13.82, 52.46.46.167",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "Authorization": [
+            "Bearer eyJraWQiOiJ2V2ltUXRzdXpRUUFUWUc5UGNZcjlLK1BJa25PaEhoZEZGMHE1YlVGWVMwPSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoicWVKQVBYVDV0N3BoOXBkMUR4WDdvQSIsInN1YiI6IjE0MDFiZjYwLWNhYjUtNGFjNy1iMDBhLTM1NDM2N2Q1ZjgyNiIsImNvZ25pdG86Z3JvdXBzIjpbInVzLWVhc3QtMV95S05rUUVrS2FfYXV0aDAiXSwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV95S05rUUVrS2EiLCJjb2duaXRvOnVzZXJuYW1lIjoiYXV0aDBfYXV0aDB8NWYzMjliNGY3M2VkYzEwMDNkNWY1ZDczIiwibm9uY2UiOiItbm9FRmtnT1dVMG1ob2FYWnFldWJzb2JrVzZPY3lFRmRZenQ0TFBlWUk0MHB5SGFuQS1sZzZYV3VoaW9TWllvT1AyXzhYZzZMYS1ZLTg3eTlHa3BJYzczTnJIeWs1X2V2SlRlOXEzX1Rkb0pUYnIzaFFKU05NbDl0ZjRKZHgzb3ZhYlg4RklzUmc5SkdxVThyTEt4VFZKa2NXZzJDZ3hDMjFQRXBDSkZDMUEiLCJhdWQiOiIxanR0NHZhNmo5a2duODRoMW42bjU2czVjdCIsImlkZW50aXRpZXMiOlt7InVzZXJJZCI6ImF1dGgwfDVmMzI5YjRmNzNlZGMxMDAzZDVmNWQ3MyIsInByb3ZpZGVyTmFtZSI6ImF1dGgwIiwicHJvdmlkZXJUeXBlIjoiU0FNTCIsImlzc3VlciI6InVybjpzdmMuYXV0aDAuY29tIiwicHJpbWFyeSI6InRydWUiLCJkYXRlQ3JlYXRlZCI6IjE1OTg0MDM3MjY0NjcifV0sInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNTk4NDA0MjMzLCJleHAiOjE1OTg0MDc4MzMsImlhdCI6MTU5ODQwNDIzMywiZW1haWwiOiJ1c2VyMDFAZXhhbXBsZS5jb20ifQ.I2PKtMjfWANBuu8eybZ_EegFEQ-D7cfCD2VyHnlHFzs_CoxthugBICI_ayMdyYhsd1FXqztbrzZIy9q2eDPh1IyaIH_s2cFBiRLCcZF-P1ULd8T9xsPqoZDEbxH_gg7u6YZYBVuLo53bNTCrC9p1pSxAUyzUa68BjZyTHSf3GEW06wJqE84e1lsyQX0qE_I1IGmYZOgq1rJCsYKwQqV9KmdZBMMEOhKizN4_Nm42LTY5frTzKPgUNIuyXaPWF2Uns1MdIoM9SoI1SnYZckgrAVlh_0U-wNu6BHhK4mpYBo90HelskOWiLzJvRqgotsfMeCgAhVNtbq7v1L2K-fHadg"
+        ],
+        "CloudFront-Forwarded-Proto": [
+            "https"
+        ],
+        "CloudFront-Is-Desktop-Viewer": [
+            "true"
+        ],
+        "CloudFront-Is-Mobile-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-SmartTV-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-Tablet-Viewer": [
+            "false"
+        ],
+        "CloudFront-Viewer-Country": [
+            "US"
+        ],
+        "Host": [
+            "9t5xagyya6.execute-api.us-east-1.amazonaws.co* Connection #0 to host allthecloudbits.com left intactm"
+        ],
+        "User-Agent": [
+            "Amazon CloudFront"
+        ],
+        "Via": [
+            "1.1 f452d023faa737bf8fd4899df4e76a45.cloudfront.net (CloudFront),1.1 66114286e54efb82c700272100713f2f.cloudfront.net (CloudFront)"
+        ],
+        "X-Amz-Cf-Id": [
+            "zOP5ckCI6uBtPDKtf-4Cmnm518dfz3TJh7gAyF0kECi2UQWPS5-poQ=="
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5f45bf55-30c7890880da73106bac3728"
+        ],
+        "X-Forwarded-For": [
+            "100.11.117.63,70.132.13.82,52.46.46.167"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "pathParameters": {
+        "proxy": "api"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "sac2jj",
+        "authorizer": {
+            "claims": {
+                "at_hash": "qeJAPXT5t7ph9pd1DxX7oA",
+                "sub": "1401bf60-cab5-4ac7-b00a-354367d5f826",
+                "cognito:groups": "us-east-1_yKNkQEkKa_auth0",
+                "email_verified": "false",
+                "iss": "https: //cognito-idp.us-east-1.amazonaws.com/us-east-1_yKNkQEkKa",
+                "cognito:username": "auth0_auth0|5f329b4f73edc1003d5f5d73",
+                "nonce": "-noEFkgOWU0mhoaXZqeubsobkW6OcyEFdYzt4LPeYI40pyHanA-lg6XWuhioSZYoOP2_8Xg6La-Y-87y9GkpIc73NrHyk5_evJTe9q3_TdoJTbr3hQJSNMl9tf4Jdx3ovabX8FIsRg9JGqU8rLKxTVJkcWg2CgxC21PEpCJFC1A",
+                "aud": "1jtt4va6j9kgn84h1n6n56s5ct",
+                "identities": "{\"dateCreated\":\"1598403726467\",\"userId\":\"auth0|5f329b4f73edc1003d5f5d73\",\"providerName\":\"auth0\",\"providerType\":\"SAML\",\"issuer\":\"urn:svc.auth0.com\",\"primary\":\"true\"}",
+                "token_use": "id",
+                "auth_time": "1598404233",
+                "exp": "Wed Aug 26 02:10:33 UTC 2020",
+                "iat": "Wed Aug 26 01:10:33 UTC 2020",
+                "email": "user01@example.com"
+            }
+        },
+        "resourcePath": "/{proxy+}",
+        "httpMethod": "GET",
+        "extendedRequestId": "R2rVaGENIAMFgKA=",
+        "requestTime": "26/Aug/2020:01:48:05 +0000",
+        "path": "/Prod/api/",
+        "accountId": "529276214230",
+        "protocol": "HTTP/1.1",
+        "stage": "Prod",
+        "domainPrefix": "9t5xagyya6",
+        "requestTimeEpoch": 1598406485719,
+        "requestId": "257d7792-80e4-4948-ad5e-ad7c1fad14dc",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "70.132.13.82",
+            "principalOrgId": null,
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "Amazon CloudFront",
+            "user": null
+        },
+        "domainName": "9t5xagyya6.execute-api.us-east-1.amazonaws.com",
+        "apiId": "9t5xagyya6"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}
+```
 
 ---
 
@@ -389,7 +532,6 @@ PHNhbWxwOlJlc3BvbnNlIHhtbG5zOnNhbWxwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJv
 
 ## TODO
 
-* store id_token and refresh_token in local storage.  delete on logout
 * add standard set of cw alarms for 4xx and 5xx thresholds.  make thresholds configurable via cfn params.  create cw dashboard from these.
 * add architecture diagram to README.md
 * remove `IncludeBody: true` from template.yaml
@@ -409,7 +551,10 @@ PHNhbWxwOlJlc3BvbnNlIHhtbG5zOnNhbWxwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJv
 * ~~remove unused secrets manager secrets~~
 * ~~fix for `allthecloudbits.com/login/auth/`~~
   * ~~for  `/login/auth/` send 200 in response with html meta refresh/redirect tag to root / instead of 302. <head><meta http-equiv="refresh" content=1;url="<?=$url?>"></head>~~
-
+* ~~update to use CF [cache policy](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/working-with-policies.html) over using the deprecated cfn properties. Try the following managed policy by setting the [CachePolicyId](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-distribution-defaultcachebehavior.html#cfn-cloudfront-distribution-defaultcachebehavior-cachepolicyid) property to Name: Managed-CachingDisabled, ID: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad.~~
+* ~~add cognito authorizer to api gateway `/api/` endpoint.~~
+  * ~~[Include the identity token in the Authorization header](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-invoke-api-integrated-with-cognito-user-pool.html)~~
+* ~~store id_token and refresh_token in local storage.  delete on logout~~
 
 
 ---
@@ -451,7 +596,67 @@ PHNhbWxwOlJlc3BvbnNlIHhtbG5zOnNhbWxwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJv
 ## Scratch
 
 ```sh
+<script>document.location = "/"</script>
 
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /><meta http-equiv="Pragma" content="no-cache" /><meta http-equiv="Expires" content="0" />
+
+Cache-Control: no-cache, no-store, must-revalidate
+Pragma: no-cache
+Expires: 0
+
+ApiGatewayApi:
+  Type: AWS::Serverless::Api
+  Properties:
+    StageName: !Sub "${Stage}"
+    Cors:
+      AllowMethods: "'POST,GET,PUT,DELETE'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"    
+    Auth:
+      Authorizers:
+        CognitoUserPoolAuth:
+          UserPoolArn: !Sub "arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${UserPool}"
+          Identity:
+            Header: Authorization
+
+let config = null
+const getConfig = async (key) => {
+
+  if (config === null) {
+    const resp = await fetch('/login/config.json')
+    config = await resp.json()    
+  }
+
+  const item = config.filter((item) => (item.OutputKey === key)  )
+  return (item.length > 0) ? item[0].OutputValue : null
+}
+
+const userPoolId = await getConfig('UserPoolId')
+const userPoolClientId = await getConfig('UserPoolClientId')
+
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
+const session = new  CognitoUserSession(
+  {
+    IdToken: urlParams.get('id_token'),
+    AccessToken: urlParams.get('access_token'),
+    RefreshToken: urlParams.get('access_token'),
+  }
+)
+const user = new CognitoUser({
+  Username:
+  Pool:
+})
+user.setSignInUserSession(session)
+
+
+const userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool({
+  UserPoolId: userPoolId,
+  ClientId: userPoolClientId
+});
+const cognitoUser = userPool.getCurrentUser();
 ```
 
 

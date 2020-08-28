@@ -147,7 +147,8 @@ post() {
 
 generatePostsFromRepos() {
   pushd ~/projects/create-blog-post-from-repo
-  create-blog-post-from-repo -command="generate-markdown-post-files" -user="pfeilbr" -destination-directory="${POST_DIRECTORY_PATH}" -cache -debug
+  rm -fr tmp
+  create-blog-post-from-repo -command="generate-markdown-post-files" -user="pfeilbr" -destination-directory="${POST_DIRECTORY_PATH}" -cache=false -debug
   popd
 }
 

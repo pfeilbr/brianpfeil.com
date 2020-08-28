@@ -29,14 +29,20 @@ learn [aws service catalog](https://aws.amazon.com/servicecatalog/)
     * access to portfolios is via IAM users, groups, roles
 * IT administrator creates products and portfolios and grants access
 * End user accesses products and deploys them
-* approved self-service products from Solution Factory
-    * e.g. Oracle RDS DB with all security, tags, etc. in place
+* example use cases: approved self-service products from Solution Factory
     * e.g. static web site. S3 + CloudFormation + WAF + ACM (certificate) + Route 53 (hosted zone, domain)
-* ** you can include/reference existing product(s) in your product cloudformation template.  This allows for modular composition and nesting.
+    * e.g. Oracle RDS DB with all security, tags, etc. in place
+* can include/reference existing product(s) in your product cloudformation template.  This *enables modular composition and nesting*.
 
 ---
 
-**Launch constraint**
+## Example Use Case | Static Website
+
+The following is a simple example of a "Static Website" product for the service catalog.  It's an S3 bucket with website enabled for it.  This product is purposely kept simple to keep the focus on Service Catalog, but a product can be make up of anything that can be expressed via a [CloudFormation](https://aws.amazon.com/cloudformation/) template.
+
+---
+
+**Define Launch Constraint**
 
 the IAM role the cloudformation stack provisioning runs under
 
@@ -106,5 +112,6 @@ S3 static website hosting routing rules added (the update)
 * [aws-samples/aws-service-catalog-reference-architectures](https://github.com/aws-samples/aws-service-catalog-reference-architectures)
 * [AWS Service Catalog - Getting Started](https://www.youtube.com/watch?v=A9kKy6WhqVA&t=318s)
 * [AWS re:Invent 2018: Streamlining Application Development with AWS Service Catalog (DEV328)](https://www.youtube.com/watch?v=jvAAiWxYQwg)
+* [AWS CloudFormation support for AWS Service Catalog products](https://aws.amazon.com/blogs/mt/how-to-launch-secure-and-governed-aws-resources-with-aws-cloudformation-and-aws-service-catalog/)
 
 
