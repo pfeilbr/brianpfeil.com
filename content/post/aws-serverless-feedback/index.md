@@ -88,7 +88,7 @@ Amplify suite of tools and services is helping in this area for easing the on-bo
 
 ### Challenge: Developer Experience (DX)
 
-The path to "serverless" adoption has shifted from the foundational technologies being in place to improving developer experience.  Everyone is sold on serverless being the right thing, now it's enabling it's usage ad making accessible to the huge pool of developers who only have experience with "traditional" application development.
+The path to "serverless" adoption has shifted from the foundational technologies being in place to improving developer experience.  Everyone is sold on serverless being the right thing, now it's enabling it's usage and making accessible to the huge pool of developers who only have experience with "traditional" application development.
 
 ### Suggestion: Developer Experience (DX)
 
