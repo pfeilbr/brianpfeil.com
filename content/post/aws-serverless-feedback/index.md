@@ -145,6 +145,8 @@ A challenge I've observed with serverless development, is slowed down iterative 
 
 ### Suggestion: Deployment Time
 
+Faster deployment times :)
+
 ---
 
 ## Lambda
