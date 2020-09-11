@@ -155,7 +155,7 @@ Faster deployment times :)
 
 Lambda has grown to have a lot of features and configuration options.  Lambda feature set is converging towards Fargate and vice versa.  There is already a decision to be made on which to choose.  This convergence could make it even more unclear which to pick.  Or if one goes away and they are merged, the migration path.
 
-### Suggestion: FaaS or Container Decision
+### Suggestion: Lambda or Container Decision
 
 * More tools similar to [Well-Architected](https://aws.amazon.com/architecture/well-architected/) to help decide.
 * Converge Lambda and Container functionality into single service
