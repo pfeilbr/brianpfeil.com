@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["aws"]
 date = 2020-03-29T09:40:13-04:00
-description = ""
+description = "short descriptions for key AWS Services"
 draft = false
 slug = "aws-services"
 tags = ["aws"]
