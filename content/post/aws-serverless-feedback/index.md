@@ -116,7 +116,7 @@ Building an effective CI/CD pipeline at a large enterprise involves leveraging n
 
 This leads to "lowest common denominator" pipelines that don't meet the vision of CI/CD.  They are dependant on the availability of adapters/integrations/etc. for specific clouds that the cloud agnostic tools provide.
 
-AWS has a corresponding solution for each of these that eases building a CI/CD pipeline when the target is AWS.  Integrated security via IAM threaded through all the service interactions is the biggest win as security is usually the sticking point.  We lose "potential" value as a result of using these non-AWS equivalents over the flexibility it provides the company to support it's current multi-cloud (aws+azure) position.
+AWS has a corresponding solution for each of these that eases building a CI/CD pipeline when the target is AWS.  Integrated security via IAM threaded through all the service interactions is the biggest win as security is usually the sticking point.  We lose "potential" value as a result of using these non-AWS equivalents over the flexibility it provides the company to support it's current multi-cloud (aws,azure,gcp, etc.) position.
 
 
 ### Suggestion: Non-AWS Core Enterprise Tools
