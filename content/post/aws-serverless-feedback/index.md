@@ -7,7 +7,7 @@ lastmod = "2020-09-11"
 draft = false
 categories = []
 tags = ["aws", "serverless"]
-summary = ""
+summary = "Feedback on serverless usage on AWS.  Based on working with and observations of the teams that leverage the set of AWS serverless services."
 
 +++
 
