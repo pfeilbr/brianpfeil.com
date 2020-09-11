@@ -225,7 +225,7 @@ Feels vendor lockin-y, but traded for the auto provisioned DB, configurable secu
 
 ### Suggestion: GraphQL Centered Development Learning Curve
 
-Looking at other tech of the past and their evolution, community standardization around GraphQL managed services would be the next likely step.  The value AppSync provides is much more than graphql itself.  It builds on the benefit of the schema via tooling like Amplify CLI for strong typing, auto provision storage backend (AWS graphql directives), client-side code generation, etc.  All these things are AWS specific and don't yet have standards or a generalized community name.  Maybe they never will, and it's similar to DynamoDB as a unique only at AWS cloud differentiating super-service, but if not, AWS could be a part of that future body and drive standardization along with other cloud vendors.
+Looking at other tech of the past and their evolution, community standardization around GraphQL managed services would be the next likely step.  The value AppSync provides is much more than graphql itself.  It builds on the benefit of the schema via tooling like Amplify CLI for strong typing, auto provision storage backend (AWS graphql directives), client-side code generation, etc.  All these things are AWS specific and don't yet have standards or a generalized community name.  Maybe they never will, and it's similar to DynamoDB as a unique **only at AWS cloud differentiating super-service**, but if not, AWS could be a part of that future body and drive standardization along with other cloud vendors.
 
 ---
 
