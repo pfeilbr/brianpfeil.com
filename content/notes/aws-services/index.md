@@ -5,6 +5,7 @@ type: "page"
 date: 2020-03-29T09:40:13-04:00
 subtitle: ""
 image: ""
+draft: true
 tags: ["aws"]
 ---
 
