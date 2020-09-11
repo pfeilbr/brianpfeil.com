@@ -112,7 +112,7 @@ This has similarities and maybe could leverage X-Ray distributed traces + the al
 
 ### Challenge: Non-AWS Core Enterprise Tools
 
-Building an effective CI/CD pipeline at a large enterprise involves leveraging non-enterprise tooling. For example, Bitbucket, Jenkins, and Artifactory.
+Building an effective CI/CD pipeline at a large enterprise involves leveraging non-AWS already established tooling. For example, Bitbucket, Jenkins, and Artifactory.
 
 This leads to "lowest common denominator" pipelines that don't meet the vision of CI/CD.  They are dependant on the availability of adapters/integrations/etc. for specific clouds that the cloud agnostic tools provide.
 
