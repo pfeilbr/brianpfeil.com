@@ -74,7 +74,7 @@ Feedback on serverless usage on AWS.  Based on working with and observations of 
 
 Serverless skill set has less to do with coding and more knowing the capabilities of each service and how they can be integrated and composed together.  The role of the architect becomes central to building effective serverless solutions.  This is increasingly so, because the integrations between services are trending more towards configuration over code.
 
-"Traditional" application developers see the next step as containers because it familiar / closer to what they're used to (long-lived processes running on an OS vs. a transient run-time environment).  It's hard to make the leap directly to serverless and bypass the containers and k8s space.
+"Traditional" application developers see the next step as containers because it's familiar / closer to what they're used to (long-lived processes running on an OS vs. a transient run-time environment).  It's hard to make the leap directly to serverless and bypass the containers and k8s space.
 
 ### Suggestion: Skill Set / Developer Accessibility
 
