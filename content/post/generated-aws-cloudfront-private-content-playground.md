@@ -34,6 +34,12 @@ This infrastructure provisioning and deployment pipeline performs an atomic depl
 
 ---
 
+## Architecture
+
+![](private-static-content-hosting-aws-system-architecture.png)
+
+---
+
 ## Prerequisites
 
 * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) - [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) with AWS credentials
@@ -532,6 +538,7 @@ PHNhbWxwOlJlc3BvbnNlIHhtbG5zOnNhbWxwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJv
 
 ## TODO
 
+* add cypress tests for production and staging (basic-auth) logins/logouts, static content verify, dynamic api verify.
 * add standard set of cw alarms for 4xx and 5xx thresholds.  make thresholds configurable via cfn params.  create cw dashboard from these.
 * add architecture diagram to README.md
 * remove `IncludeBody: true` from template.yaml
@@ -555,7 +562,7 @@ PHNhbWxwOlJlc3BvbnNlIHhtbG5zOnNhbWxwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJv
 * ~~add cognito authorizer to api gateway `/api/` endpoint.~~
   * ~~[Include the identity token in the Authorization header](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-invoke-api-integrated-with-cognito-user-pool.html)~~
 * ~~store id_token and refresh_token in local storage.  delete on logout~~
-
+* ~~fix https://staging.allthecloudbits.com/.  move hard coded `src/lambda/basic-auth/index.js:UsersSecret` to SSM parameter store.  secret gets created on every deploy~~
 
 ---
 
