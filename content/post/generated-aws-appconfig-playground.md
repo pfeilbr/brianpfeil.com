@@ -23,28 +23,49 @@ learn [AWS AppConfig](https://docs.aws.amazon.com/appconfig/latest/userguide/wha
 
 > create, manage, and quickly deploy application configurations. AWS AppConfig supports controlled deployments to applications of any size and includes built-in validation checks and monitoring. You can use AWS AppConfig with applications hosted on EC2 instances, AWS Lambda, containers, mobile applications, or IoT devices.
 
+
+
 ## Concepts
+
+**Domain**
 
 * Application (myapp)
 * Environment (dev, test, demo, prod)
-* Configuration Profile - actual configuration.  text, json, yaml, S3 object, SSM Document, SSM Parameter, CodePipeline
-* Deployment
+* Configuration Profile - versioned configuration data.  text, json, yaml, S3 object, SSM Document, SSM Parameter, CodePipeline
+* Deployment - types: `AllAtOnce`, `Linear50PercentEvery30Seconds`, `Canary10Percent20Minutes`
+
+**Functional**
+
+* deploy configuration changes from a central location
+* rules to validate your configuration. configurations that aren't valid can't be deployed.
+    * validation types: JSON schema, Lambda. see [About validators](https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-creating-configuration-and-profile-validators.html)
+
+
+---
+
+## Example(s)
 
 get configuration via cli
 ```sh
 aws appconfig get-configuration \
---application 'app01' \
---environment 'dev' \
---configuration 'config-profile-01' \
---client-id 'test' \
-appconfig.json
+    --application 'app01' \
+    --environment 'dev' \
+    --configuration 'config-profile-01' \
+    --client-id 'test' \
+    appconfig.json
 
+# view results in specified output file `appconfig.json`
 cat appconfig.json
 ```
 
 output
 
 ![](https://www.evernote.com/l/AAEqjn5qdblEL5J0kWjsMG2g4OkInAN-hOkB/image.png)
+
+---
+
+## AWS Console Screenshots
+
 
 Configuration profile source types
 

@@ -12,25 +12,26 @@ display_usage() {
     echo -e "USAGE"
     echo -e "\t$ site [COMMAND]\n"
     echo -e "COMMANDS"
+    echo -e "\tsite run-local"
     echo -e "\tsite publish [-m commit_message]"
     echo -e "\tsite post [-t title]"
     echo -e "\tsite generate-posts-from-repos"
-    
+
 }
 
-# if less than two arguments supplied, display usage 
-if [  $# -le 0 ] 
-then 
+# if less than two arguments supplied, display usage
+if [  $# -le 0 ]
+then
     display_usage
     exit 1
-fi 
- 
-# check whether user had supplied -h or --help . If yes display usage 
-if [[ ( $# == "--help") ||  $# == "-h" ]] 
-then 
+fi
+
+# check whether user had supplied -h or --help . If yes display usage
+if [[ ( $# == "--help") ||  $# == "-h" ]]
+then
     display_usage
     exit 0
-fi 
+fi
 
 PARAMS=""
 
@@ -57,7 +58,7 @@ while (( "$#" )); do
         echo "Error: Argument for $1 is missing" >&2
         exit 1
       fi
-      ;;      
+      ;;
     -*|--*=) # unsupported flags
       echo "Error: Unsupported flag $1" >&2
       exit 1
@@ -78,6 +79,19 @@ CMD="${1}"
 # echo "MY_FLAG_ARG=${MY_FLAG_ARG}"
 # echo "MESSAGE=${MESSAGE}"
 # echo "TITLE=${TITLE}"
+
+runLocal() {
+  pushd "${SITE_DIRECTORY_PATH}"
+  make dev &
+  popd
+  sleep 3
+  open "http://localhost:1313"
+  echo -e "press any key to stop server ..."
+  read REPLY
+  cmd='killall "hugo"'
+  echo -e "${cmd}\n"
+  eval "${cmd}"
+}
 
 publish() {
 	printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
@@ -153,6 +167,9 @@ generatePostsFromRepos() {
 }
 
 case "${CMD}" in
+run-local)
+  runLocal
+  ;;
 publish)
 	publish
 	;;
