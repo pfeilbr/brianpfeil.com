@@ -21,10 +21,7 @@
 
 ```sh
 # start local hugo dev server.  live reload on change.
-make dev
-
-# visit local site
-open http://localhost:1313/
+site run-local # will automatically open local server @ http://localhost:1313/
 
 # create new post. *remember to change front matter `draft=false` to publish*
 site post -t 'hello post'
