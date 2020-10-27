@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["Python", "playground"]
 date = 2020-10-27
 description = ""
 summary = " "
@@ -50,6 +50,18 @@ who, what, when, or where questions.
 * Enterprise
 
 You specify `Edition: DEVELOPER_EDITION | ENTERPRISE_EDITION` when you create an index
+
+---
+
+## Creating Example Index
+
+see [`main.py`](main.py)
+
+```sh
+sam deploy --guided
+# copy outputs into `.env`
+python main.py
+```
 
 ## Resources
 
