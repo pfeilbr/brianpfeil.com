@@ -35,6 +35,7 @@ Control Tower is the composition of many AWS services
 * Guardrails - two kinds of guardrails exist: preventive (block) and detective (after the fact notification of non-compliance)
     * implemented as [AWS Config](https://docs.aws.amazon.com/en_pv/config/index.html) - monitor for compliance
 * [Service Catalog](https://docs.aws.amazon.com/servicecatalog/) - self-service provisioning of cloud products
+* [AWS landing zone](https://aws.amazon.com/solutions/implementations/aws-landing-zone/) is a solution that helps customers more quickly set up a secure, multi-account AWS environment based on AWS best practices.
 
 ## Resources
 
