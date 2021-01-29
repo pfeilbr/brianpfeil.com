@@ -72,6 +72,26 @@ az role assignment list --assignee 'dev01@brianpfeilgmail.onmicrosoft.com'
 # list role assignments for user (object id)
 az role assignment list --assignee '38d35c72-5a26-464c-bbb3-c4487a1d4779'
 
+# list role assignments for service principal
+az role assignment list --assignee "http://service-principal-01"
+
+# reset service principal password.  if you forgot or lost it, this is the only way to get it.
+az ad sp credential reset --name "http://service-principal-01"
+
+# output
+# {
+#   "appId": "00133c8e-a08e-490e-ae7c-872ea2debf1e",
+#   "name": "http://service-principal-01",
+#   "password": "09tGSBcRsl_Gml7DI7VkRniFu_r_xxxxxx",
+#   "tenant": "b0579be4-503f-48ca-9bd2-ca22100857dd"
+# }
+
+# login with service principal
+az login --service-principal --username "http://service-principal-01" --password "09tGSBcRsl_Gml7DI7VkRniFu_r_xxxxxx" --tenant "b0579be4-503f-48ca-9bd2-ca22100857dd"
+
+# show service principal details
+az ad sp show --id "http://service-principal-01"
+
 # create resource group
 az group create --name "group01" --location eastus
 

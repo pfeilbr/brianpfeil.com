@@ -35,6 +35,12 @@ sam local invoke --force-image-build
 # start local api endpoint
 sam local start-api --force-image-build
 curl http://127.0.0.1:3000/
+
+# deploy
+sam deploy --guided
+
+# run lambda behind api gateway endpoint
+curl https://hl6u5bubr4.execute-api.us-east-1.amazonaws.com/Prod/
 ```
 
 ## Resources
