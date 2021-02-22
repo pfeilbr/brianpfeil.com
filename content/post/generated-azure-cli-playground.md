@@ -28,6 +28,9 @@ az -v
 # help
 az -h
 
+# find examples
+az find "az functionapp list"
+
 # interactive login
 az login
 
@@ -38,6 +41,8 @@ az logout
 
 az account show
 az account show | jq '.tenantId'
+
+TENANT_ID=$(az account show --query tenantId --output tsv)
 
 az account list
 az account get-access-token
@@ -62,6 +67,9 @@ az ad sp create-for-rbac
 
 # list service principals
 az ad sp list
+
+# list service principals with subset of properties
+az ad sp list --query "[].{id:appId, tenant:appOwnerTenantId, name:displayName}"
 
 # list role assignments for service principal
 az role assignment list --assignee 'http://azure-cli-2019-05-09-16-09-40'
@@ -89,8 +97,28 @@ az ad sp credential reset --name "http://service-principal-01"
 # login with service principal
 az login --service-principal --username "http://service-principal-01" --password "09tGSBcRsl_Gml7DI7VkRniFu_r_xxxxxx" --tenant "b0579be4-503f-48ca-9bd2-ca22100857dd"
 
+# get access token (bearer)
+# NOTE: must be logged in with `service-principal-01` above for this example
+# or may need to add client id to authorize application.  see following screenshot
+# <https://www.evernote.com/l/AAFJLMG88QhDgqehvtS8P-qkVuCcmFFUhCMB/image.png>
+ACCESS_TOKEN=$(az account get-access-token --resource 'https://brianpfeilmyfn01.azurewebsites.net')
+
+
+# call endpoint protected by azure ad.  e.g. functions function endpoint
+curl --header "Authorization: Bearer ${ACCESS_TOKEN}" https://brianpfeilmyfn01.azurewebsites.net/api/HttpExample
+
 # show service principal details
 az ad sp show --id "http://service-principal-01"
+
+# get access token (Bearer) that can be used as `Authorization` header
+# current user
+az account get-access-token
+
+# for specific resource
+az account get-access-token --resource 'https://vault.azure.net'
+
+# list app registrations
+az ad app list --query '[].{displayName: displayName}' --output table
 
 # create resource group
 az group create --name "group01" --location eastus
