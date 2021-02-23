@@ -4,7 +4,7 @@ categories = ["JavaScript", "playground"]
 date = 2015-10-15
 description = ""
 summary = " "
-draft = false
+draft = true
 slug = "cordova"
 tags = ["mobile","ios","framework",]
 title = "Cordova"
@@ -46,10 +46,10 @@ To ensure the salesforce [JSforce](https://jsforce.github.io/) javascript librar
 2. For iOS 9 and above, apple introduced [App Transport Security](https://blog.nraboy.com/2015/10/fix-ios-9-app-transport-security-issues-in-apache-cordova/).  It can be fixed by adding the following to `Info.plist`
 
   ```xml
-  <key>NSAppTransportSecurity</key>  
-  <dict>  
+  <key>NSAppTransportSecurity</key>
+  <dict>
       <key>NSAllowsArbitraryLoads</key>
-      <true />  
+      <true />
   </dict>
   ```
 
@@ -61,7 +61,7 @@ To ensure the salesforce [JSforce](https://jsforce.github.io/) javascript librar
   <!--
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
   -->
-  ``` 
+  ```
 
 5. Run the following to rebuild and show in simulator
 
