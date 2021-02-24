@@ -4,7 +4,7 @@ categories = ["JavaScript", "playground"]
 date = 2020-08-10
 description = ""
 summary = " "
-draft = false
+draft = true
 slug = "aws-cloudfront-private-content"
 tags = ["aws","cloudfront",]
 title = "AWS CloudFront Private Content"
@@ -52,7 +52,7 @@ This infrastructure provisioning and deployment pipeline performs an atomic depl
 ## Infrastructure Provisioning Steps
 
 1. manually create a [public route 53 hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/AboutHZWorkingWith.html) for your domain name (e.g. `mydomain.com`)
-1. update `DOMAIN_NAME` parameter in [`./run.sh`](./run.sh) with the hosted zone name 
+1. update `DOMAIN_NAME` parameter in [`./run.sh`](./run.sh) with the hosted zone name
 1. provision aws resources `./run.sh deploy-infrastructure`
 1. Check [ACM in AWS Console](https://console.aws.amazon.com/acm/home) to confirm Certificate validation via DNS validation has completed.  May need to add [DNS validation records to route 53 hosted zone](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html).
 1. update audience in SAML IdP with UserPool Id
@@ -67,7 +67,7 @@ This infrastructure provisioning and deployment pipeline performs an atomic depl
 ## Website Content Publishing From Local Machine Steps
 
 1. update website content in [`public`](public) directory
-1. run one of the following deployment commands: 
+1. run one of the following deployment commands:
     ```sh
     # format
     ./run.sh publish-content staging|prod [--blue-green-publish] [--apply-routing-rules] [--invalidate-cloudfront-cache]
@@ -89,7 +89,7 @@ This infrastructure provisioning and deployment pipeline performs an atomic depl
       ./run.sh open-website staging
       ./run.sh open-website production
       ```
-  
+
 ## Website Content Publishing via Commit Steps
 
 1. ensure you have `develop` branch checked out *(this corresponds to staging environment)*
@@ -542,7 +542,7 @@ PHNhbWxwOlJlc3BvbnNlIHhtbG5zOnNhbWxwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJv
 * add standard set of cw alarms for 4xx and 5xx thresholds.  make thresholds configurable via cfn params.  create cw dashboard from these.
 * add architecture diagram to README.md
 * remove `IncludeBody: true` from template.yaml
-* package as Serverless Application Repository 
+* package as Serverless Application Repository
 * package as [AWS Service Catalog](https://aws.amazon.com/servicecatalog/) product using CloudFormation.  See [AWS CloudFormation support for AWS Service Catalog products | AWS Management & Governance Blog](https://aws.amazon.com/blogs/mt/how-to-launch-secure-and-governed-aws-resources-with-aws-cloudformation-and-aws-service-catalog/)
 
 ## Completed
@@ -618,7 +618,7 @@ ApiGatewayApi:
     Cors:
       AllowMethods: "'POST,GET,PUT,DELETE'"
       AllowHeaders: "'*'"
-      AllowOrigin: "'*'"    
+      AllowOrigin: "'*'"
     Auth:
       Authorizers:
         CognitoUserPoolAuth:
@@ -631,7 +631,7 @@ const getConfig = async (key) => {
 
   if (config === null) {
     const resp = await fetch('/login/config.json')
-    config = await resp.json()    
+    config = await resp.json()
   }
 
   const item = config.filter((item) => (item.OutputKey === key)  )
