@@ -14,6 +14,10 @@ layout = "page"
 * AWS
 * Azure
 
+### Cloud Solutions Architect
+
+
+
 ### Veeva
 
 * Architect for US sales implementation
@@ -70,7 +74,7 @@ developer and technical lead
 * VB6
 * DHTML
 * ms-access db then MS-SQL Server
-  
+
 ### Sample Signature Control
 
 developer and technical lead
