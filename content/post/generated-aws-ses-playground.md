@@ -33,13 +33,14 @@ learn [Simple Email Service (Amazon SES)](https://aws.amazon.com/ses/)
 * send emails via SMTP or API (AWS CLI, [AWS SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SES.html#sendEmail-property))
 * connect to a URL that provides an endpoint for the Amazon SES API or SMTP interface (e.g. email-smtp.us-east-1.amazonaws.com:587)
 * DKIM support - DKIM works by adding a digital signature to the headers of an email message. This signature can then be validated against a public cryptographic key that is located in the organization's DNS record
-* SPF support - SPF establishes a method for receiving mail servers to verify that incoming email from a domain was sent from a host authorized by that domain’s administrators
+* SPF support - SPF establishes a method for receiving mail servers to verify that incoming email from a domain was sent from a host authorized by that domain’s administrators. TXT record `"v=spf1 include:amazonses.com ~all"`
 * IAM to control user access to email sending (e.g. `ses:SendEmail`)
 * Configuration sets - groups of rules that you can apply to the emails you send using Amazon SES.  can publish email sending events to CWL, Firehose, SNS
 * Event types - Send, Reject, Delivery, Bounce, Complaint, Click  Open  Rendering Failure
 * store inbound emails in S3
 * trigger lambdas based on inbound emails
 * publish your email sending events to CWLs or kinesis firehose
+* Sending personalized email via email templates.  templates contain placeholder values.  based on Handlebars template system
 * list management
     * customers can manage their own mailing lists, known as contact lists.
     * can create topics, associate topic preferences to a contact and specify `OPT_[IN|OUT]` for the topic.
@@ -55,6 +56,7 @@ learn [Simple Email Service (Amazon SES)](https://aws.amazon.com/ses/)
     * send a maximum of 200 messages per 24-hour period
     * send a maximum of 1 message per second
 * need to [request production access](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/request-production-access.html?icmpid=docs_ses_console) to move out of sandbox
+* VPC endpoint support - see [New – Amazon Simple Email Service (SES) for VPC Endpoints](https://aws.amazon.com/blogs/aws/new-amazon-simple-email-service-ses-for-vpc-endpoints/)
 
 ---
 
