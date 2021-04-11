@@ -180,11 +180,11 @@ hierarchical nesting (parent), etc.
 # Future Possibilities
 
 There currently is a "locality of code" issue with CDK, SAM, CFN, etc.  The infrastructure I define is not close to
-the application code that leverages it (e.g. lambda code living in separate file, referencing it via s3://.zip).
+the application code that leverages it (e.g. lambda code living in separate file, referencing it via `s3://.zip`).
 Explicit IAM permissions (or what could be codegened) live only in infra code.  Application code events expressed in
 code seamlessly leveraging EventBridge for example without the developer needing to do any additional work.  Would be
 a step towards a "cloud native programming language" where the programming language control constructs naturally scale
-and map to corresponding services (e.g. control flow -> step fn, events -> EventBride,
+and map to corresponding services (e.g. control flow -> step fn, events -> EventBridge,
 lambdas (lang level) -> lambdas :))
 
 # Implementation Plan
