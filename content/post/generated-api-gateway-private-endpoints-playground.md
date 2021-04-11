@@ -21,6 +21,7 @@ truncated = true
 
 learn API Gateway private endpoints
 
+![](https://www.evernote.com/l/AAGwfzGWmcBKyavQg5roa4luW4ud_iUkA_wB/image.png)
 ## Setup Steps
 
 configure API Gateway private endpoint that leverages HTTP proxy integration.  Test via lambda with VPC config that issues HTTP GET request to vpc endpoint.

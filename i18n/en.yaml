@@ -1,2 +1,2 @@
 - id: postedOnDate
-  translation: " {{ .Count }}"
+  translation: " {{ . }}"
