@@ -27,6 +27,7 @@ params:
   #favicon: "img/favicon.ico"
   commit: false
   rss: true
+  rssLimit: 500
   comments: true
   useHLJS: true
   socialShare: true
