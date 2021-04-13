@@ -578,6 +578,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 * e.g. can log all events in account including CloudTrail to CloudWatch Log Group
 * put events - 2400 requests per second per region
 * AWS service rule [targets](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html)
+* at-least-once event delivery to targets (ensure idempotent behavior)
+* no ordering guarantees
 * [schema registry](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-schemas.html) - helps with managing and versioning event schemas for evolution.  Codegen code for handling events in various languages.  can auto discover schemas by observing events on the bus.  based on json schema
 * invocation quota -  4500 requests per second per region (invocation is an event matching a rule and being sent on to the rule’s targets)
 * DLQ
@@ -593,6 +595,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * kafka alternative
 * partition key
 * shard count
+* ordering guaranteed for messages per shard
 * lambda - lambda polls per shard
     * batch size
     * batch window
