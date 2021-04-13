@@ -11,107 +11,187 @@ summary = "short descriptions for key AWS Services"
 
 +++
 
-> A quick reference for key AWS services and what they do
+# AWS Services
 
-<!-- TOC -->
+The following services are commonly used for AWS solutions.  Each service specifies key considerations and features per service for architecture and design.
 
-- [Networking and Content Delivery](#networking-and-content-delivery)
-  - [VPC](#vpc)
-  - [ELB/ALB](#elbalb)
-  - [VPC Endpoint](#vpc-endpoint)
-  - [Route 53](#route-53)
-  - [Cloud Map](#cloud-map)
-  - [Global Accelerator](#global-accelerator)
-  - [CloudFront](#cloudfront)
-  - [API Gateway](#api-gateway)
-  - [AppSync](#appsync)
-- [Compute](#compute)
-  - [EC2](#ec2)
-  - [ECS](#ecs)
-  - [Fargate](#fargate)
-  - [Batch](#batch)
-  - [EKS](#eks)
-  - [LightSail](#lightsail)
-  - [Elastic Beanstalk](#elastic-beanstalk)
-  - [Lambda](#lambda)
-  - [Lambda@Edge](#lambdaedge)
-- [Storage](#storage)
-  - [S3](#s3)
-  - [Glacier](#glacier)
-  - [EFS (Elastic File System)](#efs-elastic-file-system)
-  - [FSx for Windows File Server](#fsx-for-windows-file-server)
-  - [EBS](#ebs)
-  - [Transfer](#transfer)
-- [Database](#database)
-  - [DynamoDB](#dynamodb)
-  - [DocumentDB (MongoDB compatibility)](#documentdb-mongodb-compatibility)
-  - [RDS](#rds)
-  - [Redshift](#redshift)
-  - [ElastiCache](#elasticache)
-  - [ElasticSearch](#elasticsearch)
-  - [Neptune](#neptune)
-  - [Timestream](#timestream)
-  - [Cloud Directory](#cloud-directory)
-  - [SSM Parameter Store](#ssm-parameter-store)
-- [Application Integration](#application-integration)
-  - [Step Functions](#step-functions)
-  - [SNS](#sns)
-  - [SQS](#sqs)
-  - [EventBridge](#eventbridge)
-  - [Kinesis](#kinesis)
-- [Analytics](#analytics)
-  - [Kinesis Data Analytics](#kinesis-data-analytics)
-  - [Pinpoint](#pinpoint)
-  - [EMR](#emr)
-  - [Data Pipelines](#data-pipelines)
-  - [Glue](#glue)
-  - [Athena](#athena)
-  - [QuickSight](#quicksight)
-  - [Lake Formation](#lake-formation)
-- [Management & Governance](#management--governance)
-  - [Control Tower](#control-tower)
-  - [Organizations](#organizations)
-  - [CloudFormation](#cloudformation)
-  - [Service Catalog](#service-catalog)
-  - [Config](#config)
-  - [CloudWatch Logs](#cloudwatch-logs)
-    - [Resources](#resources)
-  - [CloudWatch Events](#cloudwatch-events)
-  - [CloudWatch Insights](#cloudwatch-insights)
-  - [CloudWatch Metrics](#cloudwatch-metrics)
-    - [Resources](#resources-1)
-  - [CloudWatch Alarms](#cloudwatch-alarms)
-  - [CloudTrail](#cloudtrail)
-- [Developer Tools](#developer-tools)
-  - [Cloud9](#cloud9)
-  - [CodeCommit](#codecommit)
-  - [CodeBuild](#codebuild)
-  - [CodeDeploy](#codedeploy)
-  - [CodePipeline](#codepipeline)
-  - [X-Ray](#x-ray)
-  - [Amplify](#amplify)
-- [Machine Learning](#machine-learning)
-  - [SageMaker](#sagemaker)
-  - [Comprehend](#comprehend)
-  - [Polly](#polly)
-  - [Rekognition](#rekognition)
-  - [Textract](#textract)
-  - [Translate](#translate)
-  - [Transcribe](#transcribe)
-  - [Forecast](#forecast)
-  - [Personalize](#personalize)
-  - [Lex](#lex)
-- [Security, Identity, and Compliance](#security-identity-and-compliance)
-  - [IAM](#iam)
-  - [Cognito](#cognito)
-  - [Secrets Manager](#secrets-manager)
-  - [WAF](#waf)
-  - [Firewall Manager](#firewall-manager)
-  - [Certificate Manager (ACM)](#certificate-manager-acm)
-  - [KMS](#kms)
-  - [Directory Service](#directory-service)
+* [AWS Services](#aws-services)
+    * [Serverless Services](#serverless-services)
+    * [Serverless Benefits](#serverless-benefits)
+    * [Relevant Patterns](#relevant-patterns)
+    * [Deployment Types](#deployment-types)
+    * [Networking and Content Delivery](#networking-and-content-delivery)
+        * [VPC](#vpc)
+        * [ELB/ALB](#elbalb)
+        * [PrivateLink / VPC Endpoint](#privatelink--vpc-endpoint)
+        * [Route 53](#route-53)
+        * [Cloud Map](#cloud-map)
+        * [Global Accelerator](#global-accelerator)
+        * [CloudFront](#cloudfront)
+        * [API Gateway](#api-gateway)
+        * [AppSync](#appsync)
+    * [Compute](#compute)
+        * [EC2](#ec2)
+        * [ECS](#ecs)
+        * [ECR](#ecr)
+        * [Fargate](#fargate)
+        * [Batch](#batch)
+        * [EKS](#eks)
+        * [LightSail](#lightsail)
+        * [Elastic Beanstalk](#elastic-beanstalk)
+        * [Lambda](#lambda)
+        * [Lambda@Edge](#lambdaedge)
+    * [Storage](#storage)
+        * [S3](#s3)
+        * [Glacier](#glacier)
+        * [EFS (Elastic File System)](#efs-elastic-file-system)
+        * [FSx for Windows File Server](#fsx-for-windows-file-server)
+        * [EBS](#ebs)
+        * [Transfer](#transfer)
+    * [Database](#database)
+        * [DynamoDB](#dynamodb)
+        * [DocumentDB (MongoDB compatibility)](#documentdb-mongodb-compatibility)
+        * [RDS](#rds)
+        * [Redshift](#redshift)
+        * [ElastiCache](#elasticache)
+        * [ElasticSearch](#elasticsearch)
+        * [Neptune](#neptune)
+        * [Timestream](#timestream)
+        * [Cloud Directory](#cloud-directory)
+        * [SSM Parameter Store](#ssm-parameter-store)
+    * [Application Integration](#application-integration)
+        * [AppFlow](#appflow)
+        * [Step Functions](#step-functions)
+        * [SNS](#sns)
+        * [SQS](#sqs)
+        * [SES](#ses)
+        * [EventBridge](#eventbridge)
+        * [Kinesis](#kinesis)
+    * [Analytics](#analytics)
+        * [Kinesis Data Analytics](#kinesis-data-analytics)
+        * [Pinpoint](#pinpoint)
+        * [EMR](#emr)
+        * [Data Pipelines](#data-pipelines)
+        * [Glue](#glue)
+        * [Glue DataBrew](#glue-databrew)
+        * [Athena](#athena)
+        * [QuickSight](#quicksight)
+        * [Lake Formation](#lake-formation)
+    * [Management & Governance](#management--governance)
+        * [Well-Architected Framework](#well-architected-framework)
+        * [Control Tower](#control-tower)
+        * [Organizations](#organizations)
+        * [CloudFormation](#cloudformation)
+        * [Serverless Application Repository (SAR)](#serverless-application-repository-sar)
+        * [Service Catalog](#service-catalog)
+        * [Config](#config)
+        * [AppConfig](#appconfig)
+        * [CloudWatch Logs](#cloudwatch-logs)
+        * [CloudWatch Events (see EventBridge)](#cloudwatch-events-see-eventbridge)
+        * [CloudWatch Insights](#cloudwatch-insights)
+        * [CloudWatch Metrics](#cloudwatch-metrics)
+        * [CloudWatch Alarms](#cloudwatch-alarms)
+        * [CloudWatch Synthetics (Canaries)](#cloudwatch-synthetics-canaries)
+        * [CloudTrail](#cloudtrail)
+    * [Developer Tools](#developer-tools)
+        * [Cloud9](#cloud9)
+        * [CodeCommit](#codecommit)
+        * [CodeBuild](#codebuild)
+        * [CodeDeploy](#codedeploy)
+        * [CodePipeline](#codepipeline)
+        * [CodeArtifact](#codeartifact)
+        * [X-Ray](#x-ray)
+        * [AWS CLI](#aws-cli)
+        * [Amplify](#amplify)
+        * [SAM (Serverless Application Model)](#sam-serverless-application-model)
+        * [CDK](#cdk)
+        * [AWS SDKs](#aws-sdks)
+    * [Machine Learning](#machine-learning)
+        * [SageMaker](#sagemaker)
+        * [Comprehend](#comprehend)
+        * [Polly](#polly)
+        * [Rekognition](#rekognition)
+        * [Textract](#textract)
+        * [Translate](#translate)
+        * [Transcribe](#transcribe)
+        * [Forecast](#forecast)
+        * [Personalize](#personalize)
+        * [Lex](#lex)
+        * [Kendra](#kendra)
+    * [Security, Identity, and Compliance](#security-identity-and-compliance)
+        * [IAM](#iam)
+        * [Cognito](#cognito)
+        * [Secrets Manager](#secrets-manager)
+        * [WAF](#waf)
+        * [Certificate Manager (ACM)](#certificate-manager-acm)
+        * [KMS](#kms)
+        * [Directory Service](#directory-service)
+    * [Media Services](#media-services)
+        * [Amazon Interactive Video Service](#amazon-interactive-video-service)
 
-<!-- /TOC -->
+## Serverless Services
+
+- [Route53](#route53)
+- [Global Accelerator](#global-accelerator)
+- [WAF](#waf)
+- [Cognito](#cognito)
+- [CloudFront](#cloudfront)
+- [API Gateway](#api-gateway)
+- [AppSync](#appsync)
+- [Amplify](#amplify)
+- [Lambda](#lambda)
+- [DynamoDB](#dynamodb)
+- [S3](#s3)
+- [SNS](#sns)
+- [SQS](#sqs)
+- [SES](#ses)
+- [Kinesis](#kinesis)
+- [EventBridge](#eventbridge)
+- [Step Functions](#step-functions)
+- [Athena](#athena)
+- [SSM Parameter Store](#ssm-parameter-store)
+- [Secrets Manager](#secrets-manager)
+- [AppConfig](#appconfig)
+- [AWS Config](#aws-config)
+- [CloudWatch Synthetics (Canaries)](#cloudwatch-synthetics-canaries)
+- [CloudWatch Metrics and Alarms](#cloudwatch-metrics-and-alarms)
+- [CloudWatch Logs](#cloudwatch-logs)
+- [CloudFormation](#cloudformation)
+- [Serverless Application Repository (SAR)](#serverless-application-repository-sar)
+- [SAM (Serverless Application Model)](#sam-serverless-application-model)
+- [CDK](#cdk)
+- [X-Ray](#x-ray)
+
+## Serverless Benefits
+
+* less things to own
+* less/no ops
+* costs - pay-per-use
+* elastic / limits scaling concerns
+* deliver value quicker
+* scale teams / org fit
+* durability - services built-in replication across AZs or regions
+* every service has soft limits for protection
+
+---
+
+## Relevant Patterns
+
+* event sourcing
+* circuit breaker - trip circuit to prevent downstream systems overload
+* load shedding - prevent backlog buildup
+* handle poison messages - prevent kinesis and dynamo streams from progressing
+* prevent distributed transactions.  e.g. lambda send job to SQS and stores status in dynamodb.  break it up.  lambda put job status in dynamo -> dynamo stream -> lambda send job to SQS
+* strangler - migrate from monolith to serverless.  e.g. DB - run RDS and dynamodb in parallel and update both for a period of time
+
+---
+
+## Deployment Types
+
+* all-at-once
+* blue/green
+* canary - traffic shift percentages with metrics
+* linear - changing the amount of traffic split to the new version incrementally according to a percentage that is provided when configured.
 
 ---
 
@@ -120,13 +200,16 @@ summary = "short descriptions for key AWS Services"
 ### VPC
 
 * virtual private cloud
-* Subnets, route tables, internet gateways, elastic ips, nat gateways, network ACLs, security groups
+* Subnets, route tables, internet gateways, elastic ips, nat gateways, network ACLs, security groups, prefix lists
 
 ### ELB/ALB
 
-* elastic (TCP) | application load balancer (http layer 7)
+* elastic (TCP)
+* ALB application load balancer (http layer 7) - Content-Based Routing
+* NLB network load balancer (tcp layer 4)
+* ELB elastic load balancer (tcp layer 4)
 
-### VPC Endpoint
+### PrivateLink / VPC Endpoint
 
 * connect to AWS services from VPC without going through internet
 * enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection
@@ -138,9 +221,17 @@ summary = "short descriptions for key AWS Services"
 ### Route 53
 
 * managed DNS
+* main service for reliability / DR
+* public and private domains (hosted zones)
+* route to aws services - CloudFront, API Gateway, ELB, RDS, S3 bucket, EC2, VPC Interface Endpoint
+* record sets, TTL
+* health checks
+* load balancing via DNS
+* routing policies - latency Based Routing, Geo DNS, Geoproximity, and Weighted Round Robin
 * domain registration
-* DNS / hosted zones
-* Traffic Flow makes it easy for you to manage traffic globally through a variety of routing types, including Latency Based Routing, Geo DNS, Geoproximity, and Weighted Round Robin
+* geo routing, geoproximity routing
+* alias record type (aws specific.  used for root/bare/naked domains)
+* [AWS Route53 — Cheat Sheet(In 2 Minutes)](https://medium.com/@kumargaurav1247/aws-route53-cheat-sheet-in-2-minutes-ada9b7f0fcb)
 
 ### Cloud Map
 
@@ -155,22 +246,55 @@ summary = "short descriptions for key AWS Services"
 ### CloudFront
 
 * CDN
-* edge / PoP locations.  traffic over AWS global infrastructure
-* [Restricting Access to Amazon S3 Content by Using an Origin Access Identity](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
+* POP / edge servers - traffic over AWS global infrastructure
+* price classes
+* ACM for TLS/SSL certs
+* cache policies.  cookie, headers, querystring, TTLs configs
+* [origin access identity](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
+* origin custom headers
+* signed URLs or cookies
+* origin groups - primary origin and a second origin to failover to
+* custom error responses - http error codes mapped to response page paths
+* georestrictions
+* lambda@edge - headers only requests, rewrite URLs, server-side rendering (SSR), auth, etc.
+* cache invalidations
+* non GET HTTP methods support.  must explicitly turn on support for PUT, POST, PATCH, etc.
+* WAF association
+* can point to Object Lambda Access Point
 
 ### API Gateway
 
+* REST API vs HTTP API (cost).  see [Choosing between HTTP APIs and REST APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html)
 * edge (cloudfront) and regional endpoints
 * API Keys
+* caching (memcached) (fixes cost based on time / no pay per use)
+* API Keys
 * Usage Plans / quotas
-* websockets
+* client certificates - ensure requests to backend are from APIG
+* throttles
+* timeout - 29s
+* request (POST) payload limits (10 MB).  no response size limits. (tested with proxy integration for 200 MB video file download)
+* auth - cognito, JWT, IAM (aws sigv4), custom lambda auth
+* OpenAPI / Swagger specs for payload validation
+* service integrations - no need for lambda glue in middle
+* velocity templates (vtl) - request/response mapping
 * custom domains
+* private endpoints
+* websockets
+* lambda integration.  point to lambda alias for deployments.
+* stages
+* mock integrations / responses
 
 ### AppSync
 
 * GraphQL managed service
 * integrates with Amazon DynamoDB, Amazon Elasticsearch, and Amazon Lambda
+* resolvers
+* resolver mapping templates via velocty (vtl)
 * Real-time subscriptions
+* aws specific graphql schema [`@directives`](https://docs.amplify.aws/cli/graphql-transformer/directives) for model (ddb), auth (cognito),
+* GraphiQL
+* javascript for vtl coming (2021-03-28)
 
 ---
 
@@ -178,13 +302,25 @@ summary = "short descriptions for key AWS Services"
 
 ### EC2
 
+* AMI
+* elastic IPs
+* ASGs (launch templates)
+* UserData - script to run on instance start
+* EC2 metadata service
+
 ### ECS
 
 * containers
+* task definitions
+
+### ECR
+
+* container registry
 
 ### Fargate
 
 * containers
+* task definitions
 * run containers without having to manage servers or clusters
 
 ### Batch
@@ -204,7 +340,34 @@ summary = "short descriptions for key AWS Services"
 
 ### Elastic Beanstalk
 
+* PaaS with language runtime + docker containers
+* heroku-like
+
 ### Lambda
+
+* synchronous vs asynchronous vs poll based/stream processing (poll based is sync. via event-source mappings)
+* memory - single knob for memory and CPU
+* DLQ
+* lambda destinations (only for async invokes)
+* reserved concurrency - concurrency allocated for a specific function. e.g. i always want fn X to be able to run 10 lambda invokes concurrently
+* provisioned concurrency - pre-warmed lambda instances / no cold starts.  good for latency sensitive needs
+    * can optionally use auto scaling to adjust on based on metrics and/or schedule.
+    * will spill over to on-demand scaling (lambda default)
+    * Provisioned Concurrency comes out of your regional concurrency limit
+* concurrent executions (throttles) - 1000 per account
+* timeout - 15min
+    * set code timeouts based on remaining invocation time provided in context
+* burst concurrency - 500 - 3000
+* burst - 500 new instances / min
+* poll based options (kinesis, dynamodb, SQS)
+    * on-failure destination (SNS or SQS)
+    * retry attempts
+    * max age of record - use to implement load shedding (prioritize newer messages)
+    * split batch on error
+    * concurrent batches per shard
+* service integrations - [Using AWS Lambda with other services - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html)
+* APIG -> lambda
+* ALB -> lambda
 
 ### Lambda@Edge
 
@@ -217,6 +380,15 @@ summary = "short descriptions for key AWS Services"
 ### S3
 
 * object/blob storage
+* versioned buckets
+* presigned URLs for private content (download or upload)
+* [S3 batch operations](https://docs.aws.amazon.com/AmazonS3/latest/dev/batch-ops-basics.html)
+* S3 select
+* [batch operations](https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-basics.html) - perform operation on list of objects specified in manifest.  e.g. lambda, copy, etc.
+* storage classes
+* S3 event notifications - notification destinations are SNS, SQS, lambda
+* replication - cross-region, same-region
+* [S3 object lambda](https://aws.amazon.com/blogs/aws/introducing-amazon-s3-object-lambda-use-your-code-to-process-data-as-it-is-being-retrieved-from-s3/) - process data retrieved from S3 with lambda before returning it to an application. lambda calls [`writeGetObjectResponse`](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#writeGetObjectResponse-property) to send modified object contents back to `GET` request.  Create S3 Access Point, then Object Lambda Access Point.
 
 ### Glacier
 
@@ -227,6 +399,7 @@ summary = "short descriptions for key AWS Services"
 * elastic file system for Linux-based workloads for use with AWS Cloud services and on-premises resources.
 * can mount as NFS v4
 * e.g. shared file system.  many EC2 instances can mount same efs file system.
+* can mount to lambda local filesystem
 
 ### FSx for Windows File Server
 
@@ -248,6 +421,23 @@ summary = "short descriptions for key AWS Services"
 
 ### DynamoDB
 
+* concepts - tables, items, queries, scans, indexes
+* global tables - for resilient active-active architectures
+* DAX - DynamoDB Accelerator - in memory cache in front
+* GSI (Global Secondary Indexes), LSI (Local Secondary Indexes)
+* transactions
+* throttles
+* point-in-time recovery (PITR)
+* streams - 24hr data retention.  poison messages (retry until success - can cause backlog)
+* partition key - distribute data among nodes to minimize hot partitions
+* TTL - can the data be removed automatically
+* parallelization factor for DDB streams processed by lambda
+* single table designs
+* fine grained item (`dynamodb:LeadingKeys`) and attribute level IAM (`dynamodb:Attributes`).  enables multi-tenant isolation.
+* [Amazon DynamoDB Encryption Client](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/what-is-ddb-encrypt.html)
+* [PartiQL - A SQL-Compatible Query Language for Amazon DynamoDB - Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ql-reference.html)
+* [dynamodb table export to s3](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DataExport.html)
+
 ### DocumentDB (MongoDB compatibility)
 
 ### RDS
@@ -260,9 +450,13 @@ summary = "short descriptions for key AWS Services"
 
 ### ElastiCache
 
-* redis and memcached
+* managed redis and memcached
 
 ### ElasticSearch
+
+* cluster
+* kibana - integrated with IAM
+* IAM for granular es api operations
 
 ### Neptune
 
@@ -285,30 +479,135 @@ summary = "short descriptions for key AWS Services"
 
 ## Application Integration
 
+### AppFlow
+
+* managed integration (ETL) service
+* securely transfer data between SaaS applications (Salesforce, Marketo, Slack, etc.), and AWS services (S3, Redshift, EventBridge, etc.)
+* concepts - flow, source, destination, flow trigger (on demand, event, schedule), map fields from source to destination (formula transforms, value validations), filters (determine records to transfer)
+* Flow notifications - flow start|complete|deactivated events sent to CloudWatch Events/EventBridge (`"source": "aws.appflow"`)
+* security
+    * encryption at rest - connection data stored in secrets manger using AWS managed or Customer managed CMK
+    * Encryption in Transit (TLS 1.2) - choose either an AWS managed CMK or a customer managed CMK. When executing a flow, Amazon AppFlow stores data temporarily in an intermediate S3 bucket and encrypts it using this key. This intermediate bucket is deleted after 24 hours, using a bucket lifecycle policy.
+* [Actions defined by Amazon AppFlow](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonappflow.html#amazonappflow-actions-as-permissions)
+
 ### Step Functions
 
-orchestration with many built-in integrations to aws services
+* Standard Workflows vs Express Workflows
+* orchestration with many built-in integrations to aws services
+* saga pattern for rollback
+* parallel map opportunities - run tasks in parallel
+* [service integrations](https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html#welcome-integrations) - request/response, run a job (`.sync`), callback with task token (`.waitForTaskToken`)
 
 ### SNS
 
 * pub/sub
 * message filtering with subscription
 * push notifications
+* standard topic
+    * at least once delivery
+    * best effort ordering - ensure downstream consumers are idempotent
+* FIFO topic
+    * strict ordering
+    * Strict deduplication: Duplicate messages aren't delivered.
+    * Deduplication happens within a 5-minute interval, from the message publish time.
+* fan out
+* subscription filters
+* destination types
+    * SQS
+    * lambda
+    * http/s
+    * mobile push notifications
+    * SMS messages
+    * email
+* DLQ configuration
+* KMS encryption
 
 ### SQS
 
 * managed message queuing service
+* batch size - batch fails as unit
+* visibility timeout - set to 6x lambda timeout
+* message retention period
+* delivery delay - max 15min
+* types - standard vs FIFO
+    * standard - at least once delivery.  need to ensure idempotent
+    * FIFO - strict ordering.  exactly-once processing
+* alarm on queue depth
+* KMS encryption
+* [DLQ](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html) for redrive for messages that can't be delivered to target SQS queue
+
+### SES
+
+* send or receive emails
+* verify domain (DNS txt) and/or email addresses (confirmation email) - verify that you own the email address or domain that you plan to send from
+* understand [Service quotas](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/quotas.html)
+* max message size - 10 MB per message (after base64 encoding).
+* sending identity - domain or an email address
+* send emails via SMTP or API (AWS CLI, [AWS SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SES.html#sendEmail-property))
+* connect to a URL that provides an endpoint for the Amazon SES API or SMTP interface (e.g. email-smtp.us-east-1.amazonaws.com:587)
+* DKIM support - DKIM works by adding a digital signature to the headers of an email message. This signature can then be validated against a public cryptographic key that is located in the organization's DNS record
+* SPF support - SPF establishes a method for receiving mail servers to verify that incoming email from a domain was sent from a host authorized by that domain’s administrators
+* IAM to control user access to email sending (e.g. `ses:SendEmail`)
+* Configuration sets - groups of rules that you can apply to the emails you send using Amazon SES.  can publish email sending events to CWL, Firehose, SNS
+* Event types - Send, Reject, Delivery, Bounce, Complaint, Click  Open  Rendering Failure
+* store inbound emails in S3
+* trigger lambdas based on inbound emails
+* publish your email sending events to CWLs or kinesis firehose
+* Sending personalized email via email templates.  templates contain placeholder values.  based on Handlebars template system
+* list management
+    * customers can manage their own mailing lists, known as contact lists.
+    * can create topics, associate topic preferences to a contact and specify `OPT_[IN|OUT]` for the topic.
+* Global Suppression List
+    * includes a global suppression list. When any Amazon SES customer sends an email that results in a hard bounce, Amazon SES adds the email address that produced the bounce to a global suppression list. The global suppression list is global in the sense that it applies to all Amazon SES customers. In other words, if a different customer attempts to send an email to an address that's on the global suppression list, Amazon SES accepts the message, but doesn't send it, because the email address is suppressed.
+    * enabled by default for all Amazon SES accounts. You can't disable it.
+* reputation dashboard to track bounce and complaint rates
+* Dedicated IP Addresses
+* IP pool management – If you lease dedicated IP addresses to use with Amazon SES, you can create groups of these addresses, called dedicated IP pools. You can then associate these dedicated IP pools with configuration sets
+* SES sandbox - all new accounts.
+    * only send mail to verified email addresses and domains
+    * only send mail from verified email addresses and domains
+    * send a maximum of 200 messages per 24-hour period
+    * send a maximum of 1 message per second
+* need to [request production access](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/request-production-access.html?icmpid=docs_ses_console) to move out of sandbox
+* VPC endpoint support - see [New – Amazon Simple Email Service (SES) for VPC Endpoints](https://aws.amazon.com/blogs/aws/new-amazon-simple-email-service-ses-for-vpc-endpoints/)
 
 ### EventBridge
 
 * pub/sub with many built-in integrations
 * integrate with external SaaS or any custom application
 * e.g. can log all events in account including CloudTrail to CloudWatch Log Group
+* put events - 2400 requests per second per region
+* AWS service rule [targets](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html)
+* [schema registry](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-schemas.html) - helps with managing and versioning event schemas for evolution.  Codegen code for handling events in various languages.  can auto discover schemas by observing events on the bus.  based on json schema
+* invocation quota -  4500 requests per second per region (invocation is an event matching a rule and being sent on to the rule’s targets)
+* DLQ
+* EventBridge resource policies
+* archive and replay events
+* IAM - resource-based and identity-based policies.  owner of EB resources (bus, rules, etc.) is an AWS root account.
+* supports sending and recieving events across accounts
+* [SaaS Partner Integrations](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-partner-event-bus.html)
 
 ### Kinesis
 
 * collect, process, and analyze real-time, streaming data
 * kafka alternative
+* partition key
+* shard count
+* lambda - lambda polls per shard
+    * batch size
+    * batch window
+    * parallelization factor
+        * Concurrent batches per shard – Process multiple batches from the same shard concurrently.
+    * enhanced fan-out via AWS::Kinesis::StreamConsumer.  each consumer gets 2 MiB per second for every shard you subscribe to.  can subscribe a max of 5 consumers per stream.
+    * Starting position - Latest, Trim horizon, At timestamp
+    * On-failure destination
+    * Retry attempts
+    * Maximum age of record – The maximum age of a record that Lambda sends to your function.
+    * Split batch on error
+* poison messages (retry until success - can cause backlog)
+* KMS
+* aggregate multiple records into one while staying under size limits to increase throughput. see <https://github.com/awslabs/kinesis-aggregation>
+* no autoscaling around shards.  requires management/ops.  consider SQS first as there's less to manage and see if it can meet the need
 
 ---
 
@@ -317,6 +616,12 @@ orchestration with many built-in integrations to aws services
 ### Kinesis Data Analytics
 
 analyze streaming data with SQL
+
+* real-time analysis
+* supports SQL applications (aws specific) and apache flink applications
+* concepts - application, input steam -> application code (SQL statements) -> output stream
+* time based windows.  tumbling windows.
+* pump
 
 ### Pinpoint
 
@@ -336,13 +641,37 @@ data processing workloads
 
 * catalog / metadata (hive metadata catalog)
 * crawlers autodiscover schema
-* [py]spark and scala
+* data stores
+* jobs
+* job types - Spark, Streaming ETL, and Python shell
+* languages - [py]spark and scala
+* concepts - Data Catalog, Classifier, Connection, Crawler, Database, Table, Dynamic Frame (extend spark RDD), Job, Transform, Trigger (time based or event)
+* glue notebook (Jupyter/Zeppelin) - interactive development and testing of your ETL scripts on a development endpoint
+* partitions
+* AWS Data Wrangler
+
+### Glue DataBrew
+
+* visual data preparation service
+* extract, clean, normalize, transform, combine, data at scale
+* target audience: non-technical Data Analyst
+* serverless.  pay for what you use
+* concepts
+  * datasets
+  * recipes - steps to apply/take on dataset
+  * job - recipe + dataset run
+  * project - visual workspace for working with data interactively.  can apply changes and visually see the results in UI.  you specify a sampling of the data to work with.
+
+![](https://www.evernote.com/l/AAG7ZKzRRblBGakFLIWEBGTrsChbY2sRNlkB/image.png)
 
 ### Athena
 
+* serverless querying of S3 data
+* federated query - run SQL queries across data stored in relational, non-relational, object, and custom data sources.
+* CTAS - create table as select
 * query S3 data in place.  pay per query / data accessed.
 * integrated with glue catalog
-* Presto
+* Presto is underlying tech
 
 ### QuickSight
 
@@ -351,6 +680,13 @@ data processing workloads
 ---
 
 ## Management & Governance
+
+### Well-Architected Framework
+
+* describes the key concepts, design principles, and architectural best practices for designing and running workloads in the cloud
+* 5 pillars - Operational Excellence, Security, Reliability, Performance, Cost Optimization
+* Well-Architected Tool - provides guidance by answer questions
+* Lens - serverless, analytics, ML, SaaS, etc.
 
 ### Control Tower
 
@@ -363,6 +699,23 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 ### CloudFormation
 
 * declarative provisioning of AWS infrastructure/resource
+* parameters, mappings, conditionals
+* intrinsic functions
+* nested stacks
+* stack drift
+* stacksets - deploy stack to multiple regions.  For DR, active-active, etc.
+* max resources declared in stack (500)
+* [custom resources]
+(https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html) - backed by lambda
+* [macros](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html) - lambda performs the template processing / transform
+* modules - package resource configurations for inclusion across stack templates, in a transparent, manageable, and repeatable way
+
+### Serverless Application Repository (SAR)
+
+> enables teams, organizations, and individual developers to find, deploy, publish, share, store, and easily assemble serverless architectures
+
+* any cfn can be used for SAR app
+* iam for access to SAR app
 
 ### Service Catalog
 
@@ -379,40 +732,62 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 
 ### Config
 
+* monitor, notify, quarantine, remediate based on resource changes.
+* RDK - rule development kit.  Config triggers lambda on resource changes.
 * AWS Config is a service that enables you to assess, audit, and evaluate the configurations of your AWS resources. Config continuously monitors and records your AWS resource configurations and allows you to automate the evaluation of recorded configurations against desired configurations.
 * define rules that get evaluated when any change is made (e.g. resource provisioned)
 * there are aws managed rules that are part of the service and you can define custom ones via lambda
 
+### AppConfig
+
+* feature flags, Update applications without interruptions, Control deployment of changes across your application
+* a capability of AWS Systems Manager, to create, manage, and quickly deploy application configurations. AppConfig supports controlled deployments to applications of any size and includes built-in validation checks and monitoring. You can use AppConfig with applications hosted on EC2 instances, AWS Lambda, containers, mobile applications, or IoT devices.
+* JSON Schema Validators - ensure that new or updated configuration settings conform to the best practices required by your application
+* e.g. a JSON doc with application configuration can be sourced from S3, parameter store
+
 ### CloudWatch Logs
 
 * centralize the logs from all of your systems, applications, and AWS services that you use, in a single, highly scalable service
+* concepts - log groups, log streams
+* subscriptions - real-time feed of log events from CloudWatch Logs (Kinesis `[stream|firehose]`, elasticsearch, Lambda)
+* [Creating Metrics From Log Events Using Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/MonitoringLogData.html)
+* encrypt with KMS
 
-#### Resources
-
-* [CloudWatch Metric Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html) - define custom metrics based on a pattern matched to log streams in a log group.
-* [Simplified Time-Series Analysis with Amazon CloudWatch Contributor Insights](https://aws.amazon.com/blogs/aws/simplified-time-series-analysis-with-amazon-cloudwatch-contributor-insights/) - generate metrics from CWL data (JSON or CLF formats)
-
-### CloudWatch Events
+### CloudWatch Events (see [EventBridge]())
 
 * cron triggers
 
 ### CloudWatch Insights
 
-query log groups
+* query log groups
+* [CWL Query Syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html)
 
 ### CloudWatch Metrics
 
-* A metric represents a time-ordered set of data points that are published to CloudWatch
+* time series data
+* metric - time-ordered set of data points that are published to CloudWatch
+* concepts - namespace, dimensions (name/value pairs), units (Bytes, Seconds, Count, and Percent), time stamp, resolution (granularity)
+* statistics - sum, max, min, average, sample count, percentile (pNN) (metric data aggregations over specified periods of time)
+* metrics retention
+* Dashboards - for Visualizations
+* [Creating Metrics From Log Events Using Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/MonitoringLogData.html)
+* [Embedded Metric Format](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Generation.html) - generate metrics from structured (json) log messages
 
-#### Resources
-
-* [Building an Amazon CloudWatch Dashboard Outside of the AWS Management Console](https://aws.amazon.com/blogs/devops/building-an-amazon-cloudwatch-dashboard-outside-of-the-aws-management-console/) - display CloudWatch dashboard outside of AWS Console.  You specify the dashboard in JSON and it returns a binary image
 
 ### CloudWatch Alarms
 
 * notify via email, SNS topics
 * create a CloudWatch alarm that watches a single CloudWatch metric or the result of a math expression based on CloudWatch metrics
 * An alarm watches a single metric over a specified time period, and performs one or more specified actions, based on the value of the metric relative to a threshold over time. The action is a notification sent to an Amazon SNS topic or an Auto Scaling policy. You can also add alarms to dashboards.
+* composite alarms
+* Alarm States - OK, ALARM, INSUFFICIENT_DATA (missing data points)
+
+### CloudWatch Synthetics (Canaries)
+
+*  supports monitoring your REST APIs, URLs, and website content every minute, 24x7, and alerts you when your application endpoints don’t behave as expected.
+* Node.js based.  bundles in Puppeteer + Chromium to the runtime
+
+> create canaries, configurable scripts that run on a schedule, to monitor your endpoints and APIs. Canaries follow the same routes and perform the same actions as a customer, which makes it possible for you to continually verify your customer experience even when you don't have any customer traffic on your applications. By using canaries, you can discover issues before your customers do.
 
 ### CloudTrail
 
@@ -434,8 +809,12 @@ query log groups
 
 ### CodeBuild
 
+* managed build service
+* provides prepackaged build environments
 * continuous integration service that compiles source code, runs tests, and produces software packages
 * like Jenkins, Travis, CircleCI
+* concepts - build project - environment (linux/windows, container image to use, etc.),
+* [`buildspec.yml`](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) - phases, env vars, artifacts
 
 ### CodeDeploy
 
@@ -447,13 +826,51 @@ query log groups
 * orchestrates CodeBuild and CodeDeploy
 * sources: github, CodeCommit, S3
 
+### CodeArtifact
+
+* fully managed software artifact repository service that makes it easy for organizations of any size to securely store, publish, and share packages used in their software development process
+* artifactory competitor
+
 ### X-Ray
 
 * distributed tracing
 * instrument code
 * similar to zipkin, jaeger
 
+### AWS CLI
+
+* `~/.aws/[config|credentials]`
+* `--generate-cli-skeleton` - e.g. `aws codebuild start-build --generate-cli-skeleton > build.json` -> `aws codebuild start-build --cli-input-json file://start-build.json`
+
 ### Amplify
+
+* CLI to provision resources (Auth (cogntio), API (API Gateway), GraphQL (AppSync), Storage (S3, DynamoDB))
+* client-side javascript/typescript, iOS, Android libraries and UI components
+* Amplify Console.  CI/CD static site hosting.
+
+### SAM (Serverless Application Model)
+
+* higher-level cfn resource types (transformed via cfn macro on backend)
+* SAM CLI
+* local development features via docker (apig endpoint
+
+### CDK
+
+* express resources using general purpose programming languages (ts/js/python/java/C#)
+* constructs - cfn (L1), CDK (L2), pattern/solution (L3)
+* synth to cfn
+* cloud assemblies - cfn + source code, docker images, assets (s3)
+* aspects - ability to visit each node/resource in stack and apply changes
+* Application -> Stacks -> Constructs
+* [Runtime context](https://docs.aws.amazon.com/cdk/latest/guide/context.html#context_example)
+* `[tf|k8s]` CDKs
+* jsii - core/foundational tech for multi-language/polyglot support.  bind any language to underlying typescript implementation.
+* CDK pipelines for CI/CD
+
+### AWS SDKs
+
+* built in retries, timeouts
+* can configure timeouts (e.g. `AWS.config.update({maxRetries: 2, httpOptions: { timeout: 2 * 1000, connectTimeout: 3 * 1000, },})`)
 
 ---
 
@@ -462,6 +879,11 @@ query log groups
 ### SageMaker
 
 * build, train, and deploy machine learning models
+* provides a suite of built-in algorithms (via docker containers)
+* can provide custom containers
+* model serving endpoints
+* jupyter notebooks
+* SageMaker notebook instance is a machine learning (ML) compute instance running the Jupyter Notebook App
 
 ### Comprehend
 
@@ -497,7 +919,7 @@ query log groups
 
 ### Forecast
 
-* managed deep learning service for time-series forecasting. By providing Amazon Forecast with historical time-series data, you can predict future points in the series. 
+* managed deep learning service for time-series forecasting. By providing Amazon Forecast with historical time-series data, you can predict future points in the series.
 
 ### Personalize
 
@@ -513,33 +935,57 @@ query log groups
 * conversational interfaces into any application using voice and text. Amazon Lex provides the advanced deep learning functionalities of automatic speech recognition (ASR) for converting speech to text, and natural language understanding (NLU) to recognize the intent of the text
 * chat bots
 
+### Kendra
+
+* intelligent search service (ML powered)
+* concepts - index, documents (html, pdf, word, ppt, txt), data sources (S3, confluence, OneDrive, etc.), query
+* point indexer to files in S3
+* pre-built faceted search UI component (web based)
+* supports [custom data sources](https://docs.aws.amazon.com/kendra/latest/dg/data-source-custom.html). e.g. salesforce attachments data source
+* can create custom document attributes
+* developer and enterprise editions
+
 ---
 
 ## Security, Identity, and Compliance
 
 ### IAM
 
+* terms - Resources, Identities, Entities, Principals (person or application)
+* authentication, authorization
+* actions and operations on resources
+* policy docs - AWS managed policies, Customer managed policies, Inline policies
+* Identity-based and resource-based policies
+* identities - users, groups, roles
+* STS - temp security credentials
+* assume role
+* identity federation - Federated users and roles (via OIDC, SAML2, Cognito)
+* [Attribute-based access control (ABAC)](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_attribute-based-access-control.html) - defines permissions based on attributes (tags)
+* [permission boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html)
+* sigv4 requests
+* account root user
+* MFA
+
 ### Cognito
+
+* UserPool
+* IdentityPool - exchange UserPool.Identity for temporary IAM credentials
+    * unauthenticated and authenticated roles
+* Built-in IdP Providers - amazon, google, twitter, facebook.
+* Federation - OIDC, SAML
+* API Gateway authorizer
+* provided login UIs
 
 ### Secrets Manager
 
 ### WAF
 
 * web application firewall
-* associate with CloudFront, ALB, API Gateway
-
-### Firewall Manager
-
-* centrally configure and manage firewall rules across accounts and applications (enterprise)
-* e.g. create firewall manager policy that states all CloudFront and ALB instances across accounts must use a specific WebACL.
-    * you can use tags to specify which CF and ALB instances to apply the RuleGroup to
-* can automatically apply WebACL to CF and/or ALB instances or only notify "out of compliance"
-* aws config must be enabled and running in each account.  this detects CF and ALB changes.
-
+* associate with ALB, CloudFront, API Gateway
 
 ### Certificate Manager (ACM)
 
-* provision, manage, and deploy public and private Secure Sockets Layer/Transport Layer Security (SSL/TLS) certificates for use with AWS services and your internal connected resources. 
+* provision, manage, and deploy public and private Secure Sockets Layer/Transport Layer Security (SSL/TLS) certificates for use with AWS services and your internal connected resources.
 
 ### KMS
 
@@ -549,3 +995,10 @@ query log groups
 
 * provides multiple ways to set up and run Amazon Cloud Directory, Amazon Cognito, and Microsoft AD with other AWS services. Amazon Cloud Directory provides a highly scalable directory store for your application’s multihierarchical data. Amazon Cognito helps you create a directory store that authenticates your users either through your own user pools or through federated identity providers. AWS Directory Service for Microsoft Active Directory (Enterprise Edition), also known as Microsoft AD, enables your directory-aware workloads and AWS resources to use a managed Active Directory in the AWS Cloud.
 
+---
+
+## Media Services
+
+### Amazon Interactive Video Service
+
+> Amazon Interactive Video Service (Amazon IVS) is a managed live streaming solution that is quick and easy to set up, and ideal for creating interactive video experiences. Send your live streams to Amazon IVS using standard streaming software like Open Broadcaster Software (OBS) and the service does everything you need to make low-latency live video available to any viewer around the world, letting you focus on building interactive experiences alongside the live video.
