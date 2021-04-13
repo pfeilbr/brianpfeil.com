@@ -40,6 +40,12 @@ params:
   #wordCount: true
   hideAuthor: true
 
+outputs:
+  home:
+    - html
+    - rss
+    - json
+
 Menus:
   main:
     - Name: "about"

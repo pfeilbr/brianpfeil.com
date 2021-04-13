@@ -8,7 +8,21 @@
       </div>
       {{ end }}
 
-      <div class="posts-list">
+      <section style="text-align: center">
+        <div class="search-section">
+          <form onkeyup="executeInlineSearch()">
+            <div class="search-bar">
+              <input id="search-query" placeholder="search" name="s" autocomplete="off" search />
+              <span class="search-icon">
+                <i class="fa fa-search fa-sm" aria-hidden="true"></i>
+              </span>
+            </div>
+          </form>
+        </div>
+      </section>
+
+
+      <div class="posts-list" id="search-results">
         {{ $pag := .Paginate (where site.RegularPages "Type" "in" site.Params.mainSections) }}
         {{ range $pag.Pages }}
         {{ .Scratch.Set "isListing" true }}

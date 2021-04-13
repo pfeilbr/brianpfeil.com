@@ -91,3 +91,34 @@
     }
     */
 </script>
+
+<!-- search -->
+<!-- search via https://gist.github.com/eddiewebb/735feb48f50f0ddd65ae5606a1cb41ae -->
+<script id="search-result-template" type="text/x-js-template">
+<article class="post-preview" id="summary-${key}">
+    <a class="search-item" href="${link}">
+        <h2 class="post-title">${title}</h2>
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+            ${postedOnDate}
+            <span class="blog-tags">
+                &nbsp;•&nbsp;
+                ${ isset tags }${tags}${ end }
+            </span>
+        </span>
+    </p>
+    <div class="post-entry">
+    ${snippet}
+    </div>
+</article>
+</script>
+
+<script>
+    const postCount={{- len (where .Site.RegularPages "Section" "==" "post") }}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.0/fuse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+<script src="{{ "js/search.js" | absURL }}"></script>
