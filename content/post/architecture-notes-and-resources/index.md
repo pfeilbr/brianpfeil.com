@@ -33,7 +33,7 @@ summary = "Architecture Notes and Resources"
 
 ---
 
-* let business and/or customer value guide all architecture decisions
+* let business value guide all architecture decisions
 * evolutionary architectures are needed to support rapid rate of business and technology change
 
 ## Definition(s)
@@ -151,6 +151,7 @@ limits / isolates tenants in a multi-tenant system so they don't negatively impa
 **Resources**
 
 * [Workload isolation using shuffle-sharding](https://aws.amazon.com/builders-library/workload-isolation-using-shuffle-sharding/?did=ba_card&trk=ba_card)
+* [AWS Well-Architected Labs | Fault isolation with shuffle sharding](https://wellarchitectedlabs.com/reliability/300_labs/300_fault_isolation_with_shuffle_sharding/)
 
 ### Constant Work
 
@@ -178,6 +179,7 @@ If AZ becomes unavailable, no new resources need to be provisioned, just a quick
 
 ### Books (*oreilly.com*)
 
+* [The Software Architect Elevator](https://learning.oreilly.com/library/view/the-software-architect/9781492077534/)
 * [Fundamentals of Software Architecture](https://learning.oreilly.com/library/view/fundamentals-of-software/9781492043447/)
 * [Clean Architecture: A Craftsman's Guide to Software Structure and Design, First Edition](https://learning.oreilly.com/library/view/clean-architecture-a/9780134494272/)
 * [Software Architecture Patterns](https://learning.oreilly.com/library/view/software-architecture-patterns/9781491971437)
@@ -202,6 +204,7 @@ If AZ becomes unavailable, no new resources need to be provisioned, just a quick
 
 ### Websites
 
+* [The System Design Primer](https://github.com/donnemartin/system-design-primer) - *great real life architecture and design examples*
 * [martinfowler.com](https://martinfowler.com/)
     * [martinfowler.com | Software Architecture Guide](https://martinfowler.com/architecture/)
 * [AWS Architecture Center](https://aws.amazon.com/architecture)
