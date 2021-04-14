@@ -739,6 +739,7 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * RDK - rule development kit.  Config triggers lambda on resource changes.
 * AWS Config is a service that enables you to assess, audit, and evaluate the configurations of your AWS resources. Config continuously monitors and records your AWS resource configurations and allows you to automate the evaluation of recorded configurations against desired configurations.
 * define rules that get evaluated when any change is made (e.g. resource provisioned)
+* conformance - collection of Config rules and remediation actions. portable.  can be applied across multiple accounts and regions
 * there are aws managed rules that are part of the service and you can define custom ones via lambda
 
 ### AppConfig
@@ -818,6 +819,7 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * like Jenkins, Travis, CircleCI
 * concepts - build project - environment (linux/windows, container image to use, etc.),
 * [`buildspec.yml`](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) - phases, env vars, artifacts
+* can be used to run ad-hoc workloads over lambda when need to run longer than 15 min
 
 ### CodeDeploy
 
