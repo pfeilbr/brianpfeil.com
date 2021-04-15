@@ -30,9 +30,10 @@ see [`kitchen-sink/README.md`](kitchen-sink/README.md)
 * cloud assemblies - cfn + source code, docker images, assets (s3)
 * aspects - ability to visit each node/resource in stack and apply changes
 * Application -> Stacks -> Constructs
+* [Runtime context](https://docs.aws.amazon.com/cdk/latest/guide/context.html#context_example)
 * `[tf|k8s]` CDKs
 * jsii - core/foundational tech for multi-language/polyglot support.  bind any language to underlying typescript implementation.
-
+* CDK pipelines for CI/CD
 ## Key Files and Directories
 
 * `bin` - entry point to CDK app.  imports 1 or more stacks from `lib` folder
@@ -45,7 +46,7 @@ see [`kitchen-sink/README.md`](kitchen-sink/README.md)
 
 * `@aws-cdk/core - App, Stack, Stack.account, Stack.region, Stack.tags, Stack.terminationProtection, Construct, Duration, CfnOutput`
 * `lambda.Function`, `lambda.Code.fromAsset`, `lambda.Code.fromInline`
-* `iam.PolicyStatement`
+* `@aws-cdk/aws-iam - Role, User, Group, PolicyStatement`
 
 ## Common Steps
 ```sh

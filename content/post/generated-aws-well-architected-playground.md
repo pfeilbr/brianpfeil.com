@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["JavaScript", "playground"]
 date = 2021-04-09
 description = ""
 summary = " "
@@ -59,6 +59,26 @@ deep dive on all things AWS Well-Architected
 ## Well-Architected Tool
 
 AWS Console Tool that steps a user through the Well-Architected Review Process
+
+### Well-Architected Alternate Renditions
+
+Consuming the WA PDFs or web content can be a bit challenging with navigation.  The WA questions, resources, etc. are available as `json` via the AWS WA Console Tool with some scraping.  This creates alternate renditions based on this data.
+
+* Run [`aws-well-architected-reformat/main.js`](aws-well-architected-reformat/main.js) to generate a reformatted and condensed version of WA.
+* See [`aws-well-architected-reformat/data`](aws-well-architected-reformat/data) for the question data as `json` for each lens.
+
+**Notes on pulling data via AWS Console**
+
+```sh
+# aws console request format
+POST https://console.aws.amazon.com/wellarchitected/api/apiservice
+
+{"method":"GET","path":"/workloads/4cfa14fe4a9d351afc9975cfdcb434af/lensReviews/wellarchitected/answers","region":"us-east-1","headers":{"Content-Type":"application/json","Accept":"application/json"},"params":{"PillarId":"operationalExcellence","MaxResults":50,"Locale":"en"}}
+
+# helpful Resources on right sidebar example
+https://wa.aws.amazon.com/TypeII/en/foundationaltechnicalreview/foundationaltechnicalreview.sec_q1.helpful-resources.en.html
+
+```
 
 ### Feature Request
 
