@@ -35,7 +35,7 @@ make dev
 
 ## Example Queries
 
-```
+```sh
 fields @timestamp, detail.eventSource, detail.eventName, @message
 | sort @timestamp desc
 | limit 100
@@ -51,6 +51,18 @@ fields @timestamp, detail.requestParameters.bucketName, detail.eventSource, deta
 | filter detail.eventSource like /s3.amazonaws.com/
 | sort @timestamp desc
 | limit 100
+
+# sts assume role CloudTrail events
+fields @timestamp, source, `detail.eventName`, detail.requestParameters.roleArn, detail.userIdentity.userName, @message
+| filter detail.eventSource = 'sts.amazonaws.com'
+| sort @timestamp desc
+
+# CodePipeline pipeline and stage change events
+fields @timestamp, `detail-type`, detail.pipeline, detail.stage, detail.state, @message
+| filter source = 'aws.codepipeline'
+| sort @timestamp desc
+
+
 ```
 
 ## Resources
