@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["Python", "playground"]
+categories = ["TypeScript", "playground"]
 date = 2021-04-23
 description = ""
 summary = " "
@@ -25,11 +25,35 @@ examples for creating CloudFormation extensions and specifically [CloudFormation
 
 > You can use the CloudFormation CLI to register extensions—both those you create yourself, as well as ones shared with you—with the CloudFormation registry. This enables you to use CloudFormation capabilities to create, provision, and manage these custom types in a safe and repeatable manner, just as you would any AWS resource
 
-see [`python-custom-resource-type-example`](python-custom-resource-type-example)
+There are the following four types of CloudFormation extension mechanisms:
+
+* [CloudFormation Custom Resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html)
+* [CloudFormation Module](https://aws.amazon.com/blogs/mt/introducing-aws-cloudformation-modules/)
+* [CloudFormation Custom Resource Types](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-types.html)
+* [CloudFormation Macros](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html)
+
+## Example Custom Resource Types
+
+* [`python-custom-resource-type-example`](python-custom-resource-type-example)
+* [`typescript-custom-resource-type-example`](typescript-custom-resource-type-example)
 
 ## Notes
 
 * [Custom resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html) can be backed by lambda or [SNS topic](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources-sns.html#walkthrough-custom-resources-sns-adding-nonaws-resource)
+
+## TODO
+
+* Org::Service::WAFCDN -> CDK app containing
+* API Gateway (custom auth token | or cloudformation security context identity) -> Step Fn -> create stack -> wait stack -> loop
+* custom resource lambda handler is just a pass through to APIG provisioning the resources.
+
+```yaml
+- Sid: DeleteAppRoles
+  Effect: Allow
+  Action:
+    - wafcdn:*
+  Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:type/resource/MyOrg-MyService-MyResource/*"
+```
 
 ## Resources
 
