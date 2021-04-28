@@ -46,6 +46,7 @@ There are the following four types of CloudFormation extension mechanisms:
 * Org::Service::WAFCDN -> CDK app containing
 * API Gateway (custom auth token | or cloudformation security context identity) -> Step Fn -> create stack -> wait stack -> loop
 * custom resource lambda handler is just a pass through to APIG provisioning the resources.
+* store API Key in secrets manager and reference from cfn custom resource type property
 
 ```yaml
 - Sid: DeleteAppRoles
@@ -63,5 +64,6 @@ There are the following four types of CloudFormation extension mechanisms:
 * [Writing an AWS CloudFormation Resource Provider in Python: Step by Step - Cloudar](https://www.cloudar.be/awsblog/writing-an-aws-cloudformation-resource-provider-in-python-step-by-step/)
 * [CloudFormation Resource Providers - A Chicken and Egg Problem](https://garbe.io/blog/2020/02/24/cloudformation-resource-provider/)
 * [Resolve the &quot;Resource timed out waiting for creation of physical resource&quot; error in AWS CloudFormation](https://aws.amazon.com/premiumsupport/knowledge-center/cloudformation-physical-resource-error/)
+* [Deploying CloudFormation resource type](https://read.korzh.cloud/deploying-cloudformation-resource-type-64bfd5d14e6e)
 
 
