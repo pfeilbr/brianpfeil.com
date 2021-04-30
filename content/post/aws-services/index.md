@@ -789,7 +789,10 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 ### CloudWatch Synthetics (Canaries)
 
 *  supports monitoring your REST APIs, URLs, and website content every minute, 24x7, and alerts you when your application endpoints don’t behave as expected.
-* Node.js based.  bundles in Puppeteer + Chromium to the runtime
+* Node.js or python based.  bundles in Puppeteer + Chromium to the runtime
+* can also used in any workloads requiring general browser automation
+* creates several CloudWatch metrics in `CloudWatchSynthetics` namespace
+* CloudFormation support via [`AWS::Synthetics::Canary`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-synthetics-canary.html)
 
 > create canaries, configurable scripts that run on a schedule, to monitor your endpoints and APIs. Canaries follow the same routes and perform the same actions as a customer, which makes it possible for you to continually verify your customer experience even when you don't have any customer traffic on your applications. By using canaries, you can discover issues before your customers do.
 
