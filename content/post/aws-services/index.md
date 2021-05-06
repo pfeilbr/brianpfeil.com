@@ -732,6 +732,7 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * approved self-service products from Solution Factory
     * e.g. Oracle RDS DB with all security, tags, etc. in place
     * e.g. static web site. S3 + CloudFormation + WAF + ACM (certificate) + Route 53 (hosted zone, domain)
+* Service Actions - enable end users to perform operational tasks, troubleshoot issues, run approved commands, or request permissions in AWS Service Catalog via SSM docs.
 
 ### Config
 
