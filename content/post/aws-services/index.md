@@ -644,14 +644,15 @@ data processing workloads
 
 * catalog / metadata (hive metadata catalog)
 * crawlers autodiscover schema
-* data stores
+* data sources - S3, RDS, JDBC, dynamodb, mongodb, documentdb
+* data targets - S3, RDS, JDBC, mongodb, documentdb
 * jobs
-* job types - Spark, Streaming ETL, and Python shell
+* job types - Spark, Streaming ETL (kinesis, kafka via spark structured streaming (micro batches)), and Python shell
 * languages - [py]spark and scala
 * concepts - Data Catalog, Classifier, Connection, Crawler, Database, Table, Dynamic Frame (extend spark RDD), Job, Transform, Trigger (time based or event)
 * glue notebook (Jupyter/Zeppelin) - interactive development and testing of your ETL scripts on a development endpoint
 * partitions
-* AWS Data Wrangler
+* AWS Data Wrangler - excellent integration library to use with glue via python shell jobs
 
 ### Glue DataBrew
 
