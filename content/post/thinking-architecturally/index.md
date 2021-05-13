@@ -10,9 +10,6 @@ tags = ["architecture"]
 summary = "Thinking Architecturally"
 
 +++
-
-
-## [Thinking Architecturally](https://www.youtube.com/watch?v=d5bNZX8tpiI)
 ### Source Resources
 
 * [Thinking Architecturally - Nathaniel Schutta](https://www.youtube.com/watch?v=d5bNZX8tpiI) - youtube
