@@ -803,6 +803,15 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * logs all recording AWS API and Management Console actions to S3
 * can query via Athena
 
+### Proton
+
+* self-serve for platform enabling teams
+* enables the standardization of cross cutting concerns for microservices based solutions (composition of many microservices).
+* e.g. the following is needed for each microservice and should be consistent/aligned with standards and best practices: compute, DNS, load balancing, code deployment pipeline, monitoring and alarms
+* similar goals as [Netflix's Spinnaker](https://spinnaker.io/)
+
+k8s ecosystem
+
 ---
 
 ## Developer Tools
