@@ -93,6 +93,7 @@ The following services are commonly used for AWS solutions.  Each service specif
         * [CloudWatch Alarms](#cloudwatch-alarms)
         * [CloudWatch Synthetics (Canaries)](#cloudwatch-synthetics-canaries)
         * [CloudTrail](#cloudtrail)
+        * [Proton](#proton)
     * [Developer Tools](#developer-tools)
         * [Cloud9](#cloud9)
         * [CodeCommit](#codecommit)
@@ -386,6 +387,9 @@ The following services are commonly used for AWS solutions.  Each service specif
 * S3 select
 * [batch operations](https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-basics.html) - perform operation on list of objects specified in manifest.  e.g. lambda, copy, etc.
 * storage classes
+* lifecycle rules - moving between storage tiers for cost savings
+* access points - managing data access at scale, access points are unique hostnames, enforce distinct permissions and network controls for any request made through the access point, scale to many applications accessing bucket with own set of permissions.
+    * addresses pain point- Managing access to this shared bucket requires a single bucket policy that controls access for dozens to hundreds of applications with different permission levels
 * S3 event notifications - notification destinations are SNS, SQS, lambda
 * replication - cross-region, same-region
 * [S3 object lambda](https://aws.amazon.com/blogs/aws/introducing-amazon-s3-object-lambda-use-your-code-to-process-data-as-it-is-being-retrieved-from-s3/) - process data retrieved from S3 with lambda before returning it to an application. lambda calls [`writeGetObjectResponse`](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#writeGetObjectResponse-property) to send modified object contents back to `GET` request.  Create S3 Access Point, then Object Lambda Access Point.
@@ -447,6 +451,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 ### Redshift
 
 * managed data warehouse service
+* RA3 instances - Scale compute and storage independently for fast query performance and lower costs
+* UDFs - lambda backed
 
 ### ElastiCache
 
@@ -575,6 +581,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 * pub/sub with many built-in integrations
 * integrate with external SaaS or any custom application
+* bus-to-bus routing within same account + region, x-account, and x-region.
+* dlq for eb rules.  if fails to deliver to target, goes in sqs queue
 * e.g. can log all events in account including CloudTrail to CloudWatch Log Group
 * put events - 2400 requests per second per region
 * AWS service rule [targets](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html)

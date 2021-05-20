@@ -28,7 +28,7 @@ see [`kitchen-sink/README.md`](kitchen-sink/README.md)
 * constructs - construct levels 1, 2, 3.  cfn (L1), CDK (L2), pattern/solution (L3)
 * synth to cfn
 * cloud assemblies - cfn + source code, docker images, assets (s3)
-* aspects - ability to visit each node/resource in stack and apply changes
+* [aspects](https://docs.aws.amazon.com/cdk/latest/guide/aspects.html) - ability to visit each node/resource in stack and apply changes
 * Application -> Stacks -> Constructs
 * [Parameters](https://docs.aws.amazon.com/cdk/latest/guide/parameters.html) - cfn parameters.  can pass in via `cdk synth`.
 * [Runtime context](https://docs.aws.amazon.com/cdk/latest/guide/context.html#context_example) - key-value pairs that can be associated with a stack or construct.  Can only be `string` values (kind of like parameters)
