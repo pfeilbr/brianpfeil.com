@@ -15,4 +15,4 @@ Hi, I'm Brian Pfeil.  I'm passionate about technology, and building things.  Thi
 
 I currently work at a Pharmaceutical company as a Cloud Architect.
 
-I can be found elsewhere at <a rel="me" href="https://twitter.com/pfeilbr">twitter</a>, [github](http://github.com/pfeilbr), and [stackoverflow](http://stackoverflow.com/users/29148/pfeilbr).
+I am an [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/) and can be found at <a rel="me" href="https://twitter.com/pfeilbr">twitter</a>, [github](http://github.com/pfeilbr), and [stackoverflow](http://stackoverflow.com/users/29148/pfeilbr).

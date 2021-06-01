@@ -317,6 +317,16 @@ The following services are commonly used for AWS solutions.  Each service specif
 ### ECR
 
 * container registry
+* concepts
+    * Registry - can create image repositories in your registry and store images in them
+    * Authorization token - client must authenticate to Amazon ECR registries as an AWS user before it can push and pull images
+    * Repository - contains your Docker images, Open Container Initiative (OCI) images, and OCI compatible artifacts
+    * Repository policy - can control access to your repositories and the images within them with repository policies
+    * Image - push and pull container images to your repositories
+        * can use them in ECS task definitions and EKS pod specifications
+* ECR public
+* resource-based permissions using AWS IAM
+*
 
 ### Fargate
 
