@@ -273,6 +273,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * Usage Plans / quotas
 * client certificates - ensure requests to backend are from APIG
 * throttles
+* with WAF in front, you can set up rate-based rules to specify the number of web requests that are allowed by each client IP in a trailing, continuously updated, 5-minute period.  *no API Key required for this*
 * timeout - 29s
 * request (POST) payload limits (10 MB).  no response size limits. (tested with proxy integration for 200 MB video file download)
 * auth - cognito, JWT, IAM (aws sigv4), custom lambda auth
@@ -377,6 +378,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     * split batch on error
     * concurrent batches per shard
 * service integrations - [Using AWS Lambda with other services - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html)
+* [lambda private endpoints(https://aws.amazon.com/blogs/aws/new-use-aws-privatelink-to-access-aws-lambda-over-private-aws-network/) - access lambda from VPC without going over internet
 * APIG -> lambda
 * ALB -> lambda
 
