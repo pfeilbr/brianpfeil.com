@@ -107,6 +107,8 @@ The following services are commonly used for AWS solutions.  Each service specif
         * [SAM (Serverless Application Model)](#sam-serverless-application-model)
         * [CDK](#cdk)
         * [AWS SDKs](#aws-sdks)
+    * [Migration & Transfer](#migration--transfer)
+        * [AWS DMS (Database Migration Service)](#aws-dms-database-migration-service)
     * [Machine Learning](#machine-learning)
         * [SageMaker](#sagemaker)
         * [Comprehend](#comprehend)
@@ -913,6 +915,50 @@ k8s ecosystem
 
 ---
 
+## Migration & Transfer
+
+### AWS DMS (Database Migration Service)
+
+- migrate RDBS, data warehouses, nosql dbs, etc. in cloud, between combos of cloud and on-prem
+- it's a server (EC2) in the cloud that runs replication software (replication engine).  [DMS replication instance types](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReplicationInstance.Types.html)
+- create source and target connections
+- schedule task on server to move data
+- pay-as-you-go model
+- data at rest is encrypted
+- SSL / TLS encrypts data in -flight
+- HA with multi-AZ deployment
+- can provision DMS resources using CloudFormation.
+- migration types: one-time, ongoing replication (CDC)
+- AWS DMS doesn't perform schema or code conversion
+	- you can use the AWS Schema Conversion Tool (AWS SCT)
+- create endpoints to access source or target data store.
+- endpoint properties
+	- Endpoint type – Source or target.
+	- Engine type – Type of database engine, such as Oracle or PostgreSQL..
+	- Server name – Server name or IP address that AWS DMS can reach.
+	- Port – Port number used for database server connections.
+	- Encryption – Secure Socket Layer (SSL) mode, if SSL is used to encrypt the connection.
+	- Credentials – User name and password for an account with the required access rights.
+- At a high level, when using AWS DMS you do the following:
+  - Create a replication server.
+  - Create source and target endpoints that have connection information about your data stores.
+  - Create one or more migration tasks to migrate data between the source and target data stores.
+- A replication task can consist of three major phases:
+  - The full load of existing data
+  - The application of cached changes
+  - Ongoing replication
+- > At the start of the ongoing replication phase, a backlog of transactions generally causes some lag between the source and target databases. The migration eventually reaches a steady state after working through this backlog of transactions.
+- > If your migration is heterogeneous (between two databases that use different engine types), you can use the AWS Schema Conversion Tool (AWS SCT) to generate a complete target schema for you.
+- Depending on the Amazon EC2 instance class you select, your replication instance comes with either 50 GB or 100 GB of data storage
+- public and private replication instances
+	- You use a private instance when both source and target databases are in the same network that is connected to the replication instance's VPC. The network can be connected to the VPC by using a VPN, AWS Direct Connect, or VPC peering.
+- DMS Replication Process
+   ![](https://docs.aws.amazon.com/dms/latest/userguide/images/datarep-Welcome.png)
+- Replication
+  ![](https://docs.aws.amazon.com/dms/latest/userguide/images/datarep-intro-rep-instance1.png)
+  ![](https://docs.aws.amazon.com/dms/latest/userguide/images/datarep-intro-rep-task1.png)
+
+---
 ## Machine Learning
 
 ### SageMaker
