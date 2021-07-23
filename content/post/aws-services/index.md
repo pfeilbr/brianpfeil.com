@@ -670,6 +670,7 @@ data processing workloads
 * data targets - S3, RDS, JDBC, mongodb, documentdb
 * jobs
 * job types - Spark, Streaming ETL (kinesis, kafka via spark structured streaming (micro batches)), and Python shell
+    * python shell job start-up time - 7-30 secs (based on usage observations)
 * languages - [py]spark and scala
 * concepts - Data Catalog, Classifier, Connection, Crawler, Database, Table, Dynamic Frame (extend spark RDD), Job, Transform, Trigger (time based or event)
 * glue notebook (Jupyter/Zeppelin) - interactive development and testing of your ETL scripts on a development endpoint
