@@ -58,6 +58,7 @@ learn [AWS App Runner](https://aws.amazon.com/blogs/containers/introducing-aws-a
 ## Demo
 
 ```sh
+# setup
 mkdir hello-app-runner
 touch apprunner.yaml
 
