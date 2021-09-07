@@ -12,6 +12,18 @@
 * hugo - `brew install hugo`
 * workbox - `npm install workbox-cli --global`
 
+## Initial Setup on New Machine
+
+```sh
+gh repo clone pfeilbr/personal-website
+cd personal-website
+
+# pull and relink submodules
+git submodule update
+git submodule foreach git checkout master
+git submodule foreach git pull origin master
+```
+
 ## Key Files and Directories
 
 * [`config.yaml`](config.yaml) - site configuration file
