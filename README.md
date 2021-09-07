@@ -7,6 +7,11 @@
 * [`public`](public) directory is a submodule @ <https://github.com/pfeilbr/pfeilbr.github.com> where all static web content is published and hosted using [github pages](https://pages.github.com/).
 * [`themes/beautifulhugo`](themes/beautifulhugo) directory is the base hugo theme. It's a submodule @ https://github.com/halogenica/beautifulhugo.  The submodule allows for pulling in updates from this base theme.
 
+## Prerequisites
+
+* hugo - `brew install hugo`
+* workbox - `npm install workbox-cli --global`
+
 ## Key Files and Directories
 
 * [`config.yaml`](config.yaml) - site configuration file
