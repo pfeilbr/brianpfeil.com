@@ -404,7 +404,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * lifecycle rules - moving between storage tiers for cost savings
 * access points - managing data access at scale, access points are unique hostnames, enforce distinct permissions and network controls for any request made through the access point, scale to many applications accessing bucket with own set of permissions.
     * addresses pain point- Managing access to this shared bucket requires a single bucket policy that controls access for dozens to hundreds of applications with different permission levels
-    * multi-region access points for resiliency.
+    * multi-region access points for resiliency/DR.
 * S3 event notifications - notification destinations are SNS, SQS, lambda
 * replication - cross-region, same-region
 * [S3 object lambda](https://aws.amazon.com/blogs/aws/introducing-amazon-s3-object-lambda-use-your-code-to-process-data-as-it-is-being-retrieved-from-s3/) - process data retrieved from S3 with lambda before returning it to an application. lambda calls [`writeGetObjectResponse`](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#writeGetObjectResponse-property) to send modified object contents back to `GET` request.  Create S3 Access Point, then Object Lambda Access Point.
