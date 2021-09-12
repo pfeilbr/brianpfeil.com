@@ -207,10 +207,13 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### ELB/ALB
 
-* elastic (TCP)
-* ALB application load balancer (http layer 7) - Content-Based Routing
-* NLB network load balancer (tcp layer 4)
-* ELB elastic load balancer (tcp layer 4)
+* Elastic Load Balancing (TCP)
+
+* ALB application load balancer  — Layer 7 (HTTP/HTTPS traffic), Flexible
+* NLB network load balancer — Layer 4 (TLS/TCP/UDP traffic), Static IPs
+* CLB classic load balancer — Layer 4/7 (HTTP/TCP/SSL traffic), Legacy, Avoid
+
+* The NLB forwards requests whereas the ALB examines the contents of the HTTP request header to determine where to route the request. So, the ALB is performing content based routing.
 
 ### PrivateLink / VPC Endpoint
 
