@@ -11,25 +11,24 @@ summary = "Architecture Notes and Resources"
 
 +++
 
-* [Architecture Notes and Resources](#architecture-notes-and-resources)
-    * [Definition(s)](#definitions)
-    * [Key Questions](#key-questions)
-    * [Organization Considerations](#organization-considerations)
-    * [Quality Attributes](#quality-attributes)
-    * [Patterns](#patterns)
-        * [event-sourcing](#event-sourcing)
-            * [Resources](#resources)
-        * [Hexagonal](#hexagonal)
-            * [Resources](#resources-1)
-    * [Topics / Concepts / Terms](#topics--concepts--terms)
-        * [Database](#database)
-        * [Shuffle Sharding](#shuffle-sharding)
-        * [Constant Work](#constant-work)
-        * [Canary](#canary)
-    * [Resources](#resources-2)
-        * [Books (*oreilly.com*)](#books-oreillycom)
-        * [Websites](#websites)
-        * [Videos](#videos)
+* [Definition(s)](#definitions)
+* [Key Questions](#key-questions)
+* [Organization Considerations](#organization-considerations)
+* [Quality Attributes](#quality-attributes)
+* [Patterns](#patterns)
+    * [event-sourcing](#event-sourcing)
+        * [Resources](#resources)
+    * [Hexagonal](#hexagonal)
+        * [Resources](#resources-1)
+* [Topics / Concepts / Terms](#topics--concepts--terms)
+    * [Database](#database)
+    * [Shuffle Sharding](#shuffle-sharding)
+    * [Constant Work](#constant-work)
+    * [Canary](#canary)
+* [Resources](#resources-2)
+    * [Books (*oreilly.com*)](#books-oreillycom)
+    * [Websites](#websites)
+    * [Videos](#videos)
 
 ---
 
@@ -162,6 +161,7 @@ If AZ becomes unavailable, no new resources need to be provisioned, just a quick
 **Resources**
 
 * [Static stability using Availability Zones](https://aws.amazon.com/builders-library/static-stability-using-availability-zones)
+* [Reliability, constant work, and a good cup of coffee](https://aws.amazon.com/builders-library/reliability-and-constant-work/?did=ba_card&trk=ba_card)
 
 ---
 
