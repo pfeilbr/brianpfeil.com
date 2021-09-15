@@ -46,6 +46,7 @@ The following services are commonly used for AWS solutions.  Each service specif
         * [Glacier](#glacier)
         * [EFS (Elastic File System)](#efs-elastic-file-system)
         * [FSx for Windows File Server](#fsx-for-windows-file-server)
+        * [Storage Gateway](#storage-gateway)
         * [EBS](#ebs)
         * [Transfer](#transfer)
     * [Database](#database)
@@ -108,6 +109,7 @@ The following services are commonly used for AWS solutions.  Each service specif
         * [CDK](#cdk)
         * [AWS SDKs](#aws-sdks)
     * [Migration & Transfer](#migration--transfer)
+        * [AWS DataSync](#aws-datasync)
         * [AWS DMS (Database Migration Service)](#aws-dms-database-migration-service)
     * [Machine Learning](#machine-learning)
         * [SageMaker](#sagemaker)
@@ -428,6 +430,14 @@ The following services are commonly used for AWS solutions.  Each service specif
 * fully managed native windows file system
 * SMB, NTFS, AD integration
 
+### Storage Gateway
+
+* NFS or SMB interface to S3, FSx, volume/tape gateways
+* compute runs on once of following: ec2, kvm, VMware, Hyper-V, or appliance
+* if SMB, need to [Configuring Microsoft Active Directory access](https://docs.aws.amazon.com/filegateway/latest/files3/CreatingAnSMBFileShare.html#configure-SMB-file-share-AD-access)
+* VPC support.  network traffic between compute and AWS Service goes over VPC endpoint
+* VPC endpoint enabled, all VPC endpoint communication from your gateway to AWS services occurs through the public service endpoint using your VPC in AWS
+* Creating a VPC endpoint for Storage Gateway
 ### EBS
 
 * block level storage volumes for use with EC2 instances. EBS volumes behave like raw, unformatted block devices
@@ -922,6 +932,9 @@ k8s ecosystem
 
 ## Migration & Transfer
 
+### AWS DataSync
+
+[![image](https://www.awsgeek.com/AWS-DataSync/AWS-DataSync.jpg)](https://www.awsgeek.com/AWS-DataSync/)
 ### AWS DMS (Database Migration Service)
 
 - migrate RDBS, data warehouses, nosql dbs, etc. in cloud, between combos of cloud and on-prem
