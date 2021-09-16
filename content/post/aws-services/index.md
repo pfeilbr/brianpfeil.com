@@ -321,6 +321,9 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 * containers
 * task definitions
+* EFS or EBS for persistent storage
+    * EFS is recommended.  Can be mounted by multiple ECS tasks for parallel access
+    * EBS can be used but is tied to un hosting EC2 instance. No fargate.
 
 ### ECR
 
