@@ -635,6 +635,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * partition key
 * shard count
 * ordering guaranteed for messages per shard
+* [dynamic partitioning](https://aws.amazon.com/about-aws/whats-new/2021/08/introducing-dynamic-partitioning-amazon-kinesis-data-firehose/) - continuously partition streaming data in Kinesis Data Firehose using keys within data like “customer_id” or “transaction_id” and deliver data grouped by these keys into corresponding Amazon Simple Storage Service (Amazon S3) prefixes
 * lambda - lambda polls per shard
     * batch size
     * batch window
