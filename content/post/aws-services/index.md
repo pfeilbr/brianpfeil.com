@@ -174,7 +174,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * elastic / limits scaling concerns
 * deliver value quicker
 * scale teams / org fit
-* durability - services built-in replication across AZs or regions
+* durability/resiliency - services built-in replication across AZs or regions
 * every service has soft limits for protection
 
 ---
@@ -1097,6 +1097,7 @@ Data transfer between AWS storage services
 * sigv4 requests
 * account root user
 * MFA
+* IAM Access Analyzer - validate policies, generate policies (based on CT logs, role or user, and timeframe)
 
 ### Cognito
 
