@@ -11,24 +11,25 @@ summary = "Architecture Notes and Resources"
 
 +++
 
-* [Definition(s)](#definitions)
-* [Key Questions](#key-questions)
-* [Organization Considerations](#organization-considerations)
-* [Quality Attributes](#quality-attributes)
-* [Patterns](#patterns)
-    * [event-sourcing](#event-sourcing)
-        * [Resources](#resources)
-    * [Hexagonal](#hexagonal)
-        * [Resources](#resources-1)
-* [Topics / Concepts / Terms](#topics--concepts--terms)
-    * [Database](#database)
-    * [Shuffle Sharding](#shuffle-sharding)
-    * [Constant Work](#constant-work)
-    * [Canary](#canary)
-* [Resources](#resources-2)
-    * [Books (*oreilly.com*)](#books-oreillycom)
-    * [Websites](#websites)
-    * [Videos](#videos)
+- [Definition(s)](#definitions)
+- [Key Questions](#key-questions)
+- [Organization Considerations](#organization-considerations)
+- [Quality Attributes](#quality-attributes)
+- [Patterns](#patterns)
+  - [event-sourcing](#event-sourcing)
+    - [Resources](#resources)
+  - [Hexagonal](#hexagonal)
+    - [Resources](#resources-1)
+- [Topics / Concepts / Terms](#topics--concepts--terms)
+  - [Database](#database)
+  - [Shuffle Sharding](#shuffle-sharding)
+  - [Constant Work](#constant-work)
+  - [Canary](#canary)
+- [Resources](#resources-2)
+  - [Books (*oreilly.com*)](#books-oreillycom)
+  - [Websites](#websites)
+  - [Decks](#decks)
+  - [Videos](#videos)
 
 ---
 
@@ -213,6 +214,11 @@ If AZ becomes unavailable, no new resources need to be provisioned, just a quick
 * [Azure Architecture Center](https://docs.microsoft.com/en-us/azure/architecture/)
 * [medium | software architecture](https://medium.com/tag/software-architecture)
 * [C4 model for visualizing software architecture](https://c4model.com/)
+
+
+### Decks
+
+* [Scalability, Availability &amp; Stability Patterns](https://www.slideshare.net/jboner/scalability-availability-stability-patterns/)
 
 ### Videos
 
