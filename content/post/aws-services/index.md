@@ -477,6 +477,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 ### RDS
 
 * Aurora, PostgreSQL, MySql, MariaDB, Oracle, SQL Sever
+* DB Instance (contains 1 or more dbs), Instance Classes (compute+memory), Instance Storage
+* HA Multi-AZ
 
 ### Redshift
 
@@ -1011,6 +1013,7 @@ Data transfer between AWS storage services
 ### SageMaker
 
 * build, train, and deploy machine learning models
+* prebuilt containers for common machine learning frameworks—such as Tensorflow, Pytorch, and MxNet
 * provides a suite of built-in algorithms (via docker containers)
 * can provide custom containers
 * model serving endpoints
