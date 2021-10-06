@@ -23,6 +23,23 @@ learn [aws cloudformation](https://aws.amazon.com/cloudformation/)
 
 ---
 
+## Concepts
+
+### Stacks
+
+* Drift detection
+  * [Resources that support import and drift detection operations - AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html)
+
+### [Stack Sets](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacksets-concepts.html)
+
+> enabling you to create, update, or delete stacks across multiple accounts and Regions with a single operation
+
+* You can create a stack set with either self-managed or service-managed permissions
+  * self-managed - first create the necessary IAM roles to establish a trusted relationship between the account you're administering the stack set from and the account you're deploying stack instances to
+  * service-managed (use with Orgs) - deploy stack instances to accounts managed by AWS Organizations in specific Regions. With this model, you don't need to create the necessary IAM roles; StackSets creates the IAM roles on your behalf.
+* automatic deployment enabled, StackSets automatically deploys to accounts that are added to the target organization or organizational units (OUs) in the future
+* account gate is an optional feature that lets you specify an AWS Lambda function to verify that a target account meets certain requirements before AWS CloudFormation StackSets begins stack operations in that account
+---
 ## Running Examples
 
 examples in [`templates/`](templates/) directory

@@ -36,7 +36,9 @@ see [`kitchen-sink/README.md`](kitchen-sink/README.md)
 * jsii - core/foundational tech for multi-language/polyglot support.  bind any language to underlying typescript implementation.
 * CDK pipelines for CI/CD
 * [Custom Logical Names](https://github.com/aws-samples/aws-cdk-examples/blob/master/typescript/custom-logical-names/README.md) - shows how to hook into an provide own resource names.  Can be used for IAM policies based on resource name `prefixes`
-* Usage with Permissions Boundaries - see [Applying permissions boundary to aws-cdk globally · Issue #3242 · aws/aws-cdk](https://github.com/aws/aws-cdk/issues/3242)
+* Usage with Permissions Boundaries - [class PermissionsBoundary · AWS CDK](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-iam.PermissionsBoundary.html). e.g. `PermissionsBoundary.of(this).apply(permissionsBoundariesPolicy);`
+
+
 ## Key Files and Directories
 
 * `bin` - entry point to CDK app.  imports 1 or more stacks from `lib` folder
