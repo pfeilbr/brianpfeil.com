@@ -386,11 +386,20 @@ The following services are commonly used for AWS solutions.  Each service specif
     * max age of record - use to implement load shedding (prioritize newer messages)
     * split batch on error
     * concurrent batches per shard
-* service integrations - [Using AWS Lambda with other services - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html)
-* [lambda private endpoints(https://aws.amazon.com/blogs/aws/new-use-aws-privatelink-to-access-aws-lambda-over-private-aws-network/) - access lambda from VPC without going over internet
 * APIG -> lambda
 * ALB -> lambda
-
+* service integrations - [Using AWS Lambda with other services - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html)
+* [lambda private endpoints](https://aws.amazon.com/blogs/aws/new-use-aws-privatelink-to-access-aws-lambda-over-private-aws-network/) - access lambda from VPC without going over internet
+* [Lambda Extensions](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html)
+* [Container Images](https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html)
+  * [Runtime interface clients](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-images.html#runtimes-api-client)
+    * runtime interface client in your container image manages the interaction between Lambda and your function code
+    * Lambda provides an open source runtime interface client for each of the supported Lambda runtimes. e.g. node.js, python, etc.
+  * [Lambda Runtime Interface Emulator](https://github.com/aws/aws-lambda-runtime-interface-emulator/)
+    * allows customers to locally test their Lambda function packaged as a container image
+    * web-server that converts HTTP requests to JSON events and maintains functional parity with the Lambda Runtime API
+  * max image size: 10 GB
+* [AWS Lambda Operator Guide](https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html)
 ### Lambda@Edge
 
 * feature of Amazon CloudFront that lets you run code closer to users of your application, which improves performance and reduces latency
