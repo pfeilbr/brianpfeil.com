@@ -390,7 +390,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * ALB -> lambda
 * service integrations - [Using AWS Lambda with other services - AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html)
 * [lambda private endpoints](https://aws.amazon.com/blogs/aws/new-use-aws-privatelink-to-access-aws-lambda-over-private-aws-network/) - access lambda from VPC without going over internet
-* [Lambda Extensions](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html)
+* [Lambda Extensions](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html) - executables in /opt/extensions that conform to the [Lambda Extensions API](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html)
 * [Container Images](https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html)
   * [Runtime interface clients](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-images.html#runtimes-api-client)
     * runtime interface client in your container image manages the interaction between Lambda and your function code
