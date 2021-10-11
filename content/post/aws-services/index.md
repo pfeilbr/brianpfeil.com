@@ -757,14 +757,15 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * declarative provisioning of AWS infrastructure/resource
 * parameters, mappings, conditionals
 * intrinsic functions
+* change sets
 * nested stacks
 * stack drift
 * stacksets - deploy stack to multiple regions.  For DR, active-active, etc.
 * max resources declared in stack (500)
-* [custom resources]
-(https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html) - backed by lambda
+* [custom resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html) - backed by lambda
 * [macros](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html) - lambda performs the template processing / transform
 * modules - package resource configurations for inclusion across stack templates, in a transparent, manageable, and repeatable way
+* CloudFormation Registry
 
 ### Serverless Application Repository (SAR)
 
