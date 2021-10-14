@@ -545,6 +545,9 @@ The following services are commonly used for AWS solutions.  Each service specif
 * saga pattern for rollback
 * parallel map opportunities - run tasks in parallel
 * [service integrations](https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html#welcome-integrations) - request/response, run a job (`.sync`), callback with task token (`.waitForTaskToken`)
+* Step Functions Visual Designer in AWS Console
+* JSONPath expressions
+* Data flow simulator
 
 ### SNS
 
