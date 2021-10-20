@@ -151,6 +151,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 - [SES](#ses)
 - [Kinesis](#kinesis)
 - [EventBridge](#eventbridge)
+- [Glue](#glue)
 - [Step Functions](#step-functions)
 - [Athena](#athena)
 - [SSM Parameter Store](#ssm-parameter-store)
@@ -224,6 +225,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     * gateway that you specify as a target for a route in your route table for traffic destined to a supported AWS service
 * interface endpoint - all other services.  via DNS resolver for VPC/subnets
     * an elastic network interface with a private IP address from the IP address range of your subnet that serves as an entry point for traffic destined to a supported service
+    * specify subnets, security groups, IAM policy doc, enable private DNS
 
 ### Route 53
 
@@ -264,6 +266,10 @@ The following services are commonly used for AWS solutions.  Each service specif
 * custom error responses - http error codes mapped to response page paths
 * georestrictions
 * lambda@edge - headers only requests, rewrite URLs, server-side rendering (SSR), auth, etc.
+* cloudfront functions - run lightweight JavaScript code
+  * no network and file system access.
+  * max run time - run less than 1 ms.
+  * Where a Lambda@Edge is deployed to one of the 13 regional edge locations, Cloudfront Functions are deployed even further down and closer to the viewer at one of the 280+ edge locations
 * cache invalidations
 * non GET HTTP methods support.  must explicitly turn on support for PUT, POST, PATCH, etc.
 * WAF association
@@ -320,9 +326,14 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 * containers
 * task definitions
+  * Fargate and EC2 launch types
+* Service - maintain a specified number of instances of a task definition
+  * Service load balancing - distribute traffic evenly across the tasks in your service
+  * Service auto scaling - via Application Auto Scaling service.  CPU/memory utilization CW metrics
 * EFS or EBS for persistent storage
     * EFS is recommended.  Can be mounted by multiple ECS tasks for parallel access
     * EBS can be used but is tied to un hosting EC2 instance. No fargate.
+ 
 
 ### ECR
 
