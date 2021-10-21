@@ -332,7 +332,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   * Service auto scaling - via Application Auto Scaling service.  CPU/memory utilization CW metrics
 * EFS or EBS for persistent storage
     * EFS is recommended.  Can be mounted by multiple ECS tasks for parallel access
-    * EBS can be used but is tied to un hosting EC2 instance. No fargate.
+    * EBS can be used but is tied to a hosting EC2 instance. Not supported on fargate.
  
 
 ### ECR
@@ -347,13 +347,16 @@ The following services are commonly used for AWS solutions.  Each service specif
         * can use them in ECS task definitions and EKS pod specifications
 * ECR public
 * resource-based permissions using AWS IAM
-*
 
 ### Fargate
+
+[Docs | Amazon ECS on AWS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html)
 
 * containers
 * task definitions
 * run containers without having to manage servers or clusters
+* removes the need to choose server types, decide when to scale your clusters, or optimize cluster packing.
+* When you run your tasks and services with the Fargate launch type, you package your application in containers, specify the CPU and memory requirements, define networking and IAM policies, and launch the application.
 
 ### Batch
 
