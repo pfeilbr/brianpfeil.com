@@ -234,7 +234,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * public and private domains (hosted zones)
 * route to aws services - CloudFront, API Gateway, ELB, RDS, S3 bucket, EC2, VPC Interface Endpoint
 * record sets, TTL
-* health checks
+* health checks - public endpoints or via CloudWatch metrics (e.g. for private endpoints)
 * load balancing via DNS
 * routing policies - latency Based Routing, Geo DNS, Geoproximity, and Weighted Round Robin
 * domain registration
@@ -368,6 +368,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 ### EKS
 
 * managed Kubernetes
+* automates the deployment, scaling, and management of containerized applications
 
 ### LightSail
 
@@ -859,13 +860,16 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * An alarm watches a single metric over a specified time period, and performs one or more specified actions, based on the value of the metric relative to a threshold over time. The action is a notification sent to an Amazon SNS topic or an Auto Scaling policy. You can also add alarms to dashboards.
 * composite alarms
 * Alarm States - OK, ALARM, INSUFFICIENT_DATA (missing data points)
+* [EventBridge integration](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-and-eventbridge.html) - CloudWatch sends events to Amazon EventBridge whenever a CloudWatch alarm changes alarm state.
 
 ### CloudWatch Synthetics (Canaries)
 
-*  supports monitoring your REST APIs, URLs, and website content every minute, 24x7, and alerts you when your application endpoints don’t behave as expected.
+* supports monitoring your REST APIs, URLs, and website content every minute, 24x7, and alerts you when your application endpoints don’t behave as expected.
 * Node.js or python based.  bundles in Puppeteer + Chromium to the runtime
+* trigger types - cron (1 min smallest freq), run once
 * can also used in any workloads requiring general browser automation
-* creates several CloudWatch metrics in `CloudWatchSynthetics` namespace
+* creates several [CloudWatch metrics in `CloudWatchSynthetics` namespace](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_metrics.html)
+* EventBridge support.  See [monitoring canary events with Amazon EventBridge](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitoring-events-eventbridge.html)
 * CloudFormation support via [`AWS::Synthetics::Canary`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-synthetics-canary.html)
 
 > create canaries, configurable scripts that run on a schedule, to monitor your endpoints and APIs. Canaries follow the same routes and perform the same actions as a customer, which makes it possible for you to continually verify your customer experience even when you don't have any customer traffic on your applications. By using canaries, you can discover issues before your customers do.
