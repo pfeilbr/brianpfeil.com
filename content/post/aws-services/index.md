@@ -867,6 +867,7 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * supports monitoring your REST APIs, URLs, and website content every minute, 24x7, and alerts you when your application endpoints don’t behave as expected.
 * Node.js or python based.  bundles in Puppeteer + Chromium to the runtime
 * trigger types - cron (1 min smallest freq), run once
+* [can run in VPC](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_VPC.html)
 * can also used in any workloads requiring general browser automation
 * creates several [CloudWatch metrics in `CloudWatchSynthetics` namespace](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_metrics.html)
 * EventBridge support.  See [monitoring canary events with Amazon EventBridge](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitoring-events-eventbridge.html)
