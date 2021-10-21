@@ -357,6 +357,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 * run containers without having to manage servers or clusters
 * removes the need to choose server types, decide when to scale your clusters, or optimize cluster packing.
 * When you run your tasks and services with the Fargate launch type, you package your application in containers, specify the CPU and memory requirements, define networking and IAM policies, and launch the application.
+* Amazon ECS tasks for Fargate can authenticate with private image registries, including Docker Hub, using basic authentication. When you enable private registry authentication, you can use private Docker images in your task definitions.
+* Fargate Spot - you can run interruption tolerant Amazon ECS tasks at a discounted rate compared to the Fargate price. Fargate Spot runs tasks on spare compute capacity. When AWS needs the capacity back, your tasks will be interrupted with a two-minute warning.
 
 ### Batch
 
