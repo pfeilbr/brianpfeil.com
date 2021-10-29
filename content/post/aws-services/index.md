@@ -417,7 +417,10 @@ The following services are commonly used for AWS solutions.  Each service specif
     * allows customers to locally test their Lambda function packaged as a container image
     * web-server that converts HTTP requests to JSON events and maintains functional parity with the Lambda Runtime API
   * max image size: 10 GB
+* [Lambda Wrapper Scripts | Modifying the runtime environment](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-modify.html#runtime-wrapper) - customize the runtime startup behavior of your Lambda function.  e.g. set env vars, add/update parameters.
 * [AWS Lambda Operator Guide](https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html)
+
+
 ### Lambda@Edge
 
 * feature of Amazon CloudFront that lets you run code closer to users of your application, which improves performance and reduces latency
@@ -1121,12 +1124,11 @@ Data transfer between AWS storage services
 
 ### IAM
 
-* terms - Resources, Identities, Entities, Principals (person or application)
+* terms - Resources, Identities, Entities, Principals (person or application), Actions
 * authentication, authorization
 * actions and operations on resources
 * policy docs - AWS managed policies, Customer managed policies, Inline policies
-* Identity-based and resource-based policies
-* identities - users, groups, roles
+* Identity-based (e.g. users, groups, roles) and resource-based policies (e.g. bucket policy, lambda permissions, sns topic policy, sqs queue policy)
 * STS - temp security credentials
 * assume role
 * identity federation - Federated users and roles (via OIDC, SAML2, Cognito)
