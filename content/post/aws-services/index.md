@@ -418,6 +418,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     * web-server that converts HTTP requests to JSON events and maintains functional parity with the Lambda Runtime API
   * max image size: 10 GB
 * [Lambda Wrapper Scripts | Modifying the runtime environment](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-modify.html#runtime-wrapper) - customize the runtime startup behavior of your Lambda function.  e.g. set env vars, add/update parameters.
+  * code example [aws-samples/aws-lambda-environmental-variables-from-aws-secrets-manager](https://github.com/aws-samples/aws-lambda-environmental-variables-from-aws-secrets-manager/blob/main/README.md)
 * [AWS Lambda Operator Guide](https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html)
 
 
