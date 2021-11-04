@@ -979,7 +979,7 @@ k8s ecosystem
 
 ### AWS DataSync
 
-copy data between NFS, SMB, S3, EFS, FSx
+copy data between NFS, SMB, S3, EFS, FSx, HDFS
 
 **concepts**
 
