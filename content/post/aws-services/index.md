@@ -515,7 +515,9 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 * managed data warehouse service
 * RA3 instances - Scale compute and storage independently for fast query performance and lower costs
-* UDFs - lambda backed
+* UDFs - lambda backed, 
+* Redshift Data API - http based (no JDBC or ODBC).  async so can retrieve results later. query results stored for 24 hrs
+* redshift spectrum - SQL queries on data stored in S3
 
 ### ElastiCache
 
