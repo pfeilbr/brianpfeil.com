@@ -513,7 +513,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### Redshift
 
-* managed data warehouse service
+* managed data warehouse service.
+* postgres foundation
 * RA3 instances - Scale compute and storage independently for fast query performance and lower costs
 * UDFs - lambda backed, 
 * Redshift Data API - http based (no JDBC or ODBC).  async so can retrieve results later. query results stored for 24 hrs
