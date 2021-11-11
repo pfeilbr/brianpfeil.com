@@ -364,7 +364,14 @@ The following services are commonly used for AWS solutions.  Each service specif
 ### Batch
 
 * run batch computing jobs using containers
-* concepts: Compute Environments (compute), Job Queues, Job Definitions (docker image), Jobs (things that run)
+* concepts:
+  * Compute Environments -  set of managed or unmanaged compute resources that are used to run jobs.  Fargate or EC2.  specify the minimum, desired, and maximum number of vCPUs for the environment.
+  * Job Queues - backed by 1 or more compute envs, assign priority
+  * Job Definitions - cpu and memory requirements, iam role for access to other aws resources
+  * Jobs - things that run on fargate or ec2.  shell script, a Linux executable, or a Docker container image
+    * [Array Jobs](https://docs.aws.amazon.com/batch/latest/userguide/array_jobs.html) - run parallel jobs such as Monte Carlo simulations, parametric sweeps, or large rendering jobs.  `AWS_BATCH_JOB_ARRAY_INDEX` is passed to each job as an env var to represent the *current index*
+    * [Automated Job Retries](https://docs.aws.amazon.com/batch/latest/userguide/job_retries.html)
+    * [Job Dependencies](https://docs.aws.amazon.com/batch/latest/userguide/job_dependencies.html)
 
 ### EKS
 
