@@ -124,6 +124,69 @@ Core of CDK is based on tree structure similar to the DOM.
 <img src="https://www.evernote.com/l/AAEqngqx1ZlJOJObL2Oe3eHqFcwiW_SaRfcB/image.png" alt="CDK Identifiers Calculation Image" width="50%" />
 
 ---
+
+### Common CDK Snippets
+
+* [@aws-cdk/core module](https://docs.aws.amazon.com/cdk/api/latest/docs/core-readme.html)
+* [@aws-cdk/aws-iam module](https://docs.aws.amazon.com/cdk/api/latest/docs/aws-iam-readme.html) - key module
+
+```js
+
+// durations
+Duration.seconds(300)   // 5 minutes
+Duration.minutes(5)     // 5 minutes
+Duration.hours(1)       // 1 hour
+Duration.days(7)        // 7 days
+Duration.parse('PT5M')  // 5 minutes
+
+// sizes
+Size.kibibytes(200) // 200 KiB
+Size.mebibytes(5)   // 5 MiB
+Size.gibibytes(40)  // 40 GiB
+Size.tebibytes(200) // 200 TiB
+Size.pebibytes(3)   // 3 PiB
+
+// create secret
+const secret = SecretValue.secretsManager('secretId', {
+  jsonField: 'password', // optional: key of a JSON field to retrieve (defaults to all content),
+  versionId: 'id',       // optional: id of the version (default AWSCURRENT)
+  versionStage: 'stage', // optional: version stage name (default AWSCURRENT)
+});
+
+// get default VPC
+const vpc = ec2.Vpc.fromLookup(stack, 'VPC', {
+  // This imports the default VPC but you can also
+  // specify a 'vpcName' or 'tags'.
+  isDefault: true,
+});
+
+// custom resource
+const fn = new lambda.Function(this, 'MyProvider', functionProps);
+
+new CustomResource(this, 'MyResource', {
+  serviceToken: fn.functionArn,
+});
+
+// OR
+
+const serviceToken = CustomResourceProvider.getOrCreate(this, 'Custom::MyCustomResourceType', {
+  codeDirectory: `${__dirname}/my-handler`,
+  runtime: CustomResourceProviderRuntime.NODEJS_12_X,
+  description: "Lambda function created by the custom resource provider",
+});
+
+new CustomResource(this, 'MyResource', {
+  resourceType: 'Custom::MyCustomResourceType',
+  serviceToken: serviceToken
+});
+
+// bastion host
+const host = new ec2.BastionHostLinux(this, 'BastionHost', { vpc });
+
+
+```
+
+---
 ## Resources
 
 * [AWS CDK · AWS CDK Reference Documentation](https://docs.aws.amazon.com/cdk/api/latest/)
