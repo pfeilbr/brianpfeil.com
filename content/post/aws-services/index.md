@@ -348,6 +348,7 @@ The following services are commonly used for AWS solutions.  Each service specif
         * can use them in ECS task definitions and EKS pod specifications
 * ECR public
 * resource-based permissions using AWS IAM
+* [Announcing Pull Through Cache Repositories for Amazon Elastic Container Registry](https://aws.amazon.com/blogs/aws/announcing-pull-through-cache-repositories-for-amazon-elastic-container-registry/)
 
 ### Fargate
 
@@ -451,6 +452,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     * addresses pain point- Managing access to this shared bucket requires a single bucket policy that controls access for dozens to hundreds of applications with different permission levels
     * [Multi-Region access points](https://aws.amazon.com/blogs/aws/s3-multi-region-access-points-accelerate-performance-availability/)
 * S3 event notifications - notification destinations are SNS, SQS, lambda
+* [Use Amazon S3 Event Notifications with Amazon EventBridge](https://aws.amazon.com/blogs/aws/new-use-amazon-s3-event-notifications-with-amazon-eventbridge/)
 * replication - cross-region, same-region
 * [S3 object lambda](https://aws.amazon.com/blogs/aws/introducing-amazon-s3-object-lambda-use-your-code-to-process-data-as-it-is-being-retrieved-from-s3/) - process data retrieved from S3 with lambda before returning it to an application. lambda calls [`writeGetObjectResponse`](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#writeGetObjectResponse-property) to send modified object contents back to `GET` request.  Create S3 Access Point, then Object Lambda Access Point.
 
@@ -680,6 +682,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * kafka alternative
 * partition key
 * shard count
+* [Kinesis Data Streams On-Demand Mode](https://aws.amazon.com/blogs/aws/amazon-kinesis-data-streams-on-demand-stream-data-at-scale-without-managing-capacity/) - charged per gigabyte of data written, read, and stored in the stream, in a pay-per-throughput fashion
 * ordering guaranteed for messages per shard
 * [dynamic partitioning](https://aws.amazon.com/about-aws/whats-new/2021/08/introducing-dynamic-partitioning-amazon-kinesis-data-firehose/) - continuously partition streaming data in Kinesis Data Firehose using keys within data like “customer_id” or “transaction_id” and deliver data grouped by these keys into corresponding Amazon Simple Storage Service (Amazon S3) prefixes
 * lambda - lambda polls per shard
@@ -719,6 +722,10 @@ usage, customer, and engagement analytics
 ### EMR
 
 hadoop, spark, and friends
+
+* [Amazon EMR Serverless](https://aws.amazon.com/emr/pricing/?nc=sn&loc=4)
+  * part of the job specification, you can provide the minimum and maximum number of concurrent workers, and the vCPU, memory, and storage for each worker
+  * charged for aggregate vCPU, memory, and storage resources used from the time workers start executing till the time they terminate, rounded up to the nearest second with a one-minute minimum.
 
 ### Data Pipelines
 
