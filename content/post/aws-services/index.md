@@ -584,6 +584,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * Step Functions Visual Designer in AWS Console
 * JSONPath expressions
 * Data flow simulator
+* [Step Functions Workflow Studio](https://aws.amazon.com/blogs/aws/new-aws-step-functions-workflow-studio-a-low-code-visual-tool-for-building-state-machines/) - visual designer for state machines
 
 ### SNS
 
