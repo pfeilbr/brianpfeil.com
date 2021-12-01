@@ -511,6 +511,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 * [Amazon DynamoDB Encryption Client](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/what-is-ddb-encrypt.html)
 * [PartiQL - A SQL-Compatible Query Language for Amazon DynamoDB - Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ql-reference.html)
 * [dynamodb table export to s3](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DataExport.html)
+* [DynamoDB Standard-IA table class](https://aws.amazon.com/blogs/aws/new-dynamodb-table-class-save-up-to-60-in-your-dynamodb-costs/)
+  > you will save up to 60 percent in storage costs as compared to using the DynamoDB Standard table class. However, DynamoDB reads and writes for this new table class are priced higher than the Standard tables
 
 ### DocumentDB (MongoDB compatibility)
 
