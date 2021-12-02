@@ -440,15 +440,19 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### S3
 
-* object/blob storage
+* object/blob storage with strong read-after-write consistency
 * versioned buckets
 * presigned URLs for private content (download or upload)
 * [S3 batch operations](https://docs.aws.amazon.com/AmazonS3/latest/dev/batch-ops-basics.html)
 * S3 select
+* Query via Athena
 * [batch operations](https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-basics.html) - perform operation on list of objects specified in manifest.  e.g. lambda, copy, etc.
 * storage classes
 * lifecycle rules - moving between storage tiers for cost savings
 * access points - managing data access at scale, access points are unique hostnames, enforce distinct permissions and network controls for any request made through the access point, scale to many applications accessing bucket with own set of permissions.
+* [S3 Object Lock](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html) - write-once-read-many (WORM) model.  retention periods and legal holds.
+* [static website hosting](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html)
+* [Multi-Region Access Points](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPoints.html)
     * addresses pain point- Managing access to this shared bucket requires a single bucket policy that controls access for dozens to hundreds of applications with different permission levels
     * [Multi-Region access points](https://aws.amazon.com/blogs/aws/s3-multi-region-access-points-accelerate-performance-availability/)
 * S3 event notifications - notification destinations are SNS, SQS, lambda
