@@ -584,6 +584,10 @@ The following services are commonly used for AWS solutions.  Each service specif
 * [Activities](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-activities.html) - enables you to have a task in your state machine where the work is performed by a worker that can be hosted anywhere.
 * start other `[sub]` workflows 
 * [error handling](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html) and Retrying after an error
+* [Input/Output Processing](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-input-output-filtering.html)
+  * * **InputPath** to select a portion of the state input
+  * **Parameters** field to create a collection of key-value pairs that are passed as input
+  * **ResultSelector** field to manipulate a state's result before `ResultPath` is applied
 * orchestration with many built-in integrations to aws services
 * [Step Functions AWS SDK Service Integrations](https://aws.amazon.com/blogs/aws/now-aws-step-functions-supports-200-aws-services-to-enable-easier-workflow-automation/)
 * full execution event history for a given execution
@@ -599,6 +603,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * Data flow simulator
 * [Step Functions Workflow Studio](https://aws.amazon.com/blogs/aws/new-aws-step-functions-workflow-studio-a-low-code-visual-tool-for-building-state-machines/) - visual designer for state machines
 * [VPC Endpoint support](https://docs.aws.amazon.com/step-functions/latest/dg/vpc-endpoints.html)
+
 
 ### SNS
 
