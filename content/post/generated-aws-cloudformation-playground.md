@@ -60,6 +60,16 @@ aws cloudformation deploy --template-file templates/s3-bucket.yaml --stack-name 
 aws cloudformation describe-stacks --stack-name s3-bucket-stack --query "Stacks[0].Outputs[].OutputValue"
 ```
 
+**common parameters**
+
+```sh
+--parameter-overrides Name=Value
+
+--tags \
+    Key1="Value1" \
+    Key2="Value2" \
+```
+
 ### Dynamic References Example
 
 see [`templates/dynamic-references-ssm-secrets.yaml`](templates/dynamic-references-ssm-secrets.yaml) and [Using Dynamic References to Specify Template Values
