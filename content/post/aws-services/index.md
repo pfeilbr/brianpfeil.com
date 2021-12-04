@@ -580,12 +580,18 @@ The following services are commonly used for AWS solutions.  Each service specif
 ### Step Functions
 
 * Standard Workflows vs Express Workflows
+* [error handling](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html) and Retrying after an error
 * orchestration with many built-in integrations to aws services
 * [Step Functions AWS SDK Service Integrations](https://aws.amazon.com/blogs/aws/now-aws-step-functions-supports-200-aws-services-to-enable-easier-workflow-automation/)
+* full execution event history for a given execution
+* [Logging using CloudWatch Logs](https://docs.aws.amazon.com/step-functions/latest/dg/cw-logs.html)
+* [Logging Step Functions Using AWS CloudTrail](https://docs.aws.amazon.com/step-functions/latest/dg/procedure-cloud-trail.html)
+* [CloudWatch Metrics](https://docs.aws.amazon.com/step-functions/latest/dg/procedure-cw-metrics.html)
+* [EventBridge Events](https://docs.aws.amazon.com/step-functions/latest/dg/cw-events.html) - Execution started, succeeded, failed, timed out, aborted
+* [X-Ray tracing support](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-xray-tracing.html)
 * saga pattern for rollback
 * parallel map opportunities - run tasks in parallel
 * [service integrations](https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html#welcome-integrations) - request/response, run a job (`.sync`), callback with task token (`.waitForTaskToken`)
-* Step Functions Visual Designer in AWS Console
 * JSONPath expressions
 * Data flow simulator
 * [Step Functions Workflow Studio](https://aws.amazon.com/blogs/aws/new-aws-step-functions-workflow-studio-a-low-code-visual-tool-for-building-state-machines/) - visual designer for state machines
@@ -682,6 +688,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * IAM - resource-based and identity-based policies.  owner of EB resources (bus, rules, etc.) is an AWS root account.
 * supports sending and recieving events across accounts
 * [SaaS Partner Integrations](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-partner-event-bus.html)
+* [X-Ray Tracing support](https://aws.amazon.com/blogs/compute/using-aws-x-ray-tracing-with-amazon-eventbridge/)
 
 ### Kinesis
 
