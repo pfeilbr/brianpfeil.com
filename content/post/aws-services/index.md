@@ -588,6 +588,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   * * **InputPath** to select a portion of the state input
   * **Parameters** field to create a collection of key-value pairs that are passed as input
   * **ResultSelector** field to manipulate a state's result before `ResultPath` is applied
+  * **OutputPath** enables you to select a portion of the state output to pass to the next state
 * orchestration with many built-in integrations to aws services
 * [Step Functions AWS SDK Service Integrations](https://aws.amazon.com/blogs/aws/now-aws-step-functions-supports-200-aws-services-to-enable-easier-workflow-automation/)
 * full execution event history for a given execution
@@ -1169,7 +1170,12 @@ Data transfer between AWS storage services
 * authentication, authorization
 * actions and operations on resources
 * policy docs - AWS managed policies, Customer managed policies, Inline policies
-* Identity-based (e.g. users, groups, roles) and resource-based policies (e.g. bucket policy, lambda permissions, sns topic policy, sqs queue policy)
+* Policy Types
+  * Identity-based (e.g. users, groups, roles)
+  * Resource-based policies (e.g. bucket policy, IAM role trust policy, lambda permissions, sns topic policy, sqs queue policy, kms key policy, vpc endpoint policy)
+  * Permissions boundaries
+  * Organizations SCPs
+  * Session policies - via assume role or federated user.  Session policies limit permissions for a created session, but do not grant permissions.
 * STS - temp security credentials
 * assume role
 * identity federation - Federated users and roles (via OIDC, SAML2, Cognito)
