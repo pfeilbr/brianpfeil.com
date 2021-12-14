@@ -361,6 +361,11 @@ The following services are commonly used for AWS solutions.  Each service specif
 * When you run your tasks and services with the Fargate launch type, you package your application in containers, specify the CPU and memory requirements, define networking and IAM policies, and launch the application.
 * Amazon ECS tasks for Fargate can authenticate with private image registries, including Docker Hub, using basic authentication. When you enable private registry authentication, you can use private Docker images in your task definitions.
 * Fargate Spot - you can run interruption tolerant Amazon ECS tasks at a discounted rate compared to the Fargate price. Fargate Spot runs tasks on spare compute capacity. When AWS needs the capacity back, your tasks will be interrupted with a two-minute warning.
+* ECS Service - desired task count.  allows you to run and maintain a specified number of instances of a task definition simultaneously in an Amazon ECS cluster. If any of your tasks should fail or stop for any reason, the Amazon ECS service scheduler launches another instance of your task definition to replace it in order to maintain the desired number of tasks in the service.
+  * optionally front with ALB
+  * [Service autoscaling](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html) is done using the Application Auto Scaling service.  See [How can I configure Amazon ECS Service Auto Scaling on Fargate?](https://aws.amazon.com/premiumsupport/knowledge-center/ecs-fargate-service-auto-scaling/)
+* Multi AZ by default - *Fargate will look to spread Task placement across all available Availability Zones*
+* [Deployment types](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-types.html) - rolling update, blue/green (via CodeDeploy)
 
 ### Batch
 
@@ -552,7 +557,28 @@ The following services are commonly used for AWS solutions.  Each service specif
 ### Timestream
 
 * time series database
+* use [SQL to query](https://docs.aws.amazon.com/timestream/latest/developerguide/reference.html)
+* Concepts
+  * **Time series** - A sequence of one or more data points (or records) recorded over a time interval.
+  * **Record** - A single data point in a time series
+    * **Multi-measure** records - store multiple measures in a single table row, instead of storing one measure per table row
+  * **Dimension** - An attribute that describes the meta-data of a time series. A dimension consists of a dimension name and a dimension value.
+  * **Measure** - The actual value being measured by the record. Examples are the stock price, the CPU or memory utilization, and the temperature or humidity reading
+  * **Timestamp** - Indicates when a measure was collected for a given record
+  * **Table** - A container for a set of related time series.
+  * **Database** - A top level container for tables.
+  * **Scheduled Query** - Timestream periodically and automatically runs these queries and reliably writes the query results into a separate table.  serverless and fully managed
+    * **Query string** - query to run
+    * **Schedule expression** - when your scheduled query instances are run.  using a cron expression
+    * **Target configuration** - map the result of a scheduled query into the destination table where the results of this scheduled query will be stored.
+    * **Notification configuration** - receive a notification for every such query run on an SNS topic that you configure when you create a scheduled query.
+* fully decoupled data ingestion, storage, and query architecture where each component can scale independent of other components
+* storage tiering, with a memory store for recent data and a magnetic store for historical data
 * InfluxDB, Prometheus, Riak
+
+![](https://docs.aws.amazon.com/timestream/latest/developerguide/images/concepts_simple.png)
+
+![](https://docs.aws.amazon.com/timestream/latest/developerguide/images/ts-architecture.png)
 
 ### Cloud Directory
 
@@ -1178,7 +1204,7 @@ Data transfer between AWS storage services
   * Session policies - via assume role or federated user.  Session policies limit permissions for a created session, but do not grant permissions.
 * STS - temp security credentials
 * assume role
-* identity federation - Federated users and roles (via OIDC, SAML2, Cognito)
+* identity providers/federation - Federated users and roles (via OIDC, SAML2)
 * [Attribute-based access control (ABAC)](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_attribute-based-access-control.html) - defines permissions based on attributes (tags)
 * [permission boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html)
 * sigv4 requests
