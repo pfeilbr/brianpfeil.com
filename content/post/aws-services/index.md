@@ -923,7 +923,7 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * Dashboards - for Visualizations
 * [Creating Metrics From Log Events Using Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/MonitoringLogData.html)
 * [Embedded Metric Format](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Generation.html) - generate metrics from structured (json) log messages
-
+* [CloudWatch Metric Streams](https://aws.amazon.com/blogs/aws/cloudwatch-metric-streams-send-aws-metrics-to-partners-and-to-your-apps-in-real-time/) - metrics are delivered to a Kinesis Data Firehose stream
 
 ### CloudWatch Alarms
 
