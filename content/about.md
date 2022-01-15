@@ -11,7 +11,7 @@ layout = "page"
 
 <div id="avatar"></div>
 
-Hi, I'm Brian Pfeil.  I'm passionate about technology, and building things.  This is my personal blog where I sometimes write about those and other interests.
+Hello, I'm Brian Pfeil.  I'm passionate about technology, and building things.  This is my personal blog where I sometimes write about those and other interests.
 
 I currently work at a Pharmaceutical company as a Cloud Architect.
 
