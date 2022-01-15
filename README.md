@@ -22,6 +22,10 @@ cd personal-website
 git submodule update
 git submodule foreach git checkout master
 git submodule foreach git pull origin master
+
+# pull contents of submodules
+# see <https://stackoverflow.com/questions/1030169/easy-way-to-pull-latest-of-all-git-submodules>
+git submodule update --init --recursive
 ```
 
 ## Key Files and Directories
