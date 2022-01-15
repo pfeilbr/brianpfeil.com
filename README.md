@@ -28,6 +28,12 @@ git submodule foreach git pull origin master
 git submodule update --init --recursive
 ```
 
+## Github Actions Deployment to Github Pages
+
+see [`.github/workflows/gh-pages.yml`](.github/workflows/gh-pages.yml)
+
+* uses [peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages) -  GitHub Action to deploy your static files to GitHub Pages
+
 ## Key Files and Directories
 
 * [`config.yaml`](config.yaml) - site configuration file
