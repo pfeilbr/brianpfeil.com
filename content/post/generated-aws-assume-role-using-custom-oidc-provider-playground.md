@@ -32,7 +32,7 @@ see also [AWS federation comes to GitHub Actions](https://awsteele.com/blog/2021
 1. create jenkins OIDC provider server.  see [pfeilbr/aws-custom-nodejs-oidc-provider-server-on-heroku](https://github.com/pfeilbr/aws-custom-nodejs-oidc-provider-server-on-heroku)
 1. create a jenkins OIDC provider in AWS account (`AWS::IAM::OIDCProvider`)
 1. jenkins job at start creates token (guid) and persists it - e.g. `JENKINS_ID_TOKEN_REQUEST_TOKEN` (github actions is called `ACTIONS_ID_TOKEN_REQUEST_TOKEN`)
-   * e.g could be persisted to service at https://vstoken.jenkins.merck.com (https://vstoken.jenkins.merck.com/.well-known/openid-configuration)
+   * e.g could be persisted to service at https://vstoken.jenkins.company.com (https://vstoken.jenkins.company.com/.well-known/openid-configuration)
 1. jenkins job issues assume role passing in `JENKINS_ID_TOKEN_REQUEST_TOKEN` - see <https://github.com/aws-actions/configure-aws-credentials/blob/master/index.js#L93>
 
 * <https://github.com/aws-actions/configure-aws-credentials/blob/master/index.js>
@@ -44,7 +44,7 @@ see also [AWS federation comes to GitHub Actions](https://awsteele.com/blog/2021
     Type: AWS::IAM::OIDCProvider
     Condition: CreateOIDCProvider
     Properties:
-      Url: https://vstoken.jenkins.merck.com
+      Url: https://vstoken.jenkins.company.com
       ClientIdList: 
         - sts.amazonaws.com
       ThumbprintList:
