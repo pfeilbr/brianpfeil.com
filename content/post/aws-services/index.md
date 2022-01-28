@@ -45,6 +45,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     - [S3](#s3)
     - [Glacier](#glacier)
     - [EFS (Elastic File System)](#efs-elastic-file-system)
+    - [FSx](#fsx)
     - [FSx for Windows File Server](#fsx-for-windows-file-server)
     - [FSx for Lustre](#fsx-for-lustre)
     - [FSx for ONTAP](#fsx-for-ontap)
@@ -478,6 +479,11 @@ The following services are commonly used for AWS solutions.  Each service specif
 * can mount as NFS v4
 * e.g. shared file system.  many EC2 instances can mount same efs file system.
 * can mount to lambda local filesystem
+
+### FSx
+
+* File System X, where X means your choice + any workload
+* NetApp ONTAP, Windows File Server, Lustre, ZFS
 
 ### FSx for Windows File Server
 
