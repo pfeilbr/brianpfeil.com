@@ -499,6 +499,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * deployment options
   * Scratch File Systems - shorter-term processing of data and for temporary storage. In the event that a file server fails, data does not persist and is not replicated.
   * Persistent File Systems -  file servers remain highly available and data is automatically replicated in the same Availability Zone (AZ) as the file system. The data volumes connected to the file servers are replicated separately from the file system they are attached to
+* mount lustre file system to S3 bucket 
 * [Choosing an Amazon FSx File System](https://aws.amazon.com/fsx/when-to-choose-fsx/)
 
 ### FSx for ONTAP
