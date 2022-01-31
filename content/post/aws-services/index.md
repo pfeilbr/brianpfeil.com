@@ -657,6 +657,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * Data flow simulator
 * [Step Functions Workflow Studio](https://aws.amazon.com/blogs/aws/new-aws-step-functions-workflow-studio-a-low-code-visual-tool-for-building-state-machines/) - visual designer for state machines
 * [VPC Endpoint support](https://docs.aws.amazon.com/step-functions/latest/dg/vpc-endpoints.html)
+* [Step Functions Local](https://docs.aws.amazon.com/step-functions/latest/dg/sfn-local.html) - downloadable version of Step Functions that lets you develop and test applications using a version of Step Functions running in your own development environment.
 
 
 ### SNS
