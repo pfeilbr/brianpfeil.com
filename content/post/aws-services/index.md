@@ -629,6 +629,8 @@ The following services are commonly used for AWS solutions.  Each service specif
     * encryption at rest - connection data stored in secrets manger using AWS managed or Customer managed CMK
     * Encryption in Transit (TLS 1.2) - choose either an AWS managed CMK or a customer managed CMK. When executing a flow, Amazon AppFlow stores data temporarily in an intermediate S3 bucket and encrypts it using this key. This intermediate bucket is deleted after 24 hours, using a bucket lifecycle policy.
 * [Actions defined by Amazon AppFlow](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonappflow.html#amazonappflow-actions-as-permissions)
+* [AppFlow integrations](https://aws.amazon.com/appflow/integrations/) - built-in integrations
+* [Custom Connector SDK](https://github.com/awslabs/aws-appflow-custom-connector-python) (python or java) - source data from any system
 
 ### Step Functions
 
