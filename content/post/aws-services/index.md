@@ -230,7 +230,9 @@ The following services are commonly used for AWS solutions.  Each service specif
 * interface endpoint - all other services.  via DNS resolver for VPC/subnets
     * an elastic network interface with a private IP address from the IP address range of your subnet that serves as an entry point for traffic destined to a supported service
     * specify subnets, security groups, IAM policy doc, enable private DNS
-
+* [VPC endpoint services](https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-service.html) - create your own application in your VPC and configure it as an AWS PrivateLink-powered service (referred to as an endpoint service). Other AWS principals can create a connection from their VPC to your endpoint service using an interface VPC endpoint.  You are the service provider, and the AWS principals that create connections to your service are service consumers.
+  ![](https://docs.aws.amazon.com/vpc/latest/privatelink/images/vpc-endpoint-service.png)
+  
 ### Route 53
 
 * managed DNS
