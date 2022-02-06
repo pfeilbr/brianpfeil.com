@@ -232,7 +232,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     * specify subnets, security groups, IAM policy doc, enable private DNS
 * [VPC endpoint services](https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-service.html) - create your own application in your VPC and configure it as an AWS PrivateLink-powered service (referred to as an endpoint service). Other AWS principals can create a connection from their VPC to your endpoint service using an interface VPC endpoint.  You are the service provider, and the AWS principals that create connections to your service are service consumers.
   ![](https://docs.aws.amazon.com/vpc/latest/privatelink/images/vpc-endpoint-service.png)
-  
+
 ### Route 53
 
 * managed DNS
@@ -1151,12 +1151,18 @@ Data transfer between AWS storage services
 ### SageMaker
 
 * build, train, and deploy machine learning models
+* provides a suite of built-in algorithms (via docker containers).  provides common machine learning algorithms that are optimized to run efficiently against extremely large data in a distributed environment
 * prebuilt containers for common machine learning frameworks—such as Tensorflow, Pytorch, and MxNet
-* provides a suite of built-in algorithms (via docker containers)
-* can provide custom containers
-* model serving endpoints
+* customer can bring own custom containers (bring-your-own-algorithms and frameworks)
+* To train a model in SageMaker, you create a training job that includes
+  * S3 location with training data
+  * Specify ML Compute instances managed by SageMaker
+  * S3 location to store output of job
+  * ECR path to where training code is
+* model serving endpoints (inference) ([SageMaker Hosting Services](https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works-deployment.html#how-it-works-hosting)).  your endpoint config specifys instance type, number of instances, etc.
 * jupyter notebooks
 * SageMaker notebook instance is a machine learning (ML) compute instance running the Jupyter Notebook App
+* [Amazon SageMaker Python SDK](https://sagemaker.readthedocs.io/)
 
 ### Comprehend
 
