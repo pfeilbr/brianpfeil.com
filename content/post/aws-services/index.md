@@ -94,6 +94,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     - [CloudWatch Events (see EventBridge)](#cloudwatch-events-see-eventbridge)
     - [CloudWatch Insights](#cloudwatch-insights)
     - [CloudWatch Metrics](#cloudwatch-metrics)
+    - [CloudWatch Dashboards](#cloudwatch-dashboards)
     - [CloudWatch Alarms](#cloudwatch-alarms)
     - [CloudWatch Synthetics (Canaries)](#cloudwatch-synthetics-canaries)
     - [CloudTrail](#cloudtrail)
@@ -952,10 +953,15 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * concepts - namespace, dimensions (name/value pairs), units (Bytes, Seconds, Count, and Percent), time stamp, resolution (granularity)
 * statistics - sum, max, min, average, sample count, percentile (pNN) (metric data aggregations over specified periods of time)
 * metrics retention
-* Dashboards - for Visualizations
 * [Creating Metrics From Log Events Using Filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/MonitoringLogData.html)
 * [Embedded Metric Format](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Generation.html) - generate metrics from structured (json) log messages
 * [CloudWatch Metric Streams](https://aws.amazon.com/blogs/aws/cloudwatch-metric-streams-send-aws-metrics-to-partners-and-to-your-apps-in-real-time/) - metrics are delivered to a Kinesis Data Firehose stream
+
+### CloudWatch Dashboards
+
+* [CloudWatch Dashboards](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Dashboards.html) - for Visualizations
+* [Dashboard Custom Widgets](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Dashboards.html) - dashboard widget that can call any AWS Lambda function with custom parameters. It then displays the returned HTML or JSON.
+* [CloudWatch Dashboard Sharing](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-dashboard-sharing.html) - Share a single dashboard and designate specific email addresses, Share a single dashboard publicly, so that anyone who has the link can view the dashboard, Share all the CloudWatch dashboards in your account and specify a third-party single sign-on (SSO)
 
 ### CloudWatch Alarms
 
