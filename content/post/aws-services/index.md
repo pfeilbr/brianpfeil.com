@@ -569,6 +569,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * UDFs - lambda backed, 
 * Redshift Data API - http based (no JDBC or ODBC).  async so can retrieve results later. query results stored for 24 hrs
 * redshift spectrum - SQL queries on data stored in S3
+* [Kinesis Data Streaming ingestion](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-streaming-ingestion.html) - eliminates the need to stage data in S3 before ingesting it into Redshift
 
 ### ElastiCache
 
