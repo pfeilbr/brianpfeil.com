@@ -854,6 +854,7 @@ data processing workloads
 * query S3 data in place.  pay per query / data accessed.
 * integrated with glue catalog
 * Presto is underlying tech
+* [Connecting to Amazon Athena with ODBC and JDBC Drivers](https://docs.aws.amazon.com/athena/latest/ug/athena-bi-tools-jdbc-odbc.html)
 
 ### QuickSight
 
