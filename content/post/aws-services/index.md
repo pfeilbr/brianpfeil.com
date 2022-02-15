@@ -855,6 +855,7 @@ data processing workloads
 * integrated with glue catalog
 * Presto is underlying tech
 * [Connecting to Amazon Athena with ODBC and JDBC Drivers](https://docs.aws.amazon.com/athena/latest/ug/athena-bi-tools-jdbc-odbc.html)
+* [QuickSight Integration](https://docs.aws.amazon.com/quicksight/latest/user/create-a-data-set-athena.html)
 
 ### QuickSight
 
