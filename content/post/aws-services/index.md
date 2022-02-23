@@ -703,6 +703,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * alarm on queue depth
 * KMS encryption
 * [DLQ](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html) for redrive for messages that can't be delivered to target SQS queue
+* [partial batch response](https://aws.amazon.com/about-aws/whats-new/2021/11/aws-lambda-partial-batch-response-sqs-event-source/) - [Reporting batch item failures](https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#services-sqs-batchfailurereporting) when used with lamdba
 
 ### SES
 
