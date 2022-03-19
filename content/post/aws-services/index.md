@@ -668,6 +668,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### SNS
 
+> if not doing "sizable" fan-out, see if EventBridge meets the need (more features around archiving, replay, retries)
+
 * pub/sub
 * message filtering with subscription
 * push notifications
