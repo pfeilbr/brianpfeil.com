@@ -406,6 +406,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 * synchronous vs asynchronous vs poll based/stream processing (poll based is sync. via event-source mappings)
 * memory - single knob for memory and CPU
+* [Lambda function URLs](https://docs.aws.amazon.com/lambda/latest/dg/lambda-urls.html)
 * DLQ
 * lambda destinations (only for async invokes)
 * reserved concurrency - concurrency allocated for a specific function. e.g. i always want fn X to be able to run 10 lambda invokes concurrently
