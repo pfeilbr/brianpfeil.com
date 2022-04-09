@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["JavaScript", "playground"]
+categories = ["Python", "playground"]
 date = 2019-07-09
 description = ""
 summary = " "
