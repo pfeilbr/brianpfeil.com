@@ -56,6 +56,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     - [DynamoDB](#dynamodb)
     - [DocumentDB (MongoDB compatibility)](#documentdb-mongodb-compatibility)
     - [RDS](#rds)
+    - [Aurora Serverless](#aurora-serverless)
     - [Redshift](#redshift)
     - [ElastiCache](#elasticache)
     - [ElasticSearch](#elasticsearch)
@@ -561,6 +562,11 @@ The following services are commonly used for AWS solutions.  Each service specif
 * Aurora, PostgreSQL, MySql, MariaDB, Oracle, SQL Sever
 * DB Instance (contains 1 or more dbs), Instance Classes (compute+memory), Instance Storage
 * HA Multi-AZ
+
+### [Aurora Serverless](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html)
+
+* [Using the Data API for Aurora Serverless v1](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html) - http API, no long lived connections
+  * see [Class: AWS.RDSDataService](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/RDSDataService.html)
 
 ### Redshift
 
