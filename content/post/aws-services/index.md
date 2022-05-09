@@ -461,7 +461,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * S3 select
 * Query via Athena
 * [batch operations](https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops-basics.html) - perform operation on list of objects specified in manifest.  e.g. lambda, copy, etc.
-* storage classes
+* [storage classes](https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html) - Standard, Standard-IA, Intelligent-Tiering, One Zone-IA, Glacier Instant Retrieval, Glacier Flexible Retrieval, Glacier Deep Archive
 * lifecycle rules - moving between storage tiers for cost savings
 * [replication - cross-region, same-region](https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html)
 * access points - managing data access at scale, access points are unique hostnames, enforce distinct permissions and network controls for any request made through the access point, scale to many applications accessing bucket with own set of permissions.
