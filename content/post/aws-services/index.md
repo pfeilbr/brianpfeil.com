@@ -1297,6 +1297,10 @@ Data transfer between AWS storage services
 ### KMS
 
 * key management service
+* symmetric, asymmetric (pki)
+* key policy determines principals that can use (identity and service)
+* [envelope encryption](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#enveloping) - key to gen data key, data key used to encrypt plaintext, key to encrypt data key, encrypted data + encrypted data key stored
+* [aws encryption sdk and cli](https://docs.aws.amazon.com/encryption-sdk/latest/developer-guide/introduction.html)
 
 ### Directory Service
 
