@@ -1296,8 +1296,9 @@ Data transfer between AWS storage services
 
 ### KMS
 
-* key management service
+* key management service - [AWS KMS concepts](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html)
 * symmetric, asymmetric (pki)
+* kye types: Customer managed key (CMK), AWS managed key, AWS owned key	 
 * key policy determines principals that can use (identity and service)
 * [envelope encryption](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#enveloping) - key to gen data key, data key used to encrypt plaintext, key to encrypt data key, encrypted data + encrypted data key stored
 * [aws encryption sdk and cli](https://docs.aws.amazon.com/encryption-sdk/latest/developer-guide/introduction.html)
