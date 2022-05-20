@@ -1288,7 +1288,11 @@ Data transfer between AWS storage services
 ### WAF
 
 * web application firewall
-* associate with ALB, CloudFront, API Gateway
+* associate with followng resource types: ALB, CloudFront Distribution, API Gateway REST API, AppSync GraphQL API
+* concepts
+  * Web ACLs - contain rules and/or rule groups
+  * Rules - contains a statement that defines the inspection criteria, and an action to take if a web request meets the criteria
+  * Rules groups - group of rules for easier management
 
 ### Certificate Manager (ACM)
 
