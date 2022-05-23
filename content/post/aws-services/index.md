@@ -52,6 +52,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     - [Storage Gateway](#storage-gateway)
     - [EBS](#ebs)
     - [Transfer](#transfer)
+    - [AWS Backup](#aws-backup)
   - [Database](#database)
     - [DynamoDB](#dynamodb)
     - [DocumentDB (MongoDB compatibility)](#documentdb-mongodb-compatibility)
@@ -529,6 +530,16 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 * SFTP to S3
 * enables the transfer of files directly into and out of S3 using SFTP
+
+### AWS Backup
+
+* centralize and automate data protection across AWS services
+* configure backup policies and monitor activity for your AWS resources in one place
+* backup and restore for: EC2 instances, S3 data, EBS volumes, DynamoDB tables, RDS database instances, Aurora clusters, EFS and FSx FSs, Storage Gateway volumes, DocumentDB clusters, Neptune clusters
+* concepts
+  * Backup Vault
+    * Backup Plans
+      * Backup Selection - e.g. backup resources having tag(s)
 
 ---
 
