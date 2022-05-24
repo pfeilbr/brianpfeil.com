@@ -243,7 +243,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * public and private domains (hosted zones)
 * route to aws services - CloudFront, API Gateway, ELB, RDS, S3 bucket, EC2, VPC Interface Endpoint
 * record sets, TTL
-* health checks - public endpoints or via CloudWatch metrics (e.g. for private endpoints)
+* health checks - public endpoints or via CloudWatch metrics (e.g. for private endpoints. see [`AlarmIdentifier`](https://docs.aws.amazon.com/Route53/latest/APIReference/API_HealthCheckConfig.html#Route53-Type-HealthCheckConfig-AlarmIdentifier))
   * can associate a health check with recordset. e.g. Route 53 failover recordset.
 * load balancing via DNS
 * routing policies - latency Based Routing, Geo DNS, Geoproximity, and Weighted Round Robin
