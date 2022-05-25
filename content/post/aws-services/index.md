@@ -41,6 +41,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     - [Elastic Beanstalk](#elastic-beanstalk)
     - [Lambda](#lambda)
     - [Lambda@Edge](#lambdaedge)
+    - [EC2 Image Builder](#ec2-image-builder)
   - [Storage](#storage)
     - [S3](#s3)
     - [Glacier](#glacier)
@@ -448,6 +449,12 @@ The following services are commonly used for AWS solutions.  Each service specif
 ### Lambda@Edge
 
 * feature of Amazon CloudFront that lets you run code closer to users of your application, which improves performance and reduces latency
+
+### EC2 Image Builder
+
+> automate the creation, management, and deployment of customized, secure, and up-to-date “golden” server images that are pre-installed and pre-configured with software and settings to meet specific IT standards.
+
+* automate the creation of EC2 AMI and docker images
 
 ---
 
