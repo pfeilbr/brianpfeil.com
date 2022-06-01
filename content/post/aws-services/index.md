@@ -819,13 +819,16 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### Kinesis Data Analytics
 
-analyze streaming data with SQL
+Process and analyze streaming data using SQL or Java.
 
-* real-time analysis
-* supports SQL applications (aws specific) and apache flink applications
-* concepts - application, input steam -> application code (SQL statements) -> output stream
-* time based windows.  tumbling windows.
-* pump
+* two application types are supported
+  * [SQL Applications](https://docs.aws.amazon.com/kinesisanalytics/latest/dev/what-is.html) - AWS specific
+    * concepts - application, input steam -> application code (SQL statements) -> output stream
+    * time based windows.  tumbling windows.
+    * pump
+  * [Apache Flink Applications](https://docs.aws.amazon.com/kinesisanalytics/latest/java/what-is.html) - OSS standard for streaming
+    * you can use Java, Scala, or SQL to process and analyze streaming data
+    * use [DataStream API](https://ci.apache.org/projects/flink/flink-docs-release-1.11/dev/datastream_api.html) and [Table API](https://ci.apache.org/projects/flink/flink-docs-release-1.11/dev/table/) 
 
 ### Pinpoint
 
