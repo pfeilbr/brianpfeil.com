@@ -663,7 +663,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### Step Functions
 
-* Standard Workflows vs Express Workflows
+* Standard Workflows (max duration: 1 yr) vs Express Workflows (max duration: 5 min)
 * States - Task, Choice, Wait, Pass, Parallel, Map, Succeed, Fail
 * [Activities](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-activities.html) - enables you to have a task in your state machine where the work is performed by a worker that can be hosted anywhere.
 * start other `[sub]` workflows 
