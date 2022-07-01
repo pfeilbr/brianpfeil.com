@@ -225,7 +225,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 * The NLB forwards requests whereas the ALB examines the contents of the HTTP request header to determine where to route the request. So, the ALB is performing content based routing.
 * Resource Type Hierarchy
-  * AWS::ElasticLoadBalancingV2::LoadBalancer -> AWS::ElasticLoadBalancingV2::Listener -> AWS::ElasticLoadBalancingV2::TargetGroup -> [Instance | IP Address | Lambda | ALB]
+  * `AWS::ElasticLoadBalancingV2::LoadBalancer -> AWS::ElasticLoadBalancingV2::Listener -> [AWS::ElasticLoadBalancingV2::ListenerRule] (e.g. path based) -> AWS::ElasticLoadBalancingV2::TargetGroup -> [Instance | IP Address | Lambda | ALB]`
 
 ### PrivateLink / VPC Endpoint
 
