@@ -864,6 +864,7 @@ data processing workloads
 * glue notebook (Jupyter/Zeppelin) - interactive development and testing of your ETL scripts on a development endpoint
 * partitions
 * AWS Data Wrangler - excellent integration library to use with glue via python shell jobs
+* [Starting an AWS Glue Workflow with an Amazon EventBridge Event](https://docs.aws.amazon.com/glue/latest/dg/starting-workflow-eventbridge.html) - trigger a workflow/job via EventBridge
 
 ### Glue DataBrew
 
