@@ -98,6 +98,17 @@ enum Result<T, E> { // T and E are generics. T can contain any type of value, E 
 }
 ```
 
+---
+
+## Smart Pointers (Box, Rc, Arc, Cell)
+
+- Box<T> is for single ownership (single thread, stored on heap).
+- Rc<T> is for multiple ownership (single thread, stored on heap).
+- Arc<T> is for multiple ownership, but threadsafe (multi-thread, stored on heap).
+- Cell<T> is for "interior mutability" for Copy types; that is, when you need to mutate something behind a &T.
+
+---
+
 ## Resources
 
 * [The Rust Programming Language book](https://doc.rust-lang.org/stable/book/)
@@ -111,6 +122,7 @@ enum Result<T, E> { // T and E are generics. T can contain any type of value, E 
 * [The Little Book of Rust Macros](http://danielkeep.github.io/tlborm/book/)
 * [Yoututbe | Jon Gjengset](https://www.youtube.com/channel/UC_iD0xppBwwsrM9DegC5cQQ) - rust videos
 * [dtolnay/cargo-expand: Subcommand to show result of macro expansion](https://github.com/dtolnay/cargo-expand)
+* [Wrapper Types in Rust: Choosing Your Guarantees](https://manishearth.github.io/blog/2015/05/27/wrapper-types-in-rust-choosing-your-guarantees/)
 
 
 
