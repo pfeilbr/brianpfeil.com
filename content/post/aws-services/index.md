@@ -58,6 +58,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     - [DynamoDB](#dynamodb)
     - [DocumentDB (MongoDB compatibility)](#documentdb-mongodb-compatibility)
     - [RDS](#rds)
+    - [Amazon Aurora](#amazon-aurora)
     - [Aurora Serverless](#aurora-serverless)
     - [Redshift](#redshift)
     - [ElastiCache](#elasticache)
@@ -582,6 +583,31 @@ The following services are commonly used for AWS solutions.  Each service specif
 * Aurora, PostgreSQL, MySql, MariaDB, Oracle, SQL Sever
 * DB Instance (contains 1 or more dbs), Instance Classes (compute+memory), Instance Storage
 * HA Multi-AZ
+
+
+### Amazon Aurora
+
+* fully managed relational database engine that's **compatible with MySQL and PostgreSQL**
+* compute and storage are separate.  underlying storage grows automatically as needed. An Aurora cluster volume can grow to a maximum size of 128 tebibytes (TiB)
+  * HA - data remains safe even if some or all of the DB instances in the cluster become unavailable
+* Aurora DB cluster consists of one or more DB instances and a cluster volume that manages the data for those DB instances
+* When data is written to the primary DB instance, Aurora synchronously replicates the data across Availability Zones to six storage nodes associated with your cluster volume. Doing so provides data redundancy, eliminates I/O freezes, and minimizes latency spikes during system backups.
+* **cluster endpoint** - a connection string that stays the same even when a failover promotes a new primary instance. cluster endpoint always represents the current primary instance in the cluster.
+* DB Instance Types
+  * Primary DB instance - Supports read and write operations, and performs all of the data modifications to the cluster volume. Each Aurora DB cluster has one primary DB instance.
+  * Aurora Replica - Connects to the same storage volume as the primary DB instance and supports only read operations. Each Aurora DB cluster can have up to 15 Aurora Replicas in addition to the primary DB instance.
+* [Amazon Aurora connection management](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html)
+  * primary instance handles all data definition language (DDL) and data manipulation language (DML) statements.
+  * Up to 15 Aurora Replicas handle read-only query traffic 
+* [Types of Aurora endpoints](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Endpoints.html#Aurora.Overview.Endpoints.Types)
+  * Cluster endpoint - read/write/DDL/DML (e.g. `mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com:3306`)
+  * Reader endpoint - provides load-balancing support for read-only connections to the DB cluster. (e.g. `mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com:3306`)
+  * Custom endpoint - represents a set of DB instances that you choose. When you connect to the endpoint, Aurora performs load balancing and chooses one of the instances in the group to handle the connection. (e.g. `myendpoint.cluster-custom-123456789012.us-east-1.rds.amazonaws.com:3306`)
+  * Instance endpoint - connects to a specific DB instance within an Aurora cluster. (e.g. `mydbinstance.123456789012.us-east-1.rds.amazonaws.com:3306`)
+* [Amazon Aurora global databases](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html)
+  ![](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/images/aurora-global-databases-conceptual-illo.png)
+
+![](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/images/AuroraArch001.png)
 
 ### [Aurora Serverless](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html)
 
