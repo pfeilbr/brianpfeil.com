@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["JavaScript", "playground"]
+categories = ["Dockerfile", "playground"]
 date = 2017-11-11
 description = ""
 summary = " "
@@ -21,73 +21,29 @@ truncated = true
 
 learn [AWS ECS](https://aws.amazon.com/documentation/ecs/)
 
-### Session Steps
+## Examples
 
-> following steps are based on <http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_tutorial.html>
+### [`ecs-fargate-load-balanced-http-service-example`](ecs-fargate-load-balanced-http-service-example/)
 
-```sh
-# configure ecs-cli
-ecs-cli configure profile --profile-name ecs-cluster-01 --access-key <YOUR KEY> --secret-key <YOUR SECRET>
-ecs-cli configure --cluster cluster01 --region us-east-1 --config-name cluster01
+example ECS Fargate private (vpc only access) load balanced (internal ALB) http service (nginx)
 
-# create 1 node cluster
-ecs-cli up --keypair brianpfeil --capability-iam --size 1 --instance-type t2.micro
+### [`ecs-fargate-task-example`](ecs-fargate-task-example/)
 
-# create node app
-cd simple-node
-docker build -t pfeilbr/simple-node .
-docker push pfeilbr/simple-node
+example ECS Fargate nodejs task that is manually run
 
-# NOTE: pfeilbr/simple-node docker image is referenced by docker-compose.yml
+### [`ecs-cli-example`](ecs-cli-example/)
 
-ecs-cli compose up
-ecs-cli ps # shows ip and port.  see https://www.evernote.com/l/AAET15kkH-dNhoxA67iDXzzSmR6DBjWtC00B/image.png
-open http://34.237.144.74 # see https://www.evernote.com/l/AAE7iN32poNDwJTGe6T8QYX875Rz4jbJwHYB/image.png
-ecs-cli compose down
+example using `ecs-cli` to serve simple docker compose nodejs web app
 
-# make changes to server.js
+## Notes
 
-# rebuild image
-docker build -t pfeilbr/simple-node .
-
-# test locally
-docker run -p 49160:8080 -d pfeilbr/simple-node
-
-# open locally
-open http://localhost:49160
-
-# push
-docker push pfeilbr/simple-node
-
-# make changes to docker-compose.yml if neccessary
-ecs-cli compose up
-
-# scale cluster to 2 nodes
-ecs-cli scale --capability-iam --size 2
-
-# scale simple-node across 2 nodes
-ecs-cli compose scale 2
-
-# create a service.  defaults to 1 task.
-# if task dies, service will automatically restart it
-# e.g. try /kill path of web app, which calls process.exit(1).  
-# it will start a new container instance within a few seconds
-ecs-cli compose service up # be sure to run "ecs-cli compose down" first
-
-# delete service
-ecs-cli compose service down
-
-# delete cluster
-ecs-cli down --force
-
-```
-
-### Resources
-
-* [Installing the Amazon ECS CLI](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html)
-* [Configuring the Amazon ECS CLI](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_Configuration.html)
-* [Amazon ECS CLI Tutorial](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_tutorial.html)
-* [Dockerizing a Node.js web app](https://nodejs.org/en/docs/guides/nodejs-docker-webapp/)
-
+- [Fargate Task CPU and memory](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html#fargate-tasks-size)
+  - min cpu: 256 (.25 vCPU), max cpu: 4096 (4 vCPU)
+  - min mem: 512 MiB, max mem: 30 GB
+- [`AWS::ECS::TaskDefinition.ExecutionRoleArn`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-taskdefinition.html#cfn-ecs-taskdefinition-executionrolearn) - role that grants the Amazon ECS container agent permission to make AWS API calls on your behalf.  For example, permission to pull ECR images and create log streams.  See [Amazon ECS task execution IAM role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html).  The `arn:aws:iam::${AWS::AccountId}:role/ecsTaskExecutionRole` role is available by default.
+- [`AWS::ECS::TaskDefinition.TaskRoleArn`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-taskdefinition.html#cfn-ecs-taskdefinition-taskrolearn) - role that grants containers in the task permission to call AWS APIs on your behalf.  e.g. access S3, secrets manager, etc.  See [IAM roles for tasks](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html)
+- [`AWS::ECS::Service.Role`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-service.html#cfn-ecs-service-role) - no need to specify in typical use case.  *Amazon ECS uses the service-linked role named AWSServiceRoleForECS to enable Amazon ECS to call AWS APIs on your behalf.* see [Service-linked role for Amazon ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using-service-linked-roles.h)
+- [`AWS::ECS::Service.NetworkConfiguration`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-service.html#cfn-ecs-service-networkconfiguration) - required for task definitions that use the awsvpc network mode to receive their own elastic network interface, and it is not supported for other network modes
+- [`AWS::ECS::Service.NetworkConfiguration.AwsvpcConfiguration.AssignPublicIp`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-service-awsvpcconfiguration.html#cfn-ecs-service-awsvpcconfiguration-assignpublicip) - Whether the task's elastic network interface receives a public IP address. The default value is DISABLED. (DISABLED | ENABLED)
 
 
