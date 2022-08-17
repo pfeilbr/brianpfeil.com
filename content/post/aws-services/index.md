@@ -1237,6 +1237,8 @@ Data transfer between AWS storage services
 * [Amazon SageMaker Python SDK](https://sagemaker.readthedocs.io/)
 * [Serverless Inference](https://docs.aws.amazon.com/sagemaker/latest/dg/serverless-endpoints.html) - ideal for workloads which have idle periods between traffic spurts and can tolerate cold starts. Serverless endpoints automatically launch compute resources and scale them in and out depending on traffic, eliminating the need to choose instance types or manage scaling policies
 * [Asynchronous inference](https://docs.aws.amazon.com/sagemaker/latest/dg/async-inference.html) - ideal for requests with large payload sizes (up to 1GB), long processing times (up to 15 minutes), and near real-time latency requirements. Asynchronous Inference enables you to save on costs by autoscaling the instance count to zero when there are no requests to process, so you only pay when your endpoint is processing requests.
+* [SageMaker Model Building Pipelines](https://sagemaker.readthedocs.io/en/stable/amazon_sagemaker_model_building_pipeline.html) - build pipelines using the SageMaker Python SDK
+  * can run locally via [SageMaker Pipelines local mode](https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines-local-mode.html)
 
 ### Comprehend
 
