@@ -337,9 +337,12 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### ECS
 
-* containers
+* container management service
+* Fargate and EC2 launch types
+* prefer ECS on Fargate over ECS on EC2.  No managing ec2 cluster with fargate
+* if using ECS on EC2 use Bottlerocket
+  * [Using Bottlerocket with Amazon ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-bottlerocket.html) *Amazon ECS-optimized AMI variant of the Bottlerocket operating system is provided as an AMI*
 * task definitions
-  * Fargate and EC2 launch types
 * Service - maintain a specified number of instances of a task definition
   * Service load balancing - distribute traffic evenly across the tasks in your service
   * Service auto scaling - via Application Auto Scaling service.  CPU/memory utilization CW metrics
