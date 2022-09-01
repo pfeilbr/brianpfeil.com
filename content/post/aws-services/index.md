@@ -705,6 +705,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * orchestration with many built-in integrations to aws services
 * [Step Functions AWS SDK Service Integrations](https://aws.amazon.com/blogs/aws/now-aws-step-functions-supports-200-aws-services-to-enable-easier-workflow-automation/)
 * full execution event history for a given execution
+* [Intrinsic functions](https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-intrinsic-functions.html) - use these instead of creating lambdas to do logic.
 * [Logging using CloudWatch Logs](https://docs.aws.amazon.com/step-functions/latest/dg/cw-logs.html)
 * [Logging Step Functions Using AWS CloudTrail](https://docs.aws.amazon.com/step-functions/latest/dg/procedure-cloud-trail.html)
 * [CloudWatch Metrics](https://docs.aws.amazon.com/step-functions/latest/dg/procedure-cw-metrics.html)
