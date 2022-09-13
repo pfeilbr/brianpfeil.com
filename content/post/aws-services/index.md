@@ -893,7 +893,7 @@ data processing workloads
 * languages - [py]spark and scala
 * concepts - Data Catalog, Classifier, Connection, Crawler, Database, Table, Dynamic Frame (extend spark RDD), Job, Transform, Trigger (time based or event)
 * [Auto Scaling for AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/auto-scaling.html)
-* [AWS Glue interactive sessions](https://docs.aws.amazon.com/glue/latest/dg/interactive-sessions.html) - serverless with no infrastructure to manage. You can start interactive sessions very quickly. Interactive sessions have a 1-minute billing minimum with cost-control features. This reduces the cost of developing data preparation applications.
+* [AWS Glue interactive sessions](https://docs.aws.amazon.com/glue/latest/dg/interactive-sessions.html) - run locally via jupyter notebook.  replaces Glue Dev endpoint. serverless with no infrastructure to manage. You can start interactive sessions very quickly. Interactive sessions have a 1-minute billing minimum with cost-control features. This reduces the cost of developing data preparation applications.
 * glue notebook (Jupyter/Zeppelin) - interactive development and testing of your ETL scripts on a development endpoint
 * partitions
 * AWS Data Wrangler - excellent integration library to use with glue via python shell jobs
