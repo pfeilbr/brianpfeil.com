@@ -86,9 +86,66 @@ https://wa.aws.amazon.com/TypeII/en/foundationaltechnicalreview/foundationaltech
 
 ### Feature Request
 
+> Custom lenses have been added.  See [Custom lenses](https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses-custom.html)
+
 One area where there is a gap for an enterprises are all the company specific policies, standards, and best practices that are additive and need to be addressed on top of AWS.  These types of questions and guidance would need to happen outside of WA Tool.
 
 A feature to define custom lenses - a customer defined lens.  This way the single WA Tool could be the method for review facilitation, improvement reporting and maintaining history.
+
+### Custom Lens
+
+template JSON file for creating custom lens
+
+```json
+{
+  "schemaVersion": "2021-11-01",
+  "name": "Replace with lens name",
+  "description": "Replace with your description",
+  "pillars": [
+    {
+      "id": "pillar_id_1",
+      "name": "Pillar 1",
+      "questions": [
+        {
+          "id": "pillar_1_q1",
+          "title": "My first question",
+          "description": "Description isn't a necessary property here for a question, but it might help your lens users.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Best practice #1",
+              "helpfulResource": {
+                "displayText": "It's recommended that you include a helpful resource text and URL for each choice for your users.",
+                "url": "https://aws.amazon.com"
+              },
+              "improvementPlan": {
+                "displayText": "You must have improvement plans per choice. It's optional whether or not to have a corresponding URL."
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Best practice #2",
+              "helpfulResource": {
+                "displayText": "It's recommended that you include a helpful resource text and URL for each choice for your users.",
+                "url": "https://aws.amazon.com"
+              },
+              "improvementPlan": {
+                "displayText": "You must have improvement plans per choice. It's optional whether or not to have a corresponding URL."
+              }
+            }
+          ],
+          "riskRules": [
+            { "condition": "choice1 && choice2", "risk": "NO_RISK" },
+            { "condition": "choice1 && !choice2", "risk": "MEDIUM_RISK" },
+            { "condition": "default", "risk": "HIGH_RISK" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+```
 
 ## Key Visuals
 
@@ -109,5 +166,10 @@ A feature to define custom lenses - a customer defined lens.  This way the singl
 * [The Review Process - AWS Well-Architected Framework](https://wa.aws.amazon.com/wat.thereviewprocess.wa-review.en.html)
 * [AWS Well Architected framework: A Complete Checklist](https://www.rapyder.com/blogs/aws-well-architected-framework-checklist/)
 * [AWS Well-Architected Framework Cheatsheet | Cloud Noon](https://cloudnoon.com/blog/aws/aws-well-architected-framework-cheatsheet/)
+* [AWS Well-Architected Tool: Custom lenses](https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses-custom.html)
+* [Announcing AWS Well-Architected Custom Lenses: Extend the Well-Architected Framework with Your Internal Best Practices](https://aws.amazon.com/blogs/aws/well-architected-custom-lenses-internal-best-practices/)
+* [Customize Well-Architected Reviews using Custom Lenses and the AWS Well-Architected Tool](https://aws.amazon.com/blogs/mt/customize-well-architected-reviews-using-custom-lenses-and-the-aws-well-architected-tool/)
+* [Custom lenses](https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses-custom.html)
+
 
 

@@ -31,6 +31,14 @@ example ECS Fargate private (vpc only access) load balanced (internal ALB) http 
 
 example ECS Fargate nodejs task that is manually run
 
+### [`ecs-fargate-task-with-efs-example`](ecs-fargate-task-with-efs-example/)
+
+example ECS Fargate nodejs task with EFS file share that is manually run
+
+### [`ecs-on-ec2-with-bottlerocket-example`](ecs-on-ec2-with-bottlerocket-example/)
+
+example ECS on EC2 using Bottlerocket AMI for ECS container instance
+
 ### [`ecs-cli-example`](ecs-cli-example/)
 
 example using `ecs-cli` to serve simple docker compose nodejs web app

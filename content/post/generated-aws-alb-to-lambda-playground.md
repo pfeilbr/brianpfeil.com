@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["Dockerfile", "playground"]
 date = 2022-07-01
 description = ""
 summary = " "
@@ -26,11 +26,14 @@ learn ALB to Lambda integration
 - AWS provided DNSName for the ALB is of the format `xxxxxxx.us-east-1.elb.amazonaws.com`
 - the ALB DNSName does not provide SSL termination by default
 - you cannot request a certificate for the ALB DNSName (`xxxxxxx.us-east-1.elb.amazonaws.com`) via ACM
+- if you own the domain, you can request a certificate (e.g. `alb01.allthecloudbits.com`) via ACM and have it automatically validated via route 53 CNAME record (see [DomainValidationOptions](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-certificatemanager-certificate.html#cfn-certificatemanager-certificate-domainvalidationoptions))
+    > In order for a AWS::CertificateManager::Certificate to be provisioned and validated in CloudFormation automatically, the `DomainName` property needs to be identical to one of the `DomainName` property supplied in DomainValidationOptions, if the ValidationMethod is **DNS**. Failing to keep them like-for-like will result in failure to create the domain validation records in Route53.
 - you can specify a single certificate for your `AWS::ElasticLoadBalancingV2::Listener` via the [`AWS::ElasticLoadBalancingV2::Listener Certificate`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-elasticloadbalancingv2-listener-certificate.html) property.  If you need multipe certificates, use [`AWS::ElasticLoadBalancingV2::ListenerCertificate`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticloadbalancingv2-listenercertificate.html)
 
 ## Demo
 
 > based on [alexcasalboni/template.yml](https://gist.github.com/alexcasalboni/9f118ac10a59a5c4eb6bfd75d0a65773) - AWS ALB - AWS Lambda integration with CloudFormation (YAML)
+> includes a custom domain name CNAME'd to the ALB hostname with ACM cert for https
 
 lambda function code is inlined in [`template.yaml`](template.yaml)
 
@@ -89,6 +92,12 @@ curl http://aws-a-myLoa-MFYJ9QBS4CCL-673155384.us-east-1.elb.amazonaws.com/api/h
 #   "body": "",
 #   "isBase64Encoded": false
 # }</code></pre>       
+
+# check our custom domain
+curl http://alb01.allthecloudbits.com
+
+# check our custom domain https endpoint
+curl https://alb01.allthecloudbits.com
 
 
 # clean up
