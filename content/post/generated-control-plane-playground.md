@@ -38,6 +38,7 @@ learn [Control Plane](https://controlplane.com/)
 - secrets management is built in
 - cli and tf provider (verified)
 
+
 ## Concepts
 
 - Org - strictly isolated bounded context that encapsulates all the resources managed by Control Plane
@@ -99,7 +100,7 @@ trust policy
       "Action": "sts:AssumeRole",
       "Condition": {
         "StringEquals": {
-          "sts:ExternalId": "merck-dev-01"
+          "sts:ExternalId": "org-dev-01"
         }
       }
     }
