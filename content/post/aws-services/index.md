@@ -84,7 +84,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   - [Athena](#athena)
   - [QuickSight](#quicksight)
   - [Lake Formation](#lake-formation)
-- [Management & Governance](#management--governance)
+- [Management \& Governance](#management--governance)
   - [Well-Architected Framework](#well-architected-framework)
   - [Control Tower](#control-tower)
   - [Organizations](#organizations)
@@ -115,7 +115,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   - [SAM (Serverless Application Model)](#sam-serverless-application-model)
   - [CDK](#cdk)
   - [AWS SDKs](#aws-sdks)
-- [Migration & Transfer](#migration--transfer)
+- [Migration \& Transfer](#migration--transfer)
   - [AWS DataSync](#aws-datasync)
   - [AWS DMS (Database Migration Service)](#aws-dms-database-migration-service)
 - [Machine Learning](#machine-learning)
@@ -821,6 +821,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 * supports sending and recieving events across accounts
 * [SaaS Partner Integrations](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-partner-event-bus.html)
 * [X-Ray Tracing support](https://aws.amazon.com/blogs/compute/using-aws-x-ray-tracing-with-amazon-eventbridge/)
+* [EventBridge Scheduler](https://aws.amazon.com/blogs/compute/introducing-amazon-eventbridge-scheduler/) - can schedule one-time or recurrently tens of millions of tasks across many AWS services
+* [Amazon EventBridge Pipes](https://aws.amazon.com/blogs/aws/new-create-point-to-point-integrations-between-event-producers-and-consumers-with-amazon-eventbridge-pipes/) - high-level concepts: source, event filter, transform and enrich, target
 
 ### Kinesis
 
