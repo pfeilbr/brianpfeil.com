@@ -74,6 +74,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   - [SES](#ses)
   - [EventBridge](#eventbridge)
   - [Kinesis](#kinesis)
+  - [AWS Application Composer](#aws-application-composer)
 - [Analytics](#analytics)
   - [Kinesis Data Analytics](#kinesis-data-analytics)
   - [Pinpoint](#pinpoint)
@@ -103,6 +104,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   - [CloudTrail](#cloudtrail)
   - [Proton](#proton)
 - [Developer Tools](#developer-tools)
+  - [AWS Application Composer](#aws-application-composer-1)
   - [Cloud9](#cloud9)
   - [CodeCommit](#codecommit)
   - [CodeBuild](#codebuild)
@@ -849,6 +851,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 * aggregate multiple records into one while staying under size limits to increase throughput. see <https://github.com/awslabs/kinesis-aggregation>
 * no autoscaling around shards.  requires management/ops.  consider SQS first as there's less to manage and see if it can meet the need
 
+### AWS Application Composer
+
 ---
 
 ## Analytics
@@ -1076,6 +1080,10 @@ k8s ecosystem
 ---
 
 ## Developer Tools
+
+### AWS Application Composer
+
+* visual designer that you can use to build your serverless applications from multiple AWS services
 
 ### Cloud9
 
