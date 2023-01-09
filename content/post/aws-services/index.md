@@ -1362,6 +1362,7 @@ Data transfer between AWS storage services
   * Web ACLs - contain rules and/or rule groups
   * Rules - contains a statement that defines the inspection criteria, and an action to take if a web request meets the criteria
   * Rules groups - group of rules for easier management
+* `AWS::SecretsManager::SecretTargetAttachment` - link between a Secrets Manager secret and the associated database by adding the database connection information to the secret JSON
 
 ### Certificate Manager (ACM)
 
