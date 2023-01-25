@@ -833,7 +833,9 @@ The following services are commonly used for AWS solutions.  Each service specif
 * [SaaS Partner Integrations](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-partner-event-bus.html)
 * [X-Ray Tracing support](https://aws.amazon.com/blogs/compute/using-aws-x-ray-tracing-with-amazon-eventbridge/)
 * [EventBridge Scheduler](https://aws.amazon.com/blogs/compute/introducing-amazon-eventbridge-scheduler/) - can schedule one-time or recurrently tens of millions of tasks across many AWS services
-* [Amazon EventBridge Pipes](https://aws.amazon.com/blogs/aws/new-create-point-to-point-integrations-between-event-producers-and-consumers-with-amazon-eventbridge-pipes/) - high-level concepts: source, event filter, transform and enrich, target
+* [Amazon EventBridge Pipes](https://aws.amazon.com/blogs/aws/new-create-point-to-point-integrations-between-event-producers-and-consumers-with-amazon-eventbridge-pipes/)
+  * create point-to-point integrations between event producers and consumers with optional transform, filter and enrich steps
+  * high-level concepts: [sources](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-pipes-event-source.html), [source event filter](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-pipes-event-filtering.html), [transform and enrich](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-pipes-input-transformation.html), [targets](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-pipes-event-target.html)
 
 ### Kinesis
 
