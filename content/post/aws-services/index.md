@@ -451,6 +451,12 @@ The following services are commonly used for AWS solutions.  Each service specif
 * [Lambda Wrapper Scripts | Modifying the runtime environment](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-modify.html#runtime-wrapper) - customize the runtime startup behavior of your Lambda function.  e.g. set env vars, add/update parameters.
   * code example [aws-samples/aws-lambda-environmental-variables-from-aws-secrets-manager](https://github.com/aws-samples/aws-lambda-environmental-variables-from-aws-secrets-manager/blob/main/README.md)
 * [AWS Lambda Operator Guide](https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html)
+* [Lambda runtime management controls](https://aws.amazon.com/blogs/compute/introducing-aws-lambda-runtime-management-controls/)
+  * visibility into which patch version of a runtime your function is using and when runtime updates are applied
+  * can optionally synchronize runtime updates with function deployments
+  * roll back your function to an earlier runtime version.
+    * example - lambda CloudWatch log line
+      `Runtime Version: python:3.9.v14	Runtime Version ARN: arn:aws:lambda:eu-south-1::runtime:7b620fc2e66107a1046b140b9d320295811af3ad5d4c6a011fad1fa65127e9e6I`
 
 
 ### Lambda@Edge
