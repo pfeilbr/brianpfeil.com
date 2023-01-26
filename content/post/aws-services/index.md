@@ -660,6 +660,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   * search and query compute
   * storage retained in S3
 * billed for a minimum of 4 OCUs for the first collection in your account
+* [CloudFormation Resource Types | OpenSearch Serverless](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/AWS_OpenSearchServerless.html)
 
 ### Neptune
 
