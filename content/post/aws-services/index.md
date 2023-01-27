@@ -653,7 +653,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * removes need to configure, manage, or scale OpenSearch clusters
 * collection - group of indices representing a specific workload or use case.  two collection types - time series and search
 * capacity is managed for you. you create a collection, then you query and index data using the same OpenSearch APIs as before
-* Serverless compute capacity is measured in OpenSearch Compute Units (OCUs). Each OCU is a combination of 6 GiB of memory and corresponding virtual CPU (vCPU), as well as data transfer to Amazon S3
+* Serverless compute capacity is measured in OpenSearch Compute Units (OCUs). Each OCU is a combination of 6 GiB of memory and corresponding virtual CPU (vCPU), as well as data transfer to S3
 * decouples compute and storage.  separates the indexing (ingest) components from the search (query) components, with S3 as the primary data storage for indexes. can scale search and index functions independently of each other and independently of the indexed data in S3.
 * costs - charged for the following components:
   * data ingestion compute
