@@ -459,6 +459,9 @@ The following services are commonly used for AWS solutions.  Each service specif
     * example - lambda CloudWatch log line
       `Runtime Version: python:3.9.v14	Runtime Version ARN: arn:aws:lambda:eu-south-1::runtime:7b620fc2e66107a1046b140b9d320295811af3ad5d4c6a011fad1fa65127e9e6I`
 
+**Shared responsibility model for AWS Lambda**
+
+![Shared responsibility model for AWS Lambda](https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd5495203-d9b4-4804-a246-7e9a50dc111d_599x287.png)
 
 ### Lambda@Edge
 
