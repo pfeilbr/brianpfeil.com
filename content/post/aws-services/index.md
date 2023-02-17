@@ -601,6 +601,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * Aurora, PostgreSQL, MySql, MariaDB, Oracle, SQL Sever
 * DB Instance (contains 1 or more dbs), Instance Classes (compute+memory), Instance Storage
 * HA Multi-AZ
+* [Database Activity Streams](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/DBActivityStreams.Overview.html) - supported for Oracle and SQL Server
 
 
 ### Amazon Aurora
