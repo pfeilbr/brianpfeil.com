@@ -60,6 +60,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   - [Amazon Aurora](#amazon-aurora)
   - [Aurora Serverless](#aurora-serverless)
   - [Redshift](#redshift)
+  - [Redshift Serverless](#redshift-serverless)
   - [ElastiCache](#elasticache)
   - [ElasticSearch / OpenSearch](#elasticsearch--opensearch)
   - [Amazon OpenSearch Serverless](#amazon-opensearch-serverless)
@@ -640,6 +641,15 @@ The following services are commonly used for AWS solutions.  Each service specif
 * Redshift Data API - http based (no JDBC or ODBC).  async so can retrieve results later. query results stored for 24 hrs
 * redshift spectrum - SQL queries on data stored in S3
 * [Kinesis Data Streaming ingestion](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-streaming-ingestion.html) - eliminates the need to stage data in S3 before ingesting it into Redshift
+
+### Redshift Serverless
+
+- automatically provisions data warehouse capacity and intelligently scales the underlying resources
+- concepts
+  - Namespace is a collection of database objects and users
+  - Workgroup is a collection of compute resources
+- RPUs - Redshift Processing Units (RPUs). RPUs are resources used to handle workloads.
+- costs - billed RPU hours on a per-second basis. no queries are running, not billed for compute capacity. charged for Redshift managed storage, based on the amount of data stored.
 
 ### ElastiCache
 
