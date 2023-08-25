@@ -36,6 +36,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   - [Fargate](#fargate)
   - [Batch](#batch)
   - [EKS](#eks)
+  - [App Runner](#app-runner)
   - [LightSail](#lightsail)
   - [Elastic Beanstalk](#elastic-beanstalk)
   - [Lambda](#lambda)
@@ -403,6 +404,13 @@ The following services are commonly used for AWS solutions.  Each service specif
 * managed Kubernetes
 * automates the deployment, scaling, and management of containerized applications
 
+### App Runner
+
+* service source: source code (python, node, java, etc. provided managed runtimes) and source image (container/docker image). 
+* compute configurations - 0.25 vCPU (512 MB memory) and up to 4 vCPU (12 GB memory)
+* public and private (VPC) support for service endpoints
+* Repository provider - only github and ECR are supported
+
 ### LightSail
 
 * Virtual servers, storage, databases, and networking for a low, predictable price.
@@ -416,8 +424,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### Lambda
 
-* synchronous vs asynchronous vs poll based/stream processing (poll based is sync. via event-source mappings)
-* memory - single knob for memory and CPU
+* synchronous, asynchronous, poll based/stream processing (poll based is sync. via event-source mappings), respoonse streaming
+* memory - single knob for memory and CPU (between 128 MB and 10,240 MB, and up to 6 vCPUs)
 * [Lambda function URLs](https://docs.aws.amazon.com/lambda/latest/dg/lambda-urls.html)
 * DLQ
 * lambda destinations (only for async invokes)
@@ -459,6 +467,8 @@ The following services are commonly used for AWS solutions.  Each service specif
   * roll back your function to an earlier runtime version.
     * example - lambda CloudWatch log line
       `Runtime Version: python:3.9.v14	Runtime Version ARN: arn:aws:lambda:eu-south-1::runtime:7b620fc2e66107a1046b140b9d320295811af3ad5d4c6a011fad1fa65127e9e6I`
+* [Introducing AWS Lambda response streaming](https://aws.amazon.com/blogs/compute/introducing-aws-lambda-response-streaming/)
+  * send responses larger than Lambda’s 6 MB response payload limit up to a soft limit of 20 MB.
 
 **Shared responsibility model for AWS Lambda**
 
