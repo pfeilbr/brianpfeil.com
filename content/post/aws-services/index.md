@@ -234,6 +234,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### PrivateLink / VPC Endpoint
 
+* PrivateLink allows access to AWS services and customer provided services hosted by other AWS customers, while maintaining network traffic within the AWS network.
 * connect to AWS services from VPC without going through internet
 * enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection
 * gateway endpoint - S3 and DynamoDB.  via VPC route table.
@@ -297,8 +298,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 * REST API vs HTTP API (cost).  see [Choosing between HTTP APIs and REST APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html)
 * edge (cloudfront) and regional endpoints
-* API Keys
-* caching (memcached) (fixes cost based on time / no pay per use)
+* caching (memcached) (fixed cost based on time / no pay-per-use)
 * API Keys
 * Usage Plans / quotas
 * client certificates - ensure requests to backend are from APIG
@@ -308,10 +308,16 @@ The following services are commonly used for AWS solutions.  Each service specif
 * request (POST) payload limits (10 MB).  no response size limits. (tested with proxy integration for 200 MB video file download)
 * auth - cognito, JWT, IAM (aws sigv4), custom lambda auth
 * OpenAPI / Swagger specs for payload validation
-* service integrations - no need for lambda glue in middle
+* service integrations - no need for lambda glue in middle. e.g. apig -> step fns
 * velocity templates (vtl) - request/response mapping
-* custom domains
-* private endpoints
+* custom domain names
+  * [custom domain names for REST APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html)
+  * [custom domain names for HTTP APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-custom-domain-names.html)
+* [private REST API](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html) - endpoints that are accessible only from within your VPC
+  * see [diagram](https://d2908q01vomqb2.cloudfront.net/1b6453892473a467d07372d45eb05abc2031647a/2021/08/10/Screen-Shot-2021-08-10-at-1.33.13-PM.png)
+* [API Gateway private integrations](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-private-integration.html) - expose your HTTP/HTTPS resources within a VPC for access by clients outside of the VPC
+  * VPC links for REST and HTTP APIs - apig endpoint -> (NLB within VPC)
+  * see [diagram](https://d2908q01vomqb2.cloudfront.net/1b6453892473a467d07372d45eb05abc2031647a/2021/08/10/Screen-Shot-2021-08-10-at-1.35.25-PM.png)
 * websockets
 * lambda integration.  point to lambda alias for deployments.
 * stages
