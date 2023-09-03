@@ -406,11 +406,15 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 ### App Runner
 
+* Service Types
+  * [Image-based service](https://docs.aws.amazon.com/apprunner/latest/dg/service-source-image.html) - container image (docker)
+  * [Code-based service](https://docs.aws.amazon.com/apprunner/latest/dg/service-source-code.html) - source code and a supported runtime ([managed platforms](https://docs.aws.amazon.com/apprunner/latest/dg/service-source-code.html#service-source-code.managed-platforms).  e.g. python, node.js, java, .net, php, ruby, go)
+    * When you create an AWS App Runner service using a source code repository, AWS App Runner requires information about building and starting your service. You can set service options by using a [configuration file](https://docs.aws.amazon.com/apprunner/latest/dg/config-file.html) ([`apprunner.yaml`](https://docs.aws.amazon.com/apprunner/latest/dg/config-file-examples.html)).
 * service source: source code (python, node, java, etc. provided managed runtimes) and source image (container/docker image). 
 * compute configurations - 0.25 vCPU (512 MB memory) and up to 4 vCPU (12 GB memory)
 * public and private (VPC) support for service endpoints
 * Repository provider - only github and ECR are supported
-* **private services** - enables access to App Runner services from within a VPC.
+* **private service (endpoint)** - enables access to App Runner services from within a VPC.
   * [Enabling Private endpoint for incoming traffic](https://docs.aws.amazon.com/apprunner/latest/dg/network-pl.html)
   * [AWS::AppRunner::VpcIngressConnection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apprunner-vpcingressconnection.html) - associate your App Runner service to an Amazon VPC endpoint
     * [AWS::AppRunner::VpcIngressConnection.DomainName](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apprunner-vpcingressconnection.html#DomainName-fn::getatt). build URL with `!Sub https://${AppRunnerService1VpcIngressConnection.DomainName}`
