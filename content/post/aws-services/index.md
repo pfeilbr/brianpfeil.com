@@ -410,6 +410,16 @@ The following services are commonly used for AWS solutions.  Each service specif
 * compute configurations - 0.25 vCPU (512 MB memory) and up to 4 vCPU (12 GB memory)
 * public and private (VPC) support for service endpoints
 * Repository provider - only github and ECR are supported
+* **private services** - enables access to App Runner services from within a VPC.
+  * [Enabling Private endpoint for incoming traffic](https://docs.aws.amazon.com/apprunner/latest/dg/network-pl.html)
+  * [AWS::AppRunner::VpcIngressConnection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apprunner-vpcingressconnection.html)
+  * create [AWS::EC2::VPCEndpoint](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpcendpoint.html) with `ServiceName: !Sub "com.amazonaws.${AWS::Region}.apprunner.requests"`
+  * see [KarlDeux/arps/template.yaml](https://github.com/KarlDeux/arps/blob/master/template.yaml) for full example.
+* service access VPC resources - e.g. app access to RDS database running in VPC
+  * VPC Connector - enables associate your service with a VPC by creating a VPC endpoint
+  * [Enabling VPC access for outgoing traffic](https://docs.aws.amazon.com/apprunner/latest/dg/network-vpc.html)
+  * [AWS::AppRunner::VpcConnector](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apprunner-vpcconnector.html)
+
 
 ### LightSail
 
@@ -421,6 +431,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 * PaaS with language runtime + docker containers
 * heroku-like
+* [App Runner](#app-runner) is the recommended service for new applications
 
 ### Lambda
 
