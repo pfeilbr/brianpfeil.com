@@ -412,7 +412,8 @@ The following services are commonly used for AWS solutions.  Each service specif
 * Repository provider - only github and ECR are supported
 * **private services** - enables access to App Runner services from within a VPC.
   * [Enabling Private endpoint for incoming traffic](https://docs.aws.amazon.com/apprunner/latest/dg/network-pl.html)
-  * [AWS::AppRunner::VpcIngressConnection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apprunner-vpcingressconnection.html)
+  * [AWS::AppRunner::VpcIngressConnection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apprunner-vpcingressconnection.html) - associate your App Runner service to an Amazon VPC endpoint
+    * [AWS::AppRunner::VpcIngressConnection.DomainName](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apprunner-vpcingressconnection.html#DomainName-fn::getatt). build URL with `!Sub https://${AppRunnerService1VpcIngressConnection.DomainName}`
   * create [AWS::EC2::VPCEndpoint](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-vpcendpoint.html) with `ServiceName: !Sub "com.amazonaws.${AWS::Region}.apprunner.requests"`
   * see [KarlDeux/arps/template.yaml](https://github.com/KarlDeux/arps/blob/master/template.yaml) for full example.
 * service access VPC resources - e.g. app access to RDS database running in VPC
