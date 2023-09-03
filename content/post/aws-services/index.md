@@ -316,7 +316,9 @@ The following services are commonly used for AWS solutions.  Each service specif
 * [private REST API](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html) - endpoints that are accessible only from within your VPC
   * see [diagram](https://d2908q01vomqb2.cloudfront.net/1b6453892473a467d07372d45eb05abc2031647a/2021/08/10/Screen-Shot-2021-08-10-at-1.33.13-PM.png)
 * [API Gateway private integrations](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-private-integration.html) - expose your HTTP/HTTPS resources within a VPC for access by clients outside of the VPC
-  * VPC links for REST and HTTP APIs - apig endpoint -> (NLB within VPC)
+  * [VPC links for REST APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-private-integration.html) - apig endpoint -> (NLB within VPC)
+  * [VPC links for HTTP APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vpc-links.html) - apig endpoint -> ([LB within VPC)
+  * see [Understanding VPC links in Amazon API Gateway private integrations](https://aws.amazon.com/blogs/compute/understanding-vpc-links-in-amazon-api-gateway-private-integrations/)
   * see [diagram](https://d2908q01vomqb2.cloudfront.net/1b6453892473a467d07372d45eb05abc2031647a/2021/08/10/Screen-Shot-2021-08-10-at-1.35.25-PM.png)
 * websockets
 * lambda integration.  point to lambda alias for deployments.
