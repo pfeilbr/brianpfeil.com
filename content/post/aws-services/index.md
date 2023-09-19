@@ -421,7 +421,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * service source: source code (python, node, java, etc. provided managed runtimes) and source image (container/docker image). 
 * compute configurations - 0.25 vCPU (512 MB memory) and up to 4 vCPU (12 GB memory)
 * public and private (VPC) support for service endpoints
-* Repository provider - only github and ECR are supported
+* Repository provider - github, bitbucket and ECR are supported
 * **private service (endpoint)** - enables access to App Runner services from within a VPC.
   * [Enabling Private endpoint for incoming traffic](https://docs.aws.amazon.com/apprunner/latest/dg/network-pl.html)
   * [AWS::AppRunner::VpcIngressConnection](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apprunner-vpcingressconnection.html) - associate your App Runner service to an Amazon VPC endpoint
@@ -1017,7 +1017,7 @@ data processing workloads
 ### Well-Architected Framework
 
 * describes the key concepts, design principles, and architectural best practices for designing and running workloads in the cloud
-* 5 pillars - Operational Excellence, Security, Reliability, Performance, Cost Optimization
+* 6 pillars - Operational Excellence, Security, Reliability, Performance, Cost Optimization, Sustainability
 * Well-Architected Tool - provides guidance by answer questions
 * Lens - serverless, analytics, ML, SaaS, etc.
 
@@ -1037,7 +1037,7 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * change sets
 * nested stacks
 * stack drift
-* stacksets - deploy stack to multiple regions.  For DR, active-active, etc.
+* stacksets - deploy stack to multiple regions.  provide the accounts and regions to deploy to.  For DR, active-active, etc.
 * max resources declared in stack (500)
 * [custom resources](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html) - backed by lambda
 * [macros](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html) - lambda performs the template processing / transform
