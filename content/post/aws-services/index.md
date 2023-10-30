@@ -813,6 +813,7 @@ The following services are commonly used for AWS solutions.  Each service specif
     * strict ordering
     * Strict deduplication: Duplicate messages aren't delivered.
     * Deduplication happens within a 5-minute interval, from the message publish time.
+* [FIFO Topic Message Archiving and Replay](https://aws.amazon.com/blogs/compute/archiving-and-replaying-messages-with-amazon-sns-fifo/) - e.g. replay topic messages to SQS
 * fan out
 * subscription filters
 * destination types
