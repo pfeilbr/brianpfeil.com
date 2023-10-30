@@ -695,6 +695,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * cluster
 * kibana - integrated with IAM
 * IAM for granular es api operations
+* automated time-based data deletion via index lifecycle policies
 
 ### Amazon OpenSearch Serverless
 
