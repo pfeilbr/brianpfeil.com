@@ -19,3 +19,8 @@ In my free time I enjoy skiing & snowboarding, mountain biking, fishing, kayakin
 ⛷ 🏂 🚵 🎣 ⛺️ 🕹 🎥
 
 I am an [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/community-builders-directory/?cb-cards.sort-by=item.additionalFields.cbName&cb-cards.sort-order=asc&awsf.builder-category=*all&awsf.location=*all&awsf.year=*all&cb-cards.q=pfeil&cb-cards.q_operator=AND) and can be found at <a rel="me" href="https://twitter.com/pfeilbr">twitter</a>, [github](http://github.com/pfeilbr), [stackoverflow](http://stackoverflow.com/users/29148/pfeilbr), and [LinkedIn](https://www.linkedin.com/in/brian-pfeil-175a011/).
+
+**Contact**
+
+*mobile*: +1 215 872 2791
+*email*: brian.pfeil@gmail.com
