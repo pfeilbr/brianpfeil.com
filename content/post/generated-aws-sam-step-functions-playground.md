@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-sam-step-functions"
-tags = ["aws","sam","step-functions",]
+tags = ["aws","sam","step-functions","infrastructure-as-code",]
 title = "AWS SAM Step Functions"
 repoFullName = "pfeilbr/aws-sam-step-functions-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-sam-step-functions-playground"
@@ -26,6 +26,8 @@ see [`template.yaml`](template.yaml) and [`data/event-bus-events.json`](data/eve
 ## Running
 
 ```sh
+export STACK_NAME="aws-sam-step-functions-playground"
+
 # deploy
 sam deploy --guided
 
@@ -43,7 +45,7 @@ aws events put-events --cli-input-json file://data/event-bus-events.json
 # }
 
 # trigger via API Gateway.  starts step fn then returns (does not wait for step fn to complete)
-curl https://4cakde2i15.execute-api.us-east-1.amazonaws.com/Prod/start
+curl https://17xns8g41h.execute-api.us-east-1.amazonaws.com/Prod/start/
 
 # e.g. output
 # {

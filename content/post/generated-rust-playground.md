@@ -40,7 +40,7 @@ nodemon --exec "RUSTFLAGS=\"$RUSTFLAGS -A dead_code\" cargo run" src/main.rs
 cargo watch -x check -x test
 
 # show output (e.g. `println!`)
-cargo watch -x 'test -- --show-output'
+cargo watch -x 'test -- --nocapture'
 
 # to get a stack backtrace on panic
 RUST_BACKTRACE=1 cargo run

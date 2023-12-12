@@ -25,8 +25,25 @@ followed Packer [GETTING STARTED](https://www.terraform.io/intro/getting-started
 
 ---
 
+## Notes
+
 * Execution Plans - describing what it will do and asks for your approval before making any infrastructure changes. This allows you to review changes before Terraform creates, updates, or destroys infrastructure.
 * Resource Graph - Terraform builds a resource graph and creates or modifies non-dependent resources in parallel.
+
+---
+
+## Module Demo
+
+- see [mymodule01](./mymodule01)
+
+```sh
+cd mymodule01/examples/app01
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+
+---
 
 ### Resources
 

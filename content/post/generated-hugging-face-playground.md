@@ -37,6 +37,9 @@ pipenv install
 pipenv install transformers
 pipenv install tensorflow
 
+# test install
+python -c "from transformers import pipeline; print(pipeline('sentiment-analysis')('we love you'))"
+
 # note first run will download the [pipeline] model (potentially time consuming) on first run
 pipenv run python main.py
 ```
