@@ -289,6 +289,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   * no network and file system access.
   * max run time - run less than 1 ms.
   * Where a Lambda@Edge is deployed to one of the 13 regional edge locations, Cloudfront Functions are deployed even further down and closer to the viewer at one of the 280+ edge locations
+* [CloudFront KeyValueStore](https://aws.amazon.com/blogs/aws/introducing-amazon-cloudfront-keyvaluestore-a-low-latency-datastore-for-cloudfront-functions/) - a low-latency, in-memory data store that can be used to store and retrieve data from within a CloudFront Function
 * cache invalidations
 * non GET HTTP methods support.  must explicitly turn on support for PUT, POST, PATCH, etc.
 * WAF association
