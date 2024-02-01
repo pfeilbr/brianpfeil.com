@@ -897,6 +897,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * archive and replay events
 * IAM - resource-based and identity-based policies.  owner of EB resources (bus, rules, etc.) is an AWS root account.
 * supports sending and recieving events across accounts
+* [API destinations](https://aws.amazon.com/blogs/compute/using-api-destinations-with-amazon-eventbridge/) - integrate with services outside of AWS using REST API calls.  e.g. send events to a third-party service that doesn't have a built-in integration with EventBridge
 * [SaaS Partner Integrations](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-partner-event-bus.html)
 * [X-Ray Tracing support](https://aws.amazon.com/blogs/compute/using-aws-x-ray-tracing-with-amazon-eventbridge/)
 * [EventBridge Scheduler](https://aws.amazon.com/blogs/compute/introducing-amazon-eventbridge-scheduler/) - can schedule one-time or recurrently tens of millions of tasks across many AWS services
