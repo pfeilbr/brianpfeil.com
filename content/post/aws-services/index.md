@@ -534,6 +534,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * S3 event notifications - notification destinations are SNS, SQS, lambda
 * [Use Amazon S3 Event Notifications with Amazon EventBridge](https://aws.amazon.com/blogs/aws/new-use-amazon-s3-event-notifications-with-amazon-eventbridge/)
 * [S3 object lambda](https://aws.amazon.com/blogs/aws/introducing-amazon-s3-object-lambda-use-your-code-to-process-data-as-it-is-being-retrieved-from-s3/) - process data retrieved from S3 with lambda before returning it to an application. lambda calls [`writeGetObjectResponse`](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#writeGetObjectResponse-property) to send modified object contents back to `GET` request.  Create S3 Access Point, then Object Lambda Access Point.
+* [Mountpoint for Amazon S3](https://github.com/awslabs/mountpoint-s3)
 
 ### Glacier
 
