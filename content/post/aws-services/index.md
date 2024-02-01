@@ -681,6 +681,7 @@ The following services are commonly used for AWS solutions.  Each service specif
 * redshift spectrum - SQL queries on data stored in S3
 * [Kinesis Data Streaming ingestion](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-streaming-ingestion.html) - eliminates the need to stage data in S3 before ingesting it into Redshift
 * [zero-ETL integrations](https://docs.aws.amazon.com/redshift/latest/mgmt/zero-etl-using.html) - RDS -> Redshift
+* [Amazon DynamoDB zero-ETL integration with Amazon Redshift](https://aws.amazon.com/about-aws/whats-new/2023/11/amazon-dynamodb-zero-etl-integration-redshift/)
 
 ### Redshift Serverless
 
