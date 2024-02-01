@@ -97,7 +97,7 @@ managed [Retrieval Augmented Generation (RAG)](https://www.promptingguide.ai/tec
 
 **Steps**
 
-- select model (e.g. )
+- select model (e.g. amazon titan)
 - define action groups
 - add knowledge base (optional)
 
@@ -120,5 +120,6 @@ managed [Retrieval Augmented Generation (RAG)](https://www.promptingguide.ai/tec
 - [Amazon Bedrock base model IDs (provisioned throughput)](https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput-models.html)
 - [aws-samples/amazon-bedrock-samples](https://github.com/aws-samples/amazon-bedrock-samples)
 - [Build a Foundation Model (FM) powered customer service bot with agents for Amazon Bedrock](https://github.com/aws-samples/amazon-bedrock-samples/tree/main/agents/agentsforbedrock-retailagent)
+- [generative-ai-amazon-bedrock-langchain-agent-example](https://github.com/aws-samples/generative-ai-amazon-bedrock-langchain-agent-example)
 
 
