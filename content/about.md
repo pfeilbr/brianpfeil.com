@@ -7,7 +7,7 @@ slug = "about"
 title = "About"
 layout = "page"
 
-+++˛
++++
 
 <div id="avatar"></div>
 
