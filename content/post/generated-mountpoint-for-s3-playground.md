@@ -21,8 +21,7 @@ truncated = true
 
 learn [Mountpoint for Amazon S3](https://github.com/awslabs/mountpoint-s3)
 
-- does not support of posix file system apis
-  - supports create, read, and delete files
+- support of posix file system apis: create, read, and delete files.  does not support updates to existing files.
 
 ## demo
 
