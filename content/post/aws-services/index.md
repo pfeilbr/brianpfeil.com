@@ -1052,6 +1052,7 @@ set up and govern a new, secure multi-account AWS environment.  builders can pro
 * [macros](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-macros.html) - lambda performs the template processing / transform
 * modules - package resource configurations for inclusion across stack templates, in a transparent, manageable, and repeatable way
 * CloudFormation Registry
+* [IaC generator](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/generate-IaC.html) - generate a CloudFormation template using resources provisioned in your account that are not already managed by CloudFormation
 
 ### Serverless Application Repository (SAR)
 
@@ -1237,6 +1238,7 @@ k8s ecosystem
 * `[tf|k8s]` CDKsnc
 * jsii - core/foundational tech for multi-language/polyglot support.  bind any language to underlying typescript implementation.
 * CDK pipelines for CI/CD
+* [CDK Migrate](https://docs.aws.amazon.com/cdk/v2/guide/migrate.html) - cloudformation to CDK
 
 ### AWS SDKs
 
