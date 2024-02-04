@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "pkl"
-tags = []
+tags = ["config","language",]
 title = "Pkl"
 repoFullName = "pfeilbr/pkl-playground"
 repoHTMLURL = "https://github.com/pfeilbr/pkl-playground"
@@ -19,7 +19,7 @@ truncated = true
 </div>
 
 
-learn [Pkl](https://pkl-lang.org/index.html), configuration that is Programmable, Scalable, and Safe
+learn [Pkl](https://pkl-lang.org/index.html), configuration that is programmable, scalable, and safe
 
 ## demo
 
