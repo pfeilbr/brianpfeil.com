@@ -51,6 +51,7 @@ The following services are commonly used for AWS solutions.  Each service specif
   - [FSx for Lustre](#fsx-for-lustre)
   - [FSx for ONTAP](#fsx-for-ontap)
   - [Storage Gateway](#storage-gateway)
+  - [Amazon File Cache](#amazon-file-cache)
   - [EBS](#ebs)
   - [AWS Transfer](#aws-transfer)
   - [AWS Backup](#aws-backup)
@@ -583,6 +584,25 @@ The following services are commonly used for AWS solutions.  Each service specif
 * VPC support.  network traffic between compute and AWS Service goes over VPC endpoint
 * VPC endpoint enabled, all VPC endpoint communication from your gateway to AWS services occurs through the public service endpoint using your VPC in AWS
 * Creating a VPC endpoint for Storage Gateway
+
+### Amazon File Cache
+
+- temporary, high-performance storage for data in on-premises file systems, or in file systems or object stores on AWS
+- link the cache to multiple NFS file systems—including on-premises and in-cloud file systems—or Amazon Simple Storage Service (S3) buckets, providing a unified view of and fast access to your data spanning on-premises and multiple AWS Regions
+- mount NFSv3 or S3.
+   ```
+   sudo mount -t lustre -o relatime,flock cache_dns_name@tcp:/mountname /mnt
+   ```
+- supports ec2, ecs, eks
+- write to cache support.  need to manually export changes to sources
+	- To export changes from the cache, use HSM commands. When you export a file or directory using HSM commands, your cache exports only data files and metadata that were created or modified since the last export.
+	- see https://docs.aws.amazon.com/fsx/latest/FileCacheGuide/exporting-files-hsm.html
+	    ```
+	    sudo lfs hsm_archive path/to/export/file
+	    sudo lfs hsm_state path/to/export/file
+     ```
+- access your cache from a Linux instance, first install the open-source Lustre client. 
+
 ### EBS
 
 * block level storage volumes for use with EC2 instances. EBS volumes behave like raw, unformatted block devices
