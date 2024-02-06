@@ -589,6 +589,9 @@ The following services are commonly used for AWS solutions.  Each service specif
 
 - temporary, high-performance storage for data in on-premises file systems, or in file systems or object stores on AWS
 - link the cache to multiple NFS file systems—including on-premises and in-cloud file systems—or Amazon Simple Storage Service (S3) buckets, providing a unified view of and fast access to your data spanning on-premises and multiple AWS Regions
+- create cache by specifying: Cache name, Cache storage capacity (Set this to a value of 1.2 TiB, 2.4 TiB, or increments of 2.4 TiB), Throughput capacity, VPC, Security Groups, Subnets
+- create **Data repository associations (DRAs)** - linking your cache to Amazon S3 or NFS data repositories
+  - Data repository path (e.g. `s3://my-bucket/my-prefix/`), cache path (e.g. `/ns1/subdir1`)
 - mount NFSv3 or S3.
    ```
    sudo mount -t lustre -o relatime,flock cache_dns_name@tcp:/mountname /mnt
