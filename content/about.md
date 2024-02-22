@@ -21,5 +21,4 @@ I am an [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/co
 
 **Contact**
 
-- *mobile*: +1 215 872 2791
 - *email*: <a href=mailto:“brian.pfeil@gmail.com”>brian.pfeil@gmail.com</a> 
