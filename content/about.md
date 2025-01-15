@@ -30,4 +30,3 @@ I am an [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/co
 
 - *email*: <a href=mailto:“brian.pfeil@gmail.com”>brian.pfeil@gmail.com</a> 
 - *mobile*: <a href=“tel:215-872-2791”>215-872-2791</a>
-- 
