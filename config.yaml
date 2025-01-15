@@ -5,7 +5,7 @@ title: "Brian Pfeil"
 theme: "beautifulhugo"
 
 buildFuture: true
-paginate: 10
+pagination.pagerSize: 10
 
 pygmentsStyle: "trac"
 pygmentsUseClasses: true
