@@ -6,7 +6,6 @@ draft = false
 slug = "about"
 title = "About"
 layout = "page"
-
 +++
 
 <div id="avatar"></div>
@@ -37,6 +36,18 @@ I am an [aws community builder (serverless)](https://aws.amazon.com/developer/co
   <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/brian.pfeil" 
      style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
     <img src="https://cdn-icons-png.flaticon.com/24/145/145802.png" alt="facebook" style="width: 24px; height: 24px; margin-right: 6px;"> facebook
+  </a> |
+  <a target="_blank" rel="noopener noreferrer" href="https://www.snapchat.com/add/pfeilbr" 
+     style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111646.png" alt="snapchat" style="width: 24px; height: 24px; margin-right: 6px;"> snapchat
+  </a> |
+  <a target="_blank" rel="noopener noreferrer" href="http://github.com/pfeilbr" 
+     style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111432.png" alt="github" style="width: 24px; height: 24px; margin-right: 6px;"> github
+  </a> |
+  <a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/users/29148/pfeilbr" 
+     style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111628.png" alt="stack overflow" style="width: 24px; height: 24px; margin-right: 6px;"> stack overflow
   </a>
 </div>
 
@@ -54,5 +65,13 @@ I am an [aws community builder (serverless)](https://aws.amazon.com/developer/co
   <a href="https://wa.me/2158722791" target="_blank" rel="noopener noreferrer"
      style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
     <img src="https://cdn-icons-png.flaticon.com/24/3536/3536445.png" alt="whatsapp" style="width: 24px; height: 24px; margin-right: 6px;"> whatsapp
+  </a> |
+  <a href="weixin://dl/chat" target="_blank" rel="noopener noreferrer"
+     style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111712.png" alt="wechat" style="width: 24px; height: 24px; margin-right: 6px;"> wechat
+  </a> |
+  <a href="https://t.me/yourtelegramusername" target="_blank" rel="noopener noreferrer"
+     style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111646.png" alt="telegram" style="width: 24px; height: 24px; margin-right: 6px;"> telegram
   </a>
 </div>
