@@ -11,8 +11,6 @@ layout = "page"
 
 <div id="avatar"></div>
 
-## bio
-
 hello, i'm brian pfeil.  i'm passionate about technology 👨‍💻, and building 🛠 things.  this is my personal blog where i sometimes write about those and other interests.
 
 i currently work at a pharmaceutical company as a cloud ☁️ architect.
@@ -61,4 +59,26 @@ I am an [aws community builder (serverless)](https://aws.amazon.com/developer/co
 
 ## contact
 
-*email*: <a href=mailto:“brian.pfeil@gmail.com”>brian.pfeil@gmail.com</a> | *mobile*: <a href=“tel:215-872-2791”>215-872-2791</a>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; color: #000;">
+  <a href="mailto:brian.pfeil@gmail.com" target="_blank" rel="noopener noreferrer"
+     style="display: flex; align-items: center; text-decoration: none; color: #000; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/732/732200.png" alt="email" style="width: 24px; height: 24px; margin-right: 6px;"> email
+  </a> |
+  <a href="tel:2158722791" target="_blank" rel="noopener noreferrer"
+     style="display: flex; align-items: center; text-decoration: none; color: #000; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/597/597177.png" alt="mobile" style="width: 24px; height: 24px; margin-right: 6px;"> mobile
+  </a> |
+  <a href="https://wa.me/2158722791" target="_blank" rel="noopener noreferrer"
+     style="display: flex; align-items: center; text-decoration: none; color: #000; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/3536/3536445.png" alt="whatsapp" style="width: 24px; height: 24px; margin-right: 6px;"> whatsapp
+  </a> |
+  <a href="weixin://dl/chat" target="_blank" rel="noopener noreferrer"
+     style="display: flex; align-items: center; text-decoration: none; color: #000; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111712.png" alt="wechat" style="width: 24px; height: 24px; margin-right: 6px;"> wechat
+  </a> |
+  <a href="https://t.me/yourtelegramusername" target="_blank" rel="noopener noreferrer"
+     style="display: flex; align-items: center; text-decoration: none; color: #000; font-size: 18px; text-transform: lowercase;">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111646.png" alt="telegram" style="width: 24px; height: 24px; margin-right: 6px;"> telegram
+  </a>
+</div>
+
