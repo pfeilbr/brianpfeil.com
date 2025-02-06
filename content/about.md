@@ -19,7 +19,7 @@ i currently work at a pharmaceutical company as a cloud ☁️ architect.
 
 tech geek 👨‍💻 | bookworm 📚 (learning addict 💉) | gym rat 🏋️ | slope shredder ⛷️🏂 | pro at being bad at gaming 🎮 (csgo, fortnite, valorant, cod—come carry me) | rap 🎧🎤 | swiftie 🤫 | caffeine-dependent ☕️ | sushi enthusiast 🍣 | snow lover ❄️ | adrenaline junkie
 
-I am an <a href="https://aws.amazon.com/developer/community/community-builders/">AWS Community Builder (Serverless)
+I am an [aws community builder (serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
 ## socials
 
