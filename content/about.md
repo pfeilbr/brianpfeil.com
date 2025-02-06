@@ -20,13 +20,13 @@ in my free time i enjoy skiing ⛷ & snowboarding 🏂, mountain biking 🚵, fi
 I am an <a href="https://aws.amazon.com/developer/community/community-builders/">AWS Community Builder (Serverless)</a> and can be found at:
 
 <div style="white-space: nowrap; font-family: Arial, sans-serif; font-size: 16px;">
-  <a href="https://www.instagram.com/pfeilbr/" style="text-decoration: none; color: black;">instagram</a> |
-  <a href="https://www.linkedin.com/in/brian-pfeil-175a011/" style="text-decoration: none; color: black;">linkedin</a> |
-  <a rel="me" href="https://twitter.com/pfeilbr" style="text-decoration: none; color: black;">twitter</a> |
-  <a href="https://www.facebook.com/brian.pfeil" style="text-decoration: none; color: black;">facebook</a> |
-  <a href="https://www.snapchat.com/add/pfeilbr" style="text-decoration: none; color: black;">snapchat</a> |
-  <a href="http://github.com/pfeilbr" style="text-decoration: none; color: black;">github</a> |
-  <a href="http://stackoverflow.com/users/29148/pfeilbr" style="text-decoration: none; color: black;">stack overflow</a>
+  <a href="https://www.instagram.com/pfeilbr/">instagram</a> |
+  <a href="https://www.linkedin.com/in/brian-pfeil-175a011/">linkedin</a> |
+  <a rel="me" href="https://twitter.com/pfeilbr">twitter</a> |
+  <a href="https://www.facebook.com/brian.pfeil">facebook</a> |
+  <a href="https://www.snapchat.com/add/pfeilbr">snapchat</a> |
+  <a href="http://github.com/pfeilbr">github</a> |
+  <a href="http://stackoverflow.com/users/29148/pfeilbr">stack overflow</a>
 </div>
 
 **contact**
