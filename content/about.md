@@ -29,6 +29,7 @@ I am an [aws community builder (serverless)](https://aws.amazon.com/developer/co
   <a rel="me" href="https://twitter.com/pfeilbr">twitter</a> |
   <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/brian.pfeil">facebook</a> |
   <a target="_blank" rel="noopener noreferrer" href="https://www.snapchat.com/add/pfeilbr">snapchat</a> |
+  <a target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/31iaxd2rhaaxral5mbfwzfkpjcba?si=cd76d189c4d34bba">spotify</a> |
   <a target="_blank" rel="noopener noreferrer" href="http://github.com/pfeilbr">github</a> |
   <a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/users/29148/pfeilbr">stack overflow</a>
 </div>
