@@ -24,17 +24,31 @@ I am an [aws community builder (serverless)](https://aws.amazon.com/developer/co
 ## socials
 
 <div>
-  <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/pfeilbr/">instagram</a> |
-  <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/brian-pfeil-175a011/">linkedin</a> |
-  <a rel="me" href="https://twitter.com/pfeilbr">twitter</a> |
-  <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/brian.pfeil">facebook</a> |
-  <a target="_blank" rel="noopener noreferrer" href="https://www.snapchat.com/add/pfeilbr">snapchat</a> |
-  <a target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/31iaxd2rhaaxral5mbfwzfkpjcba?si=cd76d189c4d34bba">spotify</a> |
-  <a target="_blank" rel="noopener noreferrer" href="http://github.com/pfeilbr">github</a> |
-  <a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/users/29148/pfeilbr">stack overflow</a>
+  <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/pfeilbr/">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="Instagram"> Instagram
+  </a> |
+  <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/brian-pfeil-175a011/">
+    <img src="https://cdn-icons-png.flaticon.com/24/145/145807.png" alt="LinkedIn"> LinkedIn
+  </a> |
+  <a rel="me" href="https://twitter.com/pfeilbr">
+    <img src="https://cdn-icons-png.flaticon.com/24/733/733579.png" alt="Twitter"> Twitter
+  </a> |
+  <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/brian.pfeil">
+    <img src="https://cdn-icons-png.flaticon.com/24/145/145802.png" alt="Facebook"> Facebook
+  </a> |
+  <a target="_blank" rel="noopener noreferrer" href="https://www.snapchat.com/add/pfeilbr">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111646.png" alt="Snapchat"> Snapchat
+  </a> |
+  <a target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/31iaxd2rhaaxral5mbfwzfkpjcba?si=cd76d189c4d34bba">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111624.png" alt="Spotify"> Spotify
+  </a> |
+  <a target="_blank" rel="noopener noreferrer" href="http://github.com/pfeilbr">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111432.png" alt="GitHub"> GitHub
+  </a> |
+  <a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/users/29148/pfeilbr">
+    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111628.png" alt="Stack Overflow"> Stack Overflow
+  </a>
 </div>
-
-<br />
 
 ## contact
 
