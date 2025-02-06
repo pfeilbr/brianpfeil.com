@@ -13,7 +13,7 @@ layout = "page"
 
 hello, i'm brian pfeil.  i'm passionate about technology 👨‍💻, and building 🛠 things.  this is my personal blog where i sometimes write about those and other interests.
 
-i currently work at [merck](https://merck.com) as a cloud ☁️ architect.
+i currently work at [merck](https://merck.com) as a principal cloud ☁️ architect 🛠️.
 
 tech geek 👨‍💻 | bookworm 📚 (learning addict 💉) | gym rat 🏋️ | slope shredder ⛷️🏂 | pro at being bad at gaming 🎮 (csgo, fortnite, valorant, cod—come carry me) | rap 🎧🎤 | swiftie 🤫 | caffeine-dependent ☕️ | sushi enthusiast 🍣 | snow lover ❄️ | adrenaline junkie
 
