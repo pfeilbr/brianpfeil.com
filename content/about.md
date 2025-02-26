@@ -33,4 +33,15 @@ I am an [aws community builder (serverless)](https://aws.amazon.com/developer/co
 
 ## contact
 
-<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;"><a href="mailto:brian.pfeil@gmail.com" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/732/732200.png" alt="email" style="width: 24px; height: 24px; margin-right: 6px;"> email</a></div> | <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;"><a href="tel:+12158722791" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/732/732200.png" alt="email" style="width: 24px; height: 24px; margin-right: 6px;"> phone</a></div>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+    <a href="mailto:brian.pfeil@gmail.com" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
+        <img src="https://cdn-icons-png.flaticon.com/24/732/732200.png" alt="email" style="width: 24px; height: 24px; margin-right: 6px;"> email
+    </a>
+</div> 
+| 
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+    <a href="tel:+12158722791" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
+        <img src="https://cdn-icons-png.flaticon.com/24/724/724664.png" alt="phone" style="width: 24px; height: 24px; margin-right: 6px;"> phone
+    </a>
+</div>
+
