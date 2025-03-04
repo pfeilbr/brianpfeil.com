@@ -1,7 +1,7 @@
 +++
 author = "Brian Pfeil"
 date = 2015-01-14T21:37:08Z
-description = ""
+description = "about section"
 draft = false
 slug = "about"
 title = "About"
