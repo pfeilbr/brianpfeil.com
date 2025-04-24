@@ -14,7 +14,7 @@ hello, i'm brian pfeil. i'm passionate about technology 👨‍💻, and buildin
 
 i currently work at <a href="https://merck.com" target="_blank" rel="noopener noreferrer">merck</a> as a <a href="https://chatgpt.com/share/67a4a547-17c8-800a-84d6-8c30046a117e" target="_blank" rel="noopener noreferrer">principal cloud ☁️ architect 🛠️</a>.
 
-tech geek 👨‍💻 | bookworm 📚 (learning addict 💉) | gym rat 🏅️ | slope shredder ⛷️🏂 | pro at being bad at gaming 🎮 (csgo, fortnite, valorant, cod--come carry me) | rap 🎷🎤 | swiftie 🧧 | caffeine-dependent ☕️ | sushi enthusiast 🍣 | snow lover ❄️ | adrenaline junkie
+tech geek 👨‍💻 | bookworm 📚 (learning addict 💉) | gym rat 🏅️ | slope shredder ⛷️🏂 | pro at being bad at gaming 🎮 (csgo, fortnite, valorant, cod--come carry me) | rap 🎷🎤 | swiftie 🧧 | caffeine-dependent ☕️ | sushi enthusiast 🍣 | snow lover ❄️ | sk8er 🛹 | jump roper 📿 ... adrenaline junkie
 
 I am an [aws community builder (serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
