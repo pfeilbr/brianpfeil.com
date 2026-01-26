@@ -10,13 +10,11 @@ layout = "page"
 
 <div id="avatar"></div>
 
-hello, i'm brian pfeil. i'm passionate about technology 👨‍💻, and building 🛠 things. this is my personal blog where i sometimes write about those and other interests.
+Hello, I'm Brian Pfeil. I'm passionate about technology and building things. This is my personal blog where I write about those and other interests.
 
-i currently work at <a href="https://merck.com" target="_blank" rel="noopener noreferrer">merck</a> as a <a href="https://chatgpt.com/share/67a4a547-17c8-800a-84d6-8c30046a117e" target="_blank" rel="noopener noreferrer">principal cloud ☁️ architect 🛠️</a>.
+I currently work at <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a> as a Principal Cloud Architect.
 
-tech geek 👨‍💻 | bookworm 📚 (learning addict 💉) | gym rat 🏅️ | slope shredder ⛷️🏂 | pro at being bad at gaming 🎮 (csgo, fortnite, valorant, cod--come carry me) | rap 🎷🎤 | swiftie 🧧 | caffeine-dependent ☕️ | sushi enthusiast 🍣 | snow lover ❄️ | sk8er 🛹 | jump roper 📿 ... adrenaline junkie
-
-I am an [aws community builder (serverless)](https://aws.amazon.com/developer/community/community-builders/)
+I'm an [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
 ## socials
 
@@ -25,10 +23,8 @@ I am an [aws community builder (serverless)](https://aws.amazon.com/developer/co
 <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/brian-pfeil-175a011/" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/145/145807.png" alt="linkedin" style="width: 24px; height: 24px; margin-right: 6px;"> linkedin</a> |
 <a rel="me" href="https://twitter.com/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png" alt="x (twitter)" style="width: 24px; height: 24px; margin-right: 6px;"> x (twitter)</a> |
 <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/brian.pfeil" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/145/145802.png" alt="facebook" style="width: 24px; height: 24px; margin-right: 6px;"> facebook</a> |
-<a target="_blank" rel="noopener noreferrer" href="https://www.snapchat.com/add/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111646.png" alt="snapchat" style="width: 24px; height: 24px; margin-right: 6px;"> snapchat</a> |
 <a target="_blank" rel="noopener noreferrer" href="http://github.com/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111432.png" alt="github" style="width: 24px; height: 24px; margin-right: 6px;"> github</a> |
-<a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/users/29148/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111628.png" alt="stack overflow" style="width: 24px; height: 24px; margin-right: 6px;"> stack overflow</a> |
-<a target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/31iaxd2rhaaxral5mbfwzfkpjcba?si=d5f0a5b5540c4aa4" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111627.png" alt="spotify" style="width: 24px; height: 24px; margin-right: 6px;"> spotify</a>
+<a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/users/29148/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111628.png" alt="stack overflow" style="width: 24px; height: 24px; margin-right: 6px;"> stack overflow</a>
 </div>
 
 ## contact
@@ -36,8 +32,5 @@ I am an [aws community builder (serverless)](https://aws.amazon.com/developer/co
 <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
     <a href="mailto:brian.pfeil@gmail.com" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
         <img src="https://cdn-icons-png.flaticon.com/24/732/732200.png" alt="email" style="width: 24px; height: 24px; margin-right: 6px;"> email
-    </a>
-    <a href="tel:+12158722791" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
-        <img src="https://cdn-icons-png.flaticon.com/24/724/724664.png" alt="phone" style="width: 24px; height: 24px; margin-right: 6px;"> phone
     </a>
 </div>
