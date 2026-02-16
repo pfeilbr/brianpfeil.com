@@ -62,9 +62,6 @@ GitHub repository READMEs (e.g., `*-playground` repos).
 
     make generate-posts
 
-    # Or directly:
-    cd tools/generate-posts && go run . -user=pfeilbr -dest=../../content/post -debug
-
 This fetches all matching repos, downloads their READMEs, and writes/updates
 `generated-*.md` files in `content/post/`.
 
@@ -93,12 +90,3 @@ On push to `main`, the workflow:
 
 Posts are generated locally and committed — the CI workflow does not run the Go tool.
 
-## Search
-
-Client-side search powered by vanilla JS (`assets/js/search.js`). Hugo generates
-a JSON search index at `/index.json`. No external search libraries.
-
-## Dark Mode
-
-Toggle via the sun/moon icon in the nav. Uses [DarkReader](https://darkreader.org/)
-with localStorage persistence.
