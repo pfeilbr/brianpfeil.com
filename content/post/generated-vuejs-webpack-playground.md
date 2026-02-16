@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "vuejs-webpack"
-tags = ["vuejs",]
+tags = ["vuejs"]
 title = "VueJS webpack"
 repoFullName = "pfeilbr/vuejs-webpack-playground"
 repoHTMLURL = "https://github.com/pfeilbr/vuejs-webpack-playground"
@@ -47,6 +47,4 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-
 

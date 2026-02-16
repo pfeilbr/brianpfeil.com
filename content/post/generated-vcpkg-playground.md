@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "vcpkg"
-tags = ["cpp","package-manager",]
+tags = ["cpp","package-manager"]
 title = "Vcpkg"
 repoFullName = "pfeilbr/vcpkg-playground"
 repoHTMLURL = "https://github.com/pfeilbr/vcpkg-playground"
@@ -27,6 +27,4 @@ see `README.md` file(s) in sub diredctories
 
 * <https://github.com/Microsoft/vcpkg>
 * <https://docs.microsoft.com/en-us/cpp/vcpkg>
-
-
 

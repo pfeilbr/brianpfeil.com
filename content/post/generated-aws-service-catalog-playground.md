@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-09-10
 description = ""
 summary = " "
 draft = false
 slug = "aws-service-catalog"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Service Catalog"
 repoFullName = "pfeilbr/aws-service-catalog-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-service-catalog-playground"
@@ -245,5 +245,3 @@ S3 static website hosting routing rules added (the update)
 * [GitHub - AlexRex/cdk-service-catalog: Showcase how to do a service catalog using CDK](https://github.com/AlexRex/cdk-service-catalog)
 * [Standardize compliance in AWS using DevOps and a Cloud Center of Excellence (CCOE) approach | Amazon Web Services](https://aws.amazon.com/blogs/mt/standardize-compliance-in-aws-using-devops-and-a-cloud-center-of-excellence-ccoe-approach/) - example pipeline to delivery service catalog portfolio across all accounts in org.
 * local evernote search `tag:service-catalog`
-
-

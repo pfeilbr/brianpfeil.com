@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2017-08-22
 description = ""
 summary = " "
 draft = false
 slug = "puppeteer"
-tags = ["testing","browser",]
+tags = ["testing","browser"]
 title = "Puppeteer"
 repoFullName = "pfeilbr/puppeteer-playground"
 repoHTMLURL = "https://github.com/pfeilbr/puppeteer-playground"
@@ -23,6 +23,4 @@ learn [puppeteer](https://github.com/GoogleChrome/puppeteer)
 
 > Puppeteer is a Node library which provides a high-level API to control headless Chrome over the DevTools Protocol. It can also be configured to use full (non-headless) Chrome.
 
-see [`examples`](examples)
-
-
+see [`examples`](https://github.com/pfeilbr/puppeteer-playground/blob/master/examples)

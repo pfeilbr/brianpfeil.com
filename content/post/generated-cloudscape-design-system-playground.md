@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "cloudscape-design-system"
-tags = ["aws","design","react","ui",]
+tags = ["aws","design","react","ui"]
 title = "Cloudscape Design System"
 repoFullName = "pfeilbr/cloudscape-design-system-playground"
 repoHTMLURL = "https://github.com/pfeilbr/cloudscape-design-system-playground"
@@ -23,7 +23,7 @@ learn [cloudscape-design-system](https://cloudscape.design/).  created and used 
 
 ## demo
 
-see [`src/App.js`](src/App.js)
+see [`src/App.js`](https://github.com/pfeilbr/cloudscape-design-system-playground/blob/master/src/App.js)
 
 ```sh
 npm install @cloudscape-design/global-styles
@@ -39,5 +39,3 @@ npm run start
 ## resources
 
 - [cloudscape-design-system](https://cloudscape.design/)
-
-

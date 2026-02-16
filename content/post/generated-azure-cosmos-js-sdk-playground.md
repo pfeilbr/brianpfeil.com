@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "azure-cosmos-js-sdk"
-tags = ["azure","javascript","sdk",]
+tags = ["azure","javascript","sdk"]
 title = "Azure Cosmos JS SDK"
 repoFullName = "pfeilbr/azure-cosmos-js-sdk-playground"
 repoHTMLURL = "https://github.com/pfeilbr/azure-cosmos-js-sdk-playground"
@@ -38,5 +38,3 @@ learn [azure cosmos db javascript sdk](https://github.com/azure/azure-cosmos-js)
 1. copy `.env.sample` to `.env` and populate with your information from **Keys**
 ![](https://www.evernote.com/l/AAG3s-Zs6VRIPa7fvjL6KuMP03bCj8nDKhYB/image.png)
 1. run `npm start`
-
-

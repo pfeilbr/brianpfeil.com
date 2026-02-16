@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "pre-commit"
-tags = ["git",]
+tags = ["git"]
 title = "Pre Commit"
 repoFullName = "pfeilbr/pre-commit-playground"
 repoHTMLURL = "https://github.com/pfeilbr/pre-commit-playground"
@@ -42,6 +42,4 @@ pre-commit run --all-files
 ## Resources
 
 * [pre-commit](https://pre-commit.com/)
-
-
 

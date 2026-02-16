@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2022-05-25
 description = ""
 summary = " "
 draft = false
 slug = "ec2-image-builder"
-tags = ["aws","ec2",]
+tags = ["aws","ec2"]
 title = "EC2 Image Builder"
 repoFullName = "pfeilbr/ec2-image-builder-playground"
 repoHTMLURL = "https://github.com/pfeilbr/ec2-image-builder-playground"
@@ -114,7 +114,7 @@ awstoe run --documents hello-world-linux.yml --phases build
 ```
 
 * a local directory named `TOE*` is created for the run and includes detailed logs
-* see [`TOE_2022-05-25_14-01-45_UTC-0_3699d6f5-dc33-11ec-9989-00224820200b`](TOE_2022-05-25_14-01-45_UTC-0_3699d6f5-dc33-11ec-9989-00224820200b)
+* see [`TOE_2022-05-25_14-01-45_UTC-0_3699d6f5-dc33-11ec-9989-00224820200b`](https://github.com/pfeilbr/ec2-image-builder-playground/blob/master/TOE_2022-05-25_14-01-45_UTC-0_3699d6f5-dc33-11ec-9989-00224820200b)
 
 ![](https://www.evernote.com/l/AAHVWa578E9A9IKjdBoT13JdAYqkfCKNUDAB/image.png)
 
@@ -126,5 +126,3 @@ awstoe run --documents hello-world-linux.yml --phases build
 - [Youtube - AWS re:Invent 2019: NEW LAUNCH! EC2 Image Builder: Virtual machine images made easy (CMP214-R1)](https://www.youtube.com/watch?v=9XFuRq0R8nk)
 - [AWS Task Orchestrator and Executor component manager](https://docs.aws.amazon.com/imagebuilder/latest/userguide/toe-component-manager.html) - runs image builder and codebuild yaml files
 - [Get started with AWSTOE](https://docs.aws.amazon.com/imagebuilder/latest/userguide/toe-get-started.html)
-
-

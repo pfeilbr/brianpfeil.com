@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "flask"
-tags = ["flask",]
+tags = ["flask"]
 title = "Flask"
 repoFullName = "pfeilbr/flask-playground"
 repoHTMLURL = "https://github.com/pfeilbr/flask-playground"
@@ -18,13 +18,13 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/flask-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/flask-playground</a>
 </div>
 
-# flask-playground
+
 
 learn [flask](https://www.palletsprojects.com/p/flask/), the python web application framework
 
-* [`server.py`](server.py) - flask server
-* [`client.py`](client.py) - http client.  uses `requests` to POST the [`image.jpeg`](image.jpeg) image file
-* [`load-test.sh`](load-test.sh) - load test via parallel requests
+* [`server.py`](https://github.com/pfeilbr/flask-playground/blob/master/server.py) - flask server
+* [`client.py`](https://github.com/pfeilbr/flask-playground/blob/master/client.py) - http client.  uses `requests` to POST the [`image.jpeg`](https://raw.githubusercontent.com/pfeilbr/flask-playground/master/image.jpeg) image file
+* [`load-test.sh`](https://github.com/pfeilbr/flask-playground/blob/master/load-test.sh) - load test via parallel requests
 
 ## Prerequisites
 
@@ -49,5 +49,3 @@ python client.py
 chmod +x load-test.sh
 ./load-test.sh
 ```
-
-

@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-10-23
 description = ""
 summary = " "
 draft = false
 slug = "aws-transfer-family"
-tags = ["aws","aws-transfer-family","sftp","ftps","ftp",]
+tags = ["aws","aws-transfer-family","sftp","ftps","ftp"]
 title = "AWS Transfer Family"
 repoFullName = "pfeilbr/aws-transfer-family-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-transfer-family-playground"
@@ -30,5 +30,3 @@ learn [AWS Transfer Family](https://aws.amazon.com/aws-transfer-family/), file t
 * [github advanced search '"AWS::Transfer::Server" language:YAML'](https://github.com/search?q=%22AWS%3A%3ATransfer%3A%3AServer%22+language%3AYAML&type=code) - find cfn examples in github
 * [Jerry Hargrove - Cloud Diagrams & Notes | AWS Transfer Family](https://www.awsgeek.com/AWS-Transfer-Family/)
 * [Jerry Hargrove - Cloud Diagrams & Notes | AWS Transfer for SFTP](https://www.awsgeek.com/AWS-Transfer-for-SFTP/)
-
-

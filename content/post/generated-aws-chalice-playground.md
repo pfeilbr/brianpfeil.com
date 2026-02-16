@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-chalice"
-tags = ["aws","serverless","python","lambda",]
+tags = ["aws","serverless","python","lambda"]
 title = "AWS Chalice"
 repoFullName = "pfeilbr/aws-chalice-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-chalice-playground"
@@ -70,5 +70,3 @@ contents of `helloworld/packaged/deployment.zip`
 ## Resources
 
 [aws/chalice](https://github.com/aws/chalice)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "serverless-plugin-cloudfront-lambda-edge"
-tags = ["serverless","cloudfront","lambda",]
+tags = ["serverless","cloudfront","lambda"]
 title = "Serverless Plugin CloudFront Lambda Edge"
 repoFullName = "pfeilbr/serverless-plugin-cloudfront-lambda-edge-playground"
 repoHTMLURL = "https://github.com/pfeilbr/serverless-plugin-cloudfront-lambda-edge-playground"
@@ -30,7 +30,7 @@ username: user01
 password: password01
 ```
 
-users are stored in aws secrets manager and sourced from [`users.json`](users.json)
+users are stored in aws secrets manager and sourced from [`users.json`](https://github.com/pfeilbr/serverless-plugin-cloudfront-lambda-edge-playground/blob/master/users.json)
 
 ## Usage
 
@@ -189,5 +189,3 @@ see [Determining the Lambda@Edge Region](https://docs.aws.amazon.com/AmazonCloud
 ```
 $(node ./scripts/get-stack-property.js )
 ```
-
-

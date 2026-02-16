@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "deep-and-machine-learning"
-tags = ["machine-learning","python",]
+tags = ["machine-learning","python"]
 title = "Deep and Machine Learning"
 repoFullName = "pfeilbr/deep-and-machine-learning-playground"
 repoHTMLURL = "https://github.com/pfeilbr/deep-and-machine-learning-playground"
@@ -55,6 +55,4 @@ docker commit 5b4a6fb7117b pfeilbr/deep-and-machine-learning:v2
 # e.g.
 docker push pfeilbr/deep-and-machine-learning:v2
 ```
-
-
 

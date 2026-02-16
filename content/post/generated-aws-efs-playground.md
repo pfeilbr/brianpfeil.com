@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-efs"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS EFS"
 repoFullName = "pfeilbr/aws-efs-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-efs-playground"
@@ -123,5 +123,3 @@ sam delete --no-prompts
 ## Resources
 
 - [Amazon Elastic File System (EFS)](https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html)
-
-

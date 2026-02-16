@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "react-router-4"
-tags = ["react",]
+tags = ["react"]
 title = "React Router 4"
 repoFullName = "pfeilbr/react-router-4-playground"
 repoHTMLURL = "https://github.com/pfeilbr/react-router-4-playground"
@@ -35,5 +35,3 @@ $ yarn start
 ```sh
 $ yarn upgrade react react-dom react-redux react-router react-router-dom react-router-redux redux react-scripts
 ```
-
-

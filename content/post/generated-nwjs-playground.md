@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "nwjs"
-tags = ["nodejs","cross-platform","framework",]
+tags = ["nodejs","cross-platform","framework"]
 title = "NWjs"
 repoFullName = "pfeilbr/nwjs-playground"
 repoHTMLURL = "https://github.com/pfeilbr/nwjs-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/nwjs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/nwjs-playground</a>
 </div>
 
+<img style="" src="http://nwjs.io/images/nw.png">
 
 # [NW.js](http://nwjs.io) playground
 
@@ -77,5 +78,3 @@ nw .
 	```bash
 	cp ../nwjs-playground.nw /Applications/myapp.app/Contents/Resources/app.nw
 	```
-
-

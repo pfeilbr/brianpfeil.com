@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "serverless-lambda-layers"
-tags = ["serverless","lambda",]
+tags = ["serverless","lambda"]
 title = "Serverless Lambda Layers"
 repoFullName = "pfeilbr/serverless-lambda-layers-playground"
 repoHTMLURL = "https://github.com/pfeilbr/serverless-lambda-layers-playground"
@@ -23,7 +23,7 @@ learn lambda layers with serverless framework
 
 ## Running
 
-see [`serverless.yml`](serverless.yml) and [`index.js`](index.js)
+see [`serverless.yml`](https://github.com/pfeilbr/serverless-lambda-layers-playground/blob/master/serverless.yml) and [`index.js`](https://github.com/pfeilbr/serverless-lambda-layers-playground/blob/master/index.js)
 
 > layers are applied in order, meaning last layer in array is applied last and will overwrite any common files in other layers.
 
@@ -47,6 +47,4 @@ npm run sls -- invoke --function hello --log
 
 * [serverless docs | AWS - Layers](https://serverless.com/framework/docs/providers/aws/guide/layers/)
 * [Part 2 — Create Lambda Layers with Serverless Framework and Offline support](https://medium.com/appgambit/part-2-create-lambda-layers-with-serverless-framework-and-offline-support-ad2a5a8dabfb)
-
-
 

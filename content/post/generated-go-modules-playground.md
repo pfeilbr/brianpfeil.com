@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "go-modules"
-tags = ["golang",]
+tags = ["golang"]
 title = "Go Modules"
 repoFullName = "pfeilbr/go-modules-playground"
 repoHTMLURL = "https://github.com/pfeilbr/go-modules-playground"
@@ -35,5 +35,3 @@ fswatch -o . | xargs -n1 -I{} go test -v ./...
 # run main on change
 fswatch -o . | xargs -n1 -I{} go run main.go
 ```
-
-

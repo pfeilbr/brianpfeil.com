@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "scribbletune"
-tags = ["nodejs","music",]
+tags = ["nodejs","music"]
 title = "Scribbletune"
 repoFullName = "pfeilbr/scribbletune-playground"
 repoHTMLURL = "https://github.com/pfeilbr/scribbletune-playground"
@@ -23,6 +23,4 @@ learn [Scribbletune](https://github.com/walmik/scribbletune).  Generate musical 
 
 * install timidity command line midi player via `brew install timidity`
 * [timidity man docs](https://www.systutorials.com/docs/linux/man/1-timidity/)
-
-
 

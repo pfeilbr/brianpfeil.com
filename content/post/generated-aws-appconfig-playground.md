@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-10-20
 description = ""
 summary = " "
 draft = false
 slug = "aws-appconfig"
-tags = ["aws","appconfig","configuration","deployment","lambda",]
+tags = ["aws","appconfig","configuration","deployment","lambda"]
 title = "AWS AppConfig"
 repoFullName = "pfeilbr/aws-appconfig-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-appconfig-playground"
@@ -96,7 +96,5 @@ Deployment
 * [AWS AppConfig integration with Lambda extensions](https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-integration-lambda-extensions.html) -
 * [sessions-with-aws-sam/appconfig-lambda-extensions/README.md](https://github.com/aws-samples/sessions-with-aws-sam/blob/master/appconfig-lambda-extensions/README.md) - good complete reference implementation on how to effectively use with lambda
 * [sthulb/appconfig-demo](https://github.com/sthulb/appconfig-demo)
-
-
 
 

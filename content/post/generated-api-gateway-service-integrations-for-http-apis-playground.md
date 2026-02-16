@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-04-02
 description = ""
 summary = " "
 draft = false
 slug = "api-gateway-service-integrations-for-http-apis"
-tags = ["aws","api-gateway","eventbridge","cloudwatch","integration",]
+tags = ["aws","api-gateway","eventbridge","cloudwatch","integration"]
 title = "API Gateway Service Integrations for HTTP APIs"
 repoFullName = "pfeilbr/api-gateway-service-integrations-for-http-apis-playground"
 repoHTMLURL = "https://github.com/pfeilbr/api-gateway-service-integrations-for-http-apis-playground"
@@ -74,6 +74,4 @@ aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
 ## Resources
 
 * [Working with AWS service integrations for HTTP APIs - Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-aws-services.html)
-
-
 

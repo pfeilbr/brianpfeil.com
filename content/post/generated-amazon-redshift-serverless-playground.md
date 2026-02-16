@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "amazon-redshift-serverless"
-tags = ["serverless","aws","db","redshift",]
+tags = ["serverless","aws","db","redshift"]
 title = "Amazon Redshift Serverless"
 repoFullName = "pfeilbr/amazon-redshift-serverless-playground"
 repoHTMLURL = "https://github.com/pfeilbr/amazon-redshift-serverless-playground"
@@ -102,6 +102,4 @@ Recovery point
 
 - [Amazon Redshift Serverless](https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-serverless.html)
 - [Amazon Redshift Serverless – Now Generally Available with New Capabilities](https://aws.amazon.com/blogs/aws/amazon-redshift-serverless-now-generally-available-with-new-capabilities/)
-
-
 

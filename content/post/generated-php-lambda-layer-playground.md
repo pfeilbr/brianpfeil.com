@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "php-lambda-layer"
-tags = ["php","lambda",]
+tags = ["php","lambda"]
 title = "PHP Lambda Layer"
 repoFullName = "pfeilbr/php-lambda-layer-playground"
 repoHTMLURL = "https://github.com/pfeilbr/php-lambda-layer-playground"
@@ -28,14 +28,14 @@ learn [stackery/php-lambda-layer](https://github.com/stackery/php-lambda-layer) 
 
 **Key Files**
 
-* [src/php/index.php](src/php/index.php)
-* [src/php/php.ini](src/php/php.ini) - for enabled extensions
-* [template.yaml](template.yaml)
-* [packaged.yaml](packaged.yaml) - *generated via sam*
+* [src/php/index.php](https://github.com/pfeilbr/php-lambda-layer-playground/blob/master/src/php/index.php)
+* [src/php/php.ini](https://github.com/pfeilbr/php-lambda-layer-playground/blob/master/src/php/php.ini) - for enabled extensions
+* [template.yaml](https://github.com/pfeilbr/php-lambda-layer-playground/blob/master/template.yaml)
+* [packaged.yaml](https://github.com/pfeilbr/php-lambda-layer-playground/blob/master/packaged.yaml) - *generated via sam*
 
 **Session**
 
-see [Makefile](Makefile) for details and make changes to variables as necessary.
+see [Makefile](https://github.com/pfeilbr/php-lambda-layer-playground/blob/master/Makefile) for details and make changes to variables as necessary.
 
 ```sh
 # deploy stack
@@ -56,5 +56,3 @@ make delete
 * [aws-samples/php-examples-for-aws-lambda](https://github.com/aws-samples/php-examples-for-aws-lambda) - github repo for article.
 * [AWS Lambda Custom Runtime for PHP: A Practical Example](https://aws.amazon.com/blogs/apn/aws-lambda-custom-runtime-for-php-a-practical-example/) - *older article, but covers low level details*
 * [AWS SDK for PHP](https://aws.amazon.com/sdk-for-php/)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "langchain-python"
-tags = ["python","llm","genai",]
+tags = ["python","llm","genai"]
 title = "LangChain Python"
 repoFullName = "pfeilbr/langchain-python-playground"
 repoHTMLURL = "https://github.com/pfeilbr/langchain-python-playground"
@@ -47,5 +47,3 @@ jupyter lab
 
 - [langchain-python](https://python.langchain.com/)
 - [LangChain AI Handbook](https://www.pinecone.io/learn/langchain/) - great resource
-
-

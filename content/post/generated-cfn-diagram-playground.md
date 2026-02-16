@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "cfn-diagram"
-tags = ["cloudformation","diagram","tools",]
+tags = ["cloudformation","diagram","tools"]
 title = "CFN Diagram"
 repoFullName = "pfeilbr/cfn-diagram-playground"
 repoHTMLURL = "https://github.com/pfeilbr/cfn-diagram-playground"
@@ -56,5 +56,3 @@ cfn-dia html --template-file CloudFrontS3WebsiteCdkStack.template.yaml \
 
 * [mhlabs/cfn-diagram](https://github.com/mhlabs/cfn-diagram)
 * [How (and Why) You Need To Start Generating Your Serverless Infrastructure Diagrams | Ready, Set, Cloud!](https://www.readysetcloud.io/blog/allen.helton/how-and-why-you-need-to-start-generating-your-diagrams/)
-
-

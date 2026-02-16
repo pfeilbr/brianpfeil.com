@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-08-18
 description = ""
 summary = " "
 draft = false
 slug = "graphviz"
-tags = ["tools","diagram","architecture",]
+tags = ["tools","diagram","architecture"]
 title = "Graphviz"
 repoFullName = "pfeilbr/graphviz-playground"
 repoHTMLURL = "https://github.com/pfeilbr/graphviz-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [Graphviz - Graph Visualization Software](https://graphviz.org/)
 
-* [`example01.dot`](example01.dot)
+* [`example01.dot`](https://github.com/pfeilbr/graphviz-playground/blob/master/example01.dot)
 
 ### Developing
 
@@ -45,5 +45,3 @@ vscode example with ["Graphviz Interactive Preview"](https://marketplace.visuals
 
 * [Graphviz&#32;Interactive&#32;Preview&#32;-&#32;Visual&#32;Studio&#32;Marketplace](https://marketplace.visualstudio.com/items?itemName=tintinweb.graphviz-interactive-preview)
 * [Create diagrams with code using Graphviz](https://ncona.com/2020/06/create-diagrams-with-code-using-graphviz/)
-
-

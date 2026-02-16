@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "modern-cpp"
-tags = ["cpp",]
+tags = ["cpp"]
 title = "Modern CPP"
 repoFullName = "pfeilbr/modern-cpp-playground"
 repoHTMLURL = "https://github.com/pfeilbr/modern-cpp-playground"
@@ -21,8 +21,8 @@ truncated = true
 
 based on [nesteruk/ModernCpp](https://github.com/nesteruk/ModernCpp)
 
-* [`playground.cpp`](playground.cpp) - main file
-* [`scripts/`](scripts) - build, run, etc. scripts
+* [`playground.cpp`](https://github.com/pfeilbr/modern-cpp-playground/blob/master/playground.cpp) - main file
+* [`scripts/`](https://github.com/pfeilbr/modern-cpp-playground/blob/master/scripts) - build, run, etc. scripts
 
 > NOTE (to self): developed and ran on 2016 MacBook Pro.  Depends on local file locations.
 
@@ -36,5 +36,3 @@ build and run on file contents change (live reload)
 
 # edit and save `playground.cpp` for live reload
 ```
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-xray"
-tags = ["aws","xray",]
+tags = ["aws","xray"]
 title = "AWS XRay"
 repoFullName = "pfeilbr/aws-xray-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-xray-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [AWS X-Ray](https://docs.aws.amazon.com/xray/)
 
-see [`index.js`](index.js)
+see [`index.js`](https://github.com/pfeilbr/aws-xray-playground/blob/master/index.js)
 
 ## Development
 
@@ -53,5 +53,3 @@ npm run dev
 
 * [aws/aws-xray-sdk-node](https://github.com/aws/aws-xray-sdk-node)
 * [aws/aws-xray-sdk-node/blob/master/packages/core/README.md](https://github.com/aws/aws-xray-sdk-node/blob/master/packages/core/README.md)
-
-

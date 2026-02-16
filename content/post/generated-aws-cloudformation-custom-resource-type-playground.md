@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-cloudformation-custom-resource-type"
-tags = ["aws","cloudformation",]
+tags = ["aws","cloudformation"]
 title = "AWS CloudFormation Custom Resource Type"
 repoFullName = "pfeilbr/aws-cloudformation-custom-resource-type-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-cloudformation-custom-resource-type-playground"
@@ -34,8 +34,8 @@ There are the following four types of CloudFormation extension mechanisms:
 
 ## Example Custom Resource Types
 
-* [`python-custom-resource-type-example`](python-custom-resource-type-example)
-* [`typescript-custom-resource-type-example`](typescript-custom-resource-type-example)
+* [`python-custom-resource-type-example`](https://github.com/pfeilbr/aws-cloudformation-custom-resource-type-playground/blob/master/python-custom-resource-type-example)
+* [`typescript-custom-resource-type-example`](https://github.com/pfeilbr/aws-cloudformation-custom-resource-type-playground/blob/master/typescript-custom-resource-type-example)
 
 ## Notes
 
@@ -65,5 +65,3 @@ There are the following four types of CloudFormation extension mechanisms:
 * [CloudFormation Resource Providers - A Chicken and Egg Problem](https://garbe.io/blog/2020/02/24/cloudformation-resource-provider/)
 * [Resolve the &quot;Resource timed out waiting for creation of physical resource&quot; error in AWS CloudFormation](https://aws.amazon.com/premiumsupport/knowledge-center/cloudformation-physical-resource-error/)
 * [Deploying CloudFormation resource type](https://read.korzh.cloud/deploying-cloudformation-resource-type-64bfd5d14e6e)
-
-

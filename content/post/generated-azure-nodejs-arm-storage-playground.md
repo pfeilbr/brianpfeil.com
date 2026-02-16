@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "azure-nodejs-arm-storage"
-tags = ["azure","nodejs",]
+tags = ["azure","nodejs"]
 title = "Azure Nodejs ARM Storage"
 repoFullName = "pfeilbr/azure-nodejs-arm-storage-playground"
 repoHTMLURL = "https://github.com/pfeilbr/azure-nodejs-arm-storage-playground"
@@ -24,5 +24,3 @@ manipulate azure storage accounts programmatically via nodejs
 ## Resources
 
 - [Azure Storage modules for Node.js](https://docs.microsoft.com/en-us/javascript/api/overview/azure/storage?view=azure-node-latest)
-
-

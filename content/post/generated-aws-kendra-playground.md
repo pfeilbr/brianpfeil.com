@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-kendra"
-tags = ["aws","kendra","search","machine-learning",]
+tags = ["aws","kendra","search","machine-learning"]
 title = "AWS Kendra"
 repoFullName = "pfeilbr/aws-kendra-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-kendra-playground"
@@ -55,7 +55,7 @@ You specify `Edition: DEVELOPER_EDITION | ENTERPRISE_EDITION` when you create an
 
 ## Creating Example Index
 
-see [`main.py`](main.py)
+see [`main.py`](https://github.com/pfeilbr/aws-kendra-playground/blob/master/main.py)
 
 ```sh
 sam deploy --guided
@@ -71,5 +71,3 @@ python main.py
     * <https://kendrasamples.s3.amazonaws.com/kendrasamples.zip>
 * [aws-samples/enterprise-search-with-amazon-kendra-workshop](https://github.com/aws-samples/enterprise-search-with-amazon-kendra-workshop)
 * [Kendra | Using a custom data source](https://docs.aws.amazon.com/kendra/latest/dg/data-source-custom.html)
-
-

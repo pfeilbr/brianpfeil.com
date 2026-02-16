@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-glue"
-tags = ["aws","glue",]
+tags = ["aws","glue"]
 title = "AWS Glue"
 repoFullName = "pfeilbr/aws-glue-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-glue-playground"
@@ -42,9 +42,9 @@ cp .env.sample .env
 node src/job-runner.js run-python-shell-script scripts/python3-shell-job-example.py
 ```
 
-## Steps to Run [`scripts/example-notebook-script-01.py`](scripts/example-notebook-script-01.py) in SageMaker notebook
+## Steps to Run [`scripts/example-notebook-script-01.py`](https://github.com/pfeilbr/aws-glue-playground/blob/master/scripts/example-notebook-script-01.py) in SageMaker notebook
 
-see [`scripts/example-notebook-script-01.py`](scripts/example-notebook-script-01.py)
+see [`scripts/example-notebook-script-01.py`](https://github.com/pfeilbr/aws-glue-playground/blob/master/scripts/example-notebook-script-01.py)
 
 1. upload data.csv to S3
 1. create glue crawler for data.csv which results in a table in glue database being created
@@ -53,7 +53,5 @@ see [`scripts/example-notebook-script-01.py`](scripts/example-notebook-script-01
     > no need to specify ssh key
 1. create SageMaker notebook
     > SageMaker notebook works just like Zepplin notebook, but less setup steps.
-1. open SageMaker notebook and past in code from [`scripts/example-notebook-script-01.py`](scripts/example-notebook-script-01.py)
-
-
+1. open SageMaker notebook and past in code from [`scripts/example-notebook-script-01.py`](https://github.com/pfeilbr/aws-glue-playground/blob/master/scripts/example-notebook-script-01.py)
 

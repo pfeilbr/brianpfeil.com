@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "nextjs"
-tags = ["javascript","react",]
+tags = ["javascript","react"]
 title = "NextJS"
 repoFullName = "pfeilbr/nextjs-playground"
 repoHTMLURL = "https://github.com/pfeilbr/nextjs-playground"
@@ -26,6 +26,4 @@ Learn [Next.js](https://github.com/zeit/next.js), a small framework for server-r
 ```sh
 $ npm run dev
 ```
-
-
 

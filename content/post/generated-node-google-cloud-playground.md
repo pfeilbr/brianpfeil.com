@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "node-google-cloud"
-tags = ["google",]
+tags = ["google"]
 title = "Node Google Cloud"
 repoFullName = "pfeilbr/node-google-cloud-playground"
 repoHTMLURL = "https://github.com/pfeilbr/node-google-cloud-playground"
@@ -19,7 +19,5 @@ truncated = true
 </div>
 
 
-* [Speech API](speech/README.md)
-
-
+* [Speech API](https://github.com/pfeilbr/node-google-cloud-playground/blob/master/speech/README.md)
 

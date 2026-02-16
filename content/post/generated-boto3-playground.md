@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "boto3"
-tags = ["boto","python",]
+tags = ["boto","python"]
 title = "Boto3"
 repoFullName = "pfeilbr/boto3-playground"
 repoHTMLURL = "https://github.com/pfeilbr/boto3-playground"
@@ -88,5 +88,3 @@ for vscode, install [Pylance&#32;-&#32;Visual&#32;Studio&#32;Marketplace](https:
 * [Working with Jupyter Notebooks in Visual Studio Code](https://code.visualstudio.com/docs/python/jupyter-support)
 * [How to use Pipenv with Jupyter and VSCode](https://towardsdatascience.com/how-to-use-pipenv-with-jupyter-and-vscode-ae0e970df486)
 * [Big Upgrades are coming to VSCode Jupyter Notebooks](https://towardsdatascience.com/vscode-jupyter-notebooks-are-getting-an-upgrade-cc9aaaefc744)
-
-

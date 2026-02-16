@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "azure-pipelines"
-tags = ["azure",]
+tags = ["azure"]
 title = "Azure Pipelines"
 repoFullName = "pfeilbr/azure-pipelines-playground"
 repoHTMLURL = "https://github.com/pfeilbr/azure-pipelines-playground"
@@ -48,20 +48,20 @@ is applied to the repo
 ## Infrastructure Provisioning Steps
 
 1. create route 53 hosted zone for your domain name (e.g. `mydomain.com`)
-1. update `DOMAIN_NAME` parameter in [`scripts/stack.sh`](scripts/stack.sh) with the hosted zone name 
+1. update `DOMAIN_NAME` parameter in [`scripts/stack.sh`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/scripts/stack.sh) with the hosted zone name 
 1. provision aws resources `./scripts/stack.sh create`
 1. Check ACM to confirm Certificate validation via DNS validation has completed.  May need to add DNS validation records to route53 hosted zone.
 1. update pipeline variables
     * REGION - *default is us-east-1*
-    * STACK_NAME - defined in [`scripts/stack.sh`](scripts/stack.sh)
+    * STACK_NAME - defined in [`scripts/stack.sh`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/scripts/stack.sh)
     * AWS_ACCESS_KEY_ID - `AccessKey` output in `./tmp/${STACK_NAME}-outputs.json`
     * AWS_SECRET_ACCESS_KEY - `SecretKey` output in `./tmp/${STACK_NAME}-outputs.json`
 
 ## Website Content Publishing Steps
 
 1. ensure you have `develop` branch checked out *(this corresponds to staging environment)*
-1. update website content in [`public`](public) directory and push to github.
-1. *(optional)* update redirect rules in [`routing-rules/routing-rules.txt`](routing-rules/routing-rules.txt)
+1. update website content in [`public`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/public) directory and push to github.
+1. *(optional)* update redirect rules in [`routing-rules/routing-rules.txt`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/routing-rules/routing-rules.txt)
 1. push your commit(s) to remote (github)
 1. publish will run.  can take up to 20 minutes to complete due CloudFront distribution update.
 1. verify updated content by visiting <https://staging.mydomain.com>
@@ -80,13 +80,13 @@ is applied to the repo
 
 ## Architecture
 
-![architecture](assets/images/architecture.png)
+![architecture](https://raw.githubusercontent.com/pfeilbr/azure-pipelines-playground/master/assets/images/architecture.png)
 
 ---
 
 ## Key Files and Directories
 
-* [`cfn-templates/resources.yaml`](cfn-templates/resources.yaml) - CloudFormation stack for provisioning AWS resources.
+* [`cfn-templates/resources.yaml`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/cfn-templates/resources.yaml) - CloudFormation stack for provisioning AWS resources.
     * S3 bucket(s) for static content (staging + production)
     * CloudFront distribution(s) (staging + production)
     * lambda@edge function for basic auth for staging site
@@ -97,12 +97,12 @@ is applied to the repo
     * route53 root domain ALIAS record to CloudFront distribution
     * route53 **staging** and **www** CNAME records to CloudFront distribution
     * IAM user for CI/CD automation used by the azure pipeline
-* [`public`](public) - static web content
-* [`scripts/stack.sh`](scripts/stack.sh) - provisions AWS resources
-* [`tmp/automation-outputs.json`](tmp/automation-stack-outputs.json) - stack outputs stored here.  *file gets created when stack is provisioned.*
-* [`scripts/tag-and-trigger-publish.sh`](scripts/tag-and-trigger-publish.sh) - tags and pushes the tag to github to trigger the publish pipeline
-* [`scripts/publish.sh`](scripts/publish.sh) - publishes a new version of the static site based on git tag.  this is used by pipeline
-* [`azure-pipelines.yml`](azure-pipelines.yml) - pipeline definition that get triggered on tag to publish to site
+* [`public`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/public) - static web content
+* [`scripts/stack.sh`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/scripts/stack.sh) - provisions AWS resources
+* [`tmp/automation-outputs.json`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/tmp/automation-stack-outputs.json) - stack outputs stored here.  *file gets created when stack is provisioned.*
+* [`scripts/tag-and-trigger-publish.sh`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/scripts/tag-and-trigger-publish.sh) - tags and pushes the tag to github to trigger the publish pipeline
+* [`scripts/publish.sh`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/scripts/publish.sh) - publishes a new version of the static site based on git tag.  this is used by pipeline
+* [`azure-pipelines.yml`](https://github.com/pfeilbr/azure-pipelines-playground/blob/master/azure-pipelines.yml) - pipeline definition that get triggered on tag to publish to site
 
 
 ---
@@ -556,6 +556,4 @@ AWS::WAFv2::WebACL
               ExcludedRules: []
 
 ```
-
-
 

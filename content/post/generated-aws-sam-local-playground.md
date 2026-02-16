@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-08-16
 description = ""
 summary = " "
 draft = false
 slug = "aws-sam-local"
-tags = ["aws","sam",]
+tags = ["aws","sam"]
 title = "AWS SAM Local"
 repoFullName = "pfeilbr/aws-sam-local-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-sam-local-playground"
@@ -70,5 +70,3 @@ sam deploy --template-file packaged.yaml --stack-name api-event-source-v1 --capa
 ### Resources
 
 * [AWS Serverless Application Model (AWS SAM) Documentation](https://docs.aws.amazon.com/serverless-application-model/index.html)
-
-

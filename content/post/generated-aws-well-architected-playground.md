@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-well-architected"
-tags = ["aws","aws-well-architected","architecture",]
+tags = ["aws","aws-well-architected","architecture"]
 title = "AWS Well-Architected"
 repoFullName = "pfeilbr/aws-well-architected-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-well-architected-playground"
@@ -121,13 +121,13 @@ AWS Console Tool that steps a user through the Well-Architected Review Process
 
 Consuming the WA PDFs or web content can be a bit challenging with navigation.  The WA questions, resources, etc. are available as `json` via the AWS WA Console Tool with some scraping.  This creates alternate renditions based on this data.
 
-* Run [`aws-well-architected-reformat/main.js`](aws-well-architected-reformat/main.js) to generate a reformatted and condensed version of WA.
+* Run [`aws-well-architected-reformat/main.js`](https://github.com/pfeilbr/aws-well-architected-playground/blob/master/aws-well-architected-reformat/main.js) to generate a reformatted and condensed version of WA.
     ```sh
     cd aws-well-architected-reformat
     node main.js > ../aws-well-architected-condensed.md
     ```
-* see alternate rendition at [`aws-well-architected-condensed.md`](aws-well-architected-condensed.md)
-* See [`aws-well-architected-reformat/data`](aws-well-architected-reformat/data) for the question data as `json` for each lens.
+* see alternate rendition at [`aws-well-architected-condensed.md`](https://github.com/pfeilbr/aws-well-architected-playground/blob/master/aws-well-architected-condensed.md)
+* See [`aws-well-architected-reformat/data`](https://github.com/pfeilbr/aws-well-architected-playground/blob/master/aws-well-architected-reformat/data) for the question data as `json` for each lens.
 
 **Notes on pulling data via AWS Console**
 
@@ -227,6 +227,4 @@ template JSON file for creating custom lens
 * [Announcing AWS Well-Architected Custom Lenses: Extend the Well-Architected Framework with Your Internal Best Practices](https://aws.amazon.com/blogs/aws/well-architected-custom-lenses-internal-best-practices/)
 * [Customize Well-Architected Reviews using Custom Lenses and the AWS Well-Architected Tool](https://aws.amazon.com/blogs/mt/customize-well-architected-reviews-using-custom-lenses-and-the-aws-well-architected-tool/)
 * [Custom lenses](https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses-custom.html)
-
-
 

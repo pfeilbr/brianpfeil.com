@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-kms"
-tags = ["aws","kms",]
+tags = ["aws","kms"]
 title = "AWS KMS"
 repoFullName = "pfeilbr/aws-kms-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-kms-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn how to use kms to encrypt and decrypt data
 
-see [`index.js`](index.js)
+see [`index.js`](https://github.com/pfeilbr/aws-kms-playground/blob/master/index.js)
 
 ## KMS Key Policies
 
@@ -51,5 +51,3 @@ Then you would need to grant access to the key via say a policy attached to a ro
 ## Resources
 
 * [Key policies in AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "angular-cli-app"
-tags = ["angular","cli",]
+tags = ["angular","cli"]
 title = "Angular CLI App"
 repoFullName = "pfeilbr/angular-cli-app-playground"
 repoHTMLURL = "https://github.com/pfeilbr/angular-cli-app-playground"
@@ -20,6 +20,4 @@ truncated = true
 
 
 learn and experiment with [angular-cli](https://github.com/angular/angular-cli)
-
-
 

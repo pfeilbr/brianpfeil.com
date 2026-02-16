@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-05-04
 description = ""
 summary = " "
 draft = false
 slug = "hashicorp-vault"
-tags = ["secrets-management","security",]
+tags = ["secrets-management","security"]
 title = "Hashicorp Vault"
 repoFullName = "pfeilbr/hashicorp-vault-playground"
 repoHTMLURL = "https://github.com/pfeilbr/hashicorp-vault-playground"
@@ -124,5 +124,3 @@ vault read aws/creds/my-role
 * [hashicorp/vault-lambda-extension](https://github.com/hashicorp/vault-lambda-extension) - utilizes the AWS Lambda Extensions API to help your Lambda function read secrets from your Vault deployment
 * [https://registry.terraform.io/modules/hashicorp/vault/aws/latest/examples/vault-iam-auth](https://registry.terraform.io/modules/hashicorp/vault/aws/latest/examples/vault-iam-auth)
 * [Serverless lambda with vault — Avoiding committing your passwords](https://medium.com/@rondineli.gomes.araujo/serverless-lambda-with-vault-avoiding-commit-your-passwords-e15a2fa0b5a1)
-
-

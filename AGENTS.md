@@ -2,23 +2,22 @@
 
 ## Overview
 
-This is a personal blog (brianpfeil.com) built with Hugo and Tailwind CSS. There is no external theme — all layouts live in `layouts/`. The site has ~310 blog posts (282 auto-generated from GitHub repos, ~30 manual), plus project pages and an about page.
+This is a personal blog (brianpfeil.com) built with Hugo. There is no external theme — all layouts live in `layouts/`. The site has ~310 blog posts (282 auto-generated from GitHub repos, ~30 manual), plus project pages and an about page.
 
 ## Architecture
 
 ### Hugo (Static Site Generator)
 - Config: `config.yaml` — no theme reference, layouts are in root `layouts/`
-- Hugo Extended required (for PostCSS/Tailwind pipeline)
 - Goldmark markdown renderer with `unsafe: true` (allows raw HTML in posts)
 - `disablePathToLower: true` — preserves URL casing
 - `buildFuture: true` — includes posts with future dates
 
 ### CSS Pipeline
-- Tailwind CSS v3.4 processed via Hugo Pipes + PostCSS
-- Entry point: `assets/css/main.css` (Tailwind directives + custom prose styles)
+- Plain CSS utility classes (no build tools, no preprocessors)
+- Entry point: `assets/css/main.css` (reset + utility classes + prose styles)
 - Syntax highlighting: `assets/css/syntax.css` (Chroma, trac style)
-- In `baseof.html`: `resources.Get "css/main.css" | css.PostCSS | minify | fingerprint`
-- **Important**: Use `css.PostCSS` not `resources.PostCSS` (deprecated in Hugo v0.128+)
+- In `baseof.html`: `slice $main $syntax | resources.Concat "css/bundle.css" | minify | fingerprint`
+- No Node.js, npm, or PostCSS required
 
 ### JavaScript
 - Zero JS frameworks. All vanilla JS.
@@ -35,7 +34,7 @@ This is a personal blog (brianpfeil.com) built with Hugo and Tailwind CSS. There
 ## Template Hierarchy
 
 ```
-layouts/_default/baseof.html     <- HTML shell, Tailwind, Google Fonts, DarkReader, dark mode JS
+layouts/_default/baseof.html     <- HTML shell, CSS bundle, Google Fonts, DarkReader, dark mode JS
   layouts/partials/nav.html      <- Responsive nav, <details> for mobile, dark mode toggle icons
   layouts/partials/footer.html   <- Social links (Twitter, GitHub, Stack Overflow, RSS)
   layouts/partials/search.html   <- Sticky search bar, <template> for results, loads search.js
@@ -77,7 +76,7 @@ layouts/_default/baseof.html     <- HTML shell, Tailwind, Google Fonts, DarkRead
   <span class="text-muted">code for article</span>&nbsp;<a href="..."><i class="fab fa-github fa-sm"></i>&nbsp;...</a>
   </div>
   ```
-- This HTML is restyled via CSS rules in `assets/css/main.css` (lines ~65-88) using `:has(> .text-muted)` and CSS mask-image for the GitHub icon
+- This HTML is restyled via CSS rules in `assets/css/main.css` using `:has(> .text-muted)` and CSS mask-image for the GitHub icon
 
 ### Pages with `layout = "page"`
 - `content/about.md` uses `layout = "page"` in front matter
@@ -89,7 +88,7 @@ layouts/_default/baseof.html     <- HTML shell, Tailwind, Google Fonts, DarkRead
 |------------------|---------------|
 | `config.yaml` (menu items) | `layouts/partials/nav.html` |
 | `config.yaml` (mainSections) | `layouts/index.html` (post query), `layouts/_default/index.json` |
-| `assets/css/main.css` | `tailwind.config.js` (content paths for purging) |
+| `assets/css/main.css` (utility classes) | All layout templates that use those classes |
 | `layouts/partials/search.html` | `assets/js/search.js`, `layouts/_default/index.json` |
 | `layouts/index.html` (post list structure) | `assets/js/search.js` (search result template should match) |
 | `tools/generate-posts/templates/post.md` | `assets/css/main.css` (backward-compat CSS for banner HTML) |
@@ -118,11 +117,6 @@ make dev  # or: ./site run-local
 make build  # hugo --minify
 ```
 
-### Run verification checks
-```bash
-make verify  # builds + checks pages, search index, RSS, etc.
-```
-
 ### Run Go tool tests
 ```bash
 make test-tools  # cd tools/generate-posts && go test ./...
@@ -130,14 +124,13 @@ make test-tools  # cd tools/generate-posts && go test ./...
 
 ## Gotchas and Pitfalls
 
-1. **`css.PostCSS` not `resources.PostCSS`** — Hugo v0.128+ removed the old name
-2. **`PagerSize` not `PageSize`** — deprecated in Hugo v0.128+
-3. **Taxonomy kind is `"taxonomy"` not `"terms"`** — Hugo renamed this
-4. **`grep -P` doesn't work on macOS** — use alternative patterns in scripts
-5. **Hugo box-drawing chars in output** — `hugo --minify` output uses Unicode box chars, not plain text; grep carefully in scripts
-6. **The 282 generated posts have a trailing comma in tags** — `tags = ["aws","alexa",]` — Hugo tolerates it, don't worry about it
-7. **DarkReader must call `setFetchMethod(window.fetch)`** — required for the CDN version to work
-8. **Search hides the scroll sentinel** — when searching, the infinite scroll sentinel is hidden; when cleared, it reappears
+1. **`PagerSize` not `PageSize`** — deprecated in Hugo v0.128+
+2. **Taxonomy kind is `"taxonomy"` not `"terms"`** — Hugo renamed this
+3. **`grep -P` doesn't work on macOS** — use alternative patterns in scripts
+4. **Hugo box-drawing chars in output** — `hugo --minify` output uses Unicode box chars, not plain text; grep carefully in scripts
+5. **The 282 generated posts have a trailing comma in tags** — `tags = ["aws","alexa",]` — Hugo tolerates it, don't worry about it
+6. **DarkReader must call `setFetchMethod(window.fetch)`** — required for the CDN version to work
+7. **Search hides the scroll sentinel** — when searching, the infinite scroll sentinel is hidden; when cleared, it reappears
 
 ## Build and Deploy
 

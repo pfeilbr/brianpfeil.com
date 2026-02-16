@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "fswatch"
-tags = ["tools",]
+tags = ["tools"]
 title = "fswatch"
 repoFullName = "pfeilbr/fswatch-playground"
 repoHTMLURL = "https://github.com/pfeilbr/fswatch-playground"
@@ -24,7 +24,7 @@ truncated = true
 
 ### Example Script
 
-see [`watch.sh`](watch.sh)
+see [`watch.sh`](https://github.com/pfeilbr/fswatch-playground/blob/master/watch.sh)
 
 ### Example Usage
 
@@ -35,6 +35,4 @@ fswatch -0 .
 # print file path information for each changed file on separate line
 fswatch -0 . | xargs -0 -n 1 -I {} echo {}
 ```
-
-
 

@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-10-02
 description = ""
 summary = " "
 draft = false
 slug = "aws-systems-manager-automation"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Systems Manager Automation"
 repoFullName = "pfeilbr/aws-systems-manager-automation-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-systems-manager-automation-playground"
@@ -85,5 +85,3 @@ aws ssm send-command \
 * [Walkthrough: Using Automation with Jenkins](https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-jenkins.html)
 * [ceshihao/ssm-public-documents](https://github.com/ceshihao/ssm-public-documents) - example ssm automation documents
 * [How To Create AWS SSM Automation Workflow | CloudAffaire](https://cloudaffaire.com/how-to-create-aws-ssm-automation-workflow/) - goo walkthrough how to create automation doc and run via aws cli
-
-

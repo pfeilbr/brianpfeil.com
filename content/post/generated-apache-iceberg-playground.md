@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2024-02-13
 description = ""
 summary = " "
 draft = false
 slug = "apache-iceberg"
-tags = ["db","spark","glue","emr",]
+tags = ["db","spark","glue","emr"]
 title = "Apache Iceberg"
 repoFullName = "pfeilbr/apache-iceberg-playground"
 repoHTMLURL = "https://github.com/pfeilbr/apache-iceberg-playground"
@@ -17,6 +17,7 @@ truncated = true
 <div class="alert alert-info small bg-info" role="alert">
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/apache-iceberg-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/apache-iceberg-playground</a>
 </div>
+
 
 
 learn [Apache Iceberg](https://iceberg.apache.org/)
@@ -67,5 +68,3 @@ learn [Apache Iceberg](https://iceberg.apache.org/)
 
 - [Apache Iceberg](https://iceberg.apache.org/)
 - [Apache Iceberg: The Definitive Guide](https://learning.oreilly.com/library/view/apache-iceberg-the/9781098148614)
-
-

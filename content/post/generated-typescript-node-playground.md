@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "typescript-node"
-tags = ["typescript",]
+tags = ["typescript"]
 title = "TypeScript Node"
 repoFullName = "pfeilbr/typescript-node-playground"
 repoHTMLURL = "https://github.com/pfeilbr/typescript-node-playground"
@@ -49,6 +49,4 @@ $ npm run dev
 
 // NOTE: app will be ran 2xs on every change when editing in Atom since atom-typescript will re-compile also in addition to `tsc -w` in the `dev` npm script
 ```
-
-
 

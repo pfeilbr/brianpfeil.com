@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-03-30
 description = ""
 summary = " "
 draft = false
 slug = "aws-ses"
-tags = ["aws","ses","email",]
+tags = ["aws","ses","email"]
 title = "AWS SES"
 repoFullName = "pfeilbr/aws-ses-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-ses-playground"
@@ -62,7 +62,7 @@ learn [Simple Email Service (Amazon SES)](https://aws.amazon.com/ses/)
 
 ## Send Email Using API
 
-create [`destination.json`](destination.json) and [`message.json`](message.json) files
+create [`destination.json`](https://github.com/pfeilbr/aws-ses-playground/blob/master/destination.json) and [`message.json`](https://github.com/pfeilbr/aws-ses-playground/blob/master/message.json) files
 
 ```sh
 # send email
@@ -125,6 +125,4 @@ openssl s_client -crlf -quiet -starttls smtp -connect email-smtp.us-east-1.amazo
 ## Resources
 
 * [Documentation | Amazon Simple Email Service](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html)
-
-
 

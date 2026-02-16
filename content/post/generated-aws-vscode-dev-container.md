@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-vscode-dev-container"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Vscode Dev Container"
 repoFullName = "pfeilbr/aws-vscode-dev-container"
 repoHTMLURL = "https://github.com/pfeilbr/aws-vscode-dev-container"
@@ -81,14 +81,12 @@ aws configure sso --profile default
 
 ## Files
 
-* [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json)
-* [`.devcontainer/Dockerfile`](.devcontainer/Dockerfile)
+* [`.devcontainer/devcontainer.json`](https://github.com/pfeilbr/aws-vscode-dev-container/blob/master/.devcontainer/devcontainer.json)
+* [`.devcontainer/Dockerfile`](https://github.com/pfeilbr/aws-vscode-dev-container/blob/master/.devcontainer/Dockerfile)
 
 ---
 
 ## Resources
 
 * [Developing inside a Container](https://code.visualstudio.com/docs/remote/containers)
-
-
 

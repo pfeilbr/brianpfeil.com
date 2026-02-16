@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "jupyter-kernel-gateway"
-tags = ["jupyter",]
+tags = ["jupyter"]
 title = "Jupyter Kernel Gateway"
 repoFullName = "pfeilbr/jupyter-kernel-gateway-playground"
 repoHTMLURL = "https://github.com/pfeilbr/jupyter-kernel-gateway-playground"
@@ -56,5 +56,3 @@ docker push pfeilbr/jupyter-kernel-gateway
 ### Screenshots
 
 ![](https://www.evernote.com/l/AAHBAoPzt9NOyLDDhg90a4FkOcrCBAs7vz4B/image.png)
-
-

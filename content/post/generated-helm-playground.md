@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2023-02-17
 description = ""
 summary = " "
 draft = false
 slug = "helm"
-tags = ["kubernetes",]
+tags = ["kubernetes"]
 title = "Helm"
 repoFullName = "pfeilbr/helm-playground"
 repoHTMLURL = "https://github.com/pfeilbr/helm-playground"
@@ -60,5 +60,3 @@ demo
 - [Kubernetes and Helm in a Nutshell](https://motius.de/insights/kubernetes-and-helm-in-a-nutshell/)
 - [Helm Charts: Kubernetes Tutorial and Examples](https://www.containiq.com/post/helm-charts)
 - [ArtifactHUB](https://artifacthub.io/) - Find, install and publish Kubernetes packages
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "googletest"
-tags = ["testing","cpp",]
+tags = ["testing","cpp"]
 title = "Googletest"
 repoFullName = "pfeilbr/googletest-playground"
 repoHTMLURL = "https://github.com/pfeilbr/googletest-playground"
@@ -68,5 +68,3 @@ popd
 # list command line options
 ./build/tst/app_tst --help
 ```
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-transcribe"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Transcribe"
 repoFullName = "pfeilbr/aws-transcribe-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-transcribe-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [aws transcribe](https://aws.amazon.com/transcribe/) speech to text service
 
-see [`src/index.js`](src/index.js) and example output in [`data/`](data/)
+see [`src/index.js`](https://github.com/pfeilbr/aws-transcribe-playground/blob/master/src/index.js) and example output in [`data/`](https://github.com/pfeilbr/aws-transcribe-playground/blob/master/data/)
 
 ## Running
 
@@ -32,6 +32,4 @@ npm install
 # run
 npm start
 ```
-
-
 

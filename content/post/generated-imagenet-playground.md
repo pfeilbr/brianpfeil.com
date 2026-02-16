@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "imagenet"
-tags = ["machine-learning","python",]
+tags = ["machine-learning","python"]
 title = "Imagenet"
 repoFullName = "pfeilbr/imagenet-playground"
 repoHTMLURL = "https://github.com/pfeilbr/imagenet-playground"
@@ -26,5 +26,3 @@ project to explore [ImageNet](http://www.image-net.org/) image data for ML appli
 run jupyter notebook via `kjupyter` command
 
 see [imagenet-classify.ipynb]()
-
-

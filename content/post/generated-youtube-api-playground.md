@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "youtube-api"
-tags = ["youtube","nodejs",]
+tags = ["youtube","nodejs"]
 title = "YouTube API"
 repoFullName = "pfeilbr/youtube-api-playground"
 repoHTMLURL = "https://github.com/pfeilbr/youtube-api-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [youtube api](https://developers.google.com/youtube/v3/) using node.js
 
-see [`src/index.js`](src/index.js)
+see [`src/index.js`](https://github.com/pfeilbr/youtube-api-playground/blob/master/src/index.js)
 
 ## Running
 
@@ -35,6 +35,4 @@ cp .env.sample .env
 # run
 npm start
 ```
-
-
 

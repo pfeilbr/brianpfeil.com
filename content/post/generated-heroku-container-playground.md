@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "heroku-container"
-tags = ["heroku",]
+tags = ["heroku"]
 title = "Heroku Container"
 repoFullName = "pfeilbr/heroku-container-playground"
 repoHTMLURL = "https://github.com/pfeilbr/heroku-container-playground"
@@ -54,6 +54,4 @@ heroku open --app stormy-badlands-73151
 # build and push
 heroku container:push web --app stormy-badlands-73151
 ```
-
-
 

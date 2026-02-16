@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-03-13
 description = ""
 summary = " "
@@ -126,6 +126,4 @@ learn [Amazon Managed Workflows for Apache Airflow](https://docs.aws.amazon.com/
 * [AWS CLI Command Reference | mwaa](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/mwaa/index.html)
 * [Airflow — Custom Plugins](https://medium.com/swlh/airflow-custom-plugins-38f0848b74c5)
 * [Airflow XCOM : The Ultimate Guide](https://marclamberti.com/blog/airflow-xcom/)
-
-
 

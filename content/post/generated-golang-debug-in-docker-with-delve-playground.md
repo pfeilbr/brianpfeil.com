@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "golang-debug-in-docker-with-delve"
-tags = ["golang","docker",]
+tags = ["golang","docker"]
 title = "Golang Debug In Docker with Delve"
 repoFullName = "pfeilbr/golang-debug-in-docker-with-delve-playground"
 repoHTMLURL = "https://github.com/pfeilbr/golang-debug-in-docker-with-delve-playground"
@@ -30,5 +30,3 @@ make run # or make build first
 ## Resources
 
 * [dlv debug](https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_debug.md) cli docs
-
-

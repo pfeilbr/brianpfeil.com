@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-05-19
 description = ""
 summary = " "
 draft = false
 slug = "aws-eventbridge"
-tags = ["aws","eventbridge",]
+tags = ["aws","eventbridge"]
 title = "AWS EventBridge"
 repoFullName = "pfeilbr/aws-eventbridge-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-eventbridge-playground"
@@ -29,5 +29,3 @@ aws events put-events --entries file://sample-events/my-custom-app-events.json
 ## Resources
 
 * <https://github.com/jbesw/s3-to-lambda/blob/master/eventbridge/README.md> - examples using `AWS::Events::Rule` in SAM to map event sources to targets (e.g. lambda, kinesis, etc.)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "intellij-maven-app"
-tags = ["java","maven","build-tools",]
+tags = ["java","maven","build-tools"]
 title = "Intellij Maven App"
 repoFullName = "pfeilbr/intellij-maven-app-playground"
 repoHTMLURL = "https://github.com/pfeilbr/intellij-maven-app-playground"
@@ -37,5 +37,3 @@ mvn package
 # run jar
 java -jar ./target/app01-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
-
-

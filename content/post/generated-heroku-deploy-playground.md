@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "heroku-deploy"
-tags = ["heroku",]
+tags = ["heroku"]
 title = "Heroku Deploy"
 repoFullName = "pfeilbr/heroku-deploy-playground"
 repoHTMLURL = "https://github.com/pfeilbr/heroku-deploy-playground"
@@ -20,8 +20,6 @@ truncated = true
 
 
 To learn and experiment with various heroku deployment options such as github and dropbox
-
-
 
 
 

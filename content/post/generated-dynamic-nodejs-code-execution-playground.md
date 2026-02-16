@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "dynamic-nodejs-code-execution"
-tags = ["nodejs",]
+tags = ["nodejs"]
 title = "Dynamic Nodejs Code Execution"
 repoFullName = "pfeilbr/dynamic-nodejs-code-execution-playground"
 repoHTMLURL = "https://github.com/pfeilbr/dynamic-nodejs-code-execution-playground"
@@ -19,12 +19,10 @@ truncated = true
 </div>
 
 
-example(s) of dynamically executing nodejs code.  see [`index.js`](index.js)
+example(s) of dynamically executing nodejs code.  see [`index.js`](https://github.com/pfeilbr/dynamic-nodejs-code-execution-playground/blob/master/index.js)
 
 ## Running
 
 ```sh
 node index.js
 ```
-
-

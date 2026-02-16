@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "minecraft-spigot-plugin"
-tags = ["minecraft",]
+tags = ["minecraft"]
 title = "Minecraft Spigot Plugin"
 repoFullName = "pfeilbr/minecraft-spigot-plugin-playground"
 repoHTMLURL = "https://github.com/pfeilbr/minecraft-spigot-plugin-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/minecraft-spigot-plugin-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/minecraft-spigot-plugin-playground</a>
 </div>
 
+## minecraft-spigot-plugin-playground
 
 Learn plugin development for the [spigot](https://www.spigotmc.org/) minecraft server.
 
@@ -63,5 +64,3 @@ cd ./minecraft-spigot-server
 ## Resources
 
 * <https://www.spigotmc.org/wiki/intellij-debug-your-plugin/>
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "streamlit"
-tags = ["ui","python",]
+tags = ["ui","python"]
 title = "Streamlit"
 repoFullName = "pfeilbr/streamlit-playground"
 repoHTMLURL = "https://github.com/pfeilbr/streamlit-playground"
@@ -33,5 +33,3 @@ jupyter lab
 ## resources
 
 - [streamlit](https://streamlit.io/)
-
-

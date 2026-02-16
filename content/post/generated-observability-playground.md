@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2023-03-03
 description = ""
 summary = " "
@@ -138,5 +138,3 @@ Prometheus metrics / OpenMetrics types
 - [OpenTelemetry | Documentation](https://opentelemetry.io/docs/)
 - [OTLP (OpenTelemetry Protocol)](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/otlp.md)
 - [Youtube: How Prometheus Monitoring works | Prometheus Architecture explained](https://www.youtube.com/watch?v=h4Sl21AKiDg)
-
-

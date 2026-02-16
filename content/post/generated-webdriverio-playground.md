@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "webdriverio"
-tags = ["nodejs","testing","automation","browser",]
+tags = ["nodejs","testing","automation","browser"]
 title = "WebdriverIO"
 repoFullName = "pfeilbr/webdriverio-playground"
 repoHTMLURL = "https://github.com/pfeilbr/webdriverio-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/webdriverio-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/webdriverio-playground</a>
 </div>
 
+Playground to learn and experiment with the node webdriverio package
 
 # Running Selenium Standalone Server (Preferred / lighter weight)
 
@@ -60,7 +61,5 @@ var options = {
 };
 ```
 
-see [`index.js`](index.js)
-
-
+see [`index.js`](https://github.com/pfeilbr/webdriverio-playground/blob/master/index.js)
 

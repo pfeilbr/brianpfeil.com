@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "react-async"
-tags = ["react",]
+tags = ["react"]
 title = "React Async"
 repoFullName = "pfeilbr/react-async-playground"
 repoHTMLURL = "https://github.com/pfeilbr/react-async-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [React Async](https://docs.react-async.com/), a React component and hook for declarative promise resolution and data fetching
 
-see [`src/App.js`](src/App.js)
+see [`src/App.js`](https://github.com/pfeilbr/react-async-playground/blob/master/src/App.js)
 
 ---
 
@@ -93,6 +93,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-
 

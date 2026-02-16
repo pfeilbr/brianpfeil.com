@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "azure-durable-functions"
-tags = ["azure",]
+tags = ["azure"]
 title = "Azure Durable Functions"
 repoFullName = "pfeilbr/azure-durable-functions-playground"
 repoHTMLURL = "https://github.com/pfeilbr/azure-durable-functions-playground"
@@ -186,5 +186,3 @@ az monitor app-insights query \
 ## Resources
 
 * [Azure Durable Functions documentation](https://docs.microsoft.com/en-us/azure/azure-functions/durable/)
-
-

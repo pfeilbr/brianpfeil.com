@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "chromadb"
-tags = ["db","vectordb",]
+tags = ["db","vectordb"]
 title = "ChromaDB"
 repoFullName = "pfeilbr/chromadb-playground"
 repoHTMLURL = "https://github.com/pfeilbr/chromadb-playground"
@@ -34,5 +34,3 @@ jupyter lab
 
 - https://github.com/chroma-core/chroma
 - https://docs.trychroma.com/
-
-

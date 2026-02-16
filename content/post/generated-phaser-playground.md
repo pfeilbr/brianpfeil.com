@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "phaser"
-tags = ["javascript","game","framework",]
+tags = ["javascript","game","framework"]
 title = "Phaser"
 repoFullName = "pfeilbr/phaser-playground"
 repoHTMLURL = "https://github.com/pfeilbr/phaser-playground"
@@ -34,6 +34,4 @@ Play @ <https://pfeilbr.github.io/phaser-playground/>
 # start live reload server
 live-server
 ```
-
-
 

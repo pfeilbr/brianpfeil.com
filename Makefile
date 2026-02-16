@@ -4,11 +4,7 @@ dev:
 build:
 	hugo --minify
 
-install:
-	npm install
-
 verify: build
-	bash scripts/verify.sh
 
 generate-posts:
 	cd tools/generate-posts && go run . -user=pfeilbr -dest=../../content/post -debug
@@ -16,4 +12,4 @@ generate-posts:
 test-tools:
 	cd tools/generate-posts && go test ./...
 
-.PHONY: dev build install verify generate-posts test-tools
+.PHONY: dev build verify generate-posts test-tools

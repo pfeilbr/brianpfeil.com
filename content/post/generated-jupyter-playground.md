@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2017-09-09
 description = ""
 summary = " "
 draft = false
 slug = "jupyter"
-tags = ["jupyter",]
+tags = ["jupyter"]
 title = "Jupyter"
 repoFullName = "pfeilbr/jupyter-playground"
 repoHTMLURL = "https://github.com/pfeilbr/jupyter-playground"
@@ -84,5 +84,3 @@ ijsinstall
 ![](https://www.evernote.com/l/AAFzQ-qoH-dIc5661TFz2RRk2hIekySeDs0B/image.png)
 
 ![](https://www.evernote.com/l/AAG5nUlw2dBIgqnqNfJyuJ6Gc7DZoo-EbaUB/image.png)
-
-

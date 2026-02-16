@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "chrome-aws-lambda"
-tags = ["chrome","aws","lambda",]
+tags = ["chrome","aws","lambda"]
 title = "Chrome AWS Lambda"
 repoFullName = "pfeilbr/chrome-aws-lambda-playground"
 repoHTMLURL = "https://github.com/pfeilbr/chrome-aws-lambda-playground"
@@ -32,5 +32,3 @@ example with <https://twitter.com>
 <https://SERVICE_ENDPOINT/dev/webpagescreenshot?url=https://twitter.com>
 
 ![](https://www.evernote.com/l/AAHuFLMzBhxOPrQx75otGHiArogvSLyRtKwB/image.png)
-
-

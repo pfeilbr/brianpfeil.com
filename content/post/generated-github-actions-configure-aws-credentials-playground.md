@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-10-06
 description = ""
 summary = " "
 draft = false
 slug = "github-actions-configure-aws-credentials"
-tags = ["aws","github","iam",]
+tags = ["aws","github","iam"]
 title = "GitHub Actions Configure AWS Credentials"
 repoFullName = "pfeilbr/github-actions-configure-aws-credentials-playground"
 repoHTMLURL = "https://github.com/pfeilbr/github-actions-configure-aws-credentials-playground"
@@ -63,5 +63,3 @@ successful workflow run with `aws sts get-caller-identity`
 * [aws-actions/configure-aws-credentials](https://github.com/aws-actions/configure-aws-credentials)
 * [AWS federation comes to GitHub Actions](https://awsteele.com/blog/2021/09/15/aws-federation-comes-to-github-actions.html)
 * [benkehoe/github-actions-boto3-demo: Demonstrate how GitHub OIDC token getting should be included in boto3](https://github.com/benkehoe/github-actions-boto3-demo)
-
-

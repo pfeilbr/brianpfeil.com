@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-08-05
 description = ""
 summary = " "
 draft = false
 slug = "neo4j"
-tags = ["neo4j",]
+tags = ["neo4j"]
 title = "Neo4j"
 repoFullName = "pfeilbr/neo4j-playground"
 repoHTMLURL = "https://github.com/pfeilbr/neo4j-playground"
@@ -84,6 +84,4 @@ neo4j stop
 ## Resources
 
 * [neo4j documentation](https://neo4j.com/docs/)
-
-
 

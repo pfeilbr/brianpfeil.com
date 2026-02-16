@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-10-12
 description = ""
 summary = " "
 draft = false
 slug = "powershell"
-tags = ["powershell",]
+tags = ["powershell"]
 title = "PowerShell"
 repoFullName = "pfeilbr/powershell-playground"
 repoHTMLURL = "https://github.com/pfeilbr/powershell-playground"
@@ -39,5 +39,3 @@ Get-AzADUser -ObjectId "user@example.com"| fl
 ```sh
 
 ```
-
-

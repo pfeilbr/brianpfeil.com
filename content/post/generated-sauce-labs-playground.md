@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "sauce-labs"
-tags = ["testing","automation",]
+tags = ["testing","automation"]
 title = "Sauce Labs"
 repoFullName = "pfeilbr/sauce-labs-playground"
 repoHTMLURL = "https://github.com/pfeilbr/sauce-labs-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/sauce-labs-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/sauce-labs-playground</a>
 </div>
 
+## [Sauce Labs](https://saucelabs.com) Playground
 
 Playground to learn, explore, and play with [Sauce Labs](https://saucelabs.com)
 
@@ -38,5 +39,3 @@ Bypasses almost all tutorial steps because they've been completed
 
 Example Test Run Output Screenshot
 ![Example Test Run Output Screenshot](http://note.io/15PU4jY)
-
-

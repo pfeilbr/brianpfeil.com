@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-10-02
 description = ""
 summary = " "
 draft = false
 slug = "github-cli"
-tags = ["cli","git","github",]
+tags = ["cli","git","github"]
 title = "GitHub CLI"
 repoFullName = "pfeilbr/github-cli-playground"
 repoHTMLURL = "https://github.com/pfeilbr/github-cli-playground"
@@ -25,5 +25,3 @@ learn [GitHub CLI](https://cli.github.com/)
 
 * [GitHub CLI](https://cli.github.com/)
 * [GitHub CLI | Manual](https://cli.github.com/manual/)
-
-

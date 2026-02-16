@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-01-29
 description = ""
 summary = " "
 draft = false
 slug = "azure-arm"
-tags = ["azure",]
+tags = ["azure"]
 title = "Azure ARM"
 repoFullName = "pfeilbr/azure-arm-playground"
 repoHTMLURL = "https://github.com/pfeilbr/azure-arm-playground"
@@ -32,5 +32,3 @@ az deployment group create \
     --parameters @templates/outputs.parameters.json
 
 ```
-
-

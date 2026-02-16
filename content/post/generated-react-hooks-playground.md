@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "react-hooks"
-tags = ["react",]
+tags = ["react"]
 title = "React Hooks"
 repoFullName = "pfeilbr/react-hooks-playground"
 repoHTMLURL = "https://github.com/pfeilbr/react-hooks-playground"
@@ -21,7 +21,5 @@ truncated = true
 
 learn [React Hooks](https://reactjs.org/docs/hooks-intro.html) introduced in React 16.8
 
-see [`src/App.tsx`](src/App.tsx)
-
-
+see [`src/App.tsx`](https://github.com/pfeilbr/react-hooks-playground/blob/master/src/App.tsx)
 

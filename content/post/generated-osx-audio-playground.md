@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "osx-audio"
-tags = ["osx",]
+tags = ["osx"]
 title = "OSX Audio"
 repoFullName = "pfeilbr/osx-audio-playground"
 repoHTMLURL = "https://github.com/pfeilbr/osx-audio-playground"
@@ -26,5 +26,3 @@ Playground to learn the various audio frameworks and APIs
 `server/`
 
 contains a node server (websocket) that the playground code interacts with
-
-

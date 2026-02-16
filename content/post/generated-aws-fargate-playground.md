@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-07-10
 description = ""
 summary = " "
 draft = false
 slug = "aws-fargate"
-tags = ["aws","fargate",]
+tags = ["aws","fargate"]
 title = "AWS Fargate"
 repoFullName = "pfeilbr/aws-fargate-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-fargate-playground"
@@ -33,5 +33,3 @@ aws ecs run-task --task-definition "fargate-001" --launch-type "FARGATE" --netwo
 # * "securityGroups": must allow outbund traffic
 # * make sure log group is already created
 ```
-
-

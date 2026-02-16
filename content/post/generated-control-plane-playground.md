@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2022-11-11
 description = ""
 summary = " "
@@ -128,5 +128,3 @@ trust policy
 - [Control Plane](https://controlplane.com/)
 - <https://docs.controlplane.com/>
 - <https://registry.terraform.io/providers/controlplane-com/cpln/latest>
-
-

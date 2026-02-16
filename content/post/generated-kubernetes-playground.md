@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "kubernetes"
-tags = ["kubernetes",]
+tags = ["kubernetes"]
 title = "Kubernetes"
 repoFullName = "pfeilbr/kubernetes-playground"
 repoHTMLURL = "https://github.com/pfeilbr/kubernetes-playground"
@@ -116,6 +116,4 @@ $ kubectl cluster-info
 ```
 
 ![](http://static-content-01.s3-website-us-east-1.amazonaws.com/1__kubectl_proxy__kubectl__1DB53603.png)
-
-
 

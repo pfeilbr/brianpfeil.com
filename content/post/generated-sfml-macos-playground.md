@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "sfml-macos"
-tags = ["macos","graphics","cpp",]
+tags = ["macos","graphics","cpp"]
 title = "SFML MacOS"
 repoFullName = "pfeilbr/sfml-macos-playground"
 repoHTMLURL = "https://github.com/pfeilbr/sfml-macos-playground"
@@ -20,5 +20,3 @@ truncated = true
 
 
 learn [SFML](https://www.sfml-dev.org/), the Simple and Fast Multimedia Library
-
-

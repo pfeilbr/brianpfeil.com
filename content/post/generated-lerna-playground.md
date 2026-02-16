@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "lerna"
-tags = ["nodejs","npm","tools",]
+tags = ["nodejs","npm","tools"]
 title = "Lerna"
 repoFullName = "pfeilbr/lerna-playground"
 repoHTMLURL = "https://github.com/pfeilbr/lerna-playground"
@@ -57,5 +57,3 @@ touch index.js
 # run client
 node index.js
 ```
-
-

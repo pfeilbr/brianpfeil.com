@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "lua-c-api"
-tags = ["lua","c",]
+tags = ["lua","c"]
 title = "Lua C API"
 repoFullName = "pfeilbr/Lua-c-api-playground"
 repoHTMLURL = "https://github.com/pfeilbr/Lua-c-api-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn and experiment with [Lua C API](https://www.lua.org/manual/5.3/#api)
 
-see [Lua-c-api-playground/main.cpp](Lua-c-api-playground/main.cpp)
+see [Lua-c-api-playground/main.cpp](https://github.com/pfeilbr/Lua-c-api-playground/blob/master/Lua-c-api-playground/main.cpp)
 
 ## Xcode Project Config
 
@@ -30,5 +30,3 @@ see [Lua-c-api-playground/main.cpp](Lua-c-api-playground/main.cpp)
 ![](https://www.evernote.com/l/AAFsRcTOjdtLgJy3ALariLx7RGl_TKAfYzAB/image.png)
 
 ![](https://www.evernote.com/l/AAHVh3E76RlO1JPdiaVZXEAtsiNhGrU20PEB/image.png)
-
-

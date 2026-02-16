@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "bref-php-lambda"
-tags = ["php","lambda",]
+tags = ["php","lambda"]
 title = "Bref PHP Lambda"
 repoFullName = "pfeilbr/bref-php-lambda-playground"
 repoHTMLURL = "https://github.com/pfeilbr/bref-php-lambda-playground"
@@ -50,5 +50,3 @@ serverless invoke --function "function" --data '{"name": "foo"}'
 ## Resources
 
 * [bref | Installation](https://bref.sh/docs/installation.html)
-
-

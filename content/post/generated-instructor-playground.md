@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "instructor"
-tags = ["ai","llm","python",]
+tags = ["ai","llm","python"]
 title = "Instructor"
 repoFullName = "pfeilbr/instructor-playground"
 repoHTMLURL = "https://github.com/pfeilbr/instructor-playground"
@@ -23,7 +23,7 @@ learn [Instructor](https://jxnl.github.io/instructor/)
 
 > Structured extraction in Python, powered by llms, designed for simplicity, transparency, and control.
 
-see [`main.ipynb`](./main.ipynb)
+see [`main.ipynb`](https://github.com/pfeilbr/instructor-playground/blob/master/main.ipynb)
 
 ## demo
 
@@ -59,5 +59,3 @@ juypter lab
 
 - <https://jxnl.github.io/instructor/>
 - https://github.com/jxnl/instructor
-
-

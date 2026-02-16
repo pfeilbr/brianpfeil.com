@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "python-async-await"
-tags = ["python",]
+tags = ["python"]
 title = "Python Async Await"
 repoFullName = "pfeilbr/python-async-await-playground"
 repoHTMLURL = "https://github.com/pfeilbr/python-async-await-playground"
@@ -30,5 +30,3 @@ learn [python async await](https://docs.python.org/3/library/asyncio-task.html)
 1. git clone
 1. pipenv install
 1. pipenv run python main.py
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "azure-js-cognitive-services"
-tags = ["azure","javascript",]
+tags = ["azure","javascript"]
 title = "Azure JS Cognitive Services"
 repoFullName = "pfeilbr/azure-js-cognitive-services-playground"
 repoHTMLURL = "https://github.com/pfeilbr/azure-js-cognitive-services-playground"
@@ -35,7 +35,7 @@ learn [azure cognitive services](https://docs.microsoft.com/en-us/azure/cognitiv
     run `az login`, then `npm run provision`  
     OR via portal
     ![](https://www.evernote.com/l/AAHErRlR-tFBJbb6x-JKpZTcsQpxXyx4KAAB/image.png)
-1. Copy [`.env.sample`](.env.sample) to `.env` and populate with values via the following steps.
+1. Copy [`.env.sample`](https://github.com/pfeilbr/azure-js-cognitive-services-playground/blob/master/.env.sample) to `.env` and populate with values via the following steps.
 1. `CLIENT_ID`, `DOMAIN`
     ![](https://www.evernote.com/l/AAExoADr6tVHoLj4lOD_58FCSWmWAelxCrMB/image.png)
 1. SUBSCRIPTION_ID
@@ -45,6 +45,4 @@ learn [azure cognitive services](https://docs.microsoft.com/en-us/azure/cognitiv
 1. `COGNITIVE_SERVICES_KEY`
     ![](https://www.evernote.com/l/AAHdTNN4abtGmq5ZKgwh2vD6uOURbM6mhHwB/image.png)
 1. run `npm start`
-
-
 

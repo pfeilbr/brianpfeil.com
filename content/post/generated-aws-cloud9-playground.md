@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-10-05
 description = ""
 summary = " "
 draft = false
 slug = "aws-cloud9"
-tags = ["aws","cloud9",]
+tags = ["aws","cloud9"]
 title = "AWS Cloud9"
 repoFullName = "pfeilbr/aws-cloud9-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-cloud9-playground"
@@ -65,5 +65,3 @@ X minutes.
 
 * [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview)
 * [vscode | Remote development over SSH](https://code.visualstudio.com/docs/remote/ssh-tutorial)
-
-

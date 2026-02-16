@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-11-01
 description = ""
 summary = " "
 draft = false
 slug = "aws-database-migration-service"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Database Migration Service"
 repoFullName = "pfeilbr/aws-database-migration-service-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-database-migration-service-playground"
@@ -45,5 +45,3 @@ A task can consist of three major phases:
 
 * [AWS Database Migration Service](https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html)
 * [AWS Schema Conversion Tool](https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_SchemaConversionTool.Installing.html)
-
-

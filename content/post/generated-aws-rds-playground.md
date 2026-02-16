@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-rds"
-tags = ["aws","rds",]
+tags = ["aws","rds"]
 title = "AWS RDS"
 repoFullName = "pfeilbr/aws-rds-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-rds-playground"
@@ -23,7 +23,7 @@ explore [AWS RDS](https://aws.amazon.com/rds/)
 
 ## Demo
 
-see [`template.yaml`](template.yaml)
+see [`template.yaml`](https://github.com/pfeilbr/aws-rds-playground/blob/master/template.yaml)
 
 ```sh
 # initial deploy with SAM
@@ -36,5 +36,3 @@ sam deploy
 ## Resources
 
 * [Amazon Relational Database Service Documentation](https://docs.aws.amazon.com/rds/index.html)
-
-

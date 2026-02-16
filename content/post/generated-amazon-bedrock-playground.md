@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "amazon-bedrock"
-tags = ["aws","ai","genai","llm",]
+tags = ["aws","ai","genai","llm"]
 title = "Amazon Bedrock"
 repoFullName = "pfeilbr/amazon-bedrock-playground"
 repoHTMLURL = "https://github.com/pfeilbr/amazon-bedrock-playground"
@@ -30,7 +30,7 @@ pipenv install
 aws sso login --profile root-AWSAdministratorAccess
 ```
 
-- visit [`main.ipynb`](./main.ipynb)
+- visit [`main.ipynb`](https://github.com/pfeilbr/amazon-bedrock-playground/blob/master/main.ipynb)
 - in vscode select `.venv` kernel in top right
 
 ---
@@ -121,5 +121,3 @@ managed [Retrieval Augmented Generation (RAG)](https://www.promptingguide.ai/tec
 - [aws-samples/amazon-bedrock-samples](https://github.com/aws-samples/amazon-bedrock-samples)
 - [Build a Foundation Model (FM) powered customer service bot with agents for Amazon Bedrock](https://github.com/aws-samples/amazon-bedrock-samples/tree/main/agents/agentsforbedrock-retailagent)
 - [generative-ai-amazon-bedrock-langchain-agent-example](https://github.com/aws-samples/generative-ai-amazon-bedrock-langchain-agent-example)
-
-

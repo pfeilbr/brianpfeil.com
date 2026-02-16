@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "html-video-embed"
-tags = ["html",]
+tags = ["html"]
 title = "HTML Video Embed"
 repoFullName = "pfeilbr/html-video-embed-playground"
 repoHTMLURL = "https://github.com/pfeilbr/html-video-embed-playground"
@@ -34,5 +34,3 @@ e.g. <http://localhost:8000/test-screencast-jwplayer.html>
 
 * [JW Player](http://www.jwplayer.com/)
 * [Video.js](http://www.videojs.com/)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "glib"
-tags = ["graphics","cpp",]
+tags = ["graphics","cpp"]
 title = "GLib"
 repoFullName = "pfeilbr/glib-playground"
 repoHTMLURL = "https://github.com/pfeilbr/glib-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [GNOME | GLib](https://wiki.gnome.org/Projects/GLib)
 
-see [`main.c`](main.c)
+see [`main.c`](https://github.com/pfeilbr/glib-playground/blob/master/main.c)
 
 ## Prerequisites
 
@@ -50,5 +50,3 @@ cmake .. && make
 * [Manage C data using the GLib collections](https://developer.ibm.com/tutorials/l-glib/)
 * [GNOME | GLib](https://wiki.gnome.org/Projects/GLib)
 * [GNOME/glib](https://github.com/GNOME/glib) repo
-
-

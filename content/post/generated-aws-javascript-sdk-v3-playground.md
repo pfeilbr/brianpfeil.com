@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-javascript-sdk-v3"
-tags = ["aws","sdk","javascript",]
+tags = ["aws","sdk","javascript"]
 title = "AWS JavaScript SDK V3"
 repoFullName = "pfeilbr/aws-javascript-sdk-v3-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-javascript-sdk-v3-playground"
@@ -21,8 +21,8 @@ truncated = true
 
 learn AWS JavaScript SDK v3
 
-* [`index.js`](index.js)
-* [`index.test.js`](index.test.js)
+* [`index.js`](https://github.com/pfeilbr/aws-javascript-sdk-v3-playground/blob/master/index.js)
+* [`index.test.js`](https://github.com/pfeilbr/aws-javascript-sdk-v3-playground/blob/master/index.test.js)
 
 ---
 
@@ -95,5 +95,3 @@ npm run test -- --watch
 * [aws/aws-sdk-js-v3](https://github.com/aws/aws-sdk-js-v3)
 * [AWS SDK for JavaScript | Developer Guide for SDK Version 3](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/welcome.html)
 * [Modular AWS SDK for JavaScript – Release Candidate](https://aws.amazon.com/blogs/developer/modular-aws-sdk-for-javascript-release-candidate/)
-
-

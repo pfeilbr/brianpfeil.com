@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-09-18
 description = ""
 summary = " "
 draft = false
 slug = "gitlab"
-tags = ["gitlab",]
+tags = ["gitlab"]
 title = "Gitlab"
 repoFullName = "pfeilbr/gitlab-playground"
 repoHTMLURL = "https://github.com/pfeilbr/gitlab-playground"
@@ -65,6 +65,4 @@ Container Logs via Kitematic UI
 
 Project view
 ![](https://www.evernote.com/l/AAEuFGfKNfxALLJSmQZ0GC7DCox1cV1MwqUB/image.png)
-
-
 

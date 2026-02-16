@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "apollo-client-local-state"
-tags = ["apollo",]
+tags = ["apollo"]
 title = "Apollo Client Local State"
 repoFullName = "pfeilbr/apollo-client-local-state-playground"
 repoHTMLURL = "https://github.com/pfeilbr/apollo-client-local-state-playground"
@@ -20,7 +20,5 @@ truncated = true
 
 
 - Apollo client [Local state management](https://www.apollographql.com/docs/react/essentials/local-state.html)
-- see [`src/App.js`](src/App.js)
-
-
+- see [`src/App.js`](https://github.com/pfeilbr/apollo-client-local-state-playground/blob/master/src/App.js)
 

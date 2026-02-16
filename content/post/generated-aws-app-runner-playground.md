@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-app-runner"
-tags = ["aws","containers",]
+tags = ["aws","containers"]
 title = "AWS App Runner"
 repoFullName = "pfeilbr/aws-app-runner-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-app-runner-playground"
@@ -93,6 +93,4 @@ tags: ["aws", "app-runner", "containers"]
 summary: "learn AWS App Runner"
 ---
 -->
-
-
 

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "goreleaser"
-tags = ["golang","continuous-delivery",]
+tags = ["golang","continuous-delivery"]
 title = "GoReleaser"
 repoFullName = "pfeilbr/goreleaser-playground"
 repoHTMLURL = "https://github.com/pfeilbr/goreleaser-playground"
@@ -41,5 +41,3 @@ goreleaser --snapshot --rm-dist
 goreleaser
 
 ```
-
-

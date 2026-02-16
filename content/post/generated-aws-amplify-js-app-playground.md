@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-amplify-js-app"
-tags = ["aws","amplify","javascript",]
+tags = ["aws","amplify","javascript"]
 title = "AWS Amplify JS App"
 repoFullName = "pfeilbr/aws-amplify-js-app-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-amplify-js-app-playground"
@@ -41,5 +41,3 @@ amplify add hosting
 amplify publish
 amplify status
 ```
-
-

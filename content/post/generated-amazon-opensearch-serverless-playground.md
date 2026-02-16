@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2023-01-27
 description = ""
 summary = " "
 draft = false
 slug = "amazon-opensearch-serverless"
-tags = ["serverless","opensearch",]
+tags = ["serverless","opensearch"]
 title = "Amazon OpenSearch Serverless"
 repoFullName = "pfeilbr/amazon-opensearch-serverless-playground"
 repoHTMLURL = "https://github.com/pfeilbr/amazon-opensearch-serverless-playground"
@@ -43,7 +43,7 @@ truncated = true
 
 creates opensearch serverless collection, network policy, access policy, and iam user
 
-[`template.yaml`](template.yaml) - based on [Using AWS CloudFormation to create Amazon OpenSearch Serverless collections](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-cfn.html)
+[`template.yaml`](https://github.com/pfeilbr/amazon-opensearch-serverless-playground/blob/master/template.yaml) - based on [Using AWS CloudFormation to create Amazon OpenSearch Serverless collections](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-cfn.html)
 
 ```sh
 sam deploy
@@ -64,5 +64,3 @@ sam deploy
 - [Build a search application with Amazon OpenSearch Serverless](https://aws.amazon.com/blogs/big-data/build-a-search-application-with-amazon-opensearch-serverless/)
 - [Using AWS CloudFormation to create Amazon OpenSearch Serverless collections](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-cfn.html)
 - [Amazon OpenSearch goes Serverless!](https://medium.com/kreuzwerker-gmbh/amazon-opensearch-goes-serverless-4bc7813d5930)
-
-

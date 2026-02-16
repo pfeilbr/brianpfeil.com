@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "serverless-flask"
-tags = ["serverless","flask","aws","python","lambda","api-gateway",]
+tags = ["serverless","flask","aws","python","lambda","api-gateway"]
 title = "Serverless Flask"
 repoFullName = "pfeilbr/serverless-flask-playground"
 repoHTMLURL = "https://github.com/pfeilbr/serverless-flask-playground"
@@ -52,5 +52,3 @@ npm run deploy
 
 * [The Official Guide to Serverless Flask](https://www.serverless.com/flask)
 * [Build a Python REST API with Serverless, Lambda, and DynamoDB](https://www.serverless.com/blog/flask-python-rest-api-serverless-lambda-dynamodb)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "keystonejs"
-tags = ["javascript","ui","framework",]
+tags = ["javascript","ui","framework"]
 title = "KeystoneJS"
 repoFullName = "pfeilbr/keystonejs-playground"
 repoHTMLURL = "https://github.com/pfeilbr/keystonejs-playground"
@@ -42,6 +42,4 @@ $ node keystone.js
 
 	Email: brian.pfeil@gmail.com
 	Password: admin
-
-
 

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "google-test-cpp-test-framework"
-tags = ["google","cpp",]
+tags = ["google","cpp"]
 title = "Google Test CPP Test Framework"
 repoFullName = "pfeilbr/google-test-cpp-test-framework-playground"
 repoHTMLURL = "https://github.com/pfeilbr/google-test-cpp-test-framework-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [googletest](https://github.com/google/googletest) / [gtest](https://github.com/google/googletest) C++ test framework
 
-see `README.md` in each subdirectory under [`src`](src)
+see `README.md` in each subdirectory under [`src`](https://github.com/pfeilbr/google-test-cpp-test-framework-playground/blob/master/src)
 
 ## gtest install
 
@@ -37,5 +37,3 @@ cmake ..
 make
 make install
 ```
-
-

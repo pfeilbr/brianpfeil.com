@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "go-sdl2"
-tags = ["golang",]
+tags = ["golang"]
 title = "Go SDL2"
 repoFullName = "pfeilbr/go-sdl2-playground"
 repoHTMLURL = "https://github.com/pfeilbr/go-sdl2-playground"
@@ -24,5 +24,3 @@ learn [go-sdl2](https://github.com/veandco/go-sdl2), the SDL2 wrapped for Go use
 ## Resources
 
 * [veandco/go-sdl2-examples](https://github.com/veandco/go-sdl2-examples)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "es6"
-tags = ["javascript",]
+tags = ["javascript"]
 title = "ES6"
 repoFullName = "pfeilbr/es6-playground"
 repoHTMLURL = "https://github.com/pfeilbr/es6-playground"
@@ -29,5 +29,3 @@ JavaScript compiler.
 Edit `app.js`
 
     $ node index.js
-
-

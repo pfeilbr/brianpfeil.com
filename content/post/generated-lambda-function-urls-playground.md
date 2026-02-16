@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "lambda-function-urls"
-tags = ["lambda","aws","http",]
+tags = ["lambda","aws","http"]
 title = "Lambda Function Urls"
 repoFullName = "pfeilbr/lambda-function-urls-playground"
 repoHTMLURL = "https://github.com/pfeilbr/lambda-function-urls-playground"
@@ -36,7 +36,7 @@ learn [Lambda function URLs](https://docs.aws.amazon.com/lambda/latest/dg/lambda
 
 ## Demo
 
-see [`template.yaml`](template.yaml)
+see [`template.yaml`](https://github.com/pfeilbr/lambda-function-urls-playground/blob/master/template.yaml)
 
 ```
 # deploy
@@ -55,6 +55,4 @@ curl https://klm4pgp5qacvq52o4zptf6avei0cuczb.lambda-url.us-east-1.on.aws/
 - [Adding a function URL to a CloudFormation template](https://docs.aws.amazon.com/lambda/latest/dg/urls-configuration.html#urls-cfn)
 - [SCP to prevent people from creating open Lambda URLs](https://twitter.com/ben11kehoe/status/1511857782298882050?s=20&t=DtKC3pq7lms95Y0J3w3_XA)
 - [use case discussion](https://twitter.com/ben11kehoe/status/1512115496761536512?s=20&t=DtKC3pq7lms95Y0J3w3_XA)
-
-
 

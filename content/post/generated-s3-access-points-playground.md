@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-10-01
 description = ""
 summary = " "
 draft = false
 slug = "s3-access-points"
-tags = ["s3","aws",]
+tags = ["s3","aws"]
 title = "S3 Access Points"
 repoFullName = "pfeilbr/s3-access-points-playground"
 repoHTMLURL = "https://github.com/pfeilbr/s3-access-points-playground"
@@ -105,6 +105,4 @@ aws --profile partner-01 s3api get-object --key a.c --bucket 'arn:aws:s3:us-east
 aws --profile partner-01 sts get-caller-identity
 
 ```
-
-
 

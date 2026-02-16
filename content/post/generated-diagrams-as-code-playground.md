@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "diagrams-as-code"
-tags = ["diagrams","visualize","architecture",]
+tags = ["diagrams","visualize","architecture"]
 title = "Diagrams As Code"
 repoFullName = "pfeilbr/diagrams-as-code-playground"
 repoHTMLURL = "https://github.com/pfeilbr/diagrams-as-code-playground"
@@ -35,6 +35,4 @@ make dev # re-runs on file changes / live reload
 ## Screenshots
 
 ![](https://www.evernote.com/l/AAGCWiB_BW9E2IIES3CRl0ICn4NJ_VhsEIoB/image.png)
-
-
 

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "react-redux"
-tags = ["react",]
+tags = ["react"]
 title = "React Redux"
 repoFullName = "pfeilbr/react-redux-playground"
 repoHTMLURL = "https://github.com/pfeilbr/react-redux-playground"
@@ -36,10 +36,8 @@ learn and experiment with
 
 ## Files
 
-- [index.html](index.html) - host page
-- [index.js](index.js) - entry point
-- [main.css](main.css) - styles
-- [webpack.config.js](webpack.config.js) - webpack config
-
-
+- [index.html](https://github.com/pfeilbr/react-redux-playground/blob/master/index.html) - host page
+- [index.js](https://github.com/pfeilbr/react-redux-playground/blob/master/index.js) - entry point
+- [main.css](https://github.com/pfeilbr/react-redux-playground/blob/master/main.css) - styles
+- [webpack.config.js](https://github.com/pfeilbr/react-redux-playground/blob/master/webpack.config.js) - webpack config
 

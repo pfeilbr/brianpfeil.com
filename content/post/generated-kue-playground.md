@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "kue"
-tags = ["javascript","queue",]
+tags = ["javascript","queue"]
 title = "Kue"
 repoFullName = "pfeilbr/kue-playground"
 repoHTMLURL = "https://github.com/pfeilbr/kue-playground"
@@ -28,5 +28,3 @@ Playground for learning / playing with [Kue](https://github.com/learnboost/kue).
 	node index.js -m create # run job creator in another terminal
 
 View the Kue web ui at <http://localhost:3000>
-
-

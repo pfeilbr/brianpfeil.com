@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "iamlive"
-tags = ["aws","iam",]
+tags = ["aws","iam"]
 title = "Iamlive"
 repoFullName = "pfeilbr/iamlive-playground"
 repoHTMLURL = "https://github.com/pfeilbr/iamlive-playground"
@@ -57,7 +57,7 @@ export HTTPS_PROXY=http://127.0.0.1:10080
 
 ### CSM Mode (Client-side monitoring mode) Example with [AWS SDK for JavaScript v2](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/welcome.html)
 
-see [`index.js`](index.js)
+see [`index.js`](https://github.com/pfeilbr/iamlive-playground/blob/master/index.js)
 
 ```sh
 # run in CSM mode example and generate policy from aws cli
@@ -80,5 +80,3 @@ node index.js
 ## Resources
 
 * [iann0036/iamlive](https://github.com/iann0036/iamlive)
-
-

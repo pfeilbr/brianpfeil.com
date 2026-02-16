@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "momento"
-tags = ["cache","db",]
+tags = ["cache","db"]
 title = "Momento"
 repoFullName = "pfeilbr/momento-playground"
 repoHTMLURL = "https://github.com/pfeilbr/momento-playground"
@@ -29,7 +29,7 @@ learn and experiment with [Momento](https://www.gomomento.com/)
 
 ## demo
 
-see [`index.js`](./index.js)
+see [`index.js`](https://github.com/pfeilbr/momento-playground/blob/master/index.js)
 
 
 ```sh
@@ -45,5 +45,3 @@ npm start
 - [Momento](https://www.gomomento.com/)
 - <https://docs.momentohq.com/>
 - [Service Limits](https://docs.momentohq.com/manage/limits)
-
-

@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-08-27
 description = ""
 summary = " "
 draft = false
 slug = "aws-appflow-salesforce-eventbridge"
-tags = ["aws","appflow","salesforce","eventbridge",]
+tags = ["aws","appflow","salesforce","eventbridge"]
 title = "AWS AppFlow Salesforce EventBridge"
 repoFullName = "pfeilbr/aws-appflow-salesforce-eventbridge-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-appflow-salesforce-eventbridge-playground"
@@ -57,5 +57,3 @@ AppFlow Mapping
 ## Resources
 
 * [Building Salesforce integrations with Amazon EventBridge and Amazon AppFlow | Amazon Web Services](https://aws.amazon.com/blogs/compute/building-salesforce-integrations-with-amazon-eventbridge/)
-
-

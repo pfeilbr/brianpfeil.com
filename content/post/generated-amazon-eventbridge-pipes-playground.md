@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2023-02-12
 description = ""
 summary = " "
 draft = false
 slug = "amazon-eventbridge-pipes"
-tags = ["eventbridge",]
+tags = ["eventbridge"]
 title = "Amazon EventBridge Pipes"
 repoFullName = "pfeilbr/amazon-eventbridge-pipes-playground"
 repoHTMLURL = "https://github.com/pfeilbr/amazon-eventbridge-pipes-playground"
@@ -39,5 +39,3 @@ learn [Amazon EventBridge Pipes](https://docs.aws.amazon.com/eventbridge/latest/
 - [Amazon EventBridge Pipes](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-pipes.html)
 - [AWS::Pipes::Pipe](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-pipes-pipe.html)
   - CloudFormation examples  [sourcegraph: lang:yaml 'AWS::Pipes::Pipe'](https://sourcegraph.com/search?q=context:global+lang:yaml+%27AWS::Pipes::Pipe%27&patternType=standard&sm=1&groupBy=repo)
-
-

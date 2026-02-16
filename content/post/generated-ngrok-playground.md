@@ -21,7 +21,7 @@ truncated = true
 
 learn [ngrok npm package](https://github.com/bubenshchykov/ngrok)
 
-see [`index.js`](index.js)
+see [`index.js`](https://github.com/pfeilbr/ngrok-playground/blob/master/index.js)
 
 ## Demo
 
@@ -40,6 +40,4 @@ node index.js
 ## Resources
 
 - [GitHub - bubenshchykov/ngrok: Expose your localhost to the web. Node wrapper for ngrok.](https://github.com/bubenshchykov/ngrok)
-
-
 

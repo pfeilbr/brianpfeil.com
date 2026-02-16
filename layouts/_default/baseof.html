@@ -10,7 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  {{ $css := resources.Get "css/main.css" | css.PostCSS | minify | fingerprint }}
+  {{ $main := resources.Get "css/main.css" }}
+  {{ $syntax := resources.Get "css/syntax.css" }}
+  {{ $css := slice $main $syntax | resources.Concat "css/bundle.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ template "_internal/google_analytics.html" . }}
 </head>

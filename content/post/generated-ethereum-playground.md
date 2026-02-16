@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2017-01-17
 description = ""
 summary = " "
 draft = false
 slug = "ethereum"
-tags = ["blockchain","cryptocurrency",]
+tags = ["blockchain","cryptocurrency"]
 title = "Ethereum"
 repoFullName = "pfeilbr/ethereum-playground"
 repoHTMLURL = "https://github.com/pfeilbr/ethereum-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/ethereum-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/ethereum-playground</a>
 </div>
 
+## [Ethereum](https://www.ethereum.org/) Playground
 
 learn and experiment with [Ethereum](https://www.ethereum.org/) decentralized blockchain based platform
 
@@ -72,6 +73,4 @@ geth --testnet console
 
 * [Web3 JavaScript Ðapp API](https://github.com/ethereum/wiki/wiki/JavaScript-API)
 * [web3.js](https://github.com/ethereum/web3.js) npm module
-
-
 

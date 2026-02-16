@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-codepipeline"
-tags = ["aws","codepipeline",]
+tags = ["aws","codepipeline"]
 title = "AWS CodePipeline"
 repoFullName = "pfeilbr/aws-codepipeline-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-codepipeline-playground"
@@ -38,5 +38,3 @@ CodeBuild gives you a amz linux server and you can run whatever you want.  This 
 ```js
 node scripts/get-pipeline.js > /pipeline-definition-export.json
 ```
-
-

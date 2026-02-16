@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-sam"
-tags = ["aws","sam",]
+tags = ["aws","sam"]
 title = "AWS SAM"
 repoFullName = "pfeilbr/aws-sam-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-sam-playground"
@@ -40,6 +40,4 @@ aws lambda invoke \
   output.log; cat output.log; rm output.log
 
 ```
-
-
 

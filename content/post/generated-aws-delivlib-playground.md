@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-delivlib"
-tags = ["aws","continuous-delivery",]
+tags = ["aws","continuous-delivery"]
 title = "AWS Delivlib"
 repoFullName = "pfeilbr/aws-delivlib-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-delivlib-playground"
@@ -30,7 +30,7 @@ learn [aws-delivlib](https://github.com/awslabs/aws-delivlib), which is a librar
 
 ## Running
 
-[`src/pipeline-hello-world`](src/pipeline-hello-world) is an example code pipeline where the source is *this* github repo ([pfeilbr/aws-delivlib-playground](https://github.com/pfeilbr/aws-delivlib-playground)).  The source nodejs app is [`src/hello-world`](src/hello-world) with jest tests.
+[`src/pipeline-hello-world`](https://github.com/pfeilbr/aws-delivlib-playground/blob/master/src/pipeline-hello-world) is an example code pipeline where the source is *this* github repo ([pfeilbr/aws-delivlib-playground](https://github.com/pfeilbr/aws-delivlib-playground)).  The source nodejs app is [`src/hello-world`](https://github.com/pfeilbr/aws-delivlib-playground/blob/master/src/hello-world) with jest tests.
 
 **Code Pipeline**
 ```
@@ -38,7 +38,7 @@ source -> build -> test (linux)
                 -> test (windows)
 ```
 
-> If any of the tests (`*.sh`) in [`src/pipeline-hello-world/tests/`](src/pipeline-hello-world/tests) change, be sure to do a `npm run build && npm run cdk deploy`.  Internally uses `assets.ZipDirectoryAsset` from `"@aws-cdk/assets"` package.
+> If any of the tests (`*.sh`) in [`src/pipeline-hello-world/tests/`](https://github.com/pfeilbr/aws-delivlib-playground/blob/master/src/pipeline-hello-world/tests) change, be sure to do a `npm run build && npm run cdk deploy`.  Internally uses `assets.ZipDirectoryAsset` from `"@aws-cdk/assets"` package.
 
 ```sh
 mkdir -p src/pipeline-hello-world
@@ -85,5 +85,3 @@ npm run cdk destroy
 
 **AWS Console | CloudFormation Stack**
 ![](https://www.evernote.com/l/AAHMGAlD7OdL95oRQkmg5bb8dCffOzOMmcMB/image.png)
-
-

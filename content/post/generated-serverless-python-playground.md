@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "serverless-python"
-tags = ["serverless","python",]
+tags = ["serverless","python"]
 title = "Serverless Python"
 repoFullName = "pfeilbr/serverless-python-playground"
 repoHTMLURL = "https://github.com/pfeilbr/serverless-python-playground"
@@ -70,5 +70,3 @@ sls invoke -f numpy --log
 # cleanup
 sls remove
 ```
-
-

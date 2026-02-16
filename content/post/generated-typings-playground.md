@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "typings"
-tags = ["typescript",]
+tags = ["typescript"]
 title = "Typings"
 repoFullName = "pfeilbr/typings-playground"
 repoHTMLURL = "https://github.com/pfeilbr/typings-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/typings-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/typings-playground</a>
 </div>
 
+## typings-playground
 
 learn and experiment with TypeScript typings
 
@@ -46,6 +47,4 @@ see contents of `tsconfig.json`, which tells `tsc` how to compile
 * [typings](https://github.com/typings/typings)
 * [DefinitelyTyped/DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)
 * <http://definitelytyped.org/>
-
-
 

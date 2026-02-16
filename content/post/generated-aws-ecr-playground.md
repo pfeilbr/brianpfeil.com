@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-ecr"
-tags = ["aws","ecr",]
+tags = ["aws","ecr"]
 title = "AWS ECR"
 repoFullName = "pfeilbr/aws-ecr-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-ecr-playground"
@@ -41,5 +41,3 @@ docker tag hello-world 529276214230.dkr.ecr.us-east-1.amazonaws.com/hello-world
 $(aws ecr get-login --no-include-email)
 docker push 529276214230.dkr.ecr.us-east-1.amazonaws.com/hello-world
 ```
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "pusher"
-tags = ["javascript","real-time",]
+tags = ["javascript","real-time"]
 title = "Pusher"
 repoFullName = "pfeilbr/pusher-playground"
 repoHTMLURL = "https://github.com/pfeilbr/pusher-playground"
@@ -31,5 +31,3 @@ https://jsbin.com/modutol/edit?html,js,output
 node index.js
 # this will cause alert with message in client web browser
 ```
-
-

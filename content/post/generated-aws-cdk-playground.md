@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-cdk"
-tags = ["aws","cdk",]
+tags = ["aws","cdk"]
 title = "AWS CDK"
 repoFullName = "pfeilbr/aws-cdk-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-cdk-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [AWS Cloud Development Kit (CDK)](https://docs.aws.amazon.com/cdk/latest/guide/home.html)
 
-see [`kitchen-sink/README.md`](kitchen-sink/README.md)
+see [`kitchen-sink/README.md`](https://github.com/pfeilbr/aws-cdk-playground/blob/master/kitchen-sink/README.md)
 ## Description
 
 * express resources using general purpose programming languages (ts/js/python/java/C#)
@@ -198,5 +198,3 @@ const host = new ec2.BastionHostLinux(this, 'BastionHost', { vpc });
 * [github | search | "filename:cdk.json"](https://github.com/search?l=&q=filename%3Acdk.json&type=code)
 * [Exploring CDK Internals](https://www.youtube.com/watch?v=X8G3G3SnCuI)
 * [Working with the AWS CDK Explorer - AWS Toolkit for VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/cdk-explorer.html)
-
-

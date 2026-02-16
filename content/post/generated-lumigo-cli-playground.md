@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-07-17
 description = ""
 summary = " "
 draft = false
 slug = "lumigo-cli"
-tags = ["cli",]
+tags = ["cli"]
 title = "Lumigo CLI"
 repoFullName = "pfeilbr/lumigo-cli-playground"
 repoHTMLURL = "https://github.com/pfeilbr/lumigo-cli-playground"
@@ -41,5 +41,3 @@ lumigo-cli s3-select-batch \
 # list Lambda functions in ALL regions
 lumigo-cli list-lambda
 ```
-
-

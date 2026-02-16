@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "python-packaging"
-tags = ["python",]
+tags = ["python"]
 title = "Python Packaging"
 repoFullName = "pfeilbr/python-packaging-playground"
 repoHTMLURL = "https://github.com/pfeilbr/python-packaging-playground"
@@ -64,5 +64,3 @@ echo -e "import example_pkg_pfeilbr\nprint(example_pkg_pfeilbr.name)" | python
 This is a simple example package. You can use
 [Github-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
 to write your content.
-
-

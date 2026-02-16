@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "emr-serverless"
-tags = ["emr","serverless",]
+tags = ["emr","serverless"]
 title = "EMR Serverless"
 repoFullName = "pfeilbr/emr-serverless-playground"
 repoHTMLURL = "https://github.com/pfeilbr/emr-serverless-playground"
@@ -234,5 +234,3 @@ example `AWS::EMRServerless::Application` usage in cfn
 - [aws-samples/emr-serverless-samples](https://github.com/aws-samples/emr-serverless-samples)
 - [AWS::EMRServerless::Application](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-emrserverless-application.html)
 - [Actions, resources, and condition keys for Amazon EMR Serverless](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonemrserverless.html)
-
-

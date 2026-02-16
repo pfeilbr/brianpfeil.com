@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "apex-lambda"
-tags = ["apex","lambda",]
+tags = ["apex","lambda"]
 title = "Apex Lambda"
 repoFullName = "pfeilbr/apex-lambda-playground"
 repoHTMLURL = "https://github.com/pfeilbr/apex-lambda-playground"
@@ -38,6 +38,4 @@ echo -n '{"q": "heroku"}' | apex invoke search
 curl -i -F name=test -F filedata=@README.md https://UPDATEME.execute-api.us-east-1.amazonaws.com/prod/playground_api-gateway
 
 ```
-
-
 

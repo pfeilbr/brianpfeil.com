@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2017-07-18
 description = ""
 summary = " "
 draft = false
 slug = "aws-kinesis"
-tags = ["aws","kinesis",]
+tags = ["aws","kinesis"]
 title = "AWS Kinesis"
 repoFullName = "pfeilbr/aws-kinesis-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-kinesis-playground"
@@ -44,8 +44,6 @@ learn [aws kinesis](https://aws.amazon.com/documentation/kinesis/)
 
 7. view event in lambda cloudwatch logs
 ![](http://static-screenshots-01.s3-website-us-east-1.amazonaws.com/CloudWatch_Management_Console_1F1EA4E8.png)
-
-
 
 
 

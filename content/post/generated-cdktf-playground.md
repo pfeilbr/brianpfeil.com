@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "cdktf"
-tags = ["aws","cdk","terraform",]
+tags = ["aws","cdk","terraform"]
 title = "CDKTF"
 repoFullName = "pfeilbr/cdktf-playground"
 repoHTMLURL = "https://github.com/pfeilbr/cdktf-playground"
@@ -62,6 +62,4 @@ cdktf destroy
 ## Resources
 
 * [Write CDK for Terraform configurations](https://learn.hashicorp.com/collections/terraform/cdktf)
-
-
 

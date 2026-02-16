@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "vectordb"
-tags = ["db","vectordb","ai","llm",]
+tags = ["db","vectordb","ai","llm"]
 title = "VectorDB"
 repoFullName = "pfeilbr/vectordb-playground"
 repoHTMLURL = "https://github.com/pfeilbr/vectordb-playground"
@@ -23,7 +23,7 @@ learn [VectorDB](https://vectordb.com/)
 
 ## demo
 
-see [`main.ipynb`](./main.ipynb)
+see [`main.ipynb`](https://github.com/pfeilbr/vectordb-playground/blob/master/main.ipynb)
 
 ```bash
 # install dependencies
@@ -41,5 +41,3 @@ jupyter lab
 
 - https://vectordb.com/
 - https://github.com/kagisearch/vectordb
-
-

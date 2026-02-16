@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-sam-golang"
-tags = ["aws","sam","golang","iam","testing",]
+tags = ["aws","sam","golang","iam","testing"]
 title = "AWS SAM Golang"
 repoFullName = "pfeilbr/aws-sam-golang-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-sam-golang-playground"
@@ -181,6 +181,4 @@ curl -X POST http://127.0.0.1:3000/job -d '{"name": "my job"}'
 # tail the logs for the worker that processes SQS messages
 lumigo-cli tail-cloudwatch-logs --namePrefix "/aws/lambda/aws-sam-golang-example-Worker" --region "us-east-1"
 ```
-
-
 

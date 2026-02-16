@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2018-02-03
 description = ""
 summary = " "
 draft = false
 slug = "aws-emr"
-tags = ["aws","emr",]
+tags = ["aws","emr"]
 title = "AWS EMR"
 repoFullName = "pfeilbr/aws-emr-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-emr-playground"
@@ -53,5 +53,3 @@ LOCATION 's3://com.brianpfeil.scratch/emr/dynamodb/export/table/log/';
 -- import csv data from s3 into dynamodb table
 INSERT OVERWRITE TABLE hiveLogTable SELECT * FROM s3_import;
 ```
-
-

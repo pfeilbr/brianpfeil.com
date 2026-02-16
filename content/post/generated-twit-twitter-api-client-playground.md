@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "twit-twitter-api-client"
-tags = ["twitter","api","nodejs",]
+tags = ["twitter","api","nodejs"]
 title = "Twit Twitter API Client"
 repoFullName = "pfeilbr/twit-twitter-api-client-playground"
 repoHTMLURL = "https://github.com/pfeilbr/twit-twitter-api-client-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [twit](https://github.com/ttezel/twit), the Twitter API Client for node.  Supports both the REST and Streaming API.
 
-see [`index.js`](index.js) for examples
+see [`index.js`](https://github.com/pfeilbr/twit-twitter-api-client-playground/blob/master/index.js) for examples
 
 ## Running
 ```sh
@@ -38,6 +38,4 @@ npm run dev
 
 * <https://github.com/ttezel/twit>
 * <https://developer.twitter.com/en/docs>
-
-
 

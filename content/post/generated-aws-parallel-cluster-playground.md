@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-parallel-cluster"
-tags = ["aws","hpc",]
+tags = ["aws","hpc"]
 title = "AWS Parallel Cluster"
 repoFullName = "pfeilbr/aws-parallel-cluster-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-parallel-cluster-playground"
@@ -95,7 +95,7 @@ pcluster delete-cluster --cluster-name hello-world
 
 ### EC2 instances
 
-![](ec2-instances.png)
+![](https://raw.githubusercontent.com/pfeilbr/aws-parallel-cluster-playground/main/ec2-instances.png)
 
 ## Resources
 
@@ -109,5 +109,3 @@ pcluster delete-cluster --cluster-name hello-world
 - [aws-parallelcluster/cli/tests/pcluster/example_configs/](https://github.com/aws/aws-parallelcluster/tree/release-3.0/cli/tests/pcluster/example_configs) - example cluster configuration files
 - [AWS ParallelCluster CLI commands](https://docs.aws.amazon.com/parallelcluster/latest/ug/commands-v3.html)
 - [Slurm Workload Manager - Documentation](https://slurm.schedmd.com/documentation.html)
-
-

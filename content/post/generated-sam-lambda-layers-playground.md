@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "sam-lambda-layers"
-tags = ["sam","lambda","aws",]
+tags = ["sam","lambda","aws"]
 title = "SAM Lambda Layers"
 repoFullName = "pfeilbr/sam-lambda-layers-playground"
 repoHTMLURL = "https://github.com/pfeilbr/sam-lambda-layers-playground"
@@ -46,5 +46,3 @@ curl https://hl6u5bubr4.execute-api.us-east-1.amazonaws.com/Prod/
 ## Resources
 
 * [Working with AWS Lambda and Lambda Layers in AWS SAM](https://aws.amazon.com/blogs/compute/working-with-aws-lambda-and-lambda-layers-in-aws-sam/)
-
-

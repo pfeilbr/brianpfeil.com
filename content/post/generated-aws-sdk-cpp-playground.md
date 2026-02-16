@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-sdk-cpp"
-tags = ["aws","sdk","cpp",]
+tags = ["aws","sdk","cpp"]
 title = "AWS SDK CPP"
 repoFullName = "pfeilbr/aws-sdk-cpp-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-sdk-cpp-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [aws-sdk-app](https://github.com/aws/aws-sdk-cpp) C++ SDK
 
-see `README.md` file(s) in subdirectories of [`src`](src)
+see `README.md` file(s) in subdirectories of [`src`](https://github.com/pfeilbr/aws-sdk-cpp-playground/blob/master/src)
 
 ## install aws-sdk-cpp
 
@@ -56,5 +56,3 @@ cmake .. && make
 * `/usr/local/lib/cmake/AWSSDK` - cmake modules
 * `/usr/local/include` - headers installed
 * `/usr/local/lib` - libraries installed (e.g. libaws-cpp-sdk-core.dylib)
-
-

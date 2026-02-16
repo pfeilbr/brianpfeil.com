@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "mage"
-tags = ["golang","build","tools",]
+tags = ["golang","build","tools"]
 title = "Mage"
 repoFullName = "pfeilbr/mage-playground"
 repoHTMLURL = "https://github.com/pfeilbr/mage-playground"
@@ -44,5 +44,3 @@ mage
 # run "hello" target
 mage hello
 ```
-
-

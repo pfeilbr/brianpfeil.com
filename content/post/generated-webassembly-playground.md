@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "webassembly"
-tags = ["webassembly",]
+tags = ["webassembly"]
 title = "WebAssembly"
 repoFullName = "pfeilbr/webassembly-playground"
 repoHTMLURL = "https://github.com/pfeilbr/webassembly-playground"
@@ -18,6 +18,4 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/webassembly-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/webassembly-playground</a>
 </div>
 
-
-
-
+see `README.md` in sub directories

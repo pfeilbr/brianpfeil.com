@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "pipenv"
-tags = ["python","packaging",]
+tags = ["python","packaging"]
 title = "Pipenv"
 repoFullName = "pfeilbr/pipenv-playground"
 repoHTMLURL = "https://github.com/pfeilbr/pipenv-playground"
@@ -61,5 +61,3 @@ pipenv run jupyter notebook
 pipenv install jupyterlab
 pipenv run jupyter lab
 ```
-
-

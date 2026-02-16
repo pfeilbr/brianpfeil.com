@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2018-05-30
 description = ""
 summary = " "
 draft = false
 slug = "jenkins-pipeline-github"
-tags = ["jenkins",]
+tags = ["jenkins"]
 title = "Jenkins Pipeline GitHub"
 repoFullName = "pfeilbr/jenkins-pipeline-github-playground"
 repoHTMLURL = "https://github.com/pfeilbr/jenkins-pipeline-github-playground"
@@ -44,5 +44,3 @@ open http://localhost:8080/job/projects/job/jenkins-pipeline-github-playground/c
 ![](https://www.evernote.com/l/AAFl1l5ijGFFD5WUJ1KIb92nGhraFE8BGrYB/image.png)
 
 ![](https://www.evernote.com/l/AAFTJAUh76BI8KSjPLEhgfJIfFcBdACzSGYB/image.png)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "storybook-ui-development-environment"
-tags = ["react","ui","ui-components","",]
+tags = ["react","ui","ui-components"]
 title = "Storybook UI Development Environment"
 repoFullName = "pfeilbr/storybook-ui-development-environment-playground"
 repoHTMLURL = "https://github.com/pfeilbr/storybook-ui-development-environment-playground"
@@ -25,6 +25,4 @@ learn [Storybook](https://storybook.js.org/) UI Development Environment
 
 * add stories to `src/components/*.stories.js`
 * run storybook via `npm run storybook`
-
-
 

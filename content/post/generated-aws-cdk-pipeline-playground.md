@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-cdk-pipeline"
-tags = ["aws","cdk","codepipeline","cicd",]
+tags = ["aws","cdk","codepipeline","cicd"]
 title = "AWS CDK Pipeline"
 repoFullName = "pfeilbr/aws-cdk-pipeline-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-cdk-pipeline-playground"
@@ -33,9 +33,9 @@ Example CI/CD pipeline and solution code exist in single CDK project / repo in a
 
 ## High-level Development Workflow
 
-1. Create solution stack [`lib/aws-cdk-pipeline-playground-stack.ts`](lib/aws-cdk-pipeline-playground-stack.ts) (`API gateway -> Lambda`).
-1. Create stage [`lib/aws-cdk-pipeline-demo-stage.ts`](lib/aws-cdk-pipeline-demo-stage.ts)(`CdkpipelinesDemoStage`) that wraps the solution stack (`AwsCdkPipelinePlaygroundStack`) for CodePipeline
-1. Create pipeline stack [`lib/aws-cdk-demo-pipeline-stack.ts`](lib/aws-cdk-demo-pipeline-stack.ts) and add `CdkpipelinesDemoStage` stage to it
+1. Create solution stack [`lib/aws-cdk-pipeline-playground-stack.ts`](https://github.com/pfeilbr/aws-cdk-pipeline-playground/blob/master/lib/aws-cdk-pipeline-playground-stack.ts) (`API gateway -> Lambda`).
+1. Create stage [`lib/aws-cdk-pipeline-demo-stage.ts`](https://github.com/pfeilbr/aws-cdk-pipeline-playground/blob/master/lib/aws-cdk-pipeline-demo-stage.ts)(`CdkpipelinesDemoStage`) that wraps the solution stack (`AwsCdkPipelinePlaygroundStack`) for CodePipeline
+1. Create pipeline stack [`lib/aws-cdk-demo-pipeline-stack.ts`](https://github.com/pfeilbr/aws-cdk-pipeline-playground/blob/master/lib/aws-cdk-demo-pipeline-stack.ts) and add `CdkpipelinesDemoStage` stage to it
 
 ## Steps
 
@@ -116,7 +116,7 @@ npx cdk bootstrap \
 
 ---
 
-* see [`cdk-deploy-to.sh`](cdk-deploy-to.sh) for handy deployment script for different account+region combinations.  Remember to bootstrap target account+region with `cdk bootstrap aws://account/region`
+* see [`cdk-deploy-to.sh`](https://github.com/pfeilbr/aws-cdk-pipeline-playground/blob/master/cdk-deploy-to.sh) for handy deployment script for different account+region combinations.  Remember to bootstrap target account+region with `cdk bootstrap aws://account/region`
 * had to downgrade npm 7 to 6 to get around types error when running `npm run build` on codebuild. see [self mutating cdk pipeline fails after updating cdk version from 1.85.0 to 1.92.0 · Issue #13541 · aws/aws-cdk](https://github.com/aws/aws-cdk/issues/13541#issuecomment-801606777)
     ```sh
     # steps
@@ -176,6 +176,4 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
  * `cdk deploy`      deploy this stack to your default AWS account/region
  * `cdk diff`        compare deployed stack with current state
  * `cdk synth`       emits the synthesized CloudFormation template
-
-
 

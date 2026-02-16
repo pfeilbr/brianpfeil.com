@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "stackery"
-tags = ["infrastructure-as-code","aws",]
+tags = ["infrastructure-as-code","aws"]
 title = "Stackery"
 repoFullName = "pfeilbr/stackery-playground"
 repoHTMLURL = "https://github.com/pfeilbr/stackery-playground"
@@ -80,5 +80,3 @@ Roles created during one time setup
 
 * [Stackery Quickstart NodeJS](https://docs.stackery.io/docs/quickstart/quickstart-nodejs/)
 * [Stackery Documentation](https://docs.stackery.io)
-
-

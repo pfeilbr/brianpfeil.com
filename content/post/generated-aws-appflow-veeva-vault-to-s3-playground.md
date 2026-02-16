@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-09-08
 description = ""
 summary = " "
 draft = false
 slug = "aws-appflow-veeva-vault-to-s3"
-tags = ["aws","appflow","s3",]
+tags = ["aws","appflow","s3"]
 title = "AWS AppFlow Veeva Vault to S3"
 repoFullName = "pfeilbr/aws-appflow-veeva-vault-to-s3-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-appflow-veeva-vault-to-s3-playground"
@@ -74,5 +74,3 @@ data landed in s3
 
 * [AppFlow Saas Applications | Veeva Vault](https://aws.amazon.com/appflow/integrations/#Veeva)
 * [https://developer.veevavault.com/](https://developer.veevavault.com/)
-
-

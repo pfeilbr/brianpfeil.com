@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-04-06
 description = ""
 summary = " "
 draft = false
 slug = "api-gateway-private-endpoints"
-tags = ["aws","api-gateway","vpc","network",]
+tags = ["aws","api-gateway","vpc","network"]
 title = "API Gateway Private Endpoints"
 repoFullName = "pfeilbr/api-gateway-private-endpoints-playground"
 repoHTMLURL = "https://github.com/pfeilbr/api-gateway-private-endpoints-playground"
@@ -117,5 +117,3 @@ exports.handler =  (event, context, callback) => {
 
 * [Introducing Amazon API Gateway Private Endpoints | Amazon Web Services](https://aws.amazon.com/blogs/compute/introducing-amazon-api-gateway-private-endpoints/)
 * [How do I troubleshoot issues connecting to an API Gateway private API endpoint?](https://aws.amazon.com/premiumsupport/knowledge-center/api-gateway-private-endpoint-connection)
-
-

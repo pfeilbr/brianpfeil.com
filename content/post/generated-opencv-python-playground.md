@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "opencv-python"
-tags = ["opencv","python",]
+tags = ["opencv","python"]
 title = "OpenCV Python"
 repoFullName = "pfeilbr/opencv-python-playground"
 repoHTMLURL = "https://github.com/pfeilbr/opencv-python-playground"
@@ -43,6 +43,4 @@ python opencv-webcam.py
 
 example run screenshot
 ![](https://www.evernote.com/l/AAEIScL_DhlHx7ZaJPGL_aa5di-WK_tHsKMB/image.png)
-
-
 

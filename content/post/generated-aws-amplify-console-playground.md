@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-amplify-console"
-tags = ["aws","amplify",]
+tags = ["aws","amplify"]
 title = "AWS Amplify Console"
 repoFullName = "pfeilbr/aws-amplify-console-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-amplify-console-playground"
@@ -30,7 +30,7 @@ learn [AWS Amplify Console](https://docs.aws.amazon.com/amplify/latest/userguide
 3. Deploys static web assets (.html, .js, .css, images) to S3 to be served with CloudFront
 4. Verifies deployment by visiting root site URL with various deveice form factors (iPhone, iPad, desktop) and taking screenshots.
 
-Build settings are defined in [`amplify.yml`](amplify.yml).  See [Configuring Build Settings](https://docs.aws.amazon.com/amplify/latest/userguide/build-settings.html) for YML Specification Syntax.
+Build settings are defined in [`amplify.yml`](https://github.com/pfeilbr/aws-amplify-console-playground/blob/master/amplify.yml).  See [Configuring Build Settings](https://docs.aws.amazon.com/amplify/latest/userguide/build-settings.html) for YML Specification Syntax.
 
 ---
 
@@ -54,5 +54,3 @@ App running on custom domain <https://amplify-master.minote.net/>
 
 * [Amplify Console | Getting Started](https://aws.amazon.com/amplify/console/getting-started/)
 * [aws-amplify/amplify-console](https://github.com/aws-amplify/amplify-console)
-
-

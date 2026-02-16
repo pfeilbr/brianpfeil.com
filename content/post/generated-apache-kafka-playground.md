@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2024-02-20
 description = ""
 summary = " "
 draft = false
 slug = "apache-kafka"
-tags = ["streaming",]
+tags = ["streaming"]
 title = "Apache Kafka"
 repoFullName = "pfeilbr/apache-kafka-playground"
 repoHTMLURL = "https://github.com/pfeilbr/apache-kafka-playground"
@@ -17,6 +17,7 @@ truncated = true
 <div class="alert alert-info small bg-info" role="alert">
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/apache-kafka-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/apache-kafka-playground</a>
 </div>
+
 
 
 learn [APACHE KAFKA](https://kafka.apache.org/)
@@ -43,5 +44,3 @@ client library for building real-time applications, where the input and/or outpu
 
 - [kafka introduction](https://kafka.apache.org/intro)
 - [APACHE KAFKA QUICKSTART](https://kafka.apache.org/quickstart)
-
-

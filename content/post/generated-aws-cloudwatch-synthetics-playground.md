@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2023-09-06
 description = ""
 summary = " "
 draft = false
 slug = "aws-cloudwatch-synthetics"
-tags = ["aws","cloudwatch",]
+tags = ["aws","cloudwatch"]
 title = "AWS CloudWatch Synthetics"
 repoFullName = "pfeilbr/aws-cloudwatch-synthetics-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-cloudwatch-synthetics-playground"
@@ -46,5 +46,3 @@ learn [CloudWatch Synthetics](https://docs.aws.amazon.com/AmazonCloudWatch/lates
 - [AWS::Synthetics::Canary](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-synthetics-canary.html)
 - [aws-reinvent-trivia-game/canaries](https://github.com/aws-samples/aws-reinvent-trivia-game/blob/master/canaries/README.md)
 - <https://github.com/awslabs/aws-well-architected-labs/blob/main/static/Reliability/300_Fault_Isolation_with_Shuffle_Sharding/Code/regular.yaml#L575> - example cloudformation template
-
-

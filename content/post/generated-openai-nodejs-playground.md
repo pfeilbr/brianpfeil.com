@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "openai-nodejs"
-tags = ["nodejs","llm","ai",]
+tags = ["nodejs","llm","ai"]
 title = "OpenAI Nodejs"
 repoFullName = "pfeilbr/openai-nodejs-playground"
 repoHTMLURL = "https://github.com/pfeilbr/openai-nodejs-playground"
@@ -35,5 +35,3 @@ truncated = true
 - [Question answering using embeddings-based search](https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb)
 - https://github.com/openai/tiktoken
 - [How to stream completions](https://github.com/openai/openai-cookbook/blob/main/examples/How_to_stream_completions.ipynb)
-
-

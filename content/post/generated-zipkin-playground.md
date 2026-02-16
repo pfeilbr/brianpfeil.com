@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "zipkin"
-tags = ["distributed-tracing","observability",]
+tags = ["distributed-tracing","observability"]
 title = "Zipkin"
 repoFullName = "pfeilbr/zipkin-playground"
 repoHTMLURL = "https://github.com/pfeilbr/zipkin-playground"
@@ -154,5 +154,3 @@ view JSON trace data by clickint the `[JSON]` button
   }
 ]
 ```
-
-

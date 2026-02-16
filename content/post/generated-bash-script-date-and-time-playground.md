@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "bash-script-date-and-time"
-tags = ["bash",]
+tags = ["bash"]
 title = "Bash Script Date and Time"
 repoFullName = "pfeilbr/bash-script-date-and-time-playground"
 repoHTMLURL = "https://github.com/pfeilbr/bash-script-date-and-time-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 examples of working with formatted dates in bash including time operations such as adding time
 
-see [`main.sh`](main.sh)
+see [`main.sh`](https://github.com/pfeilbr/bash-script-date-and-time-playground/blob/master/main.sh)
 
 ## Running
 
@@ -29,5 +29,3 @@ see [`main.sh`](main.sh)
 chmod a+x main.sh 
 fswatch -o main.sh  | xargs -n1 -I{} sh main.sh
 ```
-
-

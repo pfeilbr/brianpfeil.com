@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-cloudwatch-logs-insights"
-tags = ["aws","cloudwatch",]
+tags = ["aws","cloudwatch"]
 title = "AWS CloudWatch Logs Insights"
 repoFullName = "pfeilbr/aws-cloudwatch-logs-insights-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-cloudwatch-logs-insights-playground"
@@ -23,7 +23,7 @@ learn [CloudWatch Logs Insights](https://docs.aws.amazon.com/AmazonCloudWatch/la
 
 ## Running Example Query via AWS CLI
 
-see [`main.sh`](main.sh)
+see [`main.sh`](https://github.com/pfeilbr/aws-cloudwatch-logs-insights-playground/blob/master/main.sh)
 
 ```sh
 # run script containing query
@@ -69,5 +69,3 @@ fields @timestamp, `detail-type`, detail.pipeline, detail.stage, detail.state, @
 
 * [CloudWatch Logs Insights Query Syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html)
 * [Sample Queries - Amazon CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax-examples.html)
-
-

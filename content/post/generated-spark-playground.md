@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "spark"
-tags = ["spark",]
+tags = ["spark"]
 title = "Spark"
 repoFullName = "pfeilbr/spark-playground"
 repoHTMLURL = "https://github.com/pfeilbr/spark-playground"
@@ -39,6 +39,4 @@ spark installed at `~/dev/spark-2.2.0-bin-hadoop2.7` and is part of `PATH` in `.
 ## Resources
 
 * [Spark Documentation](https://spark.apache.org/docs/latest/)
-
-
 

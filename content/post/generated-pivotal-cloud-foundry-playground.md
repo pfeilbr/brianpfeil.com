@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "pivotal-cloud-foundry"
-tags = ["paas",]
+tags = ["paas"]
 title = "Pivotal Cloud Foundry"
 repoFullName = "pfeilbr/pivotal-cloud-foundry-playground"
 repoHTMLURL = "https://github.com/pfeilbr/pivotal-cloud-foundry-playground"
@@ -31,7 +31,7 @@ learn [Pivotal Cloud Foundry](https://pivotal.io/platform)
 
 ### Example Apps
 
-see `README.md` in subdirectories of [apps/](apps)
+see `README.md` in subdirectories of [apps/](https://github.com/pfeilbr/pivotal-cloud-foundry-playground/blob/master/apps)
 
 ---
 
@@ -125,7 +125,5 @@ cf dev stop
 **login**
 
 ![](https://www.evernote.com/l/AAGhjcTEI_pPJLX9dYtKP6XUfQ2Pi7hF990B/image.png)
-
-
 
 

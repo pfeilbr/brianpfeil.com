@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2024-02-04
 description = ""
 summary = " "
 draft = false
 slug = "pkl"
-tags = ["config","language",]
+tags = ["config","language"]
 title = "Pkl"
 repoFullName = "pfeilbr/pkl-playground"
 repoHTMLURL = "https://github.com/pfeilbr/pkl-playground"
@@ -17,6 +17,7 @@ truncated = true
 <div class="alert alert-info small bg-info" role="alert">
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/pkl-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/pkl-playground</a>
 </div>
+
 
 
 learn [Pkl](https://pkl-lang.org/index.html), configuration that is programmable, scalable, and safe
@@ -40,5 +41,3 @@ pkl eval --format yaml $FILE
 - [Pkl](https://pkl-lang.org/index.html)
 - [Pkl // Docs](https://pkl-lang.org/main/current/index.html)
 - [Truffle Language Implementation Framework](https://github.com/oracle/graal/tree/master/truffle) Pkl was built using the GraalVM Truffle framework
-
-

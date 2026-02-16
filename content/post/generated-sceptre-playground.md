@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-11-06
 description = ""
 summary = " "
 draft = false
 slug = "sceptre"
-tags = ["cloudformation","infrastructure-as-code",]
+tags = ["cloudformation","infrastructure-as-code"]
 title = "Sceptre"
 repoFullName = "pfeilbr/sceptre-playground"
 repoHTMLURL = "https://github.com/pfeilbr/sceptre-playground"
@@ -21,9 +21,9 @@ truncated = true
 
 learn [sceptre](https://sceptre.cloudreach.com/), a tool to drive cloudformation
 
-* [StackGroup Config](https://sceptre.cloudreach.com/latest/docs/stack_group_config.html) - [`config/dev/config.yaml`](my-sceptre-project/config/dev/config.yaml) - project_code, region, profile, etc.
-* [Stack Config](https://sceptre.cloudreach.com/latest/docs/stack_config.html) - [`config/dev/template.yaml`](my-sceptre-project/config/dev/template.yaml) - config for specific stack.  e.g. stack params, template_path, dependencies, hooks, etc.
-* Stack - [`templates/template.yaml`](my-sceptre-project/templates/template.yaml)
+* [StackGroup Config](https://sceptre.cloudreach.com/latest/docs/stack_group_config.html) - [`config/dev/config.yaml`](https://github.com/pfeilbr/sceptre-playground/blob/master/my-sceptre-project/config/dev/config.yaml) - project_code, region, profile, etc.
+* [Stack Config](https://sceptre.cloudreach.com/latest/docs/stack_config.html) - [`config/dev/template.yaml`](https://github.com/pfeilbr/sceptre-playground/blob/master/my-sceptre-project/config/dev/template.yaml) - config for specific stack.  e.g. stack params, template_path, dependencies, hooks, etc.
+* Stack - [`templates/template.yaml`](https://github.com/pfeilbr/sceptre-playground/blob/master/my-sceptre-project/templates/template.yaml)
 
 ## Demo
 
@@ -56,5 +56,3 @@ sceptre delete dev/template.yaml
 * [sceptre](https://sceptre.cloudreach.com/)
 * [GitHub - Sceptre/sceptre: Build better AWS infrastructure](https://github.com/Sceptre/sceptre)
 * [Introduction to Sceptre: An AWS Cloudformation Orchestration Tool](https://engineering.carsguide.com.au/introduction-to-sceptre-an-aws-cloudformation-orchestration-tool-4b8453c0ae81)
-
-

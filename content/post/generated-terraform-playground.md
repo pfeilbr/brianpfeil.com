@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "terraform"
-tags = ["infrastructure-as-code","aws",]
+tags = ["infrastructure-as-code","aws"]
 title = "Terraform"
 repoFullName = "pfeilbr/terraform-playground"
 repoHTMLURL = "https://github.com/pfeilbr/terraform-playground"
@@ -34,7 +34,7 @@ followed Packer [GETTING STARTED](https://www.terraform.io/intro/getting-started
 
 ## Module Demo
 
-- see [mymodule01](./mymodule01)
+- see [mymodule01](https://github.com/pfeilbr/terraform-playground/blob/master/mymodule01)
 
 ```sh
 cd mymodule01/examples/app01
@@ -122,6 +122,4 @@ terraform output
 * [Terraform Language Documentation](https://www.terraform.io/docs/language/index.html)
 * [Terraform | AWS Provider Docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 * [Terraform Registry](https://registry.terraform.io/browse/providers)
-
-
 

@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-10-15
 description = ""
 summary = " "
 draft = false
 slug = "aws-step-functions-aws-sdk-integration"
-tags = ["aws","sdk","step-functions",]
+tags = ["aws","sdk","step-functions"]
 title = "AWS Step Functions AWS SDK Integration"
 repoFullName = "pfeilbr/aws-step-functions-aws-sdk-integration-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-step-functions-aws-sdk-integration-playground"
@@ -25,7 +25,7 @@ learn [AWS Step Functions AWS SDK Integrations](https://aws.amazon.com/blogs/aws
 
 Based on [Gather Amazon S3 bucket info using AWS SDK service integrations - AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/tutorial-gather-s3-bucket-info-using-aws-sdk-service-integrations.html).
 
-Deploy [`example01.yaml`](example01.yaml) stack
+Deploy [`example01.yaml`](https://github.com/pfeilbr/aws-step-functions-aws-sdk-integration-playground/blob/master/example01.yaml) stack
 
 > NOTE: `ResultSelector` added to `ListBuckets` to hard code an array containing a single bucket to reduce amount of processing.
 
@@ -58,5 +58,3 @@ Example Execution
 * [AWS Step Functions adds support for over 200 AWS Services with AWS SDK Integration](https://aws.amazon.com/about-aws/whats-new/2021/09/aws-step-functions-200-aws-sdk-integration/)
 * [Now — AWS Step Functions Supports 200 AWS Services To Enable Easier Workflow Automation | Amazon Web Services](https://aws.amazon.com/blogs/aws/now-aws-step-functions-supports-200-aws-services-to-enable-easier-workflow-automation/)
 * [AWS SDK service integrations - AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/supported-services-awssdk.html)
-
-

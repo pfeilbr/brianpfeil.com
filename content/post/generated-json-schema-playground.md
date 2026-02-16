@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "json-schema"
-tags = ["json",]
+tags = ["json"]
 title = "JSON Schema"
 repoFullName = "pfeilbr/json-schema-playground"
 repoHTMLURL = "https://github.com/pfeilbr/json-schema-playground"
@@ -21,8 +21,6 @@ truncated = true
 
 project to learn [JSON schema](http://json-schema.org/)
 
-* see [main.spec.ts](__tests__/main.spec.ts) for examples
+* see [main.spec.ts](https://github.com/pfeilbr/json-schema-playground/blob/master/__tests__/main.spec.ts) for examples
 * run examples/tests `npm run test` or `npm run test:watch`
 * uses [Ajv](https://ajv.js.org/) schema validator
-
-

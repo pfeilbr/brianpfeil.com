@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2022-11-11
 description = ""
 summary = " "
 draft = false
 slug = "amazon-eventbridge-scheduler"
-tags = ["eventbridge","aws",]
+tags = ["eventbridge","aws"]
 title = "Amazon EventBridge Scheduler"
 repoFullName = "pfeilbr/amazon-eventbridge-scheduler-playground"
 repoHTMLURL = "https://github.com/pfeilbr/amazon-eventbridge-scheduler-playground"
@@ -88,5 +88,3 @@ MyStateMachine:
 - [Amazon EventBridge Scheduler resource type reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/AWS_Scheduler.html)
 - [AWS::Scheduler::Schedule](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-scheduler-schedule.html)
 - [AWS::Scheduler::ScheduleGroup](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-scheduler-schedulegroup.html)
-
-

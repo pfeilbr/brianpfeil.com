@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "python-2.x-websocket-client"
-tags = ["python",]
+tags = ["python"]
 title = "Python 2.X WebSocket Client"
 repoFullName = "pfeilbr/python-2.x-websocket-client-playground"
 repoHTMLURL = "https://github.com/pfeilbr/python-2.x-websocket-client-playground"
@@ -46,5 +46,3 @@ python client.py
 example run
 
 ![](https://www.evernote.com/l/AAFaIvf7mthMmJO0Q4o62USTYJES2wvIXCsB/image.png)
-
-

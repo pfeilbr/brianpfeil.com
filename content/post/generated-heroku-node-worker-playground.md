@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "heroku-node-worker"
-tags = ["heroku",]
+tags = ["heroku"]
 title = "Heroku Node Worker"
 repoFullName = "pfeilbr/heroku-node-worker-playground"
 repoHTMLURL = "https://github.com/pfeilbr/heroku-node-worker-playground"
@@ -69,5 +69,3 @@ heroku ps:scale worker=1
 
 * [Background Jobs in Node.js with Redis](https://devcenter.heroku.com/articles/node-redis-workers)
 * [Run Non-web Java Dynos on Heroku](https://devcenter.heroku.com/articles/run-non-web-java-processes-on-heroku)
-
-

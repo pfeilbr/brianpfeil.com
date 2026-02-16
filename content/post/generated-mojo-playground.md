@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2023-11-24
 description = ""
 summary = " "
 draft = false
 slug = "mojo"
-tags = ["machine-learning","python",]
+tags = ["machine-learning","python"]
 title = "Mojo"
 repoFullName = "pfeilbr/mojo-playground"
 repoHTMLURL = "https://github.com/pfeilbr/mojo-playground"
@@ -24,5 +24,3 @@ learn and experiment with [Modular Mojo🔥](https://docs.modular.com/)
 ## resources
 
 -<https://docs.modular.com/>
-
-

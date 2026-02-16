@@ -1,16 +1,14 @@
 # brianpfeil.com
 
-Personal blog built with [Hugo](https://gohugo.io/) and [Tailwind CSS](https://tailwindcss.com/).
+Personal blog built with [Hugo](https://gohugo.io/).
 
 ## Prerequisites
 
 - [Hugo Extended](https://gohugo.io/installation/) (v0.128+)
-- [Node.js](https://nodejs.org/) (v20+) — for Tailwind CSS
 - [Go](https://go.dev/) (v1.22+) — only needed for generating posts from GitHub repos
 
 ## Quick Start
 
-    npm install          # Install Tailwind/PostCSS dependencies
     make dev             # Start local dev server at http://localhost:1313
 
 ## Project Structure
@@ -26,17 +24,15 @@ Personal blog built with [Hugo](https://gohugo.io/) and [Tailwind CSS](https://t
     │   ├── projects/          # Custom projects list layout
     │   └── shortcodes/
     ├── assets/
-    │   ├── css/main.css       # Tailwind directives + prose styles
+    │   ├── css/main.css       # CSS reset + utility classes + prose styles
     │   ├── css/syntax.css     # Chroma syntax highlighting
     │   └── js/search.js       # Vanilla JS search
     ├── static/                # Images, CNAME, apps
     ├── tools/
     │   └── generate-posts/    # Go tool to generate posts from GitHub repos
-    ├── scripts/verify.sh      # Build verification script
     ├── site                   # Helper script (run local, create post, generate posts)
     ├── config.yaml            # Hugo configuration
-    ├── Makefile
-    └── package.json           # Node.js dependencies (Tailwind, PostCSS)
+    └── Makefile
 
 ## Writing a New Post
 
@@ -92,7 +88,6 @@ This fetches all matching repos, downloads their READMEs, and writes/updates
 |--------|-------------|
 | `make dev` | Start Hugo dev server with live reload |
 | `make build` | Build the site (`hugo --minify`) |
-| `make install` | Install Node.js dependencies |
 | `make verify` | Build + run verification checks |
 | `make generate-posts` | Run the post generator tool |
 | `make test-tools` | Run Go tests for the post generator |
@@ -107,9 +102,8 @@ This fetches all matching repos, downloads their READMEs, and writes/updates
 
 The site deploys to GitHub Pages via GitHub Actions (`.github/workflows/gh-pages.yml`).
 On push to `master`, the workflow:
-1. Installs Node.js dependencies
-2. Builds with `hugo --minify`
-3. Deploys to GitHub Pages
+1. Builds with `hugo --minify`
+2. Deploys to GitHub Pages
 
 Posts are generated locally and committed — the CI workflow does not run the Go tool.
 

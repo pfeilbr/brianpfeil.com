@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-batch"
-tags = ["aws","containers",]
+tags = ["aws","containers"]
 title = "AWS Batch"
 repoFullName = "pfeilbr/aws-batch-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-batch-playground"
@@ -23,7 +23,7 @@ truncated = true
 
 ## Examples
 
-### [`aws-batch-fargate-example`](aws-batch-fargate-example)
+### [`aws-batch-fargate-example`](https://github.com/pfeilbr/aws-batch-playground/blob/master/aws-batch-fargate-example)
 
 example of creating fargate batch compute environment, queue, definition and submitting a job
 
@@ -32,5 +32,3 @@ example of creating fargate batch compute environment, queue, definition and sub
 ## Resources
 
 - 
-
-

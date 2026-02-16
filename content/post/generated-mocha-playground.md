@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "mocha"
-tags = ["mocha",]
+tags = ["mocha"]
 title = "Mocha"
 repoFullName = "pfeilbr/mocha-playground"
 repoHTMLURL = "https://github.com/pfeilbr/mocha-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/mocha-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/mocha-playground</a>
 </div>
 
+[![Circle CI](https://circleci.com/gh/pfeilbr/mocha-playground.svg?style=svg)](https://circleci.com/gh/pfeilbr/mocha-playground)
 
 ## [Mocha](http://mochajs.org/) Playground
 
@@ -36,6 +37,4 @@ Clone repo then
 ### Run Tests
 
     $ mocha
-
-
 

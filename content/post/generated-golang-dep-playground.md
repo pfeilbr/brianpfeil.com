@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "golang-dep"
-tags = ["golang",]
+tags = ["golang"]
 title = "Golang Dep"
 repoFullName = "pfeilbr/golang-dep-playground"
 repoHTMLURL = "https://github.com/pfeilbr/golang-dep-playground"
@@ -32,5 +32,3 @@ dep ensure
 
 # can always run `dep ensure` to sync everything up
 ```
-
-

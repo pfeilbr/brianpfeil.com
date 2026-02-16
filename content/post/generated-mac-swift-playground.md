@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "mac-swift"
-tags = ["mac",]
+tags = ["mac"]
 title = "Mac Swift"
 repoFullName = "pfeilbr/mac-swift-playground"
 repoHTMLURL = "https://github.com/pfeilbr/mac-swift-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/mac-swift-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/mac-swift-playground</a>
 </div>
 
+<img style="float: right" src="http://upload.wikimedia.org/wikipedia/en/4/43/Apple_Swift_Logo.png" width="100px"></img>
 
 <div style="clear: both"></div>
 
@@ -46,5 +47,3 @@ XCPShowView(identifier: String, view: NSView)
 ```
 
 Display the provided view in the view pane with the identifier as the title
-
-

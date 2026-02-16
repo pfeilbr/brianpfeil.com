@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "cognito-federated-to-salesforce-and-s3-presigned-url"
-tags = ["cognito","salesforce","s3",]
+tags = ["cognito","salesforce","s3"]
 title = "Cognito Federated to Salesforce and S3 Presigned URL"
 repoFullName = "pfeilbr/cognito-federated-to-salesforce-and-s3-presigned-url-playground"
 repoHTMLURL = "https://github.com/pfeilbr/cognito-federated-to-salesforce-and-s3-presigned-url-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 ## Login with Cognito Federated to Salesforce Example
 
-* see [`index.html`](index.html)
+* see [`index.html`](https://github.com/pfeilbr/cognito-federated-to-salesforce-and-s3-presigned-url-playground/blob/master/index.html)
 * see `~/Dropbox/notes/static-s3-cognito-authentication.md` on local machine also for greater detail on setup
 
 ```sh
@@ -46,10 +46,8 @@ aws s3 cp index.html s3://pfeil-static-site-01/index.html
 
 ## Pre-signed URL Example
 
-* see [`index.js`](index.js)
+* see [`index.js`](https://github.com/pfeilbr/cognito-federated-to-salesforce-and-s3-presigned-url-playground/blob/master/index.js)
 * `node index.js` outputs pre-signed url. (uses ~/.aws/credentials and pre-signed URL generated under that users context/permission)
 * PUT / upload file to S3 via `curl -X PUT -T hello.txt -L '<pre-signed url>'`
-
-
 
 

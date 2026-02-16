@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-alb-to-lambda"
-tags = ["aws","lambda",]
+tags = ["aws","lambda"]
 title = "AWS ALB to Lambda"
 repoFullName = "pfeilbr/aws-alb-to-lambda-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-alb-to-lambda-playground"
@@ -35,7 +35,7 @@ learn ALB to Lambda integration
 > based on [alexcasalboni/template.yml](https://gist.github.com/alexcasalboni/9f118ac10a59a5c4eb6bfd75d0a65773) - AWS ALB - AWS Lambda integration with CloudFormation (YAML)
 > includes a custom domain name CNAME'd to the ALB hostname with ACM cert for https
 
-lambda function code is inlined in [`template.yaml`](template.yaml)
+lambda function code is inlined in [`template.yaml`](https://github.com/pfeilbr/aws-alb-to-lambda-playground/blob/master/template.yaml)
 
 ```sh
 # deploy stack
@@ -120,5 +120,3 @@ sam delete --no-prompts
 - [AWS::ElasticLoadBalancingV2::ListenerCertificate](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticloadbalancingv2-listenercertificate.html)
 - [AWS::ElasticLoadBalancingV2::ListenerRule](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticloadbalancingv2-listenerrule.html)
 - [AWS::ElasticLoadBalancingV2::TargetGroup](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticloadbalancingv2-targetgroup.html)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "graphql"
-tags = ["graphql",]
+tags = ["graphql"]
 title = "GraphQL"
 repoFullName = "pfeilbr/graphql-playground"
 repoHTMLURL = "https://github.com/pfeilbr/graphql-playground"
@@ -79,6 +79,4 @@ subscriptiion push over websocket
 
 
 ```
-
-
 

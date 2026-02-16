@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "duckdb"
-tags = ["db",]
+tags = ["db"]
 title = "DuckDB"
 repoFullName = "pfeilbr/duckdb-playground"
 repoHTMLURL = "https://github.com/pfeilbr/duckdb-playground"
@@ -33,5 +33,3 @@ jupyter lab
 ## resources
 
 - [duckdb](https://duckdb.org/)
-
-

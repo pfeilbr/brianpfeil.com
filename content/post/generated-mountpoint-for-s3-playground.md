@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2024-02-01
 description = ""
 summary = " "
 draft = false
 slug = "mountpoint-for-s3"
-tags = ["s3","aws",]
+tags = ["s3","aws"]
 title = "Mountpoint for S3"
 repoFullName = "pfeilbr/mountpoint-for-s3-playground"
 repoHTMLURL = "https://github.com/pfeilbr/mountpoint-for-s3-playground"
@@ -66,5 +66,3 @@ sudo umount ~/mnt/s3
 
 - <https://github.com/awslabs/mountpoint-s3>
 - [Configuring Mountpoint for Amazon S3](https://github.com/awslabs/mountpoint-s3/blob/main/doc/CONFIGURATION.md)
-
-

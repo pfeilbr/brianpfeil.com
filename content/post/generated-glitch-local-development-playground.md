@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "glitch-local-development"
-tags = ["glitch",]
+tags = ["glitch"]
 title = "Glitch Local Development"
 repoFullName = "pfeilbr/glitch-local-development-playground"
 repoHTMLURL = "https://github.com/pfeilbr/glitch-local-development-playground"
@@ -18,32 +18,46 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/glitch-local-development-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/glitch-local-development-playground</a>
 </div>
 
-=================
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+Develop [Glitch](https://glitch.com) apps locally.  Based on [noise-machines/git-glitched](https://github.com/noise-machines/git-glitched).
+The default Glitch development experience is to use the browser based editor.  This allows you to use your favorite local editor.
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+## Resources
 
-Find out more [about Glitch](https://glitch.com/about).
+* [Possible to code locally and push to glitch with git?](https://support.glitch.com/t/possible-to-code-locally-and-push-to-glitch-with-git/2704/3)
+* [Code locally, push to glitch via git?](https://support.glitch.com/t/code-locally-push-to-glitch-via-git/4227/5?u=tim)
+* [Changing a remote's URL](https://help.github.com/en/articles/changing-a-remotes-url).
+    > Glitch changed the git repo path since this project was first created and it had to be updated
 
+## Initial Project Setup
 
-Your Project
-------------
+* Get the writable git repo location from the Glitch UI via `Tools | Git Import, Import, Export`
+* Get the URL + User Name.  The User Name acts as the username+password.  It is a GUID.  e.g. `a63dde92-f3db-411b-a4cf-e2834ed707e4`
+* Clone glitch repo locally
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+**Example Clone (this doesn't work.  username changed)**
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+```sh
+git clone https://a63dde92-f3db-411b-a4cf-e2834ed707e4@api.glitch.com/git/glitch-local-development-playground
+```
 
+![](https://www.evernote.com/l/AAGIRoW8xEpJrrMq7J8uOiLFDgAjdZBhwJAB/image.png)
 
-Made by [Glitch](https://glitch.com/)
--------------------
+## Development (live reload from local changes)
 
-\ ゜o゜)ノ
+```sh
+npm run dev
+```
 
+> You must have the browser based editor view open for live reload to work.
 
+## Pushing Changes to Github
 
+There are two remotes, one for glitch and one for github.  The branch named `local` contains the most recent up to date changes.  Run the following to push to github.
+
+```sh
+git push -u github local
+git push -u github master
+```
+
+> When viewing on github in browser be sure to change branch to `local` to see the latest.

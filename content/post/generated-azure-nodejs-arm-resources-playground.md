@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "azure-nodejs-arm-resources"
-tags = ["azure","nodejs",]
+tags = ["azure","nodejs"]
 title = "Azure Nodejs ARM Resources"
 repoFullName = "pfeilbr/azure-nodejs-arm-resources-playground"
 repoHTMLURL = "https://github.com/pfeilbr/azure-nodejs-arm-resources-playground"
@@ -20,6 +20,4 @@ truncated = true
 
 
 manipulate azure resources (deployments, etc.) programmatically via nodejs
-
-
 

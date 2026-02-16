@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2022-07-01
 description = ""
 summary = " "
 draft = false
 slug = "rstudio-on-sagemaker"
-tags = ["sagemaker","machine-learning",]
+tags = ["sagemaker","machine-learning"]
 title = "RStudio On SageMaker"
 repoFullName = "pfeilbr/rstudio-on-sagemaker-playground"
 repoHTMLURL = "https://github.com/pfeilbr/rstudio-on-sagemaker-playground"
@@ -101,5 +101,3 @@ Deploying SageMaker Real-time Predication API Endpoint
 - [James Blair | Using RStudio on Amazon SageMaker | RStudio](https://www.youtube.com/watch?v=fmgSVRWgXDg) - good video with demo
 - [blairj09-talks/rstudio-sagemaker-webinar](https://github.com/blairj09-talks/rstudio-sagemaker-webinar) - slides from [James Blair | Using RStudio on Amazon SageMaker | RStudio](https://www.youtube.com/watch?v=fmgSVRWgXDg) video.  direct link [slides.pdf](https://github.com/blairj09-talks/rstudio-sagemaker-webinar/blob/main/slides/slides.pdf)
 - [aws/amazon-sagemaker-examples/r_examples/](https://github.com/aws/amazon-sagemaker-examples/tree/main/r_examples)
-
-

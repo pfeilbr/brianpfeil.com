@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-ecs"
-tags = ["aws","ecs",]
+tags = ["aws","ecs"]
 title = "AWS ECS"
 repoFullName = "pfeilbr/aws-ecs-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-ecs-playground"
@@ -23,23 +23,23 @@ learn [AWS ECS](https://aws.amazon.com/documentation/ecs/)
 
 ## Examples
 
-### [`ecs-fargate-load-balanced-http-service-example`](ecs-fargate-load-balanced-http-service-example/)
+### [`ecs-fargate-load-balanced-http-service-example`](https://github.com/pfeilbr/aws-ecs-playground/blob/master/ecs-fargate-load-balanced-http-service-example/)
 
 example ECS Fargate private (vpc only access) load balanced (internal ALB) http service (nginx)
 
-### [`ecs-fargate-task-example`](ecs-fargate-task-example/)
+### [`ecs-fargate-task-example`](https://github.com/pfeilbr/aws-ecs-playground/blob/master/ecs-fargate-task-example/)
 
 example ECS Fargate nodejs task that is manually run
 
-### [`ecs-fargate-task-with-efs-example`](ecs-fargate-task-with-efs-example/)
+### [`ecs-fargate-task-with-efs-example`](https://github.com/pfeilbr/aws-ecs-playground/blob/master/ecs-fargate-task-with-efs-example/)
 
 example ECS Fargate nodejs task with EFS file share that is manually run
 
-### [`ecs-on-ec2-with-bottlerocket-example`](ecs-on-ec2-with-bottlerocket-example/)
+### [`ecs-on-ec2-with-bottlerocket-example`](https://github.com/pfeilbr/aws-ecs-playground/blob/master/ecs-on-ec2-with-bottlerocket-example/)
 
 example ECS on EC2 using Bottlerocket AMI for ECS container instance
 
-### [`ecs-cli-example`](ecs-cli-example/)
+### [`ecs-cli-example`](https://github.com/pfeilbr/aws-ecs-playground/blob/master/ecs-cli-example/)
 
 example using `ecs-cli` to serve simple docker compose nodejs web app
 
@@ -53,5 +53,3 @@ example using `ecs-cli` to serve simple docker compose nodejs web app
 - [`AWS::ECS::Service.Role`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-service.html#cfn-ecs-service-role) - no need to specify in typical use case.  *Amazon ECS uses the service-linked role named AWSServiceRoleForECS to enable Amazon ECS to call AWS APIs on your behalf.* see [Service-linked role for Amazon ECS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using-service-linked-roles.h)
 - [`AWS::ECS::Service.NetworkConfiguration`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-service.html#cfn-ecs-service-networkconfiguration) - required for task definitions that use the awsvpc network mode to receive their own elastic network interface, and it is not supported for other network modes
 - [`AWS::ECS::Service.NetworkConfiguration.AwsvpcConfiguration.AssignPublicIp`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-service-awsvpcconfiguration.html#cfn-ecs-service-awsvpcconfiguration-assignpublicip) - Whether the task's elastic network interface receives a public IP address. The default value is DISABLED. (DISABLED | ENABLED)
-
-

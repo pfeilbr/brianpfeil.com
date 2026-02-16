@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-cdk-step-functions"
-tags = ["aws","cdk","step-functions",]
+tags = ["aws","cdk","step-functions"]
 title = "AWS CDK Step Functions"
 repoFullName = "pfeilbr/aws-cdk-step-functions-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-cdk-step-functions-playground"
@@ -24,7 +24,7 @@ initiates the `create-stack` and polls (`describe-stack`) on an interval for com
 
 This can be used as a backend to provision a [AWS CloudFormation Custom Resource Type](https://brianpfeil.com/post/aws-cloudformation-custom-resource-type/) that itself is backed by a set of AWS services.
 
-see CDK stack components at [`lib/aws-cdk-step-functions-playground-stack.ts`](lib/aws-cdk-step-functions-playground-stack.ts)
+see CDK stack components at [`lib/aws-cdk-step-functions-playground-stack.ts`](https://github.com/pfeilbr/aws-cdk-step-functions-playground/blob/master/lib/aws-cdk-step-functions-playground-stack.ts)
 
 ## Architecture
 
@@ -82,6 +82,4 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
  * `cdk deploy`      deploy this stack to your default AWS account/region
  * `cdk diff`        compare deployed stack with current state
  * `cdk synth`       emits the synthesized CloudFormation template
-
-
 

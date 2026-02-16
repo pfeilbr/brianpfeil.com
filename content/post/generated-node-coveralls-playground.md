@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "node-coveralls"
-tags = ["testing","nodejs",]
+tags = ["testing","nodejs"]
 title = "Node Coveralls"
 repoFullName = "pfeilbr/node-coveralls-playground"
 repoHTMLURL = "https://github.com/pfeilbr/node-coveralls-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/node-coveralls-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/node-coveralls-playground</a>
 </div>
 
+[![Coverage Status](https://coveralls.io/repos/pfeilbr/node-coveralls-playground/badge.svg?branch=master&service=github)](https://coveralls.io/github/pfeilbr/node-coveralls-playground?branch=master)
 
 # node-coveralls-playground
 
@@ -48,6 +49,4 @@ $ istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec &&
 ```
 
 > You can view the raw coverage output in the `./coverage` directory.
-
-
 

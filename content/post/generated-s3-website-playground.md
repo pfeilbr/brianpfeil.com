@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "s3-website"
-tags = ["s3","aws","static-site",]
+tags = ["s3","aws","static-site"]
 title = "S3 Website"
 repoFullName = "pfeilbr/s3-website-playground"
 repoHTMLURL = "https://github.com/pfeilbr/s3-website-playground"
@@ -40,5 +40,3 @@ open http://com.brianpfeil.s3-website-playground.site01.s3-website-us-east-1.ama
 # NOTE: using `./node_modules/s3-website/s3-website.js` to avoid global install and
 # doesn't work with `npx` because of https://www.evernote.com/l/AAH8gou8OCZKF6rfnqA2Tom3BU7c0xuFTM0B/image.png
 ```
-
-

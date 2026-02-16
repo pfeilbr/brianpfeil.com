@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "karma"
-tags = ["javascript","testing",]
+tags = ["javascript","testing"]
 title = "Karma"
 repoFullName = "pfeilbr/karma-playground"
 repoHTMLURL = "https://github.com/pfeilbr/karma-playground"
@@ -80,5 +80,3 @@ Project to learn and experiment with the Karma javascript test runner.  Karma ru
 	> You'll see Chrome or the browsers you chose start
 
 ![](http://note.io/1FdGfLE)
-
-

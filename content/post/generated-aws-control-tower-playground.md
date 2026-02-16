@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-10-17
 description = ""
 summary = " "
 draft = false
 slug = "aws-control-tower"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Control Tower"
 repoFullName = "pfeilbr/aws-control-tower-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-control-tower-playground"
@@ -43,5 +43,3 @@ Control Tower is the composition of many AWS services
 * [AWS re:Inforce 2019: Using AWS Control Tower to Govern Multi-Account AWS Environments (GRC313-R)](https://www.youtube.com/watch?v=2t-VkWt0rKk) (video)
 * [Using AWS Control Tower to govern multi-account AWS environments at scale - GRC313-R - AWS re:Inforce 2019](https://www.slideshare.net/AmazonWebServices/using-aws-control-tower-to-govern-multiaccount-aws-environments-at-scale-grc313r-aws-reinforce-2019)(slides)
 * [AWS Control Tower is now generally available](https://aws.amazon.com/about-aws/whats-new/2019/06/aws-control-tower-is-now-generally-available/)
-
-

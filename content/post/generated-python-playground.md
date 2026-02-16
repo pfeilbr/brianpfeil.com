@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "python"
-tags = ["python",]
+tags = ["python"]
 title = "Python"
 repoFullName = "pfeilbr/python-playground"
 repoHTMLURL = "https://github.com/pfeilbr/python-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn and experiment with python, it's libraries, and packages
 
-add `test_*.py` file to [tests/unit](tests/unit) directory with code to test, learn, experiment with language, library, package, etc.
+add `test_*.py` file to [tests/unit](https://github.com/pfeilbr/python-playground/blob/master/tests/unit) directory with code to test, learn, experiment with language, library, package, etc.
 
 
 ```sh
@@ -39,5 +39,3 @@ npm run test
 # run tests and watch for changes to re-run
 npm run test:watch
 ```
-
-

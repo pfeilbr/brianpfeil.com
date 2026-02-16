@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2022-01-07
 description = ""
 summary = " "
 draft = false
 slug = "aws-assume-role-using-custom-oidc-provider"
-tags = ["aws","iam","oidc",]
+tags = ["aws","iam","oidc"]
 title = "AWS Assume Role Using Custom OIDC Provider"
 repoFullName = "pfeilbr/aws-assume-role-using-custom-oidc-provider-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-assume-role-using-custom-oidc-provider-playground"
@@ -64,6 +64,4 @@ see also [AWS federation comes to GitHub Actions](https://awsteele.com/blog/2021
 * [Secure Communication Between Actions and App](https://github.community/t/secure-communication-between-actions-and-app/201330)
 * [Deploy on AWS using Bitbucket Pipelines OpenID Connect](https://support.atlassian.com/bitbucket-cloud/docs/deploy-on-aws-using-bitbucket-pipelines-openid-connect/)
 * [Bitbucket / Ben Kehoe Twitter Thread](https://twitter.com/revbingo/status/1485319472395268104?s=21)
-
-
 

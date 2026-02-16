@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-08-14
 description = ""
 summary = " "
 draft = false
 slug = "aws-cloudformation"
-tags = ["aws","cloudformation",]
+tags = ["aws","cloudformation"]
 title = "AWS CloudFormation"
 repoFullName = "pfeilbr/aws-cloudformation-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-cloudformation-playground"
@@ -47,7 +47,7 @@ learn [aws cloudformation](https://aws.amazon.com/cloudformation/)
 ---
 ## Running Examples
 
-examples in [`templates/`](templates/) directory
+examples in [`templates/`](https://github.com/pfeilbr/aws-cloudformation-playground/blob/master/templates/) directory
 
 ```sh
 # validate template
@@ -72,7 +72,7 @@ aws cloudformation describe-stacks --stack-name s3-bucket-stack --query "Stacks[
 
 ### Dynamic References Example
 
-see [`templates/dynamic-references-ssm-secrets.yaml`](templates/dynamic-references-ssm-secrets.yaml) and [Using Dynamic References to Specify Template Values
+see [`templates/dynamic-references-ssm-secrets.yaml`](https://github.com/pfeilbr/aws-cloudformation-playground/blob/master/templates/dynamic-references-ssm-secrets.yaml) and [Using Dynamic References to Specify Template Values
 ](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/dynamic-references.html#dynamic-references-secretsmanager)
 
 ```sh
@@ -121,5 +121,3 @@ aws lambda invoke \
   output.log; cat output.log; rm output.log
 
 ```
-
-

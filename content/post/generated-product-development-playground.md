@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-09-03
 description = ""
 summary = " "
@@ -57,7 +57,7 @@ https://www.youtube.com/embed/84vV8fj4Ljg
 
 ## Resources
 
-* [`wardley-map-powerpoint-template.potx`](wardley-map-powerpoint-template.potx)
+* [`wardley-map-powerpoint-template.potx`](https://github.com/pfeilbr/product-development-playground/blob/master/wardley-map-powerpoint-template.potx)
 * [wardley-maps-community.github.io/awesome-wardley-maps˝](https://wardley-maps-community.github.io/awesome-wardley-maps/)
 * [medium.com/wardleymaps](https://medium.com/wardleymaps)
 * [Wardley map - Wikipedia](https://en.wikipedia.org/wiki/Wardley_map)
@@ -65,5 +65,3 @@ https://www.youtube.com/embed/84vV8fj4Ljg
 * [Understand context and diminish risk: How to build your first Wardley Map with Miro](https://miro.com/blog/wardley-maps-whiteboard-canvas/)
 * [https://twitter.com/swardley](https://twitter.com/swardley)
 * [https://twitter.com/dvassallo](https://twitter.com/dvassallo)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-boto3"
-tags = ["aws","python","sdk",]
+tags = ["aws","python","sdk"]
 title = "AWS Boto3"
 repoFullName = "pfeilbr/aws-boto3-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-boto3-playground"
@@ -34,5 +34,3 @@ jupyter lab
 
 - [boto3](https://aws.amazon.com/sdk-for-python/)
 - [Boto3 documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
-
-

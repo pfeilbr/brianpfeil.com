@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "nexe"
-tags = ["nodejs","distribution","packaging","tools",]
+tags = ["nodejs","distribution","packaging","tools"]
 title = "Nexe"
 repoFullName = "pfeilbr/nexe-playground"
 repoHTMLURL = "https://github.com/pfeilbr/nexe-playground"
@@ -51,6 +51,4 @@ $ nexe
 
 # output is ./main.nex, which is specified in the nexe.output property
 ```
-
-
 

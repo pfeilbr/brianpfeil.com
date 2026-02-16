@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "dynamodb-export-to-s3-and-query-with-athena"
-tags = ["dynamodb","s3","aws","athena",]
+tags = ["dynamodb","s3","aws","athena"]
 title = "DynamoDB Export to S3 and Query with Athena"
 repoFullName = "pfeilbr/dynamodb-export-to-s3-and-query-with-athena-playground"
 repoHTMLURL = "https://github.com/pfeilbr/dynamodb-export-to-s3-and-query-with-athena-playground"
@@ -23,9 +23,9 @@ example exporting dynamodb table to S3 and then querying via athena
 
 ## Files
 
-* [`template.yaml`](template.yaml)
-* [`main.sh`](main.sh)
-* [`example-export/`](example-export) - example contents of export (copied from S3)
+* [`template.yaml`](https://github.com/pfeilbr/dynamodb-export-to-s3-and-query-with-athena-playground/blob/master/template.yaml)
+* [`main.sh`](https://github.com/pfeilbr/dynamodb-export-to-s3-and-query-with-athena-playground/blob/master/main.sh)
+* [`example-export/`](https://github.com/pfeilbr/dynamodb-export-to-s3-and-query-with-athena-playground/blob/master/example-export) - example contents of export (copied from S3)
 
 ## Running
 
@@ -104,6 +104,4 @@ Screenshot from Athena Console
 * [Now you can export your Amazon DynamoDB table data to your data lake in Amazon S3 to perform analytics at any scale](https://aws.amazon.com/about-aws/whats-new/2020/11/now-you-can-export-your-amazon-dynamodb-table-data-to-your-data-lake-in-amazon-s3-to-perform-analytics-at-any-scale/)
 * [Exporting DynamoDB table data to Amazon S3](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DataExport.html)
 * [AWS CloudFormation custom resource creation with Python, AWS Lambda, and crhelper](https://aws.amazon.com/blogs/infrastructure-and-automation/aws-cloudformation-custom-resource-creation-with-python-aws-lambda-and-crhelper/)
-
-
 

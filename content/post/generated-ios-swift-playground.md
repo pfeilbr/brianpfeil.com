@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "ios-swift"
-tags = ["ios",]
+tags = ["ios"]
 title = "iOS Swift"
 repoFullName = "pfeilbr/ios-swift-playground"
 repoHTMLURL = "https://github.com/pfeilbr/ios-swift-playground"
@@ -18,8 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/ios-swift-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/ios-swift-playground</a>
 </div>
 
+## ios-swift-playground
 
 Scratchpad to learn and explore swift
-
-
 

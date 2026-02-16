@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "webpack"
-tags = ["javascript","bundler","packaging",]
+tags = ["javascript","bundler","packaging"]
 title = "webpack"
 repoFullName = "pfeilbr/webpack-playground"
 repoHTMLURL = "https://github.com/pfeilbr/webpack-playground"
@@ -61,5 +61,3 @@ demonstrates the usage of
 * ng-cache loader for views and partials
 
 ---
-
-

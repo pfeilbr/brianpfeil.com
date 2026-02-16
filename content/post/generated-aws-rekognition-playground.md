@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-rekognition"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Rekognition"
 repoFullName = "pfeilbr/aws-rekognition-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-rekognition-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn [AWS Rekognition](https://docs.aws.amazon.com/rekognition/)
 
-see [`src/examples.js`](src/examples.js)
+see [`src/examples.js`](https://github.com/pfeilbr/aws-rekognition-playground/blob/master/src/examples.js)
 
 ## Prerequisites
 
@@ -37,19 +37,19 @@ see [`src/examples.js`](src/examples.js)
 ## Example Labelled Image Using [`detectLabels`](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Rekognition.html#detectLabels-property) API
 
 **Source**
-![](assets/images/city-street.jpg)
+![](https://raw.githubusercontent.com/pfeilbr/aws-rekognition-playground/master/assets/images/city-street.jpg)
 
 **Labelled**
-![](assets/images/city-street.jpg-labelled.jpg)
+![](https://raw.githubusercontent.com/pfeilbr/aws-rekognition-playground/master/assets/images/city-street.jpg-labelled.jpg)
 
 
 ## Example Labelled Image Using [`detectText`](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Rekognition.html#detectText-property) API
 
 **Source**
-![](assets/images/book-cover.jpg)
+![](https://raw.githubusercontent.com/pfeilbr/aws-rekognition-playground/master/assets/images/book-cover.jpg)
 
 **Labelled**
-![](assets/images/book-cover.jpg-labelled.jpg)
+![](https://raw.githubusercontent.com/pfeilbr/aws-rekognition-playground/master/assets/images/book-cover.jpg-labelled.jpg)
 
 
 ## Running
@@ -3858,5 +3858,3 @@ aws rekognition get-label-detection  --job-id "2c9b387607977af21c0839f177bf7034c
     }
 }
 ```
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "antd-react"
-tags = ["react","design","ui","framework","ui-components",]
+tags = ["react","design","ui","framework","ui-components"]
 title = "Antd React"
 repoFullName = "pfeilbr/antd-react-playground"
 repoHTMLURL = "https://github.com/pfeilbr/antd-react-playground"
@@ -23,8 +23,8 @@ learn [Ant Design (antd)](https://ant.design/) for [React](https://reactjs.org/)
 
 ## Files and Directories
 
-* [`src/App.js`](src/App.js)
-* [`src/App.css`](src/App.css)
+* [`src/App.js`](https://github.com/pfeilbr/antd-react-playground/blob/master/src/App.js)
+* [`src/App.css`](https://github.com/pfeilbr/antd-react-playground/blob/master/src/App.css)
 
 ## Resources
 
@@ -100,6 +100,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-
 

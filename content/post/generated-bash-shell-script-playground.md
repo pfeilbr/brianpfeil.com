@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "bash-shell-script"
-tags = ["bash","shell",]
+tags = ["bash","shell"]
 title = "Bash Shell Script"
 repoFullName = "pfeilbr/bash-shell-script-playground"
 repoHTMLURL = "https://github.com/pfeilbr/bash-shell-script-playground"
@@ -23,7 +23,7 @@ learn and experiment with [bash](https://www.gnu.org/software/bash/) shell scrip
 
 ## Development Workflow
 
-[`main.sh`](main.sh)
+[`main.sh`](https://github.com/pfeilbr/bash-shell-script-playground/blob/master/main.sh)
 
 ```sh
 # re-run on changes to main.sh.  run in own shell / blocks
@@ -31,5 +31,3 @@ make dev
 
 # edit main.sh
 ```
-
-

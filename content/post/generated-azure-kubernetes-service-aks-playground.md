@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-05-18
 description = ""
 summary = " "
 draft = false
 slug = "azure-kubernetes-service-aks"
-tags = ["azure","kubernetes",]
+tags = ["azure","kubernetes"]
 title = "Azure Kubernetes Service AKS"
 repoFullName = "pfeilbr/azure-kubernetes-service-aks-playground"
 repoHTMLURL = "https://github.com/pfeilbr/azure-kubernetes-service-aks-playground"
@@ -55,5 +55,3 @@ az group delete --name "pfeilbr-aks-01" --yes --no-wait
 ```
 
 ![](https://www.evernote.com/l/AAHFfcVhlCJNT5rYgPkVTwZ4NL5x57QaNd0B/image.png)
-
-

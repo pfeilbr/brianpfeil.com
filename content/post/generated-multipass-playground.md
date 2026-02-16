@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-02-09
 description = ""
 summary = " "
 draft = false
 slug = "multipass"
-tags = ["linux","virtualization",]
+tags = ["linux","virtualization"]
 title = "Multipass"
 repoFullName = "pfeilbr/multipass-playground"
 repoHTMLURL = "https://github.com/pfeilbr/multipass-playground"
@@ -69,5 +69,3 @@ multipass delete capital-tapir
 # purge all deleted instances permanently
 multipass purge
 ```
-
-

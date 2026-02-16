@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-web-content"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Web Content"
 repoFullName = "pfeilbr/aws-web-content"
 repoHTMLURL = "https://github.com/pfeilbr/aws-web-content"
@@ -25,8 +25,8 @@ App URL: <https://brianpfeil.com/apps/awswebcontent/build/index.html>
 
 * fetch all aws directory api metadata (arch diagrams, products, blog posts, builders library articles, etc.)
 * based on public data fetched via `https://aws.amazon.com/api/dirs/items/search?item.directoryId=${directoryId}&item.locale=en_US`
-* [`index.js`](index.js) - entrypoint
-* [`data/`](data/) - directory items
+* [`index.js`](https://github.com/pfeilbr/aws-web-content/blob/main/index.js) - entrypoint
+* [`data/`](https://github.com/pfeilbr/aws-web-content/blob/main/data/) - directory items
 
 ## Updating AWS Web Content Data
 
@@ -154,7 +154,7 @@ npm run publish
 ## TODO
 
 * add "AWS Quick Starts" directory https://aws.amazon.com/api/dirs/items/search?item.directoryId=alias%23solutions-experience&sort_by=item.additionalFields.sortDate&sort_order=desc&size=15&item.locale=en_US&tags.id=!GLOBAL%23flag%23archived
-  * stubbed and commented out in [`metadata.js`](metadata.js)
+  * stubbed and commented out in [`metadata.js`](https://github.com/pfeilbr/aws-web-content/blob/main/metadata.js)
 
 * step fn processing logic - need to figure out how to not download everything each run.  way to download only new or changed items since last run
     * define work by getting metadata for number results via https://...?item.directoryId=${directoryId}&item.locale=en_US&page=0.  generate singe sqs message for each unique URL
@@ -219,6 +219,4 @@ curl --silent --compressed \
 
 * <https://github.com/tycarac/aws-documents> - good refernce project that "Downloads AWS documents, currently whitepapers, from AWS documentation website."
 * <https://github.com/nragusa/aws-newrelease-slack> - An AWS CDK application that sends AWS new service and feature release announcements to a Slack channel of your choice
-
-
 

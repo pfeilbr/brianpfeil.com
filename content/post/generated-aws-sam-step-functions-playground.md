@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-08-14
 description = ""
 summary = " "
 draft = false
 slug = "aws-sam-step-functions"
-tags = ["aws","sam","step-functions","infrastructure-as-code",]
+tags = ["aws","sam","step-functions","infrastructure-as-code"]
 title = "AWS SAM Step Functions"
 repoFullName = "pfeilbr/aws-sam-step-functions-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-sam-step-functions-playground"
@@ -21,7 +21,7 @@ truncated = true
 
 learn and experiment with using [AWS SAM](https://aws.amazon.com/serverless/sam/) to define and deploy [AWS Step Functions](https://aws.amazon.com/step-functions/).
 
-see [`template.yaml`](template.yaml) and [`data/event-bus-events.json`](data/event-bus-events.json)
+see [`template.yaml`](https://github.com/pfeilbr/aws-sam-step-functions-playground/blob/master/template.yaml) and [`data/event-bus-events.json`](https://github.com/pfeilbr/aws-sam-step-functions-playground/blob/master/data/event-bus-events.json)
 
 ## Running
 
@@ -62,5 +62,3 @@ aws cloudformation delete-stack --stack-name "aws-sam-step-functions-playground"
 
 * [Simplifying application orchestration with AWS Step Functions and AWS SAM](https://aws.amazon.com/blogs/compute/simplifying-application-orchestration-with-aws-step-functions-and-aws-sam/)
 * [aws | events | put-events]](https://docs.aws.amazon.com/cli/latest/reference/events/put-events.html#examples)
-
-

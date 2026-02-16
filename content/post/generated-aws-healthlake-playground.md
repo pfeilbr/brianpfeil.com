@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-09-16
 description = ""
 summary = " "
 draft = false
 slug = "aws-healthlake"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Healthlake"
 repoFullName = "pfeilbr/aws-healthlake-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-healthlake-playground"
@@ -57,6 +57,4 @@ learn [Health Data Lake and Healthcare Analytics - Amazon HealthLake - Amazon We
 * [Paging Doctor Cloud! Amazon HealthLake Is Now Generally Available | Amazon Web Services](https://aws.amazon.com/blogs/aws/paging-doctor-cloud-amazon-healthlake-is-now-generally-available/)
 * [Amazon HealthLake Workshop](https://amazon-healthlake.workshop.aws/)
 * <https://www.hl7.org/fhir/patient-examples.html#> - FHIR examples
-
-
 

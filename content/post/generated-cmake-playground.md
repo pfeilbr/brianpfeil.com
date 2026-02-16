@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "cmake"
-tags = ["cmake",]
+tags = ["cmake"]
 title = "CMake"
 repoFullName = "pfeilbr/cmake-playground"
 repoHTMLURL = "https://github.com/pfeilbr/cmake-playground"
@@ -22,5 +22,3 @@ truncated = true
 project to learn [CMake](https://cmake.org/)
 
 see `README.md` file for each sub directory
-
-

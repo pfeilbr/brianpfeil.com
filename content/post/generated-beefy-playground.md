@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "beefy"
-tags = ["nodejs","tools",]
+tags = ["nodejs","tools"]
 title = "Beefy"
 repoFullName = "pfeilbr/beefy-playground"
 repoHTMLURL = "https://github.com/pfeilbr/beefy-playground"
@@ -18,6 +18,7 @@ truncated = true
 <span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/beefy-playground" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/beefy-playground</a>
 </div>
 
+## [Beefy](http://didact.us/beefy/) Playground
 
 Learn and experiment with [Beefy](http://didact.us/beefy/), which makes working with [Browserify](http://browserify.org/) a little nicer.
 
@@ -39,5 +40,3 @@ Learn and experiment with [Beefy](http://didact.us/beefy/), which makes working 
   ```
 
 ![](http://didact.us/beefy/cows.jpg)
-
-

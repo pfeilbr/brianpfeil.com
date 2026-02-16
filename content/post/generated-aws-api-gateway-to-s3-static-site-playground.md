@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-api-gateway-to-s3-static-site"
-tags = ["aws","s3","api-gateway",]
+tags = ["aws","s3","api-gateway"]
 title = "AWS API Gateway to S3 Static Site"
 repoFullName = "pfeilbr/aws-api-gateway-to-s3-static-site-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-api-gateway-to-s3-static-site-playground"
@@ -28,7 +28,7 @@ truncated = true
 ---
 
 * example of hosting static site (create-react-app) with api gateway -> s3
-* static site content at [`my-react-app`](my-react-app)
+* static site content at [`my-react-app`](https://github.com/pfeilbr/aws-api-gateway-to-s3-static-site-playground/blob/master/my-react-app)
 
 ## Example Deployment Steps
 
@@ -58,10 +58,8 @@ open https://a4kesxi0gg.execute-api.us-east-1.amazonaws.com/dev/index.html
 
 ## Resources
 
-* [API-Gateway S3 Proxy](https://jcdubs.medium.com/api-gateway-s3-proxy-a72e398b4d03) - followed this console guide to get it to work.  export as openapi from console and embed in [`template.yaml`](template.yaml)
+* [API-Gateway S3 Proxy](https://jcdubs.medium.com/api-gateway-s3-proxy-a72e398b4d03) - followed this console guide to get it to work.  export as openapi from console and embed in [`template.yaml`](https://github.com/pfeilbr/aws-api-gateway-to-s3-static-site-playground/blob/master/template.yaml)
 * [Tutorial: Create a REST API as an Amazon S3 proxy in API Gateway - Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-s3.html#api-items-in-folder-as-s3-objects-in-bucket)
 * [API Gateway S3 Integration Signature does not match with blank folder name](https://stackoverflow.com/questions/64539716/api-gateway-s3-integration-signature-does-not-match-with-blank-folder-name)
 * [Functionless S3 Integration inside a Serverless Casserole-Part 1](https://medium.com/lego-engineering/functionless-s3-integration-inside-a-serverless-casserole-part-1-b300085eea78)
 * [SAM Template for AWS Api Gateway Integration with S3 as AWS Service](https://stackoverflow.com/questions/60488172/sam-template-for-aws-api-gateway-integration-with-s3-as-aws-service)
-
-

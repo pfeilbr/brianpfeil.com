@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "amazon-memorydb"
-tags = ["aws","db",]
+tags = ["aws","db"]
 title = "Amazon MemoryDB"
 repoFullName = "pfeilbr/amazon-memorydb-playground"
 repoHTMLURL = "https://github.com/pfeilbr/amazon-memorydb-playground"
@@ -51,5 +51,3 @@ sam delete --no-prompts
 - [serverless-patterns/apigw-lambda-memorydb](https://github.com/aws-samples/serverless-patterns/tree/main/apigw-lambda-memorydb)
 - [AWSinAction/code3/chapter11/memorydb-minimal.yaml](https://github.com/AWSinAction/code3/blob/main/chapter11/memorydb-minimal.yaml)
 - [Configure ACLs with the ACL command](https://redis.io/docs/management/security/acl/)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-polly"
-tags = ["aws","polly",]
+tags = ["aws","polly"]
 title = "AWS Polly"
 repoFullName = "pfeilbr/aws-polly-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-polly-playground"
@@ -25,7 +25,7 @@ learn [aws polly]() text-to-speech (TTS)
 
 based on <https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-browser.html#getting-started-browser-scenario>
 
-update js code in [`polly.html`](polly.html) with the following
+update js code in [`polly.html`](https://github.com/pfeilbr/aws-polly-playground/blob/master/polly.html) with the following
 
 ```js
 AWS.config.region = '<YOUR_REGION>';
@@ -35,5 +35,3 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({ IdentityPoolId: '<
 ```sh
 open polly.html
 ```
-
-

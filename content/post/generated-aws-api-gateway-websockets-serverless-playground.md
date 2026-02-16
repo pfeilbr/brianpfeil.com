@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-api-gateway-websockets-serverless"
-tags = ["aws","serverless",]
+tags = ["aws","serverless"]
 title = "AWS API Gateway WebSockets Serverless"
 repoFullName = "pfeilbr/aws-api-gateway-websockets-serverless-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-api-gateway-websockets-serverless-playground"
@@ -31,5 +31,3 @@ learn AWS API Gateway Websockets with [serverless framework](https://serverless.
 * [serverless-websockets-plugin/example](https://github.com/serverless/serverless-websockets-plugin/tree/master/example)
 * [Control Access to a WebSocket API in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-control-access.html)
 * [API Gateway Limits for Configuring and Running a WebSocket API](https://docs.aws.amazon.com/apigateway/latest/developerguide/limits.html#apigateway-execution-service-websocket-limits-table)
-
-

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "serverless-lambda-java"
-tags = ["serverless","lambda","java",]
+tags = ["serverless","lambda","java"]
 title = "Serverless Lambda Java"
 repoFullName = "pfeilbr/serverless-lambda-java-playground"
 repoHTMLURL = "https://github.com/pfeilbr/serverless-lambda-java-playground"
@@ -45,5 +45,3 @@ sls invoke --function hello --data '{"msg": "hello"}' --log
 ## Resources
 
 * [How to create a REST API in Java using DynamoDB and Serverless](https://serverless.com/blog/how-to-create-a-rest-api-in-java-using-dynamodb-and-serverless/)
-
-

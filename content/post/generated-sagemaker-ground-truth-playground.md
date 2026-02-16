@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2022-06-16
 description = ""
 summary = " "
 draft = false
 slug = "sagemaker-ground-truth"
-tags = ["sagemaker","machine-learning",]
+tags = ["sagemaker","machine-learning"]
 title = "SageMaker Ground Truth"
 repoFullName = "pfeilbr/sagemaker-ground-truth-playground"
 repoHTMLURL = "https://github.com/pfeilbr/sagemaker-ground-truth-playground"
@@ -142,6 +142,4 @@ response = client.create_labeling_job(
 * [nitinaws/gt-custom-workflow](https://github.com/nitinaws/gt-custom-workflow)
 * [aws-samples/sagemaker-ground-truth-label-training-data](https://github.com/aws-samples/sagemaker-ground-truth-label-training-data)
 * [Create a Labeling Job (API) - Examples](https://docs.aws.amazon.com/sagemaker/latest/dg/sms-create-labeling-job-api.html#sms-create-labeling-job-api-examples) - python and aws cli examples
-
-
 

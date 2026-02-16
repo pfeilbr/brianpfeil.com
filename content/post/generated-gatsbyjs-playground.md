@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "gatsbyjs"
-tags = ["gatsbyjs",]
+tags = ["gatsbyjs"]
 title = "GatsbyJS"
 repoFullName = "pfeilbr/gatsbyjs-playground"
 repoHTMLURL = "https://github.com/pfeilbr/gatsbyjs-playground"
@@ -23,7 +23,7 @@ learn [Gatsby](https://www.gatsbyjs.org)
 
 ## Plugin
 
-custom plugin at [`plugins/gatsby-source-random`](plugins/gatsby-source-random)
+custom plugin at [`plugins/gatsby-source-random`](https://github.com/pfeilbr/gatsbyjs-playground/blob/master/plugins/gatsby-source-random)
 
 _original `README.md` from starter below_
 
@@ -126,6 +126,4 @@ Looking for more guidance? Full documentation for Gatsby lives [on the website](
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
 
 <!-- AUTO-GENERATED-CONTENT:END -->
-
-
 

@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "hugging-face"
-tags = ["machine-learning","nlp","python",]
+tags = ["machine-learning","nlp","python"]
 title = "Hugging Face"
 repoFullName = "pfeilbr/hugging-face-playground"
 repoHTMLURL = "https://github.com/pfeilbr/hugging-face-playground"
@@ -51,5 +51,3 @@ pipenv run python main.py
 * [Hugging Face – The AI community building the future.](https://huggingface.co/)
 * [Hugging Face Transformers Package &#8211; What Is It and How To Use It - KDnuggets](https://www.kdnuggets.com/2021/02/hugging-face-transformer-basics.html)
 * [Hosting Hugging Face models on AWS Lambda for serverless inference | Amazon Web Services](https://aws.amazon.com/blogs/compute/hosting-hugging-face-models-on-aws-lambda/)
-
-

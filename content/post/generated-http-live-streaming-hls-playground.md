@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "http-live-streaming-hls"
-tags = ["streaming","http",]
+tags = ["streaming","http"]
 title = "HTTP Live Streaming HLS"
 repoFullName = "pfeilbr/http-live-streaming-hls-playground"
 repoHTMLURL = "https://github.com/pfeilbr/http-live-streaming-hls-playground"
@@ -39,14 +39,12 @@ python -m SimpleHTTPServer 8000
 open http://localhost:8000/
 ```
 
-* [`public/index.html`](public/index.html) - include js code for video playback
-* [`assets/video/SampleVideo_1280x720_10mb.mp4`](assets/video/SampleVideo_1280x720_10mb.mp4) - sample video
+* [`public/index.html`](https://github.com/pfeilbr/http-live-streaming-hls-playground/blob/master/public/index.html) - include js code for video playback
+* [`assets/video/SampleVideo_1280x720_10mb.mp4`](https://github.com/pfeilbr/http-live-streaming-hls-playground/blob/master/assets/video/SampleVideo_1280x720_10mb.mp4) - sample video
 
 ### Resources
 
 * [How can I play a m3u8 (file) video using the HTML5 <video> element?](https://stackoverflow.com/questions/41014197/how-can-i-play-a-m3u8-file-video-using-the-html5-video-element)
 * [sample-videos.com](https://www.sample-videos.com/)
 * [HTTP Live Streaming](https://en.wikipedia.org/wiki/HTTP_Live_Streaming)
-
-
 

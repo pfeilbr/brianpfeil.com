@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "tailwindcss"
-tags = ["css","framework",]
+tags = ["css","framework"]
 title = "TailwindCSS"
 repoFullName = "pfeilbr/tailwindcss-playground"
 repoHTMLURL = "https://github.com/pfeilbr/tailwindcss-playground"
@@ -99,6 +99,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-
 

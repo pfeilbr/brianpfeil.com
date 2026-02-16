@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "aws-data-wrangler"
-tags = ["aws","data","python",]
+tags = ["aws","data","python"]
 title = "AWS Data Wrangler"
 repoFullName = "pfeilbr/aws-data-wrangler-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-data-wrangler-playground"
@@ -49,6 +49,4 @@ Can be used via a [lambda layer](https://aws-data-wrangler.readthedocs.io/en/sta
 * [awslabs/aws-data-wrangler](https://github.com/awslabs/aws-data-wrangler)
 * [AWS Data Wrangler| API Reference](https://aws-data-wrangler.readthedocs.io/en/stable/api.html)
 * <https://github.com/awslabs/aws-data-wrangler/tree/master/tutorials> - notebooks with examples
-
-
 

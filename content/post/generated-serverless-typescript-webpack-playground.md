@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "serverless-typescript-webpack"
-tags = ["serverless","typescript",]
+tags = ["serverless","typescript"]
 title = "Serverless TypeScript webpack"
 repoFullName = "pfeilbr/serverless-typescript-webpack-playground"
 repoHTMLURL = "https://github.com/pfeilbr/serverless-typescript-webpack-playground"
@@ -61,5 +61,3 @@ curl -d '{"key1":"value1", "key2":"value2"}' -H "Content-Type: application/json"
     yarn add @types/node --dev
     yarn add @types/async --dev
     ```
-
-

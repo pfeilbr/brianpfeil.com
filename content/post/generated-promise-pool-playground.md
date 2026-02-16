@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "promise-pool"
-tags = ["nodejs","concurrency",]
+tags = ["nodejs","concurrency"]
 title = "Promise Pool"
 repoFullName = "pfeilbr/promise-pool-playground"
 repoHTMLURL = "https://github.com/pfeilbr/promise-pool-playground"
@@ -21,11 +21,9 @@ truncated = true
 
 learn [supercharge/promise-pool](https://github.com/supercharge/promise-pool): Map-like, concurrent promise processing 
 
-see [`index.js`](index.js)
+see [`index.js`](https://github.com/pfeilbr/promise-pool-playground/blob/master/index.js)
 
 ## Resources
 
 * [supercharge/promise-pool](https://github.com/supercharge/promise-pool)
 * [Supercharge — an open-source Node.js framework, not just a web framework](https://superchargejs.com/docs/2.x/promise-pool)
-
-

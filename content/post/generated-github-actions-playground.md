@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2021-09-20
 description = ""
 summary = " "
@@ -24,5 +24,3 @@ learn [github actions](https://docs.github.com/en/actions)
 ## Resources
 
 - [GitHub Actions Documentation - GitHub Docs](https://docs.github.com/en/actions)
-
-

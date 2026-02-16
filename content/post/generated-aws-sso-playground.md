@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2022-07-06
 description = ""
 summary = " "
 draft = false
 slug = "aws-sso"
-tags = ["aws","sso",]
+tags = ["aws","sso"]
 title = "AWS SSO"
 repoFullName = "pfeilbr/aws-sso-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-sso-playground"
@@ -73,5 +73,3 @@ aws sso-admin list-account-assignments \
 - [AWS::SSO::PermissionSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-sso-permissionset.html)
 - [AWS::SSO::Assignment](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-sso-assignment.html)
 - [How can I get temporary credentials for an AWS Single Sign-On user using the AWS CLI?](https://aws.amazon.com/premiumsupport/knowledge-center/sso-temporary-credentials/)
-
-

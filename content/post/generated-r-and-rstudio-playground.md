@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2022-07-06
 description = ""
 summary = " "
 draft = false
 slug = "r-and-rstudio"
-tags = ["machine-learning",]
+tags = ["machine-learning"]
 title = "R and RStudio"
 repoFullName = "pfeilbr/r-and-rstudio-playground"
 repoHTMLURL = "https://github.com/pfeilbr/r-and-rstudio-playground"
@@ -83,5 +83,3 @@ open https://localhost:8787
 - [Rocker Project](https://www.rocker-project.org/) - Docker Containers for the R Environment
 - <https://docs.rstudio.com/>
 - [pfeilbr/rstudio-on-sagemaker-playground](https://github.com/pfeilbr/rstudio-on-sagemaker-playground)
-
-

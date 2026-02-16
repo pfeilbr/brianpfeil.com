@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2020-07-10
 description = ""
 summary = " "
 draft = false
 slug = "strapi"
-tags = ["cms","javascript",]
+tags = ["cms","javascript"]
 title = "Strapi"
 repoFullName = "pfeilbr/strapi-playground"
 repoHTMLURL = "https://github.com/pfeilbr/strapi-playground"
@@ -50,5 +50,3 @@ open http://localhost:1337/admin
 ## Resources
 
 * [Strapi Documentation](https://strapi.io/documentation/)
-
-

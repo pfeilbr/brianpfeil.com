@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "autotools"
-tags = ["autotools",]
+tags = ["autotools"]
 title = "Autotools"
 repoFullName = "pfeilbr/autotools-playground"
 repoHTMLURL = "https://github.com/pfeilbr/autotools-playground"
@@ -57,5 +57,3 @@ make install
 
 * [The magic behind configure, make, make install](https://robots.thoughtbot.com/the-magic-behind-configure-make-make-install)
 * [Using Autotools](https://developer.gnome.org/anjuta-build-tutorial/stable/create-autotools.html.en)
-
-

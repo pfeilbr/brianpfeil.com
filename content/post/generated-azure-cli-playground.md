@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-05-14
 description = ""
 summary = " "
 draft = false
 slug = "azure-cli"
-tags = ["azure","cli",]
+tags = ["azure","cli"]
 title = "Azure CLI"
 repoFullName = "pfeilbr/azure-cli-playground"
 repoHTMLURL = "https://github.com/pfeilbr/azure-cli-playground"
@@ -151,5 +151,3 @@ az role definition list | jq '.[].description'
 # list storage account
 az storage account list | jq '.[].name'
 ```
-
-

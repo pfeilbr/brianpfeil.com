@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2019-07-03
 description = ""
 summary = " "
 draft = false
 slug = "aws-codebuild-local"
-tags = ["aws","codebuild",]
+tags = ["aws","codebuild"]
 title = "AWS Codebuild Local"
 repoFullName = "pfeilbr/aws-codebuild-local-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-codebuild-local-playground"
@@ -40,7 +40,5 @@ cd basic-01
 codebuild_build.sh -i 'aws/codebuild/standard:2.0' -a 'artifact-output' -c
 
 ```
-
-
 
 

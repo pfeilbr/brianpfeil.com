@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "emscripten"
-tags = ["web-assembly","tools",]
+tags = ["web-assembly","tools"]
 title = "Emscripten"
 repoFullName = "pfeilbr/emscripten-playground"
 repoHTMLURL = "https://github.com/pfeilbr/emscripten-playground"
@@ -47,6 +47,4 @@ $ node output/hello_world.js
 # NOTE: overwrites
 $ emcc hello_world.c -o output/hello.html
 ```
-
-
 

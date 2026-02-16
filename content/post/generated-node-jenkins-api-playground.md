@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "node-jenkins-api"
-tags = ["jenkins",]
+tags = ["jenkins"]
 title = "Node Jenkins API"
 repoFullName = "pfeilbr/node-jenkins-api-playground"
 repoHTMLURL = "https://github.com/pfeilbr/node-jenkins-api-playground"
@@ -31,5 +31,3 @@ project to learn [node-jenkins](https://github.com/silas/node-jenkins)
 `node index.js`
 
 > shows getting details of `job` and `building a job`
-
-

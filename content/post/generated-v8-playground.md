@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "v8"
-tags = ["v8",]
+tags = ["v8"]
 title = "V8"
 repoFullName = "pfeilbr/v8-playground"
 repoHTMLURL = "https://github.com/pfeilbr/v8-playground"
@@ -42,5 +42,3 @@ The v8 include files were copied from `v8/include` to `v8-includes`
 ## Resources
 
 * [Google V8 Docs](https://developers.google.com/v8/)
-
-

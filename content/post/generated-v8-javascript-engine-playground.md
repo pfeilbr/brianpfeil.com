@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "v8-javascript-engine"
-tags = ["v8",]
+tags = ["v8"]
 title = "V8 JavaScript Engine"
 repoFullName = "pfeilbr/v8-javascript-engine-playground"
 repoHTMLURL = "https://github.com/pfeilbr/v8-javascript-engine-playground"
@@ -88,7 +88,5 @@ project to learn and develop with [V8](https://developers.google.com/v8/)
 > `${workspaceFolder}` is `v8` root directory
 
 ![](https://www.evernote.com/l/AAHCxYreY3BNyI56b_VU9HUCWfwMfOt8BsYB/image.png)
-
-
 
 

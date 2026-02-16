@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "make"
-tags = ["make",]
+tags = ["make"]
 title = "Make"
 repoFullName = "pfeilbr/make-playground"
 repoHTMLURL = "https://github.com/pfeilbr/make-playground"
@@ -31,5 +31,3 @@ learn [make](https://www.gnu.org/software/make/manual/make.html)
 # run `make` whenever Makefile changes
 fswatch -o Makefile | xargs -n1 -I{} make
 ```
-
-

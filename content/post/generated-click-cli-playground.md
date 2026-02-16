@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "click-cli"
-tags = ["cli",]
+tags = ["cli"]
 title = "Click CLI"
 repoFullName = "pfeilbr/click-cli-playground"
 repoHTMLURL = "https://github.com/pfeilbr/click-cli-playground"
@@ -23,7 +23,7 @@ learn [Click](https://click.palletsprojects.com/)
 
 > a python package for creating beautiful command line interfaces in a composable way with as little code as necessary
 
-see [`main.py`](main.py)
+see [`main.py`](https://github.com/pfeilbr/click-cli-playground/blob/master/main.py)
 
 ## Running
 
@@ -36,5 +36,3 @@ python main.py
 ## Resources
 
 * [Click](https://click.palletsprojects.com/)
-
-

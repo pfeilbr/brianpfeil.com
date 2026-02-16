@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "go"
-tags = ["golang",]
+tags = ["golang"]
 title = "Go"
 repoFullName = "pfeilbr/go-playground"
 repoHTMLURL = "https://github.com/pfeilbr/go-playground"
@@ -34,6 +34,4 @@ e.g.
 ## Resources
 
 * [Go Documentation](http://golang.org/doc/)
-
-
 

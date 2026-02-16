@@ -6,7 +6,7 @@ description = ""
 summary = " "
 draft = false
 slug = "alexa-skills"
-tags = ["aws","alexa",]
+tags = ["aws","alexa"]
 title = "Alexa Skills"
 repoFullName = "pfeilbr/alexa-skills-playground"
 repoHTMLURL = "https://github.com/pfeilbr/alexa-skills-playground"
@@ -19,7 +19,7 @@ truncated = true
 </div>
 
 
-## [sage](skills/sage) skill
+## [sage](https://github.com/pfeilbr/alexa-skills-playground/blob/master/skills/sage) skill
 
 data driven skill.  modify `config.js` then deploy
 
@@ -241,5 +241,3 @@ IntentRequest Payload Example (full)
     }
 }
 ```
-
-

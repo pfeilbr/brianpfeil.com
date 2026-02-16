@@ -1,12 +1,12 @@
 +++
 author = "Brian Pfeil"
-categories = ["<nil>", "playground"]
+categories = ["", "playground"]
 date = 2018-06-09
 description = ""
 summary = " "
 draft = false
 slug = "aws-appsync"
-tags = ["aws",]
+tags = ["aws"]
 title = "AWS Appsync"
 repoFullName = "pfeilbr/aws-appsync-playground"
 repoHTMLURL = "https://github.com/pfeilbr/aws-appsync-playground"
@@ -65,5 +65,3 @@ learn and experiment with [AWS AppSync](https://aws.amazon.com/appsync/), the ma
 * [serverless-appsync-plugin](https://github.com/sid88in/serverless-appsync-plugin)
     * [example service](https://github.com/sid88in/serverless-appsync-plugin/tree/master/example)
   * [urql](https://formidable.com/open-source/urql/) - GraphQL client
-
-
