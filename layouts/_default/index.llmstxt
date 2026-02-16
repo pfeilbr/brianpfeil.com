@@ -1,0 +1,33 @@
+{{- /* llms.txt - All site content for LLM consumption */ -}}
+# {{ .Site.Title }}
+
+> Personal blog and technical notes by {{ .Site.Params.author.name }}. Topics include cloud architecture, AWS, serverless, JavaScript, Go, and software engineering. {{ .Site.BaseURL }}
+
+## About
+{{ with .Site.GetPage "/about" }}
+{{ .Plain }}
+{{- end }}
+
+## Posts
+{{ range (where .Site.RegularPages "Section" "post") }}
+### {{ .Title }}
+
+- URL: {{ .Permalink }}
+- Date: {{ .Date.Format "2006-01-02" }}
+{{ with .Params.tags }}- Tags: {{ delimit . ", " }}{{ end }}
+
+{{ .Plain }}
+
+---
+{{ end }}
+
+## Projects
+{{ range (where .Site.RegularPages "Section" "projects") }}
+### {{ .Title }}
+
+- URL: {{ .Permalink }}
+
+{{ .Plain }}
+
+---
+{{ end }}

@@ -31,11 +31,24 @@ params:
     twitter: "pfeilbr"
     stackoverflow: "users/29148/pfeilbr"
 
+mediaTypes:
+  text/plain:
+    suffixes:
+      - txt
+
+outputFormats:
+  llmstxt:
+    mediaType: text/plain
+    baseName: llms
+    isPlainText: true
+    notAlternative: true
+
 outputs:
   home:
     - html
     - rss
     - json
+    - llmstxt
 
 menus:
   main:
