@@ -13,10 +13,8 @@ This is a personal blog (brianpfeil.com) built with Hugo. There is no external t
 - `buildFuture: true` — includes posts with future dates
 
 ### CSS Pipeline
-- Plain CSS utility classes (no build tools, no preprocessors)
-- Entry point: `assets/css/main.css` (reset + utility classes + prose styles)
-- Syntax highlighting: `assets/css/syntax.css` (Chroma, trac style)
-- In `baseof.html`: `slice $main $syntax | resources.Concat "css/bundle.css" | minify | fingerprint`
+- Single plain CSS file: `assets/css/main.css` (reset + utility classes + prose styles + syntax highlighting)
+- In `baseof.html`: `resources.Get "css/main.css" | minify | fingerprint`
 - No Node.js, npm, or PostCSS required
 
 ### JavaScript
@@ -29,7 +27,7 @@ This is a personal blog (brianpfeil.com) built with Hugo. There is no external t
 - `tools/generate-posts/` — Go CLI that creates blog posts from GitHub repo READMEs
 - Fetches repos via GitHub API, filters by regex, converts relative links to absolute
 - Config: `tools/generate-posts/config.yaml` (checked in) + `config.local.yaml` (gitignored, has GitHub token)
-- Run via: `./site generate-posts-from-repos` or `make generate-posts`
+- Run via: `make generate-posts`
 
 ## Template Hierarchy
 
@@ -44,6 +42,7 @@ layouts/_default/baseof.html     <- HTML shell, CSS bundle, Google Fonts, DarkRe
   layouts/_default/list.html     <- Tags taxonomy page (pills) + term pages (post lists)
   layouts/projects/list.html     <- Projects section (card grid)
   layouts/_default/index.json    <- JSON search index for client-side search
+  layouts/_default/_markup/render-link.html  <- Adds target="_blank" to external links
 ```
 
 ## Key Conventions
@@ -97,7 +96,7 @@ layouts/_default/baseof.html     <- HTML shell, CSS bundle, Google Fonts, DarkRe
 
 ### Add a new blog post
 ```bash
-./site post -t "My Post Title"
+hugo new post/my-post-title/index.md
 # Edit content/post/my-post-title/index.md
 make dev  # Preview
 ```
@@ -109,7 +108,7 @@ make generate-posts
 
 ### Run the dev server
 ```bash
-make dev  # or: ./site run-local
+make dev
 ```
 
 ### Build for production
@@ -136,5 +135,5 @@ make test-tools  # cd tools/generate-posts && go test ./...
 
 - **Local**: `make dev` -> Hugo dev server at localhost:1313
 - **CI**: GitHub Actions (`.github/workflows/gh-pages.yml`) -> Hugo build -> GitHub Pages
-- **Domain**: `brianpfeil.com` via CNAME in `static/CNAME`
+- **Domain**: `brianpfeil.com` (configured in GitHub Pages settings)
 - Posts are generated locally and committed; CI only builds Hugo

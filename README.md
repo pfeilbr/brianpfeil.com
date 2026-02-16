@@ -21,16 +21,13 @@ Personal blog built with [Hugo](https://gohugo.io/).
     ├── layouts/               # Hugo templates (no theme — all layouts in-repo)
     │   ├── _default/          # baseof, single, list, index.json
     │   ├── partials/          # nav, footer, search
-    │   ├── projects/          # Custom projects list layout
-    │   └── shortcodes/
+    │   └── projects/          # Custom projects list layout
     ├── assets/
-    │   ├── css/main.css       # CSS reset + utility classes + prose styles
-    │   ├── css/syntax.css     # Chroma syntax highlighting
+    │   ├── css/main.css       # CSS reset + utility classes + prose + syntax highlighting
     │   └── js/search.js       # Vanilla JS search
-    ├── static/                # Images, CNAME, apps
+    ├── static/                # Images
     ├── tools/
     │   └── generate-posts/    # Go tool to generate posts from GitHub repos
-    ├── site                   # Helper script (run local, create post, generate posts)
     ├── config.yaml            # Hugo configuration
     └── Makefile
 
@@ -38,9 +35,8 @@ Personal blog built with [Hugo](https://gohugo.io/).
 
 ### Manual post
 
-    ./site post -t "My New Post Title"
+    hugo new post/my-new-post-title/index.md
 
-This creates `content/post/my-new-post-title/index.md` with Hugo front matter.
 Edit the file, then run `make dev` to preview.
 
 ### Generated posts (from GitHub repos)
@@ -64,10 +60,6 @@ GitHub repository READMEs (e.g., `*-playground` repos).
 
 **Running the generator:**
 
-    # Via the site script:
-    ./site generate-posts-from-repos
-
-    # Or via Make:
     make generate-posts
 
     # Or directly:
@@ -91,12 +83,6 @@ This fetches all matching repos, downloads their READMEs, and writes/updates
 | `make verify` | Build + run verification checks |
 | `make generate-posts` | Run the post generator tool |
 | `make test-tools` | Run Go tests for the post generator |
-
-## The `site` Script
-
-    ./site run-local              # Start dev server + open browser
-    ./site post -t "Title"        # Create a new manual post
-    ./site generate-posts-from-repos  # Generate posts from GitHub repos
 
 ## Deployment
 
