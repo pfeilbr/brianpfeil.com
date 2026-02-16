@@ -30,6 +30,7 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
 │   ├── _default/single.html           # Individual post/page
 │   ├── _default/list.html             # Tags taxonomy + term pages
 │   ├── _default/index.json            # JSON search index
+│   ├── _default/index.llmstxt        # llms.txt — all site content for LLM consumption
 │   ├── _default/_markup/render-link.html  # Adds target="_blank" to external links
 │   ├── index.html                     # Homepage: search + post list + infinite scroll
 │   ├── projects/list.html             # Projects card grid
@@ -59,7 +60,7 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
 - `disablePathToLower: true` — preserves URL casing
 - `buildFuture: true` — includes posts with future dates
 - `mainSections: ["post", "posts"]` — controls which sections appear on homepage
-- Outputs: HTML + RSS + JSON (search index) for home
+- Outputs: HTML + RSS + JSON (search index) + llms.txt for home
 
 ### CSS Pipeline
 
@@ -83,6 +84,15 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
   - "/" keyboard shortcut to focus search
   - Click delegation on `[data-href]` article rows
 - Dark mode via DarkReader CDN in `baseof.html`, persisted to localStorage
+
+### llms.txt (`/llms.txt`)
+
+- Custom Hugo output format generating a plain-text file with all site content
+- Template: `layouts/_default/index.llmstxt`
+- Configured as a home page output format (`outputFormats.llmstxt` in config.yaml)
+- Uses `.Plain` (HTML-stripped text) for each page's content
+- Structured by section: About → Posts (with URL, date, tags) → Projects
+- Not linked in nav or HTML `<head>` (`notAlternative: true`)
 
 ### Post Generation Tool (`tools/generate-posts/`)
 
@@ -187,6 +197,7 @@ Go CLI that creates blog posts from GitHub repo READMEs.
 | `layouts/index.html` (post list structure) | `assets/js/search.js` (search result template should match) |
 | `tools/generate-posts/templates/post.md` | `assets/css/main.css` (banner restyling rules) |
 | `tools/generate-posts/config.yaml` | Generated post output (titles, tags, filtering) |
+| `config.yaml` (outputFormats) | `layouts/_default/index.llmstxt` |
 
 ## Common Tasks
 
