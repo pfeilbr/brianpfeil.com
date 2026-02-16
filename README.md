@@ -87,7 +87,7 @@ This fetches all matching repos, downloads their READMEs, and writes/updates
 ## Deployment
 
 The site deploys to GitHub Pages via GitHub Actions (`.github/workflows/gh-pages.yml`).
-On push to `master`, the workflow:
+On push to `main`, the workflow:
 1. Builds with `hugo --minify`
 2. Deploys to GitHub Pages
 
