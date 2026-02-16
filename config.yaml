@@ -2,15 +2,10 @@ baseURL: "https://brianpfeil.com/"
 disablePathToLower: true
 languageCode: "en-us"
 title: "Brian Pfeil"
-theme: "beautifulhugo"
 
 buildFuture: true
-pagination.pagerSize: 10
-
-pygmentsStyle: "trac"
-pygmentsUseClasses: true
-pygmentsCodeFences: true
-pygmentsCodefencesGuessSyntax: true
+pagination:
+  pagerSize: 30
 
 googleAnalytics: "UA-610553-4"
 
@@ -18,28 +13,23 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+  highlight:
+    style: trac
+    lineNos: false
+    noClasses: false
 
 params:
   homeTitle: "Brian Pfeil"
-  #subtitle: "a personal blog"
-  #description: "Personal blog by Brian Pfeil"
-  customCss: ["css/custom.css"]
   mainSections: ["post", "posts"]
-  #favicon: "img/favicon.ico"
-  commit: false
+  dateFormat: "January 2, 2006"
   rss: true
   rssLimit: 500
-  comments: true
-  useHLJS: true
-  socialShare: true
-  delayDisqus: true
-  showRelatedPosts: true
-  #logo = "img/avatar-icon.png" # Expecting square dimensions
-  dateFormat: "January 2, 2006"
-  #dateFormat: "2006-01-02"
-  #readingTime: true
-  #wordCount: true
-  hideAuthor: true
+  author:
+    name: "Brian Pfeil"
+    website: "https://brianpfeil.com"
+    github: "pfeilbr"
+    twitter: "pfeilbr"
+    stackoverflow: "users/29148/pfeilbr"
 
 outputs:
   home:
@@ -47,51 +37,17 @@ outputs:
     - rss
     - json
 
-Menus:
+menus:
   main:
-    - Name: "about"
-      URL: "/about/"
+    - name: "about"
+      url: "/about/"
       weight: 10
-    - Name: "posts"
-      URL: "/"
+    - name: "posts"
+      url: "/"
       weight: 20
-    - Name: "projects"
-      URL: "/projects/"
+    - name: "projects"
+      url: "/projects/"
       weight: 30
-    - Name: "tags"
-      URL: "/tags/"
+    - name: "tags"
+      url: "/tags/"
       weight: 40
-
-    # - Name: "notes"
-    #   URL: "/notes/"
-    #   weight: 40
-
-author:
-  name: "Brian Pfeil"
-  website: "https://brianpfeil.com"
-  github: "pfeilbr"
-  twitter: "pfeilbr"
-  stackoverflow: "users/29148/pfeilbr"
-  # gitlab = "username"
-  # bitbucket = "username"
-  # twitter = "username"
-  # reddit = "username"
-  # linkedin = "username"
-  # xing = "username"
-  # stackoverflow = "users/XXXXXXX/username"
-  # snapchat = "username"
-  # instagram = "username"
-  # youtube = "user/username" # or channel/channelname
-  # soundcloud = "username"
-  # spotify = "username"
-  # bandcamp = "username"
-  # itchio = "username"
-  # vk = "username"
-  # paypal = "username"
-  # telegram = "username"
-  # 500px = "username"
-  # codepen = "username"
-  # mastodon = "url"
-  # kaggle = "username"
-  # weibo = "username"
-  # slack = "username"

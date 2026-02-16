@@ -8,29 +8,17 @@ title = "About"
 layout = "page"
 +++
 
-<div id="avatar"></div>
-
 Hello, I'm Brian Pfeil. I'm passionate about technology and building things. This is my personal blog where I write about those and other interests.
 
 I currently work at <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a> as a Principal Cloud Architect.
 
 I'm an [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
-## socials
-
-<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-<a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/pfeilbr/" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="instagram" style="width: 24px; height: 24px; margin-right: 6px;"> instagram</a> |
-<a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/brian-pfeil-175a011/" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/145/145807.png" alt="linkedin" style="width: 24px; height: 24px; margin-right: 6px;"> linkedin</a> |
-<a rel="me" href="https://twitter.com/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png" alt="x (twitter)" style="width: 24px; height: 24px; margin-right: 6px;"> x (twitter)</a> |
-<a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/brian.pfeil" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/145/145802.png" alt="facebook" style="width: 24px; height: 24px; margin-right: 6px;"> facebook</a> |
-<a target="_blank" rel="noopener noreferrer" href="http://github.com/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111432.png" alt="github" style="width: 24px; height: 24px; margin-right: 6px;"> github</a> |
-<a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/users/29148/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111628.png" alt="stack overflow" style="width: 24px; height: 24px; margin-right: 6px;"> stack overflow</a>
-</div>
-
-## contact
-
-<div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
-    <a href="mailto:brian.pfeil@gmail.com" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 18px; text-transform: lowercase;">
-        <img src="https://cdn-icons-png.flaticon.com/24/732/732200.png" alt="email" style="width: 24px; height: 24px; margin-right: 6px;"> email
-    </a>
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
+<a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/pfeilbr/" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 14px;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="instagram" style="width: 20px; height: 20px; margin-right: 5px;"> Instagram</a>
+<a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/brian-pfeil-175a011/" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 14px;"><img src="https://cdn-icons-png.flaticon.com/24/145/145807.png" alt="linkedin" style="width: 20px; height: 20px; margin-right: 5px;"> LinkedIn</a>
+<a target="_blank" rel="me noopener noreferrer" href="https://twitter.com/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 14px;"><img src="https://cdn-icons-png.flaticon.com/24/5968/5968830.png" alt="x (twitter)" style="width: 20px; height: 20px; margin-right: 5px;"> X (Twitter)</a>
+<a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/brian.pfeil" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 14px;"><img src="https://cdn-icons-png.flaticon.com/24/145/145802.png" alt="facebook" style="width: 20px; height: 20px; margin-right: 5px;"> Facebook</a>
+<a target="_blank" rel="noopener noreferrer" href="http://github.com/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 14px;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111432.png" alt="github" style="width: 20px; height: 20px; margin-right: 5px;"> GitHub</a>
+<a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/users/29148/pfeilbr" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 14px;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111628.png" alt="stack overflow" style="width: 20px; height: 20px; margin-right: 5px;"> Stack Overflow</a>
 </div>

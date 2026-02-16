@@ -1,116 +1,34 @@
-<nav class="navbar navbar-default navbar-custom">
-  <div class="container-fluid">
-    <div class="navbar-header">
-
-
-
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-        <span class="sr-only">{{ i18n "toggleNavigation" }}</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+<nav class="w-full border-b border-gray-200">
+  <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="/" class="text-lg font-semibold text-gray-900 hover:text-brand no-underline">{{ .Site.Title }}</a>
+    <!-- Desktop nav -->
+    <div class="hidden sm:flex items-center gap-4">
+      {{ range .Site.Menus.main }}
+      <a href="{{ .URL }}" class="text-sm text-gray-600 hover:text-brand no-underline capitalize">{{ .Name }}</a>
+      {{ end }}
+      <button id="dark-mode-toggle" class="p-1 text-gray-600 hover:text-brand cursor-pointer" title="Toggle dark mode">
+        <svg id="dark-mode-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg id="dark-mode-moon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       </button>
-
-      {{ if .IsHome }}
-      <!-- don't show website title on home page -->
-      {{else}}
-      <a class="navbar-brand" href="{{ "" | absLangURL }}">{{ .Site.Title }}</a>
-      <!-- <a class="navbar-brand" href="{{ "" | absLangURL }}">HOME</a> -->
-      {{end}}
     </div>
-
-    <div class="collapse navbar-collapse" id="main-navbar">
-
-      <ul class="nav navbar-nav navbar-right">
-        {{ range .Site.Menus.main.ByWeight }}
-        {{ if .HasChildren }}
-        <li class="navlinks-container">
-          <a class="navlinks-parent">{{ .Name }}</a>
-          <div class="navlinks-children">
-            {{ range .Children }}
-            <a href="{{ .URL | relLangURL }}">{{ .Name }}</a>
-            {{ end }}
-          </div>
-        </li>
-        {{ else }}
-        <li>
-          <a title="{{ .Name }}" href="{{ .URL  | relLangURL }}">{{ .Name }}</a>
-        </li>
-        {{ end }}
-
-        {{ end }}
-
-        {{ if hugo.IsMultilingual }}
-        {{ if ge (len .Site.Languages) 3 }}
-        <li class="navlinks-container">
-          <a class="navlinks-parent">{{ i18n "languageSwitcherLabel" }}</a>
-          <div class="navlinks-children">
-            {{ range .Site.Languages }}
-            {{ if not (eq .Lang $.Site.Language.Lang) }}
-            <a href="/{{ .Lang }}" lang="{{ .Lang }}">{{ default .Lang .LanguageName }}</a>
-            {{ end }}
-            {{ end }}
-          </div>
-        </li>
-        {{ else }}
-        <li>
-          {{ range .Site.Languages }}
-          {{ if not (eq .Lang $.Site.Language.Lang) }}
-          <a href="/{{ .Lang }}" lang="{{ .Lang }}">{{ default .Lang .LanguageName }}</a>
+    <!-- Mobile nav -->
+    <div class="flex items-center gap-2 sm:hidden">
+      <button id="dark-mode-toggle-mobile" class="p-1 text-gray-600 hover:text-brand cursor-pointer" title="Toggle dark mode">
+        <svg class="dark-mode-sun w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="dark-mode-moon w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <details class="relative">
+        <summary class="list-none cursor-pointer p-1">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </summary>
+        <div class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-50 py-1">
+          {{ range .Site.Menus.main }}
+          <a href="{{ .URL }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 no-underline capitalize">{{ .Name }}</a>
           {{ end }}
-          {{ end }}
-        </li>
-        {{ end }}
-        {{ end }}
-
-        {{ if isset .Site.Params "gcse" }}
-        <li>
-          <a href="#modalSearch" data-toggle="modal" data-target="#modalSearch" style="outline: none;">
-            <span class="hidden-sm hidden-md hidden-lg">{{ i18n "gcseLabelShort" }}</span> <span id="searchGlyph"
-              class="glyphicon glyphicon-search"></span>
-          </a>
-        </li>
-        {{ end }}
-
-        <li>
-          <!-- dark mode toggle icons -->
-          <a id="dark-mode-toggle">
-            <i class="fa fa-moon hidden" id="dark-mode-enabled-icon" aria-hidden="true"></i>
-            <i class="fa fa-sun hidden" id="dark-mode-disabled-icon" aria-hidden="true"></i>
-          </a>
-        </li>
-      </ul>
+        </div>
+      </details>
     </div>
-
-    {{ if isset .Site.Params "logo" }}
-    <div class="avatar-container">
-      <div class="avatar-img-border">
-        <a title="{{ .Site.Title }}" href="{{ "" | absLangURL }}">
-          <img class="avatar-img" src="{{ .Site.Params.logo | absURL }}" alt="{{ .Site.Title }}" />
-        </a>
-      </div>
-    </div>
-    {{ end }}
-
   </div>
 </nav>
-
-<!-- Search Modal -->
-{{ if isset .Site.Params "gcse" }}
-<div id="modalSearch" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{ i18n "gcseLabelLong" . }}</h4>
-      </div>
-      <div class="modal-body">
-        <gcse:search></gcse:search>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">{{ i18n "gcseClose" }}</button>
-      </div>
-    </div>
-  </div>
-</div>
-{{ end }}

@@ -1,0 +1,352 @@
+github_username: "pfeilbr"
+default_branch: "master"
+
+repo_filters:
+  include:
+    - ".*-playground"
+    - "aws-web-content"
+    - "alfred-utilities-workflow"
+    - "aws-vscode-dev-container"
+  exclude:
+    - "taco-playground"
+    - "python-tox-testing-playground"
+    - "mermaid-diagram-playground"
+    - "gradle-playground"
+    - "aws-cloudfront-playground"
+    - "aws-cloudfront-private-content-playground"
+    - "aws-cloudwatch-playground"
+    - "aws-cognito-playground"
+    - "confluence-api-playground"
+    - "cordova-playground"
+    - "jfrog-artifactory-playground"
+    - "surveyjs-react-playground"
+
+title_mappings:
+  "aws-well-architected-playground": "AWS Well-Architected"
+  "aws-assume-role-using-custom-oidc-provider-playground": "AWS Assume Role Using Custom OIDC Provider"
+
+casing_corrections:
+  - "CloudWatch"
+  - "CloudFront"
+  - "CloudFormation"
+  - "OpenCV"
+  - "AWS"
+  - "CLI"
+  - "PHP"
+  - "HTTP"
+  - "SDK"
+  - "CDK"
+  - "API"
+  - "HLS"
+  - "SAM"
+  - "YouTube"
+  - "SDL2"
+  - "GoReleaser"
+  - "TailwindCSS"
+  - "GLib"
+  - "XRay"
+  - "URL"
+  - "AKS"
+  - "JS"
+  - "ARM"
+  - "WebSocket"
+  - "GatsbyJS"
+  - "fswatch"
+  - "UI"
+  - "WebSockets"
+  - "CodePipeline"
+  - "JFrog"
+  - "ECR"
+  - "CPP"
+  - "CMake"
+  - "VueJS"
+  - "WebAssembly"
+  - "JSON"
+  - "GitHub"
+  - "GraphQL"
+  - "IoT"
+  - "IAM"
+  - "ECS"
+  - "and"
+  - "KMS"
+  - "webpack"
+  - "NextJS"
+  - "KeystoneJS"
+  - "GitBook"
+  - "TypeScript"
+  - "OData"
+  - "OSX"
+  - "WebdriverIO"
+  - "HTML"
+  - "ES6"
+  - "NWjs"
+  - "iOS"
+  - "JSForce"
+  - "EventBridge"
+  - "SFML"
+  - "MacOS"
+  - "AppFlow"
+  - "MDX"
+  - "PowerShell"
+  - "Diagrams as Code"
+  - "AppConfig"
+  - "JavaScript"
+  - "to"
+  - "with"
+  - "DynamoDB"
+  - "SES"
+  - "APIs"
+  - "for"
+  - "CFN"
+  - "RDS"
+  - "CDKTF"
+  - "SurveyJS"
+  - "EC2"
+  - "EMR"
+  - "ALB"
+  - "R"
+  - "RStudio"
+  - "SageMaker"
+  - "SSO"
+  - "EFS"
+  - "OpenSearch"
+  - "VectorDB"
+  - "MemoryDB"
+  - "DuckDB"
+  - "LangChain"
+  - "PyTorch"
+  - "ChromaDB"
+  - "OpenAI"
+
+tags:
+  auto_from_repo_name:
+    - "aws"
+    - "serverless"
+    - "lambda"
+    - "angular"
+    - "apex"
+    - "apollo"
+    - "cloudformation"
+    - "cloudfront"
+    - "cognito"
+    - "amplify"
+    - "azure"
+    - "nodejs"
+    - "js"
+    - "php"
+    - "chrome"
+    - "cmake"
+    - "docker"
+    - "flask"
+    - "gitlab"
+    - "go"
+    - "heroku"
+    - "v8"
+    - "vuejs"
+    - "wordpress"
+    - "typescript"
+    - "react"
+    - "bash"
+    - "python"
+    - "opencv"
+    - "osx"
+    - "rust"
+    - "webassembly"
+    - "spark"
+    - "jenkins"
+    - "neo4j"
+    - "cpp"
+    - "mocha"
+    - "minecraft"
+    - "java"
+    - "lua"
+    - "make"
+    - "mac"
+    - "jupyter"
+    - "json"
+    - "salesforce"
+    - "jest"
+    - "ios"
+    - "html"
+    - "graphql"
+    - "google"
+    - "glitch"
+    - "gatsbyjs"
+    - "drawio"
+    - "boto"
+    - "kubernetes"
+    - "sdk"
+    - "kinesis"
+    - "iam"
+    - "glue"
+    - "fargate"
+    - "emr"
+    - "eventbridge"
+    - "iot"
+    - "kms"
+    - "polly"
+    - "sam"
+    - "xray"
+    - "ecr"
+    - "ecs"
+    - "codebuild"
+    - "codepipeline"
+    - "cdk"
+    - "autotools"
+    - "postgres"
+    - "cli"
+    - "golang"
+    - "appflow"
+    - "s3"
+    - "cloudwatch"
+    - "dynamodb"
+    - "ses"
+    - "rds"
+    - "sagemaker"
+  static: []
+  repo_mappings:
+    "alexa-skills-playground": ["aws", "alexa"]
+    "angular2-playground": ["angular", "framework"]
+    "beefy-playground": ["nodejs", "tools"]
+    "confluence-api-playground": ["cms", "javascript", "api"]
+    "cordova-playground": ["mobile", "ios", "framework"]
+    "deep-and-machine-learning-playground": ["machine-learning", "python"]
+    "dynogels-playground": ["aws", "javascript", "dynamodb"]
+    "emscripten-playground": ["web-assembly", "tools"]
+    "es6-playground": ["javascript"]
+    "ethereum-playground": ["blockchain", "cryptocurrency"]
+    "flexbox-playground": ["css"]
+    "fswatch-playground": ["tools"]
+    "gitbook-playground": ["react", "documentation"]
+    "glib-playground": ["graphics", "c++"]
+    "golang-dep-playground": ["golang"]
+    "googletest-playground": ["testing", "c++"]
+    "goreleaser-playground": ["golang", "continuous-delivery"]
+    "gradle-playground": ["java", "build-tool"]
+    "http-live-streaming-hls-playground": ["streaming", "http"]
+    "imagenet-playground": ["machine-learning", "python"]
+    "intellij-maven-app-playground": ["java", "maven", "build-tools"]
+    "jfrog-artifactory-playground": ["devops"]
+    "jsforce-playground": ["salesforce", "javascript"]
+    "karma-playground": ["javascript", "testing"]
+    "kendo-ui-playground": ["javascript", "ui", "framework"]
+    "keystonejs-playground": ["javascript", "ui", "framework"]
+    "kue-playground": ["javascript", "queue"]
+    "lerna-playground": ["nodejs", "npm", "tools"]
+    "Lua-c-api-playground": ["lua", "c"]
+    "metaforce-playground": ["salesforce", "ruby", "gem"]
+    "multipass-playground": ["linux", "virtualization"]
+    "nexe-playground": ["nodejs", "distribution", "packaging", "tools"]
+    "nextjs-playground": ["javascript", "react"]
+    "node-coveralls-playground": ["testing", "nodejs"]
+    "node-odata-playground": ["nodejs", "odata"]
+    "nodemailer-playground": ["nodejs", "gmail", "email"]
+    "nwjs-playground": ["nodejs", "cross-platform", "framework"]
+    "phaser-playground": ["javascript", "game", "framework"]
+    "pipenv-playground": ["python", "packaging"]
+    "pivotal-cloud-foundry-playground": ["paas"]
+    "puppeteer-playground": ["testing", "browser"]
+    "pusher-playground": ["javascript", "real-time"]
+    "s3-website-playground": ["aws", "s3", "static-site"]
+    "sauce-labs-playground": ["testing", "automation"]
+    "scribbletune-playground": ["nodejs", "music"]
+    "sfml-macos-playground": ["macos", "graphics", "c++"]
+    "stackery-playground": ["infrastructure-as-code", "aws"]
+    "storybook-ui-development-environment-playground": ["react", "ui", "ui-components"]
+    "strapi-playground": ["cms", "javascript"]
+    "taco-playground": ["mobile", "ios", "framework"]
+    "tailwindcss-playground": ["css", "framework"]
+    "terraform-playground": ["infrastructure-as-code", "aws"]
+    "twit-twitter-api-client-playground": ["twitter", "api", "nodejs"]
+    "typings-playground": ["typescript"]
+    "vcpkg-playground": ["c++", "package-manager"]
+    "webdriverio-playground": ["nodejs", "testing", "automation", "browser"]
+    "webpack-playground": ["javascript", "bundler", "packaging"]
+    "youtube-api-playground": ["youtube", "nodejs"]
+    "zipkin-playground": ["distributed-tracing", "observability"]
+    "aws-delivlib-playground": ["continuous-delivery", "aws"]
+    "mage-playground": ["golang", "build", "tools"]
+    "aws-comprehend-playground": ["machine-learning", "javascript"]
+    "aws-api-gateway-aws-service-integration-playground": ["aws", "api-gateway", "eventbridge", "api"]
+    "graphviz-playground": ["tools", "diagram", "architecture"]
+    "aws-sam-step-functions-playground": ["aws", "sam", "step-functions", "infrastructure-as-code"]
+    "aws-sam-golang-playground": ["iam", "testing"]
+    "antd-react-playground": ["react", "design", "ui", "framework", "ui-components"]
+    "s3-access-points-playground": ["aws", "s3"]
+    "mdx-deck-playground": ["react", "markdown", "presentation"]
+    "bash-shell-script-playground": ["shell", "bash"]
+    "powershell-playground": ["powershell"]
+    "aws-cloud9-playground": ["aws", "cloud9"]
+    "boto3-playground": ["boto", "python"]
+    "aws-systems-manager-automation-playground": ["aws"]
+    "github-cli-playground": ["git", "github", "cli"]
+    "diagrams-as-code-playground": ["diagrams", "visualize", "architecture"]
+    "aws-appconfig-playground": ["aws", "appconfig", "configuration", "deployment", "lambda"]
+    "aws-transfer-family-playground": ["aws", "aws-transfer-family", "sftp", "ftps", "ftp"]
+    "aws-javascript-sdk-v3-playground": ["aws", "sdk", "javascript"]
+    "aws-kendra-playground": ["aws", "kendra", "search", "machine-learning"]
+    "dynamodb-export-to-s3-and-query-with-athena-playground": ["aws", "dynamodb", "s3", "athena"]
+    "serverless-flask-playground": ["aws", "serverless", "python", "flask", "lambda", "api-gateway"]
+    "mermaid-diagram-playground": ["diagrams", "visualize", "architecture"]
+    "aws-data-wrangler-playground": ["aws", "data", "python"]
+    "sam-lambda-layers-playground": ["aws", "lambda", "sam"]
+    "azure-functions-playground": ["azure", "azure-functions", "serverless"]
+    "aws-glue-pyspark-fetch-databases-and-tables-metadata-playground": ["aws", "glue", "spark", "python"]
+    "aws-copilot-playground": ["aws", "ecs", "copilot"]
+    "aws-ses-playground": ["aws", "ses", "email"]
+    "api-gateway-service-integrations-for-http-apis-playground": ["aws", "api-gateway", "eventbridge", "cloudwatch", "integration"]
+    "cfn-diagram-playground": ["cloudformation", "diagram", "tools"]
+    "api-gateway-private-endpoints-playground": ["aws", "api-gateway", "vpc", "network"]
+    "aws-well-architected-playground": ["aws", "aws-well-architected", "architecture"]
+    "aws-cdk-pipeline-playground": ["aws", "cdk", "codepipeline", "cicd"]
+    "aws-chalice-playground": ["serverless", "python", "lambda"]
+    "aws-cdk-step-functions-playground": ["cdk", "step-functions"]
+    "hashicorp-vault-playground": ["secrets-management", "security"]
+    "aws-app-runner-playground": ["aws", "containers"]
+    "aws-api-gateway-to-s3-static-site-playground": ["aws", "api-gateway", "s3"]
+    "sceptre-playground": ["cloudformation", "infrastructure-as-code"]
+    "pre-commit-playground": ["git"]
+    "iamlive-playground": ["aws", "iam"]
+    "hugging-face-playground": ["machine-learning", "nlp", "python"]
+    "github-actions-configure-aws-credentials-playground": ["aws", "github", "iam"]
+    "cdktf-playground": ["aws", "cdk", "terraform"]
+    "aws-step-functions-aws-sdk-integration-playground": ["aws", "sdk", "step-functions"]
+    "aws-assume-role-using-custom-oidc-provider-playground": ["aws", "iam", "oidc"]
+    "promise-pool-playground": ["nodejs", "concurrency"]
+    "lambda-function-urls-playground": ["aws", "lambda", "http"]
+    "plotly-dash-api-gateway-lambda-playground": ["dash", "lambda", "aws"]
+    "surveyjs-react-playground": ["react", "javascript"]
+    "aws-parallel-cluster-playground": ["hpc"]
+    "ec2-image-builder-playground": ["aws", "ec2"]
+    "rstudio-on-sagemaker-playground": ["machine-learning"]
+    "sagemaker-ground-truth-playground": ["machine-learning"]
+    "aws-sso-playground": ["sso"]
+    "r-and-rstudio-playground": ["machine-learning"]
+    "amazon-redshift-serverless-playground": ["aws", "db", "redshift"]
+    "aws-batch-playground": ["containers"]
+    "amazon-opensearch-serverless-playground": ["opensearch"]
+    "amazon-bedrock-playground": ["aws", "ai", "genai", "llm"]
+    "amazon-memorydb-playground": ["aws", "db"]
+    "aws-boto3-playground": ["aws", "python", "sdk"]
+    "aws-cloudwatch-synthetics-playground": ["aws", "cloudwatch"]
+    "chromadb-playground": ["db", "vectordb"]
+    "cloudscape-design-system-playground": ["aws", "design", "react", "ui"]
+    "duckdb-playground": ["db"]
+    "langchain-python-playground": ["llm", "genai"]
+    "mojo-playground": ["machine-learning", "python"]
+    "momento-playground": ["cache", "db"]
+    "next-amplify-gen2-playground": ["aws", "next", "amplify"]
+    "openai-nodejs-playground": ["llm", "ai", "nodejs"]
+    "pytorch-playground": ["machine-learning", "python", "ai"]
+    "rust-playground": ["rust"]
+    "streamlit-playground": ["ui", "python"]
+    "vectordb-playground": ["db", "vectordb", "ai", "llm"]
+    "helm-playground": ["kubernetes"]
+    "mazon-eventbridge-pipes-playground": ["aws", "eventbridge"]
+    "amazon-eventbridge-scheduler-playground": ["aws", "eventbridge"]
+    "instructor-playground": ["ai", "llm", "python"]
+    "mountpoint-for-s3-playground": ["aws", "s3"]
+  normalize:
+    "c++": "cpp"
+    "js": "javascript"
+    "go": "golang"

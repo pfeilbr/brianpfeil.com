@@ -1,4 +1,7 @@
-tmp
+public/
+resources/
+node_modules/
 .hugo_build.lock
-.DS_Store
-.vscode/*.log
+tools/generate-posts/config.local.yaml
+tools/generate-posts/tmp/
+tools/generate-posts/generate-posts

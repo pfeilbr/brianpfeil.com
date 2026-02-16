@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ .Site.Params.homeTitle }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}{{ end }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ "index.xml" | absURL }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  {{ $css := resources.Get "css/main.css" | css.PostCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{ template "_internal/google_analytics.html" . }}
+</head>
+<body class="bg-white text-gray-800 font-sans min-h-screen flex flex-col">
+  {{ partial "nav.html" . }}
+  <main class="flex-1 w-full max-w-2xl mx-auto px-4 py-8">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  <script src="https://unpkg.com/darkreader@4.9.16/darkreader.js" crossorigin="anonymous"></script>
+  <script>
+  (function() {
+    var KEY = "DARK_MODE_ENABLED_KEY";
+    DarkReader.setFetchMethod(window.fetch);
+
+    function isEnabled() {
+      return localStorage.getItem(KEY) === "true";
+    }
+
+    function updateIcons(enabled) {
+      document.querySelectorAll("#dark-mode-sun, .dark-mode-sun").forEach(function(el) {
+        el.classList.toggle("hidden", !enabled);
+      });
+      document.querySelectorAll("#dark-mode-moon, .dark-mode-moon").forEach(function(el) {
+        el.classList.toggle("hidden", enabled);
+      });
+    }
+
+    function enable() {
+      DarkReader.enable({ brightness: 100, contrast: 90, sepia: 10 });
+      localStorage.setItem(KEY, "true");
+      updateIcons(true);
+    }
+
+    function disable() {
+      DarkReader.disable();
+      localStorage.setItem(KEY, "false");
+      updateIcons(false);
+    }
+
+    function toggle() {
+      if (isEnabled()) { disable(); } else { enable(); }
+    }
+
+    if (isEnabled()) { enable(); } else { disable(); }
+
+    document.querySelectorAll("#dark-mode-toggle, #dark-mode-toggle-mobile").forEach(function(el) {
+      el.addEventListener("click", toggle);
+    });
+  })();
+  </script>
+</body>
+</html>

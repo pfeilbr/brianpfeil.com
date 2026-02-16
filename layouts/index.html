@@ -1,51 +1,120 @@
 {{ define "main" }}
-<div role="main" class="container">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-      {{ with .Content }}
-      <div class="well">
-        {{.}}
-      </div>
-      {{ end }}
+{{ partial "search.html" . }}
 
-      <section style="text-align: center">
-        <div class="search-section">
-          <form onkeyup="executeInlineSearch()">
-            <div class="search-bar">
-              <input id="search-query" placeholder="search" name="s" autocomplete="off" search />
-              <span class="search-icon">
-                <i class="fa fa-search fa-sm" aria-hidden="true"></i>
-              </span>
-            </div>
-          </form>
-        </div>
-      </section>
+<div id="search-results"></div>
 
-
-      <div class="posts-list" id="search-results">
-        {{ $pag := .Paginate (where site.RegularPages "Type" "in" site.Params.mainSections) }}
-        {{ range $pag.Pages }}
-        {{ .Scratch.Set "isListing" true }}
-        {{ partial "post_preview" . }}
-        {{ end }}
-      </div>
-
-      {{ if or (.Paginator.HasPrev) (.Paginator.HasNext) }}
-      <ul class="pager main-pager">
-
-        {{ if .Paginator.HasPrev }}
-        <li class="previous">
-          <a href="{{ .Permalink }}page/{{ .Paginator.Prev.PageNumber }}/">&larr; {{ i18n "newerPosts" }}</a>
-        </li>
-        {{ end }}
-        {{ if .Paginator.HasNext }}
-        <li class="next">
-          <a href="{{ .Permalink }}page/{{ .Paginator.Next.PageNumber }}/">{{ i18n "olderPosts" }} &rarr;</a>
-        </li>
-        {{ end }}
-      </ul>
-      {{ end }}
+<div id="post-list">
+  {{ $pag := .Paginate (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+  {{ range $pag.Pages }}
+  <article class="post-preview py-2.5 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
+    <div class="flex items-baseline justify-between gap-3">
+      <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
+      <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ .Date.Format "Jan 2006" }}</time>
     </div>
-  </div>
+    {{ with .Params.tags }}
+    <div class="mt-0.5">{{ range $i, $t := . }}{{ if lt $i 3 }}<a href="/tags/{{ $t | urlize }}/" class="text-xs text-gray-400 hover:text-brand no-underline mr-2">{{ $t }}</a>{{ end }}{{ end }}</div>
+    {{ end }}
+  </article>
+  {{ end }}
 </div>
+
+{{ if .Paginator.HasNext }}
+<div id="scroll-sentinel" class="py-4 text-center">
+  <span id="scroll-progress" class="text-xs text-gray-400"></span>
+</div>
+{{ end }}
+
+<!-- Back to top -->
+<button id="back-to-top" class="fixed bottom-6 right-6 w-9 h-9 bg-white border border-gray-200 rounded-full shadow-sm text-gray-400 hover:text-brand hover:border-brand cursor-pointer transition-all opacity-0 pointer-events-none z-50" title="Back to top">
+  <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+</button>
+
+<script>
+var postCount = {{ len (where site.RegularPages "Type" "in" site.Params.mainSections) }};
+var pageSize = {{ .Paginator.PagerSize }};
+
+/* Row click delegation */
+document.addEventListener("click", function(e) {
+  if (e.target.closest("a")) return;
+  var row = e.target.closest("[data-href]");
+  if (row) window.location.href = row.dataset.href;
+});
+
+/* "/" keyboard shortcut to focus search */
+document.addEventListener("keydown", function(e) {
+  if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    var active = document.activeElement;
+    if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.isContentEditable)) return;
+    e.preventDefault();
+    var q = document.getElementById("search-query");
+    if (q) q.focus();
+  }
+});
+
+/* Back to top button */
+(function() {
+  var btn = document.getElementById("back-to-top");
+  if (!btn) return;
+  window.addEventListener("scroll", function() {
+    if (window.scrollY > 400) {
+      btn.style.opacity = "1";
+      btn.style.pointerEvents = "auto";
+    } else {
+      btn.style.opacity = "0";
+      btn.style.pointerEvents = "none";
+    }
+  }, { passive: true });
+  btn.addEventListener("click", function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+})();
+
+/* Infinite scroll with progress counter */
+(function() {
+  var postList = document.getElementById("post-list");
+  var sentinel = document.getElementById("scroll-sentinel");
+  var progress = document.getElementById("scroll-progress");
+  if (!sentinel || !postList) return;
+
+  var nextPage = {{ if .Paginator.HasNext }}{{ .Paginator.Next.PageNumber }}{{ else }}0{{ end }};
+  var totalPages = {{ .Paginator.TotalPages }};
+  var loading = false;
+  var loadedCount = postList.querySelectorAll("article").length;
+
+  function updateProgress() {
+    if (progress) {
+      progress.textContent = loadedCount + " of " + postCount + " posts";
+    }
+  }
+  updateProgress();
+
+  function loadNext() {
+    if (loading || nextPage > totalPages) return;
+    loading = true;
+    if (progress) progress.textContent = "Loading\u2026";
+
+    fetch("/page/" + nextPage + "/")
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var items = doc.querySelectorAll("#post-list > article");
+        items.forEach(function(item) { postList.appendChild(item); });
+        loadedCount += items.length;
+        nextPage++;
+        loading = false;
+        if (nextPage > totalPages) {
+          sentinel.remove();
+        } else {
+          updateProgress();
+        }
+      })
+      .catch(function() { loading = false; updateProgress(); });
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) loadNext();
+  }, { rootMargin: "200px" });
+  observer.observe(sentinel);
+})();
+</script>
 {{ end }}
