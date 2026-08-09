@@ -9,6 +9,14 @@ pagination:
 
 googleAnalytics: "G-SKVHNJ985Y"
 
+# Hugo 0.162.0 added security.allowContent, which denies the text/html content
+# format by default to prevent arbitrary JS in content files. content/steps/*.html
+# are hand-authored standalone HTML pages, so the default breaks the build.
+# Single-author repo, so restore the pre-0.162 behavior.
+security:
+  allowContent:
+    - ".*"
+
 markup:
   goldmark:
     renderer:
