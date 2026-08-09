@@ -212,6 +212,55 @@ input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
   .sm\:inline-block { display: inline-block; }
 }
 
+/* === Author photo (homepage intro + about page) === */
+.author-intro {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+.author-avatar {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  object-fit: cover;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px #e5e7eb;
+}
+.author-name {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 600;
+  color: #111827;
+}
+.author-role {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #4b5563;
+}
+.author-role a { color: #0d7ea8; text-decoration: none; }
+.author-role a:hover { text-decoration: underline; }
+
+/* Scoped to .prose so it outranks the generic `.prose img` rule */
+.prose .about-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 9999px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px #e5e7eb;
+}
+
+@media (min-width: 640px) {
+  .author-avatar { width: 88px; height: 88px; }
+  /* Text wraps alongside the portrait on wider screens */
+  .prose .about-photo { float: right; margin: 0.25rem 0 1rem 1.75rem; }
+}
+
 /* === Prose content styles === */
 .prose h1 { font-size: 1.5rem; line-height: 2rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #111827; }
 .prose h2 { font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: #111827; }

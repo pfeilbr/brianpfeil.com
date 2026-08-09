@@ -8,6 +8,8 @@ title = "About"
 layout = "page"
 +++
 
+<img class="about-photo" src="/images/2026-08-08-profile-brian-pfeil.jpg" alt="Brian Pfeil" width="512" height="512" decoding="async">
+
 Hello, I'm Brian Pfeil. I'm passionate about technology and building things. This is my personal blog where I write about those and other interests.
 
 I currently work at <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a> as a Principal Cloud Architect.
