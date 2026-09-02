@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Swift", "playground"]
 date = 2015-09-15
-description = ""
+description = "Playground to learn the various audio frameworks and APIs"
 summary = " "
 draft = false
 slug = "osx-audio"

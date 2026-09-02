@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2016-05-09
-description = ""
+description = "learn and experiment with angular-cli"
 summary = " "
 draft = false
 slug = "angular-cli-app"

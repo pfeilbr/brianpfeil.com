@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-04-03
-description = ""
+description = "A project to learn and experiment with the webpack module bundler."
 summary = " "
 draft = false
 slug = "webpack"

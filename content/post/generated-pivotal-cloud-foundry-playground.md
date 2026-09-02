@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-01-31
-description = ""
+description = "learn Pivotal Cloud Foundry"
 summary = " "
 draft = false
 slug = "pivotal-cloud-foundry"

@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-08-20
-description = ""
+description = "playground to learn and experiment with the node webdriverio package"
 summary = " "
 draft = false
 slug = "webdriverio"

@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["HTML", "playground"]
 date = 2015-10-15
-description = ""
+description = "Project to learn and experiment with the CSS3 Flexboxlayout module."
 summary = " "
 draft = false
 slug = "flexbox"

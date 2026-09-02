@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2018-11-19
-description = ""
+description = "learn twit, the Twitter API Client for node"
 summary = " "
 draft = false
 slug = "twit-twitter-api-client"

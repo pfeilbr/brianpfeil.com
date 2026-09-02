@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2014-06-13
-description = ""
+description = "Playground for learning / playing with Kue. Kue is a priority job queue for node."
 summary = " "
 draft = false
 slug = "kue"

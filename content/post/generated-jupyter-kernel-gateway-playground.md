@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-01-19
-description = ""
+description = "learn Jupyter Kernel Gateway"
 summary = " "
 draft = false
 slug = "jupyter-kernel-gateway"

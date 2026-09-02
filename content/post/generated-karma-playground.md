@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-02-15
-description = ""
+description = "Project to learn and experiment with Karma test runner."
 summary = " "
 draft = false
 slug = "karma"

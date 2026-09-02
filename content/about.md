@@ -16,6 +16,15 @@ I currently work at <a href="https://merck.com" target="_blank" rel="noopener no
 
 I'm an [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
+Most of what's here started as a playground repo — a small, self-contained project
+for learning something by building with it, from AWS services and infrastructure
+tooling to language runtimes and machine learning. Lately I've been shipping small
+browser apps instead: a chess game with monster pieces, an FPS aim trainer, a
+Mandarin phrase prompter, a maths-powered creature battler. All client-side, all
+open source.
+
+Browse the [projects](/projects/), or see [everything by year](/archive/).
+
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
 <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/pfeilbr/" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 14px;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="instagram" style="width: 20px; height: 20px; margin-right: 5px;"> Instagram</a>
 <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/brian-pfeil-175a011/" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 14px;"><img src="https://cdn-icons-png.flaticon.com/24/145/145807.png" alt="linkedin" style="width: 20px; height: 20px; margin-right: 5px;"> LinkedIn</a>

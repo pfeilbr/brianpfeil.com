@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-11-04
-description = ""
+description = "Learn heroku container support"
 summary = " "
 draft = false
 slug = "heroku-container"

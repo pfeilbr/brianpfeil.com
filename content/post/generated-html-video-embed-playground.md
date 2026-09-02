@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["HTML", "playground"]
 date = 2015-05-12
-description = ""
+description = "Project to learn and experiment with various HTML video players"
 summary = " "
 draft = false
 slug = "html-video-embed"

@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["", "playground"]
 date = 2018-06-09
-description = ""
+description = "learn and experiment with AWS AppSync"
 summary = " "
 draft = false
 slug = "aws-appsync"

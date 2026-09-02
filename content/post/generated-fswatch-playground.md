@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Shell", "playground"]
 date = 2019-01-29
-description = ""
+description = "learn fswatch file change monitor"
 summary = " "
 draft = false
 slug = "fswatch"

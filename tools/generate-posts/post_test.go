@@ -612,3 +612,50 @@ func TestAllRepos(t *testing.T) {
 		})
 	}
 }
+
+func TestPostCategory(t *testing.T) {
+	cfg := Config{ProjectRepos: []string{"creature-chess", "college-pilot"}}
+
+	tests := []struct {
+		repoName string
+		want     string
+	}{
+		{"creature-chess", "project"},
+		{"college-pilot", "project"},
+		{"aws-cdk-playground", "playground"},
+		{"unlisted-repo", "playground"},
+	}
+
+	for _, tt := range tests {
+		if got := postCategory(tt.repoName, cfg); got != tt.want {
+			t.Errorf("postCategory(%q) = %q, want %q", tt.repoName, got, tt.want)
+		}
+	}
+}
+
+func TestPostDescription(t *testing.T) {
+	tests := []struct {
+		name     string
+		in       string
+		repoName string
+		want     string
+	}{
+		{"empty", "", "some-repo", ""},
+		{"plain", "A friendly chess game", "creature-chess", "A friendly chess game"},
+		{"collapses whitespace", "Real chess,\n  monster   pieces.", "creature-chess", "Real chess, monster pieces."},
+		{"escapes quotes", `Inspired by "KovaaK's"`, "aim-trainer", `Inspired by \"KovaaK's\"`},
+		{"escapes backslash", `path\to\thing`, "x", `path\\to\\thing`},
+		{"backslash before quote", `a\"b`, "x", `a\\\"b`},
+		// A description that merely restates the repo name is dropped.
+		{"echoes repo name", "streamlit-playground", "streamlit-playground", ""},
+		{"echoes repo name, spaced", "Streamlit Playground", "streamlit-playground", ""},
+		{"echoes repo name, cased", "WebAssembly Playground", "webassembly-playground", ""},
+		{"superset of repo name kept", "streamlit playground for charts", "streamlit-playground", "streamlit playground for charts"},
+	}
+
+	for _, tt := range tests {
+		if got := postDescription(tt.in, tt.repoName); got != tt.want {
+			t.Errorf("%s: postDescription(%q, %q) = %q, want %q", tt.name, tt.in, tt.repoName, got, tt.want)
+		}
+	}
+}

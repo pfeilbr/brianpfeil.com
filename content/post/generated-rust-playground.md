@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Rust", "playground"]
 date = 2018-12-21
-description = ""
+description = "learn Rust programming language"
 summary = " "
 draft = false
 slug = "rust"

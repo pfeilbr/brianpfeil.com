@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2018-10-22
-description = ""
+description = "learn dynogels - DynamoDB data mapper for node.js"
 summary = " "
 draft = false
 slug = "dynogels"

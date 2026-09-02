@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["", "playground"]
 date = 2017-07-18
-description = ""
+description = "learn aws kinesis"
 summary = " "
 draft = false
 slug = "aws-kinesis"

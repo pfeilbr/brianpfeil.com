@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["", "playground"]
 date = 2017-01-17
-description = ""
+description = "learn and experiment with Ethereum decentralized blockchain based platform"
 summary = " "
 draft = false
 slug = "ethereum"

@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["C++", "playground"]
 date = 2015-05-19
-description = ""
+description = "Project to learn and experiment with the V8 javascript engine."
 summary = " "
 draft = false
 slug = "v8"

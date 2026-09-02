@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-09-22
-description = ""
+description = "Area to learn and explore the Mocha JavaScript test framework"
 summary = " "
 draft = false
 slug = "mocha"

@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["C", "playground"]
 date = 2016-06-02
-description = ""
+description = "learn and experiment with emscripten"
 summary = " "
 draft = false
 slug = "emscripten"

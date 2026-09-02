@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2018-06-06
-description = ""
+description = "project to learn JSON schema"
 summary = " "
 draft = false
 slug = "json-schema"

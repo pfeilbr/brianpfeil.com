@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-02-15
-description = ""
+description = "Project to learn and experiment with NW.js for creating desktop applications"
 summary = " "
 draft = false
 slug = "nwjs"

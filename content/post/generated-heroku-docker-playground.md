@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-09-23
-description = ""
+description = "to learn heroku-docker toolbelt plugin to build, run and deploy Heroku apps with Docker"
 summary = " "
 draft = false
 slug = "heroku-docker"

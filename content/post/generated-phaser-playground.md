@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-08-02
-description = ""
+description = "project to learn the Phaser HTML5 game framework"
 summary = " "
 draft = false
 slug = "phaser"

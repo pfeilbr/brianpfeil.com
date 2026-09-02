@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-11-01
-description = ""
+description = "learn next.js"
 summary = " "
 draft = false
 slug = "nextjs"

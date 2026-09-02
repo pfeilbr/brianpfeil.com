@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-02-04
-description = ""
+description = "Playground to learn, explore, and play with Sauce Labs"
 summary = " "
 draft = false
 slug = "sauce-labs"

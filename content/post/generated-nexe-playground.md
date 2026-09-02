@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-04-05
-description = ""
+description = "Learn and experiment with nexe single all-in-one executable packager / bundler"
 summary = " "
 draft = false
 slug = "nexe"

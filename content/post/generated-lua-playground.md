@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Lua", "playground"]
 date = 2017-01-10
-description = ""
+description = "learn and experiment with the Lua programming language"
 summary = " "
 draft = false
 slug = "lua"

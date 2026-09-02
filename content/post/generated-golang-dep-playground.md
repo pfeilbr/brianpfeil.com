@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2018-02-03
-description = ""
+description = "project to learn to use dep the dependency management tool for go"
 summary = " "
 draft = false
 slug = "golang-dep"

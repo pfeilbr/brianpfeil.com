@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-01-25
-description = ""
+description = "learn Storybook UI Development Environment"
 summary = " "
 draft = false
 slug = "storybook-ui-development-environment"

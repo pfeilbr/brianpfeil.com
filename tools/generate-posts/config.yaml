@@ -4,6 +4,15 @@ default_branch: "main"
 repo_filters:
   include:
     - ".*-playground"
+    # 2026 project repos — finished things rather than scratch space
+    - "things-to-do"
+    - "college-pilot"
+    - "aim-trainer"
+    - "chinese-mandarin-language-app"
+    - "pocono-lake-house-2026"
+    - "pokemon-game"
+    - "creature-chess"
+    - "xiaoling-lindsey-zhou-website"
     - "aws-web-content"
     - "alfred-utilities-workflow"
     - "aws-vscode-dev-container"
@@ -21,7 +30,25 @@ repo_filters:
     - "jfrog-artifactory-playground"
     - "surveyjs-react-playground"
 
+# Repos published as finished projects; these get the "project" category.
+# morning-brief is deliberately absent — it has no README, so it would
+# generate a stub post.
+project_repos:
+  - "things-to-do"
+  - "college-pilot"
+  - "aim-trainer"
+  - "chinese-mandarin-language-app"
+  - "pocono-lake-house-2026"
+  - "pokemon-game"
+  - "creature-chess"
+  - "xiaoling-lindsey-zhou-website"
+
 title_mappings:
+  "aim-trainer": "AimForge"
+  "chinese-mandarin-language-app": "Say It In Mandarin"
+  "pokemon-game": "Mathmon Battle League"
+  "pocono-lake-house-2026": "Pocono Lake House"
+  "xiaoling-lindsey-zhou-website": "Lindsey Zhou Link Page"
   "aws-well-architected-playground": "AWS Well-Architected"
   "aws-assume-role-using-custom-oidc-provider-playground": "AWS Assume Role Using Custom OIDC Provider"
 
@@ -205,6 +232,14 @@ tags:
     - "sagemaker"
   static: []
   repo_mappings:
+    "things-to-do": ["javascript", "pwa", "web"]
+    "college-pilot": ["javascript", "pwa", "web"]
+    "aim-trainer": ["javascript", "threejs", "game", "web"]
+    "chinese-mandarin-language-app": ["javascript", "pwa", "web", "speech"]
+    "pocono-lake-house-2026": ["pwa", "web", "offline"]
+    "pokemon-game": ["python", "game", "web"]
+    "creature-chess": ["javascript", "game", "web"]
+    "xiaoling-lindsey-zhou-website": ["css", "web", "github-pages"]
     "alexa-skills-playground": ["aws", "alexa"]
     "angular2-playground": ["angular", "framework"]
     "beefy-playground": ["nodejs", "tools"]

@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2018-02-10
-description = ""
+description = "learn and experiment with AWS IoT"
 summary = " "
 draft = false
 slug = "aws-iot"

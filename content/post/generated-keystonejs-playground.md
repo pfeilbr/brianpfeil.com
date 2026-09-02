@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-10-20
-description = ""
+description = "Learn and experiment with KeystoneJS"
 summary = " "
 draft = false
 slug = "keystonejs"

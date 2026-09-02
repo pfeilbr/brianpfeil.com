@@ -24,6 +24,8 @@ type RepoPost struct {
 	Title        string
 	Slug         string
 	Tags         []string
+	Category     string
+	Description  string
 	MarkdownBody string
 	FileName     string
 }
@@ -53,9 +55,60 @@ func buildPost(repo *github.Repository, cfg Config) (*RepoPost, error) {
 		Title:        title,
 		Slug:         postSlug(title),
 		Tags:         tags,
+		Category:     postCategory(repo.GetName(), cfg),
+		Description:  postDescription(repo.GetDescription(), repo.GetName()),
 		MarkdownBody: body,
 		FileName:     "generated-" + repo.GetName() + ".md",
 	}, nil
+}
+
+// postDescription makes a repo description safe to embed in a TOML basic
+// string: collapse whitespace, then escape backslashes and double quotes.
+// Without this a description containing a quote would break the front matter.
+//
+// Some repos have a description that just restates the repo name
+// ("streamlit-playground"). That is worse than nothing once it becomes the
+// page's meta description and social-card text, so it is dropped.
+func postDescription(desc, repoName string) string {
+	desc = strings.Join(strings.Fields(desc), " ")
+	if desc == "" {
+		return ""
+	}
+	if normalizeWords(desc) == normalizeWords(repoName) {
+		return ""
+	}
+	desc = strings.ReplaceAll(desc, `\`, `\\`)
+	desc = strings.ReplaceAll(desc, `"`, `\"`)
+	return desc
+}
+
+// normalizeWords lowercases and reduces anything non-alphanumeric to single
+// spaces, so "Streamlit Playground" and "streamlit-playground" compare equal.
+func normalizeWords(s string) string {
+	var b strings.Builder
+	prevSpace := true
+	for _, r := range strings.ToLower(s) {
+		if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') {
+			b.WriteRune(r)
+			prevSpace = false
+		} else if !prevSpace {
+			b.WriteRune(' ')
+			prevSpace = true
+		}
+	}
+	return strings.TrimSpace(b.String())
+}
+
+// postCategory returns the secondary category for a repo. Repos listed in
+// project_repos are finished things rather than scratch space, so they are
+// categorized as "project"; everything else keeps the historical "playground".
+func postCategory(repoName string, cfg Config) string {
+	for _, r := range cfg.ProjectRepos {
+		if r == repoName {
+			return "project"
+		}
+	}
+	return "playground"
 }
 
 // postTitle generates a human-readable title from a repo name.
@@ -180,6 +233,11 @@ func stripFrontMatterAndH1(body string) string {
 
 // renderPost executes the embedded template with the post data.
 func renderPost(post *RepoPost) (string, error) {
+	// Default so a directly-constructed RepoPost still renders a valid category.
+	if post.Category == "" {
+		post.Category = "playground"
+	}
+
 	data, err := templateFS.ReadFile("templates/post.md")
 	if err != nil {
 		return "", fmt.Errorf("read template: %w", err)

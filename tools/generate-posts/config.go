@@ -18,6 +18,10 @@ type Config struct {
 		Exclude []string `yaml:"exclude"`
 	} `yaml:"repo_filters"`
 
+	// ProjectRepos are repos published as finished projects rather than
+	// playgrounds; they get the "project" category instead of "playground".
+	ProjectRepos     []string          `yaml:"project_repos"`
+
 	TitleMappings    map[string]string `yaml:"title_mappings"`
 	CasingCorrections []string         `yaml:"casing_corrections"`
 
@@ -56,6 +60,12 @@ func LoadConfig() (Config, error) {
 		if local.DefaultBranch != "" {
 			cfg.DefaultBranch = local.DefaultBranch
 		}
+	}
+
+	// GITHUB_TOKEN wins over the file, so CI and one-off runs need no secret
+	// written to disk. `GITHUB_TOKEN=$(gh auth token) go run . ...` just works.
+	if envToken := os.Getenv("GITHUB_TOKEN"); envToken != "" {
+		cfg.GithubAccessToken = envToken
 	}
 
 	// Defaults

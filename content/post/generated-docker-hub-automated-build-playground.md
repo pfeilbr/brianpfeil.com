@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["", "playground"]
 date = 2015-08-20
-description = ""
+description = "Playground to try out Automated Builds from GitHub"
 summary = " "
 draft = false
 slug = "docker-hub-automated-build"

@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2015-01-11
-description = ""
+description = "playground for go lib/pq package"
 summary = " "
 draft = false
 slug = "go-postgres"

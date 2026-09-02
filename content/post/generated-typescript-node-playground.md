@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2016-05-18
-description = ""
+description = "example app showing how to setup and develop a typescript based node app using the typings TypeScript Definition Manager"
 summary = " "
 draft = false
 slug = "typescript-node"

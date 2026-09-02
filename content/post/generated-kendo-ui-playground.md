@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["", "playground"]
 date = 2014-08-02
-description = ""
+description = "Place to play around and learn Kendo UI"
 summary = " "
 draft = false
 slug = "kendo-ui"

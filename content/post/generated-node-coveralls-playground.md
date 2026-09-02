@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-09-29
-description = ""
+description = "To learn and experiment with coveralls test coverage service."
 summary = " "
 draft = false
 slug = "node-coveralls"

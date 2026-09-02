@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Jupyter Notebook", "playground"]
 date = 2018-01-31
-description = ""
+description = "project to explore image data for ML applications"
 summary = " "
 draft = false
 slug = "imagenet"

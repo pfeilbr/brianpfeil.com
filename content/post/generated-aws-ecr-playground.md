@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Dockerfile", "playground"]
 date = 2018-11-13
-description = ""
+description = "learn Amazon Elastic Container Registry"
 summary = " "
 draft = false
 slug = "aws-ecr"

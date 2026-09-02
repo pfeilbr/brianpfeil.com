@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2018-04-30
-description = ""
+description = "project to learn and experiment with graphql using Apollo"
 summary = " "
 draft = false
 slug = "graphql"

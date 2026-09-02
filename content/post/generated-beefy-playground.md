@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-10-16
-description = ""
+description = "Learn and experiment with Beefy, which makes working with Browserify a little nicer."
 summary = " "
 draft = false
 slug = "beefy"

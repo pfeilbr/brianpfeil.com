@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2015-03-30
-description = ""
+description = "Area to learn and experiment with ECMAScript 6 using the Babel JavaScript compiler."
 summary = " "
 draft = false
 slug = "es6"

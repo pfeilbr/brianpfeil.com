@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-05-08
-description = ""
+description = "learn azure cosmos db javascript sdk"
 summary = " "
 draft = false
 slug = "azure-cosmos-js-sdk"

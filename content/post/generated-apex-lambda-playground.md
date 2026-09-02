@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-12-06
-description = ""
+description = "learn Apex serverless architecture"
 summary = " "
 draft = false
 slug = "apex-lambda"

@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["", "playground"]
 date = 2016-05-20
-description = ""
+description = "learn GitBook publishing toolchain"
 summary = " "
 draft = false
 slug = "gitbook"

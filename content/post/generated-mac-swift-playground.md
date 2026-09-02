@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Swift", "playground"]
 date = 2014-06-05
-description = ""
+description = "Swift playground for exploring the swift programming language"
 summary = " "
 draft = false
 slug = "mac-swift"

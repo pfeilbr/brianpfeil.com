@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Go", "playground"]
 date = 2013-12-31
-description = ""
+description = "Go language examples"
 summary = " "
 draft = false
 slug = "go"

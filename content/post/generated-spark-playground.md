@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["Python", "playground"]
 date = 2015-06-05
-description = ""
+description = "Project to learn and experiment with the Apache Spark cluster computing system."
 summary = " "
 draft = false
 slug = "spark"

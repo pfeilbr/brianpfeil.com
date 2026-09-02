@@ -1,8 +1,8 @@
 +++
 author = "Brian Pfeil"
-categories = ["{{ .Repo.GetLanguage }}", "playground"]
+categories = ["{{ .Repo.GetLanguage }}", "{{ .Category }}"]
 date = {{ .Repo.GetCreatedAt.Format "2006-01-02" }}
-description = ""
+description = "{{ .Description }}"
 summary = " "
 draft = false
 slug = "{{ .Slug }}"

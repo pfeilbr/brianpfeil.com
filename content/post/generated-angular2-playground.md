@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2016-01-13
-description = ""
+description = "Project to learn and experiment with Angular2"
 summary = " "
 draft = false
 slug = "angular2"

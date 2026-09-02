@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["TypeScript", "playground"]
 date = 2016-05-02
-description = ""
+description = "learn and experiment with TypeScript typings"
 summary = " "
 draft = false
 slug = "typings"

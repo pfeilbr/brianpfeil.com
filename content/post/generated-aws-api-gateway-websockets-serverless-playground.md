@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2019-01-08
-description = ""
+description = "learn AWS API Gateway Websockets with serverless framework"
 summary = " "
 draft = false
 slug = "aws-api-gateway-websockets-serverless"

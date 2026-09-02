@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-12-09
-description = ""
+description = "learn google cloud apis"
 summary = " "
 draft = false
 slug = "node-google-cloud"

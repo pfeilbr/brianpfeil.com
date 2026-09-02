@@ -1,0 +1,372 @@
++++
+author = "Brian Pfeil"
+categories = ["Python", "project"]
+date = 2026-08-11
+description = ""
+summary = " "
+draft = false
+slug = "mathmon-battle-league"
+tags = ["python","game","web"]
+title = "Mathmon Battle League"
+repoFullName = "pfeilbr/pokemon-game"
+repoHTMLURL = "https://github.com/pfeilbr/pokemon-game"
+truncated = true
+
++++
+
+<div class="alert alert-info small bg-info" role="alert">
+<span class="text-muted">code for article</span>&nbsp;<a href="https://github.com/pfeilbr/pokemon-game" target="_blank"><i class="fab fa-github fa-sm"></i>&nbsp;pfeilbr/pokemon-game</a>
+</div>
+
+<div align="center">
+
+# ⚡ Mathmon Battle League
+
+**Catch monsters. Win battles. Get faster at maths.**
+
+A creature-collecting card battler where every attack is powered by solving a
+maths problem — built for a smart seven-year-old who likes trading cards, plays
+chess, and is good at numbers.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?s=https://github.com/pfeilbr/pokemon-game)
+
+One click, no environment variables, no configuration.
+
+</div>
+
+---
+
+## What it is
+
+You pick a partner creature, choose an opponent, and fight. Attacking means
+answering a maths question: get it right and you hit hard, answer _fast_ and you
+crit, chain answers and you build a combo. Win, and one last question decides
+whether you catch the creature for your album.
+
+It is not a quiz with a monster drawn next to it. The maths _is_ the combat
+system, and the strategy around it is real:
+
+- **A six-element wheel** where each element beats two others and loses to two
+  others — provably symmetric, so no element is secretly best and counter-picking
+  actually matters. The full chart is shown before you commit to a fight.
+- **Four moves every turn.** A quick move asks an easier question for less
+  damage; a strong move asks a harder one for more. The special costs a full
+  charge meter and hits enormously. Mend trades charge for health.
+- **Every matchup is winnable** — even the worst one on the wheel, where you deal
+  half damage and take double. It just needs you to bank charge and time the
+  special. That is the fight that teaches counter-picking.
+- **Difficulty adapts.** Ten tiers from adding-to-20 up to two-step expressions,
+  moving one step at a time on a rolling window of your last eight answers.
+  Promotion needs accuracy _and_ speed, so a lucky streak won't fling a
+  seven-year-old into fractions.
+
+Progress is tracked properly: XP and trainer levels, a 36-creature album,
+partner evolution at levels 4 and 8, twelve badges, daily streaks, and a
+per-skill accuracy and speed breakdown that doubles as the parent view.
+
+Everything is in **English and Chinese**, including all 36 creature names.
+
+---
+
+## Screens
+
+### Starting out
+
+Pick a name, pick a partner. No account, no setup — you are playing in about
+fifteen seconds.
+
+![Naming your trainer](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/17-start-name.png)
+
+![Choosing a starter](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/01-choose-partner.png)
+
+### Home
+
+Your partner, your level, your maths tier, your album progress and your streak.
+
+![Dashboard](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/02-dashboard.png)
+
+### Choosing an opponent
+
+Each candidate is labelled **Good / Tough / Even**, with the exact multipliers
+you will deal and take. The full type chart expands underneath. The strategy is
+meant to be planned, not discovered by losing.
+
+![Choosing an opponent](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/03-choose-opponent.png)
+
+![Type chart](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/04-type-chart.png)
+
+### Battle
+
+Pick a move — note the special glowing once the charge meter fills.
+
+![Choosing a move](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/05-battle-choose-move.png)
+
+Then answer. The on-screen keypad means no OS keyboard ever covers the fight on
+a tablet, and it is why every answer in the game is a whole number. The meter
+under the question is the speed bonus draining away — answer fast for extra
+damage and a critical hit. It is pure upside: when it empties it just says
+"take your time", and the hit lands normally.
+
+![Solving a problem](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/06-battle-solving.png)
+
+![A hit lands](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/07-battle-hit.png)
+
+### Winning
+
+A final question decides the catch — so the collection rewards skill rather than
+a dice roll. XP, level-ups, evolutions and new badges are all called out by name.
+
+![Victory](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/08-victory.png)
+
+Losing is not a dead end — a lost battle still awards XP, because a
+seven-year-old who gets nothing for trying stops trying.
+
+![Defeat still earns XP](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/19-defeat.png)
+
+### Album
+
+All 36 creatures across twelve evolution lines, two per element. Un-caught
+ones stay silhouetted.
+
+![Album](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/09-album.png)
+
+![A creature's card](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/18-album-detail.png)
+
+### Progress
+
+Badges, and a per-skill breakdown of accuracy, average time and attempt count.
+
+![Progress and badges](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/10-progress.png)
+
+### Chinese
+
+The whole interface, including every creature name.
+
+![Chinese interface](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/12-chinese.png)
+
+Chinese is not a translated veneer over an English game — every screen is
+first-class in both languages, including a battle mid-question and the album.
+
+![Battling in Chinese](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/20-chinese-battle.png)
+
+![The album in Chinese](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/21-chinese-album.png)
+
+### On a phone
+
+![Mobile dashboard](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/15-mobile-dashboard.png)
+![Mobile battle](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/14-mobile-battle.png)
+
+### Signing in
+
+Optional, and only offered when the deployment has a database attached.
+
+![Sign in](https://raw.githubusercontent.com/pfeilbr/pokemon-game/claude/pokemon-web-game-8aha3a/docs/screenshots/13-sign-in.png)
+
+---
+
+## Two ways to put this online
+
+|                  | What you get                                       | What it costs you                         |
+| ---------------- | -------------------------------------------------- | ----------------------------------------- |
+| **GitHub Pages** | The whole game, saving in the browser              | One toggle in this repo's settings        |
+| **Vercel**       | The same game, plus accounts and cross-device sync | An import, still no environment variables |
+
+Neither is a cut-down version. The engine is pure and the profile lives in
+`localStorage`, so all 36 creatures, every battle and the whole album work
+identically either way. The only difference is whether a save can follow a
+child to a second device.
+
+### GitHub Pages — no account, no configuration
+
+`.github/workflows/pages.yml` builds a static export on every push to `main`
+and publishes it. It needs Pages switched on once:
+
+> **Settings → Pages → Build and deployment → Source: GitHub Actions**
+
+That single step genuinely cannot be automated. `GITHUB_TOKEN` can deploy to a
+Pages site but not create one — `enablement: true` on `configure-pages` is
+refused with _"Resource not accessible by integration"_, because creating the
+site is an admin action. Tried, and it does not work.
+
+Until then the build still runs to completion and uploads the site as an
+artifact; only the deploy step waits. Afterwards nothing is needed again, on
+this or any later push, and the URL appears in the run's summary.
+
+The app is honest about what that deployment can do: with no API behind it,
+`accountsAvailable()` is false, so the sign-in UI says accounts are off rather
+than offering a form that cannot work. Verified rather than assumed — the E2E
+suite plays a full battle against the exported files, including that message.
+
+## Deploying to Vercel
+
+The app runs with **no environment variables at all**, so this is genuinely a
+two-minute job.
+
+**[→ Import this repo into Vercel](https://vercel.com/import/git?s=https://github.com/pfeilbr/pokemon-game)** —
+opens the import screen with the repository already filled in. Click **Deploy**,
+then open the URL and play.
+
+That link imports _this_ repository, so every later push redeploys
+automatically. (The generic [vercel.com/new](https://vercel.com/new) works too;
+just pick `pokemon-game` from the list.)
+
+With no configuration, progress saves in the browser on that device. That is a
+complete, playable game — accounts are an upgrade, not a requirement.
+
+### Adding accounts and cross-device sync (optional)
+
+1. In your Vercel project → **Storage** → **Create Database** → **Neon**
+   (Postgres). The free plan is plenty. Vercel injects `DATABASE_URL`
+   automatically.
+2. Redeploy.
+
+That is it — sign-in appears, the schema creates itself on first use, and
+progress follows the player between devices. Sign-up is a trainer name plus a
+**4-digit PIN**, because a seven-year-old can type four digits unaided but
+cannot manage a parent's Google password.
+
+Recommended once it works: set `AUTH_SECRET` to `openssl rand -base64 32` in
+**Settings → Environment Variables**. Without it the session key is derived from
+the database URL, which works but ties the two secrets together.
+
+### Adding Google sign-in (optional)
+
+Create an OAuth 2.0 Client ID (type: Web) in the
+[Google Cloud Console](https://console.cloud.google.com/apis/credentials), add
+`https://<your-domain>/api/auth/google/callback` as an authorised redirect URI,
+then set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` and redeploy. The Google
+button appears on its own.
+
+---
+
+## Running locally
+
+```bash
+npm install
+npm run dev          # http://localhost:3000
+```
+
+```bash
+npm test             # 192 unit tests
+npm run build        # required before E2E
+npm run test:e2e     # 44 E2E tests across desktop + mobile viewports
+npm run test:all     # typecheck + unit + E2E
+```
+
+The account layer talks SQL, so it is covered by integration tests against a
+real Postgres rather than by mocks. They skip themselves unless you offer a
+database, which keeps the default run dependency-free:
+
+```bash
+export TEST_DATABASE_URL='postgres://postgres@127.0.0.1:5432/postgres?sslmode=disable'
+npm test             # +18 Postgres integration tests
+npm run test:e2e     # +8 signed-in browser tests, incl. cross-device sync
+```
+
+CI runs both, so the sign-in path is verified before it ever reaches a real
+deployment.
+
+---
+
+## Clients
+
+| Client | Stack                                  | Status                      |
+| ------ | -------------------------------------- | --------------------------- |
+| Web    | Next.js 16 App Router                  | Complete and deployable     |
+| iOS    | React Native / Expo SDK 57 (`mobile/`) | Shell running; game UI next |
+
+Both consume the **same game engine** from `src/lib/game/`, so the rules cannot
+drift between them. See [`mobile/README.md`](https://github.com/pfeilbr/pokemon-game/blob/claude/pokemon-web-game-8aha3a/mobile/README.md).
+
+---
+
+## How it is built
+
+Next.js 16 (App Router) · React 19 · TypeScript (strict, `noUncheckedIndexedAccess`)
+· Tailwind CSS v4 · Postgres · Vitest · Playwright · Expo / React Native.
+
+**No third-party image, font, or audio assets ship with this app.** All 36
+creatures are procedurally drawn SVG generated from a data spec, and every sound
+effect is synthesised with the Web Audio API. The only image file anywhere
+outside the documentation screenshots is `public/icon.svg` — a 1.2 KB app icon,
+hand-written as vector primitives in this repository. Nothing is fetched at
+runtime, so the game loads instantly and works offline.
+
+The game rules live in `src/lib/game/` as pure, seeded, deterministic
+functions — no React, no clock, no I/O. Randomness comes from explicit seeds and
+the current time is passed _into_ the battle reducer. That means a battle
+replays exactly in a test, can be serialised mid-fight, and lets balance be
+**proven** rather than eyeballed: the suite simulates all 144 starter matchups
+and asserts properties about the outcomes.
+
+Two real design bugs were caught that way and are now regression-guarded:
+
+- With a type advantage you could once win a battle while answering **every**
+  question wrong — the 2× multiplier was amplifying the consolation hit past the
+  opponent's damage output. A miss is now a flat chip with no type, combo or
+  speed bonus, so maths is strictly the win condition.
+- The worst matchup on the wheel was unwinnable with naive play. It is winnable
+  now by banking charge for the special — so the special is highlighted the
+  moment it becomes affordable.
+
+The E2E tests genuinely play the game: they read each question off the screen,
+work out the answer independently of the game's own generator, and tap it in on
+the keypad. The screenshots above are captured by that same suite, so they
+cannot drift from the real UI. The signed-in path is exercised against a real
+Postgres, up to and including logging in on a second browser context and
+finding the badge earned on the first.
+
+See [CLAUDE.md](https://github.com/pfeilbr/pokemon-game/blob/claude/pokemon-web-game-8aha3a/CLAUDE.md) for architecture and contribution notes.
+
+---
+
+## A note on Pokémon
+
+This is a Pokémon-_style_ game, not a Pokémon game. Every creature, name and
+piece of art here is original and drawn by code in this repository. No Nintendo
+or The Pokémon Company assets, names, or trademarks are used or redistributed.
+
+### That claim is machine-checked
+
+It used to rest on good intentions, which is a poor place to rest a licensing
+promise — a single dropped `.png` or a webfont `<link>` would have falsified it
+silently and nobody would have noticed. It is now an enforced invariant:
+
+```bash
+python3 scripts/audit_assets.py          # exits non-zero on any violation
+python3 scripts/audit_assets.py --quiet  # findings and size census only
+```
+
+Standard library only, no dependencies, and it runs as the first step of
+[CI](https://github.com/pfeilbr/pokemon-game/blob/claude/pokemon-web-game-8aha3a/.github/workflows/ci.yml) on every push and pull request. It checks four
+things across every tracked _and_ untracked-but-not-ignored file:
+
+- **No binary media** — images, audio, fonts or video — anywhere except
+  `docs/screenshots/` and `mobile/docs/`, which are documentation and reach no
+  player. `public/` and `mobile/assets/` are checked especially, because a file
+  there is not merely committed, it is served.
+- **No external asset host** referenced from code: Google Fonts, any `cdn.*`,
+  unpkg, jsDelivr, imgur, raw.githubusercontent and friends, plus any remote URL
+  ending in a media extension. A host named in a _comment_ is reported but
+  allowed; the same host in _code_ fails the build. The two are told apart with
+  a real string-and-comment scanner, because `const u = 'https://cdn…'` contains
+  a `//` and a naive check calls that a comment.
+- **No Nintendo or Pokémon trademarked name** in shipped source, from a list of
+  the first-generation creatures plus the company and franchise terms. The
+  report states its own exclusions: documentation is skipped (this very section
+  would otherwise fail the build), the repository's own `pokemon-game` slug is
+  masked, and lockfile `integrity` digests are ignored as base64 noise.
+- **A size census** of everything that ships, so "the art is geometry, not
+  assets" is a number you can check rather than a sentence you have to trust.
+  All 36 creatures cost about 60 KB of TypeScript, shared byte-for-byte by both
+  clients.
+
+The few deliberate exceptions — the app icon, and one test that names a
+trademarked creature in order to assert it is _absent_ from the roster — are
+recorded in the script with the reason, re-verified on every run, and printed in
+the report. An allowance is a stated claim, not a way to switch a check off.
+
+What it proves: no third-party asset file is committed here and the app fetches
+nothing at runtime. What it cannot prove: that hand-drawn geometry is not
+someone else's drawing. That part is still a human judgement.
+

@@ -2,7 +2,7 @@
 author = "Brian Pfeil"
 categories = ["JavaScript", "playground"]
 date = 2016-05-04
-description = ""
+description = "learn and experiment with react, redux, and react-redux"
 summary = " "
 draft = false
 slug = "react-redux"
