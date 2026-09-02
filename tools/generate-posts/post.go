@@ -26,6 +26,7 @@ type RepoPost struct {
 	Tags         []string
 	Category     string
 	Description  string
+	Date         string
 	MarkdownBody string
 	FileName     string
 }
@@ -50,6 +51,11 @@ func buildPost(repo *github.Repository, cfg Config) (*RepoPost, error) {
 
 	title := postTitle(repo.GetName(), cfg)
 
+	date := repo.GetCreatedAt().Format("2006-01-02")
+	if override, ok := cfg.DateOverrides[repo.GetName()]; ok && override != "" {
+		date = override
+	}
+
 	return &RepoPost{
 		Repo:         repo,
 		Title:        title,
@@ -57,6 +63,7 @@ func buildPost(repo *github.Repository, cfg Config) (*RepoPost, error) {
 		Tags:         tags,
 		Category:     postCategory(repo.GetName(), cfg),
 		Description:  postDescription(repo.GetDescription(), repo.GetName()),
+		Date:         date,
 		MarkdownBody: body,
 		FileName:     "generated-" + repo.GetName() + ".md",
 	}, nil
@@ -146,7 +153,26 @@ func postTitle(repoName string, cfg Config) string {
 
 // postSlug creates a URL-friendly slug from a title.
 func postSlug(title string) string {
-	return strings.ToLower(strings.ReplaceAll(title, " ", "-"))
+	// Titles can carry characters that have no business in a URL path
+	// ("C++/SFML" would otherwise yield a slug with a slash in it), so keep
+	// only lowercase alphanumerics and dots — dots are URL-safe and already
+	// appear in published slugs like "python-2.x-websocket-client" — and
+	// collapse everything else to dashes.
+	var b strings.Builder
+	prevDash := false
+	for _, r := range strings.ToLower(title) {
+		switch {
+		case (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') || r == '.':
+			b.WriteRune(r)
+			prevDash = false
+		default:
+			if !prevDash {
+				b.WriteByte('-')
+				prevDash = true
+			}
+		}
+	}
+	return strings.Trim(b.String(), "-")
 }
 
 // postTags combines tags from multiple sources: auto-detected from repo name,
@@ -233,9 +259,13 @@ func stripFrontMatterAndH1(body string) string {
 
 // renderPost executes the embedded template with the post data.
 func renderPost(post *RepoPost) (string, error) {
-	// Default so a directly-constructed RepoPost still renders a valid category.
+	// Defaults so a directly-constructed RepoPost still renders valid
+	// frontmatter.
 	if post.Category == "" {
 		post.Category = "playground"
+	}
+	if post.Date == "" && post.Repo != nil {
+		post.Date = post.Repo.GetCreatedAt().Format("2006-01-02")
 	}
 
 	data, err := templateFS.ReadFile("templates/post.md")

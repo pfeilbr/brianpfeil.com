@@ -16,6 +16,16 @@ repo_filters:
     - "aws-web-content"
     - "alfred-utilities-workflow"
     - "aws-vscode-dev-container"
+    # Older public repos published as posts (dated by last activity)
+    - "aws-app-runner-private-service-with-private-integration"
+    - "lambda-glue-mysql-terraform"
+    - "aws-guidance"
+    - "16-games-in-c--sfml"
+    - "alfred-search-aws-sdk-for-javascript"
+    - "alfred-search-cloudformation"
+    - "remote-development"
+    - "serverless-finance"
+    - "python3-jupyter-notebooks"
   exclude:
     - "taco-playground"
     - "python-tox-testing-playground"
@@ -28,7 +38,6 @@ repo_filters:
     - "confluence-api-playground"
     - "cordova-playground"
     - "jfrog-artifactory-playground"
-    - "surveyjs-react-playground"
 
 # Repos published as finished projects; these get the "project" category.
 # morning-brief is deliberately absent — it has no README, so it would
@@ -43,12 +52,27 @@ project_repos:
   - "creature-chess"
   - "xiaoling-lindsey-zhou-website"
 
+# Post dates for repos whose work postdates repo creation. Keeps them
+# interleaved with other posts by when they were last worked on.
+date_overrides:
+  "aws-app-runner-private-service-with-private-integration": "2023-09-15"
+  "lambda-glue-mysql-terraform": "2023-06-06"
+  "aws-guidance": "2022-05-17"
+  "16-games-in-c--sfml": "2022-04-15"
+  "alfred-search-aws-sdk-for-javascript": "2022-02-28"
+  "alfred-search-cloudformation": "2022-02-28"
+  "surveyjs-react-playground": "2022-02-18"
+  "remote-development": "2021-09-18"
+  "serverless-finance": "2021-05-11"
+  "python3-jupyter-notebooks": "2021-01-15"
+
 title_mappings:
   "aim-trainer": "AimForge"
   "chinese-mandarin-language-app": "Say It In Mandarin"
   "pokemon-game": "Mathmon Battle League"
   "pocono-lake-house-2026": "Pocono Lake House"
   "xiaoling-lindsey-zhou-website": "Lindsey Zhou Link Page"
+  "16-games-in-c--sfml": "16 Games in C++/SFML"
   "aws-well-architected-playground": "AWS Well-Architected"
   "aws-assume-role-using-custom-oidc-provider-playground": "AWS Assume Role Using Custom OIDC Provider"
 
@@ -111,6 +135,7 @@ casing_corrections:
   - "JSForce"
   - "EventBridge"
   - "SFML"
+  - "MySQL"
   - "MacOS"
   - "AppFlow"
   - "MDX"
@@ -351,6 +376,10 @@ tags:
     "lambda-function-urls-playground": ["aws", "lambda", "http"]
     "plotly-dash-api-gateway-lambda-playground": ["dash", "lambda", "aws"]
     "surveyjs-react-playground": ["react", "javascript"]
+    "16-games-in-c--sfml": ["cpp", "game", "sfml"]
+    "remote-development": ["vscode", "docker", "typescript"]
+    "aws-guidance": ["aws", "architecture"]
+    "lambda-glue-mysql-terraform": ["aws", "lambda", "glue", "terraform"]
     "aws-parallel-cluster-playground": ["hpc"]
     "ec2-image-builder-playground": ["aws", "ec2"]
     "rstudio-on-sagemaker-playground": ["machine-learning"]

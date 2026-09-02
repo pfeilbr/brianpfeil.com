@@ -52,6 +52,8 @@ func TestPostSlug(t *testing.T) {
 		{"AWS CDK", "aws-cdk"},
 		{"React", "react"},
 		{"Docker Compose", "docker-compose"},
+		{"16 Games in C++/SFML", "16-games-in-c-sfml"},
+		{"Python 2.x WebSocket Client", "python-2.x-websocket-client"},
 	}
 
 	for _, tt := range tests {
@@ -144,8 +146,9 @@ func TestPostSlugEdgeCases(t *testing.T) {
 		{"AWS CDK Step Functions", "aws-cdk-step-functions"},
 		{"A", "a"},
 		{"Already lowercase", "already-lowercase"},
-		// Multiple spaces become multiple hyphens (current behavior)
-		{"Double  Space", "double--space"},
+		// Runs of non-slug characters collapse to a single hyphen
+		{"Double  Space", "double-space"},
+		{"--Trimmed--", "trimmed"},
 	}
 
 	for _, tt := range tests {
@@ -657,5 +660,32 @@ func TestPostDescription(t *testing.T) {
 		if got := postDescription(tt.in, tt.repoName); got != tt.want {
 			t.Errorf("%s: postDescription(%q, %q) = %q, want %q", tt.name, tt.in, tt.repoName, got, tt.want)
 		}
+	}
+}
+
+func TestBuildPostDateOverride(t *testing.T) {
+	ts := github.Timestamp{Time: time.Date(2019, 3, 1, 0, 0, 0, 0, time.UTC)}
+	repo := &github.Repository{
+		Name:      strPtr("aws-guidance"),
+		FullName:  strPtr("pfeilbr/aws-guidance"),
+		HTMLURL:   strPtr("https://github.com/pfeilbr/aws-guidance"),
+		CreatedAt: &ts,
+	}
+
+	cfg := Config{DateOverrides: map[string]string{"aws-guidance": "2022-05-17"}}
+	post, err := buildPost(repo, cfg)
+	if err != nil {
+		t.Fatalf("buildPost() error: %v", err)
+	}
+	if post.Date != "2022-05-17" {
+		t.Errorf("Date = %q, want the override 2022-05-17", post.Date)
+	}
+
+	post, err = buildPost(repo, Config{})
+	if err != nil {
+		t.Fatalf("buildPost() error: %v", err)
+	}
+	if post.Date != "2019-03-01" {
+		t.Errorf("Date = %q, want the repo creation date 2019-03-01", post.Date)
 	}
 }

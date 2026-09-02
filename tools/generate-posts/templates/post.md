@@ -1,7 +1,7 @@
 +++
 author = "Brian Pfeil"
 categories = ["{{ .Repo.GetLanguage }}", "{{ .Category }}"]
-date = {{ .Repo.GetCreatedAt.Format "2006-01-02" }}
+date = {{ .Date }}
 description = "{{ .Description }}"
 summary = " "
 draft = false

@@ -22,6 +22,11 @@ type Config struct {
 	// playgrounds; they get the "project" category instead of "playground".
 	ProjectRepos     []string          `yaml:"project_repos"`
 
+	// DateOverrides pins a post's date by repo name (YYYY-MM-DD). Without an
+	// entry the post is dated by the repo's creation date; an override is for
+	// repos whose interesting work happened long after they were created.
+	DateOverrides map[string]string `yaml:"date_overrides"`
+
 	TitleMappings    map[string]string `yaml:"title_mappings"`
 	CasingCorrections []string         `yaml:"casing_corrections"`
 
@@ -71,6 +76,9 @@ func LoadConfig() (Config, error) {
 	// Defaults
 	if cfg.DefaultBranch == "" {
 		cfg.DefaultBranch = "main"
+	}
+	if cfg.DateOverrides == nil {
+		cfg.DateOverrides = make(map[string]string)
 	}
 	if cfg.TitleMappings == nil {
 		cfg.TitleMappings = make(map[string]string)
