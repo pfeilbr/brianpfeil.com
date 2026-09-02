@@ -143,3 +143,28 @@ other = "创建者：{{ . }}"
 
 [music_footnote]
 other = "播放使用 YouTube 的嵌入播放器。曲目数量为快照，歌单会持续更新。"
+
+# 订阅页面
+[subs_intro]
+other = "我在 YouTube 上订阅的 {{ .count }} 个频道，合计约 {{ .reach }} 名订阅者。点击任意频道即可观看它的最新视频。"
+
+[subs_the_mix]
+other = "构成"
+
+[subs_the_mix_note]
+other = "这个账号大约一半是讲计算机的人，另一半是往野外跑的人。点击分类可以筛选。"
+
+[subs_filter]
+other = "按分类筛选"
+
+[subs_all]
+other = "全部"
+
+[subs_random]
+other = "随便看看"
+
+[subs_watch_latest]
+other = "观看 {{ . }} 的最新视频"
+
+[subs_footnote]
+other = "最新视频取自各频道的上传播放列表，使用 YouTube 的嵌入播放器播放。订阅数为快照。"

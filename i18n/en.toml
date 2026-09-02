@@ -143,3 +143,28 @@ other = "by {{ . }}"
 
 [music_footnote]
 other = "Playback is YouTube's embedded player. Track counts are a snapshot — the playlists keep moving."
+
+# Subscriptions page
+[subs_intro]
+other = "The {{ .count }} channels I'm subscribed to on YouTube — about {{ .reach }} subscribers between them. Press play on any one to watch its latest video."
+
+[subs_the_mix]
+other = "The mix"
+
+[subs_the_mix_note]
+other = "Roughly half of this account is people explaining computers, and half is people going outside. Tap a category to narrow it down."
+
+[subs_filter]
+other = "Filter by category"
+
+[subs_all]
+other = "Everything"
+
+[subs_random]
+other = "Surprise me"
+
+[subs_watch_latest]
+other = "Watch the latest from {{ . }}"
+
+[subs_footnote]
+other = "Latest videos come from each channel's uploads playlist, played in YouTube's embedded player. Subscriber counts are a snapshot."

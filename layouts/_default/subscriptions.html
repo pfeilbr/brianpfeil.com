@@ -1,0 +1,121 @@
+{{ define "main" }}
+{{ $s := site.Data.subscriptions }}
+<article class="subs">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600">{{ i18n "subs_intro" (dict "count" $s.total "reach" $s.combined_subscribers) }}</p>
+  </header>
+
+  <div class="prose">{{ .Content }}</div>
+
+  {{/* ---------- The mix, as one bar. Doubles as the filter control. ---------- */}}
+  <section class="music-section" aria-labelledby="the-mix">
+    <h2 id="the-mix" class="music-h2">{{ i18n "subs_the_mix" }}</h2>
+    <p class="music-sub">{{ i18n "subs_the_mix_note" }}</p>
+
+    <div class="mix-bar" role="presentation">
+      {{ range $s.categories }}
+      <span class="mix-seg" data-cat="{{ .key }}" style="flex-grow:{{ .count }}" title="{{ .label }} — {{ .count }}"></span>
+      {{ end }}
+    </div>
+
+    <div class="chips" role="group" aria-label="{{ i18n "subs_filter" }}">
+      <button type="button" class="chip is-on" data-cat="all">{{ i18n "subs_all" }} <span class="chip-n">{{ $s.total }}</span></button>
+      {{ range $s.categories }}
+      <button type="button" class="chip" data-cat="{{ .key }}">{{ .label }} <span class="chip-n">{{ .count }}</span></button>
+      {{ end }}
+      <button type="button" class="chip chip-alt" id="subs-random">{{ i18n "subs_random" }}</button>
+    </div>
+  </section>
+
+  {{/* ---------- The channels ---------- */}}
+  {{ range $s.categories }}
+  {{ $cat := .key }}
+  <section class="music-section cat-block" data-cat="{{ $cat }}" aria-labelledby="cat-{{ $cat }}">
+    <h2 id="cat-{{ $cat }}" class="music-h2"><span class="cat-dot" data-cat="{{ $cat }}"></span>{{ .label }} <span class="cat-n">{{ .count }}</span></h2>
+    <p class="music-sub">{{ .blurb }}</p>
+    <div class="ch-grid">
+      {{ range where $s.channels "cat" $cat }}
+      <div class="ch-card" data-uploads="{{ .uploads }}" data-name="{{ .name }}">
+        <div class="ch-row">
+          <img class="ch-avatar" src="{{ .avatar }}" alt="" width="44" height="44" loading="lazy" decoding="async">
+          <div class="ch-text">
+            <a class="ch-name" href="https://www.youtube.com/{{ .handle }}" target="_blank" rel="noopener">{{ .name }}</a>
+            <span class="ch-subs">{{ .subs }}</span>
+          </div>
+          <button type="button" class="ch-play" aria-label="{{ i18n "subs_watch_latest" .name }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          </button>
+        </div>
+        <div class="ch-media" hidden></div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  <p class="music-foot">{{ i18n "subs_footnote" }}</p>
+</article>
+
+<script>
+/* Two behaviours, both deliberately cheap:
+   1. Category filter -- pure show/hide, no network, no URL churn.
+   2. Click-to-load players. Pressing play on a channel swaps in an iframe for
+      that channel's uploads playlist, which starts on its most recent video.
+      Nothing from youtube.com is fetched until then, and only one plays at a
+      time so the page never turns into a wall of sound. */
+(function () {
+  /* --- filter --- */
+  var chips = document.querySelectorAll(".chip");
+  var blocks = document.querySelectorAll(".cat-block");
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      var cat = chip.dataset.cat;
+      chips.forEach(function (c) { c.classList.toggle("is-on", c === chip); });
+      blocks.forEach(function (b) { b.hidden = cat !== "all" && b.dataset.cat !== cat; });
+    });
+  });
+
+  /* --- players --- */
+  var open = null;
+  function close(card) {
+    if (!card) return;
+    var slot = card.querySelector(".ch-media");
+    slot.innerHTML = "";
+    slot.hidden = true;
+    card.classList.remove("is-playing");
+  }
+  document.querySelectorAll(".ch-card").forEach(function (card) {
+    card.querySelector(".ch-play").addEventListener("click", function () {
+      if (open === card) { close(card); open = null; return; }
+      close(open);
+      var frame = document.createElement("iframe");
+      frame.src = "https://www.youtube.com/embed/videoseries?list=" +
+        encodeURIComponent(card.dataset.uploads) + "&autoplay=1";
+      frame.title = card.dataset.name;
+      frame.loading = "lazy";
+      frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      frame.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.allowFullscreen = true;
+      var slot = card.querySelector(".ch-media");
+      slot.appendChild(frame);
+      slot.hidden = false;
+      card.classList.add("is-playing");
+      open = card;
+    });
+  });
+
+  /* --- surprise me --- */
+  var btn = document.getElementById("subs-random");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var cards = [].slice.call(document.querySelectorAll(".cat-block:not([hidden]) .ch-card"));
+      if (!cards.length) return;
+      var pick = cards[Math.floor(Math.random() * cards.length)];
+      pick.scrollIntoView({ block: "center", behavior: "smooth" });
+      pick.querySelector(".ch-play").click();
+    });
+  }
+})();
+</script>
+{{ end }}

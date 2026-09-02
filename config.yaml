@@ -103,6 +103,9 @@ languages:
         - name: "music"
           url: "/music/"
           weight: 35
+        - name: "subscriptions"
+          url: "/subscriptions/"
+          weight: 36
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -137,6 +140,9 @@ languages:
         - name: "音乐"
           url: "/zh/music/"
           weight: 35
+        - name: "订阅"
+          url: "/zh/subscriptions/"
+          weight: 36
         # Tags are generated from the English posts, so this points at the
         # English taxonomy rather than an empty /zh/tags/.
         - name: "标签"

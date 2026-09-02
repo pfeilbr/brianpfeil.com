@@ -1,0 +1,613 @@
+# Channels I subscribe to on YouTube, pulled from youtube.com/feed/channels.
+#
+# `uploads` is the channel's uploads playlist (UU + the channel id minus its
+# leading UC), which is what makes the inline player show that channel's most
+# recent video. Avatars are copied into static/subscriptions/avatars/ rather
+# than hotlinked, so the page makes no third-party request until you press play.
+#
+# Six channels in the account are deliberately not listed: an auto-generated
+# topic channel, and five tiny personal channels belonging to people who didn't
+# ask to be on my website.
+
+total: 94
+combined_subscribers: "230M"
+
+categories:
+  - key: code
+    label: "Code & systems"
+    blurb: "Editors, compilers, distributed systems, and people who take an unreasonable interest in how a computer actually works."
+    count: 25
+  - key: ai
+    label: "AI & research"
+    blurb: "Where the field is going, from the people building it."
+    count: 8
+  - key: cloud
+    label: "Cloud"
+    blurb: "Day-job reading, in video form."
+    count: 4
+  - key: explain
+    label: "Explainers"
+    blurb: "One idea, explained properly, by someone who went and looked."
+    count: 4
+  - key: outdoors
+    label: "Outdoors & off-grid"
+    blurb: "Cabins, canoes, cold weather, and long stretches of nobody talking."
+    count: 18
+  - key: food
+    label: "Food"
+    blurb: "Technique at one end, street stalls at the other."
+    count: 13
+  - key: world
+    label: "Travel & people"
+    blurb: "Somebody with a camera going where the tour buses don't."
+    count: 10
+  - key: fun
+    label: "Everything else"
+    blurb: "No unifying theory. That's the point."
+    count: 12
+
+channels:
+  - name: "Fireship"
+    handle: "@Fireship"
+    cat: code
+    subs: "4.25M"
+    uploads: "UUsBjURrPoezykLs9EqgamOA"
+    avatar: "/subscriptions/avatars/fireship.jpg"
+  - name: "Pirate Software"
+    handle: "@PirateSoftware"
+    cat: code
+    subs: "1.81M"
+    uploads: "UUMnULQ6F6kLDAHxofDWIbrw"
+    avatar: "/subscriptions/avatars/pirate-software.jpg"
+  - name: "Ben Eater"
+    handle: "@BenEater"
+    cat: code
+    subs: "1.39M"
+    uploads: "UUS0N5baNlQWJCUrhCEo8WlA"
+    avatar: "/subscriptions/avatars/ben-eater.jpg"
+  - name: "The PrimeTime"
+    handle: "@ThePrimeTimeagen"
+    cat: code
+    subs: "1.16M"
+    uploads: "UUUyeluBRhGPCW4rPe_UvBZQ"
+    avatar: "/subscriptions/avatars/the-primetime.jpg"
+  - name: "ThePrimeagen"
+    handle: "@ThePrimeagen"
+    cat: code
+    subs: "550K"
+    uploads: "UU8ENHE5xdFSwx71u3fDH5Xw"
+    avatar: "/subscriptions/avatars/theprimeagen.jpg"
+  - name: "The Pragmatic Engineer"
+    handle: "@pragmaticengineer"
+    cat: code
+    subs: "536K"
+    uploads: "UUPbwhExawYrn9xxI21TFfyw"
+    avatar: "/subscriptions/avatars/the-pragmatic-engineer.jpg"
+  - name: "CultRepo"
+    handle: "@cultrepo"
+    cat: code
+    subs: "414K"
+    uploads: "UUsUalyRg43M8D60mtHe6YcA"
+    avatar: "/subscriptions/avatars/cultrepo.jpg"
+  - name: "Matt Pocock"
+    handle: "@mattpocockuk"
+    cat: code
+    subs: "370K"
+    uploads: "UUswG6FSbgZjbWtdf_hMLaow"
+    avatar: "/subscriptions/avatars/matt-pocock.jpg"
+  - name: "Apple Developer"
+    handle: "@AppleDeveloper"
+    cat: code
+    subs: "322K"
+    uploads: "UUwrVwiJllwhJUKXKmjLcckQ"
+    avatar: "/subscriptions/avatars/apple-developer.jpg"
+  - name: "Tsoding Daily"
+    handle: "@TsodingDaily"
+    cat: code
+    subs: "217K"
+    uploads: "UUrqM0Ym_NbK1fqeQG2VIohg"
+    avatar: "/subscriptions/avatars/tsoding-daily.jpg"
+  - name: "Scott Hanselman"
+    handle: "@shanselman"
+    cat: code
+    subs: "187K"
+    uploads: "UUL-fHOdarou-CR2XUmK48Og"
+    avatar: "/subscriptions/avatars/scott-hanselman.jpg"
+  - name: "Computer History Museum"
+    handle: "@ComputerHistory"
+    cat: code
+    subs: "178K"
+    uploads: "UUHDr4RtxwA1KqKGwxgdK4Vg"
+    avatar: "/subscriptions/avatars/computer-history-museum.jpg"
+  - name: "Tsoding"
+    handle: "@Tsoding"
+    cat: code
+    subs: "162K"
+    uploads: "UUEbYhDd6c6vngsF5PQpFVWg"
+    avatar: "/subscriptions/avatars/tsoding.jpg"
+  - name: "NesHacker"
+    handle: "@NesHacker"
+    cat: code
+    subs: "153K"
+    uploads: "UUXR5PCyUI2pG_a3ydnCIS-g"
+    avatar: "/subscriptions/avatars/neshacker.jpg"
+  - name: "Molly Rocket"
+    handle: "@MollyRocket"
+    cat: code
+    subs: "145K"
+    uploads: "UUaTznQhurW5AaiYPbhEA-KA"
+    avatar: "/subscriptions/avatars/molly-rocket.jpg"
+  - name: "Ryan Peterman"
+    handle: "@RyanLPeterman"
+    cat: code
+    subs: "106K"
+    uploads: "UUzB7YGrrxDC_POenf86H3_Q"
+    avatar: "/subscriptions/avatars/ryan-peterman.jpg"
+  - name: "TheVimeagen"
+    handle: "@TheVimeagen"
+    cat: code
+    subs: "93.2K"
+    uploads: "UUVk4b-svNJoeytrrlOixebQ"
+    avatar: "/subscriptions/avatars/thevimeagen.jpg"
+  - name: "Bits inside by René Rebe"
+    handle: "@renerebe"
+    cat: code
+    subs: "71.5K"
+    uploads: "UUJLLl6AraX1POemgLfhirwg"
+    avatar: "/subscriptions/avatars/bits-inside-by-rene-rebe.jpg"
+  - name: "Josean Martinez"
+    handle: "@joseanmartinez"
+    cat: code
+    subs: "70.3K"
+    uploads: "UU_NZ6qLS9oJgsMKQhqAkg-w"
+    avatar: "/subscriptions/avatars/josean-martinez.jpg"
+  - name: "Martin Kleppmann"
+    handle: "@kleppmann"
+    cat: code
+    subs: "63K"
+    uploads: "UUlB4KPy5LkJj1t3SgYVtMOQ"
+    avatar: "/subscriptions/avatars/martin-kleppmann.jpg"
+  - name: "Enlear Academy"
+    handle: "@EnlearAcademy"
+    cat: code
+    subs: "30K"
+    uploads: "UUhpIik3lwpviVj_tIoCeUHw"
+    avatar: "/subscriptions/avatars/enlear-academy.jpg"
+  - name: "Rhymu's Videos"
+    handle: "@rhymu"
+    cat: code
+    subs: "8.29K"
+    uploads: "UU4ZfpU7QX3iSatYB2GDum5Q"
+    avatar: "/subscriptions/avatars/rhymu-s-videos.jpg"
+  - name: "DistSys Reading Group"
+    handle: "@distsysreadinggroup596"
+    cat: code
+    subs: "4.23K"
+    uploads: "UUMKIroHVXvMQRIBhENE6RhQ"
+    avatar: "/subscriptions/avatars/distsys-reading-group.jpg"
+  - name: "Shuffle Sharding"
+    handle: "@ShuffleSharding"
+    cat: code
+    subs: "1.9K"
+    uploads: "UUcqBR4FMdmHyjkJMudZsHWw"
+    avatar: "/subscriptions/avatars/shuffle-sharding.jpg"
+  - name: "Software Technology Group"
+    handle: "@softwaretechnologygroup8385"
+    cat: code
+    subs: "66"
+    uploads: "UUL3zWYuFAZGbf3RsIDmJu6g"
+    avatar: "/subscriptions/avatars/software-technology-group.jpg"
+  - name: "Lex Fridman"
+    handle: "@lexfridman"
+    cat: ai
+    subs: "5.04M"
+    uploads: "UUSHZKyawb77ixDdsGog4iWA"
+    avatar: "/subscriptions/avatars/lex-fridman.jpg"
+  - name: "Two Minute Papers"
+    handle: "@TwoMinutePapers"
+    cat: ai
+    subs: "1.83M"
+    uploads: "UUbfYPyITQ-7l4upoX8nvctg"
+    avatar: "/subscriptions/avatars/two-minute-papers.jpg"
+  - name: "Andrej Karpathy"
+    handle: "@AndrejKarpathy"
+    cat: ai
+    subs: "1.67M"
+    uploads: "UUXUPKJO5MZQN11PqgIvyuvQ"
+    avatar: "/subscriptions/avatars/andrej-karpathy.jpg"
+  - name: "sentdex"
+    handle: "@sentdex"
+    cat: ai
+    subs: "1.44M"
+    uploads: "UUfzlCWGWYyIQ0aLC5w48gBQ"
+    avatar: "/subscriptions/avatars/sentdex.jpg"
+  - name: "Anthropic"
+    handle: "@anthropic-ai"
+    cat: ai
+    subs: "783K"
+    uploads: "UUrDwWp7EBBv4NwvScIpBDOA"
+    avatar: "/subscriptions/avatars/anthropic.jpg"
+  - name: "Claude"
+    handle: "@claude"
+    cat: ai
+    subs: "560K"
+    uploads: "UUV03SRZXJEz-hchIAogeJOg"
+    avatar: "/subscriptions/avatars/claude.jpg"
+  - name: "Brandon Rohrer"
+    handle: "@BrandonRohrer"
+    cat: ai
+    subs: "89.7K"
+    uploads: "UUsBKTrp45lTfHa_p49I2AEQ"
+    avatar: "/subscriptions/avatars/brandon-rohrer.jpg"
+  - name: "Shawn Wang (swyx)"
+    handle: "@swyxTV"
+    cat: ai
+    subs: "7.73K"
+    uploads: "UUzJpE2zKwAFZ8JwMerlNquw"
+    avatar: "/subscriptions/avatars/shawn-wang-swyx.jpg"
+  - name: "Amazon Web Services"
+    handle: "@amazonwebservices"
+    cat: cloud
+    subs: "846K"
+    uploads: "UUd6MoB9NC6uYN2grvUNT-Zg"
+    avatar: "/subscriptions/avatars/amazon-web-services.jpg"
+  - name: "Adam Marczak - Azure for Everyone"
+    handle: "@AdamMarczakYT"
+    cat: cloud
+    subs: "241K"
+    uploads: "UUdmEIMC3LBil4o0tjaTbj0w"
+    avatar: "/subscriptions/avatars/adam-marczak-azure-for-everyone.jpg"
+  - name: "knowledgeindia - LearnCloud"
+    handle: "@knowledgeindia"
+    cat: cloud
+    subs: "80K"
+    uploads: "UUzpHRBVnkzBfSsXostYuW1g"
+    avatar: "/subscriptions/avatars/knowledgeindia-learncloud.jpg"
+  - name: "Master AWS with Yan"
+    handle: "@theburningmonk"
+    cat: cloud
+    subs: "8.79K"
+    uploads: "UUd2PaRjI5iAGgeld3lCFPNg"
+    avatar: "/subscriptions/avatars/master-aws-with-yan.jpg"
+  - name: "Tom Scott"
+    handle: "@TomScottGo"
+    cat: explain
+    subs: "6.74M"
+    uploads: "UUBa659QWEk1AI4Tg--mrJ2A"
+    avatar: "/subscriptions/avatars/tom-scott.jpg"
+  - name: "MIT OpenCourseWare"
+    handle: "@mitocw"
+    cat: explain
+    subs: "6.47M"
+    uploads: "UUEBb1b_L6zDS3xTUrIALZOw"
+    avatar: "/subscriptions/avatars/mit-opencourseware.jpg"
+  - name: "Practical Engineering"
+    handle: "@PracticalEngineeringChannel"
+    cat: explain
+    subs: "4.82M"
+    uploads: "UUMOqf8ab-42UUQIdVoKwjlQ"
+    avatar: "/subscriptions/avatars/practical-engineering.jpg"
+  - name: "Stanford Online"
+    handle: "@stanfordonline"
+    cat: explain
+    subs: "1.26M"
+    uploads: "UUBa5G_ESCn8Yd4vw5U-gIcg"
+    avatar: "/subscriptions/avatars/stanford-online.jpg"
+  - name: "Outdoor Boys"
+    handle: "@OutdoorBoys"
+    cat: outdoors
+    subs: "20.5M"
+    uploads: "UUfpCQ89W9wjkHc8J_6eTbBg"
+    avatar: "/subscriptions/avatars/outdoor-boys.jpg"
+  - name: "Jonna Jinton"
+    handle: "@jonnajinton"
+    cat: outdoors
+    subs: "5.25M"
+    uploads: "UUAk3t7WHs2zjsZpopox8Taw"
+    avatar: "/subscriptions/avatars/jonna-jinton.jpg"
+  - name: "Primitive Tool"
+    handle: "@PrimitiveTool"
+    cat: outdoors
+    subs: "4.92M"
+    uploads: "UU9LymR6i2IM4QfSNuOkBzNA"
+    avatar: "/subscriptions/avatars/primitive-tool.jpg"
+  - name: "Steve Wallis"
+    handle: "@campingwithsteve"
+    cat: outdoors
+    subs: "2.14M"
+    uploads: "UUSnqXeK94-iNmwqGO__eJ5g"
+    avatar: "/subscriptions/avatars/steve-wallis.jpg"
+  - name: "Joe Robinet"
+    handle: "@therealjoerobinet"
+    cat: outdoors
+    subs: "1.53M"
+    uploads: "UUts-8ZqS339n-9nxy3DN8Cg"
+    avatar: "/subscriptions/avatars/joe-robinet.jpg"
+  - name: "Joel Hansen"
+    handle: "@JoelHansen"
+    cat: outdoors
+    subs: "1.17M"
+    uploads: "UU_9I8ulL_v4SvsXwiVKlzqw"
+    avatar: "/subscriptions/avatars/joel-hansen.jpg"
+  - name: "Primitive Life"
+    handle: "@PrimitiveLife"
+    cat: outdoors
+    subs: "980K"
+    uploads: "UUhW8Ayctddx1JV56yrrtt4Q"
+    avatar: "/subscriptions/avatars/primitive-life.jpg"
+  - name: "Simple Living Alaska"
+    handle: "@SimpleLivingAlaska"
+    cat: outdoors
+    subs: "893K"
+    uploads: "UU3FHvW16m_i117IqPnb0nmA"
+    avatar: "/subscriptions/avatars/simple-living-alaska.jpg"
+  - name: "Ericsurf6"
+    handle: "@ericsurf6"
+    cat: outdoors
+    subs: "847K"
+    uploads: "UUYraBfUqw2O6qeNYRowX4UA"
+    avatar: "/subscriptions/avatars/ericsurf6.jpg"
+  - name: "RyanTwomey"
+    handle: "@Ryantwomeyy"
+    cat: outdoors
+    subs: "596K"
+    uploads: "UUZYXO1yZnSAT6sK79bZV_Hg"
+    avatar: "/subscriptions/avatars/ryantwomey.jpg"
+  - name: "Nickolas Green Outdoors"
+    handle: "@NickolasGreenOutdoors"
+    cat: outdoors
+    subs: "555K"
+    uploads: "UURQdQSQm8GQNjBP-0IYtkcA"
+    avatar: "/subscriptions/avatars/nickolas-green-outdoors.jpg"
+  - name: "tabiie ASMR CAMP"
+    handle: "@tabiieASMRCAMP"
+    cat: outdoors
+    subs: "490K"
+    uploads: "UUlKaF2YAqSwx1lJD7F86JcQ"
+    avatar: "/subscriptions/avatars/tabiie-asmr-camp.jpg"
+  - name: "Foresty Forest"
+    handle: "@forestyforest"
+    cat: outdoors
+    subs: "467K"
+    uploads: "UUofJu853kJKpkg4y5a-9YXg"
+    avatar: "/subscriptions/avatars/foresty-forest.jpg"
+  - name: "JL Jupiter"
+    handle: "@JLJupiterTV"
+    cat: outdoors
+    subs: "403K"
+    uploads: "UUtQqp8rnCvSBxIxPBE5qftw"
+    avatar: "/subscriptions/avatars/jl-jupiter.jpg"
+  - name: "This Is My Alaska"
+    handle: "@ThisIsMyAlaska"
+    cat: outdoors
+    subs: "370K"
+    uploads: "UUgqtxHwi9CPmXVMQEcRigCw"
+    avatar: "/subscriptions/avatars/this-is-my-alaska.jpg"
+  - name: "Baum Outdoors"
+    handle: "@BaumOutdoors"
+    cat: outdoors
+    subs: "279K"
+    uploads: "UUT6fVez_0DmaZ_WDaRhUw2A"
+    avatar: "/subscriptions/avatars/baum-outdoors.jpg"
+  - name: "Off-Grid Backcountry Adventures"
+    handle: "@OffGridBackcountryAdventures"
+    cat: outdoors
+    subs: "261K"
+    uploads: "UUWsADN_GsDnwgmumTPCPhMQ"
+    avatar: "/subscriptions/avatars/off-grid-backcountry-adventures.jpg"
+  - name: "Captain Discovery"
+    handle: "@CaptainDiscover"
+    cat: outdoors
+    subs: "227K"
+    uploads: "UUDBRkd8deH-Vk1nWQKWJ72w"
+    avatar: "/subscriptions/avatars/captain-discovery.jpg"
+  - name: "Mark Wiens"
+    handle: "@MarkWiens"
+    cat: food
+    subs: "11.9M"
+    uploads: "UUyEd6QBSgat5kkC6svyjudA"
+    avatar: "/subscriptions/avatars/mark-wiens.jpg"
+  - name: "Joshua Weissman"
+    handle: "@JoshuaWeissman"
+    cat: food
+    subs: "10.7M"
+    uploads: "UUhBEbMKI1eCcejTtmI32UEw"
+    avatar: "/subscriptions/avatars/joshua-weissman.jpg"
+  - name: "Travel Thirsty"
+    handle: "@TravelThirstyBlog"
+    cat: food
+    subs: "8.16M"
+    uploads: "UUHKVXtT1YBCYUnnr4apqXfg"
+    avatar: "/subscriptions/avatars/travel-thirsty.jpg"
+  - name: "WILDERNESS COOKING"
+    handle: "@WILDERNESSCOOKING"
+    cat: food
+    subs: "7.17M"
+    uploads: "UUj4KP216972cPp2w_BAHy8g"
+    avatar: "/subscriptions/avatars/wilderness-cooking.jpg"
+  - name: "BeardMeatsFood"
+    handle: "@Beardmeatsfood"
+    cat: food
+    subs: "6.79M"
+    uploads: "UUc9CjaAjsMMvaSghZB7-Kog"
+    avatar: "/subscriptions/avatars/beardmeatsfood.jpg"
+  - name: "The Food Ranger"
+    handle: "@thefoodranger"
+    cat: food
+    subs: "5.94M"
+    uploads: "UUiAq_SU0ED1C6vWFMnw8Ekg"
+    avatar: "/subscriptions/avatars/the-food-ranger.jpg"
+  - name: "Eater"
+    handle: "@eater"
+    cat: food
+    subs: "4.04M"
+    uploads: "UURzPUBhXUZHclB7B5bURFXw"
+    avatar: "/subscriptions/avatars/eater.jpg"
+  - name: "SAM THE COOKING GUY"
+    handle: "@samthecookingguy"
+    cat: food
+    subs: "3.86M"
+    uploads: "UUbRj3Tcy1Zoz3rcf83nW5kw"
+    avatar: "/subscriptions/avatars/sam-the-cooking-guy.jpg"
+  - name: "Quang Tran"
+    handle: "@QuangTran."
+    cat: food
+    subs: "2.75M"
+    uploads: "UUraOIV5tXbWQtq7ORVOG4gg"
+    avatar: "/subscriptions/avatars/quang-tran.jpg"
+  - name: "Adam Ragusea"
+    handle: "@aragusea"
+    cat: food
+    subs: "2.62M"
+    uploads: "UU9_p50tH3WmMslWRWKnM7dQ"
+    avatar: "/subscriptions/avatars/adam-ragusea.jpg"
+  - name: "FoodieBoy 푸디보이"
+    handle: "@FoodieBoyKR"
+    cat: food
+    subs: "2.4M"
+    uploads: "UUe1ZsGtbRx2pgajGzwB9L0A"
+    avatar: "/subscriptions/avatars/foodieboy.jpg"
+  - name: "Hiroyuki Terada - Diaries of a Master Sushi Chef"
+    handle: "@DiariesofaMasterSushiChef"
+    cat: food
+    subs: "2.06M"
+    uploads: "UUbULqc7U1mCHiVSCIkwEpxw"
+    avatar: "/subscriptions/avatars/hiroyuki-terada-diaries-of-a-master-sushi-chef.jpg"
+  - name: "Ras Kitchen"
+    handle: "@RasKitchen"
+    cat: food
+    subs: "763K"
+    uploads: "UUVs7k1IfvKpnhKZ71NsEIUg"
+    avatar: "/subscriptions/avatars/ras-kitchen.jpg"
+  - name: "Soft White Underbelly"
+    handle: "@SoftWhiteUnderbelly"
+    cat: world
+    subs: "7.06M"
+    uploads: "UUCvcd0FYi58LwyTQP9LITpA"
+    avatar: "/subscriptions/avatars/soft-white-underbelly.jpg"
+  - name: "bald and bankrupt"
+    handle: "@baldandbankrupt"
+    cat: world
+    subs: "4.54M"
+    uploads: "UUxDZs_ltFFvn0FDHT6kmoXA"
+    avatar: "/subscriptions/avatars/bald-and-bankrupt.jpg"
+  - name: "Peter Santenello"
+    handle: "@PeterSantenello"
+    cat: world
+    subs: "4.29M"
+    uploads: "UU3Vuq4Q1bKFtAiKYlwRv3oA"
+    avatar: "/subscriptions/avatars/peter-santenello.jpg"
+  - name: "Paolo fromTOKYO"
+    handle: "@PaolofromTOKYO"
+    cat: world
+    subs: "3.73M"
+    uploads: "UUixD9UbKvDxzGNiPC_fgHyA"
+    avatar: "/subscriptions/avatars/paolo-fromtokyo.jpg"
+  - name: "Channel 5 with Andrew Callaghan"
+    handle: "@Channel5YouTube"
+    cat: world
+    subs: "3.68M"
+    uploads: "UU-AQKm7HUNMmxjdS371MSwg"
+    avatar: "/subscriptions/avatars/channel-5-with-andrew-callaghan.jpg"
+  - name: "shiey"
+    handle: "@shiey"
+    cat: world
+    subs: "2.88M"
+    uploads: "UUpXwMqnXfJzazKS5fJ8nrVw"
+    avatar: "/subscriptions/avatars/shiey.jpg"
+  - name: "Small Brained American"
+    handle: "@SmallBrainedAmerican"
+    cat: world
+    subs: "959K"
+    uploads: "UUHASrbCS-niYRn-Y3WX38pA"
+    avatar: "/subscriptions/avatars/small-brained-american.jpg"
+  - name: "Ting-Daily life  in China"
+    handle: "@TingdailylifeinChina"
+    cat: world
+    subs: "167K"
+    uploads: "UUOLBhVvL5dcJLMZeQBUu1Vw"
+    avatar: "/subscriptions/avatars/ting-daily-life-in-china.jpg"
+  - name: "Inside China Lives"
+    handle: "@InsideChinaLives2025"
+    cat: world
+    subs: "97.7K"
+    uploads: "UUdCTCZ7Bz82AyBwETDeZ8Pg"
+    avatar: "/subscriptions/avatars/inside-china-lives.jpg"
+  - name: "Ting"
+    handle: "@tingadventure"
+    cat: world
+    subs: "88.2K"
+    uploads: "UUxam9pQur7x3lwp27wVkUzw"
+    avatar: "/subscriptions/avatars/ting.jpg"
+  - name: "Daily Dose Of Internet"
+    handle: "@DailyDoseOfInternet"
+    cat: fun
+    subs: "20.7M"
+    uploads: "UUdC0An4ZPNr_YiFiYoVbwaw"
+    avatar: "/subscriptions/avatars/daily-dose-of-internet.jpg"
+  - name: "STORROR"
+    handle: "@STORROR"
+    cat: fun
+    subs: "11M"
+    uploads: "UUdPui8EYr_sX6q1xNXCRPXg"
+    avatar: "/subscriptions/avatars/storror.jpg"
+  - name: "TimTheTatman"
+    handle: "@timthetatman"
+    cat: fun
+    subs: "5.61M"
+    uploads: "UUXBE_QQSZueB8082ml5fslg"
+    avatar: "/subscriptions/avatars/timthetatman.jpg"
+  - name: "Theo Von"
+    handle: "@TheoVon"
+    cat: fun
+    subs: "4.71M"
+    uploads: "UU5AQEUAwCh1sGDvkQtkDWUQ"
+    avatar: "/subscriptions/avatars/theo-von.jpg"
+  - name: "Mav"
+    handle: "@mav"
+    cat: fun
+    subs: "2.72M"
+    uploads: "UUL_BZpt0J9Kqwy6YPWr30ow"
+    avatar: "/subscriptions/avatars/mav.jpg"
+  - name: "Tyler Sherwin"
+    handle: "@TylerSherwinMagic"
+    cat: fun
+    subs: "1.74M"
+    uploads: "UUx5mMp3sUvyzFUgAmScurLw"
+    avatar: "/subscriptions/avatars/tyler-sherwin.jpg"
+  - name: "UrinatingTree"
+    handle: "@UrinatingTree"
+    cat: fun
+    subs: "641K"
+    uploads: "UU8a87KN4-w-ExcGufTeX9KQ"
+    avatar: "/subscriptions/avatars/urinatingtree.jpg"
+  - name: "CrazyQuady"
+    handle: "@CrazyQuady"
+    cat: fun
+    subs: "158K"
+    uploads: "UUWL3pDZHnkGA4-_bxCUVQ_A"
+    avatar: "/subscriptions/avatars/crazyquady.jpg"
+  - name: "RoScripter"
+    handle: "@RoScripter"
+    cat: fun
+    subs: "30.2K"
+    uploads: "UUpJKKVwMJbjuUX36K16hMJQ"
+    avatar: "/subscriptions/avatars/roscripter.jpg"
+  - name: "Tao Group Hospitality"
+    handle: "@TAOGroup"
+    cat: fun
+    subs: "3.15K"
+    uploads: "UUsNKCi7nvKTX7yFIl7WfnAA"
+    avatar: "/subscriptions/avatars/tao-group-hospitality.jpg"
+  - name: "RIT Admissions"
+    handle: "@rit_admissions"
+    cat: fun
+    subs: "1.71K"
+    uploads: "UUv5IpRqrZVS4if3LLG9RE1g"
+    avatar: "/subscriptions/avatars/rit-admissions.jpg"
+  - name: "3CSMediaTV"
+    handle: "@3csmediatvpa"
+    cat: fun
+    subs: "111"
+    uploads: "UUfBrPnRXEkC8Afazbkupscg"
+    avatar: "/subscriptions/avatars/3csmediatv.jpg"
