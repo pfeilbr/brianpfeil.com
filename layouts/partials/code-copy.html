@@ -1,0 +1,59 @@
+<script>
+/* Copy-to-clipboard buttons on code blocks */
+(function() {
+  var blocks = document.querySelectorAll(".prose pre");
+  if (!blocks.length) return;
+
+  /* Async Clipboard API where allowed; execCommand fallback where it isn't
+     (older browsers, non-secure origins, embedded views without permission). */
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function() { return legacyCopy(text); });
+    }
+    return legacyCopy(text);
+  }
+
+  function legacyCopy(text) {
+    return new Promise(function(resolve, reject) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:0;left:-9999px;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      ok ? resolve() : reject(new Error("copy failed"));
+    });
+  }
+
+  blocks.forEach(function(pre) {
+    var wrap = document.createElement("div");
+    wrap.className = "code-wrap";
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "code-copy";
+    btn.textContent = "copy";
+    btn.setAttribute("aria-label", "Copy code to clipboard");
+    wrap.appendChild(btn);
+
+    btn.addEventListener("click", function() {
+      copyText(pre.innerText).then(function() {
+        btn.textContent = "copied";
+        btn.classList.add("is-copied");
+        setTimeout(function() {
+          btn.textContent = "copy";
+          btn.classList.remove("is-copied");
+        }, 1500);
+      }).catch(function() {
+        btn.textContent = "failed";
+        setTimeout(function() { btn.textContent = "copy"; }, 1500);
+      });
+    });
+  });
+})();
+</script>

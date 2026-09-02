@@ -1,0 +1,44 @@
+{{ define "main" }}
+<section class="text-center py-8">
+  <p class="text-sm font-medium text-brand mb-2">404</p>
+  <h1 class="text-2xl font-bold text-gray-900 mb-2">Page not found</h1>
+  <p class="text-gray-500 mb-6">That page doesn't exist &mdash; it may have been moved or renamed. Try a search.</p>
+</section>
+
+{{ partial "search.html" . }}
+<div id="search-results"></div>
+
+<section class="mt-8">
+  <h2 class="text-sm font-semibold text-gray-900 mb-2">Recent posts</h2>
+  <div id="post-list">
+    {{ range first 10 (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+    <article class="post-preview py-2.5 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
+      <div class="flex items-baseline justify-between gap-3">
+        <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
+        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ .Date.Format "Jan 2006" }}</time>
+      </div>
+    </article>
+    {{ end }}
+  </div>
+  <p class="mt-4 text-sm"><a href="/" class="text-brand no-underline hover:underline">&larr; Back to all posts</a></p>
+</section>
+
+<script>
+/* "/" focuses search, matching the homepage */
+document.addEventListener("keydown", function(e) {
+  if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    var active = document.activeElement;
+    if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.isContentEditable)) return;
+    e.preventDefault();
+    var q = document.getElementById("search-query");
+    if (q) q.focus();
+  }
+});
+
+document.addEventListener("click", function(e) {
+  if (e.target.closest("a")) return;
+  var row = e.target.closest("[data-href]");
+  if (row) window.location.href = row.dataset.href;
+});
+</script>
+{{ end }}

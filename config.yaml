@@ -1,5 +1,6 @@
 baseURL: "https://brianpfeil.com/"
 disablePathToLower: true
+enableRobotsTXT: true
 languageCode: "en-us"
 title: "Brian Pfeil"
 
@@ -16,6 +17,18 @@ googleAnalytics: "G-SKVHNJ985Y"
 security:
   allowContent:
     - ".*"
+
+related:
+  includeNewer: true
+  threshold: 30
+  toLower: true
+  indices:
+    - name: tags
+      weight: 100
+    - name: categories
+      weight: 40
+    - name: date
+      weight: 10
 
 markup:
   goldmark:

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ if .IsHome }}{{ .Site.Params.homeTitle }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}{{ end }}">
+  {{ partial "head-meta.html" . }}
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ "index.xml" | absURL }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,11 +15,13 @@
   {{ template "_internal/google_analytics.html" . }}
 </head>
 <body class="bg-white text-gray-800 font-sans min-h-screen flex flex-col">
+  <a href="#main-content" class="skip-link">Skip to content</a>
   {{ partial "nav.html" . }}
-  <main class="flex-1 w-full max-w-2xl mx-auto px-4 py-8">
+  <main id="main-content" class="flex-1 w-full max-w-2xl mx-auto px-4 py-8">
     {{ block "main" . }}{{ end }}
   </main>
   {{ partial "footer.html" . }}
+  {{ partial "code-copy.html" . }}
   <script src="https://unpkg.com/darkreader@4.9.16/darkreader.js" crossorigin="anonymous"></script>
   <script>
   (function() {

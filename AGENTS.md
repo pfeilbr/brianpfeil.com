@@ -31,11 +31,15 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
 │   ├── _default/list.html             # Tags taxonomy + term pages
 │   ├── _default/index.json            # JSON search index
 │   ├── _default/index.llmstxt        # llms.txt — all site content for LLM consumption
+│   ├── 404.html                       # Custom 404: search + recent posts
+│   ├── robots.txt                     # robots.txt template (enableRobotsTXT: true)
 │   ├── _default/_markup/render-link.html  # Adds target="_blank" to external links
 │   ├── index.html                     # Homepage: search + post list + infinite scroll
 │   ├── projects/list.html             # Projects card grid
 │   └── partials/
 │       ├── nav.html                   # Responsive nav, dark mode toggle
+│       ├── head-meta.html             # description, Open Graph, Twitter cards, JSON-LD
+│       ├── code-copy.html             # Copy-to-clipboard buttons on .prose pre blocks
 │       ├── footer.html                # Social links (Twitter, GitHub, SO, RSS)
 │       └── search.html                # Sticky search bar + <template> + loads search.js
 ├── static/images/                     # Static images served as-is
@@ -61,6 +65,8 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
 - `buildFuture: true` — includes posts with future dates
 - `mainSections: ["post", "posts"]` — controls which sections appear on homepage
 - Outputs: HTML + RSS + JSON (search index) + llms.txt for home
+- `enableRobotsTXT: true` — renders `layouts/robots.txt` (points at the sitemap)
+- `related:` indices (tags 100, categories 40, date 10) power "Related posts" on single pages
 
 ### CSS Pipeline
 
@@ -84,6 +90,26 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
   - "/" keyboard shortcut to focus search
   - Click delegation on `[data-href]` article rows
 - Dark mode via DarkReader CDN in `baseof.html`, persisted to localStorage
+- `partials/code-copy.html` — adds a `copy` button to every `.prose pre`; wraps each
+  block in `.code-wrap`. Uses the async Clipboard API when available and falls back to
+  `document.execCommand("copy")` on non-secure origins and embedded/restricted views.
+
+### SEO & Metadata (`layouts/partials/head-meta.html`)
+
+- Emits `<meta name="description">`, Open Graph, Twitter card, and JSON-LD tags
+- Description precedence: `.Description` → `.Summary` → page content → site default.
+  Generated posts open with an `.alert` banner div, which is stripped before use.
+- JSON-LD is piped through `safeJS` — without it Go's `html/template` escapes the
+  object into a quoted JS string and crawlers see invalid structured data.
+- `@type`: `BlogPosting` for posts, `Person` for the homepage, `WebPage` otherwise
+
+### Accessibility
+
+- `.skip-link` in `baseof.html` jumps to `#main-content` (visible only on focus)
+- `:focus-visible` outlines on links, buttons, summary, inputs
+- `aria-label` on icon-only buttons and the search input; `aria-current="page"` on the
+  active nav item; decorative SVGs are `aria-hidden`
+- `prefers-reduced-motion` disables transitions and smooth scrolling
 
 ### llms.txt (`/llms.txt`)
 
@@ -194,7 +220,9 @@ Go CLI that creates blog posts from GitHub repo READMEs.
 | `config.yaml` (mainSections) | `layouts/index.html` (post query), `layouts/_default/index.json` |
 | `assets/css/main.css` (utility classes) | All layout templates that use those classes |
 | `layouts/partials/search.html` | `assets/js/search.js`, `layouts/_default/index.json` |
-| `layouts/index.html` (post list structure) | `assets/js/search.js` (search result template should match) |
+| `layouts/index.html` (post list structure) | `assets/js/search.js`, `layouts/404.html` (both reuse the row markup) |
+| `layouts/partials/head-meta.html` | `config.yaml` (`params.author`, `baseURL`) |
+| `config.yaml` (`related` indices) | `layouts/_default/single.html` (related posts block) |
 | `tools/generate-posts/templates/post.md` | `assets/css/main.css` (banner restyling rules) |
 | `tools/generate-posts/config.yaml` | Generated post output (titles, tags, filtering) |
 | `config.yaml` (outputFormats) | `layouts/_default/index.llmstxt` |
