@@ -167,7 +167,10 @@
       var cards = [].slice.call(document.querySelectorAll(".cat-block:not([hidden]) .ch-card"));
       if (!cards.length) return;
       var pick = cards[Math.floor(Math.random() * cards.length)];
-      pick.scrollIntoView({ block: "center", behavior: "smooth" });
+      pick.scrollIntoView({
+        block: "center",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+      });
       pick.querySelector(".ch-play").click();
     });
   }

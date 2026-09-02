@@ -68,21 +68,35 @@ document.addEventListener("keydown", function(e) {
   }
 });
 
+/* Respects the reduced-motion preference: passing an explicit `behavior` to
+   scrollTo() overrides the `scroll-behavior` set in CSS, so it has to be
+   checked here too. */
+function motion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+}
+
 /* Back to top button */
 (function() {
   var btn = document.getElementById("back-to-top");
   if (!btn) return;
+  /* Toggling `hidden` as well as opacity keeps the button out of the tab order
+     while it is invisible -- pointer-events:none does not stop a keyboard
+     Enter, so it used to be a focusable control nobody could see. */
+  var shown = false;
+  function show(next) {
+    if (next === shown) return;
+    shown = next;
+    if (next) btn.hidden = false;
+    btn.style.opacity = next ? "1" : "0";
+    btn.style.pointerEvents = next ? "auto" : "none";
+    if (!next) setTimeout(function () { if (!shown) btn.hidden = true; }, 200);
+  }
+  btn.hidden = true;
   window.addEventListener("scroll", function() {
-    if (window.scrollY > 400) {
-      btn.style.opacity = "1";
-      btn.style.pointerEvents = "auto";
-    } else {
-      btn.style.opacity = "0";
-      btn.style.pointerEvents = "none";
-    }
+    show(window.scrollY > 400);
   }, { passive: true });
   btn.addEventListener("click", function() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: motion() });
   });
 })();
 

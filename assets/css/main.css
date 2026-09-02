@@ -16,8 +16,12 @@
   --text-body: #374151;
   --text-muted: #4b5563;
   --text-subtle: #6b7280;
-  --text-faint: #9ca3af;
-  --text-fainter: #d1d5db;
+  /* The two "faint" tokens carry post dates, tag links, counts and the search
+     placeholder. They were #9ca3af (2.54:1) and #d1d5db (1.47:1) on white --
+     both well under WCAG AA. Retuned to 4.56:1 and 3.09:1 while staying a step
+     lighter than --text-subtle (4.83:1). */
+  --text-faint: #6f7684;
+  --text-fainter: #8d939e;
   --brand: #0d7ea8;
   --brand-hover: #1e40af;
   --on-brand: #ffffff;
@@ -39,8 +43,9 @@ html[data-theme="dark"] {
   --text-body: #c4cad4;
   --text-muted: #a5adba;
   --text-subtle: #8b93a1;
-  --text-faint: #6f7787;
-  --text-fainter: #565e6d;
+  /* 4.63:1 and 3.62:1 on --bg; were 4.20:1 and 2.90:1. */
+  --text-faint: #767e8e;
+  --text-fainter: #656d7b;
   --brand: #4ab8e0;
   --brand-hover: #8ecdf0;
   --on-brand: #0f1115;

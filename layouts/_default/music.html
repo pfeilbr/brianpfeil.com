@@ -85,6 +85,7 @@
     if (!card) return;
     var slot = card.querySelector(".pl-media");
     slot.innerHTML = "";
+    slot.removeAttribute("tabindex");
     slot.appendChild(card.playButton);
     card.classList.remove("is-playing");
   }
@@ -108,6 +109,11 @@
       slot.innerHTML = "";
       slot.appendChild(frame);
       card.classList.add("is-playing");
+      /* The button that was just activated no longer exists, so focus would
+         fall back to <body> and a keyboard user would restart from the top of
+         the page. Move it onto the slot that replaced it. */
+      slot.tabIndex = -1;
+      slot.focus({ preventScroll: true });
       open = card;
     });
   });
