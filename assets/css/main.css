@@ -1250,19 +1250,6 @@ html[data-theme="dark"] .ic {
 [data-ic="i-youtube"] { --ic-c: #dc2626; }
 [data-ic="i-twitch"]  { --ic-c: #9146ff; }
 
-.platform-head {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  margin: 2.75rem 0 0.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
-}
-.subs > .platform-head:first-of-type { border-top: 0; padding-top: 0; }
-
-.platform-name { font-size: 1.0625rem; font-weight: 700; color: var(--text-strong); }
-.platform-count { font-size: 0.75rem; color: var(--text-faint); margin-left: auto; font-variant-numeric: tabular-nums; }
-
 /* Twitch rows reuse the channel-card metrics but link out whole -- Twitch has
    no watchable "latest video", so there is no play button to press. */
 .tw-card {
@@ -1292,3 +1279,49 @@ html[data-theme="dark"] .ic {
 .social-copy.is-copied { color: var(--brand); }
 .social-copy.is-copied .social-copy-label { display: none; }
 .social-copy.is-copied .social-copy-done { display: inline !important; white-space: nowrap; }
+
+/* Platform tabs on /subscriptions/. Both platforms reachable from the top
+   rather than one being buried below ninety-odd rows of the other. */
+
+.ptabs {
+  display: flex;
+  gap: 0.25rem;
+  margin: 1.75rem 0 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.ptab {
+  font: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem 0.625rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  color: var(--text-subtle);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.ptab:hover { color: var(--text-strong); }
+.ptab.is-on { color: var(--text-strong); border-bottom-color: var(--text-strong); }
+
+.ptab .ic { opacity: 0.55; transition: opacity 0.15s ease; }
+.ptab.is-on .ic,
+.ptab:hover .ic { opacity: 1; }
+
+.ptab-name { font-size: 0.9375rem; font-weight: 600; }
+
+.ptab-count {
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  padding: 0.0625rem 0.375rem;
+  border-radius: 999px;
+  background-color: var(--bg-muted);
+  color: var(--text-faint);
+}
+.ptab.is-on .ptab-count { background-color: var(--text-strong); color: var(--bg); }
+
+/* The first section inside a panel sits right under the tab strip. */
+.ptab-panel > .music-section:first-child { margin-top: 1.5rem; }

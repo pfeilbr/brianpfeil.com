@@ -9,11 +9,26 @@
 
   <div class="prose">{{ .Content }}</div>
 
-  <div class="platform-head">
-    {{ partial "icons/chip.html" (dict "id" "i-youtube" "size" "lg") }}
-    <span class="platform-name">YouTube</span>
-    <span class="platform-count">{{ i18n "subs_n_channels" $s.total }}</span>
+  {{/* ---------- Platform tabs ----------
+     Rendered as real tabs so both platforms are reachable from the top of the
+     page. Without JavaScript both panels stay open and the page reads as it
+     did before -- the script only hides the inactive one. */}}
+  <div class="ptabs" role="tablist" aria-label="{{ i18n "subs_platforms" }}">
+    <button type="button" class="ptab is-on" role="tab" id="tab-youtube"
+            aria-controls="panel-youtube" aria-selected="true" data-panel="youtube">
+      {{ partial "icons/chip.html" (dict "id" "i-youtube" "size" "sm") }}
+      <span class="ptab-name">YouTube</span>
+      <span class="ptab-count">{{ $s.total }}</span>
+    </button>
+    <button type="button" class="ptab" role="tab" id="tab-twitch"
+            aria-controls="panel-twitch" aria-selected="false" tabindex="-1" data-panel="twitch">
+      {{ partial "icons/chip.html" (dict "id" "i-twitch" "size" "sm") }}
+      <span class="ptab-name">Twitch</span>
+      <span class="ptab-count">{{ add $t.following_total $t.past_total }}</span>
+    </button>
   </div>
+
+  <div class="ptab-panel" id="panel-youtube" role="tabpanel" aria-labelledby="tab-youtube">
 
   {{/* ---------- The mix, as one bar. Doubles as the filter control. ---------- */}}
   <section class="music-section" aria-labelledby="the-mix">
@@ -61,12 +76,10 @@
   </section>
   {{ end }}
 
+  </div>{{/* /panel-youtube */}}
+
   {{/* ---------- Twitch ---------- */}}
-  <div class="platform-head">
-    {{ partial "icons/chip.html" (dict "id" "i-twitch" "size" "lg") }}
-    <span class="platform-name">Twitch</span>
-    <span class="platform-count">{{ i18n "subs_n_channels" (add $t.following_total $t.past_total) }}</span>
-  </div>
+  <div class="ptab-panel" id="panel-twitch" role="tabpanel" aria-labelledby="tab-twitch">
 
   <section class="music-section" aria-labelledby="tw-following">
     <h2 id="tw-following" class="music-h2">{{ i18n "subs_tw_following" }} <span class="cat-n">{{ $t.following_total }}</span></h2>
@@ -83,6 +96,8 @@
       {{ range $t.past }}{{ partial "twitch-card.html" . }}{{ end }}
     </div>
   </section>
+
+  </div>{{/* /panel-twitch */}}
 
   <p class="music-foot">{{ i18n "subs_footnote" }}</p>
 </article>
@@ -136,6 +151,40 @@
       open = card;
     });
   });
+
+  /* --- platform tabs --- */
+  /* Panels start visible so the page still works with JavaScript off; the
+     first thing this does is close the inactive one. */
+  var tabs = [].slice.call(document.querySelectorAll(".ptab"));
+  var panels = {};
+  tabs.forEach(function (t) { panels[t.dataset.panel] = document.getElementById("panel-" + t.dataset.panel); });
+
+  function select(name, focus) {
+    if (!panels[name]) return;
+    /* A hidden iframe keeps playing, so stop whatever is open before leaving. */
+    if (name !== "youtube") { close(open); open = null; }
+    tabs.forEach(function (t) {
+      var on = t.dataset.panel === name;
+      t.classList.toggle("is-on", on);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      panels[t.dataset.panel].hidden = !on;
+      if (on && focus) t.focus();
+    });
+    try { history.replaceState(null, "", name === "youtube" ? location.pathname : "#" + name); } catch (e) {}
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener("click", function () { select(tab.dataset.panel); });
+    tab.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      select(tabs[(i + d + tabs.length) % tabs.length].dataset.panel, true);
+    });
+  });
+
+  select(location.hash === "#twitch" ? "twitch" : "youtube");
 
   /* --- surprise me --- */
   var btn = document.getElementById("subs-random");
