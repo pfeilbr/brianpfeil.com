@@ -15,6 +15,15 @@
     {{ end }}
   </header>
 
+  {{ if and $isPost (ge .WordCount 400) (gt (len (findRE "<h[23]" .Content)) 2) }}
+  <nav class="toc" aria-label="Table of contents">
+    <details open>
+      <summary>Contents</summary>
+      {{ .TableOfContents }}
+    </details>
+  </nav>
+  {{ end }}
+
   <div class="prose">
     {{ .Content }}
   </div>

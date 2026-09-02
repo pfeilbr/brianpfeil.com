@@ -7,6 +7,19 @@
   {{ partial "head-meta.html" . }}
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ "index.xml" | absURL }}">
+  <script>
+  /* Runs before first paint so the page never flashes the wrong theme.
+     Explicit choice wins; otherwise follow the OS. Key/values kept from the
+     previous DarkReader implementation so existing visitors keep their setting. */
+  (function() {
+    var stored = null;
+    try { stored = localStorage.getItem("DARK_MODE_ENABLED_KEY"); } catch (e) {}
+    var dark = stored === "true" ? true
+      : stored === "false" ? false
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+  })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
@@ -22,46 +35,43 @@
   </main>
   {{ partial "footer.html" . }}
   {{ partial "code-copy.html" . }}
-  <script src="https://unpkg.com/darkreader@4.9.16/darkreader.js" crossorigin="anonymous"></script>
   <script>
+  /* Theme toggle. The pre-paint script in <head> has already applied the
+     stored choice; this only wires the buttons and keeps icons in sync. */
   (function() {
     var KEY = "DARK_MODE_ENABLED_KEY";
-    DarkReader.setFetchMethod(window.fetch);
+    var root = document.documentElement;
 
-    function isEnabled() {
-      return localStorage.getItem(KEY) === "true";
-    }
-
-    function updateIcons(enabled) {
+    function updateIcons(dark) {
       document.querySelectorAll("#dark-mode-sun, .dark-mode-sun").forEach(function(el) {
-        el.classList.toggle("hidden", !enabled);
+        el.classList.toggle("hidden", !dark);
       });
       document.querySelectorAll("#dark-mode-moon, .dark-mode-moon").forEach(function(el) {
-        el.classList.toggle("hidden", enabled);
+        el.classList.toggle("hidden", dark);
       });
     }
 
-    function enable() {
-      DarkReader.enable({ brightness: 100, contrast: 90, sepia: 10 });
-      localStorage.setItem(KEY, "true");
-      updateIcons(true);
-    }
-
-    function disable() {
-      DarkReader.disable();
-      localStorage.setItem(KEY, "false");
-      updateIcons(false);
-    }
-
-    function toggle() {
-      if (isEnabled()) { disable(); } else { enable(); }
-    }
-
-    if (isEnabled()) { enable(); } else { disable(); }
+    updateIcons(root.dataset.theme === "dark");
 
     document.querySelectorAll("#dark-mode-toggle, #dark-mode-toggle-mobile").forEach(function(el) {
-      el.addEventListener("click", toggle);
+      el.addEventListener("click", function() {
+        var dark = root.dataset.theme !== "dark";
+        root.dataset.theme = dark ? "dark" : "light";
+        try { localStorage.setItem(KEY, dark ? "true" : "false"); } catch (e) {}
+        updateIcons(dark);
+      });
     });
+
+    /* Follow the OS while the visitor has made no explicit choice. */
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    var onChange = function(e) {
+      var stored;
+      try { stored = localStorage.getItem(KEY); } catch (err) { stored = null; }
+      if (stored === "true" || stored === "false") return;
+      root.dataset.theme = e.matches ? "dark" : "light";
+      updateIcons(e.matches);
+    };
+    mq.addEventListener ? mq.addEventListener("change", onChange) : mq.addListener(onChange);
   })();
   </script>
 </body>

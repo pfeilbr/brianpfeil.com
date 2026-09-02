@@ -34,6 +34,7 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
 │   ├── 404.html                       # Custom 404: search + recent posts
 │   ├── robots.txt                     # robots.txt template (enableRobotsTXT: true)
 │   ├── _default/_markup/render-link.html  # Adds target="_blank" to external links
+│   ├── _default/_markup/render-image.html # Adds loading="lazy" decoding="async"
 │   ├── index.html                     # Homepage: search + post list + infinite scroll
 │   ├── projects/list.html             # Projects card grid
 │   └── partials/
@@ -89,7 +90,7 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
   - Back-to-top button (appears after 400px scroll)
   - "/" keyboard shortcut to focus search
   - Click delegation on `[data-href]` article rows
-- Dark mode via DarkReader CDN in `baseof.html`, persisted to localStorage
+- Dark mode is native CSS, no third-party script. See "Theming" below.
 - `partials/code-copy.html` — adds a `copy` button to every `.prose pre`; wraps each
   block in `.code-wrap`. Uses the async Clipboard API when available and falls back to
   `document.execCommand("copy")` on non-secure origins and embedded/restricted views.
@@ -110,6 +111,24 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
 - `aria-label` on icon-only buttons and the search input; `aria-current="page"` on the
   active nav item; decorative SVGs are `aria-hidden`
 - `prefers-reduced-motion` disables transitions and smooth scrolling
+
+### Theming (dark mode)
+
+- Semantic CSS custom properties at the top of `main.css` (`--bg`, `--text`,
+  `--brand`, `--border`, …). Light values live on `:root`; dark values on
+  `html[data-theme="dark"]`.
+- The Tailwind-ish color utilities (`.text-gray-900`, `.bg-white`, …) resolve to
+  those variables, so the class names are historical — `.bg-white` means "page
+  background", not literally white. Templates were left untouched on purpose.
+- An inline script in `<head>` (before the stylesheet) sets `data-theme` from
+  localStorage, falling back to `prefers-color-scheme`. Running pre-paint is what
+  avoids a flash of the wrong theme — keep it inline and keep it first.
+- localStorage key is still `DARK_MODE_ENABLED_KEY` with `"true"`/`"false"` so
+  visitors who set a preference under the old DarkReader build keep it. Absent
+  key = follow the OS, and the site live-updates on OS change until the visitor
+  picks a side.
+- Chroma's trac palette is light-only; dark token colors are overridden in the
+  "Syntax highlighting: dark overrides" block at the bottom of `main.css`.
 
 ### llms.txt (`/llms.txt`)
 
@@ -220,6 +239,7 @@ Go CLI that creates blog posts from GitHub repo READMEs.
 | `config.yaml` (mainSections) | `layouts/index.html` (post query), `layouts/_default/index.json` |
 | `assets/css/main.css` (utility classes) | All layout templates that use those classes |
 | `layouts/partials/search.html` | `assets/js/search.js`, `layouts/_default/index.json` |
+| `assets/css/main.css` (theme tokens) | Any new hardcoded color — use a token instead |
 | `layouts/index.html` (post list structure) | `assets/js/search.js`, `layouts/404.html` (both reuse the row markup) |
 | `layouts/partials/head-meta.html` | `config.yaml` (`params.author`, `baseURL`) |
 | `config.yaml` (`related` indices) | `layouts/_default/single.html` (related posts block) |
