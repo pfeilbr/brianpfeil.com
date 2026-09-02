@@ -1,0 +1,17 @@
+{{- /* One playlist tile. Static until clicked; see the script in music.html. */ -}}
+{{- $p := .p -}}
+<div class="pl-card" data-list="{{ $p.id }}" data-title="{{ $p.title }}">
+  <div class="pl-media" data-hue="{{ mod .i 12 }}">
+    <button type="button" class="pl-play" aria-label="{{ i18n "music_play" $p.title }}">
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+    </button>
+  </div>
+  <div class="pl-body">
+    <h3 class="pl-title">{{ $p.title }}</h3>
+    <p class="pl-meta">
+      {{ with $p.by }}{{ i18n "music_by" . }} &middot; {{ end }}{{ i18n "music_tracks" $p.tracks }}
+    </p>
+    {{ with $p.note }}<p class="pl-note">{{ . }}</p>{{ end }}
+    <a class="pl-link" href="https://music.youtube.com/playlist?list={{ $p.id }}" target="_blank" rel="noopener">{{ i18n "music_open_in_ytm" }} &rarr;</a>
+  </div>
+</div>

@@ -821,3 +821,174 @@ body.zoom-locked { overflow: hidden; }
 
 /* Untranslated target: the link still works but goes to that language's home. */
 .lang-switcher .lang-link[data-lang-fallback] { opacity: 0.75; }
+
+/* ---------------------------------------------------------------------------
+   Music page (/music/). Scoped under .music so nothing here leaks into posts.
+   Players are click-to-load: the tile is static until someone presses play.
+   --------------------------------------------------------------------------- */
+
+.music-section { margin-top: 2.5rem; }
+
+.music-h2 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+  margin: 0 0 0.25rem;
+}
+
+.music-sub {
+  font-size: 0.8125rem;
+  color: var(--text-faint);
+  margin: 0 0 1rem;
+}
+
+.music-foot {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+}
+
+/* Top artists ------------------------------------------------------------- */
+
+.artist-list { list-style: none; margin: 0; padding: 0; }
+
+.artist-row {
+  display: grid;
+  grid-template-columns: minmax(0, 8.5rem) 1fr 2rem;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.1875rem 0;
+}
+
+.artist-name {
+  font-size: 0.875rem;
+  color: var(--text-body);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.artist-name:hover { color: var(--brand); text-decoration: underline; }
+
+.artist-bar {
+  display: block;
+  height: 0.4375rem;
+  border-radius: 999px;
+  background-color: var(--bg-muted);
+  overflow: hidden;
+}
+.artist-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background-color: var(--brand);
+  opacity: 0.75;
+}
+
+.artist-count {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Playlist cards ---------------------------------------------------------- */
+
+.pl-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .pl-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.pl-card {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.pl-card.is-playing { grid-column: 1 / -1; }
+
+.pl-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(120% 120% at 20% 15%, rgba(255, 255, 255, 0.28), transparent 60%),
+    linear-gradient(135deg, hsl(var(--pl-h, 200) 62% 46%), hsl(calc(var(--pl-h, 200) + 42) 58% 34%));
+}
+
+.pl-media iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* A spread of hues so adjacent tiles never read as the same playlist. */
+.pl-media[data-hue="0"]  { --pl-h: 202; }
+.pl-media[data-hue="1"]  { --pl-h: 340; }
+.pl-media[data-hue="2"]  { --pl-h: 268; }
+.pl-media[data-hue="3"]  { --pl-h: 158; }
+.pl-media[data-hue="4"]  { --pl-h: 28;  }
+.pl-media[data-hue="5"]  { --pl-h: 222; }
+.pl-media[data-hue="6"]  { --pl-h: 310; }
+.pl-media[data-hue="7"]  { --pl-h: 178; }
+.pl-media[data-hue="8"]  { --pl-h: 8;   }
+.pl-media[data-hue="9"]  { --pl-h: 246; }
+.pl-media[data-hue="10"] { --pl-h: 128; }
+.pl-media[data-hue="11"] { --pl-h: 48;  }
+
+.pl-play {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0.1875rem;
+  color: #111827;
+  background-color: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.25);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.pl-play:hover { transform: scale(1.08); background-color: #ffffff; }
+.pl-play:focus-visible { outline: 2px solid #ffffff; outline-offset: 3px; }
+
+.pl-body { padding: 0.75rem 0.875rem 0.875rem; display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
+
+.pl-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.pl-meta { font-size: 0.75rem; color: var(--text-faint); margin: 0; }
+
+.pl-note { font-size: 0.8125rem; color: var(--text-muted); margin: 0.125rem 0 0; line-height: 1.45; }
+
+.pl-link {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--brand);
+  text-decoration: none;
+}
+.pl-link:hover { text-decoration: underline; }

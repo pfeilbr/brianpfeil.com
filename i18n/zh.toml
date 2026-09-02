@@ -109,3 +109,37 @@ other = ""
 
 [aws_community_builder]
 other = "AWS 社区建设者（Serverless 方向）"
+
+# 音乐页面
+[music_intro]
+other = "这些是我常听的歌单，直接来自我的 YouTube Music 音乐库。点开任意一个即可播放。"
+
+[music_top_artists]
+other = "听得最多的艺人"
+
+[music_top_artists_note]
+other = "统计自我的歌单中约 {{ .tracks }} 首曲目。"
+
+[music_my_playlists]
+other = "我的歌单"
+
+[music_saved]
+other = "收藏的他人歌单"
+
+[music_play_hint]
+other = "点击播放前不会加载任何内容。"
+
+[music_play]
+other = "播放 {{ . }}"
+
+[music_open_in_ytm]
+other = "在 YouTube Music 中打开"
+
+[music_tracks]
+other = "{{ . }} 首"
+
+[music_by]
+other = "创建者：{{ . }}"
+
+[music_footnote]
+other = "播放使用 YouTube 的嵌入播放器。曲目数量为快照，歌单会持续更新。"

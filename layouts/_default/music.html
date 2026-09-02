@@ -1,0 +1,78 @@
+{{ define "main" }}
+{{ $m := site.Data.music }}
+<article class="music">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600">{{ i18n "music_intro" }}</p>
+  </header>
+
+  <div class="prose">{{ .Content }}</div>
+
+  {{/* ---------- Summary: who actually shows up in the playlists ---------- */}}
+  {{ with $m.top_artists }}
+  {{ $max := 1 }}
+  {{ range . }}{{ if gt .count $max }}{{ $max = .count }}{{ end }}{{ end }}
+  <section class="music-section" aria-labelledby="top-artists">
+    <h2 id="top-artists" class="music-h2">{{ i18n "music_top_artists" }}</h2>
+    <p class="music-sub">{{ i18n "music_top_artists_note" (dict "tracks" $m.tracks_counted) }}</p>
+    <ol class="artist-list">
+      {{ range . }}
+      <li class="artist-row">
+        <a class="artist-name" href="https://music.youtube.com/search?q={{ .name | urlquery }}" target="_blank" rel="noopener">{{ .name }}</a>
+        <span class="artist-bar" aria-hidden="true"><span style="width:{{ div (mul .count 100.0) $max }}%"></span></span>
+        <span class="artist-count">{{ .count }}</span>
+      </li>
+      {{ end }}
+    </ol>
+  </section>
+  {{ end }}
+
+  {{/* ---------- The playlists themselves ---------- */}}
+  <section class="music-section" aria-labelledby="my-playlists">
+    <h2 id="my-playlists" class="music-h2">{{ i18n "music_my_playlists" }}</h2>
+    <p class="music-sub">{{ i18n "music_play_hint" }}</p>
+    <div class="pl-grid">
+      {{ range $i, $p := $m.mine }}
+      {{ partial "playlist-card.html" (dict "p" $p "i" $i) }}
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="music-section" aria-labelledby="saved-playlists">
+    <h2 id="saved-playlists" class="music-h2">{{ i18n "music_saved" }}</h2>
+    <div class="pl-grid">
+      {{ range $i, $p := $m.saved }}
+      {{ partial "playlist-card.html" (dict "p" $p "i" (add 100 $i)) }}
+      {{ end }}
+    </div>
+  </section>
+
+  <p class="music-foot">{{ i18n "music_footnote" }}</p>
+</article>
+
+<script>
+/* Click-to-load players. The cards ship as static tiles and only swap in a
+   YouTube iframe once someone actually asks to listen, so the page costs
+   nothing until then and no third-party frame loads unbidden. */
+(function () {
+  document.querySelectorAll(".pl-card").forEach(function (card) {
+    var btn = card.querySelector(".pl-play");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var list = card.dataset.list;
+      var frame = document.createElement("iframe");
+      frame.src = "https://www.youtube.com/embed/videoseries?list=" + encodeURIComponent(list) + "&autoplay=1";
+      frame.title = card.dataset.title || "playlist";
+      frame.loading = "lazy";
+      frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      frame.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.allowFullscreen = true;
+      var slot = card.querySelector(".pl-media");
+      slot.innerHTML = "";
+      slot.appendChild(frame);
+      card.classList.add("is-playing");
+    });
+  });
+})();
+</script>
+{{ end }}

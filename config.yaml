@@ -100,6 +100,9 @@ languages:
         - name: "projects"
           url: "/projects/"
           weight: 30
+        - name: "music"
+          url: "/music/"
+          weight: 35
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -131,6 +134,9 @@ languages:
         - name: "项目"
           url: "/zh/projects/"
           weight: 30
+        - name: "音乐"
+          url: "/zh/music/"
+          weight: 35
         # Tags are generated from the English posts, so this points at the
         # English taxonomy rather than an empty /zh/tags/.
         - name: "标签"

@@ -109,3 +109,37 @@ other = ""
 
 [aws_community_builder]
 other = "AWS Community Builder (Serverless)"
+
+# Music page
+[music_intro]
+other = "Playlists I actually listen to, straight out of my YouTube Music library. Press play on any of them."
+
+[music_top_artists]
+other = "Most-played artists"
+
+[music_top_artists_note]
+other = "Tallied across about {{ .tracks }} tracks in my playlists."
+
+[music_my_playlists]
+other = "My playlists"
+
+[music_saved]
+other = "Saved from elsewhere"
+
+[music_play_hint]
+other = "Nothing loads until you press play."
+
+[music_play]
+other = "Play {{ . }}"
+
+[music_open_in_ytm]
+other = "Open in YouTube Music"
+
+[music_tracks]
+other = "{{ . }} tracks"
+
+[music_by]
+other = "by {{ . }}"
+
+[music_footnote]
+other = "Playback is YouTube's embedded player. Track counts are a snapshot — the playlists keep moving."
