@@ -66,7 +66,9 @@
       time so the page never turns into a wall of sound. */
 (function () {
   /* --- filter --- */
-  var chips = document.querySelectorAll(".chip");
+  /* [data-cat] on purpose: the "surprise me" button shares the .chip class for
+     styling but must not act as a filter. */
+  var chips = document.querySelectorAll(".chip[data-cat]");
   var blocks = document.querySelectorAll(".cat-block");
   chips.forEach(function (chip) {
     chip.addEventListener("click", function () {
