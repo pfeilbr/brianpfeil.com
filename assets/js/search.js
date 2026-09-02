@@ -55,7 +55,87 @@
     return scored.slice(0, 30);
   }
 
-  function renderResults(results) {
+  var SNIPPET_LEN = 140;
+  var SNIPPET_LEAD = 40;
+
+  /* Treat every term as a literal string, never as a regex pattern. */
+  function escapeRegExp(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  /* One case-insensitive alternation over all terms, longest first so that
+     overlapping terms highlight the longest match. */
+  function buildTermMatcher(terms) {
+    var sorted = terms.slice().sort(function (a, b) { return b.length - a.length; });
+    var parts = [];
+    for (var i = 0; i < sorted.length; i++) {
+      if (sorted[i]) parts.push(escapeRegExp(sorted[i]));
+    }
+    if (!parts.length) return null;
+    return new RegExp(parts.join("|"), "gi");
+  }
+
+  /* Extract ~140 chars of context around the first term occurrence. */
+  function buildSnippet(contents, terms) {
+    if (!contents) return "";
+
+    var lower = contents.toLowerCase();
+    var first = -1;
+    for (var i = 0; i < terms.length; i++) {
+      var at = lower.indexOf(terms[i]);
+      if (at !== -1 && (first === -1 || at < first)) first = at;
+    }
+
+    var start = first === -1 ? 0 : Math.max(0, first - SNIPPET_LEAD);
+    var end = Math.min(contents.length, start + SNIPPET_LEN);
+
+    // Trim to word boundaries so we don't cut mid-word.
+    if (start > 0) {
+      var sp = contents.indexOf(" ", start);
+      if (sp !== -1 && sp < start + 20) start = sp + 1;
+    }
+    if (end < contents.length) {
+      var lastSp = contents.lastIndexOf(" ", end);
+      if (lastSp > start + 20) end = lastSp;
+    }
+
+    var text = contents.slice(start, end).replace(/\s+/g, " ").trim();
+    if (!text) return "";
+    if (start > 0) text = "…" + text;
+    if (end < contents.length) text = text + "…";
+    return text;
+  }
+
+  /* Build highlighted content as DOM nodes only — text never goes through
+     innerHTML, so post content (raw HTML, code) can't inject markup. */
+  function highlightInto(el, text, matcher) {
+    el.textContent = "";
+    if (!text) return;
+    if (!matcher) {
+      el.appendChild(document.createTextNode(text));
+      return;
+    }
+
+    matcher.lastIndex = 0;
+    var last = 0;
+    var m;
+    while ((m = matcher.exec(text)) !== null) {
+      if (m[0] === "") { matcher.lastIndex++; continue; }
+      if (m.index > last) {
+        el.appendChild(document.createTextNode(text.slice(last, m.index)));
+      }
+      var mark = document.createElement("mark");
+      mark.textContent = m[0]; // preserves the original casing
+      el.appendChild(mark);
+      last = m.index + m[0].length;
+    }
+    if (last < text.length) {
+      el.appendChild(document.createTextNode(text.slice(last)));
+    }
+  }
+
+  function renderResults(results, terms) {
+    var matcher = buildTermMatcher(terms || []);
     resultsContainer.innerHTML = "";
     activeIndex = -1;
 
@@ -77,10 +157,18 @@
 
       var link = el.querySelector(".search-result-link");
       link.href = item.permalink;
-      link.textContent = item.title;
+      highlightInto(link, item.title || "", matcher);
 
       var dateEl = el.querySelector(".search-result-date");
       dateEl.textContent = item.date || "";
+
+      var snippetEl = el.querySelector(".search-result-snippet");
+      var snippet = buildSnippet(item.contents || "", terms || []);
+      if (snippet) {
+        highlightInto(snippetEl, snippet, matcher);
+      } else if (snippetEl && snippetEl.parentNode) {
+        snippetEl.parentNode.removeChild(snippetEl);
+      }
 
       resultsContainer.appendChild(el);
     }
@@ -99,7 +187,7 @@
 
     fetchIndex(function (data) {
       var results = search(query, data);
-      renderResults(results);
+      renderResults(results, query.toLowerCase().split(/\s+/).filter(Boolean));
     });
   }
 

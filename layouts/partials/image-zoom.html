@@ -1,0 +1,62 @@
+<script>
+/* Click-to-zoom for content images. Post bodies are capped at 42rem, which
+   makes README screenshots and architecture diagrams unreadable inline. */
+(function() {
+  var images = document.querySelectorAll(".prose img");
+  if (!images.length) return;
+
+  var overlay = null;
+  var lastFocused = null;
+
+  function build() {
+    overlay = document.createElement("div");
+    overlay.className = "zoom-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Expanded image");
+    overlay.innerHTML = '<img alt=""><button type="button" class="zoom-close" aria-label="Close image">&times;</button>';
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener("click", function(e) {
+      /* Clicking the image itself shouldn't close; anywhere else should. */
+      if (e.target.tagName !== "IMG") close();
+    });
+    return overlay;
+  }
+
+  function open(img) {
+    if (!overlay) build();
+    var full = overlay.querySelector("img");
+    full.src = img.currentSrc || img.src;
+    full.alt = img.alt || "";
+    lastFocused = document.activeElement;
+    overlay.classList.add("is-open");
+    document.body.classList.add("zoom-locked");
+    overlay.querySelector(".zoom-close").focus();
+  }
+
+  function close() {
+    if (!overlay) return;
+    overlay.classList.remove("is-open");
+    document.body.classList.remove("zoom-locked");
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && overlay && overlay.classList.contains("is-open")) close();
+  });
+
+  images.forEach(function(img) {
+    /* Skip the decorative about-page portrait and anything already linked. */
+    if (img.classList.contains("about-photo") || img.closest("a")) return;
+    img.classList.add("is-zoomable");
+    img.setAttribute("tabindex", "0");
+    img.setAttribute("role", "button");
+    img.setAttribute("aria-label", (img.alt ? img.alt + " — " : "") + "expand image");
+    img.addEventListener("click", function() { open(img); });
+    img.addEventListener("keydown", function(e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(img); }
+    });
+  });
+})();
+</script>

@@ -1,0 +1,40 @@
+{{ define "main" }}
+{{ $posts := where site.RegularPages "Type" "in" site.Params.mainSections }}
+<header class="mb-6">
+  <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+  <p class="text-sm text-gray-500">{{ len $posts }} posts</p>
+</header>
+
+{{ $byYear := $posts.GroupByDate "2006" }}
+
+<nav class="archive-years" aria-label="Jump to year">
+  {{ range $byYear }}
+  <a href="#y{{ .Key }}">{{ .Key }}</a>
+  {{ end }}
+</nav>
+
+{{ range $byYear }}
+<section class="archive-year">
+  <h2 id="y{{ .Key }}" class="archive-year-heading">
+    {{ .Key }}
+    <span class="archive-year-count">{{ len .Pages }}</span>
+  </h2>
+  {{ range .Pages }}
+  <article class="post-preview py-2 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
+    <div class="flex items-baseline justify-between gap-3">
+      <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
+      <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ .Date.Format "Jan 2" }}</time>
+    </div>
+  </article>
+  {{ end }}
+</section>
+{{ end }}
+
+<script>
+document.addEventListener("click", function(e) {
+  if (e.target.closest("a")) return;
+  var row = e.target.closest("[data-href]");
+  if (row) window.location.href = row.dataset.href;
+});
+</script>
+{{ end }}

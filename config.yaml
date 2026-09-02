@@ -89,3 +89,6 @@ menus:
     - name: "tags"
       url: "/tags/"
       weight: 40
+    - name: "archive"
+      url: "/archive/"
+      weight: 50

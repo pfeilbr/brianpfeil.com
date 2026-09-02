@@ -671,3 +671,117 @@ input[type="search"] {
   color: var(--text);
 }
 input[type="search"]::placeholder { color: var(--text-faint); }
+
+/* === Search results: matched-context snippets ======================== */
+.search-result-snippet {
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* `mark` ships with a UA yellow background that is unreadable in dark mode,
+   so both colors are pinned to theme tokens. */
+#search-results mark {
+  background-color: var(--bg-muted);
+  color: var(--brand);
+  border-radius: 0.125rem;
+  padding: 0 0.1em;
+  font-weight: 500;
+}
+#search-results .search-result-link mark {
+  background-color: transparent;
+  color: var(--brand);
+  padding: 0;
+  font-weight: 600;
+}
+
+/* === Archive page ==================================================== */
+.archive-years {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.archive-years a {
+  padding: 0.15rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background-color: var(--bg-muted);
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+.archive-years a:hover {
+  color: var(--on-brand);
+  background-color: var(--brand);
+}
+.archive-year { margin-bottom: 2rem; }
+.archive-year-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 1rem;
+}
+.archive-year-count {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-faint);
+}
+
+/* === Click-to-zoom images ============================================ */
+.prose img.is-zoomable { cursor: zoom-in; }
+.prose img.is-zoomable:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+body.zoom-locked { overflow: hidden; }
+
+.zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+}
+.zoom-overlay.is-open { display: flex; }
+.zoom-overlay img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.25rem;
+  cursor: default;
+  /* The dark-theme dimming filter is for inline reading, not full size. */
+  filter: none;
+}
+.zoom-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  cursor: pointer;
+}
+.zoom-close:hover { background: rgba(0, 0, 0, 0.7); }

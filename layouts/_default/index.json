@@ -1,5 +1,9 @@
 {{- $.Scratch.Add "index" slice -}}
 {{- range .Site.RegularPages -}}
-  {{- $.Scratch.Add "index" (dict "title" .Title "tags" .Params.tags "categories" .Params.categories "contents" (.Plain | replaceRE "\\s+" " " | truncate 1200) "permalink" .RelPermalink "date" (.Date.Format "January 2, 2006")) -}}
+  {{- /* Generated posts open with an "alert" banner div linking the source repo.
+         Its plain text is entity noise ("&amp;nbsp;"), so drop it before indexing. */ -}}
+  {{- $body := replaceRE `(?s)<div class="alert.*?</div>` "" .Content -}}
+  {{- $contents := $body | plainify | htmlUnescape | replaceRE `\s+` " " | truncate 1200 -}}
+  {{- $.Scratch.Add "index" (dict "title" .Title "tags" .Params.tags "categories" .Params.categories "contents" $contents "permalink" .RelPermalink "date" (.Date.Format "January 2, 2006")) -}}
 {{- end -}}
 {{- $.Scratch.Get "index" | jsonify -}}
