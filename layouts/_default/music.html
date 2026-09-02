@@ -27,25 +27,46 @@
   </section>
   {{ end }}
 
-  {{/* ---------- The playlists themselves ---------- */}}
-  <section class="music-section" aria-labelledby="my-playlists">
-    <h2 id="my-playlists" class="music-h2">{{ i18n "music_my_playlists" }}</h2>
-    <p class="music-sub">{{ i18n "music_play_hint" }}</p>
-    <div class="pl-grid">
-      {{ range $i, $p := $m.mine }}
-      {{ partial "playlist-card.html" (dict "p" $p "i" $i) }}
-      {{ end }}
-    </div>
-  </section>
+  {{/* ---------- The playlists themselves ----------
+     Tabbed the same way as /subscriptions/, so the saved playlists are
+     reachable from the top rather than below all of mine. Both panels render
+     visible and are only hidden by partials/tabs-script.html. */}}
+  <div class="ptabs" role="tablist" aria-label="{{ i18n "music_sections" }}">
+    <button type="button" class="ptab is-on" role="tab" id="tab-mine"
+            aria-controls="panel-mine" aria-selected="true" data-panel="mine">
+      {{ partial "icons/chip.html" (dict "id" "i-playlist" "size" "sm") }}
+      <span class="ptab-name">{{ i18n "music_my_playlists" }}</span>
+      <span class="ptab-count">{{ len $m.mine }}</span>
+    </button>
+    <button type="button" class="ptab" role="tab" id="tab-saved"
+            aria-controls="panel-saved" aria-selected="false" tabindex="-1" data-panel="saved">
+      {{ partial "icons/chip.html" (dict "id" "i-bookmark" "size" "sm") }}
+      <span class="ptab-name">{{ i18n "music_saved" }}</span>
+      <span class="ptab-count">{{ len $m.saved }}</span>
+    </button>
+  </div>
 
-  <section class="music-section" aria-labelledby="saved-playlists">
-    <h2 id="saved-playlists" class="music-h2">{{ i18n "music_saved" }}</h2>
-    <div class="pl-grid">
-      {{ range $i, $p := $m.saved }}
-      {{ partial "playlist-card.html" (dict "p" $p "i" (add 100 $i)) }}
-      {{ end }}
-    </div>
-  </section>
+  <div class="ptab-panel" id="panel-mine" role="tabpanel" aria-labelledby="tab-mine">
+    <section class="music-section">
+      <p class="music-sub music-sub-lead">{{ i18n "music_play_hint" }}</p>
+      <div class="pl-grid">
+        {{ range $i, $p := $m.mine }}
+        {{ partial "playlist-card.html" (dict "p" $p "i" $i) }}
+        {{ end }}
+      </div>
+    </section>
+  </div>
+
+  <div class="ptab-panel" id="panel-saved" role="tabpanel" aria-labelledby="tab-saved">
+    <section class="music-section">
+      <p class="music-sub music-sub-lead">{{ i18n "music_saved_note" }}</p>
+      <div class="pl-grid">
+        {{ range $i, $p := $m.saved }}
+        {{ partial "playlist-card.html" (dict "p" $p "i" (add 100 $i)) }}
+        {{ end }}
+      </div>
+    </section>
+  </div>
 
   <p class="music-foot">{{ i18n "music_footnote" }}</p>
 </article>
@@ -53,15 +74,31 @@
 <script>
 /* Click-to-load players. The cards ship as static tiles and only swap in a
    YouTube iframe once someone actually asks to listen, so the page costs
-   nothing until then and no third-party frame loads unbidden. */
+   nothing until then and no third-party frame loads unbidden.
+
+   Only one plays at a time, and switching tabs stops whatever was running --
+   an iframe inside a hidden panel carries on making noise otherwise. */
 (function () {
+  var open = null;
+
+  function close(card) {
+    if (!card) return;
+    var slot = card.querySelector(".pl-media");
+    slot.innerHTML = "";
+    slot.appendChild(card.playButton);
+    card.classList.remove("is-playing");
+  }
+
   document.querySelectorAll(".pl-card").forEach(function (card) {
     var btn = card.querySelector(".pl-play");
     if (!btn) return;
+    /* Kept so closing can put the original tile back, listener and all. */
+    card.playButton = btn;
     btn.addEventListener("click", function () {
-      var list = card.dataset.list;
+      close(open);
       var frame = document.createElement("iframe");
-      frame.src = "https://www.youtube.com/embed/videoseries?list=" + encodeURIComponent(list) + "&autoplay=1";
+      frame.src = "https://www.youtube.com/embed/videoseries?list=" +
+        encodeURIComponent(card.dataset.list) + "&autoplay=1";
       frame.title = card.dataset.title || "playlist";
       frame.loading = "lazy";
       frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
@@ -71,8 +108,17 @@
       slot.innerHTML = "";
       slot.appendChild(frame);
       card.classList.add("is-playing");
+      open = card;
+    });
+  });
+
+  /* Fired by partials/tabs-script.html just before a panel is hidden. */
+  document.querySelectorAll(".ptab-panel").forEach(function (panel) {
+    panel.addEventListener("tabhide", function () {
+      if (open && panel.contains(open)) { close(open); open = null; }
     });
   });
 })();
 </script>
+{{ partial "tabs-script.html" . }}
 {{ end }}

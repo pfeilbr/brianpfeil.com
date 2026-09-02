@@ -1,0 +1,52 @@
+{{- /* Generic tab controller, shared by /subscriptions/ and /music/.
+
+   Expects buttons with class "ptab" and data-panel="<name>", each paired with
+   an element id="panel-<name>". Panels are rendered visible and only hidden
+   here, so with JavaScript off every panel stays readable.
+
+   A panel about to be hidden gets a "tabhide" event first. Pages use it to
+   tear down anything still running inside -- a hidden iframe keeps playing
+   audio otherwise. Emit this partial AFTER the page's own script so those
+   listeners exist before the first selection runs. */ -}}
+<script>
+(function () {
+  var tabs = [].slice.call(document.querySelectorAll(".ptab"));
+  if (!tabs.length) return;
+
+  var panels = {};
+  tabs.forEach(function (t) {
+    panels[t.dataset.panel] = document.getElementById("panel-" + t.dataset.panel);
+  });
+  var first = tabs[0].dataset.panel;
+
+  function select(name, focus) {
+    if (!panels[name]) return;
+    tabs.forEach(function (t) {
+      var on = t.dataset.panel === name;
+      var panel = panels[t.dataset.panel];
+      if (!on && !panel.hidden) panel.dispatchEvent(new CustomEvent("tabhide"));
+      t.classList.toggle("is-on", on);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      panel.hidden = !on;
+      if (on && focus) t.focus();
+    });
+    try {
+      history.replaceState(null, "", name === first ? location.pathname : "#" + name);
+    } catch (e) {}
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener("click", function () { select(tab.dataset.panel); });
+    tab.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      select(tabs[(i + d + tabs.length) % tabs.length].dataset.panel, true);
+    });
+  });
+
+  var wanted = location.hash.replace("#", "");
+  select(panels[wanted] ? wanted : first);
+})();
+</script>

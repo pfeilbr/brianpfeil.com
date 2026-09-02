@@ -1247,6 +1247,8 @@ html[data-theme="dark"] .ic {
 
 /* Platform sections and Twitch cards on /subscriptions/ ------------------- */
 
+[data-ic="i-playlist"] { --ic-c: #0d7ea8; }
+[data-ic="i-bookmark"] { --ic-c: #ca8a04; }
 [data-ic="i-youtube"] { --ic-c: #dc2626; }
 [data-ic="i-twitch"]  { --ic-c: #9146ff; }
 
@@ -1325,3 +1327,6 @@ html[data-theme="dark"] .ic {
 
 /* The first section inside a panel sits right under the tab strip. */
 .ptab-panel > .music-section:first-child { margin-top: 1.5rem; }
+
+/* A note that sits directly under the tab strip, with no heading above it. */
+.music-sub-lead { margin-top: 0; }

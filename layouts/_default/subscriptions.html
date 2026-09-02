@@ -153,38 +153,12 @@
   });
 
   /* --- platform tabs --- */
-  /* Panels start visible so the page still works with JavaScript off; the
-     first thing this does is close the inactive one. */
-  var tabs = [].slice.call(document.querySelectorAll(".ptab"));
-  var panels = {};
-  tabs.forEach(function (t) { panels[t.dataset.panel] = document.getElementById("panel-" + t.dataset.panel); });
-
-  function select(name, focus) {
-    if (!panels[name]) return;
-    /* A hidden iframe keeps playing, so stop whatever is open before leaving. */
-    if (name !== "youtube") { close(open); open = null; }
-    tabs.forEach(function (t) {
-      var on = t.dataset.panel === name;
-      t.classList.toggle("is-on", on);
-      t.setAttribute("aria-selected", on ? "true" : "false");
-      t.tabIndex = on ? 0 : -1;
-      panels[t.dataset.panel].hidden = !on;
-      if (on && focus) t.focus();
-    });
-    try { history.replaceState(null, "", name === "youtube" ? location.pathname : "#" + name); } catch (e) {}
+  /* The controller lives in partials/tabs-script.html; all this page has to do
+     is stop a playing embed before its panel gets hidden. */
+  var ytPanel = document.getElementById("panel-youtube");
+  if (ytPanel) {
+    ytPanel.addEventListener("tabhide", function () { close(open); open = null; });
   }
-
-  tabs.forEach(function (tab, i) {
-    tab.addEventListener("click", function () { select(tab.dataset.panel); });
-    tab.addEventListener("keydown", function (e) {
-      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-      if (!d) return;
-      e.preventDefault();
-      select(tabs[(i + d + tabs.length) % tabs.length].dataset.panel, true);
-    });
-  });
-
-  select(location.hash === "#twitch" ? "twitch" : "youtube");
 
   /* --- surprise me --- */
   var btn = document.getElementById("subs-random");
@@ -199,4 +173,5 @@
   }
 })();
 </script>
+{{ partial "tabs-script.html" . }}
 {{ end }}
