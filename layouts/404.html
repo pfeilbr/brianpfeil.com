@@ -1,17 +1,17 @@
 {{ define "main" }}
 <section class="text-center py-8">
   <p class="text-sm font-medium text-brand mb-2">404</p>
-  <h1 class="text-2xl font-bold text-gray-900 mb-2">Page not found</h1>
-  <p class="text-gray-500 mb-6">That page doesn't exist &mdash; it may have been moved or renamed. Try a search.</p>
+  <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ i18n "not_found_title" }}</h1>
+  <p class="text-gray-500 mb-6">{{ i18n "not_found_body" }}</p>
 </section>
 
 {{ partial "search.html" . }}
 <div id="search-results"></div>
 
 <section class="mt-8">
-  <h2 class="text-sm font-semibold text-gray-900 mb-2">Recent posts</h2>
+  <h2 class="text-sm font-semibold text-gray-900 mb-2">{{ i18n "recent_posts" }}</h2>
   <div id="post-list">
-    {{ range first 10 (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+    {{ range first 10 (partial "site-posts.html" .) }}
     <article class="post-preview py-2.5 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
       <div class="flex items-baseline justify-between gap-3">
         <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
@@ -20,7 +20,7 @@
     </article>
     {{ end }}
   </div>
-  <p class="mt-4 text-sm"><a href="/" class="text-brand no-underline hover:underline">&larr; Back to all posts</a></p>
+  <p class="mt-4 text-sm"><a href="{{ if eq .Site.Language.Lang hugo.Sites.Default.Language.Lang }}/{{ else }}/{{ .Site.Language.Lang }}/{{ end }}" class="text-brand no-underline hover:underline">&larr; {{ i18n "back_to_all_posts" }}</a></p>
 </section>
 
 <script>

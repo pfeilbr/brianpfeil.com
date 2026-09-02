@@ -37,12 +37,12 @@
 {{ if or ($pag.HasPrev) ($pag.HasNext) }}
 <nav class="flex justify-between items-center mt-8 text-sm">
   {{ if $pag.HasPrev }}
-  <a href="{{ $pag.Prev.URL }}" class="text-brand hover:underline no-underline">&larr; Previous</a>
+  <a href="{{ $pag.Prev.URL }}" class="text-brand hover:underline no-underline">&larr; {{ i18n "previous" }}</a>
   {{ else }}
   <span></span>
   {{ end }}
   {{ if $pag.HasNext }}
-  <a href="{{ $pag.Next.URL }}" class="text-brand hover:underline no-underline">Next &rarr;</a>
+  <a href="{{ $pag.Next.URL }}" class="text-brand hover:underline no-underline">{{ i18n "next" }} &rarr;</a>
   {{ else }}
   <span></span>
   {{ end }}

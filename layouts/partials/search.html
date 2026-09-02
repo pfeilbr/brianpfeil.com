@@ -3,8 +3,8 @@
     <input
       type="search"
       id="search-query"
-      aria-label="Search posts"
-      placeholder="Search posts..."
+      aria-label="{{ i18n "search_posts" }}"
+      placeholder="{{ i18n "search_placeholder" }}"
       autocomplete="off"
       class="w-full px-3 py-1.5 border border-gray-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-brand focus:border-transparent"
     >
@@ -22,5 +22,19 @@
   </article>
 </template>
 
+{{- /* search.js reads its user-facing strings from here so it stays
+       language-agnostic. The index itself is always the English one --
+       posts are only written in English. */ -}}
+<script>
+window.SEARCH_I18N = {{ dict
+  "placeholder" (i18n "search_placeholder")
+  "placeholderCount" (i18n "search_placeholder_count" "%d")
+  "failed" (i18n "search_failed")
+  "noMatches" (i18n "search_no_matches")
+  "oneMatch" (i18n "search_one_match")
+  "nMatches" (i18n "search_n_matches" "%d")
+  "topMatches" (i18n "search_top_matches" "%d")
+  | jsonify | safeJS }};
+</script>
 {{ $js := resources.Get "js/search.js" | minify | fingerprint }}
 <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>

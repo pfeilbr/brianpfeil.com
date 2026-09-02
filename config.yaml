@@ -1,8 +1,14 @@
 baseURL: "https://brianpfeil.com/"
 disablePathToLower: true
 enableRobotsTXT: true
-languageCode: "en-us"
 title: "Brian Pfeil"
+
+# Multilingual. English is the source language and stays at the site root so
+# every existing URL is unchanged; Mandarin lives under /zh/. Posts are written
+# in English only -- the zh site translates the chrome and the standalone pages
+# and lists the English posts (see partials/site-posts.html).
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
 
 buildFuture: true
 pagination:
@@ -75,20 +81,61 @@ outputs:
     - json
     - llmstxt
 
-menus:
-  main:
-    - name: "about"
-      url: "/about/"
-      weight: 10
-    - name: "posts"
-      url: "/"
-      weight: 20
-    - name: "projects"
-      url: "/projects/"
-      weight: 30
-    - name: "tags"
-      url: "/tags/"
-      weight: 40
-    - name: "archive"
-      url: "/archive/"
-      weight: 50
+languages:
+  en:
+    locale: "en-us"
+    label: "English"
+    weight: 1
+    title: "Brian Pfeil"
+    params:
+      homeTitle: "Brian Pfeil"
+    menus:
+      main:
+        - name: "about"
+          url: "/about/"
+          weight: 10
+        - name: "posts"
+          url: "/"
+          weight: 20
+        - name: "projects"
+          url: "/projects/"
+          weight: 30
+        - name: "tags"
+          url: "/tags/"
+          weight: 40
+        - name: "archive"
+          url: "/archive/"
+          weight: 50
+
+  zh:
+    locale: "zh-CN"
+    label: "中文"
+    weight: 2
+    title: "Brian Pfeil"
+    params:
+      homeTitle: "Brian Pfeil"
+    # The zh site has no posts of its own, so the JSON search index and the
+    # llms.txt/RSS feeds would render empty. Point them at the English ones
+    # instead by only emitting HTML here.
+    outputs:
+      home:
+        - html
+    menus:
+      main:
+        - name: "关于"
+          url: "/zh/about/"
+          weight: 10
+        - name: "文章"
+          url: "/zh/"
+          weight: 20
+        - name: "项目"
+          url: "/zh/projects/"
+          weight: 30
+        # Tags are generated from the English posts, so this points at the
+        # English taxonomy rather than an empty /zh/tags/.
+        - name: "标签"
+          url: "/tags/"
+          weight: 40
+        - name: "归档"
+          url: "/zh/archive/"
+          weight: 50

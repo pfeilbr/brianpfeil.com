@@ -1,13 +1,13 @@
 {{ define "main" }}
-{{ $posts := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{ $posts := partial "site-posts.html" . }}
 <header class="mb-6">
   <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
-  <p class="text-sm text-gray-500">{{ len $posts }} posts</p>
+  <p class="text-sm text-gray-500">{{ i18n "posts_count" (len $posts) }}</p>
 </header>
 
 {{ $byYear := $posts.GroupByDate "2006" }}
 
-<nav class="archive-years" aria-label="Jump to year">
+<nav class="archive-years" aria-label="{{ i18n "jump_to_year" }}">
   {{ range $byYear }}
   <a href="#y{{ .Key }}">{{ .Key }}</a>
   {{ end }}

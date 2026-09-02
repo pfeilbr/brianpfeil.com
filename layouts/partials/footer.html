@@ -11,7 +11,7 @@
       {{ with .Site.Params.author.stackoverflow }}
       <a href="https://stackoverflow.com/{{ . }}" class="hover:text-brand no-underline" title="Stack Overflow" target="_blank" rel="noopener noreferrer">Stack Overflow</a>
       {{ end }}
-      <a href="/index.xml" class="hover:text-brand no-underline" title="RSS">RSS</a>
+      <a href="{{ printf "%sindex.xml" hugo.Sites.Default.Home.RelPermalink }}" class="hover:text-brand no-underline" title="{{ i18n "rss" }}">{{ i18n "rss" }}</a>
     </div>
   </div>
 </footer>

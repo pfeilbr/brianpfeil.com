@@ -7,11 +7,25 @@
   var template = document.getElementById("search-result-template");
   var indexCache = null;
 
+  // User-facing strings come from the page (see layouts/partials/search.html)
+  // so this file stays language-agnostic. "%d" is the count placeholder.
+  var T = window.SEARCH_I18N || {
+    placeholder: "Search posts\u2026",
+    placeholderCount: "Search %d posts\u2026",
+    failed: "Failed to load search index.",
+    noMatches: "No matches found.",
+    oneMatch: "1 match",
+    nMatches: "%d matches",
+    topMatches: "top %d matches"
+  };
+
+  function count(tpl, n) { return tpl.replace("%d", n); }
+
   if (!searchInput || !resultsContainer) return;
 
   // Update placeholder with post count
   if (typeof postCount !== "undefined") {
-    searchInput.placeholder = "Search " + postCount + " posts\u2026";
+    searchInput.placeholder = count(T.placeholderCount, postCount);
   }
 
   function fetchIndex(cb) {
@@ -23,7 +37,11 @@
         cb(data);
       })
       .catch(function () {
-        resultsContainer.innerHTML = '<p class="text-sm text-gray-500">Failed to load search index.</p>';
+        resultsContainer.textContent = "";
+        var err = document.createElement("p");
+        err.className = "text-sm text-gray-500";
+        err.textContent = T.failed;
+        resultsContainer.appendChild(err);
       });
   }
 
@@ -140,15 +158,18 @@
     activeIndex = -1;
 
     if (!results.length) {
-      resultsContainer.innerHTML = '<p class="text-sm text-gray-500 py-4">No matches found.</p>';
+      var none = document.createElement("p");
+      none.className = "text-sm text-gray-500 py-4";
+      none.textContent = T.noMatches;
+      resultsContainer.appendChild(none);
       return;
     }
 
     var meta = document.createElement("p");
     meta.className = "search-meta";
     meta.textContent = results.length === 1
-      ? "1 match"
-      : (results.length === 30 ? "top 30 matches" : results.length + " matches");
+      ? T.oneMatch
+      : count(results.length === 30 ? T.topMatches : T.nMatches, results.length);
     resultsContainer.appendChild(meta);
 
     for (var i = 0; i < results.length; i++) {

@@ -59,7 +59,7 @@ html {
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
   tab-size: 4;
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Inter", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
 }
 body { margin: 0; line-height: inherit; background-color: var(--bg); color: var(--text); }
 h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; }
@@ -176,7 +176,7 @@ input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
 .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
 .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
 .text-2xl { font-size: 1.5rem; line-height: 2rem; }
-.font-sans { font-family: "Inter", system-ui, sans-serif; }
+.font-sans { font-family: "Inter", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif; }
 .font-normal { font-weight: 400; }
 .font-medium { font-weight: 500; }
 .font-semibold { font-weight: 600; }
@@ -785,3 +785,39 @@ body.zoom-locked { overflow: hidden; }
   cursor: pointer;
 }
 .zoom-close:hover { background: rgba(0, 0, 0, 0.7); }
+
+
+/* ---------- Language switcher ---------- */
+
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.lang-switcher .lang-link {
+  color: var(--text-muted, #6b7280);
+  text-decoration: none;
+  padding: 0.2rem 0.3rem;
+  border-radius: 0.25rem;
+  white-space: nowrap;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.lang-switcher .lang-link:hover { color: var(--brand); }
+
+.lang-switcher .lang-link.is-active {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.lang-switcher .lang-sep {
+  color: var(--border);
+  user-select: none;
+}
+
+/* Untranslated target: the link still works but goes to that language's home. */
+.lang-switcher .lang-link[data-lang-fallback] { opacity: 0.75; }

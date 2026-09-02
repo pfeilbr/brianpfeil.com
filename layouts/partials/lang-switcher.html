@@ -1,0 +1,26 @@
+{{- /* Language switcher. Renders one link per configured language.
+
+   A language the current page has no translation for links to that language's
+   home page instead, and is marked so the click handler in baseof.html knows
+   it is a fallback rather than a real translation. */ -}}
+{{- $cur := .Site.Language.Lang -}}
+{{- $translations := dict -}}
+{{- range .AllTranslations -}}
+  {{- $translations = merge $translations (dict .Language.Lang .RelPermalink) -}}
+{{- end -}}
+<div class="lang-switcher" role="group" aria-label="{{ i18n "switch_language" }}">
+  {{- range $i, $lang := hugo.Sites }}
+  {{- $href := index $translations $lang.Language.Lang -}}
+  {{- $isTranslated := ne $href nil -}}
+  {{- /* defaultContentLanguageInSubdir is false, so the default language lives at the root. */ -}}
+  {{- if not $isTranslated }}{{ $href = cond (eq $lang.Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" $lang.Language.Lang) }}{{ end -}}
+  {{- if $i }}<span class="lang-sep" aria-hidden="true">·</span>{{ end -}}
+  <a href="{{ $href }}"
+     class="lang-link{{ if eq $lang.Language.Lang $cur }} is-active{{ end }}"
+     hreflang="{{ $lang.Language.Lang }}"
+     lang="{{ $lang.Language.Lang }}"
+     data-lang="{{ $lang.Language.Lang }}"
+     {{ if not $isTranslated }}data-lang-fallback="1" title="{{ i18n "not_translated" }}"{{ end }}
+     {{ if eq $lang.Language.Lang $cur }}aria-current="true"{{ end }}>{{ $lang.Language.Label }}</a>
+  {{- end }}
+</div>

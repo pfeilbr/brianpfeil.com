@@ -1,0 +1,11 @@
+{{- /* Every post in the site, newest first.
+
+   Posts are authored in English only. The zh site therefore has no regular
+   pages of its own, so fall back to the default (English) site's posts. The
+   links point at the canonical English post URLs, which is correct -- those
+   are the only versions that exist. */ -}}
+{{- $posts := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+{{- if not $posts -}}
+  {{- $posts = where hugo.Sites.Default.RegularPages "Type" "in" site.Params.mainSections -}}
+{{- end -}}
+{{- return $posts -}}

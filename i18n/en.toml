@@ -1,0 +1,111 @@
+# UI strings for the English site. Keys are shared with i18n/zh.toml.
+
+[skip_to_content]
+other = "Skip to content"
+
+[toggle_dark_mode]
+other = "Toggle dark mode"
+
+[open_menu]
+other = "Open menu"
+
+[main_nav]
+other = "Main"
+
+[language]
+other = "Language"
+
+[switch_language]
+other = "Switch language"
+
+[not_translated]
+other = "This page is not translated — you'll be taken to the site home."
+
+# Post metadata
+[min_read]
+other = "{{ . }} min read"
+
+[posts_count]
+other = "{{ . }} posts"
+
+[contents]
+other = "Contents"
+
+[related_posts]
+other = "Related posts"
+
+[recent_posts]
+other = "Recent posts"
+
+[post_navigation]
+other = "Post navigation"
+
+[previous]
+other = "Previous"
+
+[next]
+other = "Next"
+
+[jump_to_year]
+other = "Jump to year"
+
+[table_of_contents]
+other = "Table of contents"
+
+[back_to_top]
+other = "Back to top"
+
+[back_to_all_posts]
+other = "Back to all posts"
+
+# Search
+[search_posts]
+other = "Search posts"
+
+[search_placeholder]
+other = "Search posts…"
+
+[search_placeholder_count]
+other = "Search {{ . }} posts…"
+
+[search_failed]
+other = "Failed to load search index."
+
+[search_no_matches]
+other = "No matches found."
+
+[search_one_match]
+other = "1 match"
+
+[search_n_matches]
+other = "{{ . }} matches"
+
+[search_top_matches]
+other = "top {{ . }} matches"
+
+[loading]
+other = "Loading…"
+
+[scroll_progress]
+other = "{{ .loaded }} of {{ .total }} posts"
+
+# 404
+[not_found_title]
+other = "Page not found"
+
+[not_found_body]
+other = "That page doesn't exist — it may have been moved or renamed. Try a search."
+
+# Footer
+[rss]
+other = "RSS"
+
+# Homepage intro
+[author_role_pre]
+other = "Principal Cloud Architect at "
+
+[author_role_post]
+other = ""
+
+[aws_community_builder]
+other = "AWS Community Builder (Serverless)"

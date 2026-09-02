@@ -7,7 +7,7 @@
     <div class="text-sm text-gray-500">
       <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006") }}</time>
       <span class="mx-1.5 text-gray-300" aria-hidden="true">&middot;</span>
-      <span>{{ .ReadingTime }} min read</span>
+      <span>{{ i18n "min_read" .ReadingTime }}</span>
       {{ with .Params.tags }}
       <span class="ml-2">{{ range $i, $t := . }}{{ if $i }}, {{ end }}<a href="/tags/{{ $t | urlize }}/" class="text-brand no-underline hover:underline">{{ $t }}</a>{{ end }}</span>
       {{ end }}
@@ -16,9 +16,9 @@
   </header>
 
   {{ if and $isPost (ge .WordCount 400) (gt (len (findRE "<h[23]" .Content)) 2) }}
-  <nav class="toc" aria-label="Table of contents">
+  <nav class="toc" aria-label="{{ i18n "table_of_contents" }}">
     <details open>
-      <summary>Contents</summary>
+      <summary>{{ i18n "contents" }}</summary>
       {{ .TableOfContents }}
     </details>
   </nav>
@@ -32,8 +32,8 @@
 {{ if $isPost }}
 {{ $related := first 4 (.Site.RegularPages.Related .) }}
 {{ if $related }}
-<nav class="mt-12 pt-6 border-t border-gray-200" aria-label="Related posts">
-  <h2 class="text-sm font-semibold text-gray-900 mb-2">Related posts</h2>
+<nav class="mt-12 pt-6 border-t border-gray-200" aria-label="{{ i18n "related_posts" }}">
+  <h2 class="text-sm font-semibold text-gray-900 mb-2">{{ i18n "related_posts" }}</h2>
   {{ range $related }}
   <article class="post-preview py-2 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
     <div class="flex items-baseline justify-between gap-3">
@@ -46,16 +46,16 @@
 {{ end }}
 
 {{ if or .PrevInSection .NextInSection }}
-<nav class="mt-8 pt-6 border-t border-gray-200 flex justify-between gap-4 text-sm" aria-label="Post navigation">
+<nav class="mt-8 pt-6 border-t border-gray-200 flex justify-between gap-4 text-sm" aria-label="{{ i18n "post_navigation" }}">
   <div class="flex-1 min-w-0">
     {{ with .PrevInSection }}
-    <span class="block text-xs text-gray-400 mb-0.5">&larr; Previous</span>
+    <span class="block text-xs text-gray-400 mb-0.5">&larr; {{ i18n "previous" }}</span>
     <a href="{{ .RelPermalink }}" rel="prev" class="text-brand no-underline hover:underline">{{ .Title }}</a>
     {{ end }}
   </div>
   <div class="flex-1 min-w-0 text-right">
     {{ with .NextInSection }}
-    <span class="block text-xs text-gray-400 mb-0.5">Next &rarr;</span>
+    <span class="block text-xs text-gray-400 mb-0.5">{{ i18n "next" }} &rarr;</span>
     <a href="{{ .RelPermalink }}" rel="next" class="text-brand no-underline hover:underline">{{ .Title }}</a>
     {{ end }}
   </div>

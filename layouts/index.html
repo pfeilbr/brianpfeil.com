@@ -5,8 +5,8 @@
   <div>
     <h1 class="author-name">{{ .Site.Title }}</h1>
     <p class="author-role">
-      Principal Cloud Architect at <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a>
-      &middot; AWS Community Builder (Serverless)
+      {{ i18n "author_role_pre" }}<a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a>{{ i18n "author_role_post" }}
+      &middot; {{ i18n "aws_community_builder" }}
     </p>
   </div>
 </section>
@@ -16,7 +16,7 @@
 <div id="search-results"></div>
 
 <div id="post-list">
-  {{ $pag := .Paginate (where site.RegularPages "Type" "in" site.Params.mainSections) }}
+  {{ $pag := .Paginate (partial "site-posts.html" .) }}
   {{ range $pag.Pages }}
   <article class="post-preview py-2.5 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
     <div class="flex items-baseline justify-between gap-3">
@@ -37,12 +37,13 @@
 {{ end }}
 
 <!-- Back to top -->
-<button id="back-to-top" type="button" aria-label="Back to top" class="fixed bottom-6 right-6 w-9 h-9 bg-white border border-gray-200 rounded-full shadow-sm text-gray-400 hover:text-brand hover:border-brand cursor-pointer transition-all opacity-0 pointer-events-none z-50" title="Back to top">
+<button id="back-to-top" type="button" aria-label="{{ i18n "back_to_top" }}" class="fixed bottom-6 right-6 w-9 h-9 bg-white border border-gray-200 rounded-full shadow-sm text-gray-400 hover:text-brand hover:border-brand cursor-pointer transition-all opacity-0 pointer-events-none z-50" title="{{ i18n "back_to_top" }}">
   <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
 </button>
 
 <script>
-var postCount = {{ len (where site.RegularPages "Type" "in" site.Params.mainSections) }};
+var I18N = {{ dict "progress" (i18n "scroll_progress" (dict "loaded" "{loaded}" "total" "{total}")) "loading" (i18n "loading") | jsonify | safeJS }};
+var postCount = {{ len (partial "site-posts.html" .) }};
 var pageSize = {{ .Paginator.PagerSize }};
 
 /* Row click delegation */
@@ -89,13 +90,17 @@ document.addEventListener("keydown", function(e) {
   if (!sentinel || !postList) return;
 
   var nextPage = {{ if .Paginator.HasNext }}{{ .Paginator.Next.PageNumber }}{{ else }}0{{ end }};
+  /* "/page/2/" on the English site, "/zh/page/2/" on the Chinese one. */
+  var pageBase = {{ if .Paginator.HasNext }}{{ replaceRE `[0-9]+/$` "" .Paginator.Next.URL }}{{ else }}"/page/"{{ end }};
   var totalPages = {{ .Paginator.TotalPages }};
   var loading = false;
   var loadedCount = postList.querySelectorAll("article").length;
 
   function updateProgress() {
     if (progress) {
-      progress.textContent = loadedCount + " of " + postCount + " posts";
+      progress.textContent = I18N.progress
+        .replace("{loaded}", loadedCount)
+        .replace("{total}", postCount);
     }
   }
   updateProgress();
@@ -103,9 +108,9 @@ document.addEventListener("keydown", function(e) {
   function loadNext() {
     if (loading || nextPage > totalPages) return;
     loading = true;
-    if (progress) progress.textContent = "Loading\u2026";
+    if (progress) progress.textContent = I18N.loading;
 
-    fetch("/page/" + nextPage + "/")
+    fetch(pageBase + nextPage + "/")
       .then(function(r) { return r.text(); })
       .then(function(html) {
         var doc = new DOMParser().parseFromString(html, "text/html");

@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
+<html lang="{{ .Site.Language.Lang }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ if .IsHome }}{{ .Site.Params.homeTitle }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
   {{ partial "head-meta.html" . }}
   <link rel="canonical" href="{{ .Permalink }}">
-  <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ "index.xml" | absURL }}">
+  {{- /* Posts (and therefore the feed) only exist on the default-language site. */}}
+  <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ printf "%sindex.xml" hugo.Sites.Default.Home.Permalink }}">
+  {{- /* hreflang alternates for the languages this page actually has. */}}
+  {{- if .IsTranslated }}
+  {{- range .AllTranslations }}
+  <link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}">
+  {{- end }}
+  {{- /* .Translations is a slice, so pick the default-language one by hand. */}}
+  {{- $xdefault := .Permalink }}
+  {{- range .AllTranslations }}{{ if eq .Site.Language.Lang hugo.Sites.Default.Language.Lang }}{{ $xdefault = .Permalink }}{{ end }}{{ end }}
+  <link rel="alternate" hreflang="x-default" href="{{ $xdefault }}">
+  {{- end }}
   <script>
   /* Runs before first paint so the page never flashes the wrong theme.
      Explicit choice wins; otherwise follow the OS. Key/values kept from the
@@ -20,6 +31,46 @@
     document.documentElement.dataset.theme = dark ? "dark" : "light";
   })();
   </script>
+  <script>
+  /* Language routing. Runs before first paint so a redirect never shows the
+     wrong language first.
+
+     An explicit choice (a click on the switcher, stored under LANG_PREF) always
+     wins. With no stored choice we fall back to the browser's own language
+     preference, and only ever redirect to a URL that actually exists for this
+     page -- untranslated pages stay put rather than dumping the visitor on a
+     home page they didn't ask for. */
+  {{- $langURLs := dict -}}
+  {{- range .AllTranslations }}{{ $langURLs = merge $langURLs (dict .Site.Language.Lang .RelPermalink) }}{{ end -}}
+  (function() {
+    var KEY = "LANG_PREF";
+    var current = {{ .Site.Language.Lang }};
+    var urls = {{ $langURLs | jsonify | safeJS }};
+    window.LANG_URLS = urls;
+
+    var pref = null;
+    try { pref = localStorage.getItem(KEY); } catch (e) {}
+
+    /* Detect only on the default-language URLs. A visitor who followed a link
+       straight to /zh/ asked for that language explicitly, so never bounce them
+       back out of it on a browser-language guess. An explicit stored choice
+       still applies in both directions. */
+    if (!pref && current === {{ hugo.Sites.Default.Language.Lang }}) {
+      /* Any Chinese locale (zh, zh-CN, zh-Hans, zh-TW...) maps to the zh site. */
+      var navLangs = navigator.languages || [navigator.language || ""];
+      for (var i = 0; i < navLangs.length; i++) {
+        var tag = String(navLangs[i]).toLowerCase();
+        var base = tag.split("-")[0];
+        if (urls[tag]) { pref = tag; break; }
+        if (urls[base]) { pref = base; break; }
+      }
+    }
+
+    if (pref && pref !== current && urls[pref]) {
+      location.replace(urls[pref] + location.search + location.hash);
+    }
+  })();
+  </script>
   {{ partial "head-icons.html" . }}
   {{ partial "head-fonts.html" . }}
   {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
@@ -27,7 +78,7 @@
   {{ template "_internal/google_analytics.html" . }}
 </head>
 <body class="bg-white text-gray-800 font-sans min-h-screen flex flex-col">
-  <a href="#main-content" class="skip-link">Skip to content</a>
+  <a href="#main-content" class="skip-link">{{ i18n "skip_to_content" }}</a>
   {{ partial "nav.html" . }}
   <main id="main-content" class="flex-1 w-full max-w-2xl mx-auto px-4 py-8">
     {{ block "main" . }}{{ end }}
@@ -35,6 +86,17 @@
   {{ partial "footer.html" . }}
   {{ partial "code-copy.html" . }}
   {{ partial "image-zoom.html" . }}
+  <script>
+  /* Remember an explicit language choice so it wins over browser detection on
+     every later page load. */
+  (function() {
+    document.querySelectorAll(".lang-link").forEach(function(el) {
+      el.addEventListener("click", function() {
+        try { localStorage.setItem("LANG_PREF", el.dataset.lang); } catch (e) {}
+      });
+    });
+  })();
+  </script>
   <script>
   /* Theme toggle. The pre-paint script in <head> has already applied the
      stored choice; this only wires the buttons and keeps icons in sync. */
