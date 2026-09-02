@@ -11,7 +11,31 @@
       {{ with .Site.Params.author.stackoverflow }}
       <a href="https://stackoverflow.com/{{ . }}" class="hover:text-brand no-underline" title="Stack Overflow" target="_blank" rel="noopener noreferrer">Stack Overflow</a>
       {{ end }}
+      {{ with .Site.Params.author.discord }}
+      {{- /* Not a link: Discord profile URLs key off a numeric user id, not the
+         handle, so the useful action is copying the handle to paste into
+         Discord itself. */ -}}
+      <button type="button" class="social-copy" data-copy="{{ . }}" title="{{ i18n "copy_discord" . }}">
+        <span class="social-copy-label">Discord</span>
+        <span class="social-copy-done" hidden>{{ i18n "copied" }}</span>
+      </button>
+      {{ end }}
       <a href="{{ printf "%sindex.xml" hugo.Sites.Default.Home.RelPermalink }}" class="hover:text-brand no-underline" title="{{ i18n "rss" }}">{{ i18n "rss" }}</a>
     </div>
   </div>
 </footer>
+<script>
+/* Copy-to-clipboard for a handle that has no useful URL. If the clipboard is
+   unavailable (insecure context, permission denied) the title attribute still
+   spells the username out. */
+(function () {
+  document.querySelectorAll(".social-copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+      navigator.clipboard.writeText(btn.dataset.copy).then(function () {
+        btn.classList.add("is-copied");
+        setTimeout(function () { btn.classList.remove("is-copied"); }, 1600);
+      }, function () {});
+    });
+  });
+})();</script>

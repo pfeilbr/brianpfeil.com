@@ -61,6 +61,9 @@ params:
     github: "pfeilbr"
     twitter: "pfeilbr"
     stackoverflow: "users/29148/pfeilbr"
+    # Handle only. A Discord profile URL needs the numeric user id, not the
+    # @handle, so the footer offers this to copy rather than linking to it.
+    discord: "pfeilbr"
 
 mediaTypes:
   text/plain:

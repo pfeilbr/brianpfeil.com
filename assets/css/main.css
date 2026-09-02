@@ -1276,3 +1276,19 @@ html[data-theme="dark"] .ic {
 .tw-card:hover .ch-name { color: var(--brand); text-decoration: underline; }
 .tw-arrow { margin-left: auto; color: var(--text-fainter); flex-shrink: 0; }
 .tw-card:hover .tw-arrow { color: var(--brand); }
+
+/* Footer handle that copies instead of linking (Discord). Styled to sit in the
+   row of social links without announcing itself as a different kind of thing. */
+.social-copy {
+  font: inherit;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  position: relative;
+}
+.social-copy:hover,
+.social-copy.is-copied { color: var(--brand); }
+.social-copy.is-copied .social-copy-label { display: none; }
+.social-copy.is-copied .social-copy-done { display: inline !important; white-space: nowrap; }

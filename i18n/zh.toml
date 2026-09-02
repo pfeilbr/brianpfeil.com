@@ -233,3 +233,10 @@ other = "目前没有生效中的频道订阅 —— 不续费就会到期。这
 
 [subs_tw_followers]
 other = "{{ . }} 关注者"
+
+# 页脚
+[copy_discord]
+other = "复制我的 Discord 用户名（{{ . }}）"
+
+[copied]
+other = "已复制"

@@ -233,3 +233,10 @@ other = "No active channel subs right now — they lapse unless you renew. These
 
 [subs_tw_followers]
 other = "{{ . }} followers"
+
+# Footer
+[copy_discord]
+other = "Copy my Discord username ({{ . }})"
+
+[copied]
+other = "Copied"
