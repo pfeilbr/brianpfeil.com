@@ -1,0 +1,19 @@
+{{- /* Project slug -> glyph. Keyed on the bundle's URL segment, so the English
+   and Chinese versions of a project resolve to the same icon. */ -}}
+{{- $map := dict
+  "creature-chess" "p-chess"
+  "aim-trainer" "p-target"
+  "college-pilot" "p-cap"
+  "chinese-mandarin-language-app" "p-speech"
+  "things-to-do" "p-pin"
+  "pokemon-game" "p-cards"
+  "minotes" "p-note"
+  "animal-fun" "p-paw"
+  "vehicle-fun-for-kids" "p-car"
+  "alpha-sound" "p-letter"
+  "music-sound-touch" "p-music"
+  "mobile-account-contact-manager" "p-contact"
+  "ios-enterprise-app-store" "p-appgrid"
+-}}
+{{- $slug := path.Base .RelPermalink -}}
+{{- return index $map $slug | default "p-note" -}}

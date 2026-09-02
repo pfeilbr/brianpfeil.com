@@ -79,6 +79,11 @@
 </head>
 <body class="bg-white text-gray-800 font-sans min-h-screen flex flex-col">
   <a href="#main-content" class="skip-link">{{ i18n "skip_to_content" }}</a>
+  {{- /* Icon sprites. Topics are referenced by post rows and tag headers, which
+     can appear on almost any page; the project glyphs only exist on the
+     projects list, so they are emitted there and nowhere else. */}}
+  {{ partial "icons/sprite-topics.html" . }}
+  {{ if eq .Type "projects" }}{{ partial "icons/sprite-projects.html" . }}{{ end }}
   {{ partial "nav.html" . }}
   <main id="main-content" class="flex-1 w-full max-w-2xl mx-auto px-4 py-8">
     {{ block "main" . }}{{ end }}

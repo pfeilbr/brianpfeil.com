@@ -168,3 +168,49 @@ other = "Watch the latest from {{ . }}"
 
 [subs_footnote]
 other = "Latest videos come from each channel's uploads playlist, played in YouTube's embedded player. Subscriber counts are a snapshot."
+
+# Topic icon labels (hover titles on post rows)
+[topic_cloud]
+other = "Cloud"
+
+[topic_serverless]
+other = "Serverless"
+
+[topic_ai]
+other = "AI & machine learning"
+
+[topic_web]
+other = "Web"
+
+[topic_systems]
+other = "Systems languages"
+
+[topic_python]
+other = "Python & data"
+
+[topic_data]
+other = "Data stores"
+
+[topic_containers]
+other = "Containers"
+
+[topic_tooling]
+other = "Tooling"
+
+[topic_security]
+other = "Security & identity"
+
+[topic_mobile]
+other = "Mobile"
+
+[topic_games]
+other = "Games"
+
+[topic_architecture]
+other = "Architecture & APIs"
+
+[topic_testing]
+other = "Testing"
+
+[topic_notes]
+other = "Notes"

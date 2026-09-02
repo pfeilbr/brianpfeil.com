@@ -1,0 +1,7 @@
+{{- /* A page's topic glyph, from its tags first and its categories second --
+   the repo-generated posts carry no tags but do carry a language category, so
+   those still get something better than the fallback document. */ -}}
+{{- $tokens := slice -}}
+{{- range .Params.tags }}{{ $tokens = $tokens | append (lower (printf "%v" .)) }}{{ end -}}
+{{- range .Params.categories }}{{ $tokens = $tokens | append (lower (printf "%v" .)) }}{{ end -}}
+{{- return partial "icons/topic-id.html" $tokens -}}

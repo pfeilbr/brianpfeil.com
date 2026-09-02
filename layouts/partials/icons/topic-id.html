@@ -1,0 +1,29 @@
+{{- /* Tokens (lowercased tags + categories) -> topic glyph.
+
+   Ordered: the first rule that matches wins, so the more specific families sit
+   above the general ones. "aws + lambda" reads as serverless rather than as a
+   generic cloud post, which is the more useful signal when scanning a list. */ -}}
+{{- $rules := slice
+  (dict "id" "i-gamepad"   "match" (slice "game" "games" "gamedev" "unity" "godot" "chess"))
+  (dict "id" "i-sparkles"  "match" (slice "ai" "llm" "llms" "machine-learning" "ml" "bedrock" "genai" "openai" "mcp" "agents" "embeddings" "nlp" "claude"))
+  (dict "id" "i-shield"    "match" (slice "security" "iam" "auth" "authentication" "oauth" "cognito" "encryption" "certificates" "tls" "ssl" "secrets"))
+  (dict "id" "i-device"    "match" (slice "ios" "android" "mobile" "react-native" "pwa" "iphone" "ipad" "swift" "objective-c" "flutter"))
+  (dict "id" "i-bolt"      "match" (slice "serverless" "lambda" "sam" "cdk" "cloudformation" "eventbridge" "step-functions" "api-gateway" "sqs" "sns" "infrastructure-as-code" "terraform" "hcl" "amplify" "appsync" "streaming" "kafka" "kinesis" "queue" "events"))
+  (dict "id" "i-cloud"     "match" (slice "aws" "azure" "gcp" "cloud" "s3" "cloudfront" "cloudwatch" "ec2" "vpc" "route53" "heroku" "netlify" "vercel" "appengine" "firebase"))
+  (dict "id" "i-database"  "match" (slice "db" "sql" "database" "dynamodb" "postgres" "postgresql" "mysql" "sqlite" "redis" "glue" "athena" "rds" "elasticsearch" "neo4j" "graph-database"))
+  (dict "id" "i-container" "match" (slice "docker" "dockerfile" "kubernetes" "k8s" "container" "containers" "ecs" "eks"))
+  (dict "id" "i-beaker"    "match" (slice "python" "jupyter" "jupyter notebook" "pandas" "numpy" "data-science" "data" "notebook" "analytics"))
+  (dict "id" "i-braces"    "match" (slice "javascript" "typescript" "react" "nodejs" "node" "web" "ui" "css" "html" "vue" "jquery" "frontend" "php" "ruby" "browser" "dom"))
+  (dict "id" "i-chip"      "match" (slice "golang" "go" "rust" "cpp" "c++" "c" "java" "kotlin" "lua" "m4" "cmake" "makefile" "assembly" "concurrency" "language" "config" "dsl" "compiler"))
+  (dict "id" "i-check"     "match" (slice "testing" "test" "tests" "ci" "cd" "ci-cd" "github-actions" "debugging" "devops" "jenkins" "gitlab"))
+  (dict "id" "i-layers"    "match" (slice "architecture" "framework" "api" "sdk" "microservices" "integration" "design-patterns" "salesforce" "graphql"))
+  (dict "id" "i-terminal"  "match" (slice "cli" "tools" "shell" "bash" "zsh" "mac" "macos" "linux" "windows" "git" "vim" "terminal" "network" "atom" "vscode" "powershell" "regex"))
+-}}
+{{- $tokens := . -}}
+{{- $id := "" -}}
+{{- range $r := $rules -}}
+  {{- if and (eq $id "") (intersect $tokens $r.match) -}}
+    {{- $id = $r.id -}}
+  {{- end -}}
+{{- end -}}
+{{- return cond (eq $id "") "i-doc" $id -}}

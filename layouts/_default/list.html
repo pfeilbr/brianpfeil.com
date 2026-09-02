@@ -1,6 +1,9 @@
 {{ define "main" }}
-<h1 class="text-2xl font-bold text-gray-900 mb-6">
-  {{ .Title }}
+<h1 class="page-title text-2xl font-bold text-gray-900 mb-6">
+  {{ if eq .Kind "term" }}
+  {{ partial "icons/chip.html" (dict "id" (partial "icons/topic-id.html" (slice (lower .Title))) "size" "lg") }}
+  {{ end }}
+  <span>{{ .Title }}</span>
   {{ if eq .Kind "term" }}
   <span class="text-base font-normal text-gray-500">({{ len .Pages }})</span>
   {{ end }}
@@ -18,7 +21,10 @@
 
 {{ $pag := .Paginate .Pages }}
 {{ range $pag.Pages }}
-<article class="post-preview py-4 border-b border-gray-100">
+{{ $icon := partial "icons/topic-for-page.html" . }}
+<article class="post-preview post-row py-4 border-b border-gray-100">
+  {{ partial "icons/chip.html" (dict "id" $icon "size" "sm" "label" (partial "icons/topic-label.html" $icon)) }}
+  <div class="post-row-body">
   <a href="{{ .RelPermalink }}" class="no-underline">
     <h2 class="text-base font-semibold text-gray-900 hover:text-brand mb-1">{{ .Title }}</h2>
   </a>
@@ -31,6 +37,7 @@
   {{ with .Summary }}
   <p class="text-sm text-gray-600 m-0">{{ . | plainify | truncate 160 }}</p>
   {{ end }}
+  </div>
 </article>
 {{ end }}
 

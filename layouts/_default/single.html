@@ -35,10 +35,14 @@
 <nav class="mt-12 pt-6 border-t border-gray-200" aria-label="{{ i18n "related_posts" }}">
   <h2 class="text-sm font-semibold text-gray-900 mb-2">{{ i18n "related_posts" }}</h2>
   {{ range $related }}
-  <article class="post-preview py-2 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
-    <div class="flex items-baseline justify-between gap-3">
-      <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
-      <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ .Date.Format "Jan 2006" }}</time>
+  {{ $icon := partial "icons/topic-for-page.html" . }}
+  <article class="post-preview post-row py-2 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
+    {{ partial "icons/chip.html" (dict "id" $icon "size" "sm" "label" (partial "icons/topic-label.html" $icon)) }}
+    <div class="post-row-body">
+      <div class="flex items-baseline justify-between gap-3">
+        <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
+        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ .Date.Format "Jan 2006" }}</time>
+      </div>
     </div>
   </article>
   {{ end }}

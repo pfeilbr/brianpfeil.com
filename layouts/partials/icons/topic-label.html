@@ -1,0 +1,9 @@
+{{- /* Human name for a topic glyph, used as the chip's hover title. */ -}}
+{{- $keys := dict
+  "i-cloud" "topic_cloud" "i-bolt" "topic_serverless" "i-sparkles" "topic_ai"
+  "i-braces" "topic_web" "i-chip" "topic_systems" "i-beaker" "topic_python"
+  "i-database" "topic_data" "i-container" "topic_containers" "i-terminal" "topic_tooling"
+  "i-shield" "topic_security" "i-device" "topic_mobile" "i-gamepad" "topic_games"
+  "i-layers" "topic_architecture" "i-check" "topic_testing" "i-doc" "topic_notes"
+-}}
+{{- return i18n (index $keys . | default "topic_notes") -}}

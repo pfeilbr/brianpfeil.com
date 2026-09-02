@@ -1141,3 +1141,106 @@ body.zoom-locked { overflow: hidden; }
 
 .ch-media { aspect-ratio: 16 / 9; margin: 0.25rem 0 0.625rem; border-radius: 0.375rem; overflow: hidden; background-color: #000; }
 .ch-media iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ---------------------------------------------------------------------------
+   Icon chips. One tinted square per topic or project, so a long list can be
+   scanned by shape and colour before any of it is read. The glyphs live in an
+   SVG sprite (partials/icons/) and are referenced with <use>.
+   --------------------------------------------------------------------------- */
+
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 0.375rem;
+  color: var(--ic-c, var(--text-subtle));
+  /* Solid fallback first for anything without color-mix(). */
+  background-color: var(--bg-muted);
+  background-color: color-mix(in srgb, var(--ic-c, var(--text-subtle)) 13%, transparent);
+}
+
+.ic svg { width: 62%; height: 62%; display: block; }
+
+.ic-sm { width: 1.625rem; height: 1.625rem; }
+.ic-lg { width: 2.375rem; height: 2.375rem; border-radius: 0.5rem; }
+
+/* Dark mode needs a heavier tint and a lighter glyph to hold the same contrast. */
+html[data-theme="dark"] .ic {
+  background-color: color-mix(in srgb, var(--ic-c, var(--text-subtle)) 22%, transparent);
+  color: color-mix(in srgb, var(--ic-c, var(--text-subtle)) 62%, white);
+}
+
+/* Topic families ---------------------------------------------------------- */
+
+[data-ic="i-cloud"]     { --ic-c: #2f7fd8; }
+[data-ic="i-bolt"]      { --ic-c: #dd8005; }
+[data-ic="i-sparkles"]  { --ic-c: #8b5cf6; }
+[data-ic="i-braces"]    { --ic-c: #4f46e5; }
+[data-ic="i-chip"]      { --ic-c: #64748b; }
+[data-ic="i-beaker"]    { --ic-c: #0d9488; }
+[data-ic="i-database"]  { --ic-c: #0891b2; }
+[data-ic="i-container"] { --ic-c: #5468b8; }
+[data-ic="i-terminal"]  { --ic-c: #6b7280; }
+[data-ic="i-shield"]    { --ic-c: #dc2626; }
+[data-ic="i-device"]    { --ic-c: #db2777; }
+[data-ic="i-gamepad"]   { --ic-c: #d946ef; }
+[data-ic="i-layers"]    { --ic-c: #b45309; }
+[data-ic="i-check"]     { --ic-c: #16a34a; }
+[data-ic="i-doc"]       { --ic-c: #94a3b8; }
+
+/* Projects ---------------------------------------------------------------- */
+
+[data-ic="p-header"]   { --ic-c: #0d7ea8; }
+[data-ic="p-chess"]    { --ic-c: #7c3aed; }
+[data-ic="p-target"]   { --ic-c: #dc2626; }
+[data-ic="p-cap"]      { --ic-c: #2563eb; }
+[data-ic="p-speech"]   { --ic-c: #dd6b20; }
+[data-ic="p-pin"]      { --ic-c: #059669; }
+[data-ic="p-cards"]    { --ic-c: #d946ef; }
+[data-ic="p-note"]     { --ic-c: #64748b; }
+[data-ic="p-paw"]      { --ic-c: #ca8a04; }
+[data-ic="p-car"]      { --ic-c: #0891b2; }
+[data-ic="p-letter"]   { --ic-c: #e11d48; }
+[data-ic="p-music"]    { --ic-c: #7c3aed; }
+[data-ic="p-contact"]  { --ic-c: #0284c7; }
+[data-ic="p-appgrid"]  { --ic-c: #475569; }
+
+/* Page titles ------------------------------------------------------------- */
+
+.page-title { display: flex; align-items: center; gap: 0.625rem; }
+
+/* Post rows --------------------------------------------------------------- */
+
+.post-row { display: flex; align-items: flex-start; gap: 0.625rem; }
+.post-row .ic { margin-top: 0.0625rem; }
+.post-row-body { min-width: 0; flex: 1; }
+
+/* Project cards ----------------------------------------------------------- */
+
+.project-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.project-card:hover {
+  border-color: var(--brand);
+  box-shadow: var(--shadow-sm);
+}
+
+.project-text { min-width: 0; display: flex; flex-direction: column; gap: 0.1875rem; }
+
+.project-title { font-size: 1rem; font-weight: 600; color: var(--text-strong); line-height: 1.3; }
+.project-desc { font-size: 0.8125rem; color: var(--text-subtle); line-height: 1.5; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-card:hover .ic { transform: scale(1.06); }
+  .ic { transition: transform 0.15s ease; }
+}
