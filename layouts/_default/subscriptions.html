@@ -1,12 +1,19 @@
 {{ define "main" }}
 {{ $s := site.Data.subscriptions }}
+{{ $t := site.Data.twitch }}
 <article class="subs">
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
-    <p class="text-gray-600">{{ i18n "subs_intro" (dict "count" $s.total "reach" $s.combined_subscribers) }}</p>
+    <p class="text-gray-600">{{ i18n "subs_intro" (dict "count" $s.total "reach" $s.combined_subscribers "twitch" (add $t.following_total $t.past_total)) }}</p>
   </header>
 
   <div class="prose">{{ .Content }}</div>
+
+  <div class="platform-head">
+    {{ partial "icons/chip.html" (dict "id" "i-youtube" "size" "lg") }}
+    <span class="platform-name">YouTube</span>
+    <span class="platform-count">{{ i18n "subs_n_channels" $s.total }}</span>
+  </div>
 
   {{/* ---------- The mix, as one bar. Doubles as the filter control. ---------- */}}
   <section class="music-section" aria-labelledby="the-mix">
@@ -53,6 +60,29 @@
     </div>
   </section>
   {{ end }}
+
+  {{/* ---------- Twitch ---------- */}}
+  <div class="platform-head">
+    {{ partial "icons/chip.html" (dict "id" "i-twitch" "size" "lg") }}
+    <span class="platform-name">Twitch</span>
+    <span class="platform-count">{{ i18n "subs_n_channels" (add $t.following_total $t.past_total) }}</span>
+  </div>
+
+  <section class="music-section" aria-labelledby="tw-following">
+    <h2 id="tw-following" class="music-h2">{{ i18n "subs_tw_following" }} <span class="cat-n">{{ $t.following_total }}</span></h2>
+    <p class="music-sub">{{ i18n "subs_tw_following_note" }}</p>
+    <div class="ch-grid">
+      {{ range $t.following }}{{ partial "twitch-card.html" . }}{{ end }}
+    </div>
+  </section>
+
+  <section class="music-section" aria-labelledby="tw-past">
+    <h2 id="tw-past" class="music-h2">{{ i18n "subs_tw_past" }} <span class="cat-n">{{ $t.past_total }}</span></h2>
+    <p class="music-sub">{{ i18n "subs_tw_past_note" }}</p>
+    <div class="ch-grid">
+      {{ range $t.past }}{{ partial "twitch-card.html" . }}{{ end }}
+    </div>
+  </section>
 
   <p class="music-foot">{{ i18n "subs_footnote" }}</p>
 </article>

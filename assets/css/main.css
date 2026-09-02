@@ -1244,3 +1244,35 @@ html[data-theme="dark"] .ic {
   .project-card:hover .ic { transform: scale(1.06); }
   .ic { transition: transform 0.15s ease; }
 }
+
+/* Platform sections and Twitch cards on /subscriptions/ ------------------- */
+
+[data-ic="i-youtube"] { --ic-c: #dc2626; }
+[data-ic="i-twitch"]  { --ic-c: #9146ff; }
+
+.platform-head {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 2.75rem 0 0.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+.subs > .platform-head:first-of-type { border-top: 0; padding-top: 0; }
+
+.platform-name { font-size: 1.0625rem; font-weight: 700; color: var(--text-strong); }
+.platform-count { font-size: 0.75rem; color: var(--text-faint); margin-left: auto; font-variant-numeric: tabular-nums; }
+
+/* Twitch rows reuse the channel-card metrics but link out whole -- Twitch has
+   no watchable "latest video", so there is no play button to press. */
+.tw-card {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.4375rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  text-decoration: none;
+}
+.tw-card:hover .ch-name { color: var(--brand); text-decoration: underline; }
+.tw-arrow { margin-left: auto; color: var(--text-fainter); flex-shrink: 0; }
+.tw-card:hover .tw-arrow { color: var(--brand); }

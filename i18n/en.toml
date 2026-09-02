@@ -146,7 +146,7 @@ other = "Playback is YouTube's embedded player. Track counts are a snapshot — 
 
 # Subscriptions page
 [subs_intro]
-other = "The {{ .count }} channels I'm subscribed to on YouTube — about {{ .reach }} subscribers between them. Press play on any one to watch its latest video."
+other = "The {{ .count }} channels I follow on YouTube — about {{ .reach }} subscribers between them — plus {{ .twitch }} on Twitch. Press play on any YouTube channel to watch its latest video."
 
 [subs_the_mix]
 other = "The mix"
@@ -214,3 +214,22 @@ other = "Testing"
 
 [topic_notes]
 other = "Notes"
+
+# Subscriptions: platforms
+[subs_n_channels]
+other = "{{ . }} channels"
+
+[subs_tw_following]
+other = "Following"
+
+[subs_tw_following_note]
+other = "Twitch only exists live, so these are links rather than players — click through and they're either on or they aren't."
+
+[subs_tw_past]
+other = "Subscribed at some point"
+
+[subs_tw_past_note]
+other = "No active channel subs right now — they lapse unless you renew. These are the ones I've paid for over the years."
+
+[subs_tw_followers]
+other = "{{ . }} followers"

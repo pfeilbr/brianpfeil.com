@@ -1,0 +1,11 @@
+{{- /* One Twitch channel. A whole-row link rather than a play button: Twitch
+   only serves a channel while it is live, so an embedded player would read
+   "offline" most of the time. */ -}}
+<a class="tw-card" href="https://www.twitch.tv/{{ .login }}" target="_blank" rel="noopener">
+  <img class="ch-avatar" src="{{ .avatar }}" alt="" width="36" height="36" loading="lazy" decoding="async">
+  <span class="ch-text">
+    <span class="ch-name">{{ .name }}</span>
+    <span class="ch-subs">{{ i18n "subs_tw_followers" .followers }}</span>
+  </span>
+  <svg class="tw-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+</a>

@@ -146,7 +146,7 @@ other = "播放使用 YouTube 的嵌入播放器。曲目数量为快照，歌�
 
 # 订阅页面
 [subs_intro]
-other = "我在 YouTube 上订阅的 {{ .count }} 个频道，合计约 {{ .reach }} 名订阅者。点击任意频道即可观看它的最新视频。"
+other = "我在 YouTube 上关注的 {{ .count }} 个频道，合计约 {{ .reach }} 名订阅者，另有 Twitch 上的 {{ .twitch }} 个。点击任意 YouTube 频道即可观看它的最新视频。"
 
 [subs_the_mix]
 other = "构成"
@@ -214,3 +214,22 @@ other = "测试"
 
 [topic_notes]
 other = "笔记"
+
+# 订阅页面：平台
+[subs_n_channels]
+other = "{{ . }} 个频道"
+
+[subs_tw_following]
+other = "关注中"
+
+[subs_tw_following_note]
+other = "Twitch 只有直播，所以这里是链接而不是播放器 —— 点进去，主播要么在播，要么不在。"
+
+[subs_tw_past]
+other = "曾经订阅过"
+
+[subs_tw_past_note]
+other = "目前没有生效中的频道订阅 —— 不续费就会到期。这些是我这些年付费支持过的频道。"
+
+[subs_tw_followers]
+other = "{{ . }} 关注者"
