@@ -17,6 +17,7 @@ repo_filters:
     - "alfred-utilities-workflow"
     - "aws-vscode-dev-container"
     # Older public repos published as posts (dated by last activity)
+    - "animalfun"
     - "aws-app-runner-private-service-with-private-integration"
     - "lambda-glue-mysql-terraform"
     - "aws-guidance"
@@ -55,6 +56,7 @@ project_repos:
 # Post dates for repos whose work postdates repo creation. Keeps them
 # interleaved with other posts by when they were last worked on.
 date_overrides:
+  "animalfun": "2025-12-31"
   "aws-app-runner-private-service-with-private-integration": "2023-09-15"
   "lambda-glue-mysql-terraform": "2023-06-06"
   "aws-guidance": "2022-05-17"
@@ -72,6 +74,7 @@ title_mappings:
   "pokemon-game": "Mathmon Battle League"
   "pocono-lake-house-2026": "Pocono Lake House"
   "xiaoling-lindsey-zhou-website": "Lindsey Zhou Link Page"
+  "animalfun": "Animal Fun"
   "16-games-in-c--sfml": "16 Games in C++/SFML"
   "aws-well-architected-playground": "AWS Well-Architected"
   "aws-assume-role-using-custom-oidc-provider-playground": "AWS Assume Role Using Custom OIDC Provider"
@@ -376,6 +379,7 @@ tags:
     "lambda-function-urls-playground": ["aws", "lambda", "http"]
     "plotly-dash-api-gateway-lambda-playground": ["dash", "lambda", "aws"]
     "surveyjs-react-playground": ["react", "javascript"]
+    "animalfun": ["ios", "objective-c", "app"]
     "16-games-in-c--sfml": ["cpp", "game", "sfml"]
     "remote-development": ["vscode", "docker", "typescript"]
     "aws-guidance": ["aws", "architecture"]
