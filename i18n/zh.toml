@@ -146,7 +146,7 @@ other = "播放使用 YouTube 的嵌入播放器。曲目数量为快照，歌�
 
 # 订阅页面
 [subs_intro]
-other = "我在 YouTube 上关注的 {{ .count }} 个频道，合计约 {{ .reach }} 名订阅者，另有 Twitch 上的 {{ .twitch }} 个，以及 Steam 上的 {{ .steam }} 款游戏。点击任意 YouTube 频道即可观看它的最新视频。"
+other = "我关注的一切都在这里：YouTube 上 {{ .count }} 个频道（合计约 {{ .reach }} 名订阅者）、Twitch 上 {{ .twitch }} 个、Steam 上 {{ .steam }} 款游戏，以及阅读器里的 {{ .feeds }} 个订阅源。点击任意 YouTube 频道即可观看它的最新视频。"
 
 [subs_the_mix]
 other = "构成"
@@ -258,3 +258,9 @@ other = "{{ . }} 小时"
 
 [home]
 other = "首页"
+
+[subs_tab_feeds]
+other = "订阅源"
+
+[subs_feeds_note]
+other = "用 Feedly 阅读。另有 {{ . }} 个订阅源已归档、不再阅读，故未列出。"

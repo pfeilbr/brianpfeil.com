@@ -2,10 +2,11 @@
 {{ $s := hugo.Data.subscriptions }}
 {{ $t := hugo.Data.twitch }}
 {{ $g := hugo.Data.steam }}
+{{ $f := hugo.Data.feedly }}
 <article class="subs">
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
-    <p class="text-gray-600">{{ i18n "subs_intro" (dict "count" $s.total "reach" $s.combined_subscribers "twitch" (add $t.following_total $t.past_total) "steam" $g.library_total) }}</p>
+    <p class="text-gray-600">{{ i18n "subs_intro" (dict "count" $s.total "reach" $s.combined_subscribers "twitch" (add $t.following_total $t.past_total) "steam" $g.library_total "feeds" $f.total) }}</p>
   </header>
 
   <div class="prose">{{ .Content }}</div>
@@ -32,6 +33,12 @@
       {{ partial "icons/chip.html" (dict "id" "i-steam" "size" "sm") }}
       <span class="ptab-name">Steam</span>
       <span class="ptab-count">{{ $g.library_total }}</span>
+    </button>
+    <button type="button" class="ptab" role="tab" id="tab-feeds"
+            aria-controls="panel-feeds" aria-selected="false" tabindex="-1" data-panel="feeds">
+      {{ partial "icons/chip.html" (dict "id" "i-rss" "size" "sm") }}
+      <span class="ptab-name">{{ i18n "subs_tab_feeds" }}</span>
+      <span class="ptab-count">{{ $f.total }}</span>
     </button>
   </div>
 
@@ -124,6 +131,22 @@
       </ol>
     </section>
   </div>{{/* /panel-steam */}}
+
+  {{/* ---------- Feeds. A blogroll: names and links, nothing else. ---------- */}}
+  <div class="ptab-panel" id="panel-feeds" role="tabpanel" aria-labelledby="tab-feeds">
+    {{ range $f.groups }}
+    <section class="music-section" aria-labelledby="feeds-{{ .key }}">
+      <h2 id="feeds-{{ .key }}" class="music-h2">{{ .label }} <span class="cat-n">{{ .count }}</span></h2>
+      <p class="music-sub">{{ .blurb }}</p>
+      <ul class="feed-grid">
+        {{ range .feeds }}
+        <li><a class="feed-link" href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a></li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+    <p class="music-sub">{{ i18n "subs_feeds_note" $f.archived }}</p>
+  </div>{{/* /panel-feeds */}}
 
   <p class="music-foot">{{ i18n "subs_footnote" }}</p>
 </article>

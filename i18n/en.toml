@@ -146,7 +146,7 @@ other = "Playback is YouTube's embedded player. Track counts are a snapshot — 
 
 # Subscriptions page
 [subs_intro]
-other = "The {{ .count }} channels I follow on YouTube — about {{ .reach }} subscribers between them — plus {{ .twitch }} on Twitch and {{ .steam }} games on Steam. Press play on any YouTube channel to watch its latest video."
+other = "Everything I follow, in one place: {{ .count }} YouTube channels — about {{ .reach }} subscribers between them — {{ .twitch }} on Twitch, {{ .steam }} games on Steam, and {{ .feeds }} feeds in my reader. Press play on any YouTube channel to watch its latest video."
 
 [subs_the_mix]
 other = "The mix"
@@ -258,3 +258,9 @@ other = "{{ . }}h"
 
 [home]
 other = "Home"
+
+[subs_tab_feeds]
+other = "Feeds"
+
+[subs_feeds_note]
+other = "Read in Feedly. A further {{ . }} feeds sit in an archive folder I no longer read, so they are not listed."
