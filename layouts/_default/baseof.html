@@ -66,7 +66,13 @@
       }
     }
 
-    if (pref && pref !== current && urls[pref]) {
+    /* Only ever redirect away from a default-language URL. A visitor who
+       followed a link to /ko/about/ asked for Korean by URL, and that beats a
+       preference stored months ago — otherwise every shared link to one of the
+       eight translated sites would bounce anyone who has ever picked a
+       language, which is most returning visitors. Arriving at the root still
+       honours the stored choice, so the convenience is kept. */
+    if (pref && pref !== current && urls[pref] && current === {{ hugo.Sites.Default.Language.Lang }}) {
       location.replace(urls[pref] + location.search + location.hash);
     }
   })();
