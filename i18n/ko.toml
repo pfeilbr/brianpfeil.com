@@ -1,0 +1,266 @@
+# 한국어 사이트의 UI 문구. 키는 i18n/en.toml과 동일합니다.
+
+[skip_to_content]
+other = "본문으로 건너뛰기"
+
+[toggle_dark_mode]
+other = "다크 모드 전환"
+
+[open_menu]
+other = "메뉴 열기"
+
+[main_nav]
+other = "주 메뉴"
+
+[language]
+other = "언어"
+
+[switch_language]
+other = "언어 변경"
+
+[not_translated]
+other = "이 페이지는 한국어로 번역되어 있지 않아 사이트 홈으로 이동합니다."
+
+# 글 정보
+[min_read]
+other = "읽는 데 {{ . }}분"
+
+[posts_count]
+other = "글 {{ . }}편"
+
+[contents]
+other = "목차"
+
+[related_posts]
+other = "관련 글"
+
+[recent_posts]
+other = "최근 글"
+
+[post_navigation]
+other = "글 탐색"
+
+[previous]
+other = "이전 글"
+
+[next]
+other = "다음 글"
+
+[jump_to_year]
+other = "연도로 이동"
+
+[table_of_contents]
+other = "목차"
+
+[back_to_top]
+other = "맨 위로"
+
+[back_to_all_posts]
+other = "전체 글로 돌아가기"
+
+# 검색
+[search_posts]
+other = "글 검색"
+
+[search_placeholder]
+other = "글 검색…"
+
+[search_placeholder_count]
+other = "글 {{ . }}편에서 검색…"
+
+[search_failed]
+other = "검색 색인을 불러오지 못했습니다."
+
+[search_no_matches]
+other = "일치하는 결과가 없습니다."
+
+[search_one_match]
+other = "1건"
+
+[search_n_matches]
+other = "{{ . }}건"
+
+[search_top_matches]
+other = "상위 {{ . }}건"
+
+[loading]
+other = "불러오는 중…"
+
+[scroll_progress]
+other = "글 {{ .total }}편 중 {{ .loaded }}편"
+
+# 404
+[not_found_title]
+other = "페이지를 찾을 수 없습니다"
+
+[not_found_body]
+other = "존재하지 않는 페이지입니다 — 옮겨졌거나 이름이 바뀌었을 수 있습니다. 검색해 보세요."
+
+# 푸터
+[rss]
+other = "RSS"
+
+# 홈 소개
+[author_role_pre]
+other = "Principal Cloud Architect, 근무처: "
+
+[author_role_post]
+other = ""
+
+[aws_community_builder]
+other = "AWS Community Builder (Serverless)"
+
+# 음악 페이지
+[music_intro]
+other = "제가 실제로 듣는 재생목록을 YouTube Music 라이브러리에서 그대로 가져왔습니다. 아무거나 재생을 눌러 보세요."
+
+[music_top_artists]
+other = "가장 많이 들은 아티스트"
+
+[music_top_artists_note]
+other = "재생목록에 담긴 약 {{ .tracks }}곡을 기준으로 집계했습니다."
+
+[music_my_playlists]
+other = "내 재생목록"
+
+[music_saved]
+other = "다른 곳에서 저장한 재생목록"
+
+[music_play_hint]
+other = "재생을 누르기 전까지는 아무것도 불러오지 않습니다."
+
+[music_play]
+other = "{{ . }} 재생"
+
+[music_open_in_ytm]
+other = "YouTube Music에서 열기"
+
+[music_tracks]
+other = "{{ . }}곡"
+
+[music_by]
+other = "만든 사람: {{ . }}"
+
+[music_footnote]
+other = "재생에는 YouTube의 임베드 플레이어를 사용합니다. 곡 수는 특정 시점의 기록이며, 재생목록은 계속 바뀝니다."
+
+# 구독 페이지
+[subs_intro]
+other = "제가 구독하는 모든 것을 한곳에 모았습니다. YouTube 채널 {{ .count }}개(합계 구독자 약 {{ .reach }}명), Twitch {{ .twitch }}개, Steam 게임 {{ .steam }}개, 그리고 리더에 담긴 피드 {{ .feeds }}개입니다. YouTube 채널의 재생을 누르면 최신 영상을 바로 볼 수 있습니다."
+
+[subs_the_mix]
+other = "구성"
+
+[subs_the_mix_note]
+other = "이 계정의 절반쯤은 컴퓨터를 설명하는 사람들이고, 나머지 절반은 밖으로 나가는 사람들입니다. 분류를 눌러 좁혀 보세요."
+
+[subs_filter]
+other = "분류로 걸러 보기"
+
+[subs_all]
+other = "전체"
+
+[subs_random]
+other = "아무거나 보여주세요"
+
+[subs_watch_latest]
+other = "{{ . }}의 최신 영상 보기"
+
+[subs_footnote]
+other = "최신 영상은 각 채널의 업로드 재생목록에서 가져와 YouTube의 임베드 플레이어로 재생합니다. 구독자 수와 플레이 시간은 특정 시점의 기록입니다."
+
+# 주제 아이콘 이름 (글 목록의 마우스오버 설명)
+[topic_cloud]
+other = "클라우드"
+
+[topic_serverless]
+other = "서버리스"
+
+[topic_ai]
+other = "AI와 머신러닝"
+
+[topic_web]
+other = "웹"
+
+[topic_systems]
+other = "시스템 언어"
+
+[topic_python]
+other = "Python과 데이터"
+
+[topic_data]
+other = "데이터 저장소"
+
+[topic_containers]
+other = "컨테이너"
+
+[topic_tooling]
+other = "도구"
+
+[topic_security]
+other = "보안과 인증"
+
+[topic_mobile]
+other = "모바일"
+
+[topic_games]
+other = "게임"
+
+[topic_architecture]
+other = "아키텍처와 API"
+
+[topic_testing]
+other = "테스트"
+
+[topic_notes]
+other = "메모"
+
+# 구독 페이지: 플랫폼
+[subs_n_channels]
+other = "채널 {{ . }}개"
+
+[subs_tw_following]
+other = "팔로우 중"
+
+[subs_tw_following_note]
+other = "Twitch는 라이브일 때만 존재하니 플레이어 대신 링크만 두었습니다 — 눌러 보면 방송 중이거나 아니거나 둘 중 하나입니다."
+
+[subs_tw_past]
+other = "한때 구독했던 채널"
+
+[subs_tw_past_note]
+other = "지금은 유효한 채널 구독이 없습니다 — 갱신하지 않으면 만료되니까요. 그동안 결제해 온 채널들입니다."
+
+[subs_tw_followers]
+other = "팔로워 {{ . }}명"
+
+# 푸터
+[copy_discord]
+other = "내 Discord 사용자명 복사 ({{ . }})"
+
+[copied]
+other = "복사됨"
+
+[subs_platforms]
+other = "플랫폼"
+
+[music_sections]
+other = "재생목록"
+
+[music_saved_note]
+other = "남이 만든 재생목록인데 계속 다시 찾게 되는 것들입니다."
+
+[subs_steam_note]
+other = "라이브러리에 있는 게임 {{ .library }}개에 걸쳐 약 {{ .hours }}시간. 그중 시뮬레이터가 수상할 만큼 많습니다."
+
+[subs_steam_hours]
+other = "{{ . }}시간"
+
+[home]
+other = "홈"
+
+[subs_tab_feeds]
+other = "피드"
+
+[subs_feeds_note]
+other = "Feedly로 읽습니다. 이제는 읽지 않는 보관 폴더에 피드 {{ . }}개가 더 있지만 여기에는 넣지 않았습니다."
