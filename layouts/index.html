@@ -5,7 +5,10 @@
   <div>
     <h1 class="author-name">{{ .Site.Title }}</h1>
     <p class="author-role">
-      {{ i18n "author_role_pre" }}<a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a>{{ i18n "author_role_post" }}
+      {{- /* One string with the employer as a placeholder: a prefix/suffix pair
+         cannot express languages that put the company before the job title. */ -}}
+      {{ $merck := `<a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a>` }}
+      {{ i18n "author_role" (dict "company" $merck) | safeHTML }}
       &middot; {{ i18n "aws_community_builder" }}
     </p>
   </div>

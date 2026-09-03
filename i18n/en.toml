@@ -101,11 +101,7 @@ other = "That page doesn't exist — it may have been moved or renamed. Try a se
 other = "RSS"
 
 # Homepage intro
-[author_role_pre]
-other = "Principal Cloud Architect at "
 
-[author_role_post]
-other = ""
 
 [aws_community_builder]
 other = "AWS Community Builder (Serverless)"
@@ -264,3 +260,6 @@ other = "Feeds"
 
 [subs_feeds_note]
 other = "Read in Feedly. A further {{ . }} feeds sit in an archive folder I no longer read, so they are not listed."
+
+[author_role]
+other = "Principal Cloud Architect at {{ .company }}"

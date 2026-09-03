@@ -154,3 +154,262 @@ languages:
         - name: "归档"
           url: "/zh/archive/"
           weight: 50
+
+  es:
+    locale: "es-es"
+    label: "Español"
+    weight: 3
+    title: "Brian Pfeil"
+    params:
+      homeTitle: "Brian Pfeil"
+    # Posts are written in English only, so this site has no regular pages of
+    # its own; the search index and feeds would render empty. Emit HTML only and
+    # let the English feeds serve everyone.
+    outputs:
+      home:
+        - html
+    menus:
+      main:
+        - name: "acerca de"
+          url: "/es/about/"
+          weight: 10
+        - name: "artículos"
+          url: "/es/"
+          weight: 20
+        - name: "proyectos"
+          url: "/es/projects/"
+          weight: 30
+        - name: "música"
+          url: "/es/music/"
+          weight: 35
+        - name: "suscripciones"
+          url: "/es/subscriptions/"
+          weight: 36
+        - name: "etiquetas"
+          url: "/tags/"
+          weight: 40
+        - name: "archivo"
+          url: "/es/archive/"
+          weight: 50
+
+  pt:
+    locale: "pt-br"
+    label: "Português"
+    weight: 4
+    title: "Brian Pfeil"
+    params:
+      homeTitle: "Brian Pfeil"
+    # Posts are written in English only, so this site has no regular pages of
+    # its own; the search index and feeds would render empty. Emit HTML only and
+    # let the English feeds serve everyone.
+    outputs:
+      home:
+        - html
+    menus:
+      main:
+        - name: "sobre"
+          url: "/pt/about/"
+          weight: 10
+        - name: "artigos"
+          url: "/pt/"
+          weight: 20
+        - name: "projetos"
+          url: "/pt/projects/"
+          weight: 30
+        - name: "música"
+          url: "/pt/music/"
+          weight: 35
+        - name: "assinaturas"
+          url: "/pt/subscriptions/"
+          weight: 36
+        - name: "tags"
+          url: "/tags/"
+          weight: 40
+        - name: "arquivo"
+          url: "/pt/archive/"
+          weight: 50
+
+  fr:
+    locale: "fr-fr"
+    label: "Français"
+    weight: 5
+    title: "Brian Pfeil"
+    params:
+      homeTitle: "Brian Pfeil"
+    # Posts are written in English only, so this site has no regular pages of
+    # its own; the search index and feeds would render empty. Emit HTML only and
+    # let the English feeds serve everyone.
+    outputs:
+      home:
+        - html
+    menus:
+      main:
+        - name: "à propos"
+          url: "/fr/about/"
+          weight: 10
+        - name: "articles"
+          url: "/fr/"
+          weight: 20
+        - name: "projets"
+          url: "/fr/projects/"
+          weight: 30
+        - name: "musique"
+          url: "/fr/music/"
+          weight: 35
+        - name: "abonnements"
+          url: "/fr/subscriptions/"
+          weight: 36
+        - name: "étiquettes"
+          url: "/tags/"
+          weight: 40
+        - name: "archives"
+          url: "/fr/archive/"
+          weight: 50
+
+  de:
+    locale: "de-de"
+    label: "Deutsch"
+    weight: 6
+    title: "Brian Pfeil"
+    params:
+      homeTitle: "Brian Pfeil"
+    # Posts are written in English only, so this site has no regular pages of
+    # its own; the search index and feeds would render empty. Emit HTML only and
+    # let the English feeds serve everyone.
+    outputs:
+      home:
+        - html
+    menus:
+      main:
+        - name: "über mich"
+          url: "/de/about/"
+          weight: 10
+        - name: "beiträge"
+          url: "/de/"
+          weight: 20
+        - name: "projekte"
+          url: "/de/projects/"
+          weight: 30
+        - name: "musik"
+          url: "/de/music/"
+          weight: 35
+        - name: "abos"
+          url: "/de/subscriptions/"
+          weight: 36
+        - name: "tags"
+          url: "/tags/"
+          weight: 40
+        - name: "archiv"
+          url: "/de/archive/"
+          weight: 50
+
+  it:
+    locale: "it-it"
+    label: "Italiano"
+    weight: 7
+    title: "Brian Pfeil"
+    params:
+      homeTitle: "Brian Pfeil"
+    # Posts are written in English only, so this site has no regular pages of
+    # its own; the search index and feeds would render empty. Emit HTML only and
+    # let the English feeds serve everyone.
+    outputs:
+      home:
+        - html
+    menus:
+      main:
+        - name: "chi sono"
+          url: "/it/about/"
+          weight: 10
+        - name: "articoli"
+          url: "/it/"
+          weight: 20
+        - name: "progetti"
+          url: "/it/projects/"
+          weight: 30
+        - name: "musica"
+          url: "/it/music/"
+          weight: 35
+        - name: "iscrizioni"
+          url: "/it/subscriptions/"
+          weight: 36
+        - name: "tag"
+          url: "/tags/"
+          weight: 40
+        - name: "archivio"
+          url: "/it/archive/"
+          weight: 50
+
+  ja:
+    locale: "ja-jp"
+    label: "日本語"
+    weight: 8
+    title: "Brian Pfeil"
+    params:
+      homeTitle: "Brian Pfeil"
+    # Posts are written in English only, so this site has no regular pages of
+    # its own; the search index and feeds would render empty. Emit HTML only and
+    # let the English feeds serve everyone.
+    outputs:
+      home:
+        - html
+    menus:
+      main:
+        - name: "プロフィール"
+          url: "/ja/about/"
+          weight: 10
+        - name: "記事"
+          url: "/ja/"
+          weight: 20
+        - name: "プロジェクト"
+          url: "/ja/projects/"
+          weight: 30
+        - name: "音楽"
+          url: "/ja/music/"
+          weight: 35
+        - name: "購読"
+          url: "/ja/subscriptions/"
+          weight: 36
+        - name: "タグ"
+          url: "/tags/"
+          weight: 40
+        - name: "アーカイブ"
+          url: "/ja/archive/"
+          weight: 50
+
+  ko:
+    locale: "ko-kr"
+    label: "한국어"
+    weight: 9
+    title: "Brian Pfeil"
+    params:
+      homeTitle: "Brian Pfeil"
+    # Posts are written in English only, so this site has no regular pages of
+    # its own; the search index and feeds would render empty. Emit HTML only and
+    # let the English feeds serve everyone.
+    outputs:
+      home:
+        - html
+    menus:
+      main:
+        - name: "소개"
+          url: "/ko/about/"
+          weight: 10
+        - name: "글"
+          url: "/ko/"
+          weight: 20
+        - name: "프로젝트"
+          url: "/ko/projects/"
+          weight: 30
+        - name: "음악"
+          url: "/ko/music/"
+          weight: 35
+        - name: "구독"
+          url: "/ko/subscriptions/"
+          weight: 36
+        - name: "태그"
+          url: "/tags/"
+          weight: 40
+        - name: "아카이브"
+          url: "/ko/archive/"
+          weight: 50

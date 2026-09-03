@@ -101,11 +101,7 @@ other = "Questa pagina non esiste — potrebbe essere stata spostata o rinominat
 other = "RSS"
 
 # Presentazione in home page
-[author_role_pre]
-other = "Principal Cloud Architect presso "
 
-[author_role_post]
-other = ""
 
 [aws_community_builder]
 other = "AWS Community Builder (Serverless)"
@@ -264,3 +260,6 @@ other = "Feed"
 
 [subs_feeds_note]
 other = "Li leggo in Feedly. Altri {{ . }} feed stanno in una cartella d'archivio che non leggo più, quindi non sono elencati."
+
+[author_role]
+other = "Principal Cloud Architect presso {{ .company }}"

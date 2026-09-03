@@ -101,11 +101,7 @@ other = "このページは存在しません。移動または名前が変わ�
 other = "RSS"
 
 # トップページの紹介文
-[author_role_pre]
-other = ""
 
-[author_role_post]
-other = "のプリンシパル・クラウドアーキテクト"
 
 [aws_community_builder]
 other = "AWS Community Builder（Serverless）"
@@ -264,3 +260,6 @@ other = "フィード"
 
 [subs_feeds_note]
 other = "Feedly で読んでいます。ほかに {{ . }} 個のフィードが、もう読んでいないアーカイブ用フォルダに入っているため、ここには載せていません。"
+
+[author_role]
+other = "{{ .company }} のプリンシパル・クラウドアーキテクト"

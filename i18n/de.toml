@@ -1,0 +1,265 @@
+# UI-Texte für die deutsche Seite. Schlüssel identisch mit i18n/en.toml.
+
+[skip_to_content]
+other = "Zum Inhalt springen"
+
+[toggle_dark_mode]
+other = "Dunkelmodus umschalten"
+
+[open_menu]
+other = "Menü öffnen"
+
+[main_nav]
+other = "Hauptmenü"
+
+[language]
+other = "Sprache"
+
+[switch_language]
+other = "Sprache wechseln"
+
+[not_translated]
+other = "Diese Seite gibt es nicht auf Deutsch – es geht weiter zur Startseite."
+
+# Angaben zum Beitrag
+[min_read]
+other = "{{ . }} Min. Lesezeit"
+
+[posts_count]
+other = "{{ . }} Beiträge"
+
+[contents]
+other = "Inhalt"
+
+[related_posts]
+other = "Ähnliche Beiträge"
+
+[recent_posts]
+other = "Neueste Beiträge"
+
+[post_navigation]
+other = "Beitragsnavigation"
+
+[previous]
+other = "Zurück"
+
+[next]
+other = "Weiter"
+
+[jump_to_year]
+other = "Zum Jahr springen"
+
+[table_of_contents]
+other = "Inhaltsverzeichnis"
+
+[back_to_top]
+other = "Nach oben"
+
+[back_to_all_posts]
+other = "Zurück zu allen Beiträgen"
+
+# Suche
+[search_posts]
+other = "Beiträge durchsuchen"
+
+[search_placeholder]
+other = "Beiträge durchsuchen…"
+
+[search_placeholder_count]
+other = "{{ . }} Beiträge durchsuchen…"
+
+[search_failed]
+other = "Suchindex konnte nicht geladen werden."
+
+[search_no_matches]
+other = "Keine Treffer."
+
+[search_one_match]
+other = "1 Treffer"
+
+[search_n_matches]
+other = "{{ . }} Treffer"
+
+[search_top_matches]
+other = "Top {{ . }} Treffer"
+
+[loading]
+other = "Wird geladen…"
+
+[scroll_progress]
+other = "{{ .loaded }} von {{ .total }} Beiträgen"
+
+# 404
+[not_found_title]
+other = "Seite nicht gefunden"
+
+[not_found_body]
+other = "Diese Seite gibt es nicht – vielleicht wurde sie verschoben oder umbenannt. Am besten die Suche probieren."
+
+# Fußzeile
+[rss]
+other = "RSS"
+
+# Einleitung auf der Startseite
+
+
+[aws_community_builder]
+other = "AWS Community Builder (Serverless)"
+
+# Musikseite
+[music_intro]
+other = "Playlists, die ich tatsächlich höre, direkt aus meiner YouTube-Music-Mediathek. Einfach auf Play drücken."
+
+[music_top_artists]
+other = "Meistgehörte Künstler"
+
+[music_top_artists_note]
+other = "Ausgezählt über rund {{ .tracks }} Titel in meinen Playlists."
+
+[music_my_playlists]
+other = "Meine Playlists"
+
+[music_saved]
+other = "Von anderswo gespeichert"
+
+[music_play_hint]
+other = "Es wird nichts geladen, bevor Play gedrückt wird."
+
+[music_play]
+other = "{{ . }} abspielen"
+
+[music_open_in_ytm]
+other = "In YouTube Music öffnen"
+
+[music_tracks]
+other = "{{ . }} Titel"
+
+[music_by]
+other = "von {{ . }}"
+
+[music_footnote]
+other = "Die Wiedergabe läuft über den eingebetteten Player von YouTube. Die Titelzahlen sind eine Momentaufnahme – die Playlists bleiben in Bewegung."
+
+# Abo-Seite
+[subs_intro]
+other = "Alles, dem ich folge, an einem Ort: {{ .count }} YouTube-Kanäle – zusammen rund {{ .reach }} Abonnenten –, {{ .twitch }} auf Twitch, {{ .steam }} Spiele auf Steam und {{ .feeds }} Feeds in meinem Reader. Bei jedem YouTube-Kanal auf Play drücken und das neueste Video ansehen."
+
+[subs_the_mix]
+other = "Die Mischung"
+
+[subs_the_mix_note]
+other = "Ungefähr die Hälfte dieses Accounts sind Leute, die Computer erklären, die andere Hälfte Leute, die rausgehen. Eine Kategorie antippen, um einzugrenzen."
+
+[subs_filter]
+other = "Nach Kategorie filtern"
+
+[subs_all]
+other = "Alles"
+
+[subs_random]
+other = "Überrasch mich"
+
+[subs_watch_latest]
+other = "Neuestes Video von {{ . }} ansehen"
+
+[subs_footnote]
+other = "Die neuesten Videos stammen aus der Uploads-Playlist des jeweiligen Kanals und laufen im eingebetteten Player von YouTube. Abonnentenzahlen und Spielzeiten sind eine Momentaufnahme."
+
+# Bezeichnungen der Themen-Symbole (Tooltips in den Beitragszeilen)
+[topic_cloud]
+other = "Cloud"
+
+[topic_serverless]
+other = "Serverless"
+
+[topic_ai]
+other = "KI & Machine Learning"
+
+[topic_web]
+other = "Web"
+
+[topic_systems]
+other = "Systemsprachen"
+
+[topic_python]
+other = "Python & Daten"
+
+[topic_data]
+other = "Datenspeicher"
+
+[topic_containers]
+other = "Container"
+
+[topic_tooling]
+other = "Werkzeuge"
+
+[topic_security]
+other = "Sicherheit & Identität"
+
+[topic_mobile]
+other = "Mobile"
+
+[topic_games]
+other = "Spiele"
+
+[topic_architecture]
+other = "Architektur & APIs"
+
+[topic_testing]
+other = "Testing"
+
+[topic_notes]
+other = "Notizen"
+
+# Abo-Seite: Plattformen
+[subs_n_channels]
+other = "{{ . }} Kanäle"
+
+[subs_tw_following]
+other = "Folge ich"
+
+[subs_tw_following_note]
+other = "Twitch gibt es nur live, deshalb stehen hier Links statt Player – draufklicken, und entweder läuft gerade etwas oder eben nicht."
+
+[subs_tw_past]
+other = "Früher mal abonniert"
+
+[subs_tw_past_note]
+other = "Zurzeit keine aktiven Kanal-Abos – die laufen aus, wenn man sie nicht verlängert. Das hier sind die, für die ich über die Jahre bezahlt habe."
+
+[subs_tw_followers]
+other = "{{ . }} Follower"
+
+# Fußzeile
+[copy_discord]
+other = "Meinen Discord-Namen kopieren ({{ . }})"
+
+[copied]
+other = "Kopiert"
+
+[subs_platforms]
+other = "Plattform"
+
+[music_sections]
+other = "Playlists"
+
+[music_saved_note]
+other = "Playlists von anderen, zu denen ich immer wieder zurückkomme."
+
+[subs_steam_note]
+other = "Rund {{ .hours }} Stunden auf die {{ .library }} Spiele in der Bibliothek. Verdächtig viele davon sind Simulatoren."
+
+[subs_steam_hours]
+other = "{{ . }} Std."
+
+[home]
+other = "Start"
+
+[subs_tab_feeds]
+other = "Feeds"
+
+[subs_feeds_note]
+other = "Gelesen in Feedly. Weitere {{ . }} Feeds liegen in einem Archivordner, den ich nicht mehr lese, und sind deshalb nicht aufgeführt."
+
+[author_role]
+other = "Principal Cloud Architect bei {{ .company }}"

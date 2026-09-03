@@ -1,4 +1,5 @@
-{{- /* Language switcher. Renders one link per configured language.
+{{- /* Language switcher. With nine languages the old inline list no longer
+   fits the nav, so this is a dropdown showing the current language.
 
    A language the current page has no translation for links to that language's
    home page instead, and is marked so the click handler in baseof.html knows
@@ -8,19 +9,25 @@
 {{- range .AllTranslations -}}
   {{- $translations = merge $translations (dict .Language.Lang .RelPermalink) -}}
 {{- end -}}
-<div class="lang-switcher" role="group" aria-label="{{ i18n "switch_language" }}">
-  {{- range $i, $lang := hugo.Sites }}
-  {{- $href := index $translations $lang.Language.Lang -}}
-  {{- $isTranslated := ne $href nil -}}
-  {{- /* defaultContentLanguageInSubdir is false, so the default language lives at the root. */ -}}
-  {{- if not $isTranslated }}{{ $href = cond (eq $lang.Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" $lang.Language.Lang) }}{{ end -}}
-  {{- if $i }}<span class="lang-sep" aria-hidden="true">·</span>{{ end -}}
-  <a href="{{ $href }}"
-     class="lang-link{{ if eq $lang.Language.Lang $cur }} is-active{{ end }}"
-     hreflang="{{ $lang.Language.Lang }}"
-     lang="{{ $lang.Language.Lang }}"
-     data-lang="{{ $lang.Language.Lang }}"
-     {{ if not $isTranslated }}data-lang-fallback="1" title="{{ i18n "not_translated" }}"{{ end }}
-     {{ if eq $lang.Language.Lang $cur }}aria-current="true"{{ end }}>{{ $lang.Language.Label }}</a>
-  {{- end }}
-</div>
+<details class="lang-switcher">
+  <summary class="lang-current" aria-label="{{ i18n "switch_language" }}" title="{{ i18n "switch_language" }}">
+    <svg class="lang-globe" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3.2 9.6h17.6M3.2 14.4h17.6M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
+    <span class="lang-label">{{ .Site.Language.Label }}</span>
+    <svg class="lang-caret" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+  </summary>
+  <div class="lang-menu">
+    {{- range hugo.Sites }}
+    {{- $href := index $translations .Language.Lang -}}
+    {{- $isTranslated := ne $href nil -}}
+    {{- /* defaultContentLanguageInSubdir is false, so the default language lives at the root. */ -}}
+    {{- if not $isTranslated }}{{ $href = cond (eq .Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" .Language.Lang) }}{{ end -}}
+    <a href="{{ $href }}"
+       class="lang-link{{ if eq .Language.Lang $cur }} is-active{{ end }}"
+       hreflang="{{ .Language.Lang }}"
+       lang="{{ .Language.Lang }}"
+       data-lang="{{ .Language.Lang }}"
+       {{ if not $isTranslated }}data-lang-fallback="1" title="{{ i18n "not_translated" }}"{{ end }}
+       {{ if eq .Language.Lang $cur }}aria-current="true"{{ end }}>{{ .Language.Label }}</a>
+    {{- end }}
+  </div>
+</details>

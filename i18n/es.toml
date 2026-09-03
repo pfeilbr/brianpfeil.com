@@ -101,11 +101,7 @@ other = "Esa página no existe — puede que la hayan movido o renombrado. Prueb
 other = "RSS"
 
 # Presentación de la portada
-[author_role_pre]
-other = "Arquitecto Principal de Cloud en "
 
-[author_role_post]
-other = ""
 
 [aws_community_builder]
 other = "AWS Community Builder (Serverless)"
@@ -264,3 +260,6 @@ other = "Fuentes"
 
 [subs_feeds_note]
 other = "Las leo en Feedly. Hay otras {{ . }} fuentes en una carpeta de archivo que ya no leo, así que no aparecen aquí."
+
+[author_role]
+other = "Arquitecto Principal de Cloud en {{ .company }}"

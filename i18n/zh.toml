@@ -101,11 +101,7 @@ other = "该页面不存在 —— 可能已被移动或重命名。试试搜索
 other = "RSS 订阅"
 
 # 首页简介
-[author_role_pre]
-other = "首席云架构师，任职于 "
 
-[author_role_post]
-other = ""
 
 [aws_community_builder]
 other = "AWS 社区建设者（Serverless 方向）"
@@ -264,3 +260,6 @@ other = "订阅源"
 
 [subs_feeds_note]
 other = "用 Feedly 阅读。另有 {{ . }} 个订阅源已归档、不再阅读，故未列出。"
+
+[author_role]
+other = "首席云架构师，任职于 {{ .company }}"

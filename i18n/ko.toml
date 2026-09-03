@@ -101,11 +101,7 @@ other = "존재하지 않는 페이지입니다 — 옮겨졌거나 이름이 �
 other = "RSS"
 
 # 홈 소개
-[author_role_pre]
-other = "Principal Cloud Architect, 근무처: "
 
-[author_role_post]
-other = ""
 
 [aws_community_builder]
 other = "AWS Community Builder (Serverless)"
@@ -264,3 +260,6 @@ other = "피드"
 
 [subs_feeds_note]
 other = "Feedly로 읽습니다. 이제는 읽지 않는 보관 폴더에 피드 {{ . }}개가 더 있지만 여기에는 넣지 않았습니다."
+
+[author_role]
+other = "{{ .company }}의 프린시펄 클라우드 아키텍트"

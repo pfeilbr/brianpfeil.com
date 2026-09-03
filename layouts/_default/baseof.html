@@ -100,6 +100,20 @@
         try { localStorage.setItem("LANG_PREF", el.dataset.lang); } catch (e) {}
       });
     });
+
+    /* The switcher is a <details>; nothing closes it on its own once opened. */
+    var sw = document.querySelector(".lang-switcher");
+    if (!sw) return;
+    document.addEventListener("click", function(e) {
+      if (sw.open && !sw.contains(e.target)) sw.open = false;
+    });
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && sw.open) {
+        sw.open = false;
+        var s = sw.querySelector("summary");
+        if (s) s.focus();
+      }
+    });
   })();
   </script>
   <script>
