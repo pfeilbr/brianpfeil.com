@@ -1,0 +1,266 @@
+# 日本語サイトの UI 文言。キーは i18n/en.toml と共通です。
+
+[skip_to_content]
+other = "本文へスキップ"
+
+[toggle_dark_mode]
+other = "ダークモードを切り替え"
+
+[open_menu]
+other = "メニューを開く"
+
+[main_nav]
+other = "メインナビゲーション"
+
+[language]
+other = "言語"
+
+[switch_language]
+other = "言語を切り替え"
+
+[not_translated]
+other = "このページは翻訳されていません。サイトのトップページへ移動します。"
+
+# 記事のメタ情報
+[min_read]
+other = "約 {{ . }} 分で読めます"
+
+[posts_count]
+other = "{{ . }} 件の記事"
+
+[contents]
+other = "目次"
+
+[related_posts]
+other = "関連記事"
+
+[recent_posts]
+other = "最近の記事"
+
+[post_navigation]
+other = "記事ナビゲーション"
+
+[previous]
+other = "前の記事"
+
+[next]
+other = "次の記事"
+
+[jump_to_year]
+other = "年で移動"
+
+[table_of_contents]
+other = "目次"
+
+[back_to_top]
+other = "ページ先頭へ"
+
+[back_to_all_posts]
+other = "記事一覧に戻る"
+
+# 検索
+[search_posts]
+other = "記事を検索"
+
+[search_placeholder]
+other = "記事を検索…"
+
+[search_placeholder_count]
+other = "{{ . }} 件の記事から検索…"
+
+[search_failed]
+other = "検索インデックスを読み込めませんでした。"
+
+[search_no_matches]
+other = "該当する記事はありません。"
+
+[search_one_match]
+other = "1 件"
+
+[search_n_matches]
+other = "{{ . }} 件"
+
+[search_top_matches]
+other = "上位 {{ . }} 件"
+
+[loading]
+other = "読み込み中…"
+
+[scroll_progress]
+other = "{{ .total }} 件中 {{ .loaded }} 件を表示"
+
+# 404
+[not_found_title]
+other = "ページが見つかりません"
+
+[not_found_body]
+other = "このページは存在しません。移動または名前が変わった可能性があります。検索をお試しください。"
+
+# フッター
+[rss]
+other = "RSS"
+
+# トップページの紹介文
+[author_role_pre]
+other = ""
+
+[author_role_post]
+other = "のプリンシパル・クラウドアーキテクト"
+
+[aws_community_builder]
+other = "AWS Community Builder（Serverless）"
+
+# 音楽ページ
+[music_intro]
+other = "YouTube Music のライブラリからそのまま持ってきた、実際によく聴いているプレイリストです。どれでも再生してみてください。"
+
+[music_top_artists]
+other = "よく聴いているアーティスト"
+
+[music_top_artists_note]
+other = "プレイリストにある約 {{ .tracks }} 曲から集計しています。"
+
+[music_my_playlists]
+other = "自分のプレイリスト"
+
+[music_saved]
+other = "他の人から保存したもの"
+
+[music_play_hint]
+other = "再生するまで何も読み込まれません。"
+
+[music_play]
+other = "{{ . }} を再生"
+
+[music_open_in_ytm]
+other = "YouTube Music で開く"
+
+[music_tracks]
+other = "{{ . }} 曲"
+
+[music_by]
+other = "作成者：{{ . }}"
+
+[music_footnote]
+other = "再生には YouTube の埋め込みプレーヤーを使っています。曲数はある時点のもので、プレイリストは変わり続けます。"
+
+# 購読ページ
+[subs_intro]
+other = "フォローしているものすべて。YouTube のチャンネルが {{ .count }} 個（合計で登録者は約 {{ .reach }} 人）、Twitch が {{ .twitch }} 個、Steam のゲームが {{ .steam }} 本、リーダーのフィードが {{ .feeds }} 個。YouTube チャンネルはその場で最新の動画を再生できます。"
+
+[subs_the_mix]
+other = "内訳"
+
+[subs_the_mix_note]
+other = "このアカウントの半分はコンピューターを解説する人たち、もう半分は外に出ていく人たちです。カテゴリをタップすると絞り込めます。"
+
+[subs_filter]
+other = "カテゴリで絞り込む"
+
+[subs_all]
+other = "すべて"
+
+[subs_random]
+other = "おまかせ"
+
+[subs_watch_latest]
+other = "{{ . }} の最新動画を見る"
+
+[subs_footnote]
+other = "最新の動画は各チャンネルのアップロード用プレイリストから取得し、YouTube の埋め込みプレーヤーで再生しています。登録者数とプレイ時間はある時点のものです。"
+
+# トピックアイコンのラベル（記事一覧のホバー時に表示）
+[topic_cloud]
+other = "クラウド"
+
+[topic_serverless]
+other = "サーバーレス"
+
+[topic_ai]
+other = "AI・機械学習"
+
+[topic_web]
+other = "Web"
+
+[topic_systems]
+other = "システム系言語"
+
+[topic_python]
+other = "Python・データ"
+
+[topic_data]
+other = "データストア"
+
+[topic_containers]
+other = "コンテナ"
+
+[topic_tooling]
+other = "ツール"
+
+[topic_security]
+other = "セキュリティ・認証"
+
+[topic_mobile]
+other = "モバイル"
+
+[topic_games]
+other = "ゲーム"
+
+[topic_architecture]
+other = "アーキテクチャ・API"
+
+[topic_testing]
+other = "テスト"
+
+[topic_notes]
+other = "メモ"
+
+# 購読ページ：プラットフォーム
+[subs_n_channels]
+other = "{{ . }} チャンネル"
+
+[subs_tw_following]
+other = "フォロー中"
+
+[subs_tw_following_note]
+other = "Twitch は生放送しかないので、プレーヤーではなくリンクにしてあります。開いてみれば、配信中かそうでないかのどちらかです。"
+
+[subs_tw_past]
+other = "以前サブスクしていた"
+
+[subs_tw_past_note]
+other = "いまは有効なチャンネルサブスクがありません。更新しなければ切れてしまうためです。ここに並んでいるのは、これまでに課金してきたチャンネルです。"
+
+[subs_tw_followers]
+other = "フォロワー {{ . }} 人"
+
+# フッター
+[copy_discord]
+other = "Discord のユーザー名（{{ . }}）をコピー"
+
+[copied]
+other = "コピーしました"
+
+[subs_platforms]
+other = "プラットフォーム"
+
+[music_sections]
+other = "プレイリスト"
+
+[music_saved_note]
+other = "他の人がつくったプレイリストで、何度も戻ってきているものです。"
+
+[subs_steam_note]
+other = "ライブラリにある {{ .library }} 本のゲームで、合計およそ {{ .hours }} 時間。そのうちシミュレーターが怪しいほど多くを占めています。"
+
+[subs_steam_hours]
+other = "{{ . }} 時間"
+
+[home]
+other = "ホーム"
+
+[subs_tab_feeds]
+other = "フィード"
+
+[subs_feeds_note]
+other = "Feedly で読んでいます。ほかに {{ . }} 個のフィードが、もう読んでいないアーカイブ用フォルダに入っているため、ここには載せていません。"
