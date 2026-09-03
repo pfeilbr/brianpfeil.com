@@ -1,6 +1,6 @@
 {{ define "main" }}
-{{ $s := site.Data.subscriptions }}
-{{ $t := site.Data.twitch }}
+{{ $s := hugo.Data.subscriptions }}
+{{ $t := hugo.Data.twitch }}
 <article class="subs">
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
@@ -120,6 +120,9 @@
       var cat = chip.dataset.cat;
       chips.forEach(function (c) { c.classList.toggle("is-on", c === chip); });
       blocks.forEach(function (b) { b.hidden = cat !== "all" && b.dataset.cat !== cat; });
+      /* Same reason the tab controller fires "tabhide": an embed inside a block
+         we just hid carries on playing, with no visible player to stop it. */
+      if (open && open.closest(".cat-block").hidden) { close(open); open = null; }
     });
   });
 
@@ -164,7 +167,10 @@
   var btn = document.getElementById("subs-random");
   if (btn) {
     btn.addEventListener("click", function () {
-      var cards = [].slice.call(document.querySelectorAll(".cat-block:not([hidden]) .ch-card"));
+      /* Excluding the playing card: picking it would re-enter the toggle and
+         stop playback instead of starting something, which with a filter
+         narrowed to four channels happens often. */
+      var cards = [].slice.call(document.querySelectorAll(".cat-block:not([hidden]) .ch-card:not(.is-playing)"));
       if (!cards.length) return;
       var pick = cards[Math.floor(Math.random() * cards.length)];
       pick.scrollIntoView({

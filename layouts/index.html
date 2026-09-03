@@ -86,8 +86,15 @@ function motion() {
   function show(next) {
     if (next === shown) return;
     shown = next;
-    if (next) btn.hidden = false;
-    btn.style.opacity = next ? "1" : "0";
+    if (next) {
+      /* Opacity has to be set on a later frame than the un-hiding: coming out
+         of display:none there is no previous computed value to animate from,
+         so setting both together pops the button in with no fade. */
+      btn.hidden = false;
+      requestAnimationFrame(function () { if (shown) btn.style.opacity = "1"; });
+    } else {
+      btn.style.opacity = "0";
+    }
     btn.style.pointerEvents = next ? "auto" : "none";
     if (!next) setTimeout(function () { if (!shown) btn.hidden = true; }, 200);
   }

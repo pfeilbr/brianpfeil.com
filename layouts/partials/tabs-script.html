@@ -24,6 +24,7 @@
     tabs.forEach(function (t) {
       var on = t.dataset.panel === name;
       var panel = panels[t.dataset.panel];
+      if (!panel) return;
       if (!on && !panel.hidden) panel.dispatchEvent(new CustomEvent("tabhide"));
       t.classList.toggle("is-on", on);
       t.setAttribute("aria-selected", on ? "true" : "false");
@@ -32,7 +33,11 @@
       if (on && focus) t.focus();
     });
     try {
-      history.replaceState(null, "", name === first ? location.pathname : "#" + name);
+      /* Keep the query string: dropping it would strip campaign or tracking
+         params from the URL the visitor then copies. */
+      history.replaceState(null, "", name === first
+        ? location.pathname + location.search
+        : location.pathname + location.search + "#" + name);
     } catch (e) {}
   }
 

@@ -177,6 +177,15 @@ input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
 /* === Typography === */
 .text-xs { font-size: 0.75rem; line-height: 1rem; }
 .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+
+/* Used in layouts but never defined, so they silently did nothing: the post-nav
+   "Next" column was left-aligned, and the related-posts and prev/next blocks sat
+   flush against their border-top rules instead of clearing them. */
+.text-right { text-align: right; }
+.pt-6 { padding-top: 1.5rem; }
+.mx-1\.5 { margin-left: 0.375rem; margin-right: 0.375rem; }
+.mb-0\.5 { margin-bottom: 0.125rem; }
+.min-w-0 { min-width: 0; }
 .text-base { font-size: 1rem; line-height: 1.5rem; }
 .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
 .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
@@ -321,6 +330,10 @@ input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
 .prose h2 { font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-strong); }
 .prose h3 { font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-strong); }
 .prose h4 { font-size: 1rem; line-height: 1.5rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-strong); }
+/* Post bodies contain bare URLs of 200+ characters. Without this the widest one
+   sets the page width and every paragraph scrolls sideways on a phone. */
+.prose, .prose p, .prose li, .prose td, .prose a { overflow-wrap: anywhere; }
+
 .prose p { margin-top: 1rem; margin-bottom: 1rem; line-height: 1.625; color: var(--text-body); }
 .prose a { color: var(--brand); text-decoration-line: underline; }
 .prose a:hover { color: var(--brand-hover); }
@@ -1335,3 +1348,47 @@ html[data-theme="dark"] .ic {
 
 /* A note that sits directly under the tab strip, with no heading above it. */
 .music-sub-lead { margin-top: 0; }
+
+/* ---------------------------------------------------------------------------
+   Touch targets and small-screen fixes.
+   --------------------------------------------------------------------------- */
+
+/* Under 16px, iOS Safari zooms the viewport on focus and offers no way back.
+   The search box is the home page's main control and the "/" shortcut target. */
+@media (max-width: 639px) {
+  #search-query { font-size: 1rem; }
+}
+
+/* The language links were ~34x18px, under even the 24x24 minimum, sat 8px
+   apart, and a mis-tap switches the whole site's language and persists it. */
+.lang-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+}
+
+/* Grow the hit boxes of the mobile nav buttons without growing their icons. */
+#dark-mode-toggle-mobile,
+nav details > summary {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Filter chips were ~26px and the play buttons 28px -- the entire interaction
+   model of /subscriptions/ on a phone. The rows are ~50px tall already, so
+   these grow into space that exists. */
+@media (max-width: 639px) {
+  .chip { min-height: 2.5rem; }
+  .ch-play { width: 2.5rem; height: 2.5rem; }
+}
+
+/* The zoom overlay's 2rem padding left less room than the article column, so
+   tapping a diagram on a phone made it ~9% smaller -- the opposite of the point. */
+@media (max-width: 640px) {
+  .zoom-overlay { padding: 0; }
+}
