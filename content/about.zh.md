@@ -20,7 +20,6 @@ layout = "page"
 
 浏览[项目](/zh/projects/)，或者[按年份查看全部文章](/zh/archive/)。
 
-我的人生伴侣是 [Xiaoling (Lindsey) Zhou](https://pfeilbr.github.io/xiaoling-lindsey-zhou-website/)。💙🤍
 
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
 <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/pfeilbr/" style="display: flex; align-items: center; text-decoration: none; color: currentColor; font-size: 14px;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="instagram" style="width: 20px; height: 20px; margin-right: 5px;"> Instagram</a>

@@ -1,10 +1,11 @@
 {{ define "main" }}
 {{ $s := hugo.Data.subscriptions }}
 {{ $t := hugo.Data.twitch }}
+{{ $g := hugo.Data.steam }}
 <article class="subs">
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
-    <p class="text-gray-600">{{ i18n "subs_intro" (dict "count" $s.total "reach" $s.combined_subscribers "twitch" (add $t.following_total $t.past_total)) }}</p>
+    <p class="text-gray-600">{{ i18n "subs_intro" (dict "count" $s.total "reach" $s.combined_subscribers "twitch" (add $t.following_total $t.past_total) "steam" $g.library_total) }}</p>
   </header>
 
   <div class="prose">{{ .Content }}</div>
@@ -25,6 +26,12 @@
       {{ partial "icons/chip.html" (dict "id" "i-twitch" "size" "sm") }}
       <span class="ptab-name">Twitch</span>
       <span class="ptab-count">{{ add $t.following_total $t.past_total }}</span>
+    </button>
+    <button type="button" class="ptab" role="tab" id="tab-steam"
+            aria-controls="panel-steam" aria-selected="false" tabindex="-1" data-panel="steam">
+      {{ partial "icons/chip.html" (dict "id" "i-steam" "size" "sm") }}
+      <span class="ptab-name">Steam</span>
+      <span class="ptab-count">{{ $g.library_total }}</span>
     </button>
   </div>
 
@@ -98,6 +105,25 @@
   </section>
 
   </div>{{/* /panel-twitch */}}
+
+  {{/* ---------- Steam. Playtime suits a ranked bar better than a grid of
+       cards, so this borrows the artist chart from /music/. ---------- */}}
+  <div class="ptab-panel" id="panel-steam" role="tabpanel" aria-labelledby="tab-steam">
+    <section class="music-section">
+      <p class="music-sub music-sub-lead">{{ i18n "subs_steam_note" (dict "hours" $g.hours_total "library" $g.library_total) }}</p>
+      {{ $max := 1 }}
+      {{ range $g.games }}{{ if gt .hours $max }}{{ $max = .hours }}{{ end }}{{ end }}
+      <ol class="artist-list artist-list-wide">
+        {{ range $g.games }}
+        <li class="artist-row">
+          <a class="artist-name" href="https://store.steampowered.com/app/{{ .appid }}/" target="_blank" rel="noopener">{{ .name }}</a>
+          <span class="artist-bar" aria-hidden="true"><span style="width:{{ div (mul .hours 100.0) $max }}%"></span></span>
+          <span class="artist-count">{{ i18n "subs_steam_hours" (printf "%.0f" .hours) }}</span>
+        </li>
+        {{ end }}
+      </ol>
+    </section>
+  </div>{{/* /panel-steam */}}
 
   <p class="music-foot">{{ i18n "subs_footnote" }}</p>
 </article>

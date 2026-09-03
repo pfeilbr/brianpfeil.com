@@ -146,7 +146,7 @@ other = "Playback is YouTube's embedded player. Track counts are a snapshot — 
 
 # Subscriptions page
 [subs_intro]
-other = "The {{ .count }} channels I follow on YouTube — about {{ .reach }} subscribers between them — plus {{ .twitch }} on Twitch. Press play on any YouTube channel to watch its latest video."
+other = "The {{ .count }} channels I follow on YouTube — about {{ .reach }} subscribers between them — plus {{ .twitch }} on Twitch and {{ .steam }} games on Steam. Press play on any YouTube channel to watch its latest video."
 
 [subs_the_mix]
 other = "The mix"
@@ -167,7 +167,7 @@ other = "Surprise me"
 other = "Watch the latest from {{ . }}"
 
 [subs_footnote]
-other = "Latest videos come from each channel's uploads playlist, played in YouTube's embedded player. Subscriber counts are a snapshot."
+other = "Latest videos come from each channel's uploads playlist, played in YouTube's embedded player. Subscriber counts and playtimes are a snapshot."
 
 # Topic icon labels (hover titles on post rows)
 [topic_cloud]
@@ -249,3 +249,12 @@ other = "Playlists"
 
 [music_saved_note]
 other = "Other people's playlists I keep going back to."
+
+[subs_steam_note]
+other = "About {{ .hours }} hours across the {{ .library }} games in the library. Suspiciously many of them are simulators."
+
+[subs_steam_hours]
+other = "{{ . }}h"
+
+[home]
+other = "Home"

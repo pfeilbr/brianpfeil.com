@@ -1392,3 +1392,25 @@ nav details > summary {
 @media (max-width: 640px) {
   .zoom-overlay { padding: 0; }
 }
+
+[data-ic="i-steam"] { --ic-c: #1b6dc1; }
+
+/* Home link in the nav. The site title truncated to "Br…" once the menu grew,
+   so the portrait stands in for it -- compact, recognisable, never truncates. */
+.nav-home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--border);
+  transition: box-shadow 0.15s ease;
+}
+.nav-home:hover { box-shadow: 0 0 0 2px var(--brand); }
+.nav-home img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Game titles need more room than artist names do. */
+.artist-list-wide .artist-row { grid-template-columns: minmax(0, 12.5rem) 1fr 2.5rem; }

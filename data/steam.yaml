@@ -1,0 +1,48 @@
+# Steam library, read from steamcommunity.com while signed in.
+#
+# Only games with an hour or more on the clock are listed -- the account owns
+# 23, but eleven of them were opened once and never again, and a list of those
+# says nothing about anyone. Links go to each game's store page, which is public,
+# rather than to the profile, which may not be.
+
+profile: "https://steamcommunity.com/profiles/76561198025876229"
+library_total: 23
+hours_total: 878
+
+games:
+  - name: "Counter-Strike 2"
+    appid: 730
+    hours: 387.1
+  - name: "Ski Region Simulator"
+    appid: 270950
+    hours: 242.8
+  - name: "Farming Simulator 17"
+    appid: 447020
+    hours: 70.5
+  - name: "Farming Simulator 15"
+    appid: 313160
+    hours: 59.1
+  - name: "American Truck Simulator"
+    appid: 270880
+    hours: 38.1
+  - name: "Scrap Mechanic"
+    appid: 387990
+    hours: 36.5
+  - name: "SNOW"
+    appid: 244930
+    hours: 16.5
+  - name: "Car Mechanic Simulator 2018"
+    appid: 645630
+    hours: 9.6
+  - name: "Apex Legends"
+    appid: 1172470
+    hours: 9.2
+  - name: "Halo Infinite"
+    appid: 1240440
+    hours: 3.9
+  - name: "PUBG: BATTLEGROUNDS"
+    appid: 578080
+    hours: 2.7
+  - name: "House Flipper"
+    appid: 613100
+    hours: 2.1
