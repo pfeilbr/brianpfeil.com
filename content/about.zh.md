@@ -8,7 +8,7 @@ title = "关于"
 layout = "page"
 +++
 
-<img class="about-photo" src="/images/2026-08-09-profile-brian-pfeil-portrait.jpg" alt="Brian Pfeil" width="430" height="430" decoding="async">
+<img class="about-photo" src="/images/2026-08-09-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
 你好，我是 Brian Pfeil。我热爱技术，也热爱动手把东西做出来。这是我的个人博客，记录这些兴趣以及其他一些想法。
 

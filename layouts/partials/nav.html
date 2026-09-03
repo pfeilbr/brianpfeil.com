@@ -2,7 +2,6 @@
   <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
     <div class="flex items-center gap-3 min-w-0">
       {{ partial "lang-switcher.html" . }}
-      <a href="{{ if eq .Site.Language.Lang hugo.Sites.Default.Language.Lang }}/{{ else }}/{{ .Site.Language.Lang }}/{{ end }}" class="text-lg font-semibold text-gray-900 hover:text-brand no-underline truncate">{{ .Site.Title }}</a>
     </div>
     <!-- Desktop nav -->
     <div class="hidden sm:flex items-center gap-4">
