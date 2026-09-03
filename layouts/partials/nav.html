@@ -2,8 +2,16 @@
   <div class="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
     <div class="flex items-center gap-3 min-w-0">
       {{ $home := cond (eq .Site.Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" .Site.Language.Lang) }}
-      <a href="{{ $home }}" class="nav-home" title="{{ .Site.Title }}" aria-label="{{ i18n "home" }}"{{ if .IsHome }} aria-current="page"{{ end }}>
+      {{- /* The home page and /about/ already show a large portrait, so the
+         avatar would be the same face twice. Those pages get a house instead;
+         every page keeps a way back to the root. */ -}}
+      {{ $hasPortrait := or .IsHome (strings.HasSuffix .RelPermalink "/about/") }}
+      <a href="{{ $home }}" class="nav-home{{ if $hasPortrait }} nav-home-glyph{{ end }}" title="{{ .Site.Title }}" aria-label="{{ i18n "home" }}"{{ if .IsHome }} aria-current="page"{{ end }}>
+        {{- if $hasPortrait }}
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"/></svg>
+        {{- else }}
         <img src="/images/2026-08-09-profile-brian-pfeil-avatar.jpg" alt="" width="320" height="320" decoding="async">
+        {{- end }}
       </a>
       {{ partial "lang-switcher.html" . }}
     </div>
