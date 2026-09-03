@@ -263,3 +263,93 @@ other = "Li leggo in Feedly. Altri {{ . }} feed stanno in una cartella d'archivi
 
 [author_role]
 other = "Principal Cloud Architect presso {{ .company }}"
+
+# Categorie delle iscrizioni (erano inline in data/subscriptions.yaml)
+[cat_label_code]
+other = "Codice e sistemi"
+
+[cat_blurb_code]
+other = "Editor, compilatori, sistemi distribuiti e gente che si interessa in modo irragionevole a come funziona davvero un computer."
+
+[cat_label_ai]
+other = "IA e ricerca"
+
+[cat_blurb_ai]
+other = "Dove sta andando il campo, raccontato da chi lo costruisce."
+
+[cat_label_cloud]
+other = "Cloud"
+
+[cat_blurb_cloud]
+other = "Letture da lavoro, in versione video."
+
+[cat_label_explain]
+other = "Spiegazioni"
+
+[cat_blurb_explain]
+other = "Un'idea, spiegata come si deve, da qualcuno che è andato a vedere."
+
+[cat_label_outdoors]
+other = "Outdoor e off-grid"
+
+[cat_blurb_outdoors]
+other = "Baite, canoe, freddo e lunghi tratti in cui non parla nessuno."
+
+[cat_label_food]
+other = "Cibo"
+
+[cat_blurb_food]
+other = "Da un lato la tecnica, dall'altro le bancarelle di strada."
+
+[cat_label_world]
+other = "Viaggi e persone"
+
+[cat_blurb_world]
+other = "Qualcuno con una telecamera che va dove non arrivano i pullman turistici."
+
+[cat_label_fun]
+other = "Tutto il resto"
+
+[cat_blurb_fun]
+other = "Nessuna teoria unificante. È proprio questo il punto."
+
+# Gruppi di feed (erano inline in data/feedly.yaml)
+[feeds_label_cloud]
+other = "Cloud e ingegneria"
+
+[feeds_blurb_cloud]
+other = "La lista di letture da lavoro: AWS, serverless, architettura e chi scrive bene di come si mandano avanti i sistemi."
+
+[feeds_label_blogroll]
+other = "Blogroll"
+
+[feeds_blurb_blogroll]
+other = "Soprattutto siti personali. Le cose buone sul web sono ancora quelle che qualcuno pubblica sul proprio dominio."
+
+# Note delle playlist (erano inline in data/music.yaml)
+[pl_note_bangers]
+other = "La principale. Rap, per lo più — Drake e 21 Savage fanno buona parte del lavoro."
+
+[pl_note_gym]
+other = "Alto volume, ritmo veloce, niente ballate. Fatta per l'ultima serie."
+
+[pl_note_dance]
+other = "Pop ed elettronica in quattro quarti."
+
+[pl_note_a]
+other = "Nome pessimo, selezione ottima. Un miscuglio che ha continuato a crescere."
+
+[pl_note_feel_good]
+other = "Luminosa, calda, facile. Quella di default quando nessuno ha richieste."
+
+[pl_note_max]
+other = "Fatta per mio figlio."
+
+[pl_note_summer_1]
+other = "Finestrini abbassati, un'estate ben precisa."
+
+[pl_note_upbeat]
+other = "Breve e ostinatamente positiva."
+
+[pl_note_songs_from_the_gut]
+other = "Otto canzoni che arrivano dritte allo stomaco."

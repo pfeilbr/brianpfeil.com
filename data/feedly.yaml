@@ -11,8 +11,6 @@ archived: 37
 
 groups:
   - key: cloud
-    label: "Cloud & engineering"
-    blurb: "The day-job reading list: AWS, serverless, architecture, and the people who write well about running systems."
     count: 28
     feeds:
       - title: "All Things Distributed"
@@ -72,8 +70,6 @@ groups:
       - title: "{ Mario Zechner }"
         url: "https://mariozechner.at"
   - key: blogroll
-    label: "Blogroll"
-    blurb: "Personal sites, mostly. The good stuff on the web is still someone posting on their own domain."
     count: 91
     feeds:
       - title: "abortretry.fail"

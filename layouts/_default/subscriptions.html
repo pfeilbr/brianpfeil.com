@@ -51,14 +51,14 @@
 
     <div class="mix-bar" role="presentation">
       {{ range $s.categories }}
-      <span class="mix-seg" data-cat="{{ .key }}" style="flex-grow:{{ .count }}" title="{{ .label }} — {{ .count }}"></span>
+      <span class="mix-seg" data-cat="{{ .key }}" style="flex-grow:{{ .count }}" title="{{ i18n (printf "cat_label_%s" .key) }} — {{ .count }}"></span>
       {{ end }}
     </div>
 
     <div class="chips" role="group" aria-label="{{ i18n "subs_filter" }}">
       <button type="button" class="chip is-on" data-cat="all">{{ i18n "subs_all" }} <span class="chip-n">{{ $s.total }}</span></button>
       {{ range $s.categories }}
-      <button type="button" class="chip" data-cat="{{ .key }}">{{ .label }} <span class="chip-n">{{ .count }}</span></button>
+      <button type="button" class="chip" data-cat="{{ .key }}">{{ i18n (printf "cat_label_%s" .key) }} <span class="chip-n">{{ .count }}</span></button>
       {{ end }}
       <button type="button" class="chip chip-alt" id="subs-random">{{ i18n "subs_random" }}</button>
     </div>
@@ -68,8 +68,8 @@
   {{ range $s.categories }}
   {{ $cat := .key }}
   <section class="music-section cat-block" data-cat="{{ $cat }}" aria-labelledby="cat-{{ $cat }}">
-    <h2 id="cat-{{ $cat }}" class="music-h2"><span class="cat-dot" data-cat="{{ $cat }}"></span>{{ .label }} <span class="cat-n">{{ .count }}</span></h2>
-    <p class="music-sub">{{ .blurb }}</p>
+    <h2 id="cat-{{ $cat }}" class="music-h2"><span class="cat-dot" data-cat="{{ $cat }}"></span>{{ i18n (printf "cat_label_%s" $cat) }} <span class="cat-n">{{ .count }}</span></h2>
+    <p class="music-sub">{{ i18n (printf "cat_blurb_%s" $cat) }}</p>
     <div class="ch-grid">
       {{ range where $s.channels "cat" $cat }}
       <div class="ch-card" data-uploads="{{ .uploads }}" data-name="{{ .name }}">
@@ -136,8 +136,8 @@
   <div class="ptab-panel" id="panel-feeds" role="tabpanel" aria-labelledby="tab-feeds">
     {{ range $f.groups }}
     <section class="music-section" aria-labelledby="feeds-{{ .key }}">
-      <h2 id="feeds-{{ .key }}" class="music-h2">{{ .label }} <span class="cat-n">{{ .count }}</span></h2>
-      <p class="music-sub">{{ .blurb }}</p>
+      <h2 id="feeds-{{ .key }}" class="music-h2">{{ i18n (printf "feeds_label_%s" .key) }} <span class="cat-n">{{ .count }}</span></h2>
+      <p class="music-sub">{{ i18n (printf "feeds_blurb_%s" .key) }}</p>
       <ul class="feed-grid">
         {{ range .feeds }}
         <li><a class="feed-link" href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a></li>

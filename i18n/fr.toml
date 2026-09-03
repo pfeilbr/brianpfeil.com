@@ -263,3 +263,96 @@ other = "Lus dans Feedly. {{ . }} autres flux dorment dans un dossier d'archive 
 
 [author_role]
 other = "Architecte cloud principal chez {{ .company }}"
+
+# Catégories d'abonnements (auparavant en ligne dans data/subscriptions.yaml)
+[cat_label_code]
+other = "Code et systèmes"
+
+[cat_blurb_code]
+other = "Éditeurs, compilateurs, systèmes distribués, et des gens qui s'intéressent déraisonnablement au fonctionnement réel d'un ordinateur."
+
+[cat_label_ai]
+other = "IA et recherche"
+
+[cat_blurb_ai]
+other = "Où va le domaine, raconté par ceux qui le construisent."
+
+[cat_label_cloud]
+other = "Cloud"
+
+[cat_blurb_cloud]
+other = "Les lectures du boulot, en vidéo."
+
+[cat_label_explain]
+other = "Vulgarisation"
+
+[cat_blurb_explain]
+other = "Une idée, expliquée correctement, par quelqu'un qui est allé voir."
+
+[cat_label_outdoors]
+other = "Plein air, hors réseau"
+
+[cat_blurb_outdoors]
+other = "Des cabanes, des canoës, du grand froid, et de longs moments où personne ne parle."
+
+[cat_label_food]
+other = "Cuisine"
+
+[cat_blurb_food]
+other = "La technique d'un côté, les échoppes de rue de l'autre."
+
+[cat_label_world]
+other = "Voyage et gens"
+
+[cat_blurb_world]
+other = "Quelqu'un avec une caméra, là où les bus de touristes ne vont pas."
+
+[cat_label_fun]
+other = "Tout le reste"
+
+[cat_blurb_fun]
+other = "Aucune théorie unificatrice. C'est bien le principe."
+
+
+# Groupes de flux (auparavant en ligne dans data/feedly.yaml)
+[feeds_label_cloud]
+other = "Cloud et ingénierie"
+
+[feeds_blurb_cloud]
+other = "La liste de lecture du boulot : AWS, serverless, architecture, et les gens qui écrivent bien sur l'exploitation des systèmes."
+
+[feeds_label_blogroll]
+other = "Blogroll"
+
+[feeds_blurb_blogroll]
+other = "Des sites personnels, surtout. Ce qu'il y a de bien sur le web, c'est encore quelqu'un qui publie sur son propre domaine."
+
+
+# Notes des playlists (auparavant en ligne dans data/music.yaml)
+[pl_note_bangers]
+other = "La principale. Du rap, surtout — Drake et 21 Savage y font le gros du travail."
+
+[pl_note_gym]
+other = "Fort, rapide, aucune ballade. Faite pour la dernière série."
+
+[pl_note_dance]
+other = "De la pop et de l'électro en quatre temps."
+
+[pl_note_a]
+other = "Mal nommée, bien composée. Un fourre-tout qui n'a pas arrêté de grossir."
+
+[pl_note_feel_good]
+other = "Lumineux, chaleureux, facile. Par défaut, quand personne ne réclame rien."
+
+[pl_note_max]
+other = "Faite pour mon fils."
+
+[pl_note_summer_1]
+other = "Vitres baissées, un été bien précis."
+
+[pl_note_upbeat]
+other = "Court et positif sans relâche."
+
+[pl_note_songs_from_the_gut]
+other = "Huit morceaux qui prennent aux tripes."
+

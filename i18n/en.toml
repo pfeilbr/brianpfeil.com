@@ -263,3 +263,93 @@ other = "Read in Feedly. A further {{ . }} feeds sit in an archive folder I no l
 
 [author_role]
 other = "Principal Cloud Architect at {{ .company }}"
+
+# Subscription categories (were inline in data/subscriptions.yaml)
+[cat_label_code]
+other = "Code & systems"
+
+[cat_blurb_code]
+other = "Editors, compilers, distributed systems, and people who take an unreasonable interest in how a computer actually works."
+
+[cat_label_ai]
+other = "AI & research"
+
+[cat_blurb_ai]
+other = "Where the field is going, from the people building it."
+
+[cat_label_cloud]
+other = "Cloud"
+
+[cat_blurb_cloud]
+other = "Day-job reading, in video form."
+
+[cat_label_explain]
+other = "Explainers"
+
+[cat_blurb_explain]
+other = "One idea, explained properly, by someone who went and looked."
+
+[cat_label_outdoors]
+other = "Outdoors & off-grid"
+
+[cat_blurb_outdoors]
+other = "Cabins, canoes, cold weather, and long stretches of nobody talking."
+
+[cat_label_food]
+other = "Food"
+
+[cat_blurb_food]
+other = "Technique at one end, street stalls at the other."
+
+[cat_label_world]
+other = "Travel & people"
+
+[cat_blurb_world]
+other = "Somebody with a camera going where the tour buses don't."
+
+[cat_label_fun]
+other = "Everything else"
+
+[cat_blurb_fun]
+other = "No unifying theory. That's the point."
+
+# Feed groups (were inline in data/feedly.yaml)
+[feeds_label_cloud]
+other = "Cloud & engineering"
+
+[feeds_blurb_cloud]
+other = "The day-job reading list: AWS, serverless, architecture, and the people who write well about running systems."
+
+[feeds_label_blogroll]
+other = "Blogroll"
+
+[feeds_blurb_blogroll]
+other = "Personal sites, mostly. The good stuff on the web is still someone posting on their own domain."
+
+# Playlist notes (were inline in data/music.yaml)
+[pl_note_bangers]
+other = "The main one. Rap, mostly — Drake and 21 Savage do a lot of the heavy lifting."
+
+[pl_note_gym]
+other = "Loud, fast, no ballads. Built for the last set."
+
+[pl_note_dance]
+other = "Four-on-the-floor pop and electronic."
+
+[pl_note_a]
+other = "Badly named, well curated. A grab bag that kept growing."
+
+[pl_note_feel_good]
+other = "Bright, warm, easy. The default when nobody has a request."
+
+[pl_note_max]
+other = "Made for my son."
+
+[pl_note_summer_1]
+other = "Windows down, one specific summer."
+
+[pl_note_upbeat]
+other = "Short and relentlessly positive."
+
+[pl_note_songs_from_the_gut]
+other = "Eight songs that hit somewhere below the ribs."

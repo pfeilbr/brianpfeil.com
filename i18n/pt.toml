@@ -263,3 +263,93 @@ other = "Lidos no Feedly. Outros {{ . }} feeds ficam numa pasta de arquivo que e
 
 [author_role]
 other = "Arquiteto de Nuvem Principal na {{ .company }}"
+
+# Subscription categories (were inline in data/subscriptions.yaml)
+[cat_label_code]
+other = "Código e sistemas"
+
+[cat_blurb_code]
+other = "Editores, compiladores, sistemas distribuídos e gente com um interesse desproporcional em como um computador funciona de verdade."
+
+[cat_label_ai]
+other = "IA e pesquisa"
+
+[cat_blurb_ai]
+other = "Para onde a área está indo, na voz de quem está construindo."
+
+[cat_label_cloud]
+other = "Cloud"
+
+[cat_blurb_cloud]
+other = "Leitura de trabalho, em vídeo."
+
+[cat_label_explain]
+other = "Explicações"
+
+[cat_blurb_explain]
+other = "Uma ideia, explicada direito, por alguém que foi lá conferir."
+
+[cat_label_outdoors]
+other = "Natureza e off-grid"
+
+[cat_blurb_outdoors]
+other = "Cabanas, canoas, frio e longos trechos sem ninguém falando."
+
+[cat_label_food]
+other = "Comida"
+
+[cat_blurb_food]
+other = "Técnica de um lado, barraca de rua do outro."
+
+[cat_label_world]
+other = "Viagens e pessoas"
+
+[cat_blurb_world]
+other = "Alguém com uma câmera indo onde os ônibus de turismo não vão."
+
+[cat_label_fun]
+other = "Todo o resto"
+
+[cat_blurb_fun]
+other = "Nenhuma teoria unificadora. É esse o ponto."
+
+# Feed groups (were inline in data/feedly.yaml)
+[feeds_label_cloud]
+other = "Cloud e engenharia"
+
+[feeds_blurb_cloud]
+other = "A lista de leitura do trabalho: AWS, serverless, arquitetura e gente que escreve bem sobre manter sistemas de pé."
+
+[feeds_label_blogroll]
+other = "Blogroll"
+
+[feeds_blurb_blogroll]
+other = "Sites pessoais, na maioria. O que há de bom na web ainda é alguém publicando no próprio domínio."
+
+# Playlist notes (were inline in data/music.yaml)
+[pl_note_bangers]
+other = "A principal. Rap, na maior parte — Drake e 21 Savage fazem boa parte do trabalho pesado."
+
+[pl_note_gym]
+other = "Alto, rápido, sem baladas. Feita para a última série."
+
+[pl_note_dance]
+other = "Pop e eletrônico em quatro por quatro."
+
+[pl_note_a]
+other = "Mal batizada, bem selecionada. Uma miscelânea que não parou de crescer."
+
+[pl_note_feel_good]
+other = "Clara, quente, fácil. A padrão quando ninguém pede nada."
+
+[pl_note_max]
+other = "Feita para o meu filho."
+
+[pl_note_summer_1]
+other = "Janelas abertas, um verão específico."
+
+[pl_note_upbeat]
+other = "Curta e implacavelmente positiva."
+
+[pl_note_songs_from_the_gut]
+other = "Oito músicas que acertam bem no fundo do peito."

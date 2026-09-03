@@ -17,10 +17,22 @@ Hugo site. `content/post/*.md` are blog/project posts; `content/projects/` are p
   that happens to use Tailwind-ish names. Only the classes actually defined in
   that file exist; any other utility class in a template is a silent no-op.
   Check before using one.
-- **The site is bilingual.** English lives at the root, Mandarin under `/zh/`.
-  Every string goes in **both** `i18n/en.toml` and `i18n/zh.toml`, or the zh
-  site renders the raw key. Posts are English-only by design; standalone pages
-  and layouts are translated.
+- **The site ships in nine languages.** English at the root; `zh es pt fr de it
+  ja ko` under `/<code>/`. Every new UI string goes in **all nine**
+  `i18n/*.toml`. Posts are English-only by design; standalone pages and layouts
+  are translated.
+- **Hugo falls back to English silently, and an empty value counts as
+  missing.** A blank `other = ""` renders the English string with no warning —
+  that is how `/ja/` once shipped an English author line. So key-count parity
+  is not proof; check the rendered HTML for English sentences too.
+- **Editorial prose belongs in i18n, not in `data/`.** Category labels, group
+  blurbs and playlist notes are looked up as `cat_label_<key>`,
+  `cat_blurb_<key>`, `feeds_label_<key>`, `feeds_blurb_<key>` and
+  `pl_note_<key>`; the YAML holds structure and ids only. Anything left as
+  prose in a data file will render in English on all eight other sites.
+- **A string that has to wrap around a link needs a placeholder, not a
+  prefix/suffix pair.** `author_role` takes `{{ .company }}` because Japanese
+  and Korean put the employer before the job title.
 - **Production HTML is minified**, so attributes come out unquoted
   (`class=ptab`). `grep 'class="ptab"'` against the live site finds nothing and
   looks like a broken deploy. Grep for the bare value.

@@ -263,3 +263,96 @@ other = "Gelesen in Feedly. Weitere {{ . }} Feeds liegen in einem Archivordner, 
 
 [author_role]
 other = "Principal Cloud Architect bei {{ .company }}"
+
+# Abo-Kategorien (zuvor inline in data/subscriptions.yaml)
+[cat_label_code]
+other = "Code & Systeme"
+
+[cat_blurb_code]
+other = "Editoren, Compiler, verteilte Systeme und Leute mit einem unvernünftig großen Interesse daran, wie ein Computer tatsächlich funktioniert."
+
+[cat_label_ai]
+other = "KI & Forschung"
+
+[cat_blurb_ai]
+other = "Wohin sich das Feld bewegt, von denen, die es bauen."
+
+[cat_label_cloud]
+other = "Cloud"
+
+[cat_blurb_cloud]
+other = "Lektüre aus dem Job, als Video."
+
+[cat_label_explain]
+other = "Erklärstücke"
+
+[cat_blurb_explain]
+other = "Eine Idee, ordentlich erklärt, von jemandem, der nachgesehen hat."
+
+[cat_label_outdoors]
+other = "Draußen & abseits"
+
+[cat_blurb_outdoors]
+other = "Hütten, Kanus, Kälte und lange Strecken, in denen niemand redet."
+
+[cat_label_food]
+other = "Essen"
+
+[cat_blurb_food]
+other = "Am einen Ende die Technik, am anderen die Straßenstände."
+
+[cat_label_world]
+other = "Reisen & Menschen"
+
+[cat_blurb_world]
+other = "Jemand mit Kamera dort, wo die Reisebusse nicht hinfahren."
+
+[cat_label_fun]
+other = "Alles andere"
+
+[cat_blurb_fun]
+other = "Keine übergreifende Theorie. Genau darum geht es."
+
+
+# Feed-Gruppen (zuvor inline in data/feedly.yaml)
+[feeds_label_cloud]
+other = "Cloud & Engineering"
+
+[feeds_blurb_cloud]
+other = "Die Leseliste aus dem Job: AWS, serverless, Architektur und Leute, die gut über den Betrieb von Systemen schreiben."
+
+[feeds_label_blogroll]
+other = "Blogroll"
+
+[feeds_blurb_blogroll]
+other = "Vor allem persönliche Seiten. Das Gute im Web ist immer noch jemand, der auf der eigenen Domain schreibt."
+
+
+# Playlist-Notizen (zuvor inline in data/music.yaml)
+[pl_note_bangers]
+other = "Die Hauptplaylist. Überwiegend Rap – Drake und 21 Savage übernehmen den Großteil."
+
+[pl_note_gym]
+other = "Laut, schnell, keine Balladen. Gebaut für den letzten Satz."
+
+[pl_note_dance]
+other = "Four-on-the-Floor-Pop und Elektronisches."
+
+[pl_note_a]
+other = "Schlecht benannt, gut kuratiert. Ein Sammelsurium, das immer weiter gewachsen ist."
+
+[pl_note_feel_good]
+other = "Hell, warm, unkompliziert. Der Standard, wenn niemand einen Wunsch hat."
+
+[pl_note_max]
+other = "Für meinen Sohn gemacht."
+
+[pl_note_summer_1]
+other = "Fenster runter, ein ganz bestimmter Sommer."
+
+[pl_note_upbeat]
+other = "Kurz und unerbittlich positiv."
+
+[pl_note_songs_from_the_gut]
+other = "Acht Songs, die unter die Haut gehen."
+

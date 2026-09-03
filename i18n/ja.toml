@@ -263,3 +263,93 @@ other = "Feedly で読んでいます。ほかに {{ . }} 個のフィードが�
 
 [author_role]
 other = "{{ .company }} のプリンシパル・クラウドアーキテクト"
+
+# 購読カテゴリ（以前は data/subscriptions.yaml に直接書いていました）
+[cat_label_code]
+other = "コードとシステム"
+
+[cat_blurb_code]
+other = "エディタ、コンパイラ、分散システム、そしてコンピュータの実際の動きに度を越した興味を持つ人たち。"
+
+[cat_label_ai]
+other = "AI と研究"
+
+[cat_blurb_ai]
+other = "この分野がどこへ向かうのかを、それを作っている人たちから。"
+
+[cat_label_cloud]
+other = "クラウド"
+
+[cat_blurb_cloud]
+other = "本業の読みものを、動画で。"
+
+[cat_label_explain]
+other = "解説"
+
+[cat_blurb_explain]
+other = "ひとつのことを、実際に調べに行った人がきちんと説明する。"
+
+[cat_label_outdoors]
+other = "アウトドアとオフグリッド"
+
+[cat_blurb_outdoors]
+other = "小屋、カヌー、寒さ、そして誰もしゃべらない長い時間。"
+
+[cat_label_food]
+other = "食べもの"
+
+[cat_blurb_food]
+other = "一方の端に技術、もう一方の端に屋台。"
+
+[cat_label_world]
+other = "旅と人"
+
+[cat_blurb_world]
+other = "カメラを持った誰かが、観光バスの行かないところへ行く。"
+
+[cat_label_fun]
+other = "その他"
+
+[cat_blurb_fun]
+other = "まとまった理屈はありません。それがいいところです。"
+
+# フィードのグループ（以前は data/feedly.yaml に直接書いていました）
+[feeds_label_cloud]
+other = "クラウドとエンジニアリング"
+
+[feeds_blurb_cloud]
+other = "本業の読みものリスト。AWS、serverless、アーキテクチャ、そしてシステム運用についてうまく書く人たち。"
+
+[feeds_label_blogroll]
+other = "ブログロール"
+
+[feeds_blurb_blogroll]
+other = "ほとんどは個人サイトです。ウェブのいいものは、いまも誰かが自分のドメインに書いたものです。"
+
+# プレイリストのメモ（以前は data/music.yaml に直接書いていました）
+[pl_note_bangers]
+other = "これがメインです。だいたいラップで、Drake と 21 Savage がかなりの部分を担っています。"
+
+[pl_note_gym]
+other = "うるさくて速い、バラードなし。最後の 1 セットのために。"
+
+[pl_note_dance]
+other = "四つ打ちのポップとエレクトロニック。"
+
+[pl_note_a]
+other = "名前は雑、中身はまとも。増え続けている寄せ集めです。"
+
+[pl_note_feel_good]
+other = "明るくて、あたたかくて、気楽。誰もリクエストがないときの既定です。"
+
+[pl_note_max]
+other = "息子のために作りました。"
+
+[pl_note_summer_1]
+other = "窓を開けて走る、特定のひと夏の音。"
+
+[pl_note_upbeat]
+other = "短くて、どこまでも前向き。"
+
+[pl_note_songs_from_the_gut]
+other = "みぞおちのあたりに効く 8 曲。"

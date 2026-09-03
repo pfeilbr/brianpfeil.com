@@ -148,7 +148,7 @@ other = "Todo lo que sigo, en un solo sitio: {{ .count }} canales de YouTube —
 other = "La mezcla"
 
 [subs_the_mix_note]
-other = "Más o menos la mitad de esta cuenta es gente explicando ordenadores, y la otra mitad gente saliendo a la calle. Toca una categoría para acotar."
+other = "Más o menos la mitad de esta cuenta es gente explicando computadoras, y la otra mitad gente saliendo a la calle. Toca una categoría para acotar."
 
 [subs_filter]
 other = "Filtrar por categoría"
@@ -263,3 +263,93 @@ other = "Las leo en Feedly. Hay otras {{ . }} fuentes en una carpeta de archivo 
 
 [author_role]
 other = "Arquitecto Principal de Cloud en {{ .company }}"
+
+# Subscription categories (were inline in data/subscriptions.yaml)
+[cat_label_code]
+other = "Código y sistemas"
+
+[cat_blurb_code]
+other = "Editores, compiladores, sistemas distribuidos y gente con un interés poco razonable en cómo funciona de verdad una computadora."
+
+[cat_label_ai]
+other = "IA e investigación"
+
+[cat_blurb_ai]
+other = "Hacia dónde va el campo, contado por quienes lo están construyendo."
+
+[cat_label_cloud]
+other = "Cloud"
+
+[cat_blurb_cloud]
+other = "Lectura del trabajo, en formato vídeo."
+
+[cat_label_explain]
+other = "Divulgación"
+
+[cat_blurb_explain]
+other = "Una idea, bien explicada, por alguien que fue y lo miró."
+
+[cat_label_outdoors]
+other = "Naturaleza y off-grid"
+
+[cat_blurb_outdoors]
+other = "Cabañas, canoas, frío y largos ratos sin que nadie hable."
+
+[cat_label_food]
+other = "Comida"
+
+[cat_blurb_food]
+other = "Técnica en un extremo, puestos callejeros en el otro."
+
+[cat_label_world]
+other = "Viajes y gente"
+
+[cat_blurb_world]
+other = "Alguien con una cámara yendo donde no llegan los autobuses turísticos."
+
+[cat_label_fun]
+other = "Todo lo demás"
+
+[cat_blurb_fun]
+other = "Ninguna teoría unificadora. Esa es la idea."
+
+# Feed groups (were inline in data/feedly.yaml)
+[feeds_label_cloud]
+other = "Cloud e ingeniería"
+
+[feeds_blurb_cloud]
+other = "La lista de lectura del trabajo: AWS, serverless, arquitectura y gente que escribe bien sobre mantener sistemas en marcha."
+
+[feeds_label_blogroll]
+other = "Blogroll"
+
+[feeds_blurb_blogroll]
+other = "Sitios personales, sobre todo. Lo bueno de la web sigue siendo alguien publicando en su propio dominio."
+
+# Playlist notes (were inline in data/music.yaml)
+[pl_note_bangers]
+other = "La principal. Rap, sobre todo — Drake y 21 Savage cargan con buena parte del trabajo."
+
+[pl_note_gym]
+other = "Alto, rápido, nada de baladas. Hecha para la última serie."
+
+[pl_note_dance]
+other = "Pop y electrónica a cuatro por cuatro."
+
+[pl_note_a]
+other = "Mal nombrada, bien elegida. Un cajón de sastre que no dejó de crecer."
+
+[pl_note_feel_good]
+other = "Luminosa, cálida, fácil. La de por defecto cuando nadie pide nada."
+
+[pl_note_max]
+other = "Hecha para mi hijo."
+
+[pl_note_summer_1]
+other = "Ventanillas bajadas, un verano en concreto."
+
+[pl_note_upbeat]
+other = "Corta e implacablemente positiva."
+
+[pl_note_songs_from_the_gut]
+other = "Ocho canciones que te dan justo donde duele."

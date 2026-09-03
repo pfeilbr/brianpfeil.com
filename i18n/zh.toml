@@ -263,3 +263,93 @@ other = "用 Feedly 阅读。另有 {{ . }} 个订阅源已归档、不再阅读
 
 [author_role]
 other = "首席云架构师，任职于 {{ .company }}"
+
+# 订阅分类（原先内联在 data/subscriptions.yaml）
+[cat_label_code]
+other = "代码与系统"
+
+[cat_blurb_code]
+other = "编辑器、编译器、分布式系统，以及那些对计算机到底怎么运转有着过分兴趣的人。"
+
+[cat_label_ai]
+other = "AI 与研究"
+
+[cat_blurb_ai]
+other = "这个领域要往哪儿走，听正在造它的人说。"
+
+[cat_label_cloud]
+other = "云"
+
+[cat_blurb_cloud]
+other = "本职工作的阅读清单，视频版。"
+
+[cat_label_explain]
+other = "科普讲解"
+
+[cat_blurb_explain]
+other = "一个想法，由真正去看过的人讲明白。"
+
+[cat_label_outdoors]
+other = "户外与离网"
+
+[cat_blurb_outdoors]
+other = "小木屋、独木舟、严寒，还有很长一段没人说话的时间。"
+
+[cat_label_food]
+other = "美食"
+
+[cat_blurb_food]
+other = "一头是手艺，另一头是路边摊。"
+
+[cat_label_world]
+other = "旅行与人"
+
+[cat_blurb_world]
+other = "有人带着相机，去旅游大巴不去的地方。"
+
+[cat_label_fun]
+other = "其他一切"
+
+[cat_blurb_fun]
+other = "没有统一的主题。这正是重点。"
+
+# 订阅源分组（原先内联在 data/feedly.yaml）
+[feeds_label_cloud]
+other = "云与工程"
+
+[feeds_blurb_cloud]
+other = "本职工作的阅读清单：AWS、serverless、架构，以及那些把系统运维写得很好的人。"
+
+[feeds_label_blogroll]
+other = "友链"
+
+[feeds_blurb_blogroll]
+other = "大多是个人网站。网上真正好的东西，还是有人发在自己域名上的那些。"
+
+# 歌单备注（原先内联在 data/music.yaml）
+[pl_note_bangers]
+other = "主力歌单。多是说唱——Drake 和 21 Savage 挑了大梁。"
+
+[pl_note_gym]
+other = "响、快，没有慢歌。为最后一组准备的。"
+
+[pl_note_dance]
+other = "四四拍的流行与电子。"
+
+[pl_note_a]
+other = "名字随便取的，选歌很讲究。一个越攒越大的杂烩。"
+
+[pl_note_feel_good]
+other = "明亮、温暖、不费劲。没人点歌时的默认选择。"
+
+[pl_note_max]
+other = "为我儿子做的。"
+
+[pl_note_summer_1]
+other = "摇下车窗，某一个特定的夏天。"
+
+[pl_note_upbeat]
+other = "短，而且一路正能量。"
+
+[pl_note_songs_from_the_gut]
+other = "八首正中心口的歌。"

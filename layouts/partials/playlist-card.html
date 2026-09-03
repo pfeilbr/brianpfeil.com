@@ -11,7 +11,7 @@
     <p class="pl-meta">
       {{ with $p.by }}{{ i18n "music_by" . }} &middot; {{ end }}{{ i18n "music_tracks" $p.tracks }}
     </p>
-    {{ with $p.note }}<p class="pl-note">{{ . }}</p>{{ end }}
+    {{ with $p.note_key }}<p class="pl-note">{{ i18n (printf "pl_note_%s" .) }}</p>{{ end }}
     <a class="pl-link" href="https://music.youtube.com/playlist?list={{ $p.id }}" target="_blank" rel="noopener">{{ i18n "music_open_in_ytm" }} &rarr;</a>
   </div>
 </div>
