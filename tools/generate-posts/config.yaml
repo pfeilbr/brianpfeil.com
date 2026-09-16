@@ -25,7 +25,9 @@ repo_filters:
     - "alfred-search-aws-sdk-for-javascript"
     - "alfred-search-cloudformation"
     - "remote-development"
-    - "serverless-finance"
+    # Anchored: patterns are unanchored regexes, and this one otherwise also
+    # matches the empty serverless-finances repo and emits a stub post.
+    - "^serverless-finance$"
     - "python3-jupyter-notebooks"
     - "git-github-remove-sensitive-data-files"
     - "youtube-scraping-puppeteer"
@@ -49,6 +51,10 @@ repo_filters:
     - "confluence-api-playground"
     - "cordova-playground"
     - "jfrog-artifactory-playground"
+    # Posts deliberately taken down (e980833); without these a regeneration
+    # would quietly publish them again.
+    - "pocono-lake-house-2026"
+    - "xiaoling-lindsey-zhou-website"
 
 # Repos published as finished projects; these get the "project" category.
 # morning-brief is deliberately absent — it has no README, so it would
