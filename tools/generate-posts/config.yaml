@@ -27,6 +27,16 @@ repo_filters:
     - "remote-development"
     - "serverless-finance"
     - "python3-jupyter-notebooks"
+    - "git-github-remove-sensitive-data-files"
+    - "youtube-scraping-puppeteer"
+    - "fetch-all-github-repos-for-user"
+    - "aws-custom-nodejs-oidc-provider-server-on-heroku"
+    - "jupyter-javascript-docker"
+    - "build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito"
+    - "cmake-vscode-example"
+    - "ng-material-boilerplate"
+    - "osx-service-example"
+    - "sinatra-cors-example"
   exclude:
     - "taco-playground"
     - "python-tox-testing-playground"
@@ -67,6 +77,16 @@ date_overrides:
   "remote-development": "2021-09-18"
   "serverless-finance": "2021-05-11"
   "python3-jupyter-notebooks": "2021-01-15"
+  "git-github-remove-sensitive-data-files": "2020-11-04"
+  "youtube-scraping-puppeteer": "2020-04-16"
+  "fetch-all-github-repos-for-user": "2020-02-04"
+  "aws-custom-nodejs-oidc-provider-server-on-heroku": "2019-07-31"
+  "jupyter-javascript-docker": "2019-01-16"
+  "build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito": "2018-10-21"
+  "cmake-vscode-example": "2018-10-07"
+  "ng-material-boilerplate": "2016-03-14"
+  "osx-service-example": "2015-01-11"
+  "sinatra-cors-example": "2014-05-09"
 
 title_mappings:
   "aim-trainer": "AimForge"
@@ -76,6 +96,13 @@ title_mappings:
   "xiaoling-lindsey-zhou-website": "Lindsey Zhou Link Page"
   "animalfun": "Animal Fun"
   "16-games-in-c--sfml": "16 Games in C++/SFML"
+  "git-github-remove-sensitive-data-files": "Remove Sensitive Files from Git History"
+  "youtube-scraping-puppeteer": "YouTube Scraping with Puppeteer"
+  "aws-custom-nodejs-oidc-provider-server-on-heroku": "AWS Custom Node.js OIDC Provider Server on Heroku"
+  "build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito": "Build a Serverless Web App with Lambda, API Gateway, S3, DynamoDB and Cognito"
+  "cmake-vscode-example": "CMake VS Code Example"
+  "ng-material-boilerplate": "Angular Material Boilerplate"
+  "sinatra-cors-example": "Sinatra CORS Example"
   "aws-well-architected-playground": "AWS Well-Architected"
   "aws-assume-role-using-custom-oidc-provider-playground": "AWS Assume Role Using Custom OIDC Provider"
 
@@ -384,6 +411,16 @@ tags:
     "remote-development": ["vscode", "docker", "typescript"]
     "aws-guidance": ["aws", "architecture"]
     "lambda-glue-mysql-terraform": ["aws", "lambda", "glue", "terraform"]
+    "git-github-remove-sensitive-data-files": ["git", "github", "security"]
+    "youtube-scraping-puppeteer": ["puppeteer", "nodejs", "youtube", "scraping"]
+    "fetch-all-github-repos-for-user": ["github", "bash", "cli"]
+    "aws-custom-nodejs-oidc-provider-server-on-heroku": ["aws", "iam", "oidc", "nodejs", "heroku"]
+    "jupyter-javascript-docker": ["jupyter", "docker", "javascript"]
+    "build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito": ["aws", "serverless", "lambda", "api-gateway", "s3", "dynamodb", "cognito"]
+    "cmake-vscode-example": ["cpp", "cmake", "nix", "vscode"]
+    "ng-material-boilerplate": ["angular", "redux", "javascript"]
+    "osx-service-example": ["macos", "objective-c"]
+    "sinatra-cors-example": ["ruby", "sinatra", "cors", "api"]
     "aws-parallel-cluster-playground": ["hpc"]
     "ec2-image-builder-playground": ["aws", "ec2"]
     "rstudio-on-sagemaker-playground": ["machine-learning"]
