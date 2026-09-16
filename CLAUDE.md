@@ -38,6 +38,15 @@ Hugo site. `content/post/*.md` are blog/project posts; `content/projects/` are p
   looks like a broken deploy. Grep for the bare value.
 - Run the dev server through the preview tooling (`.claude/launch.json`, config
   name `hugo`), never `hugo server` in Bash.
+- **CI's Hugo version is pinned** in `.github/workflows/gh-pages.yml`. It used
+  to be `latest`, and 0.166.0 broke the build (`return` must be the last
+  command in its pipeline). A push can build locally and still fail to deploy
+  if the local Hugo is a different version, so check the Actions run, not just
+  the local build. Bump the pin on purpose.
+- **Generator include patterns are unanchored regexes.** `serverless-finance`
+  also matched the empty `serverless-finances` repo. Anchor any new name that
+  is a prefix of another repo's name, and list deliberately removed posts under
+  `exclude`, or `make generate-posts` will quietly publish them again.
 
 ## Page conventions
 
