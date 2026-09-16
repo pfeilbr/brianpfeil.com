@@ -16,4 +16,6 @@
   "ios-enterprise-app-store" "p-appgrid"
 -}}
 {{- $slug := path.Base .RelPermalink -}}
-{{- return index $map $slug | default "p-note" -}}
+{{- /* Hugo 0.166+ requires return to end its pipeline, so resolve first. */ -}}
+{{- $icon := index $map $slug | default "p-note" -}}
+{{- return $icon -}}

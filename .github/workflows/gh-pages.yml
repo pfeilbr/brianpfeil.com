@@ -25,7 +25,9 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "latest"
+          # Pinned: "latest" picked up 0.166.0 unannounced and broke the deploy.
+          # Bump deliberately after a local build passes on the new version.
+          hugo-version: "0.166.0"
           extended: true
 
       - name: Build
