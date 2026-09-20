@@ -4,7 +4,8 @@ dev:
 build:
 	hugo --minify
 
-verify: build
+verify: test-tools test-media
+	hugo --minify --printI18nWarnings --printPathWarnings
 
 generate-posts:
 	cd tools/generate-posts && go run . -user=pfeilbr -dest=../../content/post -debug
