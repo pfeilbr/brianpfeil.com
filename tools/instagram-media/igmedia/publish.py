@@ -21,6 +21,34 @@ HEADER = """\
 """
 
 
+class NotSignedIn(RuntimeError):
+    pass
+
+
+def check_credentials(bucket: str) -> None:
+    """Fail before the encoding, not after it.
+
+    Transcoding a few hundred videos takes a long while, and an expired SSO
+    token would otherwise only surface at the upload — after all that work.
+    """
+    who = subprocess.run(
+        ["aws", "sts", "get-caller-identity", "--query", "Arn", "--output", "text"],
+        capture_output=True, text=True,
+    )
+    if who.returncode != 0:
+        detail = who.stderr.strip().splitlines()[-1] if who.stderr.strip() else "no detail"
+        raise NotSignedIn(f"AWS CLI is not signed in ({detail}). Run: aws sso login")
+
+    # Being signed in is not the same as being able to write here.
+    head = subprocess.run(
+        ["aws", "s3api", "head-bucket", "--bucket", bucket],
+        capture_output=True, text=True,
+    )
+    if head.returncode != 0:
+        detail = head.stderr.strip().splitlines()[-1] if head.stderr.strip() else "no detail"
+        raise NotSignedIn(f"cannot reach s3://{bucket} as {who.stdout.strip()}: {detail}")
+
+
 def sync(build_dir: Path, bucket: str, prefix: str, prune: bool = False) -> str:
     """Mirror build_dir into s3://bucket/prefix and return the CLI's output."""
     if not build_dir.exists():

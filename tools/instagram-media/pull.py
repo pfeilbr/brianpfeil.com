@@ -101,6 +101,14 @@ def cmd_publish(args, cfg) -> int:
         print("nothing approved yet; see the manifest or the review sheet", file=sys.stderr)
         return 1
 
+    # Before any encoding: a dead SSO token should cost a second, not an hour.
+    if not args.dry_run:
+        try:
+            publish.check_credentials(cfg["bucket"])
+        except publish.NotSignedIn as exc:
+            print(exc, file=sys.stderr)
+            return 1
+
     root = export.unpack([p.expanduser() for p in args.export], workdir)
     items = [i for i in export.read_items(root) if i.id in approved]
     missing = approved - {i.id for i in items}
