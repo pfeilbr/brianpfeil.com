@@ -353,3 +353,37 @@ other = "Short and relentlessly positive."
 
 [pl_note_songs_from_the_gut]
 other = "Eight songs that hit somewhere below the ribs."
+
+# Media page
+[media_intro]
+other = "Photos and video from my Instagram, mirrored here so you can look through them without an account."
+
+[media_empty]
+other = "Nothing here yet."
+
+[media_count]
+other = "{{ .count }} posts"
+
+[media_hint]
+other = "Open anything to see it full size. Video only loads once you play it."
+
+[media_untitled]
+other = "No caption"
+
+[media_open]
+other = "open"
+
+[media_close]
+other = "Close"
+
+[media_prev]
+other = "Previous"
+
+[media_next]
+other = "Next"
+
+[media_viewer]
+other = "Media viewer"
+
+[media_position]
+other = "{{ .n }} of {{ .total }}"

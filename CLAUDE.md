@@ -43,6 +43,15 @@ Hugo site. `content/post/*.md` are blog/project posts; `content/projects/` are p
   command in its pipeline). A push can build locally and still fail to deploy
   if the local Hugo is a different version, so check the Actions run, not just
   the local build. Bump the pin on purpose.
+- **The nav row is capped, so it never gets roomier.** `.nav-row` is
+  `max-width: 52rem`: widening the browser adds nothing, and a seventh link
+  overlapped the language switcher at *every* width, not just narrow ones.
+  `.lang-label` truncates so flexbox can shrink instead of overlapping —
+  check a long-worded language (es, fr) before adding another nav item.
+- **Inline JSON for a script needs `safeJS`.** Same trap as the JSON-LD in
+  `head-meta.html`: without it Go wraps the array in quotes and `JSON.parse`
+  returns a string. `jsonify` escapes `<` first, so a caption still cannot
+  close the tag.
 - **Generator include patterns are unanchored regexes.** `serverless-finance`
   also matched the empty `serverless-finances` repo. Anchor any new name that
   is a prefix of another repo's name, and list deliberately removed posts under
@@ -57,6 +66,7 @@ touching a template:
 | --- | --- | --- |
 | `/music/` | `data/music.yaml` | `layouts/_default/music.html` |
 | `/subscriptions/` | `data/subscriptions.yaml`, `data/twitch.yaml` | `layouts/_default/subscriptions.html` |
+| `/media/` | `data/media.yaml` (generated) | `layouts/_default/media.html` |
 
 - **Only publish what a stranger can actually open.** Private YouTube playlists
   403 and some public ones refuse to embed, so every embed was verified against

@@ -109,6 +109,9 @@ languages:
         - name: "subscriptions"
           url: "/subscriptions/"
           weight: 36
+        - name: "media"
+          url: "/media/"
+          weight: 37
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -146,6 +149,9 @@ languages:
         - name: "订阅"
           url: "/zh/subscriptions/"
           weight: 36
+        - name: "影像"
+          url: "/zh/media/"
+          weight: 37
         # Tags are generated from the English posts, so this points at the
         # English taxonomy rather than an empty /zh/tags/.
         - name: "标签"
@@ -185,6 +191,9 @@ languages:
         - name: "suscripciones"
           url: "/es/subscriptions/"
           weight: 36
+        - name: "fotos"
+          url: "/es/media/"
+          weight: 37
         - name: "etiquetas"
           url: "/tags/"
           weight: 40
@@ -222,6 +231,9 @@ languages:
         - name: "assinaturas"
           url: "/pt/subscriptions/"
           weight: 36
+        - name: "fotos"
+          url: "/pt/media/"
+          weight: 37
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -259,6 +271,9 @@ languages:
         - name: "abonnements"
           url: "/fr/subscriptions/"
           weight: 36
+        - name: "photos"
+          url: "/fr/media/"
+          weight: 37
         - name: "étiquettes"
           url: "/tags/"
           weight: 40
@@ -296,6 +311,9 @@ languages:
         - name: "abos"
           url: "/de/subscriptions/"
           weight: 36
+        - name: "fotos"
+          url: "/de/media/"
+          weight: 37
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -333,6 +351,9 @@ languages:
         - name: "iscrizioni"
           url: "/it/subscriptions/"
           weight: 36
+        - name: "foto"
+          url: "/it/media/"
+          weight: 37
         - name: "tag"
           url: "/tags/"
           weight: 40
@@ -370,6 +391,9 @@ languages:
         - name: "購読"
           url: "/ja/subscriptions/"
           weight: 36
+        - name: "メディア"
+          url: "/ja/media/"
+          weight: 37
         - name: "タグ"
           url: "/tags/"
           weight: 40
@@ -407,6 +431,9 @@ languages:
         - name: "구독"
           url: "/ko/subscriptions/"
           weight: 36
+        - name: "미디어"
+          url: "/ko/media/"
+          weight: 37
         - name: "태그"
           url: "/tags/"
           weight: 40

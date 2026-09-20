@@ -356,3 +356,36 @@ other = "Kurz und unerbittlich positiv."
 [pl_note_songs_from_the_gut]
 other = "Acht Songs, die unter die Haut gehen."
 
+# Media page
+[media_intro]
+other = "Fotos und Videos aus meinem Instagram, hier gespiegelt – zum Durchsehen ganz ohne Konto."
+
+[media_empty]
+other = "Hier ist noch nichts."
+
+[media_count]
+other = "{{ .count }} Beiträge"
+
+[media_hint]
+other = "Zum Vergrößern anklicken. Videos werden erst geladen, wenn sie abgespielt werden."
+
+[media_untitled]
+other = "Ohne Bildtext"
+
+[media_open]
+other = "öffnen"
+
+[media_close]
+other = "Schließen"
+
+[media_prev]
+other = "Zurück"
+
+[media_next]
+other = "Weiter"
+
+[media_viewer]
+other = "Medienansicht"
+
+[media_position]
+other = "{{ .n }} von {{ .total }}"

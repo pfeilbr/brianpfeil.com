@@ -353,3 +353,37 @@ other = "短，而且一路正能量。"
 
 [pl_note_songs_from_the_gut]
 other = "八首正中心口的歌。"
+
+# Media page
+[media_intro]
+other = "来自我 Instagram 的照片和视频，在这里做了备份，无需账号即可浏览。"
+
+[media_empty]
+other = "这里还没有内容。"
+
+[media_count]
+other = "{{ .count }} 条动态"
+
+[media_hint]
+other = "点击任意一项查看大图。视频只有在播放时才会加载。"
+
+[media_untitled]
+other = "没有文字说明"
+
+[media_open]
+other = "打开"
+
+[media_close]
+other = "关闭"
+
+[media_prev]
+other = "上一个"
+
+[media_next]
+other = "下一个"
+
+[media_viewer]
+other = "媒体查看器"
+
+[media_position]
+other = "{{ .n }} / {{ .total }}"

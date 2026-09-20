@@ -353,3 +353,37 @@ other = "短くて、どこまでも前向き。"
 
 [pl_note_songs_from_the_gut]
 other = "みぞおちのあたりに効く 8 曲。"
+
+# Media page
+[media_intro]
+other = "Instagram に投稿した写真と動画です。アカウントがなくても見られるよう、ここにまとめています。"
+
+[media_empty]
+other = "まだ何もありません。"
+
+[media_count]
+other = "{{ .count }} 件の投稿"
+
+[media_hint]
+other = "タップすると大きく表示します。動画は再生するまで読み込まれません。"
+
+[media_untitled]
+other = "キャプションなし"
+
+[media_open]
+other = "開く"
+
+[media_close]
+other = "閉じる"
+
+[media_prev]
+other = "前へ"
+
+[media_next]
+other = "次へ"
+
+[media_viewer]
+other = "メディアビューア"
+
+[media_position]
+other = "{{ .n }} / {{ .total }}"

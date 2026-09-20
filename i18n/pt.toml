@@ -353,3 +353,37 @@ other = "Curta e implacavelmente positiva."
 
 [pl_note_songs_from_the_gut]
 other = "Oito músicas que acertam bem no fundo do peito."
+
+# Media page
+[media_intro]
+other = "Fotos e vídeos do meu Instagram, espelhados aqui para você ver sem precisar de conta."
+
+[media_empty]
+other = "Ainda não há nada aqui."
+
+[media_count]
+other = "{{ .count }} publicações"
+
+[media_hint]
+other = "Abra qualquer item para ver em tamanho real. O vídeo só carrega quando você dá play."
+
+[media_untitled]
+other = "Sem legenda"
+
+[media_open]
+other = "abrir"
+
+[media_close]
+other = "Fechar"
+
+[media_prev]
+other = "Anterior"
+
+[media_next]
+other = "Próximo"
+
+[media_viewer]
+other = "Visualizador de mídia"
+
+[media_position]
+other = "{{ .n }} de {{ .total }}"

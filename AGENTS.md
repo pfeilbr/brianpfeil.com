@@ -49,7 +49,8 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
 │       ├── footer.html                # Social links (Twitter, GitHub, SO, RSS)
 │       └── search.html                # Sticky search bar + <template> + loads search.js
 ├── static/images/                     # Static images served as-is
-└── tools/generate-posts/              # Go CLI — generates posts from GitHub READMEs
+├── tools/generate-posts/              # Go CLI — generates posts from GitHub READMEs
+└── tools/instagram-media/             # Python CLI — builds /media/ from an IG export
     ├── main.go                        # Entry point, CLI flags
     ├── config.go                      # Config loading (config.yaml + config.local.yaml)
     ├── github.go                      # GitHub API client, repo fetching, README download
@@ -216,6 +217,32 @@ without that, a description containing a quote breaks the TOML front matter.
 - `tags.static` — tags added to all posts (currently empty)
 
 **Dependencies:** `google/go-github`, `golang.org/x/oauth2`, `adrg/frontmatter`, `gopkg.in/yaml.v3`, `golang.org/x/text`
+
+### Media Page Tool (`tools/instagram-media/`)
+
+Python CLI that builds `/media/` from an Instagram "Download your information"
+export. No scraping and no Instagram credentials: the export is the only input,
+so a run is reproducible and nothing violates Instagram's terms.
+
+**Flow:** `stage` (read export → `manifest.yaml` + local review sheet) →
+approve → `publish` (encode → `aws s3 sync` → `data/media.yaml`).
+
+- **Approval gate** — nothing is published until `approved: true` in
+  `manifest.yaml`. `build/review.html` is a local contact sheet that writes the
+  `approve --id ...` command for you.
+- **Ids are content hashes** (`YYYYMMDD-<sha256[:8]>` over the media bytes), so
+  a re-export keeps existing approvals and only new posts arrive unapproved.
+- **Idempotent** — `derivatives.lock.json` keyed by source hash plus
+  `PROFILE_VERSION`; `aws s3 sync --size-only` against immutable, hashed names.
+- **Metadata is stripped** from every derivative (Pillow re-encode, ffmpeg
+  `-map_metadata -1`). Export originals can carry GPS.
+- **Hosting** — private bucket `brianpfeil-media01` behind CloudFront with OAC
+  (`dfalwjniugna7.cloudfront.net`). Direct S3 URLs 403. Uploads go through the
+  AWS CLI, using the shell's existing session rather than stored credentials.
+- **Meta mojibake** — exported captions are UTF-8 decoded as latin-1;
+  `fix_mojibake()` reverses it, and is a no-op when it doesn't round-trip.
+- Deps are PyYAML and Pillow in `tools/instagram-media/.venv` (`make media-deps`),
+  plus ffmpeg. Tests: `make test-media`.
 
 ## Content Conventions
 

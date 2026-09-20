@@ -356,3 +356,36 @@ other = "Court et positif sans relâche."
 [pl_note_songs_from_the_gut]
 other = "Huit morceaux qui prennent aux tripes."
 
+# Media page
+[media_intro]
+other = "Photos et vidéos de mon Instagram, reprises ici pour être parcourues sans compte."
+
+[media_empty]
+other = "Rien ici pour l'instant."
+
+[media_count]
+other = "{{ .count }} publications"
+
+[media_hint]
+other = "Ouvrez n'importe quelle vignette pour l'afficher en grand. La vidéo ne se charge qu'à la lecture."
+
+[media_untitled]
+other = "Sans légende"
+
+[media_open]
+other = "ouvrir"
+
+[media_close]
+other = "Fermer"
+
+[media_prev]
+other = "Précédent"
+
+[media_next]
+other = "Suivant"
+
+[media_viewer]
+other = "Visionneuse"
+
+[media_position]
+other = "{{ .n }} sur {{ .total }}"

@@ -353,3 +353,37 @@ other = "Corta e implacablemente positiva."
 
 [pl_note_songs_from_the_gut]
 other = "Ocho canciones que te dan justo donde duele."
+
+# Media page
+[media_intro]
+other = "Fotos y vídeos de mi Instagram, replicados aquí para poder verlos sin necesidad de cuenta."
+
+[media_empty]
+other = "Todavía no hay nada aquí."
+
+[media_count]
+other = "{{ .count }} publicaciones"
+
+[media_hint]
+other = "Abre cualquiera para verlo a tamaño completo. El vídeo solo se carga al reproducirlo."
+
+[media_untitled]
+other = "Sin descripción"
+
+[media_open]
+other = "abrir"
+
+[media_close]
+other = "Cerrar"
+
+[media_prev]
+other = "Anterior"
+
+[media_next]
+other = "Siguiente"
+
+[media_viewer]
+other = "Visor multimedia"
+
+[media_position]
+other = "{{ .n }} de {{ .total }}"

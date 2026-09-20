@@ -1,0 +1,13 @@
+# Where the built media lives. The bucket is private; CloudFront (OAC) is the
+# only thing that can read it, which is why base_url is the distribution and
+# not an S3 URL.
+bucket: "brianpfeil-media01"
+s3_prefix: "instagram"
+base_url: "https://dfalwjniugna7.cloudfront.net"
+
+# Paths. work_dir and lock_file are relative to this tool; data_file is
+# relative to the repo root.
+work_dir: "build"
+manifest: "manifest.yaml"
+lock_file: "derivatives.lock.json"
+data_file: "data/media.yaml"

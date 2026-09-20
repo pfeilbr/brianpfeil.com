@@ -353,3 +353,37 @@ other = "Breve e ostinatamente positiva."
 
 [pl_note_songs_from_the_gut]
 other = "Otto canzoni che arrivano dritte allo stomaco."
+
+# Media page
+[media_intro]
+other = "Foto e video dal mio Instagram, replicati qui per poterli sfogliare senza account."
+
+[media_empty]
+other = "Qui non c'è ancora niente."
+
+[media_count]
+other = "{{ .count }} post"
+
+[media_hint]
+other = "Apri un elemento qualsiasi per vederlo a schermo intero. Il video si carica solo quando lo avvii."
+
+[media_untitled]
+other = "Senza didascalia"
+
+[media_open]
+other = "apri"
+
+[media_close]
+other = "Chiudi"
+
+[media_prev]
+other = "Precedente"
+
+[media_next]
+other = "Successivo"
+
+[media_viewer]
+other = "Visualizzatore"
+
+[media_position]
+other = "{{ .n }} di {{ .total }}"

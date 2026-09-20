@@ -353,3 +353,37 @@ other = "짧고 한없이 긍정적입니다."
 
 [pl_note_songs_from_the_gut]
 other = "가슴 어딘가를 건드리는 여덟 곡."
+
+# Media page
+[media_intro]
+other = "인스타그램에 올린 사진과 영상입니다. 계정 없이도 볼 수 있도록 여기에 모아 두었습니다."
+
+[media_empty]
+other = "아직 아무것도 없습니다."
+
+[media_count]
+other = "게시물 {{ .count }}개"
+
+[media_hint]
+other = "아무 항목이나 열면 크게 볼 수 있습니다. 영상은 재생할 때만 불러옵니다."
+
+[media_untitled]
+other = "설명 없음"
+
+[media_open]
+other = "열기"
+
+[media_close]
+other = "닫기"
+
+[media_prev]
+other = "이전"
+
+[media_next]
+other = "다음"
+
+[media_viewer]
+other = "미디어 뷰어"
+
+[media_position]
+other = "{{ .n }} / {{ .total }}"

@@ -1,0 +1,222 @@
+{{ define "main" }}
+{{ $m := hugo.Data.media }}
+<article class="media">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600">{{ i18n "media_intro" }}</p>
+  </header>
+
+  <div class="prose">{{ .Content }}</div>
+
+  {{ if or (not $m) (not $m.items) }}
+  <p class="media-empty">{{ i18n "media_empty" }}</p>
+  {{ else }}
+  {{ $base := $m.base_url }}
+
+  <p class="media-sub">{{ i18n "media_count" (dict "count" $m.count) }} — {{ i18n "media_hint" }}</p>
+
+  {{/* Years in the order the items already come in (newest first), so the
+     page reads as a reverse timeline without needing a sort. */}}
+  {{ $years := slice }}
+  {{ range $m.items }}
+    {{ if not (in $years .year) }}{{ $years = $years | append .year }}{{ end }}
+  {{ end }}
+
+  {{ range $years }}
+  {{ $year := . }}
+  <section class="media-section" aria-labelledby="year-{{ $year }}">
+    <h2 id="year-{{ $year }}" class="media-h2">{{ $year }}</h2>
+    <div class="media-grid">
+      {{ range where $m.items "year" $year }}
+      {{ $first := index .media 0 }}
+      {{ $label := cond (ne .caption "") (.caption | plainify | truncate 120) (i18n "media_untitled") }}
+      <button type="button" class="media-tile" data-item="{{ .id }}"
+              aria-label="{{ $label }} — {{ i18n "media_open" }}">
+        <img src="{{ $base }}{{ $first.thumb }}" alt="" loading="lazy" decoding="async">
+        {{ if eq .kind "video" }}
+        <span class="media-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+        {{ else if eq .kind "album" }}
+        <span class="media-badge media-badge-count" aria-hidden="true">{{ len .media }}</span>
+        {{ end }}
+      </button>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{/* One flat list of every photo and video, so the lightbox arrows walk
+     straight through an album and on into the next post. Captions are
+     rendered by the browser as text, never as markup — see the script. */}}
+  {{ $flat := slice }}
+  {{ range $m.items }}
+    {{ $item := . }}
+    {{ $total := len .media }}
+    {{ range $n, $md := .media }}
+      {{ $flat = $flat | append (dict
+          "item" $item.id
+          "caption" $item.caption
+          "date" $item.date
+          "kind" $md.kind
+          "src" (printf "%s%s" $base $md.src)
+          "poster" (cond (eq $md.kind "video") (printf "%s%s" $base (index $md "poster")) "")
+          "w" $md.w
+          "h" $md.h
+          "n" (add $n 1)
+          "total" $total) }}
+    {{ end }}
+  {{ end }}
+  {{/* safeJS for the same reason head-meta.html uses it on the JSON-LD:
+     without it html/template wraps the whole array in quotes and JSON.parse
+     hands back a string. jsonify has already escaped < > &, so a caption
+     cannot close this tag. */}}
+  <script type="application/json" id="media-data">{{ $flat | jsonify | safeJS }}</script>
+
+  <div class="media-strings"
+       data-close="{{ i18n "media_close" }}"
+       data-prev="{{ i18n "media_prev" }}"
+       data-next="{{ i18n "media_next" }}"
+       data-dialog="{{ i18n "media_viewer" }}"
+       {{/* A whole sentence with markers, not "n" + "of" + "total": Japanese
+          and Korean put the total first. JS swaps the markers. */}}
+       data-position="{{ i18n "media_position" (dict "n" "%n" "total" "%total") }}"></div>
+  {{ end }}
+</article>
+
+{{ if and $m $m.items }}
+<script>
+/* Lightbox for /media/. Nothing is fetched from the CDN until a tile is
+   opened: the grid holds thumbnails only, and a video element is built on
+   demand and torn down on close so a hidden clip can never keep playing. */
+(function () {
+  var data = document.getElementById("media-data");
+  var strings = document.querySelector(".media-strings");
+  if (!data || !strings) return;
+
+  var items = JSON.parse(data.textContent);
+  if (!items.length) return;
+
+  var overlay = null, stage = null, caption = null, counter = null;
+  var current = 0, lastFocused = null;
+
+  function build() {
+    overlay = document.createElement("div");
+    overlay.className = "media-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", strings.dataset.dialog);
+    overlay.innerHTML =
+      '<button type="button" class="media-close"></button>' +
+      '<button type="button" class="media-nav media-prev">&#8249;</button>' +
+      '<button type="button" class="media-nav media-next">&#8250;</button>' +
+      '<div class="media-stage"></div>' +
+      '<div class="media-meta"><p class="media-caption"></p><p class="media-counter"></p></div>';
+
+    stage = overlay.querySelector(".media-stage");
+    caption = overlay.querySelector(".media-caption");
+    counter = overlay.querySelector(".media-counter");
+
+    var close = overlay.querySelector(".media-close");
+    close.setAttribute("aria-label", strings.dataset.close);
+    close.innerHTML = "&times;";
+    var prev = overlay.querySelector(".media-prev");
+    prev.setAttribute("aria-label", strings.dataset.prev);
+    var next = overlay.querySelector(".media-next");
+    next.setAttribute("aria-label", strings.dataset.next);
+
+    close.addEventListener("click", hide);
+    prev.addEventListener("click", function () { step(-1); });
+    next.addEventListener("click", function () { step(1); });
+    overlay.addEventListener("click", function (e) {
+      /* Clicking the backdrop closes; clicking the media or a control does not. */
+      if (e.target === overlay || e.target === stage) hide();
+    });
+
+    document.body.appendChild(overlay);
+  }
+
+  function clearStage() {
+    var video = stage.querySelector("video");
+    if (video) { video.pause(); video.removeAttribute("src"); video.load(); }
+    stage.innerHTML = "";
+  }
+
+  function render(i) {
+    var entry = items[i];
+    clearStage();
+
+    if (entry.kind === "video") {
+      var video = document.createElement("video");
+      video.src = entry.src;
+      video.poster = entry.poster;
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = "none";
+      video.width = entry.w;
+      video.height = entry.h;
+      stage.appendChild(video);
+    } else {
+      var img = document.createElement("img");
+      img.src = entry.src;
+      img.alt = entry.caption || "";
+      img.width = entry.w;
+      img.height = entry.h;
+      stage.appendChild(img);
+    }
+
+    /* Captions come from Instagram and can contain anything, so they are set
+       as text. Never innerHTML here. */
+    caption.textContent = entry.caption || "";
+    caption.hidden = !entry.caption;
+
+    var position = strings.dataset.position
+      .replace("%n", i + 1)
+      .replace("%total", items.length);
+    counter.textContent = entry.date + " — " + position;
+    current = i;
+  }
+
+  function step(delta) {
+    render((current + delta + items.length) % items.length);
+  }
+
+  function show(index, opener) {
+    if (!overlay) build();
+    /* Safari doesn't focus a button when it is clicked, so remembering
+       document.activeElement would send focus back to <body> on close and
+       drop a keyboard user at the top of the page. Keep the tile itself. */
+    lastFocused = opener || document.activeElement;
+    render(index);
+    overlay.classList.add("is-open");
+    document.body.classList.add("zoom-locked");
+    overlay.querySelector(".media-close").focus();
+  }
+
+  function hide() {
+    if (!overlay) return;
+    clearStage();
+    overlay.classList.remove("is-open");
+    document.body.classList.remove("zoom-locked");
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  document.querySelectorAll(".media-tile").forEach(function (tile) {
+    tile.addEventListener("click", function () {
+      var id = tile.dataset.item;
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].item === id) { show(i, tile); return; }
+      }
+    });
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (!overlay || !overlay.classList.contains("is-open")) return;
+    if (e.key === "Escape") hide();
+    else if (e.key === "ArrowLeft") step(-1);
+    else if (e.key === "ArrowRight") step(1);
+  });
+})();
+</script>
+{{ end }}
+{{ end }}
