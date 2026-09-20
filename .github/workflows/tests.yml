@@ -47,6 +47,10 @@ jobs:
           extended: true
       - name: Build with warnings surfaced
         run: hugo --minify --printI18nWarnings --printPathWarnings
+      # Builds /media/ from a fixture and with no data, then checks the HTML in
+      # all nine languages — including that the lightbox payload is a list.
+      - name: Media page render check
+        run: python3 tools/instagram-media/tests/check_layout.py --build
 
   terraform:
     name: terraform fmt + validate

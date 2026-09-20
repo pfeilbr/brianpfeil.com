@@ -1,0 +1,28 @@
+# Render fixture for tests/check_layout.py. Shaped like the real
+# data/media.yaml; the keys point nowhere because the check reads the HTML,
+# not the images. The third caption is hostile on purpose.
+base_url: https://cdn.example.test/
+count: 3
+items:
+- id: 20240303-aaaa1111
+  date: '2024-03-03'
+  year: '2024'
+  kind: video
+  caption: A reel
+  media:
+  - {kind: video, src: instagram/a/v.mp4, thumb: instagram/a/v-t.jpg, w: 576, h: 720, poster: instagram/a/v-p.jpg, duration: 2.0}
+- id: 20230101-bbbb2222
+  date: '2023-01-01'
+  year: '2023'
+  kind: album
+  caption: Two photos
+  media:
+  - {kind: photo, src: instagram/b/1.jpg, thumb: instagram/b/1-t.jpg, w: 1600, h: 1200}
+  - {kind: photo, src: instagram/b/2.jpg, thumb: instagram/b/2-t.jpg, w: 1200, h: 1600}
+- id: 20220519-cccc3333
+  date: '2022-05-19'
+  year: '2022'
+  kind: photo
+  caption: '</script><img src=x onerror=alert(1)> & "quoted"'
+  media:
+  - {kind: photo, src: instagram/c/1.jpg, thumb: instagram/c/1-t.jpg, w: 1200, h: 1200}

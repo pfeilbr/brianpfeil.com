@@ -4,7 +4,7 @@ dev:
 build:
 	hugo --minify
 
-verify: test-tools test-media
+verify: test-tools test-media test-layout
 	hugo --minify --printI18nWarnings --printPathWarnings
 
 generate-posts:
@@ -39,6 +39,9 @@ media-status:
 test-media:
 	cd tools/instagram-media && .venv/bin/python -m unittest discover -s tests
 
+test-layout:
+	python3 tools/instagram-media/tests/check_layout.py --build
+
 
 # --- Terraform (infra/) ---------------------------------------------------
 # State lives in S3 (infra/backend.hcl). The provider comes from a local
@@ -59,4 +62,4 @@ tf-validate:
 	cd infra && terraform fmt -check -recursive && terraform validate
 
 
-.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status test-media tf-init tf-plan tf-validate
+.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status test-media test-layout tf-init tf-plan tf-validate
