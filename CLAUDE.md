@@ -2,6 +2,41 @@
 
 Hugo site. `content/post/*.md` are blog/project posts; `content/projects/` are project bundles.
 
+## Where /media/ stands (read this first)
+
+The page, the pull tool and the AWS hosting are all built, live and pushed.
+`/media/` renders an empty state in all nine languages.
+
+**It is empty because no Instagram export exists on this machine** — the
+pipeline has no input, not a half-finished one. Requesting the export needs an
+Instagram login, so it is the one step B has to do:
+[accountscenter.instagram.com/info_and_permissions/dyi](https://accountscenter.instagram.com/info_and_permissions/dyi/)
+→ Posts + Reels → **Format: JSON**, All time, High quality. Instagram emails a
+link; a large account comes back as several part ZIPs.
+
+With the archive on disk:
+
+```sh
+make media-deps                                          # one-time venv
+make media-stage EXPORT=~/Downloads/instagram-export.zip
+open tools/instagram-media/build/review.html             # tick what goes public
+python3 tools/instagram-media/pull.py approve --id ...   # the sheet prints this
+make media-publish EXPORT=~/Downloads/instagram-export.zip
+git add data/media.yaml tools/instagram-media/manifest.yaml && git commit && git push
+```
+
+Nothing publishes without an explicit approval — see
+`tools/instagram-media/README.md`.
+
+**Terraform in `infra/` is written but NOT applied.** It describes the bucket
+and CloudFront distribution that already exist (created with the CLI before
+the Terraform-only rule was in play), with `import` blocks so applying adopts
+them rather than rebuilding. `terraform init` needs a 174 MB provider that
+downloads at ~50 KB/s, so run `python3 infra/scripts/fetch_provider.py
+--detach` and check `infra/.provider-cache/fetch.log`. A correct plan is
+**6 to import, 0 to add, 0 to change, 0 to destroy** — anything proposing a
+change or destroy means stop, those resources serve the live media page.
+
 ## Workflow
 
 - **Always commit and push immediately** after making changes — don't wait to be asked.

@@ -81,6 +81,22 @@ This fetches all matching repos, downloads their READMEs, and writes/updates
 | `make generate-posts` | Run the post generator tool |
 | `make test-tools` | Run Go tests for the post generator |
 
+## Media page (`/media/`)
+
+Photos and video from Instagram, mirrored onto the site from an official
+Instagram data export — no scraping, no stored credentials. Images and video
+are re-encoded (metadata stripped) and served from a private S3 bucket behind
+CloudFront; only `data/media.yaml` lives in the repo.
+
+Nothing is published until it is approved by hand. See
+[`tools/instagram-media/README.md`](tools/instagram-media/README.md) for the
+full flow, and the top of `CLAUDE.md` for the current state.
+
+    make media-deps
+    make media-stage EXPORT=~/Downloads/instagram-export.zip
+    open tools/instagram-media/build/review.html
+    make media-publish EXPORT=~/Downloads/instagram-export.zip
+
 ## Deployment
 
 The site deploys to GitHub Pages via GitHub Actions (`.github/workflows/gh-pages.yml`).
