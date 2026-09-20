@@ -35,16 +35,14 @@ Nothing publishes without an explicit approval — see
 `make verify` runs both test suites plus a warning-surfacing Hugo build, and
 the Tests workflow runs the same on every push and PR.
 
-**Terraform in `infra/` is written but NOT applied.** It describes the bucket
-and CloudFront distribution that already exist (created with the CLI before
-the Terraform-only rule was in play), with `import` blocks so applying adopts
-them rather than rebuilding. `terraform init` needs a 174 MB provider that
-downloads at ~50 KB/s, so run `python3 infra/scripts/fetch_provider.py
---detach` and check `infra/.provider-cache/fetch.log`. That has already run:
-the provider is installed and `init` and `validate` pass. Only `plan` is
-outstanding, and it needs `aws sso login`. A correct plan is
-**6 to import, 0 to add, 0 to change, 0 to destroy** — anything proposing a
-change or destroy means stop, those resources serve the live media page.
+**Terraform manages all of the AWS side.** State is remote in
+`s3://brianpfeil-tfstate-529276214230` (versioned, native S3 locking, no
+DynamoDB); `infra/bootstrap/` creates that bucket. `aws sso login`, then
+`make tf-init` and `make tf-plan` — both stacks should report no changes.
+Apply only from a saved plan (`terraform plan -out=x.tfplan`, read it, then
+`terraform apply x.tfplan`); `-auto-approve` is blocked as a blind apply.
+The AWS provider comes from a local mirror because the registry download is
+unreliable here — see `infra/README.md`.
 
 ## Workflow
 

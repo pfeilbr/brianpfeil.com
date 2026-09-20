@@ -40,4 +40,23 @@ test-media:
 	cd tools/instagram-media && .venv/bin/python -m unittest discover -s tests
 
 
-.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status test-media
+# --- Terraform (infra/) ---------------------------------------------------
+# State lives in S3 (infra/backend.hcl). The provider comes from a local
+# mirror because the registry download is unreliable here; populate it with
+# `python3 infra/scripts/fetch_provider.py --detach` if it is missing.
+TF_MIRROR := $(HOME)/.terraform.d/plugin-mirror
+TF_INIT = terraform init -input=false -backend-config=$(1) -plugin-dir=$(TF_MIRROR)
+
+tf-init:
+	cd infra && $(call TF_INIT,backend.hcl)
+	cd infra/bootstrap && $(call TF_INIT,../backend.hcl)
+
+tf-plan:
+	cd infra && terraform plan -input=false
+	cd infra/bootstrap && terraform plan -input=false
+
+tf-validate:
+	cd infra && terraform fmt -check -recursive && terraform validate
+
+
+.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status test-media tf-init tf-plan tf-validate

@@ -1,41 +1,99 @@
 # infra
 
-Terraform for the AWS side of brianpfeil.com. Nothing here is click-ops — but
-the resources it describes were, briefly: the `/media/` bucket and CloudFront
-distribution were created with the AWS CLI before this directory existed, so
-`imports.tf` adopts them instead of rebuilding them.
+Terraform for the AWS side of brianpfeil.com. Every AWS resource here is
+Terraform-managed; nothing is click-ops.
 
-## Status
+## Layout
 
-**Not yet applied.** `terraform init` needs the AWS provider (~180 MB) and the
-download from releases.hashicorp.com was running at ~50 KB/s when this was
-written. The config is unvalidated against the provider schema until someone
-runs:
+```
+infra/
+├── backend.hcl              shared S3 backend settings (bucket named once)
+├── backend.tf               site stack state key
+├── main.tf                  site stack: the /media/ CDN
+├── versions.tf
+├── bootstrap/               creates the state bucket itself
+│   ├── main.tf
+│   └── backend.tf
+├── modules/
+│   ├── media-cdn/           private S3 bucket + CloudFront via OAC
+│   └── state-bucket/        versioned, locked-down Terraform state bucket
+└── scripts/
+    └── fetch_provider.py    resumable provider download for slow links
+```
+
+The modules are the reusable units. A second CDN or a second state bucket is
+another `module` block with a different name — nothing else to copy.
+
+## State
+
+Remote, in `s3://brianpfeil-tfstate-529276214230`:
+
+| Stack | Key |
+| --- | --- |
+| `bootstrap/` | `bootstrap/terraform.tfstate` |
+| `infra/` (site) | `site/terraform.tfstate` |
+
+- **Locking** uses Terraform's native S3 lockfile (`use_lockfile`, Terraform
+  ≥ 1.10) — there is no DynamoDB table.
+- **Versioned**: every apply writes a new revision, so a bad apply can be
+  rolled back to an earlier state object. Old revisions expire after 90 days,
+  but the 20 most recent are always kept.
+- Encrypted, all four public-access blocks on, TLS-only bucket policy, and
+  `prevent_destroy` on the bucket.
+
+`backend.hcl` holds the bucket, region and locking settings so they are
+written exactly once; each stack's `backend.tf` declares only its key.
+
+## Running it
+
+```sh
+aws sso login
+make tf-init      # both stacks, against the S3 backend and local provider mirror
+make tf-plan      # both stacks
+make tf-validate
+```
+
+Apply from a saved plan, not `-auto-approve`:
 
 ```sh
 cd infra
-terraform init
-terraform plan    # expect: 6 to import, 0 to add, 0 to change, 0 to destroy
-terraform apply
+terraform plan -out=change.tfplan
+terraform show change.tfplan     # read it
+terraform apply change.tfplan
 ```
 
-If the plan proposes *changing* or *destroying* anything, stop — it means the
-config here has drifted from what is live, and the live resources are serving
-the media page.
+## The provider mirror
 
-Once applied, the `import` blocks are inert and can be deleted.
+`terraform init` pulls ~174 MB of AWS provider from releases.hashicorp.com,
+which has been unreliable from here (~50 KB/s, with long stalls). The
+provider is installed once into `~/.terraform.d/plugin-mirror` and every init
+uses `-plugin-dir` against it. On a fresh machine:
 
-## What it describes
+```sh
+python3 infra/scripts/fetch_provider.py --detach
+tail -f infra/.provider-cache/fetch.log
+```
 
-| Resource | Id |
-| --- | --- |
-| S3 bucket (private) | `brianpfeil-media01` |
-| Origin access control | `E17O3POTYCS2VP` |
-| CloudFront distribution | `E2U0TCXARHWOEF` (`dfalwjniugna7.cloudfront.net`) |
+It resumes after interruptions, verifies the published SHA256, and runs
+init / validate / plan when done. Because the mirror bypasses the registry,
+the generated `.terraform.lock.hcl` only has darwin_arm64 hashes and is
+gitignored rather than committed.
 
-`modules/media-cdn` is the reusable piece: a private bucket readable only by
-one CloudFront distribution through OAC. The bucket name deliberately has no
-dots — a dotted name breaks TLS validation on an S3 origin.
+## Bootstrapping from nothing
 
-State is local and gitignored. Moving it to S3 is worth doing before anyone
-else runs this.
+Only needed if the state bucket itself is ever lost:
+
+1. Delete `bootstrap/backend.tf` so the stack uses local state.
+2. `cd infra/bootstrap && terraform init -plugin-dir=~/.terraform.d/plugin-mirror`
+3. Plan to a file, read it, apply it — this recreates the bucket.
+4. Restore `bootstrap/backend.tf`, then
+   `terraform init -migrate-state -backend-config=../backend.hcl`.
+5. Re-import the site stack's resources (ids are in `main.tf`'s outputs
+   history and the AWS console), then `make tf-plan` should show no changes.
+
+## History
+
+The media bucket and distribution were first created with the AWS CLI while
+building `/media/`, before the Terraform-only rule applied. They were adopted
+with `import` blocks (plan: 6 to import, 0 to add, 0 to change, 0 to destroy)
+and the blocks were removed once state was durable in S3.
