@@ -34,6 +34,10 @@ jobs:
         working-directory: tools/instagram-media
       - run: python -m unittest discover -s tests -v
         working-directory: tools/instagram-media
+      # Unit tests only; the live link check needs the network and is run by
+      # hand with `make check-repo-links`.
+      - name: link-check tests
+        run: python -m unittest discover -s tools/link-check -p 'test_*.py' -v
 
   site:
     name: hugo build

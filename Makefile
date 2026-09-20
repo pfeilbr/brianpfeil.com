@@ -4,7 +4,7 @@ dev:
 build:
 	hugo --minify
 
-verify: test-tools test-media test-layout
+verify: test-tools test-media test-layout test-link-check
 	hugo --minify --printI18nWarnings --printPathWarnings
 
 generate-posts:
@@ -42,6 +42,14 @@ test-media:
 test-layout:
 	python3 tools/instagram-media/tests/check_layout.py --build
 
+test-link-check:
+	python3 -m unittest discover -s tools/link-check -p 'test_*.py'
+
+# Live and network-bound, so not part of verify: lists posts whose repo
+# link 404s for a visitor (the repo went private or was deleted).
+check-repo-links:
+	python3 tools/link-check/check_repo_links.py
+
 
 # --- Terraform (infra/) ---------------------------------------------------
 # State lives in S3 (infra/backend.hcl). The provider comes from a local
@@ -62,4 +70,4 @@ tf-validate:
 	cd infra && terraform fmt -check -recursive && terraform validate
 
 
-.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status test-media test-layout tf-init tf-plan tf-validate
+.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status test-media test-layout test-link-check check-repo-links tf-init tf-plan tf-validate
