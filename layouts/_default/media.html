@@ -63,6 +63,7 @@
           "date" $item.date
           "kind" $md.kind
           "src" (printf "%s%s" $base $md.src)
+          "thumb" (printf "%s%s" $base $md.thumb)
           "poster" (cond (eq $md.kind "video") (printf "%s%s" $base (index $md "poster")) "")
           "w" $md.w
           "h" $md.h
@@ -191,11 +192,22 @@
       stage.appendChild(video);
     } else {
       var img = document.createElement("img");
-      img.src = entry.src;
+      /* Show the grid thumbnail straight away — it is already in the cache —
+         and swap in the full-size image once it has arrived, rather than a
+         black box for as long as the download takes. */
+      img.src = preloaded[entry.src] ? entry.src : entry.thumb;
       img.alt = entry.caption || "";
       img.width = entry.w;
       img.height = entry.h;
       stage.appendChild(img);
+      if (img.src !== entry.src) {
+        var full = new Image();
+        full.onload = function () {
+          /* Only if the viewer is still on this item. */
+          if (items[current] === entry && img.isConnected) img.src = entry.src;
+        };
+        full.src = entry.src;
+      }
     }
 
     /* Captions come from Instagram and can contain anything, so they are set
