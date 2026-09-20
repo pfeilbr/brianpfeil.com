@@ -1550,6 +1550,7 @@ nav details > summary {
 .media-tile {
   position: relative;
   display: block;
+  text-decoration: none; /* a link since the JS-off fallback, not a button */
   padding: 0;
   border: 0;
   border-radius: 0.375rem;

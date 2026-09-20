@@ -30,8 +30,11 @@
       {{ range where $m.items "year" $year }}
       {{ $first := index .media 0 }}
       {{ $label := cond (ne .caption "") (.caption | plainify | truncate 120) (i18n "media_untitled") }}
-      <button type="button" class="media-tile" data-item="{{ .id }}"
-              aria-label="{{ $label }} — {{ i18n "media_open" }}">
+      {{/* A real link to the full-size file, so the grid still works with
+         JavaScript off — the same rule the tabbed pages follow. The lightbox
+         script takes over the click when it is running. */}}
+      <a class="media-tile" href="{{ $base }}{{ $first.src }}" data-item="{{ .id }}"
+         aria-label="{{ $label }} — {{ i18n "media_open" }}">
         <img src="{{ $base }}{{ $first.thumb }}" alt="" loading="lazy" decoding="async">
         {{ if eq .kind "video" }}
         <span class="media-badge" aria-hidden="true">
@@ -40,7 +43,7 @@
         {{ else if eq .kind "album" }}
         <span class="media-badge media-badge-count" aria-hidden="true">{{ len .media }}</span>
         {{ end }}
-      </button>
+      </a>
       {{ end }}
     </div>
   </section>
@@ -202,10 +205,13 @@
   }
 
   document.querySelectorAll(".media-tile").forEach(function (tile) {
-    tile.addEventListener("click", function () {
+    tile.addEventListener("click", function (e) {
+      /* Cmd/Ctrl/Shift-click and middle-click keep their normal meaning
+         (new tab, new window): the tile is a real link, so let it be one. */
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       var id = tile.dataset.item;
       for (var i = 0; i < items.length; i++) {
-        if (items[i].item === id) { show(i, tile); return; }
+        if (items[i].item === id) { e.preventDefault(); show(i, tile); return; }
       }
     });
   });
