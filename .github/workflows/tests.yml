@@ -47,3 +47,23 @@ jobs:
           extended: true
       - name: Build with warnings surfaced
         run: hugo --minify --printI18nWarnings --printPathWarnings
+
+  terraform:
+    name: terraform fmt + validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.16.3"
+      - name: fmt
+        run: terraform fmt -check -recursive
+        working-directory: infra
+      # -backend=false: validation needs the provider schema, not the state,
+      # so this runs with no AWS credentials at all.
+      - name: validate site stack
+        run: terraform init -backend=false -input=false && terraform validate
+        working-directory: infra
+      - name: validate bootstrap stack
+        run: terraform init -backend=false -input=false && terraform validate
+        working-directory: infra/bootstrap
