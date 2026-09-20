@@ -66,6 +66,16 @@ decision; only genuinely new posts arrive as `approved: false`.
   carry GPS coordinates, and these files go on a public CDN.
 - Captions are published as-is, in whatever language they were written in.
 
+## The page
+
+- Thumbnails only in the grid; each tile is a real link to the full-size
+  file, so the page works with JavaScript off.
+- The lightbox opens on the cached thumbnail and sharpens when the full image
+  arrives, preloads one neighbour each way (a poster, never a video), traps
+  focus, and pages with arrow keys or a horizontal swipe.
+- `tests/check_layout.py --build` renders the real page from
+  `tests/fixtures/media.yaml` and checks it in all nine languages.
+
 ## Where the files go
 
 Private S3 bucket `brianpfeil-media01`, served through CloudFront

@@ -32,8 +32,17 @@ git add data/media.yaml tools/instagram-media/manifest.yaml && git commit && git
 Nothing publishes without an explicit approval — see
 `tools/instagram-media/README.md`.
 
-`make verify` runs both test suites plus a warning-surfacing Hugo build, and
-the Tests workflow runs the same on every push and PR.
+`make verify` runs every test suite (Go post generator, Python media tool,
+link checker), a render check that builds `/media/` from a fixture and with
+no data and asserts on the HTML in all nine languages, and a
+warning-surfacing Hugo build. The Tests workflow runs the same on every push
+and PR, plus `terraform fmt` and `validate` on both stacks.
+
+**Open decision for B: 16 posts link to repos that are now private.** Their
+"code for article" link 404s for visitors. `make check-repo-links` lists them
+(it exits 1 while any are broken). The options are to make those repos
+public, remove the posts, or keep the posts and drop the link — nothing has
+been changed until B picks one.
 
 **Terraform manages all of the AWS side.** State is remote in
 `s3://brianpfeil-tfstate-529276214230` (versioned, native S3 locking, no
