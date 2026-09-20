@@ -67,12 +67,19 @@ def download() -> bool:
         if have >= SIZE:
             break
         log(f"attempt {attempt}: {have:,}/{SIZE:,} bytes ({have * 100 // SIZE}%)")
-        subprocess.run(
-            ["curl", "-sL", "-C", "-", "--retry", "3", "--retry-delay", "5",
-             "--max-time", "900", "-o", str(ZIP_PATH), f"{BASE}/{ZIP_NAME}"],
-            capture_output=True,
+        proc = subprocess.run(
+            ["curl", "-sS", "-L", "-C", "-", "--retry", "3", "--retry-delay", "5",
+             "--max-time", "1800", "--speed-limit", "1024", "--speed-time", "120",
+             "-o", str(ZIP_PATH), f"{BASE}/{ZIP_NAME}"],
+            capture_output=True, text=True,
         )
-        if ZIP_PATH.exists() and ZIP_PATH.stat().st_size == have:
+        gained = (ZIP_PATH.stat().st_size if ZIP_PATH.exists() else 0) - have
+        # Log why, not just that: an earlier run sat at 209 KB for six hours
+        # because curl's exit code and stderr were being discarded.
+        if proc.returncode != 0 or gained <= 0:
+            log(f"  curl exit {proc.returncode}, gained {gained:,} bytes"
+                f"{': ' + proc.stderr.strip()[:200] if proc.stderr.strip() else ''}")
+        if gained <= 0:
             time.sleep(10)  # no progress at all; back off
     else:
         log("gave up: too many attempts without finishing")

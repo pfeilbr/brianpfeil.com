@@ -3,3 +3,7 @@
 *.tfstate.*
 *.tfplan
 .provider-cache/
+# Written by a -plugin-dir install, so it carries locally-computed
+# checksums for darwin_arm64 only and would break CI or a Linux box.
+# Commit a real one from `terraform providers lock -platform=...`.
+.terraform.lock.hcl
