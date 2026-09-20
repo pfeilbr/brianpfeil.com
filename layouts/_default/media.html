@@ -102,6 +102,18 @@
 
   var overlay = null, stage = null, caption = null, counter = null;
   var current = 0, lastFocused = null;
+  var preloaded = {};
+
+  /* Fetch the neighbours of whatever is open, so paging doesn't wait on the
+     network. Bounded to one each way, only once the viewer is open, and never
+     a video — just its poster, which is a small JPEG. */
+  function preload(i) {
+    var entry = items[(i + items.length) % items.length];
+    var url = entry.kind === "video" ? entry.poster : entry.src;
+    if (!url || preloaded[url]) return;
+    preloaded[url] = true;
+    new Image().src = url;
+  }
 
   function build() {
     overlay = document.createElement("div");
@@ -196,6 +208,10 @@
       .replace("%total", items.length);
     counter.textContent = entry.date + " — " + position;
     current = i;
+    /* What is on screen is already loaded; don't fetch it again as a neighbour. */
+    preloaded[entry.kind === "video" ? entry.poster : entry.src] = true;
+    preload(i + 1);
+    preload(i - 1);
   }
 
   function step(delta) {
