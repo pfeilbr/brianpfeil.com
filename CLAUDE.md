@@ -14,7 +14,11 @@ Instagram login, so it is the one step B has to do:
 → Posts + Reels → **Format: JSON**, All time, High quality. Instagram emails a
 link; a large account comes back as several part ZIPs.
 
-With the archive on disk:
+`aws sso login` first — the session expires and `publish` now stops in a
+second rather than encoding everything and failing at the upload.
+
+With the archive on disk (several part ZIPs are fine — pass them all, or the
+directory holding them):
 
 ```sh
 make media-deps                                          # one-time venv
@@ -28,12 +32,17 @@ git add data/media.yaml tools/instagram-media/manifest.yaml && git commit && git
 Nothing publishes without an explicit approval — see
 `tools/instagram-media/README.md`.
 
+`make verify` runs both test suites plus a warning-surfacing Hugo build, and
+the Tests workflow runs the same on every push and PR.
+
 **Terraform in `infra/` is written but NOT applied.** It describes the bucket
 and CloudFront distribution that already exist (created with the CLI before
 the Terraform-only rule was in play), with `import` blocks so applying adopts
 them rather than rebuilding. `terraform init` needs a 174 MB provider that
 downloads at ~50 KB/s, so run `python3 infra/scripts/fetch_provider.py
---detach` and check `infra/.provider-cache/fetch.log`. A correct plan is
+--detach` and check `infra/.provider-cache/fetch.log`. That has already run:
+the provider is installed and `init` and `validate` pass. Only `plan` is
+outstanding, and it needs `aws sso login`. A correct plan is
 **6 to import, 0 to add, 0 to change, 0 to destroy** — anything proposing a
 change or destroy means stop, those resources serve the live media page.
 
