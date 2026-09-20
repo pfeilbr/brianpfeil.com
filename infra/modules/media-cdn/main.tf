@@ -24,6 +24,7 @@ data "aws_cloudfront_cache_policy" "optimized" {
 
 resource "aws_s3_bucket" "media" {
   bucket = var.bucket_name
+  tags   = var.tags
 }
 
 resource "aws_s3_bucket_public_access_block" "media" {
@@ -48,8 +49,10 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "media" {
 }
 
 resource "aws_cloudfront_origin_access_control" "media" {
-  name                              = "${var.bucket_name}-oac"
-  description                       = var.description
+  name = "${var.bucket_name}-oac"
+  # Falls back to the distribution comment so a second instance needs only
+  # bucket_name and comment.
+  description                       = coalesce(var.description, var.comment)
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
@@ -58,6 +61,7 @@ resource "aws_cloudfront_origin_access_control" "media" {
 resource "aws_cloudfront_distribution" "media" {
   enabled         = true
   comment         = var.comment
+  tags            = var.tags
   price_class     = var.price_class
   http_version    = "http2and3"
   is_ipv6_enabled = true
