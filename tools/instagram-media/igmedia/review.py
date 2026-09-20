@@ -30,7 +30,9 @@ def _thumb(src: Path, dest: Path, kind: str) -> bool:
 
         from PIL import Image, ImageOps
 
-        with Image.open(src) as im:
+        from .derive import open_image
+
+        with open_image(src) as im:
             im = ImageOps.exif_transpose(im)
             if im.mode not in ("RGB", "L"):
                 im = im.convert("RGB")

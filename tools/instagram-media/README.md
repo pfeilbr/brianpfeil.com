@@ -19,6 +19,19 @@ machine-readable metadata, and nothing here can read it.
 
 Instagram emails a link when the archive is ready; that can take hours.
 
+A large account comes back as several part ZIPs. Pass them all, or just the
+directory holding them — the JSON lives in one part and the media it refers to
+is spread across the others, so they only make sense merged:
+
+```sh
+make media-stage EXPORT=~/Downloads/instagram-parts      # a directory, or
+make media-stage EXPORT="part-1.zip part-2.zip part-3.zip"
+```
+
+If the whole archive is unwieldy, narrow the date range instead and run it
+again later: ids are content hashes, so a second export merges rather than
+duplicating, and keeps the approvals already made.
+
 ## Running it
 
 ```sh

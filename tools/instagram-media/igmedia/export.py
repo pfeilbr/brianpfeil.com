@@ -70,23 +70,8 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
-def unpack(export: Path, workdir: Path) -> Path:
-    """Return a directory holding the export, extracting the ZIP if needed."""
-    if export.is_dir():
-        return export
-    if export.suffix.lower() != ".zip":
-        raise ValueError(f"expected a .zip or a directory, got {export}")
-
-    # Key the extraction on the archive's size and name so re-running against
-    # the same download doesn't unpack it again.
-    tag = hashlib.sha256(f"{export.name}:{export.stat().st_size}".encode()).hexdigest()[:12]
-    dest = workdir / "export" / tag
-    marker = dest / ".extracted"
-    if marker.exists():
-        return dest
-
-    dest.mkdir(parents=True, exist_ok=True)
-    with zipfile.ZipFile(export) as zf:
+def _extract(archive: Path, dest: Path) -> None:
+    with zipfile.ZipFile(archive) as zf:
         for member in zf.namelist():
             # Refuse absolute paths and traversal; an export is trusted input
             # but a ZIP is still a ZIP.
@@ -94,7 +79,56 @@ def unpack(export: Path, workdir: Path) -> Path:
             if not str(target).startswith(str(dest.resolve())):
                 raise ValueError(f"unsafe path in archive: {member}")
         zf.extractall(dest)
-    marker.write_text("")
+
+
+def _archives(paths: list[Path]) -> list[Path]:
+    """Expand the arguments into the list of ZIPs to extract.
+
+    Instagram splits a large account into part-1-of-3.zip and friends, so a
+    directory full of ZIPs is as valid an input as a single file.
+    """
+    archives: list[Path] = []
+    for path in paths:
+        if path.is_dir():
+            archives.extend(sorted(path.glob("*.zip")))
+        elif path.suffix.lower() == ".zip":
+            archives.append(path)
+        else:
+            raise ValueError(f"expected a .zip or a directory, got {path}")
+    return archives
+
+
+def unpack(export: Path | list[Path], workdir: Path) -> Path:
+    """Return one directory holding the whole export.
+
+    Parts are extracted over each other into a single tree: the JSON lives in
+    one part and the media it references is spread across the others, so they
+    only make sense merged.
+    """
+    paths = [export] if isinstance(export, Path) else list(export)
+
+    # An already-unpacked export: a directory holding the activity tree rather
+    # than the ZIPs themselves.
+    if len(paths) == 1 and paths[0].is_dir() and not list(paths[0].glob("*.zip")):
+        return paths[0]
+
+    archives = _archives(paths)
+    if not archives:
+        raise ValueError(f"no .zip files found in {', '.join(str(p) for p in paths)}")
+
+    # Key the extraction on every part's name and size, so adding a part later
+    # unpacks afresh rather than silently reusing an incomplete tree.
+    fingerprint = ";".join(f"{a.name}:{a.stat().st_size}" for a in archives)
+    tag = hashlib.sha256(fingerprint.encode()).hexdigest()[:12]
+    dest = workdir / "export" / tag
+    marker = dest / ".extracted"
+    if marker.exists():
+        return dest
+
+    dest.mkdir(parents=True, exist_ok=True)
+    for archive in archives:
+        _extract(archive, dest)
+    marker.write_text("\n".join(a.name for a in archives) + "\n")
     return dest
 
 

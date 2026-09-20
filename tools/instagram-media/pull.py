@@ -37,7 +37,7 @@ def paths(cfg: dict) -> tuple[Path, Path, Path]:
 
 def cmd_stage(args, cfg) -> int:
     workdir, manifest_path, _ = paths(cfg)
-    root = export.unpack(Path(args.export).expanduser(), workdir)
+    root = export.unpack([p.expanduser() for p in args.export], workdir)
     items = export.read_items(root)
     if not items:
         print("no posts or reels found — is this a JSON export with media?", file=sys.stderr)
@@ -101,7 +101,7 @@ def cmd_publish(args, cfg) -> int:
         print("nothing approved yet; see the manifest or the review sheet", file=sys.stderr)
         return 1
 
-    root = export.unpack(Path(args.export).expanduser(), workdir)
+    root = export.unpack([p.expanduser() for p in args.export], workdir)
     items = [i for i in export.read_items(root) if i.id in approved]
     missing = approved - {i.id for i in items}
     if missing:
@@ -148,7 +148,8 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
 
     stage = sub.add_parser("stage", help="read an export, update the approve list, build the review sheet")
-    stage.add_argument("--export", required=True, help="path to the export .zip or unpacked directory")
+    stage.add_argument("--export", required=True, nargs="+", type=Path,
+                       help="export .zip(s), a directory of part ZIPs, or an unpacked directory")
     stage.set_defaults(func=cmd_stage)
 
     approve = sub.add_parser("approve", help="mark items as publishable")
@@ -160,7 +161,8 @@ def main() -> int:
     approve.set_defaults(func=cmd_approve)
 
     pub = sub.add_parser("publish", help="encode approved items, upload them, write the data file")
-    pub.add_argument("--export", required=True, help="path to the export .zip or unpacked directory")
+    pub.add_argument("--export", required=True, nargs="+", type=Path,
+                     help="export .zip(s), a directory of part ZIPs, or an unpacked directory")
     pub.add_argument("--prune", action="store_true", help="also delete S3 objects that are no longer approved")
     pub.add_argument("--dry-run", action="store_true", help="build locally, upload nothing")
     pub.set_defaults(func=cmd_publish)

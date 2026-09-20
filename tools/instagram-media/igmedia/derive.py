@@ -6,8 +6,11 @@ disk and uploads nothing. Bump PROFILE_VERSION to force a re-encode of
 everything (new sizes, different quality, a codec change).
 """
 
+import contextlib
 import json
+import os
 import subprocess
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -65,18 +68,51 @@ def ffprobe_video(path: Path) -> tuple[int, int, float]:
     return int(stream.get("width") or 0), int(stream.get("height") or 0), duration
 
 
+@contextlib.contextmanager
+def open_image(src: Path):
+    """Open an image, falling back to ffmpeg for anything Pillow can't read.
+
+    Instagram hands back whatever was uploaded, and an iPhone-era archive can
+    contain HEIC. Pillow needs a plugin for that which isn't a dependency
+    here, but ffmpeg already is, so it decodes to a temporary PNG first.
+    """
+    try:
+        from PIL import Image
+    except ImportError as exc:  # pragma: no cover - depends on the venv
+        raise ToolMissing("Pillow is not installed; run `make media-deps`") from exc
+
+    try:
+        im = Image.open(src)
+        im.load()
+    except Exception:
+        handle, tmp_name = tempfile.mkstemp(suffix=".png")
+        os.close(handle)
+        tmp = Path(tmp_name)
+        try:
+            _run(["ffmpeg", "-nostdin", "-y", "-loglevel", "error",
+                  "-i", str(src), "-map_metadata", "-1", str(tmp)])
+            with Image.open(tmp) as im:
+                im.load()
+                yield im
+        finally:
+            tmp.unlink(missing_ok=True)
+        return
+
+    try:
+        yield im
+    finally:
+        im.close()
+
+
 def _save_image(src: Path, dest: Path, max_edge: int, quality: int) -> tuple[int, int]:
     """Resize with Pillow, dropping every scrap of metadata on the way.
 
     Stripping EXIF is the point as much as the resize is: export originals can
     still carry GPS coordinates, and these files end up on a public CDN.
     """
-    try:
-        from PIL import Image, ImageOps
-    except ImportError as exc:  # pragma: no cover - depends on the venv
-        raise ToolMissing("Pillow is not installed; run `make media-deps`") from exc
+    from PIL import Image, ImageOps
 
-    with Image.open(src) as im:
+    with open_image(src) as im:
         im = ImageOps.exif_transpose(im)  # bake in rotation before dropping EXIF
         if im.mode not in ("RGB", "L"):
             im = im.convert("RGB")
