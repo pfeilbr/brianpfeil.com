@@ -25,10 +25,16 @@ def meta(shortcode, kind, taken_at, local, media, caption="", location=True):
         "id": shortcode, "kind": kind, "taken_at": taken_at, "taken_at_local": local,
         "caption": {"text": caption, "file": "caption.md"},
         "media": media,
-        "tagged_users": [{"username": "someone"}],
+        "tagged_users": [{"username": "someone", "x": 0.42, "y": 0.61, "media_index": 1}],
+        "permalink": f"https://www.instagram.com/p/{shortcode}/",
+        "counts": {"likes": 12, "comments": 3, "views": None},
+        "archived_at": "2026-09-20T13:07:00Z",
+        "audio": {"type": "original_audio", "title": "Original audio"},
+        "secret_new_field": "must not reach the page",
     }
     if location:
-        m["location"] = {"name": "Woody's", "lat": 39.9488443, "lng": -75.1623162}
+        m["location"] = {"pk": "43144563610", "name": "Woody's",
+                         "lat": 39.9488443, "lng": -75.1623162}
     return m
 
 
@@ -93,12 +99,35 @@ class ArchiveTest(unittest.TestCase):
         carousel = next(i for i in self.items() if i.id.endswith("CAROUSEL1"))
         self.assertEqual(carousel.caption, "2025-03-13 | woody’s")
 
-    def test_location_and_tagged_users_never_leave_the_module(self):
+    def test_coordinates_never_leave_the_module(self):
+        """Instagram shows the place name, never the coordinates stored with it."""
         for item in self.items():
             flat = json.dumps(item.__dict__, default=str)
             self.assertNotIn("39.9488", flat)
-            self.assertNotIn("Woody's", flat.replace("woody’s", ""))
-            self.assertNotIn("someone", flat)
+            self.assertNotIn("-75.162", flat)
+            self.assertNotIn('"lat"', flat)
+
+    def test_details_carry_what_instagram_shows(self):
+        carousel = next(i for i in self.items() if i.id.endswith("CAROUSEL1"))
+        self.assertEqual(carousel.details, {
+            "permalink": "https://www.instagram.com/p/CAROUSEL1/",
+            "location": {"name": "Woody's", "id": "43144563610"},
+            "likes": 12, "comments": 3, "counted": "2026-09-20",
+            "tagged": ["someone"],
+            "audio": "original",
+        })
+
+    def test_tag_positions_and_unknown_fields_are_dropped(self):
+        flat = json.dumps([i.details for i in self.items()])
+        self.assertNotIn("0.42", flat)          # the tag's on-photo position
+        self.assertNotIn("secret_new_field", flat)
+        self.assertNotIn("must not reach", flat)
+
+    def test_reels_are_marked(self):
+        reel = next(i for i in self.items() if i.id.endswith("REEL1"))
+        self.assertTrue(reel.details.get("reel"))
+        carousel = next(i for i in self.items() if i.id.endswith("CAROUSEL1"))
+        self.assertNotIn("reel", carousel.details)
 
     def test_newest_first(self):
         dates = [i.date for i in self.items()]
@@ -118,6 +147,32 @@ class ArchiveTest(unittest.TestCase):
     def test_not_an_archive(self):
         with self.assertRaises(ValueError):
             archive.read_archive(Path(self.tmp.name) / "nothing-here")
+
+
+class DetailsTest(unittest.TestCase):
+    """archive.details() on its own: the allow-list."""
+
+    def test_empty_metadata_gives_no_details(self):
+        self.assertEqual(archive.details({}), {})
+
+    def test_place_without_a_name_is_left_out(self):
+        self.assertNotIn("location", archive.details({"location": {"lat": 1.0, "lng": 2.0}}))
+
+    def test_tagged_usernames_deduplicated_in_order(self):
+        tags = [{"username": "b"}, {"username": "a"}, {"username": "b"}, {"x": 1}]
+        self.assertEqual(archive.details({"tagged_users": tags})["tagged"], ["b", "a"])
+
+    def test_silent_post_has_no_audio_line(self):
+        self.assertNotIn("audio", archive.details({"audio": {"type": "none"}}))
+
+    def test_licensed_song_shows_title_and_artist(self):
+        d = archive.details({"audio": {"type": "licensed_music", "title": "Song", "artist": "Band"}})
+        self.assertEqual(d["audio"], "Song · Band")
+
+    def test_missing_counts_are_absent_not_zero(self):
+        d = archive.details({"counts": {"likes": None, "comments": None}, "archived_at": "2026-01-01"})
+        self.assertNotIn("likes", d)
+        self.assertNotIn("counted", d)
 
 
 if __name__ == "__main__":

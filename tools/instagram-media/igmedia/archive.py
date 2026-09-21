@@ -8,12 +8,14 @@ metadata.json and a media/ folder:
         media/01.mp4, 01.thumb.jpg, 02.jpg, …
 
 It is a better source than an Instagram export: complete (the index reports
-every item on the profile), already downloaded, and keyed by shortcode.
+every item on the profile), already downloaded, keyed by shortcode, and it
+carries what Instagram shows beside a post — see details().
 
 Only feed posts and reels are read. Stories, highlights and the _oversized
 copies (higher-bitrate duplicates of reels that are also in reels/) are not.
-Location, tagged users and the raw API object are never carried through —
-only caption, date and media leave this module.
+Only what Instagram itself displays leaves this module: the place *name*
+but never the GPS coordinates stored with it, tagged usernames but not their
+on-photo positions, and none of the raw API object.
 """
 
 import json
@@ -33,6 +35,51 @@ def _when(meta: dict) -> datetime:
         if value:
             return datetime.fromisoformat(value.replace("Z", "+00:00"))
     raise ValueError("no taken_at")
+
+
+def details(meta: dict) -> dict:
+    """What Instagram shows beside the post, and nothing more.
+
+    Built by allow-list: a field only appears here if it is named below, so
+    a new field in the archive can't reach the page by accident. The place
+    comes through as its name and Instagram's place id — the lat/lng stored
+    next to them never do; Instagram doesn't show those either.
+    """
+    out: dict = {}
+    if meta.get("permalink"):
+        out["permalink"] = meta["permalink"]
+
+    place = meta.get("location") or {}
+    if place.get("name"):
+        out["location"] = {"name": place["name"]}
+        if place.get("pk"):
+            out["location"]["id"] = str(place["pk"])
+
+    counts = meta.get("counts") or {}
+    for key in ("likes", "comments"):
+        if isinstance(counts.get(key), int):
+            out[key] = counts[key]
+    # Counts are a snapshot, not live; say when it was taken.
+    if meta.get("archived_at") and ("likes" in out or "comments" in out):
+        out["counted"] = str(meta["archived_at"])[:10]
+
+    tagged = []
+    for tag in meta.get("tagged_users") or []:
+        name = tag.get("username") if isinstance(tag, dict) else None
+        if name and name not in tagged:
+            tagged.append(name)
+    if tagged:
+        out["tagged"] = tagged
+
+    audio = meta.get("audio") or {}
+    if audio.get("type") == "original_audio":
+        out["audio"] = "original"
+    elif audio.get("type") not in (None, "none") and audio.get("title"):
+        out["audio"] = " · ".join(x for x in (audio.get("title"), audio.get("artist")) if x)
+
+    if meta.get("kind") == "reel":
+        out["reel"] = True
+    return out
 
 
 def _item(directory: Path) -> Item | None:
@@ -64,7 +111,8 @@ def _item(directory: Path) -> Item | None:
     # the same whether the file is re-downloaded, re-encoded or re-exported —
     # unlike a content hash, which a different download quality would change.
     item_id = f"{taken_at.strftime('%Y%m%d')}-{shortcode}"
-    return Item(id=item_id, taken_at=taken_at, caption=caption, kind=kind, media=media)
+    return Item(id=item_id, taken_at=taken_at, caption=caption, kind=kind, media=media,
+                details=details(meta))
 
 
 def read_archive(root: Path) -> list[Item]:

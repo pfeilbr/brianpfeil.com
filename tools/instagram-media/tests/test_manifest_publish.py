@@ -32,6 +32,7 @@ class FakeItem:
     kind: str
     taken_at: datetime
     media: list = field(default_factory=list)
+    details: dict = field(default_factory=dict)
 
     @property
     def date(self) -> str:
@@ -139,6 +140,20 @@ class DataFileTest(unittest.TestCase):
         first = self.path.read_bytes()
         publish.write_data_file(self.path, "https://cdn.example", entries)
         self.assertEqual(self.path.read_bytes(), first)
+
+    def test_details_are_copied_into_the_entry(self):
+        it = item("a", caption="hi")
+        it.details = {"permalink": "https://www.instagram.com/p/a/", "likes": 5,
+                      "location": {"name": "Somewhere", "id": "1"}}
+        entry = publish.entry_for(it, [photo("x")])
+        self.assertEqual(entry["permalink"], "https://www.instagram.com/p/a/")
+        self.assertEqual(entry["likes"], 5)
+        self.assertEqual(entry["location"], {"name": "Somewhere", "id": "1"})
+        self.assertEqual(list(entry)[-1], "media")  # media stays last in the YAML
+
+    def test_no_details_means_none_in_the_entry(self):
+        entry = publish.entry_for(item("a"), [photo("x")])
+        self.assertEqual(set(entry), {"id", "date", "year", "kind", "caption", "media"})
 
     def test_unicode_is_written_as_text_not_escapes(self):
         entries = [publish.entry_for(item("a", caption="Café 😀"), [photo("a")])]

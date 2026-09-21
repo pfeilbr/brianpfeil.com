@@ -40,6 +40,9 @@ class Item:
     caption: str
     kind: str  # "photo" | "video" | "album"
     media: list[Media] = field(default_factory=list)
+    # What Instagram shows alongside a post — permalink, place name, counts,
+    # tagged accounts, audio. Only the archive source fills it in.
+    details: dict = field(default_factory=dict)
 
     @property
     def date(self) -> str:

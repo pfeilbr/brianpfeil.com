@@ -157,11 +157,14 @@ def entry_for(item, derived_media: list) -> dict:
             record["duration"] = d.duration
         media.append(record)
 
-    return {
+    entry = {
         "id": item.id,
         "date": item.date,
         "year": item.taken_at.strftime("%Y"),
         "kind": item.kind,
         "caption": item.caption,
-        "media": media,
     }
+    # Already filtered to what Instagram displays; see archive.details().
+    entry.update(getattr(item, "details", None) or {})
+    entry["media"] = media
+    return entry
