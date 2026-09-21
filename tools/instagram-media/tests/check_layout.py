@@ -146,6 +146,10 @@ def check_populated(public: Path) -> list[str]:
             errors.append(f"{label}: tile colour missing")
         if "evil.example" in html:
             errors.append(f"{label}: a malformed colour reached a style attribute")
+        # A year row linking to every year's heading (the fixture spans three).
+        for year in ("2024", "2023", "2022"):
+            if f"href=#year-{year}" not in html.replace('"', ""):
+                errors.append(f"{label}: no jump link to {year}")
         # The 2-second video in the fixture shows its length on the tile.
         if "0:02</span>" not in html:
             errors.append(f"{label}: video tile has no duration badge")

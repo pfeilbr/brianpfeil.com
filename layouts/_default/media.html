@@ -22,6 +22,15 @@
     {{ if not (in $years .year) }}{{ $years = $years | append .year }}{{ end }}
   {{ end }}
 
+  {{/* A row of the years that have posts, kept on screen while scrolling,
+     each linking to its section's heading — so 2011 is one tap away rather
+     than a long scroll past everything since. */}}
+  {{ if gt (len $years) 1 }}
+  <nav class="media-years" aria-label="{{ i18n "media_years" }}">
+    {{ range $years }}<a href="#year-{{ . }}">{{ . }}</a>{{ end }}
+  </nav>
+  {{ end }}
+
   {{/* The first rows are on screen at load, so they shouldn't wait for the
      lazy-loader to decide they're visible: eager, and high priority for the
      first few so they win the race against everything else on the page. */}}
