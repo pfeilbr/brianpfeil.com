@@ -18,7 +18,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from igmedia import audit, derive, export, manifest, publish, release, review  # noqa: E402
+from igmedia import archive, audit, derive, export, manifest, publish, release, review  # noqa: E402
 
 TOOL_DIR = Path(__file__).resolve().parent
 REPO_ROOT = TOOL_DIR.parents[1]
@@ -35,10 +35,19 @@ def paths(cfg: dict) -> tuple[Path, Path, Path]:
     return workdir, manifest_path, data_path
 
 
+def load_items(args, cfg: dict, workdir: Path):
+    """Items from an Instagram export if one was given, otherwise from the
+    instagram-archive project (config archive_dir), which is the default."""
+    if getattr(args, "export", None):
+        root = export.unpack([p.expanduser() for p in args.export], workdir)
+        return export.read_items(root)
+    source = Path(getattr(args, "archive", None) or cfg["archive_dir"]).expanduser()
+    return archive.read_archive(source)
+
+
 def cmd_stage(args, cfg) -> int:
     workdir, manifest_path, _ = paths(cfg)
-    root = export.unpack([p.expanduser() for p in args.export], workdir)
-    items = export.read_items(root)
+    items = load_items(args, cfg, workdir)
     if not items:
         print("no posts or reels found — is this a JSON export with media?", file=sys.stderr)
         return 1
@@ -109,8 +118,7 @@ def cmd_publish(args, cfg) -> int:
             print(exc, file=sys.stderr)
             return 1
 
-    root = export.unpack([p.expanduser() for p in args.export], workdir)
-    items = [i for i in export.read_items(root) if i.id in approved]
+    items = [i for i in load_items(args, cfg, workdir) if i.id in approved]
     missing = approved - {i.id for i in items}
     if missing:
         print(f"warning: {len(missing)} approved items are not in this export", file=sys.stderr)
@@ -207,14 +215,21 @@ def cmd_audit(args, cfg) -> int:
     return 1 if missing else 0
 
 
+def add_source(parser) -> None:
+    src = parser.add_mutually_exclusive_group()
+    src.add_argument("--archive", type=Path,
+                     help="instagram-archive directory (default: archive_dir in config.yaml)")
+    src.add_argument("--export", nargs="+", type=Path,
+                     help="Instagram export .zip(s), a directory of part ZIPs, or an unpacked export")
+
+
 def main() -> int:
     cfg = load_config()
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
 
     stage = sub.add_parser("stage", help="read an export, update the approve list, build the review sheet")
-    stage.add_argument("--export", required=True, nargs="+", type=Path,
-                       help="export .zip(s), a directory of part ZIPs, or an unpacked directory")
+    add_source(stage)
     stage.set_defaults(func=cmd_stage)
 
     approve = sub.add_parser("approve", help="mark items as publishable")
@@ -226,15 +241,13 @@ def main() -> int:
     approve.set_defaults(func=cmd_approve)
 
     pub = sub.add_parser("publish", help="encode approved items, upload them, write the data file")
-    pub.add_argument("--export", required=True, nargs="+", type=Path,
-                     help="export .zip(s), a directory of part ZIPs, or an unpacked directory")
+    add_source(pub)
     pub.add_argument("--prune", action="store_true", help="also delete S3 objects that are no longer approved")
     pub.add_argument("--dry-run", action="store_true", help="build locally, upload nothing")
     pub.set_defaults(func=cmd_publish)
 
     rel = sub.add_parser("release", help="publish, then commit and push only the data file and manifest")
-    rel.add_argument("--export", required=True, nargs="+", type=Path,
-                     help="export .zip(s), a directory of part ZIPs, or an unpacked directory")
+    add_source(rel)
     rel.add_argument("--prune", action="store_true", help="also delete S3 objects that are no longer approved")
     rel.add_argument("--dry-run", action="store_true", help="build locally, upload and commit nothing")
     rel.set_defaults(func=cmd_release)

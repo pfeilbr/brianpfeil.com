@@ -14,16 +14,21 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
-PROFILE_VERSION = 1
+PROFILE_VERSION = 2  # 2: cap video by long edge, remux when already web-ready
 
 IMAGE_MAX = 1600  # long edge of the full-size image the lightbox shows
 THUMB_MAX = 600  # long edge of the grid thumbnail
 IMAGE_QUALITY = 82
 THUMB_QUALITY = 78
 
-VIDEO_MAX_HEIGHT = 720
+# Long edge, not height: capping height at 720 turned Instagram's 720x960
+# portrait clips into 540x720 — smaller than what Instagram itself serves.
+VIDEO_MAX_EDGE = 1280
 VIDEO_CRF = 23
 VIDEO_AUDIO_BITRATE = "128k"
+# Above this a clip is re-encoded even if it is otherwise web-ready; a few
+# short phone clips arrive at 7-8 Mbps, which is fine, but nothing needs more.
+VIDEO_MAX_REMUX_BITRATE = 8_000_000
 
 
 @dataclass
@@ -124,18 +129,69 @@ def _save_image(src: Path, dest: Path, max_edge: int, quality: int) -> tuple[int
         return im.size
 
 
+def probe_streams(path: Path) -> dict:
+    """Codec, size and bitrate — enough to decide whether to remux."""
+    proc = subprocess.run(
+        ["ffprobe", "-v", "error",
+         "-show_entries", "stream=codec_type,codec_name,width,height:format=bit_rate",
+         "-of", "json", str(path)],
+        capture_output=True, text=True,
+    )
+    if proc.returncode != 0:
+        raise RuntimeError(f"ffprobe failed for {path.name}: {proc.stderr.strip()[:300]}")
+    data = json.loads(proc.stdout)
+    streams = data.get("streams") or []
+    video = next((s for s in streams if s.get("codec_type") == "video"), {})
+    audio = next((s for s in streams if s.get("codec_type") == "audio"), {})
+    return {
+        "video": video.get("codec_name"),
+        "audio": audio.get("codec_name"),  # None for a silent clip
+        "width": int(video.get("width") or 0),
+        "height": int(video.get("height") or 0),
+        "bit_rate": int((data.get("format") or {}).get("bit_rate") or 0),
+    }
+
+
+def can_remux(info: dict) -> bool:
+    """True when the file is already what a browser wants and only needs its
+    metadata removed: H.264 video, AAC or no audio, within the size cap and a
+    sane bitrate. HEVC in particular does not play everywhere."""
+    return (
+        info["video"] == "h264"
+        and info["audio"] in ("aac", None)
+        and 0 < max(info["width"], info["height"]) <= VIDEO_MAX_EDGE
+        and info["bit_rate"] <= VIDEO_MAX_REMUX_BITRATE
+    )
+
+
+# Both paths drop global and per-stream metadata: creation time and location
+# can sit on the container and on each stream.
+_STRIP = ["-map_metadata", "-1", "-map_metadata:s:v", "-1", "-map_metadata:s:a", "-1",
+          "-map_chapters", "-1"]
+
+
 def _encode_video(src: Path, dest: Path) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
+    if can_remux(probe_streams(src)):
+        # Copy the streams untouched: seconds instead of minutes, and no
+        # generational loss on video Instagram has already compressed once.
+        _run([
+            "ffmpeg", "-nostdin", "-y", "-loglevel", "error", "-i", str(src),
+            "-map", "0:v:0", "-map", "0:a:0?", "-c", "copy", *_STRIP,
+            "-movflags", "+faststart", str(dest),
+        ])
+        return
+
+    # Even dimensions, never upscaled, long edge capped.
+    scale = f"min(1,{VIDEO_MAX_EDGE}/max(iw,ih))"
     _run([
-        "ffmpeg", "-nostdin", "-y", "-loglevel", "error",
-        "-i", str(src),
-        # Even dimensions, never upscaled, capped at 720 tall.
-        "-vf", f"scale='trunc(iw*min(1,{VIDEO_MAX_HEIGHT}/ih)/2)*2':"
-               f"'trunc(ih*min(1,{VIDEO_MAX_HEIGHT}/ih)/2)*2'",
+        "ffmpeg", "-nostdin", "-y", "-loglevel", "error", "-i", str(src),
+        "-map", "0:v:0", "-map", "0:a:0?",
+        "-vf", f"scale='trunc(iw*{scale}/2)*2':'trunc(ih*{scale}/2)*2'",
         "-c:v", "libx264", "-preset", "medium", "-crf", str(VIDEO_CRF),
         "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", VIDEO_AUDIO_BITRATE,
-        "-map_metadata", "-1",  # drops creation time and location
+        *_STRIP,
         "-movflags", "+faststart",  # first frame without fetching the whole file
         str(dest),
     ])

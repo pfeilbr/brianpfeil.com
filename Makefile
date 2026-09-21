@@ -15,29 +15,29 @@ test-tools: ## Go tests for the post generator
 	cd tools/generate-posts && go test ./...
 
 # --- Instagram media page (/media/) ---------------------------------------
-# EXPORT points at the "Download your information" zip (or an unpacked copy).
+# Source: the instagram-archive project (~/projects/instagram/archive, set in
+# tools/instagram-media/config.yaml) by default; EXPORT=… uses an Instagram
+# "Download your information" zip instead.
 #   make media-deps
 #   make media-stage EXPORT=~/Downloads/instagram-export.zip
 #   open tools/instagram-media/build/review.html   # tick what should be public
 #   make media-publish EXPORT=~/Downloads/instagram-export.zip
 
 EXPORT ?=
+SOURCE = $(if $(EXPORT),--export $(EXPORT),)
 
 media-deps: ## Create the media tool's venv
 	cd tools/instagram-media && python3 -m venv .venv && .venv/bin/pip install -q -r requirements.txt
 
-media-stage: ## Read an export (EXPORT=…), update the approve list, build the review sheet
-	@test -n "$(EXPORT)" || (echo "set EXPORT=/path/to/instagram-export.zip" && exit 1)
-	cd tools/instagram-media && .venv/bin/python pull.py stage --export $(EXPORT)
+media-stage: ## Read the archive (or EXPORT=…), update the approve list, build the review sheet
+	cd tools/instagram-media && .venv/bin/python pull.py stage $(SOURCE)
 
-media-publish: ## Encode and upload approved items, write data/media.yaml (EXPORT=…)
-	@test -n "$(EXPORT)" || (echo "set EXPORT=/path/to/instagram-export.zip" && exit 1)
-	cd tools/instagram-media && .venv/bin/python pull.py publish --export $(EXPORT)
+media-publish: ## Encode and upload approved items, write data/media.yaml
+	cd tools/instagram-media && .venv/bin/python pull.py publish $(SOURCE)
 
 # publish, then commit and push data/media.yaml and the manifest — only those.
-media-release: ## media-publish, then commit and push only the media files (EXPORT=…)
-	@test -n "$(EXPORT)" || (echo "set EXPORT=/path/to/instagram-export.zip" && exit 1)
-	cd tools/instagram-media && .venv/bin/python pull.py release --export $(EXPORT)
+media-release: ## media-publish, then commit and push only the media files
+	cd tools/instagram-media && .venv/bin/python pull.py release $(SOURCE)
 
 # Every file the page references exists on the CDN; exits 1 if any are missing.
 media-audit: ## Check every file the page references exists on the CDN

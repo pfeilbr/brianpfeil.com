@@ -146,39 +146,110 @@ class CacheTest(unittest.TestCase):
         self.assertEqual(derive.Lock(path).data, {})
 
 
+def make_video(path: Path, size: str, codec: str = "libx264", audio: bool = True,
+               extra: list[str] | None = None) -> Path:
+    """A short clip tagged with a location and creation time on the container
+    and on the streams, as a phone video can be."""
+    cmd = ["ffmpeg", "-nostdin", "-y", "-loglevel", "error",
+           "-f", "lavfi", "-i", f"testsrc2=size={size}:rate=30"]
+    if audio:
+        cmd += ["-f", "lavfi", "-i", "sine=frequency=440"]
+    cmd += ["-t", "1",
+            "-metadata", "location=+40.4461-079.9822/",
+            "-metadata", "creation_time=2023-01-01T12:00:00Z",
+            "-metadata:s:v", "creation_time=2023-01-01T12:00:00Z",
+            "-c:v", codec, "-pix_fmt", "yuv420p", *(extra or [])]
+    if audio:
+        cmd += ["-c:a", "aac", "-shortest"]
+    subprocess.run(cmd + [str(path)], check=True)
+    return path
+
+
+def tags(path: Path) -> str:
+    """Every container and stream tag, lower-cased, for asserting absence."""
+    return subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format_tags:stream_tags",
+         "-of", "default", str(path)],
+        capture_output=True, text=True, check=True,
+    ).stdout.lower()
+
+
+class RemuxDecisionTest(unittest.TestCase):
+    """Pure logic: which files are already what a browser wants."""
+
+    def info(self, **over):
+        base = {"video": "h264", "audio": "aac", "width": 720, "height": 960,
+                "bit_rate": 2_000_000}
+        base.update(over)
+        return base
+
+    def test_web_ready_h264_is_remuxed(self):
+        self.assertTrue(derive.can_remux(self.info()))
+
+    def test_silent_clip_is_remuxed(self):
+        self.assertTrue(derive.can_remux(self.info(audio=None)))
+
+    def test_hevc_is_re_encoded(self):
+        self.assertFalse(derive.can_remux(self.info(video="hevc")))
+
+    def test_oversized_is_re_encoded(self):
+        self.assertFalse(derive.can_remux(self.info(width=1920, height=1080)))
+
+    def test_high_bitrate_is_re_encoded(self):
+        self.assertFalse(derive.can_remux(self.info(bit_rate=derive.VIDEO_MAX_REMUX_BITRATE + 1)))
+
+    def test_odd_audio_is_re_encoded(self):
+        self.assertFalse(derive.can_remux(self.info(audio="opus")))
+
+
 @unittest.skipUnless(HAS_FFMPEG, "ffmpeg not installed")
 class VideoTest(unittest.TestCase):
     def setUp(self):
         self.tmp = TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
-        self.src = self.root / "in.mp4"
-        subprocess.run(
-            ["ffmpeg", "-nostdin", "-y", "-loglevel", "error",
-             "-f", "lavfi", "-i", "testsrc2=size=1080x1920:rate=30",
-             "-f", "lavfi", "-i", "sine=frequency=440", "-t", "1",
-             "-metadata", "location=+40.4461-079.9822/",
-             "-metadata", "creation_time=2023-01-01T12:00:00Z",
-             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest",
-             str(self.src)],
-            check=True,
-        )
         self.lock = derive.Lock(self.root / "lock.json")
 
-    def test_video_is_capped_at_720_and_stripped_of_location(self):
-        d = derive.derive(Media(self.src, "video", "d" * 64), "vid", self.root / "out",
+    def derive_video(self, src: Path, name="vid"):
+        d = derive.derive(Media(src, "video", name.ljust(64, "0")), name, self.root / "out",
                           "instagram", self.lock)
-        self.assertEqual(d.height, derive.VIDEO_MAX_HEIGHT)
-        self.assertEqual(d.width % 2, 0)
-        self.assertIsNotNone(d.poster_key)
+        return d, self.root / "out" / name / Path(d.key).name
 
-        probe = subprocess.run(
-            ["ffprobe", "-v", "error", "-show_entries", "format_tags", "-of", "default",
-             str(self.root / "out" / "vid" / Path(d.key).name)],
-            capture_output=True, text=True, check=True,
-        ).stdout
-        self.assertNotIn("location", probe.lower())
-        self.assertNotIn("2023-01-01", probe)
+    def assert_clean(self, out: Path):
+        found = tags(out)
+        self.assertNotIn("location", found)
+        self.assertNotIn("2023-01-01", found)
+
+    def test_web_ready_clip_is_remuxed_untouched_and_stripped(self):
+        src = make_video(self.root / "ready.mp4", "720x960")
+        d, out = self.derive_video(src, "ready")
+        self.assertEqual((d.width, d.height), (720, 960))  # not scaled down
+        self.assertEqual(derive.probe_streams(out)["video"], "h264")
+        self.assert_clean(out)
+
+    def test_silent_clip_remuxes_without_inventing_audio(self):
+        src = make_video(self.root / "silent.mp4", "720x900", audio=False)
+        _, out = self.derive_video(src, "silent")
+        self.assertIsNone(derive.probe_streams(out)["audio"])
+        self.assert_clean(out)
+
+    def test_oversized_clip_is_re_encoded_to_the_long_edge_cap(self):
+        src = make_video(self.root / "big.mp4", "1080x1920")
+        d, out = self.derive_video(src, "big")
+        self.assertEqual(max(d.width, d.height), derive.VIDEO_MAX_EDGE)
+        self.assertEqual((d.width % 2, d.height % 2), (0, 0))
+        self.assertIsNotNone(d.poster_key)
+        self.assert_clean(out)
+
+    def test_hevc_is_re_encoded_to_h264(self):
+        if "libx265" not in subprocess.run(["ffmpeg", "-hide_banner", "-encoders"],
+                                           capture_output=True, text=True).stdout:
+            self.skipTest("ffmpeg built without libx265")
+        src = make_video(self.root / "hevc.mp4", "720x960", codec="libx265",
+                         extra=["-tag:v", "hvc1"])
+        _, out = self.derive_video(src, "hevc")
+        self.assertEqual(derive.probe_streams(out)["video"], "h264")
+        self.assert_clean(out)
 
 
 if __name__ == "__main__":

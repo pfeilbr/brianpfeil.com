@@ -15,3 +15,7 @@ work_dir: "build"
 manifest: "manifest.yaml"
 lock_file: "derivatives.lock.json"
 data_file: "data/media.yaml"
+
+# The default media source: the instagram-archive project, which keeps every
+# feed post and reel as metadata.json + media/. --export overrides it.
+archive_dir: "~/projects/instagram/archive"
