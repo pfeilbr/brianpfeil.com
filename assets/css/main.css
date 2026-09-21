@@ -1601,6 +1601,11 @@ nav details > summary {
 
 .media-tile:hover img { opacity: 0.85; }
 
+/* Stories get Instagram's ring, so they read as stories among the posts. */
+.media-tile-story {
+  box-shadow: inset 0 0 0 2px var(--bg), 0 0 0 2px #d62976;
+}
+
 .media-tile:focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 2px;

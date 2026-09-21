@@ -18,7 +18,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from igmedia import archive, audit, derive, export, manifest, publish, release, review  # noqa: E402
+from igmedia import archive, audit, derive, export, manifest, publish, release, review, stories  # noqa: E402
 
 TOOL_DIR = Path(__file__).resolve().parent
 REPO_ROOT = TOOL_DIR.parents[1]
@@ -36,13 +36,27 @@ def paths(cfg: dict) -> tuple[Path, Path, Path]:
 
 
 def load_items(args, cfg: dict, workdir: Path):
-    """Items from an Instagram export if one was given, otherwise from the
-    instagram-archive project (config archive_dir), which is the default."""
+    """Everything to consider publishing, newest first.
+
+    Posts and reels come from the instagram-archive project (archive_dir),
+    which is complete and keyed by shortcode. An export, if given, adds its
+    stories — the one thing the archive can't hold. Its posts and reels are
+    ignored while the archive is in use, so nothing appears twice; with
+    --no-archive the export is the only source, stories included.
+    Reshares — someone else's post, or one of B's reels — are dropped.
+    """
+    use_archive = not getattr(args, "no_archive", False)
+    items = []
+    if use_archive:
+        items += archive.read_archive(Path(getattr(args, "archive", None) or cfg["archive_dir"]).expanduser())
     if getattr(args, "export", None):
         root = export.unpack([p.expanduser() for p in args.export], workdir)
-        return export.read_items(root)
-    source = Path(getattr(args, "archive", None) or cfg["archive_dir"]).expanduser()
-    return archive.read_archive(source)
+        items += export.read_items(root, stories=True, posts=not use_archive)
+
+    kept, dropped = stories.filter_reshares(items, stories.load_inventory(cfg.get("story_inventory")))
+    for item, reason in dropped:
+        print(f"  not published: {item.id} ({reason})")
+    return sorted(kept, key=lambda i: (i.taken_at, i.id), reverse=True)
 
 
 def cmd_stage(args, cfg) -> int:
@@ -233,11 +247,12 @@ def cmd_audit(args, cfg) -> int:
 
 
 def add_source(parser) -> None:
-    src = parser.add_mutually_exclusive_group()
-    src.add_argument("--archive", type=Path,
-                     help="instagram-archive directory (default: archive_dir in config.yaml)")
-    src.add_argument("--export", nargs="+", type=Path,
-                     help="Instagram export .zip(s), a directory of part ZIPs, or an unpacked export")
+    parser.add_argument("--archive", type=Path,
+                        help="instagram-archive directory (default: archive_dir in config.yaml)")
+    parser.add_argument("--export", nargs="+", type=Path,
+                        help="Instagram export .zip(s) or directory: adds its stories to the archive")
+    parser.add_argument("--no-archive", action="store_true",
+                        help="use the export alone, posts and reels included")
 
 
 def main() -> int:

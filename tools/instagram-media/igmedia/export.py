@@ -16,6 +16,7 @@ from pathlib import Path
 # hard-coding "your_instagram_activity/media/".
 POST_GLOBS = ("posts_*.json", "posts.json")
 REEL_GLOBS = ("reels.json", "reels_*.json")
+STORY_GLOBS = ("stories.json", "stories_*.json")
 
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".heic", ".webp"}
 VIDEO_SUFFIXES = {".mp4", ".mov", ".m4v"}
@@ -239,19 +240,35 @@ def _build_item(entry: dict, root: Path) -> Item | None:
     return Item(id=item_id, taken_at=taken_at, caption=caption.strip(), kind=kind, media=media)
 
 
-def read_items(root: Path) -> list[Item]:
-    """Return every post and reel in the export, newest first."""
+def _load(path: Path) -> list[dict]:
+    try:
+        return _entries(json.loads(path.read_text(encoding="utf-8")))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return []
+
+
+def read_items(root: Path, stories: bool = False, posts: bool = True) -> list[Item]:
+    """Posts and reels in the export (and stories, if asked), newest first."""
     items: dict[str, Item] = {}
-    for path in _find_json(root, POST_GLOBS) + _find_json(root, REEL_GLOBS):
-        try:
-            payload = json.loads(path.read_text(encoding="utf-8"))
-        except (json.JSONDecodeError, UnicodeDecodeError):
-            continue
-        for entry in _entries(payload):
-            item = _build_item(entry, root)
-            if item is not None:
-                # Cross-posted reels can appear in both files; the id is
-                # content-derived, so the duplicate collapses onto itself.
-                items[item.id] = item
+    if posts:
+        for path in _find_json(root, POST_GLOBS) + _find_json(root, REEL_GLOBS):
+            for entry in _load(path):
+                item = _build_item(entry, root)
+                if item is not None:
+                    # Cross-posted reels can appear in both files; the id is
+                    # content-derived, so the duplicate collapses onto itself.
+                    items[item.id] = item
+
+    if stories:
+        for path in _find_json(root, STORY_GLOBS):
+            for entry in _load(path):
+                # A story entry *is* its media — there's no "media" list to
+                # wrap it, as there is for a post — so give it one.
+                item = _build_item({"media": [entry],
+                                    "creation_timestamp": entry.get("creation_timestamp"),
+                                    "title": entry.get("title", "")}, root)
+                if item is not None:
+                    item.details = {**item.details, "story": True}
+                    items[item.id] = item
 
     return sorted(items.values(), key=lambda i: (i.taken_at, i.id), reverse=True)

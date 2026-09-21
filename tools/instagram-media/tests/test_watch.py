@@ -1,8 +1,8 @@
-"""Tests for the Downloads watcher's decision about when to stage.
+"""Tests for the Downloads watcher's decision about when to act.
 
-The failure modes that matter: staging a half-written download, staging some
-unrelated ZIP, missing a media-only part, or staging the same export twice.
-Staging itself is injected, so none of this runs pull.py.
+The failure modes that matter: acting on a half-written download or on some
+unrelated ZIP, missing a media-only part, or running the same export twice.
+The action itself is injected, so none of this runs pull.py.
 """
 
 import json
@@ -134,12 +134,28 @@ class CheckTest(unittest.TestCase):
         self.assertEqual(data["staged"][0][0], "instagram-pfeilbr.zip")
 
 
+class ActionTest(unittest.TestCase):
+    def test_an_export_is_published_not_just_staged(self):
+        """B asked for everything on /media/; the watcher runs sync."""
+        self.assertEqual(w.WATCH_ACTION, "sync")
+
+    def test_the_action_is_what_runs(self):
+        from unittest import mock
+        with mock.patch.object(w.subprocess, "run") as run:
+            run.return_value = mock.Mock(returncode=0, stdout="ok", stderr="")
+            w.run_stage([Path("/tmp/x.zip")])
+        cmd = run.call_args[0][0]
+        self.assertEqual(cmd[2], "sync")
+        self.assertEqual(cmd[3:], ["--export", "/tmp/x.zip"])
+
+
 class PlistTest(unittest.TestCase):
-    def test_watches_downloads_and_never_publishes(self):
+    def test_watches_downloads_and_runs_a_plain_check(self):
         body = w.plist_body()
         self.assertEqual(body["WatchPaths"], [str(w.WATCH_DIR)])
         self.assertIn("StartInterval", body)
-        # It runs this script with no arguments: a check, never publish.
+        # It runs this script with no arguments: one check, whose action is
+        # WATCH_ACTION — covered by ActionTest.
         self.assertEqual(len(body["ProgramArguments"]), 2)
         self.assertTrue(body["ProgramArguments"][1].endswith("watch_downloads.py"))
 

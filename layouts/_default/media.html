@@ -51,7 +51,7 @@
          strict pattern before it goes into a style attribute. */}}
       {{ $grid := index $first "grid" }}
       {{ $color := index $first "color" }}
-      <a class="media-tile" href="{{ $base }}{{ $first.src }}" data-item="{{ .id }}"
+      <a class="media-tile{{ if .story }} media-tile-story{{ end }}" href="{{ $base }}{{ $first.src }}" data-item="{{ .id }}"
          aria-label="{{ $label }} — {{ i18n "media_open" }}"
          {{- if and $color (findRE `^#[0-9a-f]{6}$` $color) }} style="background-color:{{ $color | safeCSS }}"{{ end }}>
         {{ $tile = add $tile 1 }}
@@ -96,6 +96,7 @@
     {{ with $it.counted }}{{ $post = merge $post (dict "counted" .) }}{{ end }}
     {{ with $it.tagged }}{{ $post = merge $post (dict "tagged" .) }}{{ end }}
     {{ with $it.audio }}{{ $post = merge $post (dict "audio" .) }}{{ end }}
+    {{ with $it.story }}{{ $post = merge $post (dict "story" true) }}{{ end }}
     {{ $posts = $posts | append $post }}
     {{ range $it.media }}
       {{/* An object, not an array: Hugo's append won't nest a list in a list
@@ -125,7 +126,8 @@
        data-audio="{{ i18n "media_original_audio" }}"
        data-music="{{ i18n "media_music_added" (dict "title" "%title") }}"
        data-as-of="{{ i18n "media_as_of" (dict "date" "%date") }}"
-       data-location="{{ i18n "media_location" }}"></div>
+       data-location="{{ i18n "media_location" }}"
+       data-story="{{ i18n "media_story" }}"></div>
   {{ end }}
 </article>
 
@@ -297,6 +299,7 @@
       counter.appendChild(document.createTextNode(" · "));
     }
     counter.appendChild(document.createTextNode(
+      (post.story ? s.story + " · " : "") +
       entry.date + " · " + s.position.replace("%n", i + 1).replace("%total", items.length)));
 
     fillCaption(caption, entry.caption || "");

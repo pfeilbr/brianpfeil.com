@@ -153,6 +153,11 @@ def check_populated(public: Path) -> list[str]:
             errors.append(f"{label}: added music not carried in the payload")
         if "data-music=" not in html:
             errors.append(f"{label}: missing viewer string data-music")
+        # The fixture's third item is a story: ringed tile, flagged in the payload.
+        if "media-tile media-tile-story" not in html.replace('"', ""):
+            errors.append(f"{label}: story tile has no ring class")
+        if isinstance(data, dict) and not any(p.get("story") for p in data.get("posts") or []):
+            errors.append(f"{label}: story not flagged in the payload")
         # A year row linking to every year's heading (the fixture spans three).
         for year in ("2024", "2023", "2022"):
             if f"href=#year-{year}" not in html.replace('"', ""):

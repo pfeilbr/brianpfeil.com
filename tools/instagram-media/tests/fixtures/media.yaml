@@ -30,6 +30,7 @@ items:
   date: '2022-05-19'
   year: '2022'
   kind: photo
+  story: true
   caption: '</script><img src=x onerror=alert(1)> & "quoted"'
   media:
   - {kind: photo, src: instagram/c/1.jpg, thumb: instagram/c/1-t.jpg, w: 1200, h: 1200, color: 'red;background:url(//evil.example/x)'}

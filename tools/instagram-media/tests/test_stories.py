@@ -1,0 +1,148 @@
+"""Tests for stories: reading them from an export, dropping reshares, and
+combining them with the archive without duplicating anything."""
+
+import argparse
+import json
+import sys
+import unittest
+from datetime import datetime, timezone
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+import pull  # noqa: E402
+from igmedia import export, stories  # noqa: E402
+from igmedia.export import Item, Media  # noqa: E402
+
+# 2026-08-30 00:53 in New York is 04:53 UTC.
+def at(local_hhmm: str, day: str = "2026-08-30") -> datetime:
+    naive = datetime.fromisoformat(f"{day}T{local_hhmm}:00")
+    return naive.replace(tzinfo=stories.LOCAL).astimezone(timezone.utc)
+
+
+def story(item_id: str, when: datetime) -> Item:
+    return Item(id=item_id, taken_at=when, caption="", kind="photo",
+                media=[Media(Path("x.jpg"), "photo", "0" * 64, when)], details={"story": True})
+
+
+def inv(day, seq, of, hhmm, reshare=None):
+    return {"day": day, "seq": seq, "of": of, "local_time": hhmm,
+            "audio": "reshare" if reshare else "none", "reshare_of": reshare}
+
+
+class ReshareFilterTest(unittest.TestCase):
+    def test_counts_line_up_so_reshares_are_dropped_by_position(self):
+        items = [story("a", at("00:53")), story("b", at("01:50")), story("c", at("01:50")),
+                 story("d", at("02:10"))]
+        inventory = [inv("2026-08-30", 1, 4, "00:53"), inv("2026-08-30", 2, 4, "01:50"),
+                     inv("2026-08-30", 3, 4, "01:50", "other_post"),
+                     inv("2026-08-30", 4, 4, "02:10", "own_reel")]
+        kept, dropped = stories.filter_reshares(items, inventory)
+        # b and c share a minute; position still tells them apart.
+        self.assertEqual([i.id for i in kept], ["a", "b"])
+        self.assertEqual({i.id: r for i, r in dropped}, {
+            "c": "reshare of someone else's post",
+            "d": "reshare of a reel already on the page",
+        })
+
+    def test_counts_differ_so_the_whole_minute_is_dropped(self):
+        """Erring toward leaving one of B's stories out, never publishing
+        someone else's."""
+        items = [story("a", at("01:50")), story("b", at("01:50")), story("c", at("02:10"))]
+        inventory = [inv("2026-08-30", 1, 2, "01:50", "other_post"), inv("2026-08-30", 2, 2, "02:10")]
+        kept, dropped = stories.filter_reshares(items, inventory)
+        self.assertEqual([i.id for i in kept], ["c"])
+        self.assertTrue(all("matched by minute" in r for _, r in dropped))
+
+    def test_days_without_reshares_or_inventory_pass_through(self):
+        items = [story("a", at("09:00", "2026-09-01")), story("b", at("09:00", "2026-07-01"))]
+        inventory = [inv("2026-09-01", 1, 1, "09:00")]
+        kept, _ = stories.filter_reshares(items, inventory)
+        self.assertEqual({i.id for i in kept}, {"a", "b"})
+
+    def test_posts_are_never_touched(self):
+        post = Item(id="p", taken_at=at("01:50"), caption="", kind="photo", media=[])
+        kept, _ = stories.filter_reshares([post], [inv("2026-08-30", 1, 1, "01:50", "other_post")])
+        self.assertEqual([i.id for i in kept], ["p"])
+
+    def test_no_inventory_keeps_everything(self):
+        self.assertEqual(stories.load_inventory(None), [])
+        self.assertEqual(stories.load_inventory(Path("/nonexistent.jsonl")), [])
+
+
+def write_export(root: Path) -> Path:
+    media = root / "your_instagram_activity" / "media"
+    media.mkdir(parents=True)
+    for rel, data in {"media/posts/p.jpg": b"post", "media/stories/s1.jpg": b"story-1",
+                      "media/stories/s2.mp4": b"story-2"}.items():
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_bytes(data)
+    (media / "posts_1.json").write_text(json.dumps([
+        {"media": [{"uri": "media/posts/p.jpg", "creation_timestamp": 1700000000}],
+         "title": "a post", "creation_timestamp": 1700000000}]))
+    (media / "stories.json").write_text(json.dumps({"ig_stories": [
+        {"uri": "media/stories/s1.jpg", "creation_timestamp": 1788000000, "title": "first"},
+        {"uri": "media/stories/s2.mp4", "creation_timestamp": 1788000600, "title": ""},
+    ]}))
+    return root
+
+
+class ExportStoriesTest(unittest.TestCase):
+    def setUp(self):
+        self.tmp = TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = write_export(Path(self.tmp.name) / "export")
+
+    def test_stories_are_read_only_when_asked(self):
+        self.assertEqual(len(export.read_items(self.root)), 1)
+        both = export.read_items(self.root, stories=True)
+        self.assertEqual(len(both), 3)
+
+    def test_a_story_is_its_own_single_media_item(self):
+        only = export.read_items(self.root, stories=True, posts=False)
+        self.assertEqual(sorted(i.kind for i in only), ["photo", "video"])
+        self.assertTrue(all(i.details.get("story") for i in only))
+        self.assertEqual(sorted(i.caption for i in only), ["", "first"])
+
+
+class CombinedSourceTest(unittest.TestCase):
+    """The archive owns posts and reels; an export adds stories only."""
+
+    def setUp(self):
+        self.tmp = TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        base = Path(self.tmp.name)
+        self.export = write_export(base / "export")
+        self.archive = base / "archive"
+        d = self.archive / "posts" / "2025" / "2025-03-14__SHORT1"
+        (d / "media").mkdir(parents=True)
+        (self.archive / "reels").mkdir()
+        (d / "media" / "01.jpg").write_bytes(b"archived post")
+        (d / "metadata.json").write_text(json.dumps({
+            "id": "SHORT1", "kind": "post", "taken_at": "2025-03-14T15:14:59Z",
+            "media": [{"index": 1, "type": "image", "file": "media/01.jpg"}],
+            "caption": {"text": "from the archive"}}))
+        self.cfg = {"archive_dir": str(self.archive), "story_inventory": None}
+
+    def load(self, **kw):
+        args = argparse.Namespace(archive=None, export=kw.get("export"),
+                                  no_archive=kw.get("no_archive", False))
+        return pull.load_items(args, self.cfg, Path(self.tmp.name) / "work")
+
+    def test_archive_alone(self):
+        self.assertEqual([i.caption for i in self.load()], ["from the archive"])
+
+    def test_export_adds_stories_but_not_its_posts(self):
+        items = self.load(export=[self.export])
+        captions = sorted(i.caption for i in items)
+        self.assertEqual(captions, ["", "first", "from the archive"])
+        self.assertNotIn("a post", captions)   # the export's copy of a post
+
+    def test_no_archive_uses_the_export_for_everything(self):
+        captions = sorted(i.caption for i in self.load(export=[self.export], no_archive=True))
+        self.assertEqual(captions, ["", "a post", "first"])
+
+
+if __name__ == "__main__":
+    unittest.main()

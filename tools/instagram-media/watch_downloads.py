@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Watch ~/Downloads for an Instagram export and stage it when it lands.
+"""Watch ~/Downloads for an Instagram export and publish its stories.
 
 Runs from a launchd agent: whenever ~/Downloads changes (and every 30 minutes
 as a fallback) it looks for a finished Instagram export, and if it finds one it
-hasn't seen, runs `pull.py stage` and posts a macOS notification.
+hasn't seen, runs `pull.py sync --export …` and posts a macOS notification.
 
-It only ever stages. Nothing is approved, encoded or uploaded — the approve
-list still needs a human, which is the point of it.
+sync publishes: B asked for everything to be on /media/, and the account is
+public. Posts and reels still come from the archive; the export adds its
+stories, minus reshares (see igmedia/stories.py), each silent clip given
+music. Set WATCH_ACTION = "stage" to go back to staging for review.
 
     watch_downloads.py            one check (what launchd runs)
     watch_downloads.py --install  install and start the launchd agent
@@ -35,6 +37,10 @@ LOG = Path.home() / "Library" / "Logs" / "brianpfeil-instagram-watch.log"
 
 LABEL = "com.brianpfeil.instagram-watch"
 PLIST = Path.home() / "Library" / "LaunchAgents" / f"{LABEL}.plist"
+
+# "sync" publishes (stage, approve all, encode, upload, commit, push);
+# "stage" only prepares the approve list and review sheet.
+WATCH_ACTION = "sync"
 
 # Browsers write a download under a temporary name and rename it when done.
 IN_PROGRESS_SUFFIXES = (".crdownload", ".download", ".part", ".partial", ".tmp")
@@ -137,7 +143,7 @@ def check(directory: Path = WATCH_DIR, state_file: Path = STATE, stage=None) -> 
 
 def run_stage(exports: list[Path]) -> tuple[bool, str]:
     proc = subprocess.run(
-        [str(PYTHON), str(PULL), "stage", "--export", *map(str, exports)],
+        [str(PYTHON), str(PULL), WATCH_ACTION, "--export", *map(str, exports)],
         capture_output=True, text=True, cwd=TOOL_DIR,
     )
     return proc.returncode == 0, (proc.stdout + proc.stderr)
@@ -220,7 +226,9 @@ def main() -> int:
         return 1
 
     log(result)
-    if result.startswith("staged"):
+    if result.startswith("staged") and WATCH_ACTION == "sync":
+        notify("Instagram export published", "Its stories are on brianpfeil.com/media.")
+    elif result.startswith("staged"):
         notify("Instagram export staged",
                "Open tools/instagram-media/build/review.html and tick what to publish.")
     elif result.startswith("stage failed"):
