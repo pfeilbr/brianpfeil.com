@@ -1,37 +1,51 @@
 # brianpfeil.com
 
-Personal blog built with [Hugo](https://gohugo.io/).
+Personal site built with [Hugo](https://gohugo.io/), in nine languages:
+English at the root, and `zh es pt fr de it ja ko` under `/<code>/`. Posts are
+English-only; pages, layouts and UI strings are translated.
+
+For working on it with an AI agent, `CLAUDE.md` holds the conventions and the
+gotchas that have bitten before, and opens with where current work stands.
 
 ## Prerequisites
 
-- [Hugo Extended](https://gohugo.io/installation/) (v0.128+)
-- [Go](https://go.dev/) (v1.22+) — only needed for generating posts from GitHub repos
+- [Hugo Extended](https://gohugo.io/installation/) **0.166.0** — the version
+  CI is pinned to. A different local version can build fine and still fail to
+  deploy.
+- [Go](https://go.dev/) 1.25+ — only for generating posts from GitHub repos
+- Python 3.11+ and [ffmpeg](https://ffmpeg.org/) — only for the media page
+- [Terraform](https://www.terraform.io/) 1.10+ and the AWS CLI — only for
+  `infra/`
 
-## Quick Start
+## Quick start
 
-    make dev             # Start local dev server at http://localhost:1313
+    make dev       # dev server at http://localhost:1313
+    make verify    # every test suite, then a checked production build
 
-## Project Structure
+## Project structure
 
     .
     ├── content/
-    │   ├── post/              # Blog posts (manual + generated)
-    │   ├── projects/          # Project pages
-    │   └── about.md           # About page
-    ├── layouts/               # Hugo templates (no theme — all layouts in-repo)
-    │   ├── _default/          # baseof, single, list, index.json
-    │   ├── partials/          # nav, footer, search
-    │   └── projects/          # Custom projects list layout
+    │   ├── post/              # posts (manual + generated-*.md)
+    │   ├── projects/          # project bundles
+    │   └── *.md, *.<lang>.md  # standalone pages, one file per language
+    ├── data/                  # structure behind data-driven pages (music, media, …)
+    ├── i18n/                  # UI strings — every key in all nine files
+    ├── layouts/               # all templates in-repo, no theme
     ├── assets/
-    │   ├── css/main.css       # CSS reset + utility classes + prose + syntax highlighting
-    │   └── js/search.js       # Vanilla JS search
-    ├── static/                # Images
+    │   ├── css/main.css       # hand-written utility CSS (not Tailwind)
+    │   └── js/search.js       # client-side search
+    ├── static/                # images and other files served as-is
     ├── tools/
-    │   └── generate-posts/    # Go tool to generate posts from GitHub repos
-    ├── config.yaml            # Hugo configuration
+    │   ├── generate-posts/    # Go: posts from GitHub repo READMEs
+    │   ├── instagram-media/   # Python: /media/ from an Instagram export
+    │   ├── i18n-check/        # Python: the nine languages agree; no English fallback
+    │   └── link-check/        # Python: posts whose repo link a visitor can't open
+    ├── infra/                 # Terraform for the AWS side (see infra/README.md)
+    ├── config.yaml            # Hugo config, including per-language menus
     └── Makefile
 
-## Writing a New Post
+## Writing a new post
 
 ### Manual post
 
@@ -41,68 +55,81 @@ Edit the file, then run `make dev` to preview.
 
 ### Generated posts (from GitHub repos)
 
-The tool at `tools/generate-posts/` automatically creates blog posts from your
-GitHub repository READMEs (e.g., `*-playground` repos).
+`tools/generate-posts/` creates posts from GitHub repository READMEs (for
+example `*-playground` repos).
 
-**One-time setup:**
+The quickest way to run it uses the GitHub CLI's token, with nothing on disk:
 
-1. Create a GitHub personal access token at https://github.com/settings/tokens
-   (needs `repo` scope for private repos, or just `public_repo` for public only)
-2. Create the local config file:
+    cd tools/generate-posts
+    GITHUB_TOKEN=$(gh auth token) go run . -user=pfeilbr -dest=../../content/post
 
-       cp tools/generate-posts/config.yaml tools/generate-posts/config.local.yaml
-
-3. Add your token to `config.local.yaml`:
-
-       github_access_token: "ghp_your_token_here"
-
-   This file is gitignored and will not be committed.
-
-**Running the generator:**
-
-    make generate-posts
-
-This fetches all matching repos, downloads their READMEs, and writes/updates
-`generated-*.md` files in `content/post/`.
+Or put a token in `tools/generate-posts/config.local.yaml` (gitignored) as
+`github_access_token: "..."` and run `make generate-posts`.
 
 **Configuration** is in `tools/generate-posts/config.yaml`:
-- `repo_filters.include/exclude` — regex patterns to select repos
-- `title_mappings` — override auto-generated titles for specific repos
-- `casing_corrections` — words that need specific casing (e.g., "AWS", "CDK")
-- `tags.*` — auto-tagging rules, per-repo tag mappings, tag normalization
+- `repo_filters.include/exclude` — regexes selecting repos. They are
+  **unanchored**: anchor a name that is a prefix of another repo's, and list
+  deliberately removed posts under `exclude` so they aren't regenerated.
+- `date_overrides` — date a post by last activity rather than repo creation
+- `title_mappings` — override generated titles
+- `casing_corrections` — words needing specific casing ("AWS", "CDK")
+- `tags.*` — auto-tagging, per-repo tags, tag normalisation
 
-## Makefile Targets
+## The media page (`/media/`)
 
-| Target | Description |
-|--------|-------------|
-| `make dev` | Start Hugo dev server with live reload |
-| `make build` | Build the site (`hugo --minify`) |
-| `make verify` | Build + run verification checks |
-| `make generate-posts` | Run the post generator tool |
-| `make test-tools` | Run Go tests for the post generator |
+Photos and video from Instagram, built from Instagram's official data export
+— no scraping, no stored credentials. Files are re-encoded with all metadata
+(including GPS) stripped, and served from a private S3 bucket behind
+CloudFront; only `data/media.yaml` lives in the repo. **Nothing is published
+until it is approved by hand.**
 
-## Media page (`/media/`)
-
-Photos and video from Instagram, mirrored onto the site from an official
-Instagram data export — no scraping, no stored credentials. Images and video
-are re-encoded (metadata stripped) and served from a private S3 bucket behind
-CloudFront; only `data/media.yaml` lives in the repo.
-
-Nothing is published until it is approved by hand. See
-[`tools/instagram-media/README.md`](tools/instagram-media/README.md) for the
-full flow, and the top of `CLAUDE.md` for the current state.
-
-    make media-deps
+    make media-deps                                    # once
+    make media-watch-install                           # once: auto-stage from ~/Downloads
     make media-stage EXPORT=~/Downloads/instagram-export.zip
-    open tools/instagram-media/build/review.html
-    make media-publish EXPORT=~/Downloads/instagram-export.zip
+    open tools/instagram-media/build/review.html       # tick what goes public
+    make media-release EXPORT=~/Downloads/instagram-export.zip
 
-## Deployment
+See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 
-The site deploys to GitHub Pages via GitHub Actions (`.github/workflows/gh-pages.yml`).
-On push to `main`, the workflow:
-1. Builds with `hugo --minify`
-2. Deploys to GitHub Pages
+## Makefile targets
 
-Posts are generated locally and committed — the CI workflow does not run the Go tool.
+| Target | Does |
+| --- | --- |
+| **Site** | |
+| `make dev` | Hugo dev server with live reload |
+| `make build` | Production build (`hugo --minify`) |
+| `make verify` | Every `test-*` target below, then a production build and the i18n fallback check on it (not the live link check or Terraform) |
+| **Posts** | |
+| `make generate-posts` | Regenerate `generated-*.md` from GitHub |
+| `make check-repo-links` | List posts whose repo link 404s for a visitor (live, needs network) |
+| **Media** | |
+| `make media-deps` | Create the tool's venv |
+| `make media-stage EXPORT=…` | Read an export, update the approve list, build the review sheet |
+| `make media-publish EXPORT=…` | Encode and upload approved items, write `data/media.yaml` |
+| `make media-release EXPORT=…` | `media-publish`, then commit and push only the media files |
+| `make media-status` | What is approved and what is live |
+| `make media-watch-install` / `-uninstall` / `-status` | The `~/Downloads` watcher |
+| **Tests** | |
+| `make test-tools` | Go tests for the post generator |
+| `make test-media` | Python tests for the media tool |
+| `make test-layout` | Render `/media/` from a fixture and check it in all nine languages |
+| `make test-link-check` | Tests for the repo-link checker |
+| `make test-i18n` | Tests for, and a run of, the i18n consistency check |
+| **Infrastructure** | |
+| `make tf-init` / `tf-plan` / `tf-validate` | Terraform, both stacks, S3 backend |
 
+## CI and deployment
+
+Two workflows run on every push to `main`:
+
+- **Tests** — Go and Python test suites, the `/media/` render check, the i18n
+  consistency and fallback check, a Hugo build with warnings surfaced, and
+  `terraform fmt` + `validate` on both stacks. Runs on pull requests too.
+- **Deploy to GitHub Pages** — `hugo --minify`, then publish.
+
+Generated posts and `data/media.yaml` are produced locally and committed. CI
+runs neither the post generator nor the media tool, so it needs no GitHub
+token, no Instagram data and no AWS credentials.
+
+AWS resources (the media bucket, its CDN and the Terraform state bucket) are
+all Terraform-managed — see [`infra/README.md`](infra/README.md).
