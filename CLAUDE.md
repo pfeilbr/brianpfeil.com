@@ -17,6 +17,10 @@ link; a large account comes back as several part ZIPs.
 `aws sso login` first — the session expires and `publish` now stops in a
 second rather than encoding everything and failing at the upload.
 
+A launchd agent (`make media-watch-install`, installed) stages the export
+automatically when it lands in `~/Downloads` and posts a notification; check
+`make media-watch-status`. It never approves or publishes.
+
 With the archive on disk (several part ZIPs are fine — pass them all, or the
 directory holding them):
 

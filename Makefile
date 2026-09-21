@@ -36,6 +36,17 @@ media-publish:
 media-status:
 	cd tools/instagram-media && .venv/bin/python pull.py status
 
+# A launchd agent that stages an Instagram export as soon as it lands in
+# ~/Downloads. It only stages; approving and publishing stay manual.
+media-watch-install:
+	tools/instagram-media/.venv/bin/python tools/instagram-media/watch_downloads.py --install
+
+media-watch-uninstall:
+	tools/instagram-media/.venv/bin/python tools/instagram-media/watch_downloads.py --uninstall
+
+media-watch-status:
+	tools/instagram-media/.venv/bin/python tools/instagram-media/watch_downloads.py --status
+
 test-media:
 	cd tools/instagram-media && .venv/bin/python -m unittest discover -s tests
 
@@ -70,4 +81,4 @@ tf-validate:
 	cd infra && terraform fmt -check -recursive && terraform validate
 
 
-.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status test-media test-layout test-link-check check-repo-links tf-init tf-plan tf-validate
+.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check check-repo-links tf-init tf-plan tf-validate

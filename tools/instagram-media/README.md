@@ -32,6 +32,22 @@ If the whole archive is unwieldy, narrow the date range instead and run it
 again later: ids are content hashes, so a second export merges rather than
 duplicating, and keeps the approvals already made.
 
+## Watching for it
+
+`make media-watch-install` sets up a launchd agent that notices the export
+arriving in `~/Downloads` and stages it straight away, with a macOS
+notification pointing at the review sheet. It fires when Downloads changes
+and every 30 minutes as a fallback.
+
+- It only **stages**. Nothing is approved, encoded or uploaded.
+- It waits for a download to finish: browser temp names (`.crdownload`,
+  `.download`) are ignored, and a file must be two minutes old.
+- It recognises an export by its contents, not just its name, and picks up
+  every part together; the same set of parts is only staged once.
+- `make media-watch-status` shows whether it is loaded and its last runs;
+  the log is `~/Library/Logs/brianpfeil-instagram-watch.log`.
+  `make media-watch-uninstall` removes it.
+
 ## Running it
 
 ```sh
