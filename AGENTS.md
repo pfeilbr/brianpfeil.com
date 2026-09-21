@@ -4,12 +4,19 @@
 
 Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No external theme — all layouts are in `layouts/`. The site has blog posts (most auto-generated from GitHub repos, the rest manual), project pages, and an about page.
 
+The site ships in **nine languages** — English at the root, `zh es pt fr de it
+ja ko` under `/<code>/`. Posts are English-only; pages, layouts and UI strings
+are translated, and every UI string must exist in all nine `i18n/*.toml`.
+
+`CLAUDE.md` is the living source for conventions and hard-won gotchas and
+opens with the current state of in-flight work; read it alongside this file.
+
 ## Project Structure
 
 ```
 .
 ├── config.yaml                        # Hugo config (no theme reference)
-├── Makefile                           # dev, build, generate-posts, test-tools
+├── Makefile                           # dev, build, verify, tests, media-*, tf-* (see README)
 ├── AGENTS.md
 ├── README.md
 ├── .github/workflows/gh-pages.yml     # CI: Hugo build → GitHub Pages
@@ -28,9 +35,12 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
 │       ├── _index.md                  # Section index
 │       └── {project}/index.md         # Individual project pages
 ├── layouts/
-│   ├── _default/baseof.html           # HTML shell, CSS bundle, Google Fonts, DarkReader
+│   ├── _default/baseof.html           # HTML shell, CSS bundle, pre-paint theme script, icon sprites
 │   ├── _default/single.html           # Individual post/page
 │   ├── _default/list.html             # Tags taxonomy + term pages
+│   ├── _default/music.html            # /music/ — data/music.yaml, tabbed, click-to-load players
+│   ├── _default/subscriptions.html    # /subscriptions/ — tabbed, click-to-load
+│   ├── _default/media.html            # /media/ — data/media.yaml, grid + lightbox
 │   ├── _default/index.json            # JSON search index
 │   ├── _default/index.llmstxt        # llms.txt — all site content for LLM consumption
 │   ├── 404.html                       # Custom 404: search + recent posts
@@ -49,18 +59,24 @@ Personal blog ([brianpfeil.com](https://brianpfeil.com)) built with Hugo. No ext
 │       ├── footer.html                # Social links (Twitter, GitHub, SO, RSS)
 │       └── search.html                # Sticky search bar + <template> + loads search.js
 ├── static/images/                     # Static images served as-is
-├── tools/generate-posts/              # Go CLI — generates posts from GitHub READMEs
-└── tools/instagram-media/             # Python CLI — builds /media/ from an IG export
-    ├── main.go                        # Entry point, CLI flags
-    ├── config.go                      # Config loading (config.yaml + config.local.yaml)
-    ├── github.go                      # GitHub API client, repo fetching, README download
-    ├── post.go                        # Post building: title, tags, slug, rendering
-    ├── links.go                       # Relative → absolute link rewriting
-    ├── *_test.go                      # Tests for post titles, slugs, link rewriting
-    ├── templates/post.md              # Go template for generated post output
-    ├── config.yaml                    # Repo filters, title mappings, casing, tag rules
-    ├── config.local.yaml              # Gitignored — GitHub token goes here
-    └── testdata/                      # Test fixtures with expect.json + sample READMEs
+├── data/                              # Structure behind data-driven pages (music, subscriptions, media)
+├── i18n/                              # UI strings, one file per language — every key in all nine
+├── infra/                             # Terraform: media CDN + state bucket (see infra/README.md)
+└── tools/
+    ├── generate-posts/                # Go CLI — generates posts from GitHub READMEs
+    │   ├── main.go                    # Entry point, CLI flags
+    │   ├── config.go                  # Config loading (config.yaml + config.local.yaml)
+    │   ├── github.go                  # GitHub API client, repo fetching, README download
+    │   ├── post.go                    # Post building: title, tags, slug, rendering
+    │   ├── links.go                   # Relative → absolute link rewriting
+    │   ├── *_test.go                  # Tests for post titles, slugs, link rewriting
+    │   ├── templates/post.md          # Go template for generated post output
+    │   ├── config.yaml                # Repo filters, title mappings, casing, tag rules
+    │   ├── config.local.yaml          # Gitignored — GitHub token goes here
+    │   └── testdata/                  # Test fixtures with expect.json + sample READMEs
+    ├── instagram-media/               # Python CLI — builds /media/ from an IG export
+    ├── i18n-check/                    # Python — the nine languages agree; no English fallback
+    └── link-check/                    # Python — posts whose repo link a visitor can't open
 ```
 
 ## Architecture
@@ -241,8 +257,16 @@ approve → `publish` (encode → `aws s3 sync` → `data/media.yaml`).
   AWS CLI, using the shell's existing session rather than stored credentials.
 - **Meta mojibake** — exported captions are UTF-8 decoded as latin-1;
   `fix_mojibake()` reverses it, and is a no-op when it doesn't round-trip.
+- **`release`** = `publish`, then commit and push `data/media.yaml` and the
+  manifest *by path*, so unrelated staged work never rides along.
+- **`--prune`** deletes un-approved objects and invalidates them on CloudFront —
+  everything is cached a year and immutable, so an S3 delete alone leaves the
+  file served from the edge.
+- **Downloads watcher** — a launchd agent (`make media-watch-install`) stages an
+  export as soon as it lands in `~/Downloads`. It only ever stages.
+- Split part-ZIPs are merged; HEIC decodes through ffmpeg (Pillow here can't).
 - Deps are PyYAML and Pillow in `tools/instagram-media/.venv` (`make media-deps`),
-  plus ffmpeg. Tests: `make test-media`.
+  plus ffmpeg. Tests: `make test-media`; `make test-layout` renders the page.
 
 ## Content Conventions
 
@@ -350,7 +374,7 @@ make test-tools  # cd tools/generate-posts && go test ./...
 3. **`grep -P` doesn't work on macOS** — use alternative patterns in scripts
 4. **Hugo box-drawing chars in output** — `hugo --minify` output uses Unicode box chars; grep carefully in scripts
 5. **Generated posts have trailing comma in tags** — `tags = ["aws","alexa",]` — Hugo tolerates it, don't worry about it
-6. **DarkReader must call `setFetchMethod(window.fetch)`** — required for the CDN version to work
+6. **CI's Hugo version is pinned** (0.166.0, in both workflows) — a different local version can build fine and still fail to deploy; check the Actions run
 7. **Search hides the scroll sentinel** — when searching, the infinite scroll sentinel is hidden; when cleared, it reappears
 8. **Generated posts are idempotent** — the Go tool fully controls their content; manual edits will be overwritten on next run
 9. **`config.local.yaml` is gitignored** — GitHub token lives there, never in `config.yaml`
@@ -358,6 +382,7 @@ make test-tools  # cd tools/generate-posts && go test ./...
 ## Build and Deploy
 
 - **Local**: `make dev` → Hugo dev server at localhost:1313 (with live reload, drafts enabled)
-- **CI**: GitHub Actions (`.github/workflows/gh-pages.yml`) → triggers on push to `main` → `hugo --minify` → deploys to GitHub Pages
+- **Deploy**: `.github/workflows/gh-pages.yml` → on push to `main` → `hugo --minify` → GitHub Pages
+- **Tests**: `.github/workflows/tests.yml` → on push and PR → Go + Python suites, the `/media/` render check, the i18n consistency/fallback check, a warnings-surfaced Hugo build, and `terraform fmt` + `validate`. `make verify` runs the same locally.
 - **Domain**: `brianpfeil.com` (configured in GitHub Pages repo settings)
 - Posts are generated locally and committed; CI only runs the Hugo build
