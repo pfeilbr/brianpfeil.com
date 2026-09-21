@@ -52,8 +52,11 @@
              {{- if le $tile 8 }} loading="eager"{{ if le $tile 4 }} fetchpriority="high"{{ end }}
              {{- else }} loading="lazy"{{ end }} decoding="async">
         {{ if eq .kind "video" }}
-        <span class="media-badge" aria-hidden="true">
+        {{/* Play glyph plus the clip's length, as m:ss, when it's known. */}}
+        {{ $secs := int (math.Round (default 0 (index $first "duration"))) }}
+        <span class="media-badge media-badge-video" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          {{- if gt $secs 0 }}<span>{{ div $secs 60 }}:{{ printf "%02d" (mod $secs 60) }}</span>{{ end -}}
         </span>
         {{ else if eq .kind "album" }}
         <span class="media-badge media-badge-count" aria-hidden="true">{{ len .media }}</span>

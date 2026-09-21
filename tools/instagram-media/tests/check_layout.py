@@ -146,6 +146,9 @@ def check_populated(public: Path) -> list[str]:
             errors.append(f"{label}: tile colour missing")
         if "evil.example" in html:
             errors.append(f"{label}: a malformed colour reached a style attribute")
+        # The 2-second video in the fixture shows its length on the tile.
+        if "0:02</span>" not in html:
+            errors.append(f"{label}: video tile has no duration badge")
         if "c/1-t.jpg" not in html:
             errors.append(f"{label}: tile without grid images didn't fall back to the thumbnail")
 
