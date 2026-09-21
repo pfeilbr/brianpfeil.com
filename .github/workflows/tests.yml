@@ -30,6 +30,9 @@ jobs:
           python-version: "3.13"
           cache: pip
           cache-dependency-path: tools/instagram-media/requirements.txt
+      # ffmpeg so the video tests run rather than skip: they are what proves
+      # a published clip carries no location or creation time.
+      - run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
       - run: pip install -r requirements.txt
         working-directory: tools/instagram-media
       - run: python -m unittest discover -s tests -v
