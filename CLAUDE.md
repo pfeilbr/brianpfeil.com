@@ -28,9 +28,20 @@ publish selectively instead: `make media-stage`, tick items in
 something down: `pull.py approve --id …` to unapprove, then
 `pull.py release --prune` (also evicts it from CloudFront).
 
-A Download Your Information export was also requested on 2026-09-21 before
-the archive was known about; it isn't needed. `--export` still works if one
-is ever wanted, and the Downloads watcher still stages one if it lands.
+**Every video has sound.** 102 of 234 had none; they get original music
+composed by `igmedia/music.py` (six seeded tracks, royalty-free because they
+are generated here, never downloaded). "Silent" includes an audio track that
+never gets louder than -45 dBFS. The viewer labels it "♪ Sunlit · music
+added" so nobody mistakes it for recorded sound.
+
+**Stories are pending the Instagram export.** The archive knows about 153
+archived stories only as an inventory (`harvest/iphone/story-inventory.jsonl`),
+not their files. The export requested 2026-09-21 (Media, all time, JSON,
+medium) carries them. When it lands in `~/Downloads`, the watcher runs
+`pull.py sync --export …`: posts and reels still from the archive, stories
+from the export, reshares dropped (2 of someone else's posts, 9 of B's own
+reels — `igmedia/stories.py`), silent stories given music, pushed live.
+Download it within four days of Meta's email; it needs B's password.
 
 `aws sso login` first if the session has expired — `publish` checks before encoding.
 

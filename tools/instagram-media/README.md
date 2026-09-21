@@ -48,11 +48,12 @@ duplicating, and keeps the approvals already made.
 ## Watching for it
 
 `make media-watch-install` sets up a launchd agent that notices the export
-arriving in `~/Downloads` and stages it straight away, with a macOS
-notification pointing at the review sheet. It fires when Downloads changes
-and every 30 minutes as a fallback.
+arriving in `~/Downloads` and publishes its stories straight away (`sync`),
+with a macOS notification. It fires when Downloads changes and every 30
+minutes as a fallback.
 
-- It only **stages**. Nothing is approved, encoded or uploaded.
+- It **publishes** (`WATCH_ACTION = "sync"` in `watch_downloads.py`); set it
+  to `"stage"` to review before anything goes live.
 - It waits for a download to finish: browser temp names (`.crdownload`,
   `.download`) are ignored, and a file must be two minutes old.
 - It recognises an export by its contents, not just its name, and picks up
@@ -108,6 +109,26 @@ decision; only genuinely new posts arrive as `approved: false`.
   focus, and pages with arrow keys or a horizontal swipe.
 - `tests/check_layout.py --build` renders the real page from
   `tests/fixtures/media.yaml` and checks it in all nine languages.
+
+## Sound
+
+Every published video has sound. A clip with no audio track — or one whose
+loudest moment is below -45 dBFS — gets music from `igmedia/music.py`: six
+original tracks synthesised with numpy (pad, arpeggio, bass, light drums,
+reverb), deterministic, seamless when looped, and royalty-free because they
+are composed here rather than downloaded. Each post gets one track at a
+deterministic offset; the picture is copied untouched; the file gets a new
+name so the silent version's year-long cache can't leave anyone hearing
+nothing. The viewer says "♪ <track> · music added".
+
+## Stories
+
+The archive has no story files, only an inventory. Stories come from an
+Instagram export: `--export` adds the export's stories to the archive's
+posts and reels. Reshares are dropped by matching the inventory on local day
+and order within the day (`igmedia/stories.py`) — someone else's post is
+never republished, and a reshare of a reel already on the page isn't
+duplicated.
 
 ## Checking it
 
