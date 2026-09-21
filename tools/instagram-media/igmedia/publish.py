@@ -159,6 +159,8 @@ def entry_for(item, derived_media: list) -> dict:
             record["grid"] = list(d.grid_keys)
         if d.color:
             record["color"] = d.color
+        if d.music:
+            record["music"] = d.music  # the clip had no sound; this track was added
         media.append(record)
 
     entry = {

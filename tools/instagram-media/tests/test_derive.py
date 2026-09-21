@@ -202,6 +202,26 @@ class RemuxDecisionTest(unittest.TestCase):
         self.assertFalse(derive.can_remux(self.info(audio="opus")))
 
 
+def fake_library(root: Path) -> dict:
+    """One 6-second stereo tone standing in for every track, so video tests
+    don't render the real library."""
+    import math
+    import struct
+    import wave
+    path = root / "tone.wav"
+    with wave.open(str(path), "wb") as w:
+        w.setnchannels(2)
+        w.setsampwidth(2)
+        w.setframerate(44100)
+        frames = b"".join(
+            struct.pack("<hh", *(int(8000 * math.sin(2 * math.pi * 330 * n / 44100)),) * 2)
+            for n in range(44100 * 6))
+        w.writeframes(frames)
+    from igmedia import music
+    return {"paths": {t.id: path for t in music.TRACKS},
+            "seconds": {t.id: 6.0 for t in music.TRACKS}}
+
+
 @unittest.skipUnless(HAS_FFMPEG, "ffmpeg not installed")
 class VideoTest(unittest.TestCase):
     def setUp(self):
@@ -209,6 +229,9 @@ class VideoTest(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
         self.lock = derive.Lock(self.root / "lock.json")
+        patcher = mock.patch.object(derive, "music_library", return_value=fake_library(self.root))
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     def derive_video(self, src: Path, name="vid"):
         d = derive.derive(Media(src, "video", name.ljust(64, "0")), name, self.root / "out",
@@ -227,11 +250,53 @@ class VideoTest(unittest.TestCase):
         self.assertEqual(derive.probe_streams(out)["video"], "h264")
         self.assert_clean(out)
 
-    def test_silent_clip_remuxes_without_inventing_audio(self):
+    def test_silent_clip_gets_music_and_keeps_its_picture(self):
+        """Every published video has sound: a clip with no audio track gets an
+        original track mixed in, and its picture is copied untouched."""
         src = make_video(self.root / "silent.mp4", "720x900", audio=False)
-        _, out = self.derive_video(src, "silent")
-        self.assertIsNone(derive.probe_streams(out)["audio"])
+        d, out = self.derive_video(src, "silent")
+        info = derive.probe_streams(out)
+        self.assertEqual(info["audio"], "aac")
+        self.assertEqual((info["video"], info["width"], info["height"]), ("h264", 720, 900))
+        self.assertIn("-mt", out.name)          # a new URL, never the silent one's
+        self.assertIsNotNone(d.music)
+        self.assertGreater(derive.peak_db(out), derive.SILENT_BELOW_DB)
+        self.assertAlmostEqual(derive.ffprobe_video(out)[2], 1.0, delta=0.15)
         self.assert_clean(out)
+
+    def test_silent_version_is_removed_from_the_build(self):
+        src = make_video(self.root / "silent2.mp4", "720x900", audio=False)
+        self.derive_video(src, "silent2")
+        leftovers = [f.name for f in (self.root / "out" / "silent2").glob("*.mp4")]
+        self.assertEqual(len(leftovers), 1, leftovers)
+
+    def test_clip_with_real_sound_is_left_alone(self):
+        src = make_video(self.root / "loud.mp4", "720x960")
+        d, out = self.derive_video(src, "loud")
+        self.assertNotIn("-mt", out.name)
+        self.assertIsNone(d.music)
+        self.assertEqual(self.lock.get("loud".ljust(64, "0"))["sound"], "original")
+
+    def test_near_silent_audio_track_counts_as_silent(self):
+        """An audio track that is there but inaudible is still blank sound."""
+        src = self.root / "hush.mp4"
+        subprocess.run(["ffmpeg", "-nostdin", "-y", "-loglevel", "error",
+                        "-f", "lavfi", "-i", "testsrc2=size=720x900:rate=30",
+                        "-f", "lavfi", "-i", "sine=frequency=440",
+                        "-t", "1", "-af", "volume=-72dB",
+                        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac",
+                        "-shortest", str(src)], check=True)
+        self.assertLess(derive.peak_db(src), derive.SILENT_BELOW_DB)
+        d, out = self.derive_video(src, "hush")
+        self.assertIsNotNone(d.music)
+        self.assertGreater(derive.peak_db(out), derive.SILENT_BELOW_DB)
+
+    def test_music_is_mixed_once_and_reused(self):
+        src = make_video(self.root / "once.mp4", "720x900", audio=False)
+        first, _ = self.derive_video(src, "once")
+        with mock.patch.object(derive, "_mix_music", side_effect=AssertionError("mixed again")):
+            again, _ = self.derive_video(src, "once")
+        self.assertEqual(first.key, again.key)
 
     def test_oversized_clip_is_re_encoded_to_the_long_edge_cap(self):
         src = make_video(self.root / "big.mp4", "1080x1920")

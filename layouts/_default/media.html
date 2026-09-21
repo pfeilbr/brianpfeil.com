@@ -100,8 +100,11 @@
     {{ range $it.media }}
       {{/* An object, not an array: Hugo's append won't nest a list in a list
          that starts empty. One-letter keys keep it nearly as small. */}}
-      {{ $media = $media | append (dict "i" $idx "k" (cond (eq .kind "video") "v" "p")
-            "s" .src "t" .thumb "p" (default "" (index . "poster")) "w" .w "h" .h) }}
+      {{ $row := dict "i" $idx "k" (cond (eq .kind "video") "v" "p")
+            "s" .src "t" .thumb "p" (default "" (index . "poster")) "w" .w "h" .h }}
+      {{/* m: the track added to a clip that had no sound of its own. */}}
+      {{ with index . "music" }}{{ $row = merge $row (dict "m" .) }}{{ end }}
+      {{ $media = $media | append $row }}
     {{ end }}
   {{ end }}
   {{ $payload := dict "base" $base "posts" $posts "media" $media }}
@@ -120,6 +123,7 @@
        data-comments="{{ i18n "media_comments" }}"
        data-with="{{ i18n "media_with" (dict "users" "%users") }}"
        data-audio="{{ i18n "media_original_audio" }}"
+       data-music="{{ i18n "media_music_added" (dict "title" "%title") }}"
        data-as-of="{{ i18n "media_as_of" (dict "date" "%date") }}"
        data-location="{{ i18n "media_location" }}"></div>
   {{ end }}
@@ -148,7 +152,7 @@
       item: post.id, post: post, caption: post.caption || "", date: post.date,
       kind: m.k === "v" ? "video" : "photo",
       src: raw.base + m.s, thumb: raw.base + m.t, poster: m.p ? raw.base + m.p : "",
-      w: m.w, h: m.h, n: seen[m.i], total: perPost[m.i]
+      w: m.w, h: m.h, n: seen[m.i], total: perPost[m.i], music: m.m || ""
     };
   });
   if (!items.length) return;
@@ -311,10 +315,16 @@
     var asOf = post.counted ? s.asOf.replace("%date", post.counted) : "";
     if (post.likes) stats.appendChild(stat("\u2665", s.likes, post.likes, asOf));
     if (post.comments) stats.appendChild(stat("\u{1F4AC}", s.comments, post.comments, asOf));
-    if (entry.kind === "video" && post.audio) {
+    /* A clip that had no sound of its own says its music was added, so the
+       track isn't mistaken for what was recorded. */
+    var sound = entry.kind !== "video" ? ""
+      : entry.music ? s.music.replace("%title", entry.music)
+      : post.audio === "original" ? s.audio
+      : post.audio || "";
+    if (sound) {
       var audio = document.createElement("span");
       audio.className = "media-stat";
-      audio.textContent = "\u266A " + (post.audio === "original" ? s.audio : post.audio);
+      audio.textContent = "\u266A " + sound;
       stats.appendChild(audio);
     }
     if (post.url) stats.appendChild(link(post.url, s.instagram + " \u2197"));

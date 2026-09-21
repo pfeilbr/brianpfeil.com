@@ -86,6 +86,7 @@ def check_populated(public: Path) -> list[str]:
                 errors.append(f"{label}: tile is not a link to the CDN: {tile}")
                 break
 
+        data = None
         if page.payload is None:
             errors.append(f"{label}: no #media-data payload")
         else:
@@ -146,6 +147,12 @@ def check_populated(public: Path) -> list[str]:
             errors.append(f"{label}: tile colour missing")
         if "evil.example" in html:
             errors.append(f"{label}: a malformed colour reached a style attribute")
+        # The fixture's video had no sound and was given a track: the viewer
+        # has to be able to say so.
+        if isinstance(data, dict) and not any(r.get("m") == "Sunlit" for r in data.get("media") or []):
+            errors.append(f"{label}: added music not carried in the payload")
+        if "data-music=" not in html:
+            errors.append(f"{label}: missing viewer string data-music")
         # A year row linking to every year's heading (the fixture spans three).
         for year in ("2024", "2023", "2022"):
             if f"href=#year-{year}" not in html.replace('"', ""):
