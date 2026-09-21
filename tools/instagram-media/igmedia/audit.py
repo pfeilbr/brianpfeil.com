@@ -19,6 +19,8 @@ def referenced_keys(data: dict) -> set[str]:
             for field in ("src", "thumb", "poster"):
                 if media.get(field):
                     keys.add(media[field])
+            # The grid's square tiles, referenced from each tile's srcset.
+            keys.update(k for k in media.get("grid") or [] if k)
     return keys
 
 

@@ -32,6 +32,14 @@ class ReferencedTest(unittest.TestCase):
             "i/a/1.jpg", "i/a/1-t.jpg", "i/a/2.jpg", "i/a/2-t.jpg",
         })
 
+    def test_grid_tiles_count_as_referenced(self):
+        """They're used through srcset; missing them made the audit call every
+        tile an orphan and suggest pruning files the page shows."""
+        data = {"items": [{"media": [{"src": "a.jpg", "thumb": "a-t.jpg",
+                                      "grid": ["a-g360.webp", "a-g720.webp"]}]}]}
+        self.assertEqual(audit.referenced_keys(data),
+                         {"a.jpg", "a-t.jpg", "a-g360.webp", "a-g720.webp"})
+
     def test_photos_have_no_poster_to_collect(self):
         keys = audit.referenced_keys({"items": [DATA["items"][1]]})
         self.assertFalse(any(k.endswith("-p.jpg") for k in keys))
