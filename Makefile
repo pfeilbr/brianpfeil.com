@@ -34,6 +34,11 @@ media-publish:
 	@test -n "$(EXPORT)" || (echo "set EXPORT=/path/to/instagram-export.zip" && exit 1)
 	cd tools/instagram-media && .venv/bin/python pull.py publish --export $(EXPORT)
 
+# publish, then commit and push data/media.yaml and the manifest — only those.
+media-release:
+	@test -n "$(EXPORT)" || (echo "set EXPORT=/path/to/instagram-export.zip" && exit 1)
+	cd tools/instagram-media && .venv/bin/python pull.py release --export $(EXPORT)
+
 media-status:
 	cd tools/instagram-media && .venv/bin/python pull.py status
 
@@ -86,4 +91,4 @@ tf-validate:
 	cd infra && terraform fmt -check -recursive && terraform validate
 
 
-.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-i18n check-repo-links tf-init tf-plan tf-validate
+.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-release media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-i18n check-repo-links tf-init tf-plan tf-validate

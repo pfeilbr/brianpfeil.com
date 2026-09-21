@@ -1,2 +1,4 @@
 build/
 .venv/
+# Records what is in build/, which isn't committed; meaningless without it.
+derivatives.lock.json

@@ -55,10 +55,12 @@ make media-deps                                        # one-time venv
 make media-stage EXPORT=~/Downloads/instagram-export.zip
 open tools/instagram-media/build/review.html           # tick what to publish
 python3 tools/instagram-media/pull.py approve --id ...  # the sheet writes this for you
-make media-publish EXPORT=~/Downloads/instagram-export.zip
+make media-release EXPORT=~/Downloads/instagram-export.zip
 ```
 
-Then commit `data/media.yaml` and `manifest.yaml` and push.
+`release` is `publish` followed by a commit and push of `data/media.yaml` and
+`manifest.yaml` — by path, so nothing else that happens to be staged or
+modified goes with them. `publish` on its own does everything but the commit.
 
 `make media-status` prints what is approved and what is live.
 

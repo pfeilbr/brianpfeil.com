@@ -29,8 +29,7 @@ make media-deps                                          # one-time venv
 make media-stage EXPORT=~/Downloads/instagram-export.zip
 open tools/instagram-media/build/review.html             # tick what goes public
 python3 tools/instagram-media/pull.py approve --id ...   # the sheet prints this
-make media-publish EXPORT=~/Downloads/instagram-export.zip
-git add data/media.yaml tools/instagram-media/manifest.yaml && git commit && git push
+make media-release EXPORT=~/Downloads/instagram-export.zip   # publish + commit + push
 ```
 
 Nothing publishes without an explicit approval — see

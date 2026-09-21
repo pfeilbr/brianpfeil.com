@@ -18,7 +18,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from igmedia import derive, export, manifest, publish, review  # noqa: E402
+from igmedia import derive, export, manifest, publish, release, review  # noqa: E402
 
 TOOL_DIR = Path(__file__).resolve().parent
 REPO_ROOT = TOOL_DIR.parents[1]
@@ -141,6 +141,28 @@ def cmd_publish(args, cfg) -> int:
     return 0
 
 
+def cmd_release(args, cfg) -> int:
+    """publish, then commit and push the data file and manifest — only those."""
+    code = cmd_publish(args, cfg)
+    if code != 0 or args.dry_run:
+        return code
+
+    _, manifest_path, data_path = paths(cfg)
+    data = yaml.safe_load(data_path.read_text(encoding="utf-8")) or {}
+    approved = len(manifest.approved_ids(list(manifest.load(manifest_path).values())))
+    try:
+        sha = release.commit_and_push(
+            REPO_ROOT, [data_path, manifest_path],
+            release.message_for(int(data.get("count", 0)), approved),
+        )
+    except release.ReleaseError as exc:
+        print(exc, file=sys.stderr)
+        return 1
+    print(f"released as {sha}; the site deploys from main" if sha
+          else "nothing changed since the last release")
+    return 0
+
+
 def cmd_status(args, cfg) -> int:
     _, manifest_path, data_path = paths(cfg)
     records = list(manifest.load(manifest_path).values())
@@ -178,6 +200,13 @@ def main() -> int:
     pub.add_argument("--prune", action="store_true", help="also delete S3 objects that are no longer approved")
     pub.add_argument("--dry-run", action="store_true", help="build locally, upload nothing")
     pub.set_defaults(func=cmd_publish)
+
+    rel = sub.add_parser("release", help="publish, then commit and push only the data file and manifest")
+    rel.add_argument("--export", required=True, nargs="+", type=Path,
+                     help="export .zip(s), a directory of part ZIPs, or an unpacked directory")
+    rel.add_argument("--prune", action="store_true", help="also delete S3 objects that are no longer approved")
+    rel.add_argument("--dry-run", action="store_true", help="build locally, upload and commit nothing")
+    rel.set_defaults(func=cmd_release)
 
     status = sub.add_parser("status", help="what is approved and what is live")
     status.set_defaults(func=cmd_status)
