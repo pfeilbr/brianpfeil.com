@@ -118,9 +118,9 @@
 
 {{ if and $m $m.items }}
 <script>
-/* Lightbox for /media/. Nothing is fetched from the CDN until a tile is
-   opened: the grid holds thumbnails only, and a video element is built on
-   demand and torn down on close so a hidden clip can never keep playing. */
+/* Lightbox for /media/. Nothing heavier than a thumbnail is fetched until a
+   tile is opened; a video is built on demand, starts when opened, and is torn
+   down on close or when paging away, so a hidden clip can never keep playing. */
 (function () {
   var data = document.getElementById("media-data");
   var strings = document.querySelector(".media-strings");
@@ -219,6 +219,7 @@
   /* Everything below builds DOM nodes; nothing from the data is ever parsed
      as markup. Links to Instagram open in a new tab. */
   var IG = "https://www.instagram.com/";
+  var REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)");
   function link(href, text) {
     var a = document.createElement("a");
     a.href = href;
@@ -327,10 +328,21 @@
       video.poster = entry.poster;
       video.controls = true;
       video.playsInline = true;
-      video.preload = "none";
       video.width = entry.w;
       video.height = entry.h;
       stage.appendChild(video);
+      /* Opening a video is the visitor asking to watch it, so start it rather
+         than make them press play a second time. The click, key or swipe
+         that got here is the gesture browsers require for sound. Without
+         one (arriving on a shared link) the browser refuses, and the video
+         just waits on its poster. Not at all for reduced motion. */
+      if (!REDUCED_MOTION.matches) {
+        video.preload = "auto";
+        var started = video.play();
+        if (started && started.catch) started.catch(function () {});
+      } else {
+        video.preload = "metadata";
+      }
     } else {
       var img = document.createElement("img");
       /* Show the grid thumbnail straight away — it is already in the cache —
