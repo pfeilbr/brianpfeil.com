@@ -79,6 +79,12 @@
   </script>
   {{ partial "head-icons.html" . }}
   {{ partial "head-fonts.html" . }}
+  {{- /* /media/ pulls every thumbnail from the CDN; opening that connection
+     while the HTML is still arriving saves the DNS + TLS round trips before
+     the first tile. No crossorigin: images are plain no-cors requests. */ -}}
+  {{ if and (eq .Layout "media") hugo.Data.media hugo.Data.media.base_url }}
+  <link rel="preconnect" href="{{ strings.TrimSuffix "/" hugo.Data.media.base_url }}">
+  {{ end }}
   {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ template "_internal/google_analytics.html" . }}

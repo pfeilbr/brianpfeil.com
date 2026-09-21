@@ -22,6 +22,10 @@
     {{ if not (in $years .year) }}{{ $years = $years | append .year }}{{ end }}
   {{ end }}
 
+  {{/* The first rows are on screen at load, so they shouldn't wait for the
+     lazy-loader to decide they're visible: eager, and high priority for the
+     first few so they win the race against everything else on the page. */}}
+  {{ $tile := 0 }}
   {{ range $years }}
   {{ $year := . }}
   <section class="media-section" aria-labelledby="year-{{ $year }}">
@@ -35,7 +39,10 @@
          script takes over the click when it is running. */}}
       <a class="media-tile" href="{{ $base }}{{ $first.src }}" data-item="{{ .id }}"
          aria-label="{{ $label }} — {{ i18n "media_open" }}">
-        <img src="{{ $base }}{{ $first.thumb }}" alt="" loading="lazy" decoding="async">
+        {{ $tile = add $tile 1 }}
+        <img src="{{ $base }}{{ $first.thumb }}" alt=""
+             {{- if le $tile 8 }} loading="eager"{{ if le $tile 4 }} fetchpriority="high"{{ end }}
+             {{- else }} loading="lazy"{{ end }} decoding="async">
         {{ if eq .kind "video" }}
         <span class="media-badge" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
