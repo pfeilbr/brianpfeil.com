@@ -77,17 +77,18 @@ Or put a token in `tools/generate-posts/config.local.yaml` (gitignored) as
 
 ## The media page (`/media/`)
 
-Photos and video from Instagram, built from Instagram's official data export
-— no scraping, no stored credentials. Files are re-encoded with all metadata
+Photos and video from Instagram, built from the instagram-archive project
+(`~/projects/instagram/archive`) or an official Instagram data export — no
+scraping, no stored credentials. Files are re-encoded with all metadata
 (including GPS) stripped, and served from a private S3 bucket behind
 CloudFront; only `data/media.yaml` lives in the repo. **Nothing is published
 until it is approved by hand.**
 
-    make media-deps                                    # once
-    make media-watch-install                           # once: auto-stage from ~/Downloads
-    make media-stage EXPORT=~/Downloads/instagram-export.zip
-    open tools/instagram-media/build/review.html       # tick what goes public
-    make media-release EXPORT=~/Downloads/instagram-export.zip
+    make media-deps       # once
+    make media-sync       # archive -> live: stage, approve all, encode, upload, commit, push
+
+Or selectively: `make media-stage`, tick items in
+`tools/instagram-media/build/review.html`, then `make media-release`.
 
 See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 
@@ -105,9 +106,10 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make check-repo-links` | List posts whose repo link 404s for a visitor (live, needs network) |
 | **Media** | |
 | `make media-deps` | Create the tool's venv |
-| `make media-stage EXPORT=…` | Read an export, update the approve list, build the review sheet |
-| `make media-publish EXPORT=…` | Encode and upload approved items, write `data/media.yaml` |
-| `make media-release EXPORT=…` | `media-publish`, then commit and push only the media files |
+| `make media-stage` | Read the archive (or `EXPORT=…`), update the approve list, build the review sheet |
+| `make media-publish` | Encode and upload approved items, write `data/media.yaml` |
+| `make media-release` | `media-publish`, then commit and push only the media files |
+| `make media-sync` | Archive to live in one step: stage, approve every item, release (no-op when nothing is new) |
 | `make media-status` | What is approved and what is live |
 | `make media-audit` | Every file the page references exists on the CDN (exits 1 if not) |
 | `make media-watch-install` | Install the launchd agent that stages exports from `~/Downloads` |

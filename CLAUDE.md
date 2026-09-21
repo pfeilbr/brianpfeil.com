@@ -4,45 +4,35 @@ Hugo site. `content/post/*.md` are blog/project posts; `content/projects/` are p
 
 ## Where /media/ stands (read this first)
 
-The page, the pull tool and the AWS hosting are all built, live and pushed.
-`/media/` renders an empty state in all nine languages.
+**Live, with all 89 feed items** (79 posts, 10 reels, 2011–2026; 575 photos
+and videos, 1,382 files on the CDN) — released as `bf44087` on 2026-09-21.
 
-**It is empty because no Instagram export has been downloaded yet.** One was
-requested on 2026-09-21 (confirmed pending in Accounts Center): Instagram
-pfeilbr, **Media** only, **All time**, **JSON**, **Medium quality**. Meta emails
-brian.pfeil@gmail.com when it is ready and the download link expires after
-four days. Use the same settings for any later export: item ids are content
-hashes, so a different quality produces different bytes, new ids, and loses
-every approval already made.
+**The source is the instagram-archive project**, `~/projects/instagram/archive`
+(`archive_dir` in `tools/instagram-media/config.yaml`), which keeps every feed
+item as `metadata.json` + `media/`. Only posts and reels are read; stories,
+highlights and `_oversized/` (higher-bitrate duplicates of reels) are not.
+Every record carries a GPS location and tagged users; neither is published.
+Ids are local date + Instagram shortcode, so they survive re-downloads.
 
-To request another one (it needs an Instagram login; B re-enters the password):
-[accountscenter.instagram.com/info_and_permissions/dyi](https://accountscenter.instagram.com/info_and_permissions/dyi/)
-→ Posts + Reels → **Format: JSON**, All time, High quality. Instagram emails a
-link; a large account comes back as several part ZIPs.
-
-`aws sso login` first — the session expires and `publish` now stops in a
-second rather than encoding everything and failing at the upload.
-
-A launchd agent (`make media-watch-install`, installed) stages the export
-automatically when it lands in `~/Downloads` and posts a notification; check
-`make media-watch-status`. It never approves or publishes.
-
-With the archive on disk (several part ZIPs are fine — pass them all, or the
-directory holding them):
+To refresh after the archive picks up new posts — one command, repeatable,
+and a no-op when nothing is new:
 
 ```sh
-make media-deps                                          # one-time venv
-make media-stage EXPORT=~/Downloads/instagram-export.zip
-open tools/instagram-media/build/review.html             # tick what goes public
-python3 tools/instagram-media/pull.py approve --id ...   # the sheet prints this
-make media-release EXPORT=~/Downloads/instagram-export.zip   # publish + commit + push
+make media-sync        # stage, approve every item, encode, upload, commit, push
+make media-audit       # confirm every referenced file is on the CDN
 ```
 
-Nothing publishes without an explicit approval — see
-`tools/instagram-media/README.md`. After a release, `make media-audit`
-confirms every file the page references is on the CDN. `publish --prune`
-also evicts removed files from CloudFront (they are cached for a year), and
-the CDN serves AWS's managed security headers. `make help` lists everything.
+The account is public, which is why everything is approved by default. To
+publish selectively instead: `make media-stage`, tick items in
+`tools/instagram-media/build/review.html`, `make media-release`. To take
+something down: `pull.py approve --id …` to unapprove, then
+`pull.py release --prune` (also evicts it from CloudFront).
+
+A Download Your Information export was also requested on 2026-09-21 before
+the archive was known about; it isn't needed. `--export` still works if one
+is ever wanted, and the Downloads watcher still stages one if it lands.
+
+`aws sso login` first if the session has expired — `publish` checks before encoding.
 
 `make verify` runs every test suite (Go post generator, Python media tool,
 link checker), a render check that builds `/media/` from a fixture and with

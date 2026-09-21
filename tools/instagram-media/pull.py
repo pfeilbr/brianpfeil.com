@@ -184,6 +184,23 @@ def cmd_status(args, cfg) -> int:
     return 0
 
 
+def cmd_sync(args, cfg) -> int:
+    """Archive to live site in one go: stage, approve every feed post and reel,
+    release. For when everything on the (public) Instagram profile should be
+    on /media/ too. Re-running with nothing new uploads and commits nothing."""
+    code = cmd_stage(args, cfg)
+    if code != 0:
+        return code
+    _, manifest_path, _ = paths(cfg)
+    records = list(manifest.load(manifest_path).values())
+    newly = sum(1 for r in records if not r.get("approved"))
+    for record in records:
+        record["approved"] = True
+    manifest.save(manifest_path, records)
+    print(f"approved {newly} new item(s); {len(records)} in total")
+    return cmd_release(args, cfg)
+
+
 def cmd_audit(args, cfg) -> int:
     """Check every file the page references exists on the CDN."""
     _, _, data_path = paths(cfg)
@@ -251,6 +268,12 @@ def main() -> int:
     rel.add_argument("--prune", action="store_true", help="also delete S3 objects that are no longer approved")
     rel.add_argument("--dry-run", action="store_true", help="build locally, upload and commit nothing")
     rel.set_defaults(func=cmd_release)
+
+    syn = sub.add_parser("sync", help="stage, approve every item, release — archive to live in one step")
+    add_source(syn)
+    syn.add_argument("--prune", action="store_true", help="also delete S3 objects that are no longer approved")
+    syn.add_argument("--dry-run", action="store_true", help="build locally, upload and commit nothing")
+    syn.set_defaults(func=cmd_sync)
 
     aud = sub.add_parser("audit", help="check every file the page references is on the CDN")
     aud.set_defaults(func=cmd_audit)

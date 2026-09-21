@@ -40,6 +40,9 @@ media-release: ## media-publish, then commit and push only the media files
 	cd tools/instagram-media && .venv/bin/python pull.py release $(SOURCE)
 
 # Every file the page references exists on the CDN; exits 1 if any are missing.
+media-sync: ## Archive to live: stage, approve every item, release (repeatable; no-op when nothing is new)
+	cd tools/instagram-media && .venv/bin/python pull.py sync $(SOURCE)
+
 media-audit: ## Check every file the page references exists on the CDN
 	cd tools/instagram-media && .venv/bin/python pull.py audit
 
@@ -102,4 +105,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: help dev build verify generate-posts test-tools media-deps media-stage media-publish media-release media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-i18n test-docs check-repo-links tf-init tf-plan tf-validate
+.PHONY: help dev build verify generate-posts test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-i18n test-docs check-repo-links tf-init tf-plan tf-validate

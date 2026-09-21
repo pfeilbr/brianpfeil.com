@@ -7,6 +7,19 @@ There is no Instagram scraping here and no Instagram credentials anywhere. The
 export is the only input, which is what makes a run reproducible — and it is
 also the only way to get this media without breaking Instagram's terms.
 
+## Sources
+
+**The instagram-archive project (default).** `~/projects/instagram/archive`,
+set as `archive_dir` in `config.yaml`, keeps every feed item as a directory of
+`metadata.json` + `media/`. `igmedia/archive.py` reads `posts/` and `reels/`
+only — not stories, highlights, or `_oversized/` (higher-bitrate duplicates
+of reels already in `reels/`). Location, tagged users and the raw API object
+never leave that module. Ids are the local date plus Instagram's shortcode.
+
+    make media-sync     # stage, approve everything, release; a no-op when nothing is new
+
+**An Instagram export**, with `--export` / `EXPORT=…`, as described below.
+
 ## Getting an export
 
 [accountscenter.instagram.com/info_and_permissions/dyi](https://accountscenter.instagram.com/info_and_permissions/dyi/)
@@ -79,7 +92,9 @@ decision; only genuinely new posts arrive as `approved: false`.
 
 - Feed posts and reels only. Stories, archived posts, tagged photos and
   messages are never read, even though some exports contain them.
-- Images are resized to 1600px, video re-encoded to 720p H.264.
+- Images are capped at 1600px on the long edge. Video that is already
+  web-ready (H.264, AAC or silent, ≤1280px, ≤8 Mbps) is remuxed untouched;
+  anything else (HEVC, larger, higher bitrate) is re-encoded to H.264.
 - **All metadata is stripped** on the way through — export originals can still
   carry GPS coordinates, and these files go on a public CDN.
 - Captions are published as-is, in whatever language they were written in.
