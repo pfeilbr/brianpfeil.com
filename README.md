@@ -98,6 +98,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | **Site** | |
 | `make dev` | Hugo dev server with live reload |
 | `make build` | Production build (`hugo --minify`) |
+| `make help` | List every target with a one-line description |
 | `make verify` | Every `test-*` target below, then a production build and the i18n fallback check on it (not the live link check or Terraform) |
 | **Posts** | |
 | `make generate-posts` | Regenerate `generated-*.md` from GitHub |
@@ -109,13 +110,16 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make media-release EXPORT=…` | `media-publish`, then commit and push only the media files |
 | `make media-status` | What is approved and what is live |
 | `make media-audit` | Every file the page references exists on the CDN (exits 1 if not) |
-| `make media-watch-install` / `-uninstall` / `-status` | The `~/Downloads` watcher |
+| `make media-watch-install` | Install the launchd agent that stages exports from `~/Downloads` |
+| `make media-watch-uninstall` | Remove the Downloads watcher |
+| `make media-watch-status` | Whether the watcher is loaded, and its last runs |
 | **Tests** | |
 | `make test-tools` | Go tests for the post generator |
 | `make test-media` | Python tests for the media tool |
 | `make test-layout` | Render `/media/` from a fixture and check it in all nine languages |
 | `make test-link-check` | Tests for the repo-link checker |
 | `make test-i18n` | Tests for, and a run of, the i18n consistency check |
+| `make test-docs` | Every Makefile target has help text and is in the README |
 | **Infrastructure** | |
 | `make tf-init` / `tf-plan` / `tf-validate` | Terraform, both stacks, S3 backend |
 

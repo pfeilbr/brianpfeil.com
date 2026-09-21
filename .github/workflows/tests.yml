@@ -43,6 +43,10 @@ jobs:
         run: python -m unittest discover -s tools/link-check -p 'test_*.py' -v
       - name: i18n-check tests
         run: python -m unittest discover -s tools/i18n-check -p 'test_*.py' -v
+      - name: docs check (every Makefile target documented)
+        run: |
+          python -m unittest discover -s tools/docs-check -p 'test_*.py' -v
+          python tools/docs-check/check_docs.py
 
   site:
     name: hugo build
