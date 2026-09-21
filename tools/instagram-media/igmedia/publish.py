@@ -155,6 +155,10 @@ def entry_for(item, derived_media: list) -> dict:
         if d.kind == "video":
             record["poster"] = d.poster_key
             record["duration"] = d.duration
+        if d.grid_keys:
+            record["grid"] = list(d.grid_keys)
+        if d.color:
+            record["color"] = d.color
         media.append(record)
 
     entry = {

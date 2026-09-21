@@ -137,6 +137,18 @@ def check_populated(public: Path) -> list[str]:
         if "</script><img" in html:
             errors.append(f"{label}: hostile caption rendered unescaped")
 
+        # Grid tiles: the item with them gets a srcset and its colour; the
+        # one without falls back to the thumbnail; a malformed colour is
+        # never written into a style attribute.
+        if "v-g360.webp 360w" not in html or "v-g720.webp 720w" not in html:
+            errors.append(f"{label}: grid tile srcset missing")
+        if "background-color:#1a2b3c" not in html:
+            errors.append(f"{label}: tile colour missing")
+        if "evil.example" in html:
+            errors.append(f"{label}: a malformed colour reached a style attribute")
+        if "c/1-t.jpg" not in html:
+            errors.append(f"{label}: tile without grid images didn't fall back to the thumbnail")
+
         if page.empty:
             errors.append(f"{label}: shows the empty state despite having items")
     return errors

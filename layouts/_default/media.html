@@ -37,10 +37,18 @@
       {{/* A real link to the full-size file, so the grid still works with
          JavaScript off — the same rule the tabbed pages follow. The lightbox
          script takes over the click when it is running. */}}
+      {{/* Square WebP tiles sized for the grid, with the photo's average
+         colour behind them while they load. The colour is checked against a
+         strict pattern before it goes into a style attribute. */}}
+      {{ $grid := index $first "grid" }}
+      {{ $color := index $first "color" }}
       <a class="media-tile" href="{{ $base }}{{ $first.src }}" data-item="{{ .id }}"
-         aria-label="{{ $label }} — {{ i18n "media_open" }}">
+         aria-label="{{ $label }} — {{ i18n "media_open" }}"
+         {{- if and $color (findRE `^#[0-9a-f]{6}$` $color) }} style="background-color:{{ $color | safeCSS }}"{{ end }}>
         {{ $tile = add $tile 1 }}
-        <img src="{{ $base }}{{ $first.thumb }}" alt=""
+        <img src="{{ $base }}{{ if $grid }}{{ index $grid 0 }}{{ else }}{{ $first.thumb }}{{ end }}"
+             {{- with $grid }} srcset="{{ $base }}{{ index . 0 }} 360w, {{ $base }}{{ index . 1 }} 720w"
+             sizes="(min-width: 640px) 162px, 31vw"{{ end }} alt=""
              {{- if le $tile 8 }} loading="eager"{{ if le $tile 4 }} fetchpriority="high"{{ end }}
              {{- else }} loading="lazy"{{ end }} decoding="async">
         {{ if eq .kind "video" }}

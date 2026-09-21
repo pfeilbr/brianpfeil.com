@@ -151,6 +151,14 @@ class DataFileTest(unittest.TestCase):
         self.assertEqual(entry["location"], {"name": "Somewhere", "id": "1"})
         self.assertEqual(list(entry)[-1], "media")  # media stays last in the YAML
 
+    def test_grid_tiles_and_colour_reach_the_entry(self):
+        d = Derived(kind="photo", key="k.jpg", thumb_key="k-t.jpg", poster_key=None,
+                    width=10, height=10, duration=None,
+                    grid_keys=("k-g360.webp", "k-g720.webp"), color="#aabbcc")
+        media = publish.entry_for(item("a"), [d])["media"][0]
+        self.assertEqual(media["grid"], ["k-g360.webp", "k-g720.webp"])
+        self.assertEqual(media["color"], "#aabbcc")
+
     def test_no_details_means_none_in_the_entry(self):
         entry = publish.entry_for(item("a"), [photo("x")])
         self.assertEqual(set(entry), {"id", "date", "year", "kind", "caption", "media"})

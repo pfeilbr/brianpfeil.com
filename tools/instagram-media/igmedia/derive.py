@@ -21,6 +21,12 @@ THUMB_MAX = 600  # long edge of the grid thumbnail
 IMAGE_QUALITY = 82
 THUMB_QUALITY = 78
 
+# Grid tiles are square and display at about 110-162 CSS px, so the grid gets
+# its own square WebP crops rather than the 600px JPEG thumbnail: 360px covers
+# a phone at 3x or a desktop tile at 2x, 720px anything denser.
+GRID_SIZES = (360, 720)
+GRID_QUALITY = 72
+
 # Long edge, not height: capping height at 720 turned Instagram's 720x960
 # portrait clips into 540x720 — smaller than what Instagram itself serves.
 VIDEO_MAX_EDGE = 1280
@@ -42,6 +48,8 @@ class Derived:
     width: int
     height: int
     duration: float | None
+    grid_keys: tuple = ()  # square WebP tiles, smallest first
+    color: str | None = None  # average colour, shown while a tile loads
 
 
 class ToolMissing(RuntimeError):
@@ -233,26 +241,75 @@ class Lock:
         )
 
 
+def _grid(source: Path, dest_dir: Path, stem: str) -> tuple[list[str], str]:
+    """Square WebP grid tiles and the image's average colour.
+
+    Cropped square at build time because the tile shows a square anyway —
+    every pixel outside it was bytes downloaded to be hidden. Never upscaled:
+    a 612px photo from 2011 gets a 612px tile, not a blurry 720.
+    """
+    from PIL import Image, ImageOps
+
+    names = []
+    with Image.open(source) as im:
+        im = ImageOps.exif_transpose(im).convert("RGB")
+        side = min(im.size)
+        left, top = (im.width - side) // 2, (im.height - side) // 2
+        square = im.crop((left, top, left + side, top + side))
+        # One pixel is the average; good enough to fill a tile while it loads.
+        r, g, b = square.resize((1, 1), Image.LANCZOS).getpixel((0, 0))
+        color = f"#{r:02x}{g:02x}{b:02x}"
+        for size in GRID_SIZES:
+            name = f"{stem}-g{size}.webp"
+            tile = square.resize((min(size, side),) * 2, Image.LANCZOS) if side > size else square
+            tile.save(dest_dir / name, format="WEBP", quality=GRID_QUALITY, method=6)
+            names.append(name)
+    return names, color
+
+
+def _ensure_grid(record: dict, dest_dir: Path, stem: str) -> bool:
+    """Add grid tiles to a record that predates them. True if it changed.
+
+    Built from the full-size image (or a video's poster) already on disk, so
+    adding tiles to an existing build never re-encodes a video.
+    """
+    if record.get("grid") and all((dest_dir / n).exists() for n in record["grid"]):
+        return False
+    source = dest_dir / (record["name"] if record["kind"] == "photo" else record["poster"])
+    names, color = _grid(source, dest_dir, stem)
+    record["grid"], record["color"] = names, color
+    record["files"] = [f for f in record["files"] if f not in names] + names
+    return True
+
+
+def _derived(record: dict, base: str) -> "Derived":
+    return Derived(
+        kind=record["kind"],
+        key=f"{base}/{record['name']}",
+        thumb_key=f"{base}/{record['thumb']}",
+        poster_key=f"{base}/{record['poster']}" if record.get("poster") else None,
+        width=record["width"],
+        height=record["height"],
+        duration=record.get("duration"),
+        grid_keys=tuple(f"{base}/{n}" for n in record.get("grid") or ()),
+        color=record.get("color"),
+    )
+
+
 def derive(media, item_id: str, outdir: Path, prefix: str, lock: Lock) -> Derived:
     """Build (or re-use) the web files for one photo or video."""
     stem = media.sha256[:12]
     base = f"{prefix}/{item_id}"
 
+    dest_dir = outdir / item_id
+
     cached = lock.get(media.sha256)
     if cached is not None:
-        files = [outdir / item_id / Path(k).name for k in cached["files"]]
-        if all(f.exists() for f in files):
-            return Derived(
-                kind=cached["kind"],
-                key=f"{base}/{cached['name']}",
-                thumb_key=f"{base}/{cached['thumb']}",
-                poster_key=f"{base}/{cached['poster']}" if cached.get("poster") else None,
-                width=cached["width"],
-                height=cached["height"],
-                duration=cached.get("duration"),
-            )
-
-    dest_dir = outdir / item_id
+        base_files = [f for f in cached["files"] if f not in (cached.get("grid") or [])]
+        if all((dest_dir / f).exists() for f in base_files):
+            if _ensure_grid(cached, dest_dir, stem):
+                lock.put(media.sha256, cached)
+            return _derived(cached, base)
 
     if media.kind == "photo":
         name, thumb = f"{stem}.jpg", f"{stem}-t.jpg"
@@ -281,13 +338,6 @@ def derive(media, item_id: str, outdir: Path, prefix: str, lock: Lock) -> Derive
             "files": [name, thumb, poster],
         }
 
+    _ensure_grid(record, dest_dir, stem)
     lock.put(media.sha256, record)
-    return Derived(
-        kind=record["kind"],
-        key=f"{base}/{record['name']}",
-        thumb_key=f"{base}/{record['thumb']}",
-        poster_key=f"{base}/{record['poster']}" if record.get("poster") else None,
-        width=record["width"],
-        height=record["height"],
-        duration=record.get("duration"),
-    )
+    return _derived(record, base)

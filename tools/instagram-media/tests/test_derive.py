@@ -252,5 +252,75 @@ class VideoTest(unittest.TestCase):
         self.assert_clean(out)
 
 
+class GridTest(unittest.TestCase):
+    """Square WebP tiles for the grid, and the colour shown while they load."""
+
+    def setUp(self):
+        self.tmp = TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self.out = self.root / "out"
+        self.lock = derive.Lock(self.root / "lock.json")
+
+    def derive_photo(self, size, color=(200, 80, 40), sha="e" * 64):
+        src = self.root / f"{sha[:4]}.jpg"
+        Image.new("RGB", size, color).save(src, format="JPEG")
+        return derive.derive(Media(src, "photo", sha), "g", self.out, "instagram", self.lock)
+
+    def tile(self, key):
+        return Image.open(self.out / "g" / Path(key).name)
+
+    def test_two_square_webp_tiles_at_360_and_720(self):
+        d = self.derive_photo((2400, 1800))
+        self.assertEqual([Path(k).name for k in d.grid_keys],
+                         ["eeeeeeeeeeee-g360.webp", "eeeeeeeeeeee-g720.webp"])
+        for key, size in zip(d.grid_keys, derive.GRID_SIZES):
+            with self.tile(key) as im:
+                self.assertEqual(im.format, "WEBP")
+                self.assertEqual(im.size, (size, size))
+
+    def test_small_originals_are_not_upscaled(self):
+        d = self.derive_photo((612, 612), sha="f" * 64)
+        with self.tile(d.grid_keys[0]) as small, self.tile(d.grid_keys[1]) as large:
+            self.assertEqual(small.size, (360, 360))
+            self.assertEqual(large.size, (612, 612))
+
+    def test_colour_is_the_average_as_hex(self):
+        d = self.derive_photo((800, 600), color=(200, 80, 40), sha="a1" * 32)
+        self.assertRegex(d.color, r"^#[0-9a-f]{6}$")
+        r, g, b = (int(d.color[i:i + 2], 16) for i in (1, 3, 5))
+        self.assertTrue(abs(r - 200) < 8 and abs(g - 80) < 8 and abs(b - 40) < 8, d.color)
+
+    def test_tiles_carry_no_metadata(self):
+        src = jpeg_with_gps(self.root / "gps.jpg")
+        d = derive.derive(Media(src, "photo", "b2" * 32), "g", self.out, "instagram", self.lock)
+        for key in d.grid_keys:
+            with self.tile(key) as im:
+                self.assertEqual(len(im.getexif()), 0)
+
+    def test_tiles_are_added_to_an_older_build_without_re_encoding(self):
+        """A lock record from before grid tiles existed gets them from the image
+        already on disk; a video is never re-encoded to add them."""
+        d = self.derive_photo((800, 600), sha="c3" * 32)
+        record = self.lock.get("c3" * 32)
+        for name in record.pop("grid"):
+            (self.out / "g" / name).unlink()
+        record.pop("color")
+        record["files"] = [f for f in record["files"] if not f.endswith(".webp")]
+        with mock.patch.object(derive, "_encode_video", side_effect=AssertionError("re-encoded")), \
+             mock.patch.object(derive, "_save_image", side_effect=AssertionError("re-encoded")):
+            again = derive.derive(Media(self.root / "c3c3.jpg", "photo", "c3" * 32), "g",
+                                  self.out, "instagram", self.lock)
+        self.assertEqual(len(again.grid_keys), 2)
+        self.assertTrue(all((self.out / "g" / Path(k).name).exists() for k in again.grid_keys))
+        self.assertEqual(again.color, d.color)
+
+    def test_a_cached_build_with_tiles_is_left_alone(self):
+        self.derive_photo((800, 600), sha="d4" * 32)
+        with mock.patch.object(derive, "_grid", side_effect=AssertionError("rebuilt tiles")):
+            derive.derive(Media(self.root / "d4d4.jpg", "photo", "d4" * 32), "g",
+                          self.out, "instagram", self.lock)
+
+
 if __name__ == "__main__":
     unittest.main()
