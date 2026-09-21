@@ -17,6 +17,9 @@ from pathlib import Path
 POST_GLOBS = ("posts_*.json", "posts.json")
 REEL_GLOBS = ("reels.json", "reels_*.json")
 STORY_GLOBS = ("stories.json", "stories_*.json")
+# Posts B took off the profile with "Archive". Still B's own, just not on the
+# grid — and in no other source: the profile API only lists what is visible.
+ARCHIVED_GLOBS = ("archived_posts.json", "archived_posts_*.json")
 
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".heic", ".webp"}
 VIDEO_SUFFIXES = {".mp4", ".mov", ".m4v"}
@@ -247,9 +250,21 @@ def _load(path: Path) -> list[dict]:
         return []
 
 
-def read_items(root: Path, stories: bool = False, posts: bool = True) -> list[Item]:
-    """Posts and reels in the export (and stories, if asked), newest first."""
+def read_items(root: Path, stories: bool = False, posts: bool = True,
+               archived: bool = False) -> list[Item]:
+    """Posts and reels in the export (and stories and archived posts, if
+    asked), newest first."""
     items: dict[str, Item] = {}
+    if archived:
+        # First, so that a post which is somehow in both files ends up as the
+        # ordinary post: the id is content-derived and the later write wins.
+        for path in _find_json(root, ARCHIVED_GLOBS):
+            for entry in _load(path):
+                item = _build_item(entry, root)
+                if item is not None:
+                    item.details = {**item.details, "archived": True}
+                    items[item.id] = item
+
     if posts:
         for path in _find_json(root, POST_GLOBS) + _find_json(root, REEL_GLOBS):
             for entry in _load(path):

@@ -34,12 +34,18 @@ are generated here, never downloaded). "Silent" includes an audio track that
 never gets louder than -45 dBFS. The viewer labels it "♪ Sunlit · music
 added" so nobody mistakes it for recorded sound.
 
-**Stories are pending the Instagram export.** The archive knows about 153
+**Everything B made goes on /media/, whether or not the profile shows it** —
+stories and posts hidden with "Archive" included. Both exist only in the
+export (`archived_posts.json`, `stories.json`); the viewer labels them
+"Story" / "Archived post". Still never published: reshares of other
+people's posts, and recently-deleted items.
+
+**Stories and archived posts are pending the Instagram export.** The archive knows about 153
 archived stories only as an inventory (`harvest/iphone/story-inventory.jsonl`),
 not their files. The export requested 2026-09-21 (Media, all time, JSON,
 medium) carries them. When it lands in `~/Downloads`, the watcher runs
 `pull.py sync --export …`: posts and reels still from the archive, stories
-from the export, reshares dropped (2 of someone else's posts, 9 of B's own
+and archived posts from the export, reshares dropped (2 of someone else's posts, 9 of B's own
 reels — `igmedia/stories.py`), silent stories given music, pushed live.
 Download it within four days of Meta's email; it needs B's password.
 

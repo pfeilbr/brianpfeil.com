@@ -139,6 +139,29 @@ class CombinedSourceTest(unittest.TestCase):
         self.assertEqual(captions, ["", "first", "from the archive"])
         self.assertNotIn("a post", captions)   # the export's copy of a post
 
+    def add_archived(self, entries):
+        (self.export / "media/archived_posts").mkdir(parents=True, exist_ok=True)
+        for n, e in enumerate(entries):
+            (self.export / f"media/archived_posts/h{n}.jpg").write_bytes(f"hidden-{n}".encode())
+            e["media"] = [{"uri": f"media/archived_posts/h{n}.jpg",
+                           "creation_timestamp": e["creation_timestamp"]}]
+        (self.export / "your_instagram_activity/media/archived_posts.json").write_text(
+            json.dumps({"ig_archived_post_media": entries}))
+
+    def test_export_adds_posts_archived_off_the_profile(self):
+        self.add_archived([{"title": "hidden from the grid", "creation_timestamp": 1500000000}])
+        items = {i.caption: i for i in self.load(export=[self.export])}
+        self.assertIn("hidden from the grid", items)
+        self.assertTrue(items["hidden from the grid"].details.get("archived"))
+
+    def test_a_restored_post_is_not_shown_twice(self):
+        # Same second as the archive's SHORT1 (2025-03-14T15:14:59Z): it was
+        # archived once and put back, so the profile copy is the one to keep.
+        self.add_archived([{"title": "restored", "creation_timestamp": 1741965299}])
+        captions = [i.caption for i in self.load(export=[self.export])]
+        self.assertNotIn("restored", captions)
+        self.assertIn("from the archive", captions)
+
     def test_no_archive_uses_the_export_for_everything(self):
         captions = sorted(i.caption for i in self.load(export=[self.export], no_archive=True))
         self.assertEqual(captions, ["", "a post", "first"])

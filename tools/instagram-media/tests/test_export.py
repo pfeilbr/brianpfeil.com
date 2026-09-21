@@ -134,6 +134,51 @@ class ReadItemsTest(unittest.TestCase):
         self.assertNotEqual(before["video caption"], after["video caption"])
 
 
+class ArchivedPostsTest(unittest.TestCase):
+    """Posts taken off the profile with "Archive" live in their own file."""
+
+    def setUp(self):
+        self.tmp = TemporaryDirectory()
+        self.root = Path(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+        add_media(self.root, "media/posts/a.jpg", b"photo-a")
+        add_media(self.root, "media/archived_posts/h.jpg", b"hidden-h")
+        add_media(self.root, "media/archived_posts/i.jpg", b"hidden-i")
+        write_export(self.root, posts=[
+            {"media": [{"uri": "media/posts/a.jpg", "creation_timestamp": 1672574400}],
+             "title": "visible", "creation_timestamp": 1672574400},
+        ])
+        activity = self.root / "your_instagram_activity" / "media"
+        (activity / "archived_posts.json").write_text(json.dumps({"ig_archived_post_media": [
+            {"media": [{"uri": "media/archived_posts/h.jpg", "creation_timestamp": 1500000000},
+                       {"uri": "media/archived_posts/i.jpg", "creation_timestamp": 1500000000}],
+             "title": "hidden", "creation_timestamp": 1500000000},
+            # Also in posts_1.json: must come out once, as the ordinary post.
+            {"media": [{"uri": "media/posts/a.jpg", "creation_timestamp": 1672574400}],
+             "title": "visible", "creation_timestamp": 1672574400},
+        ]}), encoding="utf-8")
+
+    def test_not_read_unless_asked(self):
+        self.assertEqual([i.caption for i in export.read_items(self.root)], ["visible"])
+
+    def test_read_and_flagged(self):
+        by_caption = {i.caption: i for i in export.read_items(self.root, archived=True)}
+        self.assertEqual(set(by_caption), {"visible", "hidden"})
+        self.assertTrue(by_caption["hidden"].details.get("archived"))
+        self.assertEqual(by_caption["hidden"].kind, "album")
+
+    def test_a_post_in_both_files_is_an_ordinary_post(self):
+        by_caption = {i.caption: i for i in export.read_items(self.root, archived=True)}
+        self.assertFalse(by_caption["visible"].details.get("archived"))
+
+    def test_read_without_the_exports_posts(self):
+        """With the archive project as the source of posts, only the hidden
+        ones come from the export."""
+        items = export.read_items(self.root, posts=False, archived=True)
+        self.assertEqual(sorted(i.caption for i in items), ["hidden", "visible"])
+        self.assertTrue(all(i.details.get("archived") for i in items))
+
+
 class UnpackTest(unittest.TestCase):
     def test_rejects_a_traversal_path(self):
         import zipfile

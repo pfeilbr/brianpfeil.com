@@ -91,7 +91,9 @@ decision; only genuinely new posts arrive as `approved: false`.
 
 ## What ends up public
 
-- Feed posts and reels only. Stories, archived posts, tagged photos and
+- Feed posts and reels, plus — from an export — stories and archived posts
+  (ones taken off the profile with "Archive"; the viewer labels them
+  "Archived post"). Reshares, recently deleted items, tagged photos and
   messages are never read, even though some exports contain them.
 - Images are capped at 1600px on the long edge. Video that is already
   web-ready (H.264, AAC or silent, ≤1280px, ≤8 Mbps) is remuxed untouched;
@@ -129,6 +131,14 @@ posts and reels. Reshares are dropped by matching the inventory on local day
 and order within the day (`igmedia/stories.py`) — someone else's post is
 never republished, and a reshare of a reel already on the page isn't
 duplicated.
+
+## Archived posts
+
+A post hidden with Instagram's "Archive" is on no profile page, so the
+instagram-archive project never sees it; the export's `archived_posts.json`
+is the only source. `--export` reads it alongside the stories. One that was
+archived and later restored is already in the archive project, and is
+skipped by matching the second it was posted.
 
 ## Checking it
 

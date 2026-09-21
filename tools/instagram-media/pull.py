@@ -39,10 +39,11 @@ def load_items(args, cfg: dict, workdir: Path):
     """Everything to consider publishing, newest first.
 
     Posts and reels come from the instagram-archive project (archive_dir),
-    which is complete and keyed by shortcode. An export, if given, adds its
-    stories — the one thing the archive can't hold. Its posts and reels are
-    ignored while the archive is in use, so nothing appears twice; with
-    --no-archive the export is the only source, stories included.
+    which is complete for the profile and keyed by shortcode. An export, if
+    given, adds what the profile doesn't show and the archive therefore can't
+    hold: stories, and posts taken off the grid with "Archive". Its posts and
+    reels are ignored while the archive is in use, so nothing appears twice;
+    with --no-archive the export is the only source.
     Reshares — someone else's post, or one of B's reels — are dropped.
     """
     use_archive = not getattr(args, "no_archive", False)
@@ -51,7 +52,13 @@ def load_items(args, cfg: dict, workdir: Path):
         items += archive.read_archive(Path(getattr(args, "archive", None) or cfg["archive_dir"]).expanduser())
     if getattr(args, "export", None):
         root = export.unpack([p.expanduser() for p in args.export], workdir)
-        items += export.read_items(root, stories=True, posts=not use_archive)
+        extra = export.read_items(root, stories=True, posts=not use_archive, archived=True)
+        # A post archived and later restored is in both sources under
+        # different ids (shortcode vs content hash); the second it was
+        # posted is the one thing they share.
+        on_profile = {i.taken_at.timestamp() for i in items}
+        items += [i for i in extra
+                  if not ((i.details or {}).get("archived") and i.taken_at.timestamp() in on_profile)]
 
     kept, dropped = stories.filter_reshares(items, stories.load_inventory(cfg.get("story_inventory")))
     for item, reason in dropped:
@@ -250,7 +257,7 @@ def add_source(parser) -> None:
     parser.add_argument("--archive", type=Path,
                         help="instagram-archive directory (default: archive_dir in config.yaml)")
     parser.add_argument("--export", nargs="+", type=Path,
-                        help="Instagram export .zip(s) or directory: adds its stories to the archive")
+                        help="Instagram export .zip(s) or directory: adds its stories and archived posts to the archive")
     parser.add_argument("--no-archive", action="store_true",
                         help="use the export alone, posts and reels included")
 

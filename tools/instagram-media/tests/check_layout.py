@@ -158,6 +158,14 @@ def check_populated(public: Path) -> list[str]:
             errors.append(f"{label}: story tile has no ring class")
         if isinstance(data, dict) and not any(p.get("story") for p in data.get("posts") or []):
             errors.append(f"{label}: story not flagged in the payload")
+        # The fixture's album was archived off the profile: flagged in the
+        # payload, and the viewer has a (translated) label for it.
+        if isinstance(data, dict) and not any(p.get("archived") for p in data.get("posts") or []):
+            errors.append(f"{label}: archived post not flagged in the payload")
+        if "data-archived=" not in html:
+            errors.append(f"{label}: missing viewer string data-archived")
+        elif lang and "Archived post" in html:
+            errors.append(f"{label}: data-archived fell back to English")
         # A year row linking to every year's heading (the fixture spans three).
         for year in ("2024", "2023", "2022"):
             if f"href=#year-{year}" not in html.replace('"', ""):

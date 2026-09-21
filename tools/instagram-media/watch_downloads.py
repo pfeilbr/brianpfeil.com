@@ -227,7 +227,7 @@ def main() -> int:
 
     log(result)
     if result.startswith("staged") and WATCH_ACTION == "sync":
-        notify("Instagram export published", "Its stories are on brianpfeil.com/media.")
+        notify("Instagram export published", "Its stories and archived posts are on brianpfeil.com/media.")
     elif result.startswith("staged"):
         notify("Instagram export staged",
                "Open tools/instagram-media/build/review.html and tick what to publish.")
