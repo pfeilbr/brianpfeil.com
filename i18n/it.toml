@@ -387,3 +387,25 @@ other = "Visualizzatore"
 
 [media_position]
 other = "{{ .n }} di {{ .total }}"
+
+# Media page: Instagram post details
+[media_view_on_instagram]
+other = "Vedi su Instagram"
+
+[media_likes]
+other = "Mi piace"
+
+[media_comments]
+other = "Commenti"
+
+[media_with]
+other = "con {{ .users }}"
+
+[media_original_audio]
+other = "Audio originale"
+
+[media_as_of]
+other = "al {{ .date }}"
+
+[media_location]
+other = "Luogo"

@@ -387,3 +387,25 @@ other = "メディアビューア"
 
 [media_position]
 other = "{{ .n }} / {{ .total }}"
+
+# Media page: Instagram post details
+[media_view_on_instagram]
+other = "Instagram で見る"
+
+[media_likes]
+other = "いいね"
+
+[media_comments]
+other = "コメント"
+
+[media_with]
+other = "{{ .users }} と一緒に"
+
+[media_original_audio]
+other = "オリジナル音源"
+
+[media_as_of]
+other = "{{ .date }} 時点"
+
+[media_location]
+other = "場所"

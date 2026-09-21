@@ -116,6 +116,20 @@ def check_populated(public: Path) -> list[str]:
                     errors.append(f"{label}: media rows repeat the CDN address")
                 if sum(1 for row in media if row.get("k") == "v" and not row.get("p")):
                     errors.append(f"{label}: a video row has no poster")
+                # Post details: carried for the post that has them...
+                album = next((p for p in posts if p.get("id") == "20230101-bbbb2222"), {})
+                want = {"url": "https://www.instagram.com/p/bbbb2222/", "loc": "Somewhere Nice",
+                        "locId": "12345", "likes": 12, "comments": 3, "tagged": ["friend", "other"]}
+                for key, value in want.items():
+                    if album.get(key) != value:
+                        errors.append(f"{label}: post detail {key} is {album.get(key)!r}, want {value!r}")
+                # ...but never coordinates, even if the data file had them.
+                if any(k in p for p in posts for k in ("lat", "lng")) or "39.9488" in html:
+                    errors.append(f"{label}: coordinates reached the page")
+                # And strings the viewer needs for them are present and translated.
+                for attr in ("data-instagram", "data-likes", "data-with", "data-location"):
+                    if attr not in html:
+                        errors.append(f"{label}: missing viewer string {attr}")
 
         # The hostile caption must not survive as markup anywhere on the page:
         # jsonify escapes "<" as a unicode escape in the payload, and the

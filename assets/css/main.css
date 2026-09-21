@@ -1599,40 +1599,69 @@ nav details > summary {
   inset: 0;
   z-index: 100;
   display: none;
-  place-items: center;
   background-color: rgb(0 0 0 / 0.92);
-  padding: 3rem 1rem 5rem;
+  padding: 3.25rem 1rem 0.75rem;
 }
 
-.media-overlay.is-open { display: grid; }
+/* A column: the photo takes whatever height the details below it leave, so
+   a long caption or a row of tags shrinks the photo instead of covering it. */
+.media-overlay.is-open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .media-stage {
-  display: grid;
-  place-items: center;
-  max-width: 100%;
-  max-height: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .media-stage img,
 .media-stage video {
   max-width: 100%;
-  max-height: calc(100vh - 9rem);
+  max-height: 100%;
   width: auto;
   height: auto;
+  object-fit: contain;
   border-radius: 0.25rem;
   background-color: #000;
 }
 
 .media-meta {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0.75rem 1rem 1rem;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 42rem;
+  padding-top: 0.625rem;
   text-align: center;
   color: #e5e7eb;
   font-size: 0.8125rem;
   line-height: 1.5;
+}
+
+.media-meta [hidden] { display: none !important; }
+
+.media-meta a {
+  color: #f3f4f6;
+  text-decoration: underline;
+  text-decoration-color: rgb(255 255 255 / 0.35);
+  text-underline-offset: 2px;
+}
+
+.media-meta a:hover { text-decoration-color: currentColor; }
+
+.media-tagged { color: #d1d5db; margin: 0 0 0.25rem; }
+
+.media-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 0.875rem;
+  color: #d1d5db;
+  margin: 0.125rem 0 0;
 }
 
 .media-caption {
@@ -1645,7 +1674,7 @@ nav details > summary {
   white-space: pre-wrap;
 }
 
-.media-counter { color: #9ca3af; margin: 0; }
+.media-counter { color: #9ca3af; margin: 0 0 0.25rem; }
 
 .media-close,
 .media-nav {

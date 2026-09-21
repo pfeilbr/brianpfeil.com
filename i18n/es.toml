@@ -387,3 +387,25 @@ other = "Visor multimedia"
 
 [media_position]
 other = "{{ .n }} de {{ .total }}"
+
+# Media page: Instagram post details
+[media_view_on_instagram]
+other = "Ver en Instagram"
+
+[media_likes]
+other = "Me gusta"
+
+[media_comments]
+other = "Comentarios"
+
+[media_with]
+other = "con {{ .users }}"
+
+[media_original_audio]
+other = "Audio original"
+
+[media_as_of]
+other = "a fecha de {{ .date }}"
+
+[media_location]
+other = "Ubicación"

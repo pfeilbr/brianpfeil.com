@@ -387,3 +387,25 @@ other = "Media viewer"
 
 [media_position]
 other = "{{ .n }} of {{ .total }}"
+
+# Media page: Instagram post details
+[media_view_on_instagram]
+other = "View on Instagram"
+
+[media_likes]
+other = "Likes"
+
+[media_comments]
+other = "Comments"
+
+[media_with]
+other = "with {{ .users }}"
+
+[media_original_audio]
+other = "Original audio"
+
+[media_as_of]
+other = "as of {{ .date }}"
+
+[media_location]
+other = "Location"

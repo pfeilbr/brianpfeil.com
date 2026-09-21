@@ -387,3 +387,25 @@ other = "媒体查看器"
 
 [media_position]
 other = "{{ .n }} / {{ .total }}"
+
+# Media page: Instagram post details
+[media_view_on_instagram]
+other = "在 Instagram 上查看"
+
+[media_likes]
+other = "赞"
+
+[media_comments]
+other = "评论"
+
+[media_with]
+other = "与 {{ .users }} 一起"
+
+[media_original_audio]
+other = "原创音频"
+
+[media_as_of]
+other = "截至 {{ .date }}"
+
+[media_location]
+other = "地点"

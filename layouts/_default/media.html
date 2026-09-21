@@ -66,7 +66,17 @@
   {{ $posts := slice }}
   {{ $media := slice }}
   {{ range $idx, $it := $m.items }}
-    {{ $posts = $posts | append (dict "id" $it.id "date" $it.date "caption" $it.caption) }}
+    {{ $post := dict "id" $it.id "date" $it.date "caption" $it.caption }}
+    {{/* What Instagram shows beside the post, when the source had it. Zero
+       counts are left out, as Instagram leaves out "0 likes". */}}
+    {{ with $it.permalink }}{{ $post = merge $post (dict "url" .) }}{{ end }}
+    {{ with $it.location }}{{ $post = merge $post (dict "loc" .name "locId" (index . "id")) }}{{ end }}
+    {{ with $it.likes }}{{ $post = merge $post (dict "likes" .) }}{{ end }}
+    {{ with $it.comments }}{{ $post = merge $post (dict "comments" .) }}{{ end }}
+    {{ with $it.counted }}{{ $post = merge $post (dict "counted" .) }}{{ end }}
+    {{ with $it.tagged }}{{ $post = merge $post (dict "tagged" .) }}{{ end }}
+    {{ with $it.audio }}{{ $post = merge $post (dict "audio" .) }}{{ end }}
+    {{ $posts = $posts | append $post }}
     {{ range $it.media }}
       {{/* An object, not an array: Hugo's append won't nest a list in a list
          that starts empty. One-letter keys keep it nearly as small. */}}
@@ -84,7 +94,14 @@
        data-dialog="{{ i18n "media_viewer" }}"
        {{/* A whole sentence with markers, not "n" + "of" + "total": Japanese
           and Korean put the total first. JS swaps the markers. */}}
-       data-position="{{ i18n "media_position" (dict "n" "%n" "total" "%total") }}"></div>
+       data-position="{{ i18n "media_position" (dict "n" "%n" "total" "%total") }}"
+       data-instagram="{{ i18n "media_view_on_instagram" }}"
+       data-likes="{{ i18n "media_likes" }}"
+       data-comments="{{ i18n "media_comments" }}"
+       data-with="{{ i18n "media_with" (dict "users" "%users") }}"
+       data-audio="{{ i18n "media_original_audio" }}"
+       data-as-of="{{ i18n "media_as_of" (dict "date" "%date") }}"
+       data-location="{{ i18n "media_location" }}"></div>
   {{ end }}
 </article>
 
@@ -116,7 +133,7 @@
   });
   if (!items.length) return;
 
-  var overlay = null, stage = null, caption = null, counter = null;
+  var overlay = null, stage = null, caption = null, counter = null, tagged = null, stats = null;
   var current = 0, lastFocused = null;
   var preloaded = {};
 
@@ -142,11 +159,14 @@
       '<button type="button" class="media-nav media-prev">&#8249;</button>' +
       '<button type="button" class="media-nav media-next">&#8250;</button>' +
       '<div class="media-stage"></div>' +
-      '<div class="media-meta"><p class="media-caption"></p><p class="media-counter"></p></div>';
+      '<div class="media-meta"><p class="media-counter"></p><p class="media-caption"></p>' +
+      '<p class="media-tagged"></p><p class="media-stats"></p></div>';
 
     stage = overlay.querySelector(".media-stage");
     caption = overlay.querySelector(".media-caption");
     counter = overlay.querySelector(".media-counter");
+    tagged = overlay.querySelector(".media-tagged");
+    stats = overlay.querySelector(".media-stats");
 
     var close = overlay.querySelector(".media-close");
     close.setAttribute("aria-label", strings.dataset.close);
@@ -183,6 +203,101 @@
     });
 
     document.body.appendChild(overlay);
+  }
+
+  /* Everything below builds DOM nodes; nothing from the data is ever parsed
+     as markup. Links to Instagram open in a new tab. */
+  var IG = "https://www.instagram.com/";
+  function link(href, text) {
+    var a = document.createElement("a");
+    a.href = href;
+    a.textContent = text;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    return a;
+  }
+
+  /* #hashtags and @mentions become links, as they are on Instagram. A handle
+     can't end in a dot, and an @ inside a word (an email address) isn't one. */
+  var TOKENS = /(^|[^\w@#])([#@])([\p{L}\p{N}_.]*[\p{L}\p{N}_])/gu;
+  function fillCaption(el, text) {
+    el.textContent = "";
+    var last = 0, m;
+    TOKENS.lastIndex = 0;
+    while ((m = TOKENS.exec(text))) {
+      var start = m.index + m[1].length;
+      if (start > last) el.appendChild(document.createTextNode(text.slice(last, start)));
+      var href = m[2] === "#" ? IG + "explore/tags/" + encodeURIComponent(m[3]) + "/"
+                              : IG + encodeURIComponent(m[3]) + "/";
+      el.appendChild(link(href, m[2] + m[3]));
+      last = start + 1 + m[3].length;
+    }
+    if (last < text.length) el.appendChild(document.createTextNode(text.slice(last)));
+  }
+
+  /* Fill a translated phrase ("with %users") around nodes, so word order
+     stays the translator's — Japanese and Korean put the names first. */
+  function fillTemplate(el, template, marker, nodes) {
+    var parts = template.split(marker);
+    el.textContent = "";
+    el.appendChild(document.createTextNode(parts[0]));
+    nodes.forEach(function (n) { el.appendChild(n); });
+    if (parts.length > 1) el.appendChild(document.createTextNode(parts.slice(1).join(marker)));
+  }
+
+  function stat(symbol, label, value, title) {
+    var span = document.createElement("span");
+    span.className = "media-stat";
+    span.textContent = symbol + " " + value;
+    span.setAttribute("aria-label", label + ": " + value);
+    if (title) span.title = title;
+    return span;
+  }
+
+  function fillDetails(entry, i) {
+    var post = entry.post || {};
+    var s = strings.dataset;
+
+    /* Where and when: place (linked to its Instagram page), date, position. */
+    counter.textContent = "";
+    if (post.loc) {
+      var place = post.locId ? link(IG + "explore/locations/" + encodeURIComponent(post.locId) + "/", post.loc)
+                             : document.createTextNode(post.loc);
+      var pin = document.createElement("span");
+      pin.className = "media-place";
+      pin.setAttribute("aria-label", s.location + ": " + post.loc);
+      pin.appendChild(document.createTextNode("\u{1F4CD} "));
+      pin.appendChild(place);
+      counter.appendChild(pin);
+      counter.appendChild(document.createTextNode(" · "));
+    }
+    counter.appendChild(document.createTextNode(
+      entry.date + " · " + s.position.replace("%n", i + 1).replace("%total", items.length)));
+
+    fillCaption(caption, entry.caption || "");
+    caption.hidden = !entry.caption;
+
+    var people = (post.tagged || []).map(function (u, k) {
+      var frag = document.createDocumentFragment();
+      if (k) frag.appendChild(document.createTextNode(", "));
+      frag.appendChild(link(IG + encodeURIComponent(u) + "/", "@" + u));
+      return frag;
+    });
+    if (people.length) fillTemplate(tagged, s["with"], "%users", people);
+    tagged.hidden = !people.length;
+
+    stats.textContent = "";
+    var asOf = post.counted ? s.asOf.replace("%date", post.counted) : "";
+    if (post.likes) stats.appendChild(stat("\u2665", s.likes, post.likes, asOf));
+    if (post.comments) stats.appendChild(stat("\u{1F4AC}", s.comments, post.comments, asOf));
+    if (entry.kind === "video" && post.audio) {
+      var audio = document.createElement("span");
+      audio.className = "media-stat";
+      audio.textContent = "\u266A " + (post.audio === "original" ? s.audio : post.audio);
+      stats.appendChild(audio);
+    }
+    if (post.url) stats.appendChild(link(post.url, s.instagram + " \u2197"));
+    stats.hidden = !stats.childNodes.length;
   }
 
   function clearStage() {
@@ -225,15 +340,9 @@
       }
     }
 
-    /* Captions come from Instagram and can contain anything, so they are set
-       as text. Never innerHTML here. */
-    caption.textContent = entry.caption || "";
-    caption.hidden = !entry.caption;
-
-    var position = strings.dataset.position
-      .replace("%n", i + 1)
-      .replace("%total", items.length);
-    counter.textContent = entry.date + " — " + position;
+    /* Captions and every other detail come from Instagram and can contain
+       anything, so they are built as nodes. Never innerHTML here. */
+    fillDetails(entry, i);
     current = i;
     /* What is on screen is already loaded; don't fetch it again as a neighbour. */
     preloaded[entry.kind === "video" ? entry.poster : entry.src] = true;

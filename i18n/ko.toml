@@ -387,3 +387,25 @@ other = "미디어 뷰어"
 
 [media_position]
 other = "{{ .n }} / {{ .total }}"
+
+# Media page: Instagram post details
+[media_view_on_instagram]
+other = "Instagram에서 보기"
+
+[media_likes]
+other = "좋아요"
+
+[media_comments]
+other = "댓글"
+
+[media_with]
+other = "{{ .users }} 님과 함께"
+
+[media_original_audio]
+other = "오리지널 오디오"
+
+[media_as_of]
+other = "{{ .date }} 기준"
+
+[media_location]
+other = "위치"

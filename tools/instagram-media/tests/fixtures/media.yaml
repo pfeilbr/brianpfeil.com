@@ -15,7 +15,13 @@ items:
   date: '2023-01-01'
   year: '2023'
   kind: album
-  caption: Two photos
+  caption: 'Two photos #weekend with @friend'
+  permalink: https://www.instagram.com/p/bbbb2222/
+  location: {name: Somewhere Nice, id: '12345', lat: 39.9488443, lng: -75.1623162}
+  likes: 12
+  comments: 3
+  counted: '2026-09-20'
+  tagged: [friend, other]
   media:
   - {kind: photo, src: instagram/b/1.jpg, thumb: instagram/b/1-t.jpg, w: 1600, h: 1200}
   - {kind: photo, src: instagram/b/2.jpg, thumb: instagram/b/2-t.jpg, w: 1200, h: 1600}

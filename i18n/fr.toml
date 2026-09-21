@@ -389,3 +389,25 @@ other = "Visionneuse"
 
 [media_position]
 other = "{{ .n }} sur {{ .total }}"
+
+# Media page: Instagram post details
+[media_view_on_instagram]
+other = "Voir sur Instagram"
+
+[media_likes]
+other = "J’aime"
+
+[media_comments]
+other = "Commentaires"
+
+[media_with]
+other = "avec {{ .users }}"
+
+[media_original_audio]
+other = "Son original"
+
+[media_as_of]
+other = "au {{ .date }}"
+
+[media_location]
+other = "Lieu"
