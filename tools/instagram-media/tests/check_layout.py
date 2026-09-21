@@ -94,12 +94,28 @@ def check_populated(public: Path) -> list[str]:
             except json.JSONDecodeError as exc:
                 errors.append(f"{label}: payload is not JSON: {exc}")
                 data = None
-            # The safeJS regression: valid JSON, but a string, not a list.
-            if data is not None and not isinstance(data, list):
-                errors.append(f"{label}: payload decoded to {type(data).__name__}, expected list"
+            # The safeJS regression: valid JSON, but a string, not an object.
+            if data is not None and not isinstance(data, dict):
+                errors.append(f"{label}: payload decoded to {type(data).__name__}, expected object"
                               " (missing safeJS?)")
-            elif isinstance(data, list) and len(data) != FIXTURE_MEDIA:
-                errors.append(f"{label}: payload has {len(data)} entries, expected {FIXTURE_MEDIA}")
+            elif isinstance(data, dict):
+                posts, media = data.get("posts") or [], data.get("media") or []
+                if data.get("base") != FIXTURE_BASE:
+                    errors.append(f"{label}: payload base is {data.get('base')!r}")
+                if len(posts) != FIXTURE_ITEMS:
+                    errors.append(f"{label}: payload has {len(posts)} posts, expected {FIXTURE_ITEMS}")
+                if len(media) != FIXTURE_MEDIA:
+                    errors.append(f"{label}: payload has {len(media)} media, expected {FIXTURE_MEDIA}")
+                # Every media row must point at a real post and carry both kinds right.
+                for row in media:
+                    if not (isinstance(row, dict) and 0 <= row.get("i", -1) < len(posts)
+                            and row.get("k") in ("p", "v") and row.get("s") and row.get("t")):
+                        errors.append(f"{label}: bad media row {row!r}")
+                        break
+                if any("://" in str(row.get(k, "")) for row in media for k in ("s", "t", "p")):
+                    errors.append(f"{label}: media rows repeat the CDN address")
+                if sum(1 for row in media if row.get("k") == "v" and not row.get("p")):
+                    errors.append(f"{label}: a video row has no poster")
 
         # The hostile caption must not survive as markup anywhere on the page:
         # jsonify escapes "<" as a unicode escape in the payload, and the

@@ -56,33 +56,26 @@
   </section>
   {{ end }}
 
-  {{/* One flat list of every photo and video, so the lightbox arrows walk
-     straight through an album and on into the next post. Captions are
-     rendered by the browser as text, never as markup — see the script. */}}
-  {{ $flat := slice }}
-  {{ range $m.items }}
-    {{ $item := . }}
-    {{ $total := len .media }}
-    {{ range $n, $md := .media }}
-      {{ $flat = $flat | append (dict
-          "item" $item.id
-          "caption" $item.caption
-          "date" $item.date
-          "kind" $md.kind
-          "src" (printf "%s%s" $base $md.src)
-          "thumb" (printf "%s%s" $base $md.thumb)
-          "poster" (cond (eq $md.kind "video") (printf "%s%s" $base (index $md "poster")) "")
-          "w" $md.w
-          "h" $md.h
-          "n" (add $n 1)
-          "total" $total) }}
+  {{/* Two lists: one entry per post (caption, date and, later, the rest of
+     its details), and one compact row per photo or video pointing back at
+     its post by index — {i: post, k: "p"|"v", s: src, t: thumb, p: poster,
+     w, h}. A caption
+     is stored once rather than once per photo in an album, and the CDN
+     address once rather than three times per file. The script expands it.
+     Captions are rendered as text, never as markup — see the script. */}}
+  {{ $posts := slice }}
+  {{ $media := slice }}
+  {{ range $idx, $it := $m.items }}
+    {{ $posts = $posts | append (dict "id" $it.id "date" $it.date "caption" $it.caption) }}
+    {{ range $it.media }}
+      {{/* An object, not an array: Hugo's append won't nest a list in a list
+         that starts empty. One-letter keys keep it nearly as small. */}}
+      {{ $media = $media | append (dict "i" $idx "k" (cond (eq .kind "video") "v" "p")
+            "s" .src "t" .thumb "p" (default "" (index . "poster")) "w" .w "h" .h) }}
     {{ end }}
   {{ end }}
-  {{/* safeJS for the same reason head-meta.html uses it on the JSON-LD:
-     without it html/template wraps the whole array in quotes and JSON.parse
-     hands back a string. jsonify has already escaped < > &, so a caption
-     cannot close this tag. */}}
-  <script type="application/json" id="media-data">{{ $flat | jsonify | safeJS }}</script>
+  {{ $payload := dict "base" $base "posts" $posts "media" $media }}
+  <script type="application/json" id="media-data">{{ $payload | jsonify | safeJS }}</script>
 
   <div class="media-strings"
        data-close="{{ i18n "media_close" }}"
@@ -105,7 +98,22 @@
   var strings = document.querySelector(".media-strings");
   if (!data || !strings) return;
 
-  var items = JSON.parse(data.textContent);
+  /* Expand the compact payload into one entry per photo or video, each
+     carrying its post's details — the shape the rest of the viewer uses. */
+  var raw = JSON.parse(data.textContent);
+  var perPost = {};
+  raw.media.forEach(function (m) { perPost[m.i] = (perPost[m.i] || 0) + 1; });
+  var seen = {};
+  var items = raw.media.map(function (m) {
+    var post = raw.posts[m.i];
+    seen[m.i] = (seen[m.i] || 0) + 1;
+    return {
+      item: post.id, post: post, caption: post.caption || "", date: post.date,
+      kind: m.k === "v" ? "video" : "photo",
+      src: raw.base + m.s, thumb: raw.base + m.t, poster: m.p ? raw.base + m.p : "",
+      w: m.w, h: m.h, n: seen[m.i], total: perPost[m.i]
+    };
+  });
   if (!items.length) return;
 
   var overlay = null, stage = null, caption = null, counter = null;
