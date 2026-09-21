@@ -4,6 +4,10 @@
 bucket: "brianpfeil-media01"
 s3_prefix: "instagram"
 base_url: "https://dfalwjniugna7.cloudfront.net"
+# Needed so --prune can evict deleted files from the CDN cache; every file
+# is cached for a year, so deleting from S3 alone leaves it being served.
+# Matches `terraform output media_distribution_id` in infra/.
+distribution_id: "E2U0TCXARHWOEF"
 
 # Paths. work_dir and lock_file are relative to this tool; data_file is
 # relative to the repo root.

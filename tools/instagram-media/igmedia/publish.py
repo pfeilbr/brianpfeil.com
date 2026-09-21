@@ -5,7 +5,10 @@ credentials and SSO session the shell already has, and needs no extra Python
 dependency.
 """
 
+import hashlib
+import json
 import subprocess
+import time
 from pathlib import Path
 
 import yaml
@@ -69,6 +72,59 @@ def sync(build_dir: Path, bucket: str, prefix: str, prune: bool = False) -> str:
     if proc.returncode != 0:
         raise RuntimeError(f"aws s3 sync failed: {proc.stderr.strip()[:800]}")
     return proc.stdout.strip()
+
+
+def deleted_paths(sync_output: str) -> list[str]:
+    """CDN paths for every object `aws s3 sync --delete` removed.
+
+    Lines look like `delete: s3://bucket/instagram/<id>/<file>`; the path the
+    CDN serves is everything after the bucket.
+    """
+    paths = []
+    for line in sync_output.splitlines():
+        line = line.strip()
+        if not line.startswith("delete: s3://"):
+            continue
+        key = line[len("delete: s3://"):].split("/", 1)
+        if len(key) == 2 and key[1]:
+            paths.append("/" + key[1])
+    return sorted(set(paths))
+
+
+INVALIDATION_BATCH = 3000  # CloudFront's per-request limit on paths
+
+
+def invalidate(distribution_id: str, paths: list[str], run=subprocess.run) -> int:
+    """Evict deleted objects from the CDN. Returns how many requests were made.
+
+    Every derivative is cached for a year and marked immutable, so deleting an
+    un-approved photo from S3 is not enough: CloudFront would keep serving it
+    from the edge. Removal has to reach the cache too.
+    """
+    if not paths:
+        return 0
+    requests = 0
+    for start in range(0, len(paths), INVALIDATION_BATCH):
+        batch = paths[start:start + INVALIDATION_BATCH]
+        # Unique per request, deliberately not derived from the paths alone:
+        # CloudFront treats a reused reference as already done, forever. The
+        # same content-hashed file can be approved, pruned, approved and
+        # pruned again, and the second eviction must still happen.
+        digest = hashlib.sha256("\n".join(batch).encode()).hexdigest()[:16]
+        reference = f"prune-{time.time_ns()}-{digest}"
+        body = json.dumps({
+            "Paths": {"Quantity": len(batch), "Items": batch},
+            "CallerReference": reference,
+        })
+        proc = run(
+            ["aws", "cloudfront", "create-invalidation",
+             "--distribution-id", distribution_id, "--invalidation-batch", body],
+            capture_output=True, text=True,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(f"invalidation failed: {proc.stderr.strip()[:500]}")
+        requests += 1
+    return requests
 
 
 def write_data_file(path: Path, base_url: str, entries: list[dict]) -> None:

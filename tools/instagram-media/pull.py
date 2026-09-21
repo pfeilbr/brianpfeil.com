@@ -132,6 +132,10 @@ def cmd_publish(args, cfg) -> int:
 
     out = publish.sync(build_dir, cfg["bucket"], cfg["s3_prefix"], prune=args.prune)
     uploaded = len([l for l in out.splitlines() if l.startswith("upload:")])
+    removed = publish.deleted_paths(out)
+    if removed:
+        publish.invalidate(cfg["distribution_id"], removed)
+        print(f"removed {len(removed)} files and evicted them from the CDN cache")
     publish.write_data_file(data_path, cfg["base_url"], entries)
     print(f"{len(entries)} items; {uploaded} files uploaded → {data_path.relative_to(REPO_ROOT)}")
     return 0
