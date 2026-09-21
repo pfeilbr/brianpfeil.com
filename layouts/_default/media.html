@@ -202,7 +202,9 @@
     var next = overlay.querySelector(".media-next");
     next.setAttribute("aria-label", strings.dataset.next);
 
-    close.addEventListener("click", hide);
+    /* Not addEventListener("click", hide): the click event would arrive as
+       hide's fromHistory argument, and be truthy. */
+    close.addEventListener("click", function () { hide(); });
     prev.addEventListener("click", function () { step(-1); });
     next.addEventListener("click", function () { step(1); });
 
@@ -389,6 +391,9 @@
        anything, so they are built as nodes. Never innerHTML here. */
     fillDetails(entry, i);
     current = i;
+    if (isOpen() || (history.state && history.state.media)) {
+      history.replaceState(history.state, "", hashFor(i));
+    }
     /* What is on screen is already loaded; don't fetch it again as a neighbour. */
     preloaded[entry.kind === "video" ? entry.poster : entry.src] = true;
     preload(i + 1);
@@ -399,25 +404,64 @@
     render((current + delta + items.length) % items.length);
   }
 
-  function show(index, opener) {
+  /* Every photo and video has a URL: #<post id>, plus /<n> past the first
+     photo of an album. Opening one pushes a history entry so Back closes the
+     viewer; paging replaces it, so Back doesn't walk through every photo. */
+  function hashFor(i) {
+    var e = items[i];
+    return "#" + e.item + (e.n > 1 ? "/" + e.n : "");
+  }
+
+  function indexFromHash() {
+    var m = /^#([^/]+)(?:\/(\d+))?$/.exec(location.hash);
+    if (!m) return -1;
+    var n = m[2] ? parseInt(m[2], 10) : 1;
+    for (var k = 0; k < items.length; k++) {
+      if (items[k].item === decodeURIComponent(m[1]) && items[k].n === n) return k;
+    }
+    return -1;   /* e.g. #year-2026 — not a post */
+  }
+
+  function isOpen() { return !!overlay && overlay.classList.contains("is-open"); }
+
+  function tileFor(i) {
+    return document.querySelector('.media-tile[data-item="' + items[i].item + '"]');
+  }
+
+  function show(index, opener, fromHistory) {
     if (!overlay) build();
     /* Safari doesn't focus a button when it is clicked, so remembering
        document.activeElement would send focus back to <body> on close and
        drop a keyboard user at the top of the page. Keep the tile itself. */
-    lastFocused = opener || document.activeElement;
+    lastFocused = opener || tileFor(index) || document.activeElement;
+    if (!fromHistory) history.pushState({ media: true }, "", hashFor(index));
     render(index);
     overlay.classList.add("is-open");
     document.body.classList.add("zoom-locked");
     overlay.querySelector(".media-close").focus();
   }
 
-  function hide() {
-    if (!overlay) return;
+  function hide(fromHistory) {
+    if (!isOpen()) return;
     clearStage();
     overlay.classList.remove("is-open");
     document.body.classList.remove("zoom-locked");
-    if (lastFocused && lastFocused.focus) lastFocused.focus();
+    if (lastFocused && lastFocused.focus) lastFocused.focus({ preventScroll: true });
+    if (fromHistory) return;
+    /* Opened by a click: step back off the entry it pushed. Opened from a
+       link: there's nothing of ours to go back to, so just drop the hash. */
+    if (history.state && history.state.media) history.back();
+    else history.replaceState(null, "", location.pathname + location.search);
   }
+
+  window.addEventListener("popstate", function () {
+    var i = indexFromHash();
+    if (i >= 0) {
+      if (isOpen()) render(i); else show(i, null, true);
+    } else if (isOpen()) {
+      hide(true);
+    }
+  });
 
   document.querySelectorAll(".media-tile").forEach(function (tile) {
     tile.addEventListener("click", function (e) {
@@ -451,6 +495,11 @@
       first.focus();
     }
   }
+
+  /* Arriving on a shared link opens the item it names. There's no gesture,
+     so a video waits on its poster instead of playing with sound. */
+  var linked = indexFromHash();
+  if (linked >= 0) show(linked, null, true);
 
   document.addEventListener("keydown", function (e) {
     if (!overlay || !overlay.classList.contains("is-open")) return;
