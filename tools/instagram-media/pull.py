@@ -18,7 +18,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from igmedia import derive, export, manifest, publish, release, review  # noqa: E402
+from igmedia import audit, derive, export, manifest, publish, release, review  # noqa: E402
 
 TOOL_DIR = Path(__file__).resolve().parent
 REPO_ROOT = TOOL_DIR.parents[1]
@@ -176,6 +176,37 @@ def cmd_status(args, cfg) -> int:
     return 0
 
 
+def cmd_audit(args, cfg) -> int:
+    """Check every file the page references exists on the CDN."""
+    _, _, data_path = paths(cfg)
+    if not data_path.exists():
+        print("nothing published yet; nothing to audit")
+        return 0
+    data = yaml.safe_load(data_path.read_text(encoding="utf-8")) or {}
+    referenced = audit.referenced_keys(data)
+    try:
+        present = audit.list_objects(cfg["bucket"], cfg["s3_prefix"])
+    except RuntimeError as exc:
+        print(exc, file=sys.stderr)
+        return 1
+
+    missing, orphaned = audit.audit(referenced, present)
+    print(f"{len(referenced)} files referenced by the page, {len(present)} in the bucket")
+    if missing:
+        print(f"MISSING — broken on the live page ({len(missing)}):")
+        for key in missing[:20]:
+            print(f"  {key}")
+        if len(missing) > 20:
+            print(f"  … and {len(missing) - 20} more")
+        print("re-run publish to upload them")
+    if orphaned:
+        print(f"{len(orphaned)} file(s) in the bucket that nothing references; "
+              "publish --prune removes them and evicts them from the CDN")
+    if not missing and not orphaned:
+        print("ok: bucket and page agree")
+    return 1 if missing else 0
+
+
 def main() -> int:
     cfg = load_config()
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -207,6 +238,9 @@ def main() -> int:
     rel.add_argument("--prune", action="store_true", help="also delete S3 objects that are no longer approved")
     rel.add_argument("--dry-run", action="store_true", help="build locally, upload and commit nothing")
     rel.set_defaults(func=cmd_release)
+
+    aud = sub.add_parser("audit", help="check every file the page references is on the CDN")
+    aud.set_defaults(func=cmd_audit)
 
     status = sub.add_parser("status", help="what is approved and what is live")
     status.set_defaults(func=cmd_status)

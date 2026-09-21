@@ -94,6 +94,13 @@ decision; only genuinely new posts arrive as `approved: false`.
 - `tests/check_layout.py --build` renders the real page from
   `tests/fixtures/media.yaml` and checks it in all nine languages.
 
+## Checking it
+
+`make media-audit` compares every file `data/media.yaml` references with what
+is actually in the bucket. Missing files are broken images on the live page
+(an upload that died partway) and make it exit 1; files nothing references
+are reported as orphans that `publish --prune` would remove.
+
 ## Where the files go
 
 Private S3 bucket `brianpfeil-media01`, served through CloudFront

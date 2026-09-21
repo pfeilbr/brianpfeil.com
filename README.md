@@ -108,6 +108,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make media-publish EXPORT=…` | Encode and upload approved items, write `data/media.yaml` |
 | `make media-release EXPORT=…` | `media-publish`, then commit and push only the media files |
 | `make media-status` | What is approved and what is live |
+| `make media-audit` | Every file the page references exists on the CDN (exits 1 if not) |
 | `make media-watch-install` / `-uninstall` / `-status` | The `~/Downloads` watcher |
 | **Tests** | |
 | `make test-tools` | Go tests for the post generator |
