@@ -43,3 +43,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "security_headers" {
+  description = "Attach AWS's managed security-headers policy (HSTS, nosniff, frame and referrer policy)."
+  type        = bool
+  default     = true
+}

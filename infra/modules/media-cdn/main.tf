@@ -22,6 +22,14 @@ data "aws_cloudfront_cache_policy" "optimized" {
   name = "Managed-CachingOptimized"
 }
 
+# HSTS, X-Content-Type-Options: nosniff, X-Frame-Options, Referrer-Policy.
+# nosniff is the one that matters most here: every file is served with the
+# type S3 recorded, and the browser should not second-guess it.
+data "aws_cloudfront_response_headers_policy" "security" {
+  count = var.security_headers ? 1 : 0
+  name  = "Managed-SecurityHeadersPolicy"
+}
+
 resource "aws_s3_bucket" "media" {
   bucket = var.bucket_name
   tags   = var.tags
@@ -79,6 +87,8 @@ resource "aws_cloudfront_distribution" "media" {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     cache_policy_id        = data.aws_cloudfront_cache_policy.optimized.id
+
+    response_headers_policy_id = var.security_headers ? data.aws_cloudfront_response_headers_policy.security[0].id : null
   }
 
   restrictions {
@@ -93,30 +103,25 @@ resource "aws_cloudfront_distribution" "media" {
 }
 
 # Attached after the distribution exists: the condition pins read access to
-# this one distribution, so the ARN has to be known.
+# this one distribution, so the ARN has to be known. Built with jsonencode
+# rather than an aws_iam_policy_document data source: a data source is
+# deferred whenever the distribution has any pending change, which made every
+# CDN change also plan a (no-op) "bucket policy will be updated".
 resource "aws_s3_bucket_policy" "media" {
   bucket = aws_s3_bucket.media.id
-  policy = data.aws_iam_policy_document.media.json
-}
-
-data "aws_iam_policy_document" "media" {
-  statement {
-    sid       = "AllowCloudFrontServicePrincipalReadOnly"
-    effect    = "Allow"
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.media.arn}/*"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["cloudfront.amazonaws.com"]
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "AWS:SourceArn"
-      values   = [aws_cloudfront_distribution.media.arn]
-    }
-  }
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Sid       = "AllowCloudFrontServicePrincipalReadOnly"
+      Effect    = "Allow"
+      Principal = { Service = "cloudfront.amazonaws.com" }
+      Action    = "s3:GetObject"
+      Resource  = "${aws_s3_bucket.media.arn}/*"
+      Condition = {
+        StringEquals = { "AWS:SourceArn" = aws_cloudfront_distribution.media.arn }
+      }
+    }]
+  })
 }
 
 locals {
