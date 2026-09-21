@@ -33,7 +33,10 @@ make media-release EXPORT=~/Downloads/instagram-export.zip   # publish + commit 
 ```
 
 Nothing publishes without an explicit approval — see
-`tools/instagram-media/README.md`.
+`tools/instagram-media/README.md`. After a release, `make media-audit`
+confirms every file the page references is on the CDN. `publish --prune`
+also evicts removed files from CloudFront (they are cached for a year), and
+the CDN serves AWS's managed security headers. `make help` lists everything.
 
 `make verify` runs every test suite (Go post generator, Python media tool,
 link checker), a render check that builds `/media/` from a fixture and with
