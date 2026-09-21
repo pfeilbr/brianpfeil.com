@@ -4,8 +4,9 @@ dev:
 build:
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check
+verify: test-tools test-media test-layout test-link-check test-i18n
 	hugo --minify --printI18nWarnings --printPathWarnings
+	python3 tools/i18n-check/check_i18n.py --public public
 
 generate-posts:
 	cd tools/generate-posts && go run . -user=pfeilbr -dest=../../content/post -debug
@@ -58,6 +59,10 @@ test-link-check:
 
 # Live and network-bound, so not part of verify: lists posts whose repo
 # link 404s for a visitor (the repo went private or was deleted).
+test-i18n:
+	python3 -m unittest discover -s tools/i18n-check -p 'test_*.py'
+	python3 tools/i18n-check/check_i18n.py
+
 check-repo-links:
 	python3 tools/link-check/check_repo_links.py
 
@@ -81,4 +86,4 @@ tf-validate:
 	cd infra && terraform fmt -check -recursive && terraform validate
 
 
-.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check check-repo-links tf-init tf-plan tf-validate
+.PHONY: dev build verify generate-posts test-tools media-deps media-stage media-publish media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-i18n check-repo-links tf-init tf-plan tf-validate

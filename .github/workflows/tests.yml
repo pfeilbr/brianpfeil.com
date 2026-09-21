@@ -41,6 +41,8 @@ jobs:
       # hand with `make check-repo-links`.
       - name: link-check tests
         run: python -m unittest discover -s tools/link-check -p 'test_*.py' -v
+      - name: i18n-check tests
+        run: python -m unittest discover -s tools/i18n-check -p 'test_*.py' -v
 
   site:
     name: hugo build
@@ -54,6 +56,10 @@ jobs:
           extended: true
       - name: Build with warnings surfaced
         run: hugo --minify --printI18nWarnings --printPathWarnings
+      # Hugo falls back to English silently; this checks the i18n files agree
+      # and that no translated page is showing English it has a translation for.
+      - name: i18n consistency and fallback check
+        run: python3 tools/i18n-check/check_i18n.py --public public
       # Builds /media/ from a fixture and with no data, then checks the HTML in
       # all nine languages — including that the lightbox payload is a list.
       - name: Media page render check
