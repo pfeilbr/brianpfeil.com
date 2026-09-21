@@ -7,9 +7,15 @@ Hugo site. `content/post/*.md` are blog/project posts; `content/projects/` are p
 The page, the pull tool and the AWS hosting are all built, live and pushed.
 `/media/` renders an empty state in all nine languages.
 
-**It is empty because no Instagram export exists on this machine** — the
-pipeline has no input, not a half-finished one. Requesting the export needs an
-Instagram login, so it is the one step B has to do:
+**It is empty because no Instagram export has been downloaded yet.** One was
+requested on 2026-09-21 (confirmed pending in Accounts Center): Instagram
+pfeilbr, **Media** only, **All time**, **JSON**, **Medium quality**. Meta emails
+brian.pfeil@gmail.com when it is ready and the download link expires after
+four days. Use the same settings for any later export: item ids are content
+hashes, so a different quality produces different bytes, new ids, and loses
+every approval already made.
+
+To request another one (it needs an Instagram login; B re-enters the password):
 [accountscenter.instagram.com/info_and_permissions/dyi](https://accountscenter.instagram.com/info_and_permissions/dyi/)
 → Posts + Reels → **Format: JSON**, All time, High quality. Instagram emails a
 link; a large account comes back as several part ZIPs.
