@@ -158,6 +158,15 @@ def check_populated(public: Path) -> list[str]:
             errors.append(f"{label}: story tile has no ring class")
         if isinstance(data, dict) and not any(p.get("story") for p in data.get("posts") or []):
             errors.append(f"{label}: story not flagged in the payload")
+        # The story reshared someone else's post: carried in the payload, and
+        # the viewer has both reshare labels.
+        if isinstance(data, dict) and not any(p.get("reshare") == "other_post" for p in data.get("posts") or []):
+            errors.append(f"{label}: reshare not carried in the payload")
+        for key in ("data-reshare-other=", "data-reshare-own="):
+            if key not in html:
+                errors.append(f"{label}: missing viewer string {key}")
+        if lang and ("Reshared post" in html or "Reshared reel" in html):
+            errors.append(f"{label}: a reshare label fell back to English")
         # The fixture's album was archived off the profile: flagged in the
         # payload, and the viewer has a (translated) label for it.
         if isinstance(data, dict) and not any(p.get("archived") for p in data.get("posts") or []):

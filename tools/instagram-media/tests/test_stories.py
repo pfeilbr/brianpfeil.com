@@ -1,4 +1,4 @@
-"""Tests for stories: reading them from an export, dropping reshares, and
+"""Tests for stories: reading them from an export, labelling reshares, and
 combining them with the archive without duplicating anything."""
 
 import argparse
@@ -31,40 +31,43 @@ def inv(day, seq, of, hhmm, reshare=None):
             "audio": "reshare" if reshare else "none", "reshare_of": reshare}
 
 
-class ReshareFilterTest(unittest.TestCase):
-    def test_counts_line_up_so_reshares_are_dropped_by_position(self):
+class ReshareTagTest(unittest.TestCase):
+    def test_counts_line_up_so_reshares_are_labelled_by_position(self):
         items = [story("a", at("00:53")), story("b", at("01:50")), story("c", at("01:50")),
                  story("d", at("02:10"))]
         inventory = [inv("2026-08-30", 1, 4, "00:53"), inv("2026-08-30", 2, 4, "01:50"),
                      inv("2026-08-30", 3, 4, "01:50", "other_post"),
                      inv("2026-08-30", 4, 4, "02:10", "own_reel")]
-        kept, dropped = stories.filter_reshares(items, inventory)
+        tagged = stories.tag_reshares(items, inventory)
         # b and c share a minute; position still tells them apart.
-        self.assertEqual([i.id for i in kept], ["a", "b"])
-        self.assertEqual({i.id: r for i, r in dropped}, {
+        self.assertEqual({i.id: r for i, r in tagged}, {
             "c": "reshare of someone else's post",
             "d": "reshare of a reel already on the page",
         })
+        self.assertEqual([i.details.get("reshare") for i in items],
+                         [None, None, "other_post", "own_reel"])
+        # Nothing is dropped: every story stays in the list it came in.
+        self.assertEqual(len(items), 4)
 
-    def test_counts_differ_so_the_whole_minute_is_dropped(self):
-        """Erring toward leaving one of B's stories out, never publishing
-        someone else's."""
+    def test_counts_differ_so_the_whole_minute_is_labelled(self):
+        """Erring toward over-labelling one of B's stories, never presenting
+        someone else's post as B's."""
         items = [story("a", at("01:50")), story("b", at("01:50")), story("c", at("02:10"))]
         inventory = [inv("2026-08-30", 1, 2, "01:50", "other_post"), inv("2026-08-30", 2, 2, "02:10")]
-        kept, dropped = stories.filter_reshares(items, inventory)
-        self.assertEqual([i.id for i in kept], ["c"])
-        self.assertTrue(all("matched by minute" in r for _, r in dropped))
+        tagged = stories.tag_reshares(items, inventory)
+        self.assertEqual(sorted(i.id for i, _ in tagged), ["a", "b"])
+        self.assertIsNone(items[2].details.get("reshare"))
 
     def test_days_without_reshares_or_inventory_pass_through(self):
         items = [story("a", at("09:00", "2026-09-01")), story("b", at("09:00", "2026-07-01"))]
         inventory = [inv("2026-09-01", 1, 1, "09:00")]
-        kept, _ = stories.filter_reshares(items, inventory)
-        self.assertEqual({i.id for i in kept}, {"a", "b"})
+        self.assertEqual(stories.tag_reshares(items, inventory), [])
+        self.assertTrue(all("reshare" not in i.details for i in items))
 
     def test_posts_are_never_touched(self):
         post = Item(id="p", taken_at=at("01:50"), caption="", kind="photo", media=[])
-        kept, _ = stories.filter_reshares([post], [inv("2026-08-30", 1, 1, "01:50", "other_post")])
-        self.assertEqual([i.id for i in kept], ["p"])
+        self.assertEqual(stories.tag_reshares([post], [inv("2026-08-30", 1, 1, "01:50", "other_post")]), [])
+        self.assertEqual(post.details, {})
 
     def test_no_inventory_keeps_everything(self):
         self.assertEqual(stories.load_inventory(None), [])

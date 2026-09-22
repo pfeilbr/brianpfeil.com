@@ -93,8 +93,9 @@ decision; only genuinely new posts arrive as `approved: false`.
 
 - Feed posts and reels, plus — from an export — stories and archived posts
   (ones taken off the profile with "Archive"; the viewer labels them
-  "Archived post"). Reshares, recently deleted items, tagged photos and
-  messages are never read, even though some exports contain them.
+  "Archived post"). Stories that reshare a post are published too, labelled
+  "Reshared post" / "Reshared reel". Recently deleted items, tagged photos
+  and messages are never read, even though some exports contain them.
 - Images are capped at 1600px on the long edge. Video that is already
   web-ready (H.264, AAC or silent, ≤1280px, ≤8 Mbps) is remuxed untouched;
   anything else (HEVC, larger, higher bitrate) is re-encoded to H.264.
@@ -127,10 +128,11 @@ nothing. The viewer says "♪ <track> · music added".
 
 The archive has no story files, only an inventory. Stories come from an
 Instagram export: `--export` adds the export's stories to the archive's
-posts and reels. Reshares are dropped by matching the inventory on local day
-and order within the day (`igmedia/stories.py`) — someone else's post is
-never republished, and a reshare of a reel already on the page isn't
-duplicated.
+posts and reels. Stories that reshare a post are found by matching the
+inventory on local day and order within the day (`igmedia/stories.py`) and
+published with a label — "Reshared post" for someone else's, "Reshared reel"
+for one of B's reels that is already on the page — so nobody takes them
+for B's own footage.
 
 ## Archived posts
 

@@ -20,7 +20,7 @@ data_file: "data/media.yaml"
 # feed post and reel as metadata.json + media/. --export overrides it.
 archive_dir: "~/projects/instagram/archive"
 
-# Stories read off the iOS app, with which ones were reshares. Stories that
-# reshare someone else's post, or one of the reels already on the page,
-# are never published. Missing file = no reshare filtering.
+# Stories read off the iOS app, with which ones were reshares. A story that
+# reshares someone else's post, or one of the reels already on the page, is
+# published with a "reshared" label. Missing file = no labels.
 story_inventory: "~/projects/instagram/harvest/iphone/story-inventory.jsonl"

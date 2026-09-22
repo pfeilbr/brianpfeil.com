@@ -99,6 +99,9 @@
     {{ with $it.story }}{{ $post = merge $post (dict "story" true) }}{{ end }}
     {{/* Taken off the Instagram grid with "Archive"; only here now. */}}
     {{ with $it.archived }}{{ $post = merge $post (dict "archived" true) }}{{ end }}
+    {{/* A story that reshared a post: "other_post" (someone else's) or
+       "own_reel" (one already on this page). */}}
+    {{ with $it.reshare }}{{ $post = merge $post (dict "reshare" .) }}{{ end }}
     {{ $posts = $posts | append $post }}
     {{ range $it.media }}
       {{/* An object, not an array: Hugo's append won't nest a list in a list
@@ -130,7 +133,9 @@
        data-as-of="{{ i18n "media_as_of" (dict "date" "%date") }}"
        data-location="{{ i18n "media_location" }}"
        data-story="{{ i18n "media_story" }}"
-       data-archived="{{ i18n "media_archived" }}"></div>
+       data-archived="{{ i18n "media_archived" }}"
+       data-reshare-other="{{ i18n "media_reshare_other" }}"
+       data-reshare-own="{{ i18n "media_reshare_own" }}"></div>
   {{ end }}
 </article>
 
@@ -306,6 +311,7 @@
     counter.appendChild(document.createTextNode(
       (post.story ? s.story + " · " : "") +
       (post.archived ? s.archived + " · " : "") +
+      (post.reshare ? (post.reshare === "own_reel" ? s.reshareOwn : s.reshareOther) + " · " : "") +
       entry.date + " · " + s.position.replace("%n", i + 1).replace("%total", items.length)));
 
     fillCaption(caption, entry.caption || "");

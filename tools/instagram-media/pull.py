@@ -44,7 +44,8 @@ def load_items(args, cfg: dict, workdir: Path):
     hold: stories, and posts taken off the grid with "Archive". Its posts and
     reels are ignored while the archive is in use, so nothing appears twice;
     with --no-archive the export is the only source.
-    Reshares — someone else's post, or one of B's reels — are dropped.
+    Stories that reshare a post — someone else's, or one of B's reels — are
+    published too, labelled as reshares.
     """
     use_archive = not getattr(args, "no_archive", False)
     items = []
@@ -60,10 +61,9 @@ def load_items(args, cfg: dict, workdir: Path):
         items += [i for i in extra
                   if not ((i.details or {}).get("archived") and i.taken_at.timestamp() in on_profile)]
 
-    kept, dropped = stories.filter_reshares(items, stories.load_inventory(cfg.get("story_inventory")))
-    for item, reason in dropped:
-        print(f"  not published: {item.id} ({reason})")
-    return sorted(kept, key=lambda i: (i.taken_at, i.id), reverse=True)
+    for item, reason in stories.tag_reshares(items, stories.load_inventory(cfg.get("story_inventory"))):
+        print(f"  labelled: {item.id} ({reason})")
+    return sorted(items, key=lambda i: (i.taken_at, i.id), reverse=True)
 
 
 def cmd_stage(args, cfg) -> int:
