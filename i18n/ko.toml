@@ -508,3 +508,10 @@ other = "영화 목록을 불러오지 못했습니다. 페이지를 새로 고�
 [movies_noscript]
 other = "이 페이지는 JavaScript로 그려집니다. 목록 데이터는 <a href=\"/data/movies.json\">movies.json</a>에 있습니다."
 
+
+# Pages drawn in the browser from /data/*.json (partials/data-render.html).
+[data_load_error]
+other = "이 페이지의 데이터를 불러오지 못했습니다. 새로 고침해 주세요."
+
+[data_noscript]
+other = "이 페이지는 JavaScript로 그려집니다. 데이터는 <a href=\"{{ .url }}\">{{ .url }}</a>에 있습니다."

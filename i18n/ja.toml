@@ -508,3 +508,10 @@ other = "映画リストを読み込めませんでした。ページを再読�
 [movies_noscript]
 other = "このページは JavaScript で表示しています。リストのデータは <a href=\"/data/movies.json\">movies.json</a> にあります。"
 
+
+# Pages drawn in the browser from /data/*.json (partials/data-render.html).
+[data_load_error]
+other = "このページのデータを読み込めませんでした。再読み込みしてください。"
+
+[data_noscript]
+other = "このページは JavaScript で表示しています。データは <a href=\"{{ .url }}\">{{ .url }}</a> にあります。"

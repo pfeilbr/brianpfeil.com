@@ -1,9 +1,15 @@
-{{- /* Every file in data/ is also published as /data/<name>.json, so each
-   section's data can be fetched as-is -- /movies/ renders from its copy.
-   Hugo reads YAML and JSON alike, so this covers both. Called once, from the
-   English home page; resources publish to the site root either way. */ -}}
+{{- /* Every file in data/ is also published as /data/<name>.json, and the
+   data-driven pages (/music/, /subscriptions/, /media/, /movies/) are drawn
+   in the browser from those copies. Hugo reads YAML and JSON alike, so this
+   covers both. Called once, from the English home page; resources publish
+   to the site root either way.
+
+   media is the exception: it gets the whitelisted payload from
+   partials/media-payload.html, never the raw file. */ -}}
 {{- range $name, $d := hugo.Data -}}
-  {{- with resources.FromString (printf "data/%s.json" $name) (jsonify $d) -}}
+  {{- $out := $d -}}
+  {{- if eq $name "media" }}{{ $out = partial "media-payload.html" . }}{{ end -}}
+  {{- with resources.FromString (printf "data/%s.json" $name) (jsonify $out) -}}
     {{- .Publish -}}
   {{- end -}}
 {{- end -}}

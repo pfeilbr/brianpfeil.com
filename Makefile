@@ -63,7 +63,7 @@ media-watch-status: ## Is the watcher loaded, and its last runs
 test-media: ## Python tests for the media tool
 	cd tools/instagram-media && .venv/bin/python -m unittest discover -s tests
 
-test-layout: ## Render /media/ from a fixture and check it in all nine languages
+test-layout: ## Build /media/ from a fixture; check /data/media.json and the page in all nine languages
 	python3 tools/instagram-media/tests/check_layout.py --build
 
 test-link-check: ## Tests for the repo-link checker
@@ -79,7 +79,7 @@ test-i18n: ## Tests for, and a run of, the i18n consistency check
 	python3 -m unittest discover -s tools/i18n-check -p 'test_*.py'
 	python3 tools/i18n-check/check_i18n.py
 
-# Add a movie to data/movies.json as {"title": …, "imdb": "tt…"}, then run this.
+# Add a movie to data/movies.json as {"title": …, "year": …} (or "imdb": "tt…"), then run this.
 movies-refresh: ## Fill in and refresh data/movies.json (posters, scores, trailers, streaming)
 	python3 tools/movies/refresh.py
 

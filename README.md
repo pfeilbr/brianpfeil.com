@@ -120,7 +120,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | **Tests** | |
 | `make test-tools` | Go tests for the post generator |
 | `make test-media` | Python tests for the media tool |
-| `make test-layout` | Render `/media/` from a fixture and check it in all nine languages |
+| `make test-layout` | Build `/media/` from a fixture; check `/data/media.json` and the page in all nine languages |
 | `make test-link-check` | Tests for the repo-link checker |
 | `make test-i18n` | Tests for, and a run of, the i18n consistency check |
 | `make test-docs` | Every Makefile target has help text and is in the README |

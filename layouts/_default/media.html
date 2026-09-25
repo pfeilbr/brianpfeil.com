@@ -1,5 +1,7 @@
 {{ define "main" }}
-{{ $m := hugo.Data.media }}
+{{- /* Drawn in the browser from /data/media.json, which is the whitelisted
+   payload built by partials/media-payload.html (not the raw data file).
+   The template supplies the shell and the translated strings. */ -}}
 <article class="media">
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
@@ -7,116 +9,21 @@
   </header>
 
   <div class="prose">{{ .Content }}</div>
+  <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/media.json") | safeHTML }}</p></noscript>
 
-  {{ if or (not $m) (not $m.items) }}
-  <p class="media-empty">{{ i18n "media_empty" }}</p>
-  {{ else }}
-  {{ $base := $m.base_url }}
-
-  <p class="media-sub">{{ i18n "media_count" (dict "count" $m.count) }} — {{ i18n "media_hint" }}</p>
-
-  {{/* Years in the order the items already come in (newest first), so the
-     page reads as a reverse timeline without needing a sort. */}}
-  {{ $years := slice }}
-  {{ range $m.items }}
-    {{ if not (in $years .year) }}{{ $years = $years | append .year }}{{ end }}
-  {{ end }}
-
+  <p class="media-empty" hidden>{{ i18n "media_empty" }}</p>
+  <p class="media-sub" hidden></p>
   {{/* A row of the years that have posts, kept on screen while scrolling,
-     each linking to its section's heading — so 2011 is one tap away rather
-     than a long scroll past everything since. */}}
-  {{ if gt (len $years) 1 }}
-  <nav class="media-years" aria-label="{{ i18n "media_years" }}">
-    {{ range $years }}<a href="#year-{{ . }}">{{ . }}</a>{{ end }}
-  </nav>
-  {{ end }}
-
-  {{/* The first rows are on screen at load, so they shouldn't wait for the
-     lazy-loader to decide they're visible: eager, and high priority for the
-     first few so they win the race against everything else on the page. */}}
-  {{ $tile := 0 }}
-  {{ range $years }}
-  {{ $year := . }}
-  <section class="media-section" aria-labelledby="year-{{ $year }}">
-    <h2 id="year-{{ $year }}" class="media-h2">{{ $year }}</h2>
-    <div class="media-grid">
-      {{ range where $m.items "year" $year }}
-      {{ $first := index .media 0 }}
-      {{ $label := cond (ne .caption "") (.caption | plainify | truncate 120) (i18n "media_untitled") }}
-      {{/* A real link to the full-size file, so the grid still works with
-         JavaScript off — the same rule the tabbed pages follow. The lightbox
-         script takes over the click when it is running. */}}
-      {{/* Square WebP tiles sized for the grid, with the photo's average
-         colour behind them while they load. The colour is checked against a
-         strict pattern before it goes into a style attribute. */}}
-      {{ $grid := index $first "grid" }}
-      {{ $color := index $first "color" }}
-      <a class="media-tile{{ if .story }} media-tile-story{{ end }}" href="{{ $base }}{{ $first.src }}" data-item="{{ .id }}"
-         aria-label="{{ $label }} — {{ i18n "media_open" }}"
-         {{- if and $color (findRE `^#[0-9a-f]{6}$` $color) }} style="background-color:{{ $color | safeCSS }}"{{ end }}>
-        {{ $tile = add $tile 1 }}
-        <img src="{{ $base }}{{ if $grid }}{{ index $grid 0 }}{{ else }}{{ $first.thumb }}{{ end }}"
-             {{- with $grid }} srcset="{{ $base }}{{ index . 0 }} 360w, {{ $base }}{{ index . 1 }} 720w"
-             sizes="(min-width: 640px) 162px, 31vw"{{ end }} alt=""
-             {{- if le $tile 8 }} loading="eager"{{ if le $tile 4 }} fetchpriority="high"{{ end }}
-             {{- else }} loading="lazy"{{ end }} decoding="async">
-        {{ if eq .kind "video" }}
-        {{/* Play glyph plus the clip's length, as m:ss, when it's known. */}}
-        {{ $secs := int (math.Round (default 0 (index $first "duration"))) }}
-        <span class="media-badge media-badge-video" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          {{- if gt $secs 0 }}<span>{{ div $secs 60 }}:{{ printf "%02d" (mod $secs 60) }}</span>{{ end -}}
-        </span>
-        {{ else if eq .kind "album" }}
-        <span class="media-badge media-badge-count" aria-hidden="true">{{ len .media }}</span>
-        {{ end }}
-      </a>
-      {{ end }}
-    </div>
-  </section>
-  {{ end }}
-
-  {{/* Two lists: one entry per post (caption, date and, later, the rest of
-     its details), and one compact row per photo or video pointing back at
-     its post by index — {i: post, k: "p"|"v", s: src, t: thumb, p: poster,
-     w, h}. A caption
-     is stored once rather than once per photo in an album, and the CDN
-     address once rather than three times per file. The script expands it.
-     Captions are rendered as text, never as markup — see the script. */}}
-  {{ $posts := slice }}
-  {{ $media := slice }}
-  {{ range $idx, $it := $m.items }}
-    {{ $post := dict "id" $it.id "date" $it.date "caption" $it.caption }}
-    {{/* What Instagram shows beside the post, when the source had it. Zero
-       counts are left out, as Instagram leaves out "0 likes". */}}
-    {{ with $it.permalink }}{{ $post = merge $post (dict "url" .) }}{{ end }}
-    {{ with $it.location }}{{ $post = merge $post (dict "loc" .name "locId" (index . "id")) }}{{ end }}
-    {{ with $it.likes }}{{ $post = merge $post (dict "likes" .) }}{{ end }}
-    {{ with $it.comments }}{{ $post = merge $post (dict "comments" .) }}{{ end }}
-    {{ with $it.counted }}{{ $post = merge $post (dict "counted" .) }}{{ end }}
-    {{ with $it.tagged }}{{ $post = merge $post (dict "tagged" .) }}{{ end }}
-    {{ with $it.audio }}{{ $post = merge $post (dict "audio" .) }}{{ end }}
-    {{ with $it.story }}{{ $post = merge $post (dict "story" true) }}{{ end }}
-    {{/* Taken off the Instagram grid with "Archive"; only here now. */}}
-    {{ with $it.archived }}{{ $post = merge $post (dict "archived" true) }}{{ end }}
-    {{/* A story that reshared a post: "other_post" (someone else's) or
-       "own_reel" (one already on this page). */}}
-    {{ with $it.reshare }}{{ $post = merge $post (dict "reshare" .) }}{{ end }}
-    {{ $posts = $posts | append $post }}
-    {{ range $it.media }}
-      {{/* An object, not an array: Hugo's append won't nest a list in a list
-         that starts empty. One-letter keys keep it nearly as small. */}}
-      {{ $row := dict "i" $idx "k" (cond (eq .kind "video") "v" "p")
-            "s" .src "t" .thumb "p" (default "" (index . "poster")) "w" .w "h" .h }}
-      {{/* m: the track added to a clip that had no sound of its own. */}}
-      {{ with index . "music" }}{{ $row = merge $row (dict "m" .) }}{{ end }}
-      {{ $media = $media | append $row }}
-    {{ end }}
-  {{ end }}
-  {{ $payload := dict "base" $base "posts" $posts "media" $media }}
-  <script type="application/json" id="media-data">{{ $payload | jsonify | safeJS }}</script>
+     each linking to its section's heading. */}}
+  <nav class="media-years" aria-label="{{ i18n "media_years" }}" hidden></nav>
+  <div id="media-grid" aria-busy="true"></div>
 
   <div class="media-strings"
+       data-count="{{ i18n "media_count" (dict "count" "%count") }}"
+       data-hint="{{ i18n "media_hint" }}"
+       data-untitled="{{ i18n "media_untitled" }}"
+       data-open="{{ i18n "media_open" }}"
+       data-error="{{ i18n "data_load_error" }}"
        data-close="{{ i18n "media_close" }}"
        data-prev="{{ i18n "media_prev" }}"
        data-next="{{ i18n "media_next" }}"
@@ -136,22 +43,131 @@
        data-archived="{{ i18n "media_archived" }}"
        data-reshare-other="{{ i18n "media_reshare_other" }}"
        data-reshare-own="{{ i18n "media_reshare_own" }}"></div>
-  {{ end }}
 </article>
 
-{{ if and $m $m.items }}
+<script>
+/* The grid. Years in the order the posts already come in (newest first), so
+   the page reads as a reverse timeline. Each tile is a real link to the
+   full-size file, so a middle-click still opens it; the lightbox below takes
+   over a plain click. Square WebP tiles, with the photo's average colour
+   behind them while they load. */
+window.MediaGrid = function (raw, strings) {
+  var s = strings.dataset;
+  var grid = document.getElementById("media-grid");
+  var years = [];
+  raw.posts.forEach(function (p) { if (years.indexOf(p.year) < 0) years.push(p.year); });
+  var first = {};
+  raw.media.forEach(function (m) { if (!(m.i in first)) first[m.i] = m; });
+  var perPost = {};
+  raw.media.forEach(function (m) { perPost[m.i] = (perPost[m.i] || 0) + 1; });
+
+  var sub = document.querySelector(".media-sub");
+  sub.textContent = s.count.replace("%count", raw.posts.length) + " \u2014 " + s.hint;
+  sub.hidden = false;
+
+  if (years.length > 1) {
+    var nav = document.querySelector(".media-years");
+    years.forEach(function (y) {
+      var a = document.createElement("a");
+      a.href = "#year-" + y;
+      a.textContent = y;
+      nav.appendChild(a);
+    });
+    nav.hidden = false;
+  }
+
+  /* The first rows are on screen at load: eager, and high priority for the
+     first few so they win the race against everything else on the page. */
+  var tile = 0;
+  years.forEach(function (y) {
+    var sec = document.createElement("section");
+    sec.className = "media-section";
+    sec.setAttribute("aria-labelledby", "year-" + y);
+    var h = document.createElement("h2");
+    h.id = "year-" + y;
+    h.className = "media-h2";
+    h.textContent = y;
+    sec.appendChild(h);
+    var g = document.createElement("div");
+    g.className = "media-grid";
+    raw.posts.forEach(function (p, idx) {
+      if (p.year !== y || !first[idx]) return;
+      var m = first[idx];
+      var a = document.createElement("a");
+      a.className = "media-tile" + (p.story ? " media-tile-story" : "");
+      a.href = raw.base + m.s;
+      a.dataset.item = p.id;
+      var text = (p.caption || "").replace(/\s+/g, " ").trim();
+      var label = text ? (text.length > 120 ? text.slice(0, 119) + "\u2026" : text) : s.untitled;
+      a.setAttribute("aria-label", label + " \u2014 " + s.open);
+      /* Checked again here, though the payload already only carries hex. */
+      if (m.c && /^#[0-9a-f]{6}$/.test(m.c)) a.style.backgroundColor = m.c;
+      tile++;
+      var img = document.createElement("img");
+      img.src = raw.base + (m.g ? m.g[0] : m.t);
+      if (m.g) {
+        img.srcset = raw.base + m.g[0] + " 360w, " + raw.base + m.g[1] + " 720w";
+        img.sizes = "(min-width: 640px) 162px, 31vw";
+      }
+      img.alt = "";
+      img.loading = tile <= 8 ? "eager" : "lazy";
+      if (tile <= 4) img.fetchPriority = "high";
+      img.decoding = "async";
+      a.appendChild(img);
+      if (p.kind === "video") {
+        /* Play glyph plus the clip's length, as m:ss, when it's known. */
+        var b = document.createElement("span");
+        b.className = "media-badge media-badge-video";
+        b.setAttribute("aria-hidden", "true");
+        b.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        if (m.d > 0) {
+          var t = document.createElement("span");
+          t.textContent = Math.floor(m.d / 60) + ":" + String(m.d % 60).padStart(2, "0");
+          b.appendChild(t);
+        }
+        a.appendChild(b);
+      } else if (p.kind === "album") {
+        var c = document.createElement("span");
+        c.className = "media-badge media-badge-count";
+        c.setAttribute("aria-hidden", "true");
+        c.textContent = perPost[idx];
+        a.appendChild(c);
+      }
+      g.appendChild(a);
+    });
+    sec.appendChild(g);
+    grid.appendChild(sec);
+  });
+  grid.setAttribute("aria-busy", "false");
+  /* The browser looked for #year-2019 before the section existed. */
+  if (/^#year-/.test(location.hash)) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) target.scrollIntoView();
+  }
+};
+</script>
 <script>
 /* Lightbox for /media/. Nothing heavier than a thumbnail is fetched until a
    tile is opened; a video is built on demand, starts when opened, and is torn
    down on close or when paging away, so a hidden clip can never keep playing. */
 (function () {
-  var data = document.getElementById("media-data");
   var strings = document.querySelector(".media-strings");
-  if (!data || !strings) return;
+  function empty() {
+    document.getElementById("media-grid").setAttribute("aria-busy", "false");
+    document.querySelector(".media-empty").hidden = false;
+  }
+  fetch("/data/media.json")
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (raw) {
+      if (!raw.posts || !raw.posts.length) return empty();
+      window.MediaGrid(raw, strings);
+      viewer(raw);
+    })
+    .catch(empty);
 
+  function viewer(raw) {
   /* Expand the compact payload into one entry per photo or video, each
      carrying its post's details — the shape the rest of the viewer uses. */
-  var raw = JSON.parse(data.textContent);
   var perPost = {};
   raw.media.forEach(function (m) { perPost[m.i] = (perPost[m.i] || 0) + 1; });
   var seen = {};
@@ -521,7 +537,7 @@
     else if (e.key === "ArrowLeft") step(-1);
     else if (e.key === "ArrowRight") step(1);
   });
+  }
 })();
 </script>
-{{ end }}
 {{ end }}

@@ -508,3 +508,10 @@ other = "无法加载电影列表，请刷新页面重试。"
 [movies_noscript]
 other = "此页面由 JavaScript 绘制。电影列表数据见 <a href=\"/data/movies.json\">movies.json</a>。"
 
+
+# Pages drawn in the browser from /data/*.json (partials/data-render.html).
+[data_load_error]
+other = "无法加载此页面的数据，请刷新重试。"
+
+[data_noscript]
+other = "此页面由 JavaScript 绘制。数据见 <a href=\"{{ .url }}\">{{ .url }}</a>。"

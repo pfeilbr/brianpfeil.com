@@ -64,8 +64,9 @@ jobs:
       # and that no translated page is showing English it has a translation for.
       - name: i18n consistency and fallback check
         run: python3 tools/i18n-check/check_i18n.py --public public
-      # Builds /media/ from a fixture and with no data, then checks the HTML in
-      # all nine languages — including that the lightbox payload is a list.
+      # Builds /media/ from a fixture and with no data, then checks
+      # /data/media.json (whitelisted, no coordinates) and the page shell in
+      # all nine languages.
       - name: Media page render check
         run: python3 tools/instagram-media/tests/check_layout.py --build
 

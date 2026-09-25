@@ -1908,3 +1908,8 @@ nav details > summary {
   .mv-group { flex-direction: column; gap: 0.25rem; }
   .mv-group-label { flex-basis: auto; }
 }
+
+/* Pages drawn from /data/*.json: the note shown when the data cannot load,
+   or when JavaScript is off. */
+.data-error { padding: 1.5rem 0; color: var(--text-muted); }
+.data-error a { color: var(--brand); text-decoration: underline; }

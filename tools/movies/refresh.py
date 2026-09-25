@@ -111,12 +111,22 @@ query($id: ID!) {
 
 
 def find_jw_id(movie):
-    """The JustWatch node whose IMDb id matches; titles alone are ambiguous."""
+    """The JustWatch node for a movie. Matched on IMDb id when the entry has
+    one -- titles alone are ambiguous -- otherwise on title search plus
+    release year, and the IMDb id found is written back so later runs are
+    exact. Check a new entry's title in the output: a year match can still
+    pick a same-year namesake."""
+    want = movie.get("imdb")
     for q in (movie["title"], f'{movie["title"]} {movie.get("year", "")}'.strip()):
         for e in jw(SEARCH, {"q": q})["popularTitles"]["edges"]:
-            if e["node"]["content"]["externalIds"]["imdbId"] == movie["imdb"]:
+            c = e["node"]["content"]
+            imdb = c["externalIds"]["imdbId"]
+            if want and imdb == want:
                 return e["node"]["id"]
-    raise RuntimeError(f'{movie["title"]}: no JustWatch match for {movie["imdb"]}')
+            if not want and imdb and c["originalReleaseYear"] == movie.get("year"):
+                movie["imdb"] = imdb
+                return e["node"]["id"]
+    raise RuntimeError(f'{movie["title"]}: no JustWatch match for {want or movie.get("year")}')
 
 
 def download(url, dest):
@@ -262,8 +272,14 @@ def refresh(movie):
     movie["justwatch_url"] = "https://www.justwatch.com" + en["fullPath"]
 
     slug_rt, mpa = wikidata(movie["imdb"])
-    if mpa:
+    # An "mpa" set by hand wins; then Wikidata; JustWatch's own value only if
+    # it is an MPA certificate at all (it sometimes gives TV-MA for a film).
+    if movie.get("mpa"):
+        movie["rating"] = movie["mpa"]
+    elif mpa:
         movie["rating"] = mpa
+    elif not re.fullmatch(r"G|PG|PG-13|R|NC-17", movie["rating"] or ""):
+        movie["rating"] = None
     slug_rt = movie.get("rt_slug") or slug_rt
     if slug_rt:
         movie["rt_slug"] = slug_rt
@@ -284,7 +300,7 @@ def main(argv):
     only = set(argv)
     failed = []
     for movie in doc["movies"]:
-        if only and movie["imdb"] not in only:
+        if only and movie.get("imdb") not in only and movie["title"] not in only:
             continue
         try:
             refresh(movie)
