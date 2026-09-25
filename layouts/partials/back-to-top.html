@@ -1,0 +1,36 @@
+{{- /* Floating "back to top" arrow, bottom right, on every page. It appears
+   once the visitor has scrolled a screen's worth down, so short pages never
+   show it. Sits below the lightbox/zoom overlays (z-index 100). */ -}}
+<button id="back-to-top" type="button" class="back-to-top" aria-label="{{ i18n "back_to_top" }}" title="{{ i18n "back_to_top" }}" hidden>
+  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+</button>
+<script>
+(function() {
+  var btn = document.getElementById("back-to-top");
+  if (!btn) return;
+  /* Toggling `hidden` as well as opacity keeps the button out of the tab order
+     while it is invisible -- pointer-events:none does not stop a keyboard
+     Enter. Opacity is set a frame after un-hiding so the fade runs. */
+  var shown = false;
+  function show(next) {
+    if (next === shown) return;
+    shown = next;
+    if (next) {
+      btn.hidden = false;
+      requestAnimationFrame(function() { if (shown) btn.classList.add("is-shown"); });
+    } else {
+      btn.classList.remove("is-shown");
+      setTimeout(function() { if (!shown) btn.hidden = true; }, 200);
+    }
+  }
+  function update() { show(window.scrollY > 400); }
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+  btn.addEventListener("click", function() {
+    /* An explicit `behavior` overrides CSS scroll-behavior, so honour the
+       reduced-motion preference here too. */
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  });
+})();
+</script>

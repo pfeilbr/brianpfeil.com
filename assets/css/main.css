@@ -1913,3 +1913,31 @@ nav details > summary {
    or when JavaScript is off. */
 .data-error { padding: 1.5rem 0; color: var(--text-muted); }
 .data-error a { color: var(--brand); text-decoration: underline; }
+
+/* Floating back-to-top arrow (partials/back-to-top.html), every page. Below
+   the lightbox and zoom overlays (100) and the language menu (60). */
+.back-to-top {
+  position: fixed;
+  right: max(1.5rem, env(safe-area-inset-right));
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  color: var(--text-subtle);
+  background-color: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, color 0.15s, border-color 0.15s;
+}
+.back-to-top[hidden] { display: none; }
+.back-to-top.is-shown { opacity: 1; }
+.back-to-top:hover { color: var(--brand); border-color: var(--brand); }
+.back-to-top:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+@media print { .back-to-top { display: none; } }

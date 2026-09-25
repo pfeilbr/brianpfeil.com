@@ -44,11 +44,6 @@
 </div>
 {{ end }}
 
-<!-- Back to top -->
-<button id="back-to-top" type="button" aria-label="{{ i18n "back_to_top" }}" class="fixed bottom-6 right-6 w-9 h-9 bg-white border border-gray-200 rounded-full shadow-sm text-gray-400 hover:text-brand hover:border-brand cursor-pointer transition-all opacity-0 pointer-events-none z-50" title="{{ i18n "back_to_top" }}">
-  <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
-</button>
-
 <script>
 var I18N = {{ dict "progress" (i18n "scroll_progress" (dict "loaded" "{loaded}" "total" "{total}")) "loading" (i18n "loading") | jsonify | safeJS }};
 var postCount = {{ len (partial "site-posts.html" .) }};
@@ -71,45 +66,6 @@ document.addEventListener("keydown", function(e) {
     if (q) q.focus();
   }
 });
-
-/* Respects the reduced-motion preference: passing an explicit `behavior` to
-   scrollTo() overrides the `scroll-behavior` set in CSS, so it has to be
-   checked here too. */
-function motion() {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-}
-
-/* Back to top button */
-(function() {
-  var btn = document.getElementById("back-to-top");
-  if (!btn) return;
-  /* Toggling `hidden` as well as opacity keeps the button out of the tab order
-     while it is invisible -- pointer-events:none does not stop a keyboard
-     Enter, so it used to be a focusable control nobody could see. */
-  var shown = false;
-  function show(next) {
-    if (next === shown) return;
-    shown = next;
-    if (next) {
-      /* Opacity has to be set on a later frame than the un-hiding: coming out
-         of display:none there is no previous computed value to animate from,
-         so setting both together pops the button in with no fade. */
-      btn.hidden = false;
-      requestAnimationFrame(function () { if (shown) btn.style.opacity = "1"; });
-    } else {
-      btn.style.opacity = "0";
-    }
-    btn.style.pointerEvents = next ? "auto" : "none";
-    if (!next) setTimeout(function () { if (!shown) btn.hidden = true; }, 200);
-  }
-  btn.hidden = true;
-  window.addEventListener("scroll", function() {
-    show(window.scrollY > 400);
-  }, { passive: true });
-  btn.addEventListener("click", function() {
-    window.scrollTo({ top: 0, behavior: motion() });
-  });
-})();
 
 /* Infinite scroll with progress counter */
 (function() {

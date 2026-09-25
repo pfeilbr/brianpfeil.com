@@ -186,3 +186,7 @@ touching a template:
   from JSON by the page's own script. It fires `tabhide` on a panel before hiding it; pages listen
   for that to tear down playing embeds, because a hidden iframe keeps playing
   audio. Emit the partial *after* the page's own script so listeners exist first.
+- **Back to top** — `layouts/partials/back-to-top.html`, included once in
+  `baseof.html`, so every page gets the same floating arrow (bottom right,
+  after 400px of scroll). Don't add a per-page one. It sits at `z-index: 50`,
+  under the lightbox/zoom overlays (100).
