@@ -11,7 +11,7 @@
 {{- if eq $desc "" }}{{ $desc = $default }}{{ end -}}
 {{- $title := cond .IsHome .Site.Params.homeTitle (printf "%s | %s" .Title .Site.Title) -}}
 {{- $img := "" -}}
-{{- with .Params.image }}{{ $img = . | absURL }}{{ else }}{{ $img = "/images/2026-08-09-profile-brian-pfeil-portrait.jpg" | absURL }}{{ end -}}
+{{- with .Params.image }}{{ $img = . | absURL }}{{ else }}{{ $img = "/images/2026-08-20-profile-brian-pfeil-portrait.jpg" | absURL }}{{ end -}}
 
 <meta name="description" content="{{ $desc }}">
 <meta name="theme-color" content="#0d7ea8">

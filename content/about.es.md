@@ -8,7 +8,7 @@ title = "Sobre mí"
 layout = "page"
 +++
 
-<img class="about-photo" src="/images/2026-08-09-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
+<img class="about-photo" src="/images/2026-08-20-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
 Hola, soy Brian Pfeil. Me apasiona la tecnología y construir cosas. Este es mi blog personal, donde escribo sobre eso y sobre otros intereses.
 

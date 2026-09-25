@@ -8,7 +8,7 @@ title = "소개"
 layout = "page"
 +++
 
-<img class="about-photo" src="/images/2026-08-09-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
+<img class="about-photo" src="/images/2026-08-20-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
 안녕하세요, Brian Pfeil입니다. 저는 기술을 좋아하고 무언가를 직접 만드는 일을 좋아합니다. 이곳은 그런 관심사와 그 밖의 이야기를 적어 두는 개인 블로그입니다.
 

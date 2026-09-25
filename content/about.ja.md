@@ -8,7 +8,7 @@ title = "自己紹介"
 layout = "page"
 +++
 
-<img class="about-photo" src="/images/2026-08-09-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
+<img class="about-photo" src="/images/2026-08-20-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
 こんにちは、Brian Pfeil です。技術と、ものをつくることが好きです。ここはその話や、それ以外の関心事について書いている個人ブログです。
 
