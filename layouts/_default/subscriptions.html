@@ -1,179 +1,126 @@
 {{ define "main" }}
-{{ $s := hugo.Data.subscriptions }}
-{{ $t := hugo.Data.twitch }}
-{{ $g := hugo.Data.steam }}
-{{ $f := hugo.Data.feedly }}
+{{- /* Drawn in the browser from /data/{subscriptions,twitch,steam,feedly}.json.
+   The template supplies the page shell and translated strings only. Category
+   and feed-group labels are editorial prose, so they live in i18n and are
+   looked up here per key; the keys come from the data files. */ -}}
+{{ $cats := dict }}
+{{ range hugo.Data.subscriptions.categories }}
+  {{ $cats = merge $cats (dict .key (dict "label" (i18n (printf "cat_label_%s" .key)) "blurb" (i18n (printf "cat_blurb_%s" .key)))) }}
+{{ end }}
+{{ $groups := dict }}
+{{ range hugo.Data.feedly.groups }}
+  {{ $groups = merge $groups (dict .key (dict "label" (i18n (printf "feeds_label_%s" .key)) "blurb" (i18n (printf "feeds_blurb_%s" .key)))) }}
+{{ end }}
+{{ $T := dict
+  "intro" (i18n "subs_intro" (dict "count" "{count}" "reach" "{reach}" "twitch" "{twitch}" "steam" "{steam}" "feeds" "{feeds}"))
+  "watch" (i18n "subs_watch_latest" "{name}")
+  "followers" (i18n "subs_tw_followers" "{n}")
+  "steamNote" (i18n "subs_steam_note" (dict "hours" "{hours}" "library" "{library}"))
+  "hours" (i18n "subs_steam_hours" "{n}")
+  "feedsNote" (i18n "subs_feeds_note" "{n}")
+  "error" (i18n "data_load_error")
+  "cats" $cats
+  "groups" $groups
+}}
 <article class="subs">
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
-    <p class="text-gray-600">{{ i18n "subs_intro" (dict "count" $s.total "reach" $s.combined_subscribers "twitch" (add $t.following_total $t.past_total) "steam" $g.library_total "feeds" $f.total) }}</p>
+    <p class="text-gray-600" id="subs-intro"></p>
   </header>
 
   <div class="prose">{{ .Content }}</div>
+  <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/subscriptions.json") | safeHTML }}</p></noscript>
 
-  {{/* ---------- Platform tabs ----------
-     Rendered as real tabs so both platforms are reachable from the top of the
-     page. Without JavaScript both panels stay open and the page reads as it
-     did before -- the script only hides the inactive one. */}}
+  {{/* ---------- Platform tabs ---------- */}}
   <div class="ptabs" role="tablist" aria-label="{{ i18n "subs_platforms" }}">
     <button type="button" class="ptab is-on" role="tab" id="tab-youtube"
             aria-controls="panel-youtube" aria-selected="true" data-panel="youtube">
       {{ partial "icons/chip.html" (dict "id" "i-youtube" "size" "sm") }}
       <span class="ptab-name">YouTube</span>
-      <span class="ptab-count">{{ $s.total }}</span>
+      <span class="ptab-count" data-count="youtube"></span>
     </button>
     <button type="button" class="ptab" role="tab" id="tab-twitch"
             aria-controls="panel-twitch" aria-selected="false" tabindex="-1" data-panel="twitch">
       {{ partial "icons/chip.html" (dict "id" "i-twitch" "size" "sm") }}
       <span class="ptab-name">Twitch</span>
-      <span class="ptab-count">{{ add $t.following_total $t.past_total }}</span>
+      <span class="ptab-count" data-count="twitch"></span>
     </button>
     <button type="button" class="ptab" role="tab" id="tab-steam"
             aria-controls="panel-steam" aria-selected="false" tabindex="-1" data-panel="steam">
       {{ partial "icons/chip.html" (dict "id" "i-steam" "size" "sm") }}
       <span class="ptab-name">Steam</span>
-      <span class="ptab-count">{{ $g.library_total }}</span>
+      <span class="ptab-count" data-count="steam"></span>
     </button>
     <button type="button" class="ptab" role="tab" id="tab-feeds"
             aria-controls="panel-feeds" aria-selected="false" tabindex="-1" data-panel="feeds">
       {{ partial "icons/chip.html" (dict "id" "i-rss" "size" "sm") }}
       <span class="ptab-name">{{ i18n "subs_tab_feeds" }}</span>
-      <span class="ptab-count">{{ $f.total }}</span>
+      <span class="ptab-count" data-count="feeds"></span>
     </button>
   </div>
 
   <div class="ptab-panel" id="panel-youtube" role="tabpanel" aria-labelledby="tab-youtube">
-
-  {{/* ---------- The mix, as one bar. Doubles as the filter control. ---------- */}}
-  <section class="music-section" aria-labelledby="the-mix">
-    <h2 id="the-mix" class="music-h2">{{ i18n "subs_the_mix" }}</h2>
-    <p class="music-sub">{{ i18n "subs_the_mix_note" }}</p>
-
-    <div class="mix-bar" role="presentation">
-      {{ range $s.categories }}
-      <span class="mix-seg" data-cat="{{ .key }}" style="flex-grow:{{ .count }}" title="{{ i18n (printf "cat_label_%s" .key) }} — {{ .count }}"></span>
-      {{ end }}
-    </div>
-
-    <div class="chips" role="group" aria-label="{{ i18n "subs_filter" }}">
-      <button type="button" class="chip is-on" data-cat="all">{{ i18n "subs_all" }} <span class="chip-n">{{ $s.total }}</span></button>
-      {{ range $s.categories }}
-      <button type="button" class="chip" data-cat="{{ .key }}">{{ i18n (printf "cat_label_%s" .key) }} <span class="chip-n">{{ .count }}</span></button>
-      {{ end }}
-      <button type="button" class="chip chip-alt" id="subs-random">{{ i18n "subs_random" }}</button>
-    </div>
-  </section>
-
-  {{/* ---------- The channels ---------- */}}
-  {{ range $s.categories }}
-  {{ $cat := .key }}
-  <section class="music-section cat-block" data-cat="{{ $cat }}" aria-labelledby="cat-{{ $cat }}">
-    <h2 id="cat-{{ $cat }}" class="music-h2"><span class="cat-dot" data-cat="{{ $cat }}"></span>{{ i18n (printf "cat_label_%s" $cat) }} <span class="cat-n">{{ .count }}</span></h2>
-    <p class="music-sub">{{ i18n (printf "cat_blurb_%s" $cat) }}</p>
-    <div class="ch-grid">
-      {{ range where $s.channels "cat" $cat }}
-      <div class="ch-card" data-uploads="{{ .uploads }}" data-name="{{ .name }}">
-        <div class="ch-row">
-          <img class="ch-avatar" src="{{ .avatar }}" alt="" width="44" height="44" loading="lazy" decoding="async">
-          <div class="ch-text">
-            <a class="ch-name" href="https://www.youtube.com/{{ .handle }}" target="_blank" rel="noopener">{{ .name }}</a>
-            <span class="ch-subs">{{ .subs }}</span>
-          </div>
-          <button type="button" class="ch-play" aria-label="{{ i18n "subs_watch_latest" .name }}">
-            <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
-          </button>
-        </div>
-        <div class="ch-media" hidden></div>
+    {{/* The mix, as one bar. Doubles as the filter control. */}}
+    <section class="music-section" aria-labelledby="the-mix">
+      <h2 id="the-mix" class="music-h2">{{ i18n "subs_the_mix" }}</h2>
+      <p class="music-sub">{{ i18n "subs_the_mix_note" }}</p>
+      <div class="mix-bar" role="presentation" id="subs-mix"></div>
+      <div class="chips" role="group" aria-label="{{ i18n "subs_filter" }}" id="subs-chips">
+        <button type="button" class="chip is-on" data-cat="all">{{ i18n "subs_all" }} <span class="chip-n" data-count="youtube"></span></button>
       </div>
-      {{ end }}
-    </div>
-  </section>
-  {{ end }}
+    </section>
+    <div id="subs-channels" aria-busy="true"></div>
+  </div>
 
-  </div>{{/* /panel-youtube */}}
-
-  {{/* ---------- Twitch ---------- */}}
   <div class="ptab-panel" id="panel-twitch" role="tabpanel" aria-labelledby="tab-twitch">
+    <section class="music-section" aria-labelledby="tw-following">
+      <h2 id="tw-following" class="music-h2">{{ i18n "subs_tw_following" }} <span class="cat-n" data-count="tw-following"></span></h2>
+      <p class="music-sub">{{ i18n "subs_tw_following_note" }}</p>
+      <div class="ch-grid" id="tw-following-list"></div>
+    </section>
+    <section class="music-section" aria-labelledby="tw-past">
+      <h2 id="tw-past" class="music-h2">{{ i18n "subs_tw_past" }} <span class="cat-n" data-count="tw-past"></span></h2>
+      <p class="music-sub">{{ i18n "subs_tw_past_note" }}</p>
+      <div class="ch-grid" id="tw-past-list"></div>
+    </section>
+  </div>
 
-  <section class="music-section" aria-labelledby="tw-following">
-    <h2 id="tw-following" class="music-h2">{{ i18n "subs_tw_following" }} <span class="cat-n">{{ $t.following_total }}</span></h2>
-    <p class="music-sub">{{ i18n "subs_tw_following_note" }}</p>
-    <div class="ch-grid">
-      {{ range $t.following }}{{ partial "twitch-card.html" . }}{{ end }}
-    </div>
-  </section>
-
-  <section class="music-section" aria-labelledby="tw-past">
-    <h2 id="tw-past" class="music-h2">{{ i18n "subs_tw_past" }} <span class="cat-n">{{ $t.past_total }}</span></h2>
-    <p class="music-sub">{{ i18n "subs_tw_past_note" }}</p>
-    <div class="ch-grid">
-      {{ range $t.past }}{{ partial "twitch-card.html" . }}{{ end }}
-    </div>
-  </section>
-
-  </div>{{/* /panel-twitch */}}
-
-  {{/* ---------- Steam. Playtime suits a ranked bar better than a grid of
-       cards, so this borrows the artist chart from /music/. ---------- */}}
+  {{/* Steam. Playtime suits a ranked bar better than a grid of cards, so
+     this borrows the artist chart from /music/. */}}
   <div class="ptab-panel" id="panel-steam" role="tabpanel" aria-labelledby="tab-steam">
     <section class="music-section">
-      <p class="music-sub music-sub-lead">{{ i18n "subs_steam_note" (dict "hours" $g.hours_total "library" $g.library_total) }}</p>
-      {{ $max := 1 }}
-      {{ range $g.games }}{{ if gt .hours $max }}{{ $max = .hours }}{{ end }}{{ end }}
-      <ol class="artist-list artist-list-wide">
-        {{ range $g.games }}
-        <li class="artist-row">
-          <a class="artist-name" href="https://store.steampowered.com/app/{{ .appid }}/" target="_blank" rel="noopener">{{ .name }}</a>
-          <span class="artist-bar" aria-hidden="true"><span style="width:{{ div (mul .hours 100.0) $max }}%"></span></span>
-          <span class="artist-count">{{ i18n "subs_steam_hours" (printf "%.0f" .hours) }}</span>
-        </li>
-        {{ end }}
-      </ol>
+      <p class="music-sub music-sub-lead" id="steam-note"></p>
+      <ol class="artist-list artist-list-wide" id="steam-list"></ol>
     </section>
-  </div>{{/* /panel-steam */}}
+  </div>
 
-  {{/* ---------- Feeds. A blogroll: names and links, nothing else. ---------- */}}
+  {{/* Feeds. A blogroll: names and links, nothing else. */}}
   <div class="ptab-panel" id="panel-feeds" role="tabpanel" aria-labelledby="tab-feeds">
-    {{ range $f.groups }}
-    <section class="music-section" aria-labelledby="feeds-{{ .key }}">
-      <h2 id="feeds-{{ .key }}" class="music-h2">{{ i18n (printf "feeds_label_%s" .key) }} <span class="cat-n">{{ .count }}</span></h2>
-      <p class="music-sub">{{ i18n (printf "feeds_blurb_%s" .key) }}</p>
-      <ul class="feed-grid">
-        {{ range .feeds }}
-        <li><a class="feed-link" href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a></li>
-        {{ end }}
-      </ul>
-    </section>
-    {{ end }}
-    <p class="music-sub">{{ i18n "subs_feeds_note" $f.archived }}</p>
-  </div>{{/* /panel-feeds */}}
+    <div id="feeds-groups"></div>
+    <p class="music-sub" id="feeds-note"></p>
+  </div>
 
   <p class="music-foot">{{ i18n "subs_footnote" }}</p>
 </article>
 
+{{ partial "data-render.html" . }}
 <script>
-/* Two behaviours, both deliberately cheap:
+/* Everything below the tabs is built from four JSON files. Then two
+   behaviours, both deliberately cheap:
    1. Category filter -- pure show/hide, no network, no URL churn.
    2. Click-to-load players. Pressing play on a channel swaps in an iframe for
       that channel's uploads playlist, which starts on its most recent video.
       Nothing from youtube.com is fetched until then, and only one plays at a
       time so the page never turns into a wall of sound. */
 (function () {
-  /* --- filter --- */
-  /* [data-cat] on purpose: the "surprise me" button shares the .chip class for
-     styling but must not act as a filter. */
-  var chips = document.querySelectorAll(".chip[data-cat]");
-  var blocks = document.querySelectorAll(".cat-block");
-  chips.forEach(function (chip) {
-    chip.addEventListener("click", function () {
-      var cat = chip.dataset.cat;
-      chips.forEach(function (c) { c.classList.toggle("is-on", c === chip); });
-      blocks.forEach(function (b) { b.hidden = cat !== "all" && b.dataset.cat !== cat; });
-      /* Same reason the tab controller fires "tabhide": an embed inside a block
-         we just hid carries on playing, with no visible player to stop it. */
-      if (open && open.closest(".cat-block").hidden) { close(open); open = null; }
-    });
-  });
+  var D = window.DataPage, el = D.el.bind(D);
+  var T = {{ $T | jsonify | safeJS }};
+  var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
+  var ARROW = '<svg class="tw-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+  function count(key, n) {
+    document.querySelectorAll('[data-count="' + key + '"]').forEach(function (e) { e.textContent = n; });
+  }
+  function label(map, key) { return (map[key] || {}).label || key; }
 
   /* --- players --- */
   var open = null;
@@ -184,51 +131,205 @@
     slot.hidden = true;
     card.classList.remove("is-playing");
   }
-  document.querySelectorAll(".ch-card").forEach(function (card) {
-    card.querySelector(".ch-play").addEventListener("click", function () {
-      if (open === card) { close(card); open = null; return; }
-      close(open);
-      var frame = document.createElement("iframe");
-      frame.src = "https://www.youtube.com/embed/videoseries?list=" +
-        encodeURIComponent(card.dataset.uploads) + "&autoplay=1";
-      frame.title = card.dataset.name;
-      frame.loading = "lazy";
-      frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-      frame.referrerPolicy = "strict-origin-when-cross-origin";
-      frame.allowFullscreen = true;
-      var slot = card.querySelector(".ch-media");
-      slot.appendChild(frame);
-      slot.hidden = false;
-      card.classList.add("is-playing");
-      open = card;
-    });
-  });
-
-  /* --- platform tabs --- */
-  /* The controller lives in partials/tabs-script.html; all this page has to do
-     is stop a playing embed before its panel gets hidden. */
-  var ytPanel = document.getElementById("panel-youtube");
-  if (ytPanel) {
-    ytPanel.addEventListener("tabhide", function () { close(open); open = null; });
+  function toggle(card) {
+    if (open === card) { close(card); open = null; return; }
+    close(open);
+    var frame = document.createElement("iframe");
+    frame.src = "https://www.youtube.com/embed/videoseries?list=" +
+      encodeURIComponent(card.dataset.uploads) + "&autoplay=1";
+    frame.title = card.dataset.name;
+    frame.loading = "lazy";
+    frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    frame.allowFullscreen = true;
+    var slot = card.querySelector(".ch-media");
+    slot.appendChild(frame);
+    slot.hidden = false;
+    card.classList.add("is-playing");
+    open = card;
   }
 
-  /* --- surprise me --- */
-  var btn = document.getElementById("subs-random");
-  if (btn) {
-    btn.addEventListener("click", function () {
-      /* Excluding the playing card: picking it would re-enter the toggle and
-         stop playback instead of starting something, which with a filter
-         narrowed to four channels happens often. */
-      var cards = [].slice.call(document.querySelectorAll(".cat-block:not([hidden]) .ch-card:not(.is-playing)"));
+  /* --- YouTube --- */
+  function avatar(src, size) {
+    var img = el("img", "ch-avatar");
+    img.src = src; img.alt = ""; img.width = size; img.height = size;
+    img.loading = "lazy"; img.decoding = "async";
+    return img;
+  }
+  function channel(c) {
+    var card = el("div", "ch-card");
+    card.dataset.uploads = c.uploads;
+    card.dataset.name = c.name;
+    var row = el("div", "ch-row");
+    row.appendChild(avatar(c.avatar, 44));
+    var text = el("div", "ch-text");
+    text.appendChild(D.link("https://www.youtube.com/" + encodeURIComponent(c.handle), "ch-name", c.name));
+    text.appendChild(el("span", "ch-subs", c.subs));
+    row.appendChild(text);
+    var btn = el("button", "ch-play");
+    btn.type = "button";
+    btn.setAttribute("aria-label", D.fill(T.watch, { name: c.name }));
+    btn.innerHTML = PLAY;
+    btn.addEventListener("click", function () { toggle(card); });
+    row.appendChild(btn);
+    card.appendChild(row);
+    var media = el("div", "ch-media");
+    media.hidden = true;
+    card.appendChild(media);
+    return card;
+  }
+  function youtube(s) {
+    count("youtube", s.total);
+    var mix = document.getElementById("subs-mix");
+    var chips = document.getElementById("subs-chips");
+    var random = el("button", "chip chip-alt", {{ i18n "subs_random" }});
+    random.type = "button";
+    random.id = "subs-random";
+    var out = document.getElementById("subs-channels");
+    s.categories.forEach(function (cat) {
+      var seg = el("span", "mix-seg");
+      seg.dataset.cat = cat.key;
+      seg.style.flexGrow = cat.count;
+      seg.title = label(T.cats, cat.key) + " — " + cat.count;
+      mix.appendChild(seg);
+
+      var chip = el("button", "chip", label(T.cats, cat.key) + " ");
+      chip.type = "button";
+      chip.dataset.cat = cat.key;
+      chip.appendChild(el("span", "chip-n", String(cat.count)));
+      chips.appendChild(chip);
+
+      var sec = el("section", "music-section cat-block");
+      sec.dataset.cat = cat.key;
+      sec.setAttribute("aria-labelledby", "cat-" + cat.key);
+      var h = el("h2", "music-h2");
+      h.id = "cat-" + cat.key;
+      var dot = el("span", "cat-dot");
+      dot.dataset.cat = cat.key;
+      h.appendChild(dot);
+      h.appendChild(document.createTextNode(label(T.cats, cat.key) + " "));
+      h.appendChild(el("span", "cat-n", String(cat.count)));
+      sec.appendChild(h);
+      sec.appendChild(el("p", "music-sub", (T.cats[cat.key] || {}).blurb || ""));
+      var grid = el("div", "ch-grid");
+      s.channels.filter(function (c) { return c.cat === cat.key; })
+        .forEach(function (c) { grid.appendChild(channel(c)); });
+      sec.appendChild(grid);
+      out.appendChild(sec);
+    });
+    chips.appendChild(random);
+    out.setAttribute("aria-busy", "false");
+
+    /* --- filter --- */
+    /* [data-cat] on purpose: the "surprise me" button shares the .chip class
+       for styling but must not act as a filter. */
+    var chipEls = chips.querySelectorAll(".chip[data-cat]");
+    var blocks = out.querySelectorAll(".cat-block");
+    chipEls.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        var key = chip.dataset.cat;
+        chipEls.forEach(function (c) { c.classList.toggle("is-on", c === chip); });
+        blocks.forEach(function (b) { b.hidden = key !== "all" && b.dataset.cat !== key; });
+        /* An embed inside a block we just hid carries on playing. */
+        if (open && open.closest(".cat-block").hidden) { close(open); open = null; }
+      });
+    });
+
+    /* --- surprise me --- */
+    random.addEventListener("click", function () {
+      /* Excluding the playing card: picking it would stop playback instead
+         of starting something. */
+      var cards = [].slice.call(out.querySelectorAll(".cat-block:not([hidden]) .ch-card:not(.is-playing)"));
       if (!cards.length) return;
       var pick = cards[Math.floor(Math.random() * cards.length)];
       pick.scrollIntoView({
         block: "center",
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
       });
-      pick.querySelector(".ch-play").click();
+      toggle(pick);
     });
   }
+
+  /* --- Twitch: whole-row links rather than players, because Twitch only
+     serves a channel while it is live. --- */
+  function twitchCard(c) {
+    var a = D.link("https://www.twitch.tv/" + encodeURIComponent(c.login), "tw-card");
+    a.appendChild(avatar(c.avatar, 36));
+    var text = el("span", "ch-text");
+    text.appendChild(el("span", "ch-name", c.name));
+    text.appendChild(el("span", "ch-subs", D.fill(T.followers, { n: c.followers })));
+    a.appendChild(text);
+    a.insertAdjacentHTML("beforeend", ARROW);
+    return a;
+  }
+  function twitch(t) {
+    count("twitch", t.following_total + t.past_total);
+    count("tw-following", t.following_total);
+    count("tw-past", t.past_total);
+    t.following.forEach(function (c) { document.getElementById("tw-following-list").appendChild(twitchCard(c)); });
+    t.past.forEach(function (c) { document.getElementById("tw-past-list").appendChild(twitchCard(c)); });
+  }
+
+  /* --- Steam --- */
+  function steam(g) {
+    count("steam", g.library_total);
+    document.getElementById("steam-note").textContent =
+      D.fill(T.steamNote, { hours: g.hours_total, library: g.library_total });
+    var max = Math.max.apply(null, g.games.map(function (x) { return x.hours; }).concat(1));
+    var list = document.getElementById("steam-list");
+    g.games.forEach(function (x) {
+      var li = el("li", "artist-row");
+      li.appendChild(D.link("https://store.steampowered.com/app/" + encodeURIComponent(x.appid) + "/", "artist-name", x.name));
+      var bar = el("span", "artist-bar");
+      bar.setAttribute("aria-hidden", "true");
+      var fillBar = el("span");
+      fillBar.style.width = (x.hours * 100 / max) + "%";
+      bar.appendChild(fillBar);
+      li.appendChild(bar);
+      li.appendChild(el("span", "artist-count", D.fill(T.hours, { n: Math.round(x.hours) })));
+      list.appendChild(li);
+    });
+  }
+
+  /* --- Feeds --- */
+  function feeds(f) {
+    count("feeds", f.total);
+    var out = document.getElementById("feeds-groups");
+    f.groups.forEach(function (g) {
+      var sec = el("section", "music-section");
+      sec.setAttribute("aria-labelledby", "feeds-" + g.key);
+      var h = el("h2", "music-h2", label(T.groups, g.key) + " ");
+      h.id = "feeds-" + g.key;
+      h.appendChild(el("span", "cat-n", String(g.count)));
+      sec.appendChild(h);
+      sec.appendChild(el("p", "music-sub", (T.groups[g.key] || {}).blurb || ""));
+      var ul = el("ul", "feed-grid");
+      g.feeds.forEach(function (x) {
+        var li = el("li");
+        li.appendChild(D.link(x.url, "feed-link", x.title));
+        ul.appendChild(li);
+      });
+      sec.appendChild(ul);
+      out.appendChild(sec);
+    });
+    document.getElementById("feeds-note").textContent = D.fill(T.feedsNote, { n: f.archived });
+  }
+
+  Promise.all(["subscriptions", "twitch", "steam", "feedly"].map(function (n) { return D.load(n); }))
+    .then(function (all) {
+      var s = all[0], t = all[1], g = all[2], f = all[3];
+      document.getElementById("subs-intro").textContent = D.fill(T.intro, {
+        count: s.total, reach: s.combined_subscribers,
+        twitch: t.following_total + t.past_total, steam: g.library_total, feeds: f.total
+      });
+      youtube(s); twitch(t); steam(g); feeds(f);
+    })
+    .catch(function () { D.fail(document.getElementById("subs-channels"), T.error); });
+
+  /* --- platform tabs --- */
+  /* The controller lives in partials/tabs-script.html; this page only has to
+     stop a playing embed before its panel gets hidden. */
+  document.getElementById("panel-youtube").addEventListener("tabhide", function () { close(open); open = null; });
 })();
 </script>
 {{ partial "tabs-script.html" . }}

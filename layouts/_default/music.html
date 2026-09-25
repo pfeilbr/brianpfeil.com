@@ -1,5 +1,21 @@
 {{ define "main" }}
-{{ $m := hugo.Data.music }}
+{{- /* Drawn in the browser from /data/music.json (data/music.yaml). The
+   template only supplies the page shell and the translated strings; the
+   playlist notes are looked up per note_key, so the key list comes from the
+   data file, but nothing else of it is rendered here. */ -}}
+{{ $notes := dict }}
+{{ range slice hugo.Data.music.mine hugo.Data.music.saved }}{{ range . }}
+  {{ with .note_key }}{{ $notes = merge $notes (dict . (i18n (printf "pl_note_%s" .))) }}{{ end }}
+{{ end }}{{ end }}
+{{ $T := dict
+  "artistsNote" (i18n "music_top_artists_note" (dict "tracks" "{tracks}"))
+  "play" (i18n "music_play" "{title}")
+  "open" (i18n "music_open_in_ytm")
+  "tracks" (i18n "music_tracks" "{n}")
+  "by" (i18n "music_by" "{name}")
+  "error" (i18n "data_load_error")
+  "notes" $notes
+}}
 <article class="music">
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
@@ -7,78 +23,61 @@
   </header>
 
   <div class="prose">{{ .Content }}</div>
+  <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/music.json") | safeHTML }}</p></noscript>
 
   {{/* ---------- Summary: who actually shows up in the playlists ---------- */}}
-  {{ with $m.top_artists }}
-  {{ $max := 1 }}
-  {{ range . }}{{ if gt .count $max }}{{ $max = .count }}{{ end }}{{ end }}
-  <section class="music-section" aria-labelledby="top-artists">
+  <section class="music-section" aria-labelledby="top-artists" id="music-artists" hidden>
     <h2 id="top-artists" class="music-h2">{{ i18n "music_top_artists" }}</h2>
-    <p class="music-sub">{{ i18n "music_top_artists_note" (dict "tracks" $m.tracks_counted) }}</p>
-    <ol class="artist-list">
-      {{ range . }}
-      <li class="artist-row">
-        <a class="artist-name" href="https://music.youtube.com/search?q={{ .name | urlquery }}" target="_blank" rel="noopener">{{ .name }}</a>
-        <span class="artist-bar" aria-hidden="true"><span style="width:{{ div (mul .count 100.0) $max }}%"></span></span>
-        <span class="artist-count">{{ .count }}</span>
-      </li>
-      {{ end }}
-    </ol>
+    <p class="music-sub" id="music-artists-note"></p>
+    <ol class="artist-list" id="music-artist-list"></ol>
   </section>
-  {{ end }}
 
   {{/* ---------- The playlists themselves ----------
      Tabbed the same way as /subscriptions/, so the saved playlists are
-     reachable from the top rather than below all of mine. Both panels render
-     visible and are only hidden by partials/tabs-script.html. */}}
+     reachable from the top rather than below all of mine. */}}
   <div class="ptabs" role="tablist" aria-label="{{ i18n "music_sections" }}">
     <button type="button" class="ptab is-on" role="tab" id="tab-mine"
             aria-controls="panel-mine" aria-selected="true" data-panel="mine">
       {{ partial "icons/chip.html" (dict "id" "i-playlist" "size" "sm") }}
       <span class="ptab-name">{{ i18n "music_my_playlists" }}</span>
-      <span class="ptab-count">{{ len $m.mine }}</span>
+      <span class="ptab-count" data-count="mine"></span>
     </button>
     <button type="button" class="ptab" role="tab" id="tab-saved"
             aria-controls="panel-saved" aria-selected="false" tabindex="-1" data-panel="saved">
       {{ partial "icons/chip.html" (dict "id" "i-bookmark" "size" "sm") }}
       <span class="ptab-name">{{ i18n "music_saved" }}</span>
-      <span class="ptab-count">{{ len $m.saved }}</span>
+      <span class="ptab-count" data-count="saved"></span>
     </button>
   </div>
 
   <div class="ptab-panel" id="panel-mine" role="tabpanel" aria-labelledby="tab-mine">
     <section class="music-section">
       <p class="music-sub music-sub-lead">{{ i18n "music_play_hint" }}</p>
-      <div class="pl-grid">
-        {{ range $i, $p := $m.mine }}
-        {{ partial "playlist-card.html" (dict "p" $p "i" $i) }}
-        {{ end }}
-      </div>
+      <div class="pl-grid" data-list="mine" aria-busy="true"></div>
     </section>
   </div>
 
   <div class="ptab-panel" id="panel-saved" role="tabpanel" aria-labelledby="tab-saved">
     <section class="music-section">
       <p class="music-sub music-sub-lead">{{ i18n "music_saved_note" }}</p>
-      <div class="pl-grid">
-        {{ range $i, $p := $m.saved }}
-        {{ partial "playlist-card.html" (dict "p" $p "i" (add 100 $i)) }}
-        {{ end }}
-      </div>
+      <div class="pl-grid" data-list="saved" aria-busy="true"></div>
     </section>
   </div>
 
   <p class="music-foot">{{ i18n "music_footnote" }}</p>
 </article>
 
+{{ partial "data-render.html" . }}
 <script>
-/* Click-to-load players. The cards ship as static tiles and only swap in a
-   YouTube iframe once someone actually asks to listen, so the page costs
-   nothing until then and no third-party frame loads unbidden.
+/* Playlist cards and the artist chart, built from /data/music.json.
 
-   Only one plays at a time, and switching tabs stops whatever was running --
-   an iframe inside a hidden panel carries on making noise otherwise. */
+   Click-to-load players: the cards are static tiles and only swap in a
+   YouTube iframe once someone asks to listen, so no third-party frame loads
+   unbidden. Only one plays at a time, and switching tabs stops whatever was
+   running -- an iframe inside a hidden panel carries on making noise. */
 (function () {
+  var D = window.DataPage, el = D.el.bind(D);
+  var T = {{ $T | jsonify | safeJS }};
   var open = null;
 
   function close(card) {
@@ -90,32 +89,84 @@
     card.classList.remove("is-playing");
   }
 
-  document.querySelectorAll(".pl-card").forEach(function (card) {
-    var btn = card.querySelector(".pl-play");
-    if (!btn) return;
-    /* Kept so closing can put the original tile back, listener and all. */
-    card.playButton = btn;
-    btn.addEventListener("click", function () {
-      close(open);
-      var frame = document.createElement("iframe");
-      frame.src = "https://www.youtube.com/embed/videoseries?list=" +
-        encodeURIComponent(card.dataset.list) + "&autoplay=1";
-      frame.title = card.dataset.title || "playlist";
-      frame.loading = "lazy";
-      frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-      frame.referrerPolicy = "strict-origin-when-cross-origin";
-      frame.allowFullscreen = true;
-      var slot = card.querySelector(".pl-media");
-      slot.innerHTML = "";
-      slot.appendChild(frame);
-      card.classList.add("is-playing");
-      /* The button that was just activated no longer exists, so focus would
-         fall back to <body> and a keyboard user would restart from the top of
-         the page. Move it onto the slot that replaced it. */
-      slot.tabIndex = -1;
-      slot.focus({ preventScroll: true });
-      open = card;
+  function play(card) {
+    close(open);
+    var frame = document.createElement("iframe");
+    frame.src = "https://www.youtube.com/embed/videoseries?list=" +
+      encodeURIComponent(card.dataset.list) + "&autoplay=1";
+    frame.title = card.dataset.title || "playlist";
+    frame.loading = "lazy";
+    frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    frame.allowFullscreen = true;
+    var slot = card.querySelector(".pl-media");
+    slot.innerHTML = "";
+    slot.appendChild(frame);
+    card.classList.add("is-playing");
+    /* The button that was just activated no longer exists, so focus would
+       fall back to <body>. Move it onto the slot that replaced it. */
+    slot.tabIndex = -1;
+    slot.focus({ preventScroll: true });
+    open = card;
+  }
+
+  function card(p, i) {
+    var c = el("div", "pl-card");
+    c.dataset.list = p.id;
+    c.dataset.title = p.title;
+    var media = el("div", "pl-media");
+    media.dataset.hue = String(i % 12);
+    var btn = el("button", "pl-play");
+    btn.type = "button";
+    btn.setAttribute("aria-label", D.fill(T.play, { title: p.title }));
+    btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>';
+    btn.addEventListener("click", function () { play(c); });
+    c.playButton = btn;
+    media.appendChild(btn);
+    c.appendChild(media);
+
+    var body = el("div", "pl-body");
+    body.appendChild(el("h3", "pl-title", p.title));
+    body.appendChild(el("p", "pl-meta",
+      (p.by ? D.fill(T.by, { name: p.by }) + " · " : "") + D.fill(T.tracks, { n: p.tracks })));
+    if (p.note_key && T.notes[p.note_key]) body.appendChild(el("p", "pl-note", T.notes[p.note_key]));
+    body.appendChild(D.link("https://music.youtube.com/playlist?list=" + encodeURIComponent(p.id),
+      "pl-link", T.open + " →"));
+    c.appendChild(body);
+    return c;
+  }
+
+  function artists(m) {
+    if (!m.top_artists || !m.top_artists.length) return;
+    var max = Math.max.apply(null, m.top_artists.map(function (a) { return a.count; }).concat(1));
+    var list = document.getElementById("music-artist-list");
+    m.top_artists.forEach(function (a) {
+      var li = el("li", "artist-row");
+      li.appendChild(D.link("https://music.youtube.com/search?q=" + encodeURIComponent(a.name), "artist-name", a.name));
+      var bar = el("span", "artist-bar");
+      bar.setAttribute("aria-hidden", "true");
+      var fillBar = el("span");
+      fillBar.style.width = (a.count * 100 / max) + "%";
+      bar.appendChild(fillBar);
+      li.appendChild(bar);
+      li.appendChild(el("span", "artist-count", String(a.count)));
+      list.appendChild(li);
     });
+    document.getElementById("music-artists-note").textContent = D.fill(T.artistsNote, { tracks: m.tracks_counted });
+    document.getElementById("music-artists").hidden = false;
+  }
+
+  D.load("music").then(function (m) {
+    artists(m);
+    [["mine", 0], ["saved", 100]].forEach(function (pair) {
+      var lists = m[pair[0]] || [];
+      var grid = document.querySelector('.pl-grid[data-list="' + pair[0] + '"]');
+      lists.forEach(function (p, i) { grid.appendChild(card(p, pair[1] + i)); });
+      grid.setAttribute("aria-busy", "false");
+      document.querySelector('[data-count="' + pair[0] + '"]').textContent = lists.length;
+    });
+  }).catch(function () {
+    document.querySelectorAll(".pl-grid").forEach(function (g) { D.fail(g, T.error); });
   });
 
   /* Fired by partials/tabs-script.html just before a panel is hidden. */

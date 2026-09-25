@@ -1,0 +1,41 @@
+{{- /* Shared helpers for pages drawn in the browser from /data/<name>.json
+   (published by partials/publish-data.html). Emitted once per page, before
+   the page's own script.
+
+   Translated strings reach the script with their placeholders still in
+   them -- a layout calls i18n with "{n}" as the argument and fill() swaps
+   the real value in -- so word order stays the translator's. Everything
+   from the data is set as text, never parsed as markup. */ -}}
+<script>
+window.DataPage = window.DataPage || {
+  el: function (tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  },
+  link: function (href, cls, text) {
+    var a = this.el("a", cls, text);
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener";
+    return a;
+  },
+  fill: function (s, vals) {
+    return String(s).replace(/\{(\w+)\}/g, function (m, k) { return k in vals ? vals[k] : m; });
+  },
+  /* Resolves to the parsed JSON, or rejects on a network error or non-200. */
+  load: function (name) {
+    return fetch("/data/" + name + ".json").then(function (r) {
+      if (!r.ok) throw new Error(name + ".json: " + r.status);
+      return r.json();
+    });
+  },
+  /* A load failure replaces the page's content area with a one-line note. */
+  fail: function (container, message) {
+    container.setAttribute("aria-busy", "false");
+    container.textContent = "";
+    container.appendChild(this.el("p", "data-error", message));
+  }
+};
+</script>

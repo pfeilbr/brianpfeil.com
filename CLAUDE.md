@@ -56,7 +56,8 @@ Download it within four days of Meta's email; it needs B's password.
 
 `make verify` runs every test suite (Go post generator, Python media tool,
 link checker), a render check that builds `/media/` from a fixture and with
-no data and asserts on the HTML in all nine languages, and a
+no data and asserts on `/data/media.json` and the page shell in all nine
+languages, and a
 warning-surfacing Hugo build. The Tests workflow runs the same on every push
 and PR, plus `terraform fmt` and `validate` on both stacks.
 
@@ -142,12 +143,21 @@ touching a template:
 | `/media/` | `data/media.yaml` (generated) | `layouts/_default/media.html` |
 | `/movies/` | `data/movies.json` (`make movies-refresh`) | `layouts/_default/movies.html` |
 
-- **Every `data/` file is also served as `/data/<name>.json`**
-  (`partials/publish-data.html`). `/movies/` is drawn by its own script from
-  that JSON rather than by Hugo; to add a movie, append `{"title", "imdb"}` to
-  `data/movies.json` and run `make movies-refresh`. Synopses, titles and
-  genres come back in all nine languages from JustWatch, so they are data,
-  not i18n.
+- **Every data-driven page is drawn in the browser from `/data/<name>.json`.**
+  `partials/publish-data.html` publishes each `data/` file there (media gets
+  the whitelisted payload from `partials/media-payload.html`, never the raw
+  YAML — add a field there deliberately or it does not ship). The layouts
+  supply only the shell and translated strings, passed to the script with
+  their placeholders intact (`i18n "x" "{n}"`) and filled by
+  `DataPage.fill` from `partials/data-render.html`. Keyed editorial strings
+  (`cat_label_*`, `pl_note_*`, …) are still i18n, looked up per key in the
+  layout. With JavaScript off these pages show a `<noscript>` link to their
+  JSON instead of content — that was B's call.
+- **/movies/:** append `{"title", "year"}` (or `"imdb"`) to
+  `data/movies.json` and run `make movies-refresh`; check the new title in its
+  output, since a year match can pick a same-year namesake. Synopses, titles
+  and genres come back in all nine languages from JustWatch, so they are
+  data, not i18n. Set `"mpa"` on an entry to override a wrong rating.
 - **Nine nav links.** `.nav-row` is now `56rem` and the full row appears
   from 900px, because Spanish needs ~873px. A tenth link means re-measuring.
 
@@ -172,7 +182,7 @@ touching a template:
   language category. Chips are decorative and `aria-hidden`.
 - **Tabs** — `layouts/partials/tabs-script.html` drives any page with `.ptab`
   buttons (`data-panel="x"`) and matching `#panel-x` elements. Panels render
-  **visible** and are only hidden by that script, so the page still works with
-  JavaScript off. It fires `tabhide` on a panel before hiding it; pages listen
+  **visible** and are only hidden by that script; their contents are filled
+  from JSON by the page's own script. It fires `tabhide` on a panel before hiding it; pages listen
   for that to tear down playing embeds, because a hidden iframe keeps playing
   audio. Emit the partial *after* the page's own script so listeners exist first.

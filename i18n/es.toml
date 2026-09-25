@@ -508,3 +508,10 @@ other = "No se pudo cargar la lista de películas. Prueba a recargar la página.
 [movies_noscript]
 other = "Esta página se dibuja con JavaScript. La lista está en <a href=\"/data/movies.json\">movies.json</a>."
 
+
+# Pages drawn in the browser from /data/*.json (partials/data-render.html).
+[data_load_error]
+other = "No se pudieron cargar los datos de esta página. Prueba a recargarla."
+
+[data_noscript]
+other = "Esta página se dibuja con JavaScript. Sus datos están en <a href=\"{{ .url }}\">{{ .url }}</a>."

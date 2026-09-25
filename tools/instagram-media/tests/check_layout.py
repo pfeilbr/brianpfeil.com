@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
-"""Check the rendered /media/ page against tests/fixtures/media.yaml.
+"""Check the built /media/ page and its data against tests/fixtures/media.yaml.
 
-Hugo templates have no unit tests, so this reads what Hugo actually produced.
+/media/ is drawn in the browser from /data/media.json, the whitelisted payload
+that partials/media-payload.html builds from data/media.yaml. So this checks
+two things Hugo produced: the JSON (every field the viewer needs, and nothing
+it must never have -- coordinates, a colour that isn't hex), and the page
+shell in all nine languages (the viewer's translated strings, the empty
+state, and no inline copy of the data).
+
 It exists because the layout has already failed silently once: without
 safeJS the lightbox's JSON payload rendered as a quoted string, the page
 looked fine, and nothing opened.
@@ -27,45 +33,38 @@ FIXTURE_ITEMS = 3
 FIXTURE_MEDIA = 4  # the album has two
 FIXTURE_BASE = "https://cdn.example.test/"
 
+VIEWER_STRINGS = ("data-instagram", "data-likes", "data-with", "data-location", "data-music",
+                  "data-archived", "data-reshare-other", "data-reshare-own", "data-count",
+                  "data-untitled", "data-open", "data-error")
+
 
 class MediaPage(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.tiles: list[dict] = []
-        self.empty = False
-        self.payload: str | None = None
-        self._in_payload = False
-        self._in_empty = False
+        self.tiles = 0
+        self.empty_state = False
+        self.inline_payload = False
+        self.strings: dict[str, str] = {}
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         classes = (a.get("class") or "").split()
         if "media-tile" in classes:
-            self.tiles.append({"tag": tag, **a})
+            self.tiles += 1
         if tag == "p" and "media-empty" in classes:
-            self._in_empty = True
+            self.empty_state = True
         if tag == "script" and a.get("id") == "media-data":
-            self._in_payload = True
-            self.payload = ""
-
-    def handle_endtag(self, tag):
-        if tag == "script":
-            self._in_payload = False
-        if tag == "p":
-            self._in_empty = False
-
-    def handle_data(self, data):
-        if self._in_payload:
-            self.payload += data
-        if self._in_empty and data.strip():
-            self.empty = True
+            self.inline_payload = True
+        if "media-strings" in classes:
+            self.strings = {k: v or "" for k, v in a.items() if k.startswith("data-")}
 
 
 def page_for(public: Path, lang: str) -> Path:
     return public / lang / "media" / "index.html" if lang else public / "media" / "index.html"
 
 
-def check_populated(public: Path) -> list[str]:
+def check_shell(public: Path) -> list[str]:
+    """What every language's page must carry, with or without data."""
     errors = []
     for lang in LANGS:
         path = page_for(public, lang)
@@ -73,137 +72,113 @@ def check_populated(public: Path) -> list[str]:
         if not path.exists():
             errors.append(f"{label}: not built")
             continue
-
         html = path.read_text(encoding="utf-8")
         page = MediaPage()
         page.feed(html)
-
-        if len(page.tiles) != FIXTURE_ITEMS:
-            errors.append(f"{label}: {len(page.tiles)} tiles, expected {FIXTURE_ITEMS}")
-        for tile in page.tiles:
-            # Links, not buttons, so the grid works with JavaScript off.
-            if tile["tag"] != "a" or not (tile.get("href") or "").startswith(FIXTURE_BASE):
-                errors.append(f"{label}: tile is not a link to the CDN: {tile}")
-                break
-
-        data = None
-        if page.payload is None:
-            errors.append(f"{label}: no #media-data payload")
-        else:
-            try:
-                data = json.loads(page.payload)
-            except json.JSONDecodeError as exc:
-                errors.append(f"{label}: payload is not JSON: {exc}")
-                data = None
-            # The safeJS regression: valid JSON, but a string, not an object.
-            if data is not None and not isinstance(data, dict):
-                errors.append(f"{label}: payload decoded to {type(data).__name__}, expected object"
-                              " (missing safeJS?)")
-            elif isinstance(data, dict):
-                posts, media = data.get("posts") or [], data.get("media") or []
-                if data.get("base") != FIXTURE_BASE:
-                    errors.append(f"{label}: payload base is {data.get('base')!r}")
-                if len(posts) != FIXTURE_ITEMS:
-                    errors.append(f"{label}: payload has {len(posts)} posts, expected {FIXTURE_ITEMS}")
-                if len(media) != FIXTURE_MEDIA:
-                    errors.append(f"{label}: payload has {len(media)} media, expected {FIXTURE_MEDIA}")
-                # Every media row must point at a real post and carry both kinds right.
-                for row in media:
-                    if not (isinstance(row, dict) and 0 <= row.get("i", -1) < len(posts)
-                            and row.get("k") in ("p", "v") and row.get("s") and row.get("t")):
-                        errors.append(f"{label}: bad media row {row!r}")
-                        break
-                if any("://" in str(row.get(k, "")) for row in media for k in ("s", "t", "p")):
-                    errors.append(f"{label}: media rows repeat the CDN address")
-                if sum(1 for row in media if row.get("k") == "v" and not row.get("p")):
-                    errors.append(f"{label}: a video row has no poster")
-                # Post details: carried for the post that has them...
-                album = next((p for p in posts if p.get("id") == "20230101-bbbb2222"), {})
-                want = {"url": "https://www.instagram.com/p/bbbb2222/", "loc": "Somewhere Nice",
-                        "locId": "12345", "likes": 12, "comments": 3, "tagged": ["friend", "other"]}
-                for key, value in want.items():
-                    if album.get(key) != value:
-                        errors.append(f"{label}: post detail {key} is {album.get(key)!r}, want {value!r}")
-                # ...but never coordinates, even if the data file had them.
-                if any(k in p for p in posts for k in ("lat", "lng")) or "39.9488" in html:
-                    errors.append(f"{label}: coordinates reached the page")
-                # And strings the viewer needs for them are present and translated.
-                for attr in ("data-instagram", "data-likes", "data-with", "data-location"):
-                    if attr not in html:
-                        errors.append(f"{label}: missing viewer string {attr}")
-
-        # The hostile caption must not survive as markup anywhere on the page:
-        # jsonify escapes "<" as a unicode escape in the payload, and the
-        # aria-label is entity-escaped, so the raw tag should appear nowhere.
-        if "</script><img" in html:
-            errors.append(f"{label}: hostile caption rendered unescaped")
-
-        # Grid tiles: the item with them gets a srcset and its colour; the
-        # one without falls back to the thumbnail; a malformed colour is
-        # never written into a style attribute.
-        if "v-g360.webp 360w" not in html or "v-g720.webp 720w" not in html:
-            errors.append(f"{label}: grid tile srcset missing")
-        if "background-color:#1a2b3c" not in html:
-            errors.append(f"{label}: tile colour missing")
-        if "evil.example" in html:
-            errors.append(f"{label}: a malformed colour reached a style attribute")
-        # The fixture's video had no sound and was given a track: the viewer
-        # has to be able to say so.
-        if isinstance(data, dict) and not any(r.get("m") == "Sunlit" for r in data.get("media") or []):
-            errors.append(f"{label}: added music not carried in the payload")
-        if "data-music=" not in html:
-            errors.append(f"{label}: missing viewer string data-music")
-        # The fixture's third item is a story: ringed tile, flagged in the payload.
-        if "media-tile media-tile-story" not in html.replace('"', ""):
-            errors.append(f"{label}: story tile has no ring class")
-        if isinstance(data, dict) and not any(p.get("story") for p in data.get("posts") or []):
-            errors.append(f"{label}: story not flagged in the payload")
-        # The story reshared someone else's post: carried in the payload, and
-        # the viewer has both reshare labels.
-        if isinstance(data, dict) and not any(p.get("reshare") == "other_post" for p in data.get("posts") or []):
-            errors.append(f"{label}: reshare not carried in the payload")
-        for key in ("data-reshare-other=", "data-reshare-own="):
-            if key not in html:
-                errors.append(f"{label}: missing viewer string {key}")
+        if page.tiles:
+            errors.append(f"{label}: {page.tiles} tiles in the HTML; they are drawn from the JSON")
+        if page.inline_payload:
+            errors.append(f"{label}: an inline #media-data payload; the page reads /data/media.json")
+        if "/data/media.json" not in html:
+            errors.append(f"{label}: does not load /data/media.json")
+        # The empty state is in the shell, shown when there is nothing to draw.
+        if not page.empty_state:
+            errors.append(f"{label}: no empty-state message")
+        for attr in VIEWER_STRINGS:
+            if not page.strings.get(attr):
+                errors.append(f"{label}: missing viewer string {attr}")
         if lang and ("Reshared post" in html or "Reshared reel" in html):
             errors.append(f"{label}: a reshare label fell back to English")
-        # The fixture's album was archived off the profile: flagged in the
-        # payload, and the viewer has a (translated) label for it.
-        if isinstance(data, dict) and not any(p.get("archived") for p in data.get("posts") or []):
-            errors.append(f"{label}: archived post not flagged in the payload")
-        if "data-archived=" not in html:
-            errors.append(f"{label}: missing viewer string data-archived")
-        elif lang and "Archived post" in html:
+        if lang and "Archived post" in html:
             errors.append(f"{label}: data-archived fell back to English")
-        # A year row linking to every year's heading (the fixture spans three).
-        for year in ("2024", "2023", "2022"):
-            if f"href=#year-{year}" not in html.replace('"', ""):
-                errors.append(f"{label}: no jump link to {year}")
-        # The 2-second video in the fixture shows its length on the tile.
-        if "0:02</span>" not in html:
-            errors.append(f"{label}: video tile has no duration badge")
-        if "c/1-t.jpg" not in html:
-            errors.append(f"{label}: tile without grid images didn't fall back to the thumbnail")
-
-        if page.empty:
-            errors.append(f"{label}: shows the empty state despite having items")
+        if lang and page.strings.get("data-count", "").endswith(" posts"):
+            errors.append(f"{label}: data-count fell back to English")
     return errors
 
 
-def check_empty(public: Path) -> list[str]:
+def check_payload(public: Path) -> list[str]:
     errors = []
-    for lang in LANGS:
-        path = page_for(public, lang)
-        label = f"/{lang}/media/" if lang else "/media/"
-        if not path.exists():
-            errors.append(f"{label}: not built")
-            continue
-        page = MediaPage()
-        page.feed(path.read_text(encoding="utf-8"))
-        if not page.empty:
-            errors.append(f"{label}: no empty-state message")
-        if page.tiles or page.payload is not None:
-            errors.append(f"{label}: renders tiles or a payload with no data")
+    path = public / "data" / "media.json"
+    if not path.exists():
+        return ["/data/media.json: not published"]
+    text = path.read_text(encoding="utf-8")
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError as exc:
+        return [f"/data/media.json: not JSON: {exc}"]
+    if not isinstance(data, dict):
+        return [f"/data/media.json: decoded to {type(data).__name__}, expected object"]
+
+    posts, media = data.get("posts") or [], data.get("media") or []
+    if data.get("base") != FIXTURE_BASE:
+        errors.append(f"payload base is {data.get('base')!r}")
+    if len(posts) != FIXTURE_ITEMS:
+        errors.append(f"payload has {len(posts)} posts, expected {FIXTURE_ITEMS}")
+    if len(media) != FIXTURE_MEDIA:
+        errors.append(f"payload has {len(media)} media, expected {FIXTURE_MEDIA}")
+    # Every media row must point at a real post and carry both kinds right.
+    for row in media:
+        if not (isinstance(row, dict) and 0 <= row.get("i", -1) < len(posts)
+                and row.get("k") in ("p", "v") and row.get("s") and row.get("t")):
+            errors.append(f"bad media row {row!r}")
+            break
+    if any("://" in str(row.get(k, "")) for row in media for k in ("s", "t", "p")):
+        errors.append("media rows repeat the CDN address")
+    if sum(1 for row in media if row.get("k") == "v" and not row.get("p")):
+        errors.append("a video row has no poster")
+    # The grid needs a year and kind per post.
+    for p in posts:
+        if not p.get("year") or p.get("kind") not in ("photo", "video", "album"):
+            errors.append(f"post {p.get('id')} has no year or kind")
+            break
+    # Post details: carried for the post that has them...
+    album = next((p for p in posts if p.get("id") == "20230101-bbbb2222"), {})
+    want = {"url": "https://www.instagram.com/p/bbbb2222/", "loc": "Somewhere Nice",
+            "locId": "12345", "likes": 12, "comments": 3, "tagged": ["friend", "other"]}
+    for key, value in want.items():
+        if album.get(key) != value:
+            errors.append(f"post detail {key} is {album.get(key)!r}, want {value!r}")
+    # ...but never coordinates, even though the data file has them.
+    if any(k in p for p in posts for k in ("lat", "lng")) or "39.9488" in text:
+        errors.append("coordinates reached /data/media.json")
+    # Grid tiles: the video has both sizes, its colour and its length; the
+    # malformed colour is dropped rather than passed to the page.
+    video = next((r for r in media if r.get("k") == "v"), {})
+    if video.get("g") != ["instagram/a/v-g360.webp", "instagram/a/v-g720.webp"]:
+        errors.append(f"grid tiles missing: {video.get('g')!r}")
+    if video.get("c") != "#1a2b3c":
+        errors.append(f"tile colour is {video.get('c')!r}")
+    if video.get("d") != 2:
+        errors.append(f"video length is {video.get('d')!r}, want 2")
+    if "evil.example" in text:
+        errors.append("a malformed colour reached the payload")
+    # The fixture's video had no sound and was given a track.
+    if video.get("m") != "Sunlit":
+        errors.append("added music not carried in the payload")
+    # The hostile caption is data: jsonify escapes "<", so the raw tag
+    # appears nowhere, and the page sets captions as text.
+    if "</script><img" in text:
+        errors.append("hostile caption stored unescaped")
+    if not any("<img src=x" in (p.get("caption") or "") for p in posts):
+        errors.append("hostile caption was altered rather than kept as text")
+    if not any(p.get("story") for p in posts):
+        errors.append("story not flagged in the payload")
+    if not any(p.get("reshare") == "other_post" for p in posts):
+        errors.append("reshare not carried in the payload")
+    if not any(p.get("archived") for p in posts):
+        errors.append("archived post not flagged in the payload")
+    return errors
+
+
+def check_populated(public: Path) -> list[str]:
+    return check_shell(public) + check_payload(public)
+
+
+def check_empty(public: Path) -> list[str]:
+    errors = check_shell(public)
+    path = public / "data" / "media.json"
+    if path.exists() and (json.loads(path.read_text(encoding="utf-8")).get("posts") or []):
+        errors.append("/data/media.json has posts with no data file")
     return errors
 
 

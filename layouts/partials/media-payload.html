@@ -1,0 +1,44 @@
+{{- /* The /media/ page's data, as published at /data/media.json. Not the raw
+   data/media.yaml: fields are copied one by one, so nothing the generator
+   ever adds (coordinates, say) reaches the site without being listed here.
+
+   Two lists: one entry per post, and one compact row per photo or video
+   pointing back at its post by index -- {i: post, k: "p"|"v", s: src,
+   t: thumb, p: poster, w, h, g: [360w, 720w] grid tiles, c: colour,
+   d: seconds, m: added music}. A caption is stored once rather than once
+   per photo in an album, and the CDN address once rather than per file. */ -}}
+{{- $m := hugo.Data.media -}}
+{{- $posts := slice -}}
+{{- $media := slice -}}
+{{- range $idx, $it := $m.items -}}
+  {{- $post := dict "id" $it.id "date" $it.date "year" $it.year "kind" $it.kind "caption" $it.caption -}}
+  {{- /* What Instagram shows beside the post, when the source had it. Zero
+     counts are left out, as Instagram leaves out "0 likes". */ -}}
+  {{- with $it.permalink }}{{ $post = merge $post (dict "url" .) }}{{ end -}}
+  {{- with $it.location }}{{ $post = merge $post (dict "loc" .name "locId" (index . "id")) }}{{ end -}}
+  {{- with $it.likes }}{{ $post = merge $post (dict "likes" .) }}{{ end -}}
+  {{- with $it.comments }}{{ $post = merge $post (dict "comments" .) }}{{ end -}}
+  {{- with $it.counted }}{{ $post = merge $post (dict "counted" .) }}{{ end -}}
+  {{- with $it.tagged }}{{ $post = merge $post (dict "tagged" .) }}{{ end -}}
+  {{- with $it.audio }}{{ $post = merge $post (dict "audio" .) }}{{ end -}}
+  {{- with $it.story }}{{ $post = merge $post (dict "story" true) }}{{ end -}}
+  {{- /* Taken off the Instagram grid with "Archive"; only here now. */ -}}
+  {{- with $it.archived }}{{ $post = merge $post (dict "archived" true) }}{{ end -}}
+  {{- /* A story that reshared a post: "other_post" or "own_reel". */ -}}
+  {{- with $it.reshare }}{{ $post = merge $post (dict "reshare" .) }}{{ end -}}
+  {{- $posts = $posts | append $post -}}
+  {{- range $it.media -}}
+    {{- /* An object, not an array: Hugo's append won't nest a list in a list
+       that starts empty. */ -}}
+    {{- $row := dict "i" $idx "k" (cond (eq .kind "video") "v" "p")
+          "s" .src "t" .thumb "p" (default "" (index . "poster")) "w" .w "h" .h -}}
+    {{- with index . "grid" }}{{ $row = merge $row (dict "g" .) }}{{ end -}}
+    {{- /* Only a plain hex colour: the page writes it into a style. */ -}}
+    {{- with index . "color" }}{{ if findRE `^#[0-9a-f]{6}$` . }}{{ $row = merge $row (dict "c" .) }}{{ end }}{{ end -}}
+    {{- with index . "duration" }}{{ $row = merge $row (dict "d" (int (math.Round .))) }}{{ end -}}
+    {{- /* m: the track added to a clip that had no sound of its own. */ -}}
+    {{- with index . "music" }}{{ $row = merge $row (dict "m" .) }}{{ end -}}
+    {{- $media = $media | append $row -}}
+  {{- end -}}
+{{- end -}}
+{{- return (dict "base" $m.base_url "posts" $posts "media" $media) -}}
