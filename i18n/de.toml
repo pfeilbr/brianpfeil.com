@@ -429,3 +429,84 @@ other = "Geteilter Beitrag"
 
 [media_reshare_own]
 other = "Geteiltes Reel"
+
+# Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
+# by the page script, not by Hugo.
+[movies_intro]
+other = "Die Filme, die ich mir immer wieder ansehe, in keiner bestimmten Reihenfolge. Jeder Titel führt zu IMDb; die Wertungen stammen von Rotten Tomatoes, die Dienste zeigen, wo es den Film heute in den USA gibt."
+
+[movies_sort_label]
+other = "Sortieren"
+
+[movies_sort_mine]
+other = "Meine Reihenfolge"
+
+[movies_sort_rt]
+other = "Tomatometer"
+
+[movies_sort_year]
+other = "Jahr"
+
+[movies_sort_title]
+other = "Titel"
+
+[movies_filter_streaming]
+other = "Jetzt im Stream"
+
+[movies_minutes]
+other = "{n} Min."
+
+[movies_directed_by]
+other = "Regie: {names}"
+
+[movies_starring]
+other = "Mit {names}"
+
+[movies_trailer]
+other = "Trailer"
+
+[movies_close_trailer]
+other = "Trailer schließen"
+
+[movies_where_to_watch]
+other = "Wo ansehen (USA)"
+
+[movies_offer_free]
+other = "Kostenlos"
+
+[movies_offer_stream]
+other = "Abo"
+
+[movies_offer_rent]
+other = "Leihen"
+
+[movies_offer_buy]
+other = "Kaufen"
+
+[movies_all_options]
+other = "Alle Angebote bei JustWatch"
+
+[movies_not_streaming]
+other = "Derzeit in den USA nicht im Stream."
+
+[movies_tomatometer]
+other = "Tomatometer"
+
+[movies_popcornmeter]
+other = "Popcornmeter"
+
+[movies_certified_fresh]
+other = "Certified Fresh"
+
+[movies_original_title]
+other = "Originaltitel: {title}"
+
+[movies_footnote]
+other = "Wertungen von Rotten Tomatoes und IMDb, US-Verfügbarkeit von JustWatch, Stand {date}. Die Daten hinter dieser Seite:"
+
+[movies_load_error]
+other = "Die Filmliste konnte nicht geladen werden. Bitte die Seite neu laden."
+
+[movies_noscript]
+other = "Diese Seite wird mit JavaScript gezeichnet. Die Liste liegt unter <a href=\"/data/movies.json\">movies.json</a>."
+

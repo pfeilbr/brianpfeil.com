@@ -427,3 +427,84 @@ other = "공유한 게시물"
 
 [media_reshare_own]
 other = "공유한 릴스"
+
+# Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
+# by the page script, not by Hugo.
+[movies_intro]
+other = "몇 번이고 다시 보게 되는 영화들입니다(순서 무관). 제목은 IMDb로 연결되고, 점수는 로튼 토마토, 서비스는 현재 미국에서 볼 수 있는 곳입니다."
+
+[movies_sort_label]
+other = "정렬"
+
+[movies_sort_mine]
+other = "내 순서"
+
+[movies_sort_rt]
+other = "토마토미터"
+
+[movies_sort_year]
+other = "연도"
+
+[movies_sort_title]
+other = "제목"
+
+[movies_filter_streaming]
+other = "지금 스트리밍 중"
+
+[movies_minutes]
+other = "{n}분"
+
+[movies_directed_by]
+other = "감독: {names}"
+
+[movies_starring]
+other = "출연: {names}"
+
+[movies_trailer]
+other = "예고편"
+
+[movies_close_trailer]
+other = "예고편 닫기"
+
+[movies_where_to_watch]
+other = "볼 수 있는 곳(미국)"
+
+[movies_offer_free]
+other = "무료"
+
+[movies_offer_stream]
+other = "구독"
+
+[movies_offer_rent]
+other = "대여"
+
+[movies_offer_buy]
+other = "구매"
+
+[movies_all_options]
+other = "JustWatch에서 모두 보기"
+
+[movies_not_streaming]
+other = "현재 미국에서 스트리밍되지 않습니다."
+
+[movies_tomatometer]
+other = "토마토미터"
+
+[movies_popcornmeter]
+other = "팝콘미터"
+
+[movies_certified_fresh]
+other = "Certified Fresh"
+
+[movies_original_title]
+other = "원제: {title}"
+
+[movies_footnote]
+other = "점수는 로튼 토마토와 IMDb, 미국 시청 정보는 JustWatch 기준({date}). 이 페이지의 데이터:"
+
+[movies_load_error]
+other = "영화 목록을 불러오지 못했습니다. 페이지를 새로 고침해 주세요."
+
+[movies_noscript]
+other = "이 페이지는 JavaScript로 그려집니다. 목록 데이터는 <a href=\"/data/movies.json\">movies.json</a>에 있습니다."
+

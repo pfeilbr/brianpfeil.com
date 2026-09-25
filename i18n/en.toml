@@ -427,3 +427,84 @@ other = "Reshared post"
 
 [media_reshare_own]
 other = "Reshared reel"
+
+# Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
+# by the page script, not by Hugo.
+[movies_intro]
+other = "The movies I come back to, in no particular order. Every title links to IMDb; scores come from Rotten Tomatoes, and the services are where each one streams in the US today."
+
+[movies_sort_label]
+other = "Sort"
+
+[movies_sort_mine]
+other = "My order"
+
+[movies_sort_rt]
+other = "Tomatometer"
+
+[movies_sort_year]
+other = "Year"
+
+[movies_sort_title]
+other = "Title"
+
+[movies_filter_streaming]
+other = "Streaming now"
+
+[movies_minutes]
+other = "{n} min"
+
+[movies_directed_by]
+other = "Directed by {names}"
+
+[movies_starring]
+other = "Starring {names}"
+
+[movies_trailer]
+other = "Trailer"
+
+[movies_close_trailer]
+other = "Close trailer"
+
+[movies_where_to_watch]
+other = "Where to watch (US)"
+
+[movies_offer_free]
+other = "Free"
+
+[movies_offer_stream]
+other = "Stream"
+
+[movies_offer_rent]
+other = "Rent"
+
+[movies_offer_buy]
+other = "Buy"
+
+[movies_all_options]
+other = "All options on JustWatch"
+
+[movies_not_streaming]
+other = "Not streaming in the US right now."
+
+[movies_tomatometer]
+other = "Tomatometer"
+
+[movies_popcornmeter]
+other = "Popcornmeter"
+
+[movies_certified_fresh]
+other = "Certified Fresh"
+
+[movies_original_title]
+other = "Original title: {title}"
+
+[movies_footnote]
+other = "Scores from Rotten Tomatoes and IMDb, US availability from JustWatch, as of {date}. The data behind this page:"
+
+[movies_load_error]
+other = "The movie list could not be loaded. Try reloading the page."
+
+[movies_noscript]
+other = "This page is drawn with JavaScript. The list itself is at <a href=\"/data/movies.json\">movies.json</a>."
+

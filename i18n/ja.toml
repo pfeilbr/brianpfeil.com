@@ -427,3 +427,84 @@ other = "シェアした投稿"
 
 [media_reshare_own]
 other = "シェアしたリール"
+
+# Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
+# by the page script, not by Hugo.
+[movies_intro]
+other = "何度も見返してしまう映画たち（順不同）。タイトルは IMDb へのリンク、スコアは Rotten Tomatoes、サービスは現在アメリカで視聴できるところです。"
+
+[movies_sort_label]
+other = "並べ替え"
+
+[movies_sort_mine]
+other = "私の順番"
+
+[movies_sort_rt]
+other = "トマトメーター"
+
+[movies_sort_year]
+other = "公開年"
+
+[movies_sort_title]
+other = "タイトル"
+
+[movies_filter_streaming]
+other = "配信中のみ"
+
+[movies_minutes]
+other = "{n} 分"
+
+[movies_directed_by]
+other = "監督：{names}"
+
+[movies_starring]
+other = "出演：{names}"
+
+[movies_trailer]
+other = "予告編"
+
+[movies_close_trailer]
+other = "予告編を閉じる"
+
+[movies_where_to_watch]
+other = "視聴できるサービス（米国）"
+
+[movies_offer_free]
+other = "無料"
+
+[movies_offer_stream]
+other = "見放題"
+
+[movies_offer_rent]
+other = "レンタル"
+
+[movies_offer_buy]
+other = "購入"
+
+[movies_all_options]
+other = "JustWatch ですべて見る"
+
+[movies_not_streaming]
+other = "現在、米国では配信されていません。"
+
+[movies_tomatometer]
+other = "トマトメーター"
+
+[movies_popcornmeter]
+other = "ポップコーンメーター"
+
+[movies_certified_fresh]
+other = "Certified Fresh"
+
+[movies_original_title]
+other = "原題：{title}"
+
+[movies_footnote]
+other = "スコアは Rotten Tomatoes と IMDb、米国での配信状況は JustWatch より（{date} 時点）。このページのデータ："
+
+[movies_load_error]
+other = "映画リストを読み込めませんでした。ページを再読み込みしてください。"
+
+[movies_noscript]
+other = "このページは JavaScript で表示しています。リストのデータは <a href=\"/data/movies.json\">movies.json</a> にあります。"
+

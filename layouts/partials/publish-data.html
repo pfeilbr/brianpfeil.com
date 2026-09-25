@@ -1,0 +1,9 @@
+{{- /* Every file in data/ is also published as /data/<name>.json, so each
+   section's data can be fetched as-is -- /movies/ renders from its copy.
+   Hugo reads YAML and JSON alike, so this covers both. Called once, from the
+   English home page; resources publish to the site root either way. */ -}}
+{{- range $name, $d := hugo.Data -}}
+  {{- with resources.FromString (printf "data/%s.json" $name) (jsonify $d) -}}
+    {{- .Publish -}}
+  {{- end -}}
+{{- end -}}
