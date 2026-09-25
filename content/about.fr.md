@@ -8,7 +8,7 @@ title = "À propos"
 layout = "page"
 +++
 
-<img class="about-photo" src="/images/2026-08-20-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
+<img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
 
 Bonjour, je suis Brian Pfeil. La technologie et la fabrication d'objets me passionnent. Ce blog personnel est l'endroit où j'écris à ce sujet, et sur le reste de ce qui m'intéresse.
