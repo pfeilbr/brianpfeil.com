@@ -517,3 +517,86 @@ other = "Impossible de charger les données de cette page. Essayez de la recharg
 
 [data_noscript]
 other = "Cette page est affichée avec JavaScript. Ses données se trouvent dans <a href=\"{{ .url }}\">{{ .url }}</a>."
+
+# Home page table of contents (layouts/index.html, data/home.yaml)
+[hub_bio]
+other = "Je construis des choses avec la technologie et j'écris sur ce que j'apprends. Ce site a commencé comme un blog ; il réunit aussi mes projets, photos et vidéos, ma musique et les chaînes que je suis."
+
+[hub_more_about]
+other = "En savoir plus sur moi"
+
+[hub_explore]
+other = "Explorer"
+
+[hub_all_posts]
+other = "Tous les articles"
+
+[hub_posts_title]
+other = "Articles"
+
+[hub_posts_blurb]
+other = "Notes et expériences sur le cloud, le code, l'IA et les outils"
+
+[hub_media_title]
+other = "Photos"
+
+[hub_media_blurb]
+other = "Photos et vidéos de mon Instagram, sans compte"
+
+[hub_movies_title]
+other = "Films"
+
+[hub_movies_blurb]
+other = "Mes films préférés, et où les regarder"
+
+[hub_movies_count]
+other = "{{ .count }} films"
+
+[hub_projects_title]
+other = "Projets"
+
+[hub_projects_blurb]
+other = "Petites applis et jeux pour le navigateur, tous open source"
+
+[hub_projects_count]
+other = "{{ .count }} projets"
+
+[hub_music_title]
+other = "Musique"
+
+[hub_music_blurb]
+other = "Les playlists que j'ai créées et enregistrées, et ce que j'écoute en boucle"
+
+[hub_music_count]
+other = "{{ .count }} playlists"
+
+[hub_subscriptions_title]
+other = "Abonnements"
+
+[hub_subscriptions_blurb]
+other = "Les chaînes YouTube et Twitch que je suis"
+
+[hub_subscriptions_count]
+other = "{{ .count }} chaînes"
+
+[hub_resume_title]
+other = "CV"
+
+[hub_resume_blurb]
+other = "Où j'ai travaillé et ce que j'y ai construit"
+
+[hub_archive_title]
+other = "Archives"
+
+[hub_archive_blurb]
+other = "Tous les articles, classés par année"
+
+[hub_tags_title]
+other = "Étiquettes"
+
+[hub_tags_blurb]
+other = "Parcourir les articles par sujet"
+
+[hub_tags_count]
+other = "{{ .count }} sujets"
+

@@ -20,11 +20,11 @@
     </article>
     {{ end }}
   </div>
-  <p class="mt-4 text-sm"><a href="{{ if eq .Site.Language.Lang hugo.Sites.Default.Language.Lang }}/{{ else }}/{{ .Site.Language.Lang }}/{{ end }}" class="text-brand no-underline hover:underline">&larr; {{ i18n "back_to_all_posts" }}</a></p>
+  <p class="mt-4 text-sm"><a href="{{ if eq .Site.Language.Lang hugo.Sites.Default.Language.Lang }}/post/{{ else }}/{{ .Site.Language.Lang }}/post/{{ end }}" class="text-brand no-underline hover:underline">&larr; {{ i18n "back_to_all_posts" }}</a></p>
 </section>
 
 <script>
-/* "/" focuses search, matching the homepage */
+/* "/" focuses search, matching the posts page */
 document.addEventListener("keydown", function(e) {
   if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
     var active = document.activeElement;

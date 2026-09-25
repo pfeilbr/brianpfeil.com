@@ -515,3 +515,86 @@ other = "The data for this page could not be loaded. Try reloading."
 
 [data_noscript]
 other = "This page is drawn with JavaScript. Its data is at <a href=\"{{ .url }}\">{{ .url }}</a>."
+
+# Home page table of contents (layouts/index.html, data/home.yaml)
+[hub_bio]
+other = "I build things with technology and write about what I learn. This started as a blog; now it's also home to my projects, photos and video, music, and the channels I follow."
+
+[hub_more_about]
+other = "More about me"
+
+[hub_explore]
+other = "Explore"
+
+[hub_all_posts]
+other = "All posts"
+
+[hub_posts_title]
+other = "Posts"
+
+[hub_posts_blurb]
+other = "Notes and playground write-ups on cloud, code, AI and tooling"
+
+[hub_media_title]
+other = "Media"
+
+[hub_media_blurb]
+other = "Photos and video from my Instagram, no account needed"
+
+[hub_movies_title]
+other = "Movies"
+
+[hub_movies_blurb]
+other = "Favorite films, with where to stream them"
+
+[hub_movies_count]
+other = "{{ .count }} movies"
+
+[hub_projects_title]
+other = "Projects"
+
+[hub_projects_blurb]
+other = "Small browser apps and games — all open source"
+
+[hub_projects_count]
+other = "{{ .count }} projects"
+
+[hub_music_title]
+other = "Music"
+
+[hub_music_blurb]
+other = "Playlists I've made and saved, and who's on repeat"
+
+[hub_music_count]
+other = "{{ .count }} playlists"
+
+[hub_subscriptions_title]
+other = "Subscriptions"
+
+[hub_subscriptions_blurb]
+other = "The YouTube and Twitch channels I follow"
+
+[hub_subscriptions_count]
+other = "{{ .count }} channels"
+
+[hub_resume_title]
+other = "Résumé"
+
+[hub_resume_blurb]
+other = "Where I've worked and what I've built there"
+
+[hub_archive_title]
+other = "Archive"
+
+[hub_archive_blurb]
+other = "Every post, grouped by year"
+
+[hub_tags_title]
+other = "Tags"
+
+[hub_tags_blurb]
+other = "Browse posts by topic"
+
+[hub_tags_count]
+other = "{{ .count }} topics"
+

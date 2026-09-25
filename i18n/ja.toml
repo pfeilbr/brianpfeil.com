@@ -515,3 +515,86 @@ other = "このページのデータを読み込めませんでした。再読�
 
 [data_noscript]
 other = "このページは JavaScript で表示しています。データは <a href=\"{{ .url }}\">{{ .url }}</a> にあります。"
+
+# Home page table of contents (layouts/index.html, data/home.yaml)
+[hub_bio]
+other = "テクノロジーでものを作り、学んだことを書いています。ブログとして始まったこのサイトには、今ではプロジェクト、写真と動画、音楽、フォローしているチャンネルもまとめています。"
+
+[hub_more_about]
+other = "プロフィールをもっと見る"
+
+[hub_explore]
+other = "サイトの案内"
+
+[hub_all_posts]
+other = "すべての記事"
+
+[hub_posts_title]
+other = "記事"
+
+[hub_posts_blurb]
+other = "クラウド、コード、AI、ツールについてのメモと実験記録"
+
+[hub_media_title]
+other = "メディア"
+
+[hub_media_blurb]
+other = "Instagram の写真と動画。アカウントなしで見られます"
+
+[hub_movies_title]
+other = "映画"
+
+[hub_movies_blurb]
+other = "お気に入りの映画と、配信で観られる場所"
+
+[hub_movies_count]
+other = "{{ .count }} 本の映画"
+
+[hub_projects_title]
+other = "プロジェクト"
+
+[hub_projects_blurb]
+other = "ブラウザで動く小さなアプリとゲーム。すべてオープンソース"
+
+[hub_projects_count]
+other = "{{ .count }} 件のプロジェクト"
+
+[hub_music_title]
+other = "音楽"
+
+[hub_music_blurb]
+other = "作成・保存したプレイリストと、よく聴くアーティスト"
+
+[hub_music_count]
+other = "{{ .count }} 件のプレイリスト"
+
+[hub_subscriptions_title]
+other = "購読"
+
+[hub_subscriptions_blurb]
+other = "フォローしている YouTube と Twitch のチャンネル"
+
+[hub_subscriptions_count]
+other = "{{ .count }} チャンネル"
+
+[hub_resume_title]
+other = "職務経歴"
+
+[hub_resume_blurb]
+other = "これまでの勤務先と手がけたもの"
+
+[hub_archive_title]
+other = "アーカイブ"
+
+[hub_archive_blurb]
+other = "すべての記事を年ごとに"
+
+[hub_tags_title]
+other = "タグ"
+
+[hub_tags_blurb]
+other = "トピック別に記事を探す"
+
+[hub_tags_count]
+other = "{{ .count }} 件のトピック"
+

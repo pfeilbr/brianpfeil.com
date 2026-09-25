@@ -2,6 +2,15 @@
 
 Hugo site. `content/post/*.md` are blog/project posts; `content/projects/` are project bundles.
 
+**The home page is a table of contents, not the post list.** `/` is an
+about-style hero plus a card per section (`layouts/index.html`, driven by
+`data/home.yaml`; titles/blurbs are `hub_<key>_title` / `hub_<key>_blurb`).
+Posts, Media and Movies are wide cards with a preview (latest titles, newest
+tiles, first posters); the rest are plain cards listed in the YAML.
+The searchable, infinitely-scrolling post list lives at `/post/`
+(`layouts/post/list.html`, `content/post/_index.<lang>.md` in all nine
+languages). A new section = one entry in `data/home.yaml` + its i18n keys.
+
 ## Where /media/ stands (read this first)
 
 **Live, with all 89 feed items** (79 posts, 10 reels, 2011–2026; 575 photos
@@ -142,6 +151,7 @@ touching a template:
 | `/subscriptions/` | `data/subscriptions.yaml`, `data/twitch.yaml` | `layouts/_default/subscriptions.html` |
 | `/media/` | `data/media.yaml` (generated) | `layouts/_default/media.html` |
 | `/movies/` | `data/movies.json` (`make movies-refresh`) | `layouts/_default/movies.html` |
+| `/` (home) | `data/home.yaml` | `layouts/index.html` |
 
 - **Every data-driven page is drawn in the browser from `/data/<name>.json`.**
   `partials/publish-data.html` publishes each `data/` file there (media gets

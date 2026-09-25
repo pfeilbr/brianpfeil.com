@@ -517,3 +517,86 @@ other = "Die Daten dieser Seite konnten nicht geladen werden. Bitte neu laden."
 
 [data_noscript]
 other = "Diese Seite wird mit JavaScript gezeichnet. Die Daten liegen unter <a href=\"{{ .url }}\">{{ .url }}</a>."
+
+# Home page table of contents (layouts/index.html, data/home.yaml)
+[hub_bio]
+other = "Ich baue Dinge mit Technik und schreibe über das, was ich dabei lerne. Angefangen hat das als Blog; inzwischen finden sich hier auch meine Projekte, Fotos und Videos, Musik und die Kanäle, denen ich folge."
+
+[hub_more_about]
+other = "Mehr über mich"
+
+[hub_explore]
+other = "Entdecken"
+
+[hub_all_posts]
+other = "Alle Beiträge"
+
+[hub_posts_title]
+other = "Beiträge"
+
+[hub_posts_blurb]
+other = "Notizen und Experimente zu Cloud, Code, KI und Werkzeugen"
+
+[hub_media_title]
+other = "Fotos"
+
+[hub_media_blurb]
+other = "Fotos und Videos von meinem Instagram, ganz ohne Konto"
+
+[hub_movies_title]
+other = "Filme"
+
+[hub_movies_blurb]
+other = "Meine Lieblingsfilme und wo man sie streamen kann"
+
+[hub_movies_count]
+other = "{{ .count }} Filme"
+
+[hub_projects_title]
+other = "Projekte"
+
+[hub_projects_blurb]
+other = "Kleine Browser-Apps und Spiele – alle Open Source"
+
+[hub_projects_count]
+other = "{{ .count }} Projekte"
+
+[hub_music_title]
+other = "Musik"
+
+[hub_music_blurb]
+other = "Playlists, die ich erstellt und gespeichert habe, und was bei mir in Dauerschleife läuft"
+
+[hub_music_count]
+other = "{{ .count }} Playlists"
+
+[hub_subscriptions_title]
+other = "Abos"
+
+[hub_subscriptions_blurb]
+other = "Die YouTube- und Twitch-Kanäle, denen ich folge"
+
+[hub_subscriptions_count]
+other = "{{ .count }} Kanäle"
+
+[hub_resume_title]
+other = "Lebenslauf"
+
+[hub_resume_blurb]
+other = "Wo ich gearbeitet und was ich dort gebaut habe"
+
+[hub_archive_title]
+other = "Archiv"
+
+[hub_archive_blurb]
+other = "Alle Beiträge, nach Jahr geordnet"
+
+[hub_tags_title]
+other = "Tags"
+
+[hub_tags_blurb]
+other = "Beiträge nach Thema durchsuchen"
+
+[hub_tags_count]
+other = "{{ .count }} Themen"
+

@@ -515,3 +515,86 @@ other = "Não foi possível carregar os dados desta página. Tente recarregar."
 
 [data_noscript]
 other = "Esta página é desenhada com JavaScript. Os dados estão em <a href=\"{{ .url }}\">{{ .url }}</a>."
+
+# Home page table of contents (layouts/index.html, data/home.yaml)
+[hub_bio]
+other = "Construo coisas com tecnologia e escrevo sobre o que aprendo. Isto começou como um blog; agora também reúne meus projetos, fotos e vídeos, música e os canais que acompanho."
+
+[hub_more_about]
+other = "Mais sobre mim"
+
+[hub_explore]
+other = "Explorar"
+
+[hub_all_posts]
+other = "Todos os artigos"
+
+[hub_posts_title]
+other = "Artigos"
+
+[hub_posts_blurb]
+other = "Notas e experimentos sobre nuvem, código, IA e ferramentas"
+
+[hub_media_title]
+other = "Fotos"
+
+[hub_media_blurb]
+other = "Fotos e vídeos do meu Instagram, sem precisar de conta"
+
+[hub_movies_title]
+other = "Filmes"
+
+[hub_movies_blurb]
+other = "Meus filmes favoritos e onde assistir"
+
+[hub_movies_count]
+other = "{{ .count }} filmes"
+
+[hub_projects_title]
+other = "Projetos"
+
+[hub_projects_blurb]
+other = "Pequenos apps e jogos para o navegador, todos de código aberto"
+
+[hub_projects_count]
+other = "{{ .count }} projetos"
+
+[hub_music_title]
+other = "Música"
+
+[hub_music_blurb]
+other = "Playlists que criei e salvei, e o que mais ouço"
+
+[hub_music_count]
+other = "{{ .count }} playlists"
+
+[hub_subscriptions_title]
+other = "Assinaturas"
+
+[hub_subscriptions_blurb]
+other = "Os canais do YouTube e da Twitch que acompanho"
+
+[hub_subscriptions_count]
+other = "{{ .count }} canais"
+
+[hub_resume_title]
+other = "Currículo"
+
+[hub_resume_blurb]
+other = "Onde trabalhei e o que construí lá"
+
+[hub_archive_title]
+other = "Arquivo"
+
+[hub_archive_blurb]
+other = "Todos os artigos, agrupados por ano"
+
+[hub_tags_title]
+other = "Tags"
+
+[hub_tags_blurb]
+other = "Navegue pelos artigos por tema"
+
+[hub_tags_count]
+other = "{{ .count }} temas"
+

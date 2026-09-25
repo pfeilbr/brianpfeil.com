@@ -515,3 +515,86 @@ other = "无法加载此页面的数据，请刷新重试。"
 
 [data_noscript]
 other = "此页面由 JavaScript 绘制。数据见 <a href=\"{{ .url }}\">{{ .url }}</a>。"
+
+# Home page table of contents (layouts/index.html, data/home.yaml)
+[hub_bio]
+other = "我喜欢用技术动手做东西，并把学到的写下来。这里最初是个博客，如今也收录我的项目、照片和视频、音乐，以及我关注的频道。"
+
+[hub_more_about]
+other = "更多关于我"
+
+[hub_explore]
+other = "浏览"
+
+[hub_all_posts]
+other = "全部文章"
+
+[hub_posts_title]
+other = "文章"
+
+[hub_posts_blurb]
+other = "关于云、代码、AI 和工具的笔记与实验记录"
+
+[hub_media_title]
+other = "影像"
+
+[hub_media_blurb]
+other = "来自我 Instagram 的照片和视频，无需账号即可浏览"
+
+[hub_movies_title]
+other = "电影"
+
+[hub_movies_blurb]
+other = "我最喜欢的电影，以及在哪里可以看"
+
+[hub_movies_count]
+other = "{{ .count }} 部电影"
+
+[hub_projects_title]
+other = "项目"
+
+[hub_projects_blurb]
+other = "小型浏览器应用和游戏——全部开源"
+
+[hub_projects_count]
+other = "{{ .count }} 个项目"
+
+[hub_music_title]
+other = "音乐"
+
+[hub_music_blurb]
+other = "我创建和收藏的歌单，以及常听的艺人"
+
+[hub_music_count]
+other = "{{ .count }} 个歌单"
+
+[hub_subscriptions_title]
+other = "订阅"
+
+[hub_subscriptions_blurb]
+other = "我关注的 YouTube 和 Twitch 频道"
+
+[hub_subscriptions_count]
+other = "{{ .count }} 个频道"
+
+[hub_resume_title]
+other = "简历"
+
+[hub_resume_blurb]
+other = "我的工作经历和做过的项目"
+
+[hub_archive_title]
+other = "归档"
+
+[hub_archive_blurb]
+other = "按年份整理的全部文章"
+
+[hub_tags_title]
+other = "标签"
+
+[hub_tags_blurb]
+other = "按主题浏览文章"
+
+[hub_tags_count]
+other = "{{ .count }} 个主题"
+

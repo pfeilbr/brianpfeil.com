@@ -515,3 +515,86 @@ other = "Impossibile caricare i dati di questa pagina. Prova a ricaricarla."
 
 [data_noscript]
 other = "Questa pagina è disegnata con JavaScript. I dati si trovano in <a href=\"{{ .url }}\">{{ .url }}</a>."
+
+# Home page table of contents (layouts/index.html, data/home.yaml)
+[hub_bio]
+other = "Costruisco cose con la tecnologia e scrivo di ciò che imparo. È nato come blog; ora raccoglie anche i miei progetti, foto e video, musica e i canali che seguo."
+
+[hub_more_about]
+other = "Altro su di me"
+
+[hub_explore]
+other = "Esplora"
+
+[hub_all_posts]
+other = "Tutti gli articoli"
+
+[hub_posts_title]
+other = "Articoli"
+
+[hub_posts_blurb]
+other = "Note ed esperimenti su cloud, codice, IA e strumenti"
+
+[hub_media_title]
+other = "Foto"
+
+[hub_media_blurb]
+other = "Foto e video dal mio Instagram, senza bisogno di un account"
+
+[hub_movies_title]
+other = "Film"
+
+[hub_movies_blurb]
+other = "I miei film preferiti e dove vederli"
+
+[hub_movies_count]
+other = "{{ .count }} film"
+
+[hub_projects_title]
+other = "Progetti"
+
+[hub_projects_blurb]
+other = "Piccole app e giochi per il browser, tutti open source"
+
+[hub_projects_count]
+other = "{{ .count }} progetti"
+
+[hub_music_title]
+other = "Musica"
+
+[hub_music_blurb]
+other = "Le playlist che ho creato e salvato, e cosa ascolto di continuo"
+
+[hub_music_count]
+other = "{{ .count }} playlist"
+
+[hub_subscriptions_title]
+other = "Iscrizioni"
+
+[hub_subscriptions_blurb]
+other = "I canali YouTube e Twitch che seguo"
+
+[hub_subscriptions_count]
+other = "{{ .count }} canali"
+
+[hub_resume_title]
+other = "Curriculum"
+
+[hub_resume_blurb]
+other = "Dove ho lavorato e cosa ho costruito"
+
+[hub_archive_title]
+other = "Archivio"
+
+[hub_archive_blurb]
+other = "Tutti gli articoli, raggruppati per anno"
+
+[hub_tags_title]
+other = "Tag"
+
+[hub_tags_blurb]
+other = "Sfoglia gli articoli per argomento"
+
+[hub_tags_count]
+other = "{{ .count }} argomenti"
+

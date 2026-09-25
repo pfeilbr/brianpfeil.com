@@ -1,0 +1,117 @@
+{{ define "main" }}
+{{- /* The post list used to be the home page. It lives here now that the
+   home page is a table of contents for every section of the site. Posts are
+   English-only, so every language lists the English ones. */ -}}
+{{ $all := partial "site-posts.html" . }}
+<h1 class="page-title text-2xl font-bold text-gray-900 mb-2">
+  {{ partial "icons/chip.html" (dict "id" "i-pen" "size" "lg") }}
+  <span>{{ .Title }}</span>
+</h1>
+<p class="section-sub">{{ i18n "hub_posts_blurb" }} &middot; {{ i18n "posts_count" (len $all) }}</p>
+
+{{ partial "search.html" . }}
+
+<div id="search-results"></div>
+
+<div id="post-list">
+  {{ $pag := .Paginate $all }}
+  {{ range $pag.Pages }}
+  {{ $icon := partial "icons/topic-for-page.html" . }}
+  <article class="post-preview post-row py-2.5 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
+    {{ partial "icons/chip.html" (dict "id" $icon "size" "sm" "label" (partial "icons/topic-label.html" $icon)) }}
+    <div class="post-row-body">
+      <div class="flex items-baseline justify-between gap-3">
+        <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
+        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ .Date.Format "Jan 2006" }}</time>
+      </div>
+      {{ with .Params.tags }}
+      <div class="mt-0.5">{{ range $i, $t := . }}{{ if lt $i 3 }}<a href="/tags/{{ $t | urlize }}/" class="text-xs text-gray-400 hover:text-brand no-underline mr-2">{{ $t }}</a>{{ end }}{{ end }}</div>
+      {{ end }}
+    </div>
+  </article>
+  {{ end }}
+</div>
+
+{{ if .Paginator.HasNext }}
+<div id="scroll-sentinel" class="py-4 text-center">
+  <span id="scroll-progress" class="text-xs text-gray-400"></span>
+</div>
+{{ end }}
+
+
+<script>
+var I18N = {{ dict "progress" (i18n "scroll_progress" (dict "loaded" "{loaded}" "total" "{total}")) "loading" (i18n "loading") | jsonify | safeJS }};
+var postCount = {{ len $all }};
+var pageSize = {{ .Paginator.PagerSize }};
+
+/* Row click delegation */
+document.addEventListener("click", function(e) {
+  if (e.target.closest("a")) return;
+  var row = e.target.closest("[data-href]");
+  if (row) window.location.href = row.dataset.href;
+});
+
+/* "/" keyboard shortcut to focus search */
+document.addEventListener("keydown", function(e) {
+  if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    var active = document.activeElement;
+    if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.isContentEditable)) return;
+    e.preventDefault();
+    var q = document.getElementById("search-query");
+    if (q) q.focus();
+  }
+});
+
+/* Infinite scroll with progress counter */
+(function() {
+  var postList = document.getElementById("post-list");
+  var sentinel = document.getElementById("scroll-sentinel");
+  var progress = document.getElementById("scroll-progress");
+  if (!sentinel || !postList) return;
+
+  var nextPage = {{ if .Paginator.HasNext }}{{ .Paginator.Next.PageNumber }}{{ else }}0{{ end }};
+  /* "/post/page/2/" on the English site, "/zh/post/page/2/" on the Chinese one. */
+  var pageBase = {{ if .Paginator.HasNext }}{{ replaceRE `[0-9]+/$` "" .Paginator.Next.URL }}{{ else }}"/post/page/"{{ end }};
+  var totalPages = {{ .Paginator.TotalPages }};
+  var loading = false;
+  var loadedCount = postList.querySelectorAll("article").length;
+
+  function updateProgress() {
+    if (progress) {
+      progress.textContent = I18N.progress
+        .replace("{loaded}", loadedCount)
+        .replace("{total}", postCount);
+    }
+  }
+  updateProgress();
+
+  function loadNext() {
+    if (loading || nextPage > totalPages) return;
+    loading = true;
+    if (progress) progress.textContent = I18N.loading;
+
+    fetch(pageBase + nextPage + "/")
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var items = doc.querySelectorAll("#post-list > article");
+        items.forEach(function(item) { postList.appendChild(item); });
+        loadedCount += items.length;
+        nextPage++;
+        loading = false;
+        if (nextPage > totalPages) {
+          sentinel.remove();
+        } else {
+          updateProgress();
+        }
+      })
+      .catch(function() { loading = false; updateProgress(); });
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) loadNext();
+  }, { rootMargin: "200px" });
+  observer.observe(sentinel);
+})();
+</script>
+{{ end }}

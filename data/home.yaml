@@ -1,0 +1,46 @@
+# The home page's table of contents (layouts/index.html).
+#
+# Posts and Media are rendered as wide cards with a preview of their contents;
+# everything listed under `sections` gets a plain card, in this order. Titles
+# and blurbs are i18n keys, hub_<key>_title and hub_<key>_blurb, so they
+# translate -- keep prose out of this file. `path` is relative to the
+# language's root; `icon` is a glyph id in partials/icons/sprite-topics.html.
+
+sections:
+  - key: projects
+    path: projects
+    icon: i-rocket
+  - key: music
+    path: music
+    icon: i-music
+  - key: subscriptions
+    path: subscriptions
+    icon: i-youtube
+  - key: resume
+    path: resume-full
+    icon: i-briefcase
+  - key: archive
+    path: archive
+    icon: i-archive
+  - key: tags
+    path: tags
+    icon: i-tag
+
+# Profiles linked from the hero. Names are brand names, so not translated.
+social:
+  - name: GitHub
+    url: https://github.com/pfeilbr
+    icon: i-github
+  - name: LinkedIn
+    url: https://www.linkedin.com/in/brian-pfeil-175a011/
+    icon: i-linkedin
+  - name: Instagram
+    url: https://www.instagram.com/pfeilbr/
+    icon: i-instagram
+  - name: X (Twitter)
+    url: https://twitter.com/pfeilbr
+    icon: i-x
+    me: true
+  - name: Stack Overflow
+    url: https://stackoverflow.com/users/29148/pfeilbr
+    icon: i-stack
