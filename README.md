@@ -104,6 +104,8 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | **Posts** | |
 | `make generate-posts` | Regenerate `generated-*.md` from GitHub |
 | `make check-repo-links` | List posts whose repo link 404s for a visitor (live, needs network) |
+| **Movies** | |
+| `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
 | **Media** | |
 | `make media-deps` | Create the tool's venv |
 | `make media-stage` | Read the archive (or `EXPORT=…`), update the approve list, build the review sheet |

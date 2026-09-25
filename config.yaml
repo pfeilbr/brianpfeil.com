@@ -112,6 +112,9 @@ languages:
         - name: "media"
           url: "/media/"
           weight: 37
+        - name: "movies"
+          url: "/movies/"
+          weight: 38
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -152,6 +155,9 @@ languages:
         - name: "影像"
           url: "/zh/media/"
           weight: 37
+        - name: "电影"
+          url: "/zh/movies/"
+          weight: 38
         # Tags are generated from the English posts, so this points at the
         # English taxonomy rather than an empty /zh/tags/.
         - name: "标签"
@@ -194,6 +200,9 @@ languages:
         - name: "fotos"
           url: "/es/media/"
           weight: 37
+        - name: "películas"
+          url: "/es/movies/"
+          weight: 38
         - name: "etiquetas"
           url: "/tags/"
           weight: 40
@@ -234,6 +243,9 @@ languages:
         - name: "fotos"
           url: "/pt/media/"
           weight: 37
+        - name: "filmes"
+          url: "/pt/movies/"
+          weight: 38
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -274,6 +286,9 @@ languages:
         - name: "photos"
           url: "/fr/media/"
           weight: 37
+        - name: "films"
+          url: "/fr/movies/"
+          weight: 38
         - name: "étiquettes"
           url: "/tags/"
           weight: 40
@@ -314,6 +329,9 @@ languages:
         - name: "fotos"
           url: "/de/media/"
           weight: 37
+        - name: "filme"
+          url: "/de/movies/"
+          weight: 38
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -354,6 +372,9 @@ languages:
         - name: "foto"
           url: "/it/media/"
           weight: 37
+        - name: "film"
+          url: "/it/movies/"
+          weight: 38
         - name: "tag"
           url: "/tags/"
           weight: 40
@@ -394,6 +415,9 @@ languages:
         - name: "メディア"
           url: "/ja/media/"
           weight: 37
+        - name: "映画"
+          url: "/ja/movies/"
+          weight: 38
         - name: "タグ"
           url: "/tags/"
           weight: 40
@@ -434,6 +458,9 @@ languages:
         - name: "미디어"
           url: "/ko/media/"
           weight: 37
+        - name: "영화"
+          url: "/ko/movies/"
+          weight: 38
         - name: "태그"
           url: "/tags/"
           weight: 40

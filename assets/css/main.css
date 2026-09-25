@@ -1486,7 +1486,11 @@ nav details > summary {
    language switcher and seven links do not fit in 42rem, and every width
    above it was capped at the same 42rem, so the links overlapped the
    switcher at every viewport rather than only on narrow ones. */
-.nav-row { max-width: 52rem; }
+/* Eight links since /movies/: Spanish needs ~873px for the row with a
+   legible language label, so the cap is 56rem and the full row only shows
+   from 900px (measured per language with the links on one line). */
+.nav-row { max-width: 56rem; }
+.nav-wide a { white-space: nowrap; }
 
 /* The avatar is a fixed target; the language label is the elastic part. With
    min-width:0 and an ellipsis the left group can shrink, so a long menu in
@@ -1501,7 +1505,7 @@ nav details > summary {
 .nav-wide { display: none; }
 .nav-compact { display: flex; }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .nav-wide { display: flex; }
   .nav-compact { display: none; }
 }
@@ -1763,3 +1767,144 @@ nav details > summary {
 }
 
 .media-strings { display: none; }
+
+/* ---------------------------------------------------------------------------
+   Movies page (/movies/). Rows are drawn by the page script from
+   /data/movies.json; see layouts/_default/movies.html.
+   --------------------------------------------------------------------------- */
+.mv-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+.mv-sort, .mv-filter { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+.mv-sort select {
+  border: 1px solid var(--border-strong);
+  border-radius: 0.375rem;
+  background-color: var(--bg);
+  padding: 0.25rem 0.5rem;
+  min-height: 2.25rem;
+}
+.mv-filter input { width: 1rem; height: 1rem; accent-color: var(--brand); }
+.mv-count { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--text-faint); }
+
+.mv-list[aria-busy="true"] { min-height: 60vh; }
+
+.mv-row {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 1rem 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 1rem;
+}
+.mv-row:target { background-color: var(--bg-subtle); }
+
+.mv-poster { position: relative; align-self: start; }
+.mv-poster img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 0.375rem;
+  background-color: var(--bg-muted);
+  box-shadow: var(--shadow-sm);
+}
+.mv-rank {
+  position: absolute;
+  top: 0.375rem;
+  left: 0.375rem;
+  min-width: 1.5rem;
+  padding: 0 0.375rem;
+  border-radius: 999px;
+  background-color: rgb(0 0 0 / 0.72);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.mv-body { min-width: 0; }
+.mv-title { font-size: 1.25rem; font-weight: 700; color: var(--text-strong); line-height: 1.3; }
+.mv-title a:hover { color: var(--brand); }
+.mv-year { font-weight: 400; color: var(--text-faint); }
+.mv-orig { font-size: 0.8125rem; color: var(--text-faint); margin-top: 0.125rem; }
+.mv-facts { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+.mv-scores { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 0.625rem; }
+.mv-rt, .mv-imdb { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+.mv-score, .mv-imdb { display: inline-flex; align-items: baseline; gap: 0.3rem; font-size: 0.8125rem; }
+.mv-score b, .mv-imdb b { font-size: 1.0625rem; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.mv-score-ic { font-size: 1rem; line-height: 1; align-self: center; }
+.mv-score-label { color: var(--text-faint); }
+.mv-rt:hover .mv-score-label, .mv-imdb:hover .mv-score-label { color: var(--brand); }
+.mv-imdb-badge {
+  align-self: center;
+  background-color: #f5c518;
+  color: #000;
+  font-weight: 800;
+  font-size: 0.6875rem;
+  padding: 0.0625rem 0.3rem;
+  border-radius: 0.1875rem;
+}
+
+.mv-synopsis { font-size: 0.9375rem; color: var(--text-body); margin-top: 0.75rem; line-height: 1.6; }
+.mv-credits { font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.375rem; }
+
+.mv-play {
+  margin-top: 0.875rem;
+  padding: 0.375rem 0.875rem;
+  min-height: 2.25rem;
+  border-radius: 999px;
+  background-color: var(--text-strong);
+  color: var(--bg);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.mv-play:hover { background-color: var(--brand); color: var(--on-brand); }
+
+.mv-trailer { margin-top: 0.75rem; aspect-ratio: 16 / 9; background-color: #000; border-radius: 0.5rem; overflow: hidden; }
+.mv-trailer iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+.mv-watch { margin-top: 1rem; }
+.mv-watch-h { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint); margin-bottom: 0.375rem; }
+.mv-group { display: flex; gap: 0.5rem; align-items: baseline; margin-top: 0.375rem; }
+.mv-group-label { flex: 0 0 4.5rem; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); }
+.mv-services { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+.mv-service {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.1875rem 0.5rem 0.1875rem 0.25rem;
+  min-height: 1.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--text-body);
+  background-color: var(--bg);
+}
+.mv-service:hover { border-color: var(--brand); color: var(--brand); }
+.mv-service img { width: 1.25rem; height: 1.25rem; border-radius: 0.25rem; }
+.mv-price { color: var(--text-faint); font-variant-numeric: tabular-nums; }
+.mv-none { font-size: 0.875rem; color: var(--text-faint); }
+.mv-more { display: inline-block; margin-top: 0.5rem; font-size: 0.8125rem; color: var(--brand); }
+.mv-more:hover { text-decoration: underline; }
+
+.mv-note { padding: 1.5rem 0; color: var(--text-muted); }
+.mv-note a, .mv-foot a { color: var(--brand); text-decoration: underline; }
+.mv-foot { margin-top: 1.5rem; font-size: 0.8125rem; color: var(--text-faint); }
+
+@media (max-width: 540px) {
+  .mv-row { grid-template-columns: 6rem 1fr; gap: 0.75rem 1rem; }
+  .mv-title { font-size: 1.0625rem; }
+  /* Offers take the full width under the poster on a phone. */
+  .mv-watch { margin-left: -7rem; }
+  .mv-group { flex-direction: column; gap: 0.25rem; }
+  .mv-group-label { flex-basis: auto; }
+}

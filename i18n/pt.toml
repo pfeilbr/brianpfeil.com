@@ -427,3 +427,84 @@ other = "Publicação compartilhada"
 
 [media_reshare_own]
 other = "Reel compartilhado"
+
+# Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
+# by the page script, not by Hugo.
+[movies_intro]
+other = "Os filmes aos quais eu sempre volto, sem ordem específica. Cada título leva ao IMDb; as notas são do Rotten Tomatoes e os serviços são onde cada um está disponível hoje nos EUA."
+
+[movies_sort_label]
+other = "Ordenar"
+
+[movies_sort_mine]
+other = "Minha ordem"
+
+[movies_sort_rt]
+other = "Tomatômetro"
+
+[movies_sort_year]
+other = "Ano"
+
+[movies_sort_title]
+other = "Título"
+
+[movies_filter_streaming]
+other = "Em streaming agora"
+
+[movies_minutes]
+other = "{n} min"
+
+[movies_directed_by]
+other = "Direção de {names}"
+
+[movies_starring]
+other = "Com {names}"
+
+[movies_trailer]
+other = "Trailer"
+
+[movies_close_trailer]
+other = "Fechar trailer"
+
+[movies_where_to_watch]
+other = "Onde assistir (EUA)"
+
+[movies_offer_free]
+other = "Grátis"
+
+[movies_offer_stream]
+other = "Assinatura"
+
+[movies_offer_rent]
+other = "Alugar"
+
+[movies_offer_buy]
+other = "Comprar"
+
+[movies_all_options]
+other = "Todas as opções no JustWatch"
+
+[movies_not_streaming]
+other = "Sem streaming nos EUA no momento."
+
+[movies_tomatometer]
+other = "Tomatômetro"
+
+[movies_popcornmeter]
+other = "Popcornmeter"
+
+[movies_certified_fresh]
+other = "Certified Fresh"
+
+[movies_original_title]
+other = "Título original: {title}"
+
+[movies_footnote]
+other = "Notas do Rotten Tomatoes e do IMDb, disponibilidade nos EUA pelo JustWatch, em {date}. Os dados desta página:"
+
+[movies_load_error]
+other = "Não foi possível carregar a lista de filmes. Tente recarregar a página."
+
+[movies_noscript]
+other = "Esta página é desenhada com JavaScript. A lista está em <a href=\"/data/movies.json\">movies.json</a>."
+

@@ -117,7 +117,7 @@ unreliable here — see `infra/README.md`.
   if the local Hugo is a different version, so check the Actions run, not just
   the local build. Bump the pin on purpose.
 - **The nav row is capped, so it never gets roomier.** `.nav-row` is
-  `max-width: 52rem`: widening the browser adds nothing, and a seventh link
+  `max-width: 56rem`: widening the browser adds nothing, and a seventh link
   overlapped the language switcher at *every* width, not just narrow ones.
   `.lang-label` truncates so flexbox can shrink instead of overlapping —
   check a long-worded language (es, fr) before adding another nav item.
@@ -140,6 +140,16 @@ touching a template:
 | `/music/` | `data/music.yaml` | `layouts/_default/music.html` |
 | `/subscriptions/` | `data/subscriptions.yaml`, `data/twitch.yaml` | `layouts/_default/subscriptions.html` |
 | `/media/` | `data/media.yaml` (generated) | `layouts/_default/media.html` |
+| `/movies/` | `data/movies.json` (`make movies-refresh`) | `layouts/_default/movies.html` |
+
+- **Every `data/` file is also served as `/data/<name>.json`**
+  (`partials/publish-data.html`). `/movies/` is drawn by its own script from
+  that JSON rather than by Hugo; to add a movie, append `{"title", "imdb"}` to
+  `data/movies.json` and run `make movies-refresh`. Synopses, titles and
+  genres come back in all nine languages from JustWatch, so they are data,
+  not i18n.
+- **Nine nav links.** `.nav-row` is now `56rem` and the full row appears
+  from 900px, because Spanish needs ~873px. A tenth link means re-measuring.
 
 - **Only publish what a stranger can actually open.** Private YouTube playlists
   403 and some public ones refuse to embed, so every embed was verified against

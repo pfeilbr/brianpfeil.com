@@ -427,3 +427,84 @@ other = "转发的帖子"
 
 [media_reshare_own]
 other = "转发的 Reels"
+
+# Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
+# by the page script, not by Hugo.
+[movies_intro]
+other = "我反复重温的电影，排名不分先后。每个片名都链接到 IMDb；评分来自烂番茄，平台是目前在美国可以观看的渠道。"
+
+[movies_sort_label]
+other = "排序"
+
+[movies_sort_mine]
+other = "我的顺序"
+
+[movies_sort_rt]
+other = "烂番茄新鲜度"
+
+[movies_sort_year]
+other = "年份"
+
+[movies_sort_title]
+other = "片名"
+
+[movies_filter_streaming]
+other = "正在流媒体播放"
+
+[movies_minutes]
+other = "{n} 分钟"
+
+[movies_directed_by]
+other = "导演：{names}"
+
+[movies_starring]
+other = "主演：{names}"
+
+[movies_trailer]
+other = "预告片"
+
+[movies_close_trailer]
+other = "关闭预告片"
+
+[movies_where_to_watch]
+other = "观看渠道（美国）"
+
+[movies_offer_free]
+other = "免费"
+
+[movies_offer_stream]
+other = "订阅"
+
+[movies_offer_rent]
+other = "租赁"
+
+[movies_offer_buy]
+other = "购买"
+
+[movies_all_options]
+other = "在 JustWatch 查看全部"
+
+[movies_not_streaming]
+other = "目前在美国没有流媒体。"
+
+[movies_tomatometer]
+other = "烂番茄新鲜度"
+
+[movies_popcornmeter]
+other = "爆米花指数"
+
+[movies_certified_fresh]
+other = "新鲜认证"
+
+[movies_original_title]
+other = "原名：{title}"
+
+[movies_footnote]
+other = "评分来自烂番茄和 IMDb，美国观看渠道来自 JustWatch，数据截至 {date}。本页数据："
+
+[movies_load_error]
+other = "无法加载电影列表，请刷新页面重试。"
+
+[movies_noscript]
+other = "此页面由 JavaScript 绘制。电影列表数据见 <a href=\"/data/movies.json\">movies.json</a>。"
+

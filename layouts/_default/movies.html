@@ -1,0 +1,276 @@
+{{ define "main" }}
+{{- /* /movies/ renders in the browser from /data/movies.json (published from
+   data/movies.json by partials/publish-data.html), so the JSON is the page's
+   only source. tools/movies/refresh.py fills it in from a list of IMDb ids.
+   Everything the script prints comes from here, already translated. */ -}}
+{{ $lang := .Site.Language.Lang }}
+{{ $strings := dict
+  "min" (i18n "movies_minutes")
+  "directed" (i18n "movies_directed_by")
+  "starring" (i18n "movies_starring")
+  "trailer" (i18n "movies_trailer")
+  "close" (i18n "movies_close_trailer")
+  "watch" (i18n "movies_where_to_watch")
+  "free" (i18n "movies_offer_free")
+  "stream" (i18n "movies_offer_stream")
+  "rent" (i18n "movies_offer_rent")
+  "buy" (i18n "movies_offer_buy")
+  "allOptions" (i18n "movies_all_options")
+  "none" (i18n "movies_not_streaming")
+  "critics" (i18n "movies_tomatometer")
+  "audience" (i18n "movies_popcornmeter")
+  "certified" (i18n "movies_certified_fresh")
+  "original" (i18n "movies_original_title")
+  "updated" (i18n "movies_footnote")
+  "error" (i18n "movies_load_error")
+}}
+<article class="movies">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600">{{ i18n "movies_intro" }}</p>
+  </header>
+
+  <div class="prose">{{ .Content }}</div>
+
+  <div class="mv-toolbar">
+    <label class="mv-sort">
+      <span>{{ i18n "movies_sort_label" }}</span>
+      <select id="mv-sort">
+        <option value="mine">{{ i18n "movies_sort_mine" }}</option>
+        <option value="rt">{{ i18n "movies_sort_rt" }}</option>
+        <option value="year">{{ i18n "movies_sort_year" }}</option>
+        <option value="title">{{ i18n "movies_sort_title" }}</option>
+      </select>
+    </label>
+    <label class="mv-filter">
+      <input type="checkbox" id="mv-streaming">
+      <span>{{ i18n "movies_filter_streaming" }}</span>
+    </label>
+    <span class="mv-count" id="mv-count" aria-live="polite"></span>
+  </div>
+
+  <ol class="mv-list" id="mv-list" aria-busy="true"></ol>
+
+  <noscript><p class="mv-note">{{ i18n "movies_noscript" | safeHTML }}</p></noscript>
+  <p class="mv-foot" id="mv-foot"></p>
+</article>
+
+<script>
+/* One row per movie: poster, localized title, the facts IMDb would show,
+   Rotten Tomatoes scores, a click-to-load trailer and every US service that
+   has it. Trailers only fetch from YouTube once asked for, one at a time. */
+(function () {
+  var LANG = {{ $lang }};
+  var T = {{ $strings | jsonify | safeJS }};
+  var list = document.getElementById("mv-list");
+  var sortSel = document.getElementById("mv-sort");
+  var streamOnly = document.getElementById("mv-streaming");
+  var count = document.getElementById("mv-count");
+  var foot = document.getElementById("mv-foot");
+  var movies = [];
+  var playing = null;
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function link(href, cls, text) {
+    var a = el("a", cls, text);
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener nofollow";
+    return a;
+  }
+  function fill(s, vals) {
+    return s.replace(/\{(\w+)\}/g, function (m, k) { return k in vals ? vals[k] : m; });
+  }
+  function pick(map) { return map ? (map[LANG] || map.en) : ""; }
+  function streamable(m) {
+    return m.offers.some(function (o) { return o.type === "stream" || o.type === "free"; });
+  }
+
+  function score(kind, value, fresh, certified) {
+    var s = el("span", "mv-score mv-" + kind + (fresh ? " is-fresh" : " is-rotten"));
+    s.appendChild(el("span", "mv-score-ic", kind === "critics" ? (fresh ? "🍅" : "🤢") : "🍿"));
+    s.appendChild(el("b", null, value + "%"));
+    s.appendChild(el("span", "mv-score-label", T[kind] + (certified ? " · " + T.certified : "")));
+    return s;
+  }
+
+  function closeTrailer() {
+    if (!playing) return;
+    playing.slot.remove();
+    playing.btn.setAttribute("aria-expanded", "false");
+    playing.btn.textContent = "▶ " + T.trailer;
+    playing.btn.focus({ preventScroll: true });
+    playing = null;
+  }
+
+  function openTrailer(btn, m) {
+    var wasThis = playing && playing.btn === btn;
+    closeTrailer();
+    if (wasThis) return;
+    var slot = el("div", "mv-trailer");
+    var frame = document.createElement("iframe");
+    frame.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(m.trailer) + "?autoplay=1&rel=0";
+    frame.title = T.trailer + ": " + m.title;
+    frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    frame.allowFullscreen = true;
+    slot.appendChild(frame);
+    btn.after(slot);
+    btn.setAttribute("aria-expanded", "true");
+    btn.textContent = "✕ " + T.close;
+    playing = { slot: slot, btn: btn };
+  }
+
+  function offers(m) {
+    var box = el("div", "mv-watch");
+    box.appendChild(el("h3", "mv-watch-h", T.watch));
+    if (!m.offers.length) box.appendChild(el("p", "mv-none", T.none));
+    ["free", "stream", "rent", "buy"].forEach(function (type) {
+      var of = m.offers.filter(function (o) { return o.type === type; });
+      if (!of.length) return;
+      var g = el("div", "mv-group");
+      g.appendChild(el("span", "mv-group-label", T[type]));
+      var ul = el("ul", "mv-services");
+      of.forEach(function (o) {
+        var li = el("li");
+        var a = link(o.url, "mv-service");
+        a.title = o.service + (o.price ? " · " + o.price : "") + " · " + o.quality;
+        if (o.icon) {
+          var img = el("img");
+          img.src = o.icon; img.alt = ""; img.width = 20; img.height = 20;
+          img.loading = "lazy"; img.decoding = "async";
+          a.appendChild(img);
+        }
+        a.appendChild(el("span", null, o.service));
+        if (o.price) a.appendChild(el("span", "mv-price", o.price));
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      g.appendChild(ul);
+      box.appendChild(g);
+    });
+    box.appendChild(link(m.justwatch_url, "mv-more", T.allOptions + " ↗"));
+    return box;
+  }
+
+  function row(m, rank) {
+    var li = el("li", "mv-row");
+    li.id = m.imdb;
+    var title = pick(m.titles) || m.title;
+
+    var poster = el("div", "mv-poster");
+    if (m.poster) {
+      var img = el("img");
+      img.src = m.poster; img.alt = ""; img.width = 166; img.height = 249;
+      img.loading = rank < 4 ? "eager" : "lazy"; img.decoding = "async";
+      poster.appendChild(img);
+    }
+    poster.appendChild(el("span", "mv-rank", String(rank + 1)));
+    li.appendChild(poster);
+
+    var body = el("div", "mv-body");
+    var h = el("h2", "mv-title");
+    h.appendChild(link(m.imdb_url, null, title));
+    h.appendChild(el("span", "mv-year", " (" + m.year + ")"));
+    body.appendChild(h);
+    if (title !== m.title) body.appendChild(el("p", "mv-orig", fill(T.original, { title: m.title })));
+
+    var facts = [];
+    if (m.rating) facts.push(m.rating);
+    if (m.runtime) facts.push(fill(T.min, { n: m.runtime }));
+    var g = pick(m.genres);
+    if (g && g.length) facts.push(g.join(", "));
+    body.appendChild(el("p", "mv-facts", facts.join(" · ")));
+
+    var scores = el("div", "mv-scores");
+    var rt = m.rotten_tomatoes;
+    if (rt) {
+      var a = link(rt.url, "mv-rt");
+      if (rt.critics != null) a.appendChild(score("critics", rt.critics, rt.critics >= 60, rt.certified));
+      if (rt.audience != null) a.appendChild(score("audience", rt.audience, rt.audience >= 60, false));
+      scores.appendChild(a);
+    }
+    if (m.imdb_rating) {
+      var i = link(m.imdb_url, "mv-imdb");
+      i.appendChild(el("span", "mv-imdb-badge", "IMDb"));
+      i.appendChild(el("b", null, m.imdb_rating.toFixed(1)));
+      i.appendChild(el("span", "mv-score-label", "/10"));
+      scores.appendChild(i);
+    }
+    body.appendChild(scores);
+
+    var syn = pick(m.synopsis);
+    if (syn) body.appendChild(el("p", "mv-synopsis", syn));
+    var credits = [];
+    if (m.directors.length) credits.push(fill(T.directed, { names: m.directors.join(", ") }));
+    if (m.cast.length) credits.push(fill(T.starring, { names: m.cast.join(", ") }));
+    credits.forEach(function (c) { body.appendChild(el("p", "mv-credits", c)); });
+
+    if (m.trailer) {
+      var btn = el("button", "mv-play", "▶ " + T.trailer);
+      btn.type = "button";
+      btn.setAttribute("aria-expanded", "false");
+      btn.addEventListener("click", function () { openTrailer(btn, m); });
+      body.appendChild(btn);
+    }
+    body.appendChild(offers(m));
+    li.appendChild(body);
+    return li;
+  }
+
+  function render() {
+    closeTrailer();
+    var shown = movies.slice();
+    var by = sortSel.value;
+    if (by === "rt") shown.sort(function (a, b) {
+      return ((b.rotten_tomatoes || {}).critics || 0) - ((a.rotten_tomatoes || {}).critics || 0);
+    });
+    if (by === "year") shown.sort(function (a, b) { return a.year - b.year; });
+    if (by === "title") shown.sort(function (a, b) {
+      return (pick(a.titles) || a.title).localeCompare(pick(b.titles) || b.title, LANG);
+    });
+    if (streamOnly.checked) shown = shown.filter(streamable);
+    list.textContent = "";
+    shown.forEach(function (m) { list.appendChild(row(m, m._rank)); });
+    count.textContent = shown.length + " / " + movies.length;
+  }
+
+  fetch("/data/movies.json")
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (doc) {
+      movies = doc.movies;
+      movies.forEach(function (m, i) { m._rank = i; });
+      render();
+      list.setAttribute("aria-busy", "false");
+      var d = new Date(doc.updated + "T00:00:00Z");
+      foot.textContent = fill(T.updated, {
+        date: d.toLocaleDateString(LANG, { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })
+      });
+      foot.appendChild(document.createTextNode(" "));
+      var raw = el("a", null, "movies.json");
+      raw.href = "/data/movies.json";
+      foot.appendChild(raw);
+      sortSel.addEventListener("change", render);
+      streamOnly.addEventListener("change", render);
+      /* A shared link to one movie (#tt0111161) lands on it once it exists. */
+      if (location.hash) {
+        var t = document.getElementById(location.hash.slice(1));
+        if (t) t.scrollIntoView();
+      }
+    })
+    .catch(function () {
+      list.setAttribute("aria-busy", "false");
+      list.appendChild(el("li", "mv-note", T.error));
+    });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeTrailer();
+  });
+})();
+</script>
+{{ end }}
