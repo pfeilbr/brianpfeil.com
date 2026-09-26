@@ -47,7 +47,7 @@ to write a file that doesn't match, so a broken run commits nothing.
 The file is merged run to run, not replaced: each item keeps its
 `first_seen`, a source that fails keeps yesterday's items (its `status`
 says `error`), and items age out after `window_days` — except that each
-writer in `people` and `learning` keeps their latest three posts.
+source in `people`, `learning` and `tools` keeps its latest three entries, so a quiet writer still has a card and a tool still shows its current version.
 
 ## What it cannot read
 

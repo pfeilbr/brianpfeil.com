@@ -52,7 +52,7 @@ SCHEMA_VERSION = 1
 SECTIONS = ["people", "labs", "tools", "community", "learning"]
 SUMMARY_CHARS = 280
 PERSON_KEEP = 3          # latest posts a writer keeps past the window
-EVERGREEN = ("people", "learning")   # sections whose writers keep them
+EVERGREEN = ("people", "learning", "tools")   # sections whose sources keep their latest few
 DEFAULT_LIMIT = 5
 
 # Title/summary words that make an entry from a general-purpose feed count as AI.
