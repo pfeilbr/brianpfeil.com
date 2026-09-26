@@ -1,7 +1,7 @@
 +++
 author = "Brian Pfeil"
 date = 2015-01-14T21:37:08Z
-description = "このサイトについて"
+description = "Brian Pfeil について：30 年にわたりテクノロジーでものを作ってきたプリンシパル・クラウドアーキテクト、AWS Community Builder。ほかの人の学びに役立つよう、学んだことを発信しています。"
 draft = false
 slug = "about"
 title = "自己紹介"

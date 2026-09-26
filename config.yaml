@@ -76,6 +76,13 @@ outputFormats:
     baseName: llms
     isPlainText: true
     notAlternative: true
+  # Everything, for tools that want the whole site in one file; llms.txt is
+  # the short index that points at it.
+  llmsfull:
+    mediaType: text/plain
+    baseName: llms-full
+    isPlainText: true
+    notAlternative: true
 
 outputs:
   home:
@@ -83,6 +90,7 @@ outputs:
     - rss
     - json
     - llmstxt
+    - llmsfull
 
 languages:
   en:

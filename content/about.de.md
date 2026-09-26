@@ -1,7 +1,7 @@
 +++
 author = "Brian Pfeil"
 date = 2015-01-14T21:37:08Z
-description = "Über mich"
+description = "Über Brian Pfeil: 30 Jahre Bauen mit Technik, Principal Cloud Architect und AWS Community Builder. Ich teile, was ich lerne, damit andere davon profitieren."
 draft = false
 slug = "about"
 title = "Über mich"

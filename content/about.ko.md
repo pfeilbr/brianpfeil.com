@@ -1,7 +1,7 @@
 +++
 author = "Brian Pfeil"
 date = 2015-01-14T21:37:08Z
-description = "이 사이트 소개"
+description = "Brian Pfeil 소개: 30년 동안 기술로 무언가를 만들어 온 프린시펄 클라우드 아키텍트이자 AWS Community Builder. 다른 사람들의 배움에 도움이 되도록 배운 것을 나눕니다."
 draft = false
 slug = "about"
 title = "소개"

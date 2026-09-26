@@ -79,6 +79,23 @@ class BuildTest(unittest.TestCase):
         self.assertIn('href="/courses/auth/"', page)
         self.assertIn("&larr; Web Auth", page)
 
+    def test_lessons_get_canonical_and_description(self):
+        _, files = self.build(lesson="<html><head><title>Lesson 2 · Cookies</title></head><body></body></html>")
+        page = files["lessons/0002-cookies.html"]
+        self.assertIn('<link rel="canonical" href="https://brianpfeil.com/courses/auth/lessons/0002-cookies.html">', page)
+        self.assertIn('<meta name="description" content="Cookies — lesson 2 of 2 in the free Web Auth course. Sessions and tokens.">', page)
+        self.assertLess(page.index("canonical"), page.index("</head>"))
+
+    def test_existing_description_is_kept(self):
+        _, files = self.build(lesson='<html><head><meta name="description" content="Mine"></head><body></body></html>')
+        self.assertEqual(files["lessons/0002-cookies.html"].count('name="description"'), 1)
+
+    def test_sitemap_lists_every_page(self):
+        entry, _ = self.build()
+        xml = s.sitemap([entry], "https://brianpfeil.com")
+        self.assertIn("<loc>https://brianpfeil.com/courses/auth/lessons/0001-intro.html</loc>", xml)
+        self.assertIn("<loc>https://brianpfeil.com/courses/auth/reference/glossary.html</loc>", xml)
+
     def test_personal_details_are_redacted(self):
         _, files = self.build()
         page = files["lessons/0002-cookies.html"]
@@ -86,6 +103,10 @@ class BuildTest(unittest.TestCase):
         self.assertIn("For your spare time", page)
         self.assertIn("Your Name (TEAMID1234)", page)
         self.assertIn("alex@example.com", page)
+
+    def test_site_url_is_allowed_but_nothing_else(self):
+        self.assertEqual(s.deny_hits('href="https://brianpfeil.com/x"', CFG["deny"], (CFG["site"],)), [])
+        self.assertNotEqual(s.deny_hits('https://brianpfeil.com/ and Brian', CFG["deny"], (CFG["site"],)), [])
 
     def test_deny_hit_stops_the_course(self):
         with self.assertRaises(s.PrivacyError):
@@ -132,7 +153,7 @@ class RealDataTest(unittest.TestCase):
 
     def test_published_pages_pass_the_deny_list(self):
         for page in s.STATIC.rglob("*.html"):
-            self.assertEqual(s.deny_hits(page.read_text(encoding="utf-8"), CFG["deny"]), [], page)
+            self.assertEqual(s.deny_hits(page.read_text(encoding="utf-8"), CFG["deny"], (CFG["site"],)), [], page)
 
     def test_relative_links_resolve(self):
         """Every same-site link in a published page lands on something."""

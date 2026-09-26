@@ -546,6 +546,14 @@ other = "Die Daten dieser Seite konnten nicht geladen werden. Bitte neu laden."
 [data_noscript]
 other = "Diese Seite wird mit JavaScript gezeichnet. Die Daten liegen unter <a href=\"{{ .url }}\">{{ .url }}</a>."
 
+# --- SEO (partials/head-meta.html) ---
+
+[site_description]
+other = "Brian Pfeil – Principal Cloud Architect und AWS Community Builder. Kostenlose Kurse, Leitfäden zur Cloud-Architektur und Praxisnotizen zu AWS, Serverless und AI."
+
+[tag_desc]
+other = "Beiträge von Brian Pfeil mit dem Tag „{{ .tag }}“."
+
 # --- /architecture/ (layouts/architecture/, content/architecture/) ---
 
 [arch_intro]
@@ -613,7 +621,7 @@ other = "Die Quellen, an denen jede Lektion geprüft wurde, und wo du Fragen ste
 other = "Alle Kurse"
 
 [courses_footnote]
-other = "Jede Lektion ist eine einzelne, in sich geschlossene Seite: keine Anmeldung, kein Tracking, nichts zu installieren."
+other = "Jede Lektion ist eine einzelne, in sich geschlossene Seite: keine Anmeldung, nichts zu installieren."
 
 [course_cat_ai_ml]
 other = "AI & ML"

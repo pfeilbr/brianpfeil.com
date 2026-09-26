@@ -1,33 +1,34 @@
-{{- /* llms.txt - All site content for LLM consumption */ -}}
-# {{ .Site.Title }}
+{{- /* llms.txt (https://llmstxt.org): a short, linked index of the site.
+   The full text of every post is in llms-full.txt. */ -}}
+# {{ site.Title }}
 
-> Personal blog and technical notes by {{ .Site.Params.author.name }}. Topics include cloud architecture, AWS, serverless, JavaScript, Go, and software engineering. {{ .Site.BaseURL }}
+> {{ i18n "site_description" }}
 
-## About
-{{ with .Site.GetPage "/about" }}
-{{ .Plain }}
+{{ with site.GetPage "/about" }}{{ .Description }} {{ .Permalink }}{{ end }}
+
+The full text of every post and project is in {{ absURL "llms-full.txt" }}.
+
+## Architecture guides
+{{ range (site.GetPage "/architecture").Pages.ByWeight }}
+- [{{ .Title }}]({{ .Permalink }}): {{ .Description }}
+{{- end }}
+
+## Courses
+{{ with hugo.Data.courses }}{{ range .courses }}
+- [{{ .title }}]({{ absURL (printf "courses/%s/" .slug) }}): {{ .description }} ({{ len .lessons }} lessons)
+{{- end }}{{ end }}
+
+## Learning resources
+{{ with site.GetPage "/learn" }}
+- [{{ .Title }}]({{ .Permalink }}): {{ .Description }}
+{{- end }}
+
+## Projects
+{{ range (where site.RegularPages "Section" "projects").ByDate.Reverse }}
+- [{{ .Title }}]({{ .Permalink }}): {{ .Description | plainify | htmlUnescape }}
 {{- end }}
 
 ## Posts
-{{ range (where .Site.RegularPages "Section" "post") }}
-### {{ .Title }}
-
-- URL: {{ .Permalink }}
-- Date: {{ .Date.Format "2006-01-02" }}
-{{ with .Params.tags }}- Tags: {{ delimit . ", " }}{{ end }}
-
-{{ .Plain }}
-
----
-{{ end }}
-
-## Projects
-{{ range (where .Site.RegularPages "Section" "projects") }}
-### {{ .Title }}
-
-- URL: {{ .Permalink }}
-
-{{ .Plain }}
-
----
-{{ end }}
+{{ range (where site.RegularPages "Section" "post").ByDate.Reverse }}
+- [{{ .Title }}]({{ .Permalink }}){{ with .Description }}: {{ . | plainify | htmlUnescape }}{{ end }}
+{{- end }}

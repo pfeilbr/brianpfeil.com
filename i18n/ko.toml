@@ -544,6 +544,14 @@ other = "이 페이지의 데이터를 불러오지 못했습니다. 새로 고�
 [data_noscript]
 other = "이 페이지는 JavaScript로 그려집니다. 데이터는 <a href=\"{{ .url }}\">{{ .url }}</a>에 있습니다."
 
+# --- SEO (partials/head-meta.html) ---
+
+[site_description]
+other = "Brian Pfeil — 프린시펄 클라우드 아키텍트이자 AWS Community Builder. 무료 강좌, 클라우드 아키텍처 가이드, 학습 자료, AWS·서버리스·AI 실전 노트를 제공합니다."
+
+[tag_desc]
+other = "Brian Pfeil의 ‘{{ .tag }}’ 태그 글."
+
 # --- /architecture/ (layouts/architecture/, content/architecture/) ---
 
 [arch_intro]
@@ -611,7 +619,7 @@ other = "각 레슨을 검증할 때 참고한 자료와, 질문할 수 있는 �
 other = "전체 강좌"
 
 [courses_footnote]
-other = "모든 레슨은 그 자체로 완결된 한 페이지입니다. 가입도, 추적도 없고, 읽기 위해 설치할 것도 없습니다."
+other = "모든 레슨은 그 자체로 완결된 한 페이지입니다. 가입도 필요 없고, 읽기 위해 설치할 것도 없습니다."
 
 [course_cat_ai_ml]
 other = "AI & ML"

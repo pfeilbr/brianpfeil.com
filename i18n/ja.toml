@@ -544,6 +544,14 @@ other = "このページのデータを読み込めませんでした。再読�
 [data_noscript]
 other = "このページは JavaScript で表示しています。データは <a href=\"{{ .url }}\">{{ .url }}</a> にあります。"
 
+# --- SEO (partials/head-meta.html) ---
+
+[site_description]
+other = "Brian Pfeil（プリンシパル・クラウドアーキテクト、AWS Community Builder）のサイト。無料コース、クラウドアーキテクチャのガイド、学習リソース、AWS・サーバーレス・AI の実践ノートを公開しています。"
+
+[tag_desc]
+other = "Brian Pfeil の「{{ .tag }}」タグの記事。"
+
 # --- /architecture/ (layouts/architecture/, content/architecture/) ---
 
 [arch_intro]
@@ -611,7 +619,7 @@ other = "各レッスンの内容を確認した情報源と、質問できる�
 other = "すべての講座"
 
 [courses_footnote]
-other = "どのレッスンもそれだけで完結した 1 ページです。登録もトラッキングもなく、読むために何かをインストールする必要もありません。"
+other = "どのレッスンもそれだけで完結した 1 ページです。登録は不要で、読むために何かをインストールする必要もありません。"
 
 [course_cat_ai_ml]
 other = "AI・ML"

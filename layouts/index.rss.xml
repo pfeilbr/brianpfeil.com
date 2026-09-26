@@ -1,0 +1,38 @@
+{{- /* The home feed: posts, projects and architecture guides, newest first.
+   Hugo's default home feed lists every page on the site (about, archive,
+   movies...), which isn't what a subscriber wants. */ -}}
+{{- $pages := where site.RegularPages "Section" "in" (slice "post" "projects" "architecture") -}}
+{{- $pages = $pages.ByDate.Reverse -}}
+{{- $limit := site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 }}{{ $pages = $pages | first $limit }}{{ end -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ site.Title }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ i18n "site_description" }}</description>
+    <generator>Hugo</generator>
+    <language>{{ site.Language.Lang }}</language>
+    {{- with site.Params.author.name }}
+    <managingEditor>{{ . }}</managingEditor>
+    {{- end }}
+    {{- with $pages }}
+    <lastBuildDate>{{ (index . 0).Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+    {{- end }}
+    {{- with .OutputFormats.Get "RSS" }}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+    {{- end }}
+    {{- range $pages }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      <guid>{{ .Permalink }}</guid>
+      {{- with .Section }}
+      <category>{{ . }}</category>
+      {{- end }}
+      <description>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | htmlUnescape }}{{ end }}</description>
+    </item>
+    {{- end }}
+  </channel>
+</rss>

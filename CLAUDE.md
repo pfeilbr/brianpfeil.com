@@ -233,6 +233,20 @@ touching a template:
   the channel id minus its leading `UC`.
 - Avatars are downscaled and copied into `static/`, never hotlinked.
 
+## SEO
+
+- `partials/head-meta.html`: descriptions fall back to `i18n "site_description"`
+  (translated), tag pages use `tag_desc`. Only `post`, `projects` and
+  `architecture` pages are articles (`BlogPosting` / `TechArticle`); every
+  other page is a `WebPage`. The home page carries a Person + WebSite
+  `@graph`; articles point at the Person by `@id`. New section of articles →
+  add it to `$isArticle`.
+- The home RSS (`layouts/index.rss.xml`) lists posts, projects and guides only.
+- `llms.txt` is a short linked index; `llms-full.txt` has the full text.
+- Course lessons are static files, so `sync_courses.py` gives each a
+  canonical link and meta description and writes `static/sitemap-courses.xml`,
+  which `robots.txt` lists next to Hugo's sitemap.
+
 ## Shared UI pieces
 
 - **Icons** — `layouts/partials/icons/`. `chip.html` renders a tinted square;

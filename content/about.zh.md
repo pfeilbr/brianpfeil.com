@@ -1,7 +1,7 @@
 +++
 author = "Brian Pfeil"
 date = 2015-01-14T21:37:08Z
-description = "关于本站"
+description = "关于 Brian Pfeil：在技术领域动手做东西已有 30 年，首席云架构师、AWS 社区建设者，分享所学，希望能帮助别人学习。"
 draft = false
 slug = "about"
 title = "关于"

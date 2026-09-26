@@ -1,6 +1,7 @@
 {
   "_comment": "Settings for sync_courses.py. `source` is the learn project's courses directory (a /teach workspace per course). Only lessons/ and reference/ are published -- MISSION.md, NOTES.md and learning-records/ are about the learner and stay private. `redact` is applied to every published page, in order, as regex -> replacement; `deny` is checked afterwards and any hit stops the sync, so a new lesson that mentions something personal can't slip out.",
   "source": "~/projects/learn/public/courses",
+  "site": "https://brianpfeil.com",
   "exclude": [],
   "redact": [
     ["Apple Development: Brian Pfeil \\([A-Z0-9]{10}\\)", "Apple Development: Your Name (TEAMID1234)"],

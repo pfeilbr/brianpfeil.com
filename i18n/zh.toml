@@ -544,6 +544,14 @@ other = "无法加载此页面的数据，请刷新重试。"
 [data_noscript]
 other = "此页面由 JavaScript 绘制。数据见 <a href=\"{{ .url }}\">{{ .url }}</a>。"
 
+# --- SEO (partials/head-meta.html) ---
+
+[site_description]
+other = "Brian Pfeil——首席云架构师，AWS 社区建设者。提供免费课程、云架构指南、学习资源，以及关于 AWS、Serverless 和 AI 的实践笔记。"
+
+[tag_desc]
+other = "Brian Pfeil 标记为“{{ .tag }}”的文章。"
+
 # --- /architecture/ (layouts/architecture/, content/architecture/) ---
 
 [arch_intro]
@@ -611,7 +619,7 @@ other = "每一课核对过的资料来源，以及可以提问的地方。"
 other = "全部课程"
 
 [courses_footnote]
-other = "每一课都是一个独立的页面：无需注册，没有追踪，阅读时也不用安装任何东西。"
+other = "每一课都是一个独立的页面：无需注册，阅读时也不用安装任何东西。"
 
 [course_cat_ai_ml]
 other = "AI 与 ML"

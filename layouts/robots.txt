@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: {{ "sitemap.xml" | absURL }}
+{{- /* The course lessons are static files Hugo does not know about; tools/courses/sync_courses.py lists them here. */}}
+Sitemap: {{ "sitemap-courses.xml" | absURL }}

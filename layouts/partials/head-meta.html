@@ -1,6 +1,7 @@
-{{- $default := "Notes, playgrounds, and projects by Brian Pfeil — Principal Cloud Architect and AWS Community Builder." -}}
+{{- $default := i18n "site_description" -}}
 {{- $desc := "" -}}
 {{- with .Description }}{{ $desc = . }}{{ end -}}
+{{- if and (eq $desc "") (eq .Kind "term") }}{{ $desc = i18n "tag_desc" (dict "tag" (.Data.Term | default .Title)) }}{{ end -}}
 {{- if eq (trim ($desc | plainify) " \n\t\r") "" }}{{ with .Summary }}{{ $desc = . | plainify | truncate 200 }}{{ end }}{{ end -}}
 {{- if and (eq (trim ($desc | plainify) " \n\t\r") "") .IsPage -}}
   {{- /* Generated posts open with an "alert" banner div linking the source repo; drop it. */ -}}
@@ -10,8 +11,13 @@
 {{- $desc = trim (replaceRE `\s+` " " ($desc | plainify | htmlUnescape)) " " -}}
 {{- if eq $desc "" }}{{ $desc = $default }}{{ end -}}
 {{- $title := cond .IsHome .Site.Params.homeTitle (printf "%s | %s" .Title .Site.Title) -}}
+{{- /* Posts, projects and guides are articles; data pages, courses and
+   standalone pages are web pages (courses carry their own Course JSON-LD). */ -}}
+{{- $isArticle := and .IsPage (in (slice "post" "projects" "architecture") .Section) -}}
+{{- $person := printf "%s#person" hugo.Sites.Default.Home.Permalink -}}
 {{- $img := "" -}}
-{{- with .Params.image }}{{ $img = . | absURL }}{{ else }}{{ $img = "/images/2025-03-01-profile-brian-pfeil-portrait.jpg" | absURL }}{{ end -}}
+{{- $defaultImg := true -}}
+{{- with .Params.image }}{{ $img = . | absURL }}{{ $defaultImg = false }}{{ else }}{{ $img = "/images/2025-03-01-profile-brian-pfeil-portrait.jpg" | absURL }}{{ end -}}
 
 <meta name="description" content="{{ $desc }}">
 <meta name="theme-color" content="#0d7ea8">
@@ -22,15 +28,21 @@
 <meta property="og:description" content="{{ $desc }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:image" content="{{ $img }}">
-<meta property="og:type" content="{{ if and .IsPage (ne .Params.layout "page") }}article{{ else }}website{{ end }}">
-{{- if and .IsPage (ne .Params.layout "page") }}
+<meta property="og:type" content="{{ if $isArticle }}article{{ else }}website{{ end }}">
+{{- /* Open Graph wants ll_CC ("en_US"); config locales are "en-us". */ -}}
+{{- $ogLocale := partial "og-locale.html" .Site.Language.Locale }}
+<meta property="og:locale" content="{{ $ogLocale }}">
+{{- range .Translations }}
+<meta property="og:locale:alternate" content="{{ partial "og-locale.html" .Site.Language.Locale }}">
+{{- end }}
+{{- if $isArticle }}
 <meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
 {{- with .Params.tags }}{{ range . }}
 <meta property="article:tag" content="{{ . }}">
 {{- end }}{{ end }}
 {{- end }}
 
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="{{ if $defaultImg }}summary{{ else }}summary_large_image{{ end }}">
 <meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $desc }}">
 <meta name="twitter:image" content="{{ $img }}">
@@ -38,33 +50,49 @@
 <meta name="twitter:site" content="@{{ . }}">{{ end }}
 
 <script type="application/ld+json">
-{{- if and .IsPage (ne .Params.layout "page") -}}
+{{- if $isArticle -}}
 {{ dict
   "@context" "https://schema.org"
-  "@type" "BlogPosting"
+  "@type" (cond (eq .Section "architecture") "TechArticle" "BlogPosting")
   "headline" .Title
   "description" $desc
   "url" .Permalink
   "image" $img
+  "inLanguage" .Site.Language.Lang
   "datePublished" (.Date.Format "2006-01-02")
   "dateModified" (.Lastmod.Format "2006-01-02")
   "keywords" (delimit (.Params.tags | default slice) ", ")
   "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
-  "author" (dict "@type" "Person" "name" .Site.Params.author.name "url" .Site.Params.author.website)
-  "publisher" (dict "@type" "Person" "name" .Site.Params.author.name "url" .Site.Params.author.website)
+  "author" (dict "@type" "Person" "@id" $person "name" .Site.Params.author.name "url" .Site.Params.author.website)
+  "publisher" (dict "@type" "Person" "@id" $person "name" .Site.Params.author.name "url" .Site.Params.author.website)
   | jsonify (dict "indent" "  ") | safeJS }}
 {{- else if .IsHome -}}
 {{ dict
   "@context" "https://schema.org"
-  "@type" "Person"
-  "name" .Site.Params.author.name
-  "url" .Site.Params.author.website
-  "image" $img
-  "jobTitle" "Principal Cloud Architect"
-  "sameAs" (slice
-    (printf "https://github.com/%s" .Site.Params.author.github)
-    (printf "https://twitter.com/%s" .Site.Params.author.twitter)
-    (printf "https://stackoverflow.com/%s" .Site.Params.author.stackoverflow))
+  "@graph" (slice
+    (dict
+      "@type" "Person"
+      "@id" $person
+      "name" .Site.Params.author.name
+      "url" .Site.Params.author.website
+      "image" $img
+      "jobTitle" "Principal Cloud Architect"
+      "description" $desc
+      "knowsAbout" (slice "Cloud architecture" "AWS" "Serverless" "Architecture review" "Terraform" "AI")
+      "sameAs" (slice
+        (printf "https://github.com/%s" .Site.Params.author.github)
+        (printf "https://x.com/%s" .Site.Params.author.twitter)
+        "https://www.linkedin.com/in/brian-pfeil-175a011/"
+        "https://www.instagram.com/pfeilbr/"
+        (printf "https://stackoverflow.com/%s" .Site.Params.author.stackoverflow)))
+    (dict
+      "@type" "WebSite"
+      "@id" (printf "%s#website" hugo.Sites.Default.Home.Permalink)
+      "name" .Site.Title
+      "url" .Permalink
+      "description" $desc
+      "inLanguage" .Site.Language.Lang
+      "publisher" (dict "@id" $person)))
   | jsonify (dict "indent" "  ") | safeJS }}
 {{- else -}}
 {{ dict
@@ -73,6 +101,8 @@
   "name" .Title
   "description" $desc
   "url" .Permalink
+  "inLanguage" .Site.Language.Lang
+  "isPartOf" (dict "@id" (printf "%s#website" hugo.Sites.Default.Home.Permalink))
   | jsonify (dict "indent" "  ") | safeJS }}
 {{- end -}}
 </script>

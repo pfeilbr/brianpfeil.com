@@ -1,7 +1,7 @@
 +++
 author = "Brian Pfeil"
 date = 2015-01-14T21:37:08Z
-description = "informazioni sul sito"
+description = "Chi è Brian Pfeil: 30 anni a costruire con la tecnologia, Principal Cloud Architect e AWS Community Builder. Condivido ciò che imparo perché altri ne traggano beneficio."
 draft = false
 slug = "about"
 title = "Chi sono"
