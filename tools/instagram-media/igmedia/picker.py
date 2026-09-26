@@ -135,7 +135,7 @@ class Picker:
                 left -= len(chunk)
         with open(tmp, "rb") as f:
             got = fetch.sniff(f.read(16))
-        want = "video" if variant in ("preview", "hq") else "image"
+        want = "video" if variant in ("preview", "hq", "motion") else "image"
         # Google answers a refused request with a small placeholder PNG.
         if not left and dest.suffix == ".jpg" and tmp.stat().st_size < 2048:
             got = "a placeholder image"

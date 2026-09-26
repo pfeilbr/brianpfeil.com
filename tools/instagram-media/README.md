@@ -166,7 +166,10 @@ clips, landscapes). Then:
   is blocked, whatever else found it — "Wyatt Pfeil skiing" and so on are
   harvested for that alone;
 - a "scene" shot (found by the activity alone) is blocked by anyone at all
-  in it, however small — a swimmer far out on a beach counts;
+  in it, however small — a swimmer far out on a beach counts. Scene shots
+  are hidden in the picker unless "show scenery / POV" is ticked: they
+  aren't photos of B, and Vision misses distant people in silhouette (a
+  rowing crew got through);
 - readable text that looks like a number plate, house number, phone number,
   street, email or a page of writing blocks it; other text (a logo, a trail
   sign) is shown as a warning; receipts, screenshots and documents are blocked;

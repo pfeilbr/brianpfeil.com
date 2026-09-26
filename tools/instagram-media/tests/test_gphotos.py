@@ -186,6 +186,33 @@ class ScreenTest(unittest.TestCase):
         self.assertEqual(screen.similar_groups(cands), {"a": "b", "b": "b", "c": "c"})
 
 
+class ReceiveTest(unittest.TestCase):
+    """What the browser sends is checked against the variant asked for."""
+
+    def picker(self, d):
+        from igmedia import picker
+        p = picker.Picker.__new__(picker.Picker)
+        import threading, queue
+        p.lock, p.jobs, p.work = threading.RLock(), queue.Queue(), Path(d)
+        p.cands = gphotos.Candidates(Path(d) / "c.json")
+        p.cands.items[KEY] = {"key": KEY, "kind": "photo", "screen": {"status": "ok"}}
+        return p
+
+    def test_motion_clip_is_accepted_as_video(self):
+        with TemporaryDirectory() as d:
+            p = self.picker(d)
+            body = b"\x00\x00\x00\x18ftypmp42" + b"0" * 4000
+            self.assertEqual(p.receive(KEY, "motion", io.BytesIO(body), len(body)), {"ok": True})
+            self.assertTrue(p.cands.items[KEY]["motion"])
+            self.assertNotIn("screen", p.cands.items[KEY])  # judged again, clip included
+
+    def test_picture_for_motion_is_refused(self):
+        with TemporaryDirectory() as d:
+            p = self.picker(d)
+            body = b"\xff\xd8\xff" + b"0" * 4000
+            self.assertFalse(p.receive(KEY, "motion", io.BytesIO(body), len(body))["ok"])
+
+
 class SniffTest(unittest.TestCase):
     def test_sniff(self):
         self.assertEqual(fetch.sniff(b"\xff\xd8\xff\xe0" + b"0" * 12), "image")

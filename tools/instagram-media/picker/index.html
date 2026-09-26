@@ -117,6 +117,7 @@ section.content { padding: 12px 16px 80px; }
     <div class="bar">
       <strong id="title"></strong><span class="count" id="count"></span>
       <div class="spacer"></div>
+      <label class="status" title="Shots found by the activity alone, with nobody detected in them: POV clips and scenery. Vision misses distant people in these (a rowing crew in silhouette), so look closely."><input type="checkbox" id="scenes"> show scenery / POV</label>
       <label class="status"><input type="range" id="size" min="120" max="340" value="190"> size</label>
       <button class="btn" id="skip-rest" title="Skip every undecided item on screen (S)">Skip the rest on screen</button>
     </div>
@@ -156,7 +157,12 @@ async function api(path, body) {
   return r.json();
 }
 
-function inCat(it) { return it.decision === "include" ? it.category === cat : it.categories.includes(cat); }
+// Scenery and POV shots (found by the activity alone) are hidden unless asked
+// for: they aren't photos of B, and distant people slip past screening.
+let scenes = false;
+try { scenes = localStorage.getItem("picker.scenes") === "1"; } catch (e) {}
+function inCat(it) {
+  if (it.tier === "scene" && !scenes && it.decision !== "include") return false; return it.decision === "include" ? it.category === cat : it.categories.includes(cat); }
 
 function visible() {
   const items = S.items.filter(inCat);
@@ -181,7 +187,8 @@ function renderCats() {
   const nav = $("#cats");
   nav.innerHTML = "";
   for (const c of S.categories) {
-    const items = S.items.filter((it) => it.decision === "include" ? it.category === c.key : it.categories.includes(c.key));
+    const items = S.items.filter((it) => it.decision === "include" ? it.category === c.key
+      : it.categories.includes(c.key) && (scenes || it.tier !== "scene"));
     const inc = items.filter((it) => it.decision === "include").length;
     const todo = items.filter((it) => ok(it) && !it.decision && it.leader === it.key).length;
     const b = document.createElement("button");
@@ -505,6 +512,12 @@ viewer.addEventListener("click", (e) => { if (e.target === viewer || e.target.cl
 
 $("#tabs").onclick = (e) => { if (e.target.dataset.view) { view = e.target.dataset.view; focus = 0; render(); } };
 $("#skip-rest").onclick = skipRest;
+$("#scenes").checked = scenes;
+$("#scenes").onchange = (e) => {
+  scenes = e.target.checked;
+  try { localStorage.setItem("picker.scenes", scenes ? "1" : "0"); } catch (err) {}
+  focus = 0; render();
+};
 $("#log").title = "Click to hide";
 $("#log").onclick = () => { $("#log").classList.remove("open"); $("#log").dataset.dismissed = "1"; };
 $("#size").oninput = (e) => document.documentElement.style.setProperty("--tile", e.target.value + "px");
