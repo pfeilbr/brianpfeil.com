@@ -334,7 +334,17 @@ class Picker:
             lock = derive.Lock(self.tool_dir / g["lock_file"])
             vision = lambda imgs: screen.run_vision(self.vision_bin, imgs)  # noqa: E731
             with self.lock:
-                picks = {k: v for k, v in self.picks.items() if k not in self.cands.excluded}
+                # A pick that stopped passing screening (stricter rules, or its
+                # motion clip showed someone) is set aside, never published.
+                failing = [k for k, v in self.picks.items() if v.get("decision") == "include" and (
+                    k in self.cands.excluded or
+                    ((self.cands.items.get(k) or {}).get("screen") or {}).get("status") not in ("ok", "warn"))]
+                for k in failing:
+                    self.picks[k] = {"key": k, "decision": "skip", "category": None}
+                    self.log(f"set aside {self.cands.items.get(k, {}).get('id', k[:16])}: no longer passes screening")
+                if failing:
+                    gphotos.save_picks(self.picks_path, self.picks)
+                picks = dict(self.picks)
                 cands = dict(self.cands.items)
             cats = [c.key for c in self.categories]
             source = lambda c: self.hq(c["key"]) if c["kind"] == "video" else self.final(c["key"])  # noqa: E731
@@ -532,7 +542,16 @@ def serve(tool_dir: Path, repo_root: Path, cfg: dict, port: int = 8790, workers:
     p.port = port
     for _ in range(workers):
         threading.Thread(target=p.worker, daemon=True).start()
-    srv = ThreadingHTTPServer(("127.0.0.1", port), make_handler(p, tool_dir / "picker"))
+    class Server(ThreadingHTTPServer):
+        def handle_error(self, request, client_address):
+            # A browser drops a video request whenever it seeks or moves on;
+            # that is not an error worth a traceback.
+            import sys
+            if isinstance(sys.exc_info()[1], (ConnectionResetError, BrokenPipeError)):
+                return
+            super().handle_error(request, client_address)
+
+    srv = Server(("127.0.0.1", port), make_handler(p, tool_dir / "picker"))
     print(f"picker: http://127.0.0.1:{port}  ({len(p.cands.items)} candidates, "
           f"{p.jobs.qsize()} to screen)", flush=True)
     srv.serve_forever()
