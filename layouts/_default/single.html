@@ -42,7 +42,7 @@
     <div class="post-row-body">
       <div class="flex items-baseline justify-between gap-3">
         <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
-        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ .Date.Format "Jan 2006" }}</time>
+        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ partial "fmt-date.html" (dict "t" .Date "f" "month_year") }}</time>
       </div>
     </div>
   </article>
@@ -67,12 +67,6 @@
 </nav>
 {{ end }}
 
-<script>
-document.addEventListener("click", function(e) {
-  if (e.target.closest("a")) return;
-  var row = e.target.closest("[data-href]");
-  if (row) window.location.href = row.dataset.href;
-});
-</script>
+{{ partial "row-click.html" . }}
 {{ end }}
 {{ end }}

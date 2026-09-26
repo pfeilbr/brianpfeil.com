@@ -1704,3 +1704,36 @@ other = "CTO da Amazon; só as publicações sobre IA"
 [ai_role_pragmatic]
 other = "O que a IA está fazendo com as equipes de engenharia; só o que é sobre IA"
 # --- END /ai/ ---
+
+[zoom_dialog]
+other = "Imagem ampliada"
+
+[zoom_close]
+other = "Fechar imagem"
+
+[zoom_expand]
+other = "ampliar imagem"
+
+[code_copy]
+other = "copiar"
+
+[code_copied]
+other = "copiado"
+
+[code_copy_failed]
+other = "falhou"
+
+[code_copy_label]
+other = "Copiar código para a área de transferência"
+
+[tag_title]
+other = "Posts com a tag “{{ .term }}”"
+
+[category_title]
+other = "Posts de {{ .term }}"
+
+[date_month_year]
+other = "Jan 2006"
+
+[date_day_month]
+other = "2 Jan"

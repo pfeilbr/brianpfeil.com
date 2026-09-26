@@ -3,13 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ if .IsHome }}{{ .Site.Params.homeTitle }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  <title>{{ partial "page-title.html" . }}</title>
   {{ partial "head-meta.html" . }}
+  {{- /* 404 pages are served at any URL, so they get no canonical or
+     hreflang and are kept out of search results. */}}
+  {{- if eq .Kind "404" }}
+  <meta name="robots" content="noindex">
+  {{- else }}
   <link rel="canonical" href="{{ .Permalink }}">
+  {{- end }}
   {{- /* Posts (and therefore the feed) only exist on the default-language site. */}}
   <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ printf "%sindex.xml" hugo.Sites.Default.Home.Permalink }}">
   {{- /* hreflang alternates for the languages this page actually has. */}}
-  {{- if .IsTranslated }}
+  {{- if and .IsTranslated (ne .Kind "404") }}
   {{- range .AllTranslations }}
   <link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}">
   {{- end }}
@@ -146,6 +152,9 @@
       });
       document.querySelectorAll("#dark-mode-moon, .dark-mode-moon").forEach(function(el) {
         el.classList.toggle("hidden", dark);
+      });
+      document.querySelectorAll("#dark-mode-toggle, #dark-mode-toggle-mobile").forEach(function(el) {
+        el.setAttribute("aria-pressed", dark ? "true" : "false");
       });
     }
 

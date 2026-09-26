@@ -1,0 +1,7 @@
+{{- /* A date in the current language's order and month names.
+   Call with (dict "t" <time or string> "f" "month_year" | "day_month").
+   The layout comes from i18n (date_month_year / date_day_month) because
+   word order differs ("Jan 2006", "2006年1月"), and time.Format translates
+   the month name ("janv.", "Jan.") for the page's language. */ -}}
+{{- $t := time.AsTime .t -}}
+{{- return time.Format (i18n (printf "date_%s" .f)) $t -}}

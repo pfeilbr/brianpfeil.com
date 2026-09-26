@@ -23,6 +23,13 @@
 
   if (!searchInput || !resultsContainer) return;
 
+  // Screen readers hear the match count, not every result, through one
+  // polite status line outside the list that gets rebuilt on each keystroke.
+  var status = document.createElement("p");
+  status.className = "sr-only";
+  status.setAttribute("role", "status");
+  resultsContainer.parentNode.insertBefore(status, resultsContainer);
+
   // Update placeholder with post count
   if (typeof postCount !== "undefined") {
     searchInput.placeholder = count(T.placeholderCount, postCount);
@@ -41,6 +48,7 @@
         var err = document.createElement("p");
         err.className = "text-sm text-gray-500";
         err.textContent = T.failed;
+        status.textContent = T.failed;
         resultsContainer.appendChild(err);
       });
   }
@@ -161,6 +169,7 @@
       var none = document.createElement("p");
       none.className = "text-sm text-gray-500 py-4";
       none.textContent = T.noMatches;
+      status.textContent = T.noMatches;
       resultsContainer.appendChild(none);
       return;
     }
@@ -171,6 +180,7 @@
       ? T.oneMatch
       : count(results.length === 30 ? T.topMatches : T.nMatches, results.length);
     resultsContainer.appendChild(meta);
+    status.textContent = meta.textContent;
 
     for (var i = 0; i < results.length; i++) {
       var item = results[i].item;
@@ -200,6 +210,7 @@
 
     if (!query) {
       resultsContainer.innerHTML = "";
+      status.textContent = "";
       if (postList) postList.style.display = "";
       return;
     }
@@ -274,6 +285,15 @@
       if (!searchInput.value) kbdHint.style.display = "";
     });
   }
+
+  // "/" focuses search from anywhere on a page that has it (posts list, 404)
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+    var active = document.activeElement;
+    if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.isContentEditable)) return;
+    e.preventDefault();
+    searchInput.focus();
+  });
 
   // Also hide sentinel/progress when searching, show when cleared
   var sentinel = document.getElementById("scroll-sentinel");

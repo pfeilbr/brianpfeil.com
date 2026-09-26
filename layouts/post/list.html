@@ -22,7 +22,7 @@
     <div class="post-row-body">
       <div class="flex items-baseline justify-between gap-3">
         <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
-        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ .Date.Format "Jan 2006" }}</time>
+        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ partial "fmt-date.html" (dict "t" .Date "f" "month_year") }}</time>
       </div>
       {{ with .Params.tags }}
       <div class="mt-0.5">{{ range $i, $t := . }}{{ if lt $i 3 }}<a href="/tags/{{ $t | urlize }}/" class="text-xs text-gray-400 hover:text-brand no-underline mr-2">{{ $t }}</a>{{ end }}{{ end }}</div>
@@ -39,28 +39,11 @@
 {{ end }}
 
 
+{{ partial "row-click.html" . }}
 <script>
 var I18N = {{ dict "progress" (i18n "scroll_progress" (dict "loaded" "{loaded}" "total" "{total}")) "loading" (i18n "loading") | jsonify | safeJS }};
 var postCount = {{ len $all }};
 var pageSize = {{ .Paginator.PagerSize }};
-
-/* Row click delegation */
-document.addEventListener("click", function(e) {
-  if (e.target.closest("a")) return;
-  var row = e.target.closest("[data-href]");
-  if (row) window.location.href = row.dataset.href;
-});
-
-/* "/" keyboard shortcut to focus search */
-document.addEventListener("keydown", function(e) {
-  if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
-    var active = document.activeElement;
-    if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.isContentEditable)) return;
-    e.preventDefault();
-    var q = document.getElementById("search-query");
-    if (q) q.focus();
-  }
-});
 
 /* Infinite scroll with progress counter */
 (function() {

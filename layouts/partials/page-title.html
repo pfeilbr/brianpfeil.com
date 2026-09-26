@@ -1,0 +1,16 @@
+{{- /* The <title> text, shared by <title> in baseof.html and the og/twitter
+   titles in head-meta.html so they never drift apart.
+
+   Tag and category pages get their own wording: a tag named after a post
+   ("Boto") otherwise shared that post's title exactly. The 404 page uses its
+   translated heading rather than Hugo's English "404 Page not found". */ -}}
+{{- $t := printf "%s | %s" .Title .Site.Title -}}
+{{- if .IsHome -}}
+  {{- $t = .Site.Params.homeTitle -}}
+{{- else if eq .Kind "404" -}}
+  {{- $t = printf "%s | %s" (i18n "not_found_title") .Site.Title -}}
+{{- else if eq .Kind "term" -}}
+  {{- $key := cond (eq .Data.Plural "categories") "category_title" "tag_title" -}}
+  {{- $t = printf "%s | %s" (i18n $key (dict "term" (.Data.Term | default .Title))) .Site.Title -}}
+{{- end -}}
+{{- return $t -}}

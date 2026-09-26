@@ -1,6 +1,7 @@
 <script>
 /* Copy-to-clipboard buttons on code blocks */
 (function() {
+  var T = {{ dict "copy" (i18n "code_copy") "copied" (i18n "code_copied") "failed" (i18n "code_copy_failed") "label" (i18n "code_copy_label") | jsonify | safeJS }};
   var blocks = document.querySelectorAll(".prose pre");
   if (!blocks.length) return;
 
@@ -37,21 +38,21 @@
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "code-copy";
-    btn.textContent = "copy";
-    btn.setAttribute("aria-label", "Copy code to clipboard");
+    btn.textContent = T.copy;
+    btn.setAttribute("aria-label", T.label);
     wrap.appendChild(btn);
 
     btn.addEventListener("click", function() {
       copyText(pre.innerText).then(function() {
-        btn.textContent = "copied";
+        btn.textContent = T.copied;
         btn.classList.add("is-copied");
         setTimeout(function() {
-          btn.textContent = "copy";
+          btn.textContent = T.copy;
           btn.classList.remove("is-copied");
         }, 1500);
       }).catch(function() {
-        btn.textContent = "failed";
-        setTimeout(function() { btn.textContent = "copy"; }, 1500);
+        btn.textContent = T.failed;
+        setTimeout(function() { btn.textContent = T.copy; }, 1500);
       });
     });
   });

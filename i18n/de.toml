@@ -1706,3 +1706,36 @@ other = "CTO von Amazon; nur die KI-Beiträge"
 [ai_role_pragmatic]
 other = "Was KI mit Engineering-Teams macht; nur die KI-Beiträge"
 # --- END /ai/ ---
+
+[zoom_dialog]
+other = "Vergrößertes Bild"
+
+[zoom_close]
+other = "Bild schließen"
+
+[zoom_expand]
+other = "Bild vergrößern"
+
+[code_copy]
+other = "kopieren"
+
+[code_copied]
+other = "kopiert"
+
+[code_copy_failed]
+other = "fehlgeschlagen"
+
+[code_copy_label]
+other = "Code in die Zwischenablage kopieren"
+
+[tag_title]
+other = "Beiträge mit dem Schlagwort „{{ .term }}“"
+
+[category_title]
+other = "{{ .term }}-Beiträge"
+
+[date_month_year]
+other = "Jan 2006"
+
+[date_day_month]
+other = "2. Jan"

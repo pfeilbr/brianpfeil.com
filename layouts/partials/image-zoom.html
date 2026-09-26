@@ -5,6 +5,7 @@
   var images = document.querySelectorAll(".prose img");
   if (!images.length) return;
 
+  var T = {{ dict "dialog" (i18n "zoom_dialog") "close" (i18n "zoom_close") "expand" (i18n "zoom_expand") | jsonify | safeJS }};
   var overlay = null;
   var lastFocused = null;
 
@@ -13,8 +14,8 @@
     overlay.className = "zoom-overlay";
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
-    overlay.setAttribute("aria-label", "Expanded image");
-    overlay.innerHTML = '<img alt=""><button type="button" class="zoom-close" aria-label="Close image">&times;</button>';
+    overlay.setAttribute("aria-label", T.dialog);
+    overlay.innerHTML = '<img alt=""><button type="button" class="zoom-close" aria-label="' + T.close + '">&times;</button>';
     document.body.appendChild(overlay);
 
     overlay.addEventListener("click", function(e) {
@@ -43,7 +44,10 @@
   }
 
   document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" && overlay && overlay.classList.contains("is-open")) close();
+    if (!overlay || !overlay.classList.contains("is-open")) return;
+    if (e.key === "Escape") close();
+    /* aria-modal promises focus stays inside; the close button is the only stop. */
+    else if (e.key === "Tab") { e.preventDefault(); overlay.querySelector(".zoom-close").focus(); }
   });
 
   images.forEach(function(img) {
@@ -52,7 +56,7 @@
     img.classList.add("is-zoomable");
     img.setAttribute("tabindex", "0");
     img.setAttribute("role", "button");
-    img.setAttribute("aria-label", (img.alt ? img.alt + " — " : "") + "expand image");
+    img.setAttribute("aria-label", (img.alt ? img.alt + " — " : "") + T.expand);
     img.addEventListener("click", function() { open(img); });
     img.addEventListener("keydown", function(e) {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(img); }

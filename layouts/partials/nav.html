@@ -10,7 +10,9 @@
         {{- if $hasPortrait }}
         <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"/></svg>
         {{- else }}
-        <img src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="" width="320" height="320" decoding="async">
+        {{- $av := resources.Get "images/avatar.jpg" -}}
+        {{- $a1 := $av.Fill "36x36 q85" -}}{{- $a2 := $av.Fill "72x72 q85" -}}{{- $a3 := $av.Fill "108x108 q85" }}
+        <img src="{{ $a2.RelPermalink }}" srcset="{{ $a1.RelPermalink }} 1x, {{ $a2.RelPermalink }} 2x, {{ $a3.RelPermalink }} 3x" alt="" width="36" height="36" decoding="async">
         {{- end }}
       </a>
       {{ partial "lang-switcher.html" . }}
@@ -32,7 +34,7 @@
         <svg class="dark-mode-moon w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       </button>
       <details class="relative">
-        <summary class="list-none cursor-pointer p-1" role="button" aria-label="{{ i18n "open_menu" }}">
+        <summary class="list-none cursor-pointer p-1" aria-label="{{ i18n "open_menu" }}">
           <svg class="w-6 h-6 text-gray-600" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>

@@ -1,0 +1,9 @@
+<script>
+/* Post rows (article[data-href]) are clickable anywhere, not just on the title
+   link. Delegated, so rows added later by infinite scroll work too. */
+document.addEventListener("click", function(e) {
+  if (e.target.closest("a")) return;
+  var row = e.target.closest("[data-href]");
+  if (row) window.location.href = row.dataset.href;
+});
+</script>

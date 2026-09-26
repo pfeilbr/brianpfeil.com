@@ -20,6 +20,17 @@ googleAnalytics: "G-SKVHNJ985Y"
 # format by default to prevent arbitrary JS in content files. content/steps/*.html
 # are hand-authored standalone HTML pages, so the default breaks the build.
 # Single-author repo, so restore the pre-0.162 behavior.
+# The nav avatar is shown at 36px but the file in static/ is 320px; mounting it
+# into assets lets partials/nav.html resize it at build time, so it can never
+# drift from the original. Declaring an assets mount replaces the default one,
+# hence assets/ itself is listed too.
+module:
+  mounts:
+    - source: assets
+      target: assets
+    - source: static/images/2025-03-01-profile-brian-pfeil-avatar.jpg
+      target: assets/images/avatar.jpg
+
 security:
   allowContent:
     - ".*"

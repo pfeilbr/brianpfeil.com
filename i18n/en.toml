@@ -1705,3 +1705,36 @@ other = "Amazon CTO; only the AI posts"
 [ai_role_pragmatic]
 other = "What AI is doing to engineering teams; only the AI posts"
 # --- END /ai/ ---
+
+[zoom_dialog]
+other = "Expanded image"
+
+[zoom_close]
+other = "Close image"
+
+[zoom_expand]
+other = "expand image"
+
+[code_copy]
+other = "copy"
+
+[code_copied]
+other = "copied"
+
+[code_copy_failed]
+other = "failed"
+
+[code_copy_label]
+other = "Copy code to clipboard"
+
+[tag_title]
+other = "Posts tagged “{{ .term }}”"
+
+[category_title]
+other = "{{ .term }} posts"
+
+[date_month_year]
+other = "Jan 2006"
+
+[date_day_month]
+other = "Jan 2"

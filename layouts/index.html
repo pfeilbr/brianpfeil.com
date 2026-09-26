@@ -58,7 +58,7 @@
       {{ range first 4 $posts }}
       <li>
         <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2006" }}</time>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "fmt-date.html" (dict "t" .Date "f" "month_year") }}</time>
       </li>
       {{ end }}
     </ul>
@@ -106,7 +106,7 @@
       {{ range $heads }}
       <li>
         <a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>
-        <time datetime="{{ .published }}">{{ (time .published).Format "Jan 2" }}</time>
+        <time datetime="{{ .published }}">{{ partial "fmt-date.html" (dict "t" .published "f" "day_month") }}</time>
       </li>
       {{ end }}
     </ul>
@@ -195,7 +195,7 @@
       {{ range first 4 (sort $own "pushed" "desc") }}
       <li>
         <a href="https://github.com/pfeilbr/{{ .name }}" target="_blank" rel="noopener">{{ .name }}</a>
-        <time datetime="{{ .pushed }}">{{ (time.AsTime .pushed).Format "Jan 2006" }}</time>
+        <time datetime="{{ .pushed }}">{{ partial "fmt-date.html" (dict "t" .pushed "f" "month_year") }}</time>
       </li>
       {{ end }}
     </ul>

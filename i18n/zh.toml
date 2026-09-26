@@ -1704,3 +1704,36 @@ other = "亚马逊 CTO；仅收录 AI 文章"
 [ai_role_pragmatic]
 other = "AI 对工程团队的影响；仅收录 AI 文章"
 # --- END /ai/ ---
+
+[zoom_dialog]
+other = "放大的图片"
+
+[zoom_close]
+other = "关闭图片"
+
+[zoom_expand]
+other = "放大图片"
+
+[code_copy]
+other = "复制"
+
+[code_copied]
+other = "已复制"
+
+[code_copy_failed]
+other = "失败"
+
+[code_copy_label]
+other = "将代码复制到剪贴板"
+
+[tag_title]
+other = "标签为「{{ .term }}」的文章"
+
+[category_title]
+other = "{{ .term }} 分类的文章"
+
+[date_month_year]
+other = "2006年1月"
+
+[date_day_month]
+other = "1月2日"

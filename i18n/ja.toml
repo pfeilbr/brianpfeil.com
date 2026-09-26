@@ -1704,3 +1704,36 @@ other = "Amazon CTO。AI の記事のみ"
 [ai_role_pragmatic]
 other = "AI がエンジニアリングチームにもたらす変化。AI の記事のみ"
 # --- END /ai/ ---
+
+[zoom_dialog]
+other = "拡大画像"
+
+[zoom_close]
+other = "画像を閉じる"
+
+[zoom_expand]
+other = "画像を拡大"
+
+[code_copy]
+other = "コピー"
+
+[code_copied]
+other = "コピー済み"
+
+[code_copy_failed]
+other = "失敗"
+
+[code_copy_label]
+other = "コードをクリップボードにコピー"
+
+[tag_title]
+other = "「{{ .term }}」タグの記事"
+
+[category_title]
+other = "{{ .term }} の記事"
+
+[date_month_year]
+other = "2006年1月"
+
+[date_day_month]
+other = "1月2日"

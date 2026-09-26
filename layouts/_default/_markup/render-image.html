@@ -1,1 +1,10 @@
-<img src="{{ .Destination | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+{{- /* Page-bundle images get their intrinsic size so the page doesn't jump
+   as they load. Remote images keep no size: fetching them at build time
+   would make the build depend on third-party hosts. */ -}}
+{{- $dims := "" -}}
+{{- with .Page.Resources.Get .Destination -}}
+  {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") -}}
+    {{- $dims = printf ` width="%d" height="%d"` .Width .Height -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ .Destination | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ $dims | safeHTMLAttr }} loading="lazy" decoding="async">

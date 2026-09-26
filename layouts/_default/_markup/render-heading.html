@@ -1,0 +1,6 @@
+{{- /* The page template already renders the title as the page's one <h1>, so a
+   "# Heading" in the markdown (common in READMEs pulled in as posts) becomes
+   <h2>. Every other level is left as written. */ -}}
+{{- $level := cond (eq .Level 1) 2 .Level -}}
+<h{{ $level }} id="{{ .Anchor }}"
+  {{- range $k, $v := .Attributes }}{{ if ne $k "id" }} {{ $k }}="{{ $v }}"{{ end }}{{ end }}>{{ .Text }}</h{{ $level }}>

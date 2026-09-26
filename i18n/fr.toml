@@ -1705,3 +1705,36 @@ other = "CTO d'Amazon ; uniquement les articles sur l'IA"
 [ai_role_pragmatic]
 other = "Ce que l'IA change pour les équipes d'ingénierie ; uniquement l'IA"
 # --- END /ai/ ---
+
+[zoom_dialog]
+other = "Image agrandie"
+
+[zoom_close]
+other = "Fermer l'image"
+
+[zoom_expand]
+other = "agrandir l'image"
+
+[code_copy]
+other = "copier"
+
+[code_copied]
+other = "copié"
+
+[code_copy_failed]
+other = "échec"
+
+[code_copy_label]
+other = "Copier le code dans le presse-papiers"
+
+[tag_title]
+other = "Articles avec l'étiquette « {{ .term }} »"
+
+[category_title]
+other = "Articles {{ .term }}"
+
+[date_month_year]
+other = "Jan 2006"
+
+[date_day_month]
+other = "2 Jan"
