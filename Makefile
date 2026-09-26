@@ -4,9 +4,10 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-i18n test-docs ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-i18n test-docs test-github ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
+	python3 tools/github-repos/check_page.py --public public
 
 generate-posts: ## Regenerate generated-*.md posts from GitHub
 	cd tools/generate-posts && go run . -user=pfeilbr -dest=../../content/post -debug
@@ -83,6 +84,14 @@ test-i18n: ## Tests for, and a run of, the i18n consistency check
 movies-refresh: ## Fill in and refresh data/movies.json (posters, scores, trailers, streaming)
 	python3 tools/movies/refresh.py
 
+# Every public repo of pfeilbr, classified into areas and learning paths
+# (tools/github-repos/config.json). Needs `gh auth login`.
+github-refresh: ## Refresh data/github.json from GitHub (repos, READMEs, areas, learning paths)
+	python3 tools/github-repos/refresh.py
+
+test-github: ## Tests for the GitHub page's data refresher
+	python3 -m unittest discover -s tools/github-repos -p 'test_*.py'
+
 check-repo-links: ## List posts whose repo link 404s for a visitor (live, needs network)
 	python3 tools/link-check/check_repo_links.py
 
@@ -109,4 +118,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: help dev build verify generate-posts movies-refresh test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-i18n test-docs check-repo-links tf-init tf-plan tf-validate
+.PHONY: help dev build verify generate-posts movies-refresh github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-i18n test-docs check-repo-links tf-init tf-plan tf-validate

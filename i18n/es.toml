@@ -598,3 +598,397 @@ other = "Explora los artículos por tema"
 [hub_tags_count]
 other = "{{ .count }} temas"
 
+
+# --- /github/ ---------------------------------------------------------------
+# Strings with {n}-style placeholders are filled in the browser by the page's
+# script, not by Hugo; keep the braces and the names inside them.
+
+[gh_intro]
+other = "{n} repositorios públicos desde {since}, la mayoría pequeños laboratorios hechos para aprender una sola cosa. Búscalos, explóralos por área o lenguaje, o sigue una ruta de aprendizaje."
+
+[gh_profile]
+other = "Perfil en GitHub"
+
+[gh_stat_repos]
+other = "repositorios"
+
+[gh_stat_playgrounds]
+other = "laboratorios"
+
+[gh_stat_languages]
+other = "lenguajes"
+
+[gh_stat_articles]
+other = "con artículo"
+
+[gh_lang_bar]
+other = "Lenguajes principales en todos los repositorios"
+
+[gh_tabs_label]
+other = "Formas de explorar"
+
+[gh_tab_browse]
+other = "Explorar"
+
+[gh_tab_learn]
+other = "Aprender"
+
+[gh_tab_timeline]
+other = "Cronología"
+
+[gh_search_label]
+other = "Buscar repositorios"
+
+[gh_search_placeholder]
+other = "Busca en {n} repos: prueba lambda, react o lang:go"
+
+[gh_advanced]
+other = "Avanzado"
+
+[gh_kind_label]
+other = "Tipo"
+
+[gh_kind_all]
+other = "Todos"
+
+[gh_kind_playground]
+other = "Laboratorios"
+
+[gh_kind_project]
+other = "Proyectos"
+
+[gh_kind_fork]
+other = "Forks"
+
+[gh_badge_playground]
+other = "Laboratorio"
+
+[gh_badge_fork]
+other = "Fork"
+
+[gh_badge_archived]
+other = "Archivado"
+
+[gh_areas]
+other = "Áreas"
+
+[gh_languages]
+other = "Lenguajes"
+
+[gh_more]
+other = "+{n} más"
+
+[gh_fewer]
+other = "Mostrar menos"
+
+[gh_created]
+other = "Creado"
+
+[gh_pushed]
+other = "Última actualización"
+
+[gh_year_any]
+other = "Cualquier año"
+
+[gh_year_from]
+other = "Desde el año"
+
+[gh_year_to]
+other = "Hasta el año"
+
+[gh_only_article]
+other = "Con artículo"
+
+[gh_only_demo]
+other = "Con demo en vivo"
+
+[gh_include_forks]
+other = "Incluir forks"
+
+[gh_search_readme]
+other = "Buscar también en el README"
+
+[gh_min_stars]
+other = "Mínimo de estrellas"
+
+[gh_histogram]
+other = "Repositorios creados por año. Haz clic en una barra para filtrar por ese año."
+
+[gh_syntax_title]
+other = "Sintaxis de búsqueda"
+
+[gh_syntax_lang]
+other = "lenguaje principal"
+
+[gh_syntax_area]
+other = "área"
+
+[gh_syntax_tag]
+other = "etiqueta"
+
+[gh_syntax_is]
+other = "laboratorio, proyecto o fork"
+
+[gh_syntax_has]
+other = "tiene artículo o demo en vivo"
+
+[gh_syntax_created]
+other = "creado en un año o en un rango de años"
+
+[gh_syntax_pushed]
+other = "actualizado por última vez después de un año"
+
+[gh_syntax_stars]
+other = "al menos esta cantidad de estrellas"
+
+[gh_syntax_not]
+other = "excluye todo lo que tenga esta palabra"
+
+[gh_syntax_phrase]
+other = "esta frase exacta"
+
+[gh_sort_label]
+other = "Ordenar"
+
+[gh_sort_best]
+other = "Más relevantes"
+
+[gh_sort_pushed]
+other = "Actualizados recientemente"
+
+[gh_sort_created]
+other = "Más nuevos"
+
+[gh_sort_oldest]
+other = "Más antiguos"
+
+[gh_sort_stars]
+other = "Más estrellas"
+
+[gh_sort_name]
+other = "Nombre"
+
+[gh_view_label]
+other = "Vista"
+
+[gh_view_cards]
+other = "Tarjetas"
+
+[gh_view_list]
+other = "Lista"
+
+[gh_showing]
+other = "{shown} de {total} repositorios"
+
+[gh_clear]
+other = "Quitar filtros"
+
+[gh_show_more]
+other = "Mostrar más"
+
+[gh_none]
+other = "Ningún repositorio coincide. Prueba a quitar un filtro."
+
+[gh_updated]
+other = "Actualizado el {date}"
+
+[gh_created_in]
+other = "Creado el {date}"
+
+[gh_article]
+other = "Artículo"
+
+[gh_code]
+other = "Código"
+
+[gh_demo]
+other = "Demo en vivo"
+
+[gh_open_dev]
+other = "Abrir en el navegador (github.dev)"
+
+[gh_codespace]
+other = "Ejecutar en un Codespace"
+
+[gh_copy_clone]
+other = "Copiar el comando git clone"
+
+[gh_copied]
+other = "Copiado"
+
+[gh_forked_from]
+other = "Fork de {repo}"
+
+[gh_stars_title]
+other = "{n} estrellas"
+
+[gh_learn_intro]
+other = "¿Estás aprendiendo alguna de estas tecnologías? La mayoría de mis repos son laboratorios: pequeños, autocontenidos, cada uno hecho mientras aprendía justo eso. Elige una ruta abajo. Primero aparecen los repos con un artículo que los explica paso a paso."
+
+[gh_learn_how]
+other = "Cómo usar un laboratorio"
+
+[gh_learn_step1]
+other = "Lee el artículo, si lo hay. Explica qué hace el código y por qué."
+
+[gh_learn_step2]
+other = "Abre el código en tu navegador con github.dev. No hay nada que instalar."
+
+[gh_learn_step3]
+other = "Clónalo, sigue el README y cambia cosas hasta que algo se rompa."
+
+[gh_track_pick]
+other = "Rutas de aprendizaje"
+
+[gh_track_count]
+other = "{n} repos"
+
+[gh_track_show_all]
+other = "Ver los {n}"
+
+[gh_track_in_browse]
+other = "Buscar en esta ruta"
+
+[gh_track_close]
+other = "Volver a todas las rutas"
+
+[gh_timeline_intro]
+other = "Todos los repositorios por año de creación, sin forks. Pasa el cursor sobre un nombre para ver su descripción."
+
+[gh_load_error]
+other = "No se pudo cargar la lista de repositorios. Vuelve a intentarlo más tarde."
+
+[gh_noscript]
+other = "Esta página se dibuja con JavaScript. Los datos que la alimentan están en <a href=\"/data/github.json\">github.json</a>."
+
+[gh_footnote]
+other = "Desde la API de GitHub, {date}."
+
+[gh_area_games]
+other = "Juegos y gráficos"
+
+[gh_area_ai]
+other = "IA y aprendizaje automático"
+
+[gh_area_security]
+other = "Seguridad y autenticación"
+
+[gh_area_mobile]
+other = "Móvil y escritorio"
+
+[gh_area_serverless]
+other = "Serverless e IaC"
+
+[gh_area_cloud]
+other = "Nube"
+
+[gh_area_data]
+other = "Datos y bases de datos"
+
+[gh_area_containers]
+other = "Contenedores"
+
+[gh_area_python]
+other = "Python y notebooks"
+
+[gh_area_web]
+other = "Web y JavaScript"
+
+[gh_area_systems]
+other = "Lenguajes de sistemas"
+
+[gh_area_testing]
+other = "Pruebas y DevOps"
+
+[gh_area_architecture]
+other = "API e integraciones"
+
+[gh_area_tools]
+other = "CLI y herramientas de desarrollo"
+
+[gh_area_other]
+other = "Otros"
+
+[gh_track_serverless_title]
+other = "Serverless en AWS"
+
+[gh_track_serverless_blurb]
+other = "Lambda, API Gateway, Step Functions, EventBridge y lo que los une"
+
+[gh_track_iac_title]
+other = "Infraestructura como código"
+
+[gh_track_iac_blurb]
+other = "CDK, CloudFormation, SAM y Terraform: recursos en la nube definidos en el código fuente"
+
+[gh_track_containers_title]
+other = "Contenedores"
+
+[gh_track_containers_blurb]
+other = "Docker, Kubernetes, ECS y Fargate"
+
+[gh_track_ai_title]
+other = "IA y LLM"
+
+[gh_track_ai_blurb]
+other = "Bedrock, OpenAI, agentes, embeddings y aprendizaje automático clásico"
+
+[gh_track_frontend_title]
+other = "Frontend"
+
+[gh_track_frontend_blurb]
+other = "React, Vue, CSS y todo lo que corre en el navegador"
+
+[gh_track_node_title]
+other = "Node.js y TypeScript"
+
+[gh_track_node_blurb]
+other = "JavaScript en el servidor, de Express a Deno"
+
+[gh_track_python_title]
+other = "Python y notebooks"
+
+[gh_track_python_blurb]
+other = "Scripts, notebooks de Jupyter y herramientas de datos"
+
+[gh_track_data_title]
+other = "Bases de datos y streaming"
+
+[gh_track_data_blurb]
+other = "DynamoDB, Postgres, Redis, Kafka y analítica"
+
+[gh_track_go_title]
+other = "Go"
+
+[gh_track_go_blurb]
+other = "Pequeños programas, módulos y herramientas en Go"
+
+[gh_track_systems_title]
+other = "C, C++ y Rust"
+
+[gh_track_systems_blurb]
+other = "Código nativo, sistemas de compilación y WebAssembly"
+
+[gh_track_mobile_title]
+other = "Apps móviles y de escritorio"
+
+[gh_track_mobile_blurb]
+other = "iOS, Swift, Android, React Native y Electron"
+
+[gh_track_security_title]
+other = "Autenticación y seguridad"
+
+[gh_track_security_blurb]
+other = "OAuth, OIDC, Cognito, IAM y gestión de secretos"
+
+[hub_github_title]
+other = "GitHub"
+
+[hub_github_blurb]
+other = "Todos los repos públicos, con búsqueda y rutas de aprendizaje por los laboratorios"
+
+[hub_github_count]
+other = "{{ .count }} repositorios"
+
+[hub_github_all]
+other = "Explorar todos los repositorios"

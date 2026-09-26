@@ -1,0 +1,1056 @@
+{{ define "main" }}
+{{- /* /github/ renders in the browser from /data/github.json, written by
+   tools/github-repos/refresh.py (make github-refresh). Three ways in:
+
+     Browse    instant search with GitHub-style qualifiers (lang:go, is:fork,
+               created:2018..2020), faceted by kind, area and language, and
+               an Advanced panel for dates, stars and a per-year histogram
+     Learn     learning paths through the playgrounds, easiest first
+     Timeline  every repo by the year it was created
+
+   Everything the script prints comes from here, already translated. Area and
+   path names are i18n keys (gh_area_<key>, gh_track_<key>_title/_blurb) looked
+   up per key, so the JSON carries structure only. Filter state lives in the
+   query string, so any search can be shared as a link. */ -}}
+{{ $lang := .Site.Language.Lang }}
+{{ $data := hugo.Data.github }}
+
+{{- /* Repo -> the article about it on this site, from the posts themselves,
+   so a renamed slug can never leave a dead link here. */ -}}
+{{ $articles := dict }}
+{{ range partial "site-posts.html" . }}
+  {{ $p := . }}
+  {{ with $p.Params.repoFullName }}
+    {{ $parts := split . "/" }}
+    {{ if and (eq (len $parts) 2) (eq (lower (index $parts 0)) "pfeilbr") }}
+      {{ $articles = merge $articles (dict (lower (index $parts 1)) $p.RelPermalink) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $areas := dict }}
+{{ with $data }}{{ range .areas }}{{ $areas = merge $areas (dict .key (i18n (printf "gh_area_%s" .key))) }}{{ end }}{{ end }}
+{{ $tracks := dict }}
+{{ with $data }}{{ range .tracks }}
+  {{ $tracks = merge $tracks (dict .key (dict "title" (i18n (printf "gh_track_%s_title" .key)) "blurb" (i18n (printf "gh_track_%s_blurb" .key)))) }}
+{{ end }}{{ end }}
+
+{{ $strings := dict
+  "intro" (i18n "gh_intro")
+  "placeholder" (i18n "gh_search_placeholder")
+  "badgePlayground" (i18n "gh_badge_playground")
+  "badgeFork" (i18n "gh_badge_fork")
+  "badgeArchived" (i18n "gh_badge_archived")
+  "more" (i18n "gh_more")
+  "fewer" (i18n "gh_fewer")
+  "yearAny" (i18n "gh_year_any")
+  "showing" (i18n "gh_showing")
+  "none" (i18n "gh_none")
+  "updated" (i18n "gh_updated")
+  "created" (i18n "gh_created_in")
+  "article" (i18n "gh_article")
+  "code" (i18n "gh_code")
+  "demo" (i18n "gh_demo")
+  "openDev" (i18n "gh_open_dev")
+  "codespace" (i18n "gh_codespace")
+  "copyClone" (i18n "gh_copy_clone")
+  "copied" (i18n "gh_copied")
+  "forkedFrom" (i18n "gh_forked_from")
+  "stars" (i18n "gh_stars_title")
+  "trackCount" (i18n "gh_track_count")
+  "showAll" (i18n "gh_track_show_all")
+  "inBrowse" (i18n "gh_track_in_browse")
+  "closeTrack" (i18n "gh_track_close")
+  "error" (i18n "gh_load_error")
+  "footnote" (i18n "gh_footnote")
+  "other" (i18n "gh_area_other")
+}}
+
+<article class="gh">
+  <header class="gh-head">
+    <div class="gh-head-top">
+      {{ partial "icons/chip.html" (dict "id" "i-github" "size" "lg") }}
+      <h1 class="gh-title">{{ .Title }}</h1>
+      <a class="gh-profile" href="https://github.com/pfeilbr" target="_blank" rel="me noopener">@pfeilbr
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
+        <span class="sr-only">{{ i18n "gh_profile" }}</span></a>
+    </div>
+    <p class="gh-intro" id="gh-intro"></p>
+    <dl class="gh-stats" id="gh-stats" hidden>
+      <div><dt>{{ i18n "gh_stat_repos" }}</dt><dd data-stat="repos"></dd></div>
+      <div><dt>{{ i18n "gh_stat_playgrounds" }}</dt><dd data-stat="playgrounds"></dd></div>
+      <div><dt>{{ i18n "gh_stat_languages" }}</dt><dd data-stat="languages"></dd></div>
+      <div><dt>{{ i18n "gh_stat_articles" }}</dt><dd data-stat="articles"></dd></div>
+    </dl>
+    <div class="gh-langbar" id="gh-langbar" role="group" aria-label="{{ i18n "gh_lang_bar" }}" hidden>
+      <div class="gh-langbar-track" id="gh-langbar-track"></div>
+      <div class="gh-langbar-legend" id="gh-langbar-legend"></div>
+    </div>
+  </header>
+
+  <noscript><p class="data-error">{{ i18n "gh_noscript" | safeHTML }}</p></noscript>
+
+  <div class="ptabs" role="tablist" aria-label="{{ i18n "gh_tabs_label" }}">
+    <button type="button" class="ptab is-on" role="tab" id="tab-browse"
+            aria-controls="panel-browse" aria-selected="true" data-panel="browse">
+      {{ partial "icons/chip.html" (dict "id" "i-github" "size" "sm") }}
+      <span class="ptab-name">{{ i18n "gh_tab_browse" }}</span>
+    </button>
+    <button type="button" class="ptab" role="tab" id="tab-learn"
+            aria-controls="panel-learn" aria-selected="false" tabindex="-1" data-panel="learn">
+      {{ partial "icons/chip.html" (dict "id" "i-rocket" "size" "sm") }}
+      <span class="ptab-name">{{ i18n "gh_tab_learn" }}</span>
+    </button>
+    <button type="button" class="ptab" role="tab" id="tab-timeline"
+            aria-controls="panel-timeline" aria-selected="false" tabindex="-1" data-panel="timeline">
+      {{ partial "icons/chip.html" (dict "id" "i-archive" "size" "sm") }}
+      <span class="ptab-name">{{ i18n "gh_tab_timeline" }}</span>
+    </button>
+  </div>
+
+  {{/* ---------- Browse ---------- */}}
+  <div class="ptab-panel" id="panel-browse" role="tabpanel" aria-labelledby="tab-browse">
+    <div class="gh-searchrow">
+      <label class="gh-search">
+        <span class="sr-only">{{ i18n "gh_search_label" }}</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+        <input type="search" id="gh-q" autocomplete="off" spellcheck="false" enterkeyhint="search">
+        <kbd class="gh-kbd" aria-hidden="true">/</kbd>
+      </label>
+      <button type="button" class="gh-adv-toggle" id="gh-adv-toggle" aria-expanded="false" aria-controls="gh-adv">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+        <span>{{ i18n "gh_advanced" }}</span>
+      </button>
+    </div>
+
+    <div class="gh-seg" role="radiogroup" aria-label="{{ i18n "gh_kind_label" }}" id="gh-kind">
+      <button type="button" role="radio" data-kind="all">{{ i18n "gh_kind_all" }} <span class="gh-n"></span></button>
+      <button type="button" role="radio" data-kind="playground">{{ i18n "gh_kind_playground" }} <span class="gh-n"></span></button>
+      <button type="button" role="radio" data-kind="project">{{ i18n "gh_kind_project" }} <span class="gh-n"></span></button>
+      <button type="button" role="radio" data-kind="fork">{{ i18n "gh_kind_fork" }} <span class="gh-n"></span></button>
+    </div>
+
+    <div class="gh-facet">
+      <h2 class="gh-facet-h">{{ i18n "gh_areas" }}</h2>
+      <div class="gh-chips" id="gh-areas"></div>
+    </div>
+    <div class="gh-facet">
+      <h2 class="gh-facet-h">{{ i18n "gh_languages" }}</h2>
+      <div class="gh-chips" id="gh-langs"></div>
+    </div>
+
+    <section class="gh-adv" id="gh-adv" hidden aria-label="{{ i18n "gh_advanced" }}">
+      <div class="gh-adv-grid">
+        <fieldset class="gh-range">
+          <legend>{{ i18n "gh_created" }}</legend>
+          <select id="gh-cf" aria-label="{{ i18n "gh_created" }}: {{ i18n "gh_year_from" }}"></select>
+          <span aria-hidden="true">–</span>
+          <select id="gh-ct" aria-label="{{ i18n "gh_created" }}: {{ i18n "gh_year_to" }}"></select>
+        </fieldset>
+        <fieldset class="gh-range">
+          <legend>{{ i18n "gh_pushed" }}</legend>
+          <select id="gh-pf" aria-label="{{ i18n "gh_pushed" }}: {{ i18n "gh_year_from" }}"></select>
+          <span aria-hidden="true">–</span>
+          <select id="gh-pt" aria-label="{{ i18n "gh_pushed" }}: {{ i18n "gh_year_to" }}"></select>
+        </fieldset>
+        <label class="gh-stars-in">
+          <span>{{ i18n "gh_min_stars" }}</span>
+          <input type="number" id="gh-stars" min="0" step="1" inputmode="numeric" placeholder="0">
+        </label>
+      </div>
+      <div class="gh-checks">
+        <label><input type="checkbox" id="gh-art"> {{ i18n "gh_only_article" }}</label>
+        <label><input type="checkbox" id="gh-demo"> {{ i18n "gh_only_demo" }}</label>
+        <label><input type="checkbox" id="gh-forks"> {{ i18n "gh_include_forks" }}</label>
+        <label><input type="checkbox" id="gh-rm" checked> {{ i18n "gh_search_readme" }}</label>
+      </div>
+      <figure class="gh-hist">
+        <div class="gh-hist-bars" id="gh-hist"></div>
+        <figcaption>{{ i18n "gh_histogram" }}</figcaption>
+      </figure>
+      <details class="gh-syntax">
+        <summary>{{ i18n "gh_syntax_title" }}</summary>
+        <table>
+          <tr><td><code>lang:go</code></td><td>{{ i18n "gh_syntax_lang" }}</td></tr>
+          <tr><td><code>area:ai</code></td><td>{{ i18n "gh_syntax_area" }}</td></tr>
+          <tr><td><code>tag:lambda</code></td><td>{{ i18n "gh_syntax_tag" }}</td></tr>
+          <tr><td><code>is:playground</code> <code>is:project</code> <code>is:fork</code></td><td>{{ i18n "gh_syntax_is" }}</td></tr>
+          <tr><td><code>has:article</code> <code>has:demo</code></td><td>{{ i18n "gh_syntax_has" }}</td></tr>
+          <tr><td><code>created:2019</code> <code>created:2018..2020</code></td><td>{{ i18n "gh_syntax_created" }}</td></tr>
+          <tr><td><code>pushed:&gt;2023</code></td><td>{{ i18n "gh_syntax_pushed" }}</td></tr>
+          <tr><td><code>stars:&gt;2</code></td><td>{{ i18n "gh_syntax_stars" }}</td></tr>
+          <tr><td><code>-azure</code></td><td>{{ i18n "gh_syntax_not" }}</td></tr>
+          <tr><td><code>"step functions"</code></td><td>{{ i18n "gh_syntax_phrase" }}</td></tr>
+        </table>
+      </details>
+    </section>
+
+    <div class="gh-toolbar">
+      <span class="gh-count" id="gh-count" aria-live="polite"></span>
+      <button type="button" class="gh-clear" id="gh-clear" hidden>{{ i18n "gh_clear" }}</button>
+      <label class="gh-sort">
+        <span class="sr-only">{{ i18n "gh_sort_label" }}</span>
+        <select id="gh-sort" aria-label="{{ i18n "gh_sort_label" }}">
+          <option value="best">{{ i18n "gh_sort_best" }}</option>
+          <option value="pushed">{{ i18n "gh_sort_pushed" }}</option>
+          <option value="created">{{ i18n "gh_sort_created" }}</option>
+          <option value="oldest">{{ i18n "gh_sort_oldest" }}</option>
+          <option value="stars">{{ i18n "gh_sort_stars" }}</option>
+          <option value="name">{{ i18n "gh_sort_name" }}</option>
+        </select>
+      </label>
+      <div class="gh-view" role="radiogroup" aria-label="{{ i18n "gh_view_label" }}" id="gh-view">
+        <button type="button" role="radio" data-view="cards" title="{{ i18n "gh_view_cards" }}" aria-label="{{ i18n "gh_view_cards" }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="4" width="17" height="7" rx="1.5"/><rect x="3.5" y="13" width="17" height="7" rx="1.5"/></svg>
+        </button>
+        <button type="button" role="radio" data-view="list" title="{{ i18n "gh_view_list" }}" aria-label="{{ i18n "gh_view_list" }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <ol class="gh-list" id="gh-list" aria-busy="true"></ol>
+    <button type="button" class="gh-more" id="gh-more" hidden>{{ i18n "gh_show_more" }}</button>
+  </div>
+
+  {{/* ---------- Learn ---------- */}}
+  <div class="ptab-panel" id="panel-learn" role="tabpanel" aria-labelledby="tab-learn">
+    <p class="gh-lead">{{ i18n "gh_learn_intro" }}</p>
+    <div class="gh-how">
+      <h2 class="gh-how-h">{{ i18n "gh_learn_how" }}</h2>
+      <ol>
+        <li>{{ partial "icons/chip.html" (dict "id" "i-pen" "size" "sm") }}<span>{{ i18n "gh_learn_step1" }}</span></li>
+        <li>{{ partial "icons/chip.html" (dict "id" "i-braces" "size" "sm") }}<span>{{ i18n "gh_learn_step2" }}</span></li>
+        <li>{{ partial "icons/chip.html" (dict "id" "i-terminal" "size" "sm") }}<span>{{ i18n "gh_learn_step3" }}</span></li>
+      </ol>
+    </div>
+    <h2 class="gh-facet-h gh-paths-h" id="gh-paths-h">{{ i18n "gh_track_pick" }}</h2>
+    <div class="gh-tracks" id="gh-tracks"></div>
+    <section class="gh-track" id="gh-track" hidden tabindex="-1"></section>
+  </div>
+
+  {{/* ---------- Timeline ---------- */}}
+  <div class="ptab-panel" id="panel-timeline" role="tabpanel" aria-labelledby="tab-timeline">
+    <p class="gh-lead">{{ i18n "gh_timeline_intro" }}</p>
+    <div class="gh-timeline" id="gh-timeline"></div>
+  </div>
+
+  <p class="mv-foot" id="gh-foot"></p>
+</article>
+
+{{ partial "data-render.html" . }}
+<script>
+(function () {
+  var D = window.DataPage;
+  var LANG = {{ $lang }};
+  var T = {{ $strings | jsonify | safeJS }};
+  var AREA = {{ $areas | jsonify | safeJS }};
+  var TRACK = {{ $tracks | jsonify | safeJS }};
+  var ARTICLE = {{ $articles | jsonify | safeJS }};
+  var GH = "https://github.com/";
+  var PAGE = 30;
+  var $ = function (id) { return document.getElementById(id); };
+  var q = $("gh-q"), list = $("gh-list"), moreBtn = $("gh-more");
+  var doc, repos = [], user = "pfeilbr", colors = {}, areaIcon = {};
+  var shown = PAGE, lastResults = [];
+  var nf = new Intl.NumberFormat(LANG);
+
+  /* ---------- small DOM helpers ---------- */
+  var SVG = "http://www.w3.org/2000/svg";
+  function glyph(id, cls) {
+    var s = document.createElementNS(SVG, "svg");
+    s.setAttribute("viewBox", "0 0 24 24");
+    s.setAttribute("fill", "none");
+    s.setAttribute("stroke", "currentColor");
+    s.setAttribute("stroke-width", "1.7");
+    s.setAttribute("stroke-linecap", "round");
+    s.setAttribute("stroke-linejoin", "round");
+    s.setAttribute("aria-hidden", "true");
+    if (cls) s.setAttribute("class", cls);
+    var u = document.createElementNS(SVG, "use");
+    u.setAttribute("href", "#" + id);
+    s.appendChild(u);
+    return s;
+  }
+  function chip(id, size) {
+    var c = D.el("span", "ic ic-" + (size || "sm"));
+    c.dataset.ic = id;
+    c.setAttribute("aria-hidden", "true");
+    c.appendChild(glyph(id));
+    return c;
+  }
+  function dot(lang) {
+    var d = D.el("span", "gh-dot");
+    d.style.backgroundColor = colors[lang] || "#8d939e";
+    d.setAttribute("aria-hidden", "true");
+    return d;
+  }
+  function btn(text, cls) {
+    var b = D.el("button", cls, text);
+    b.type = "button";
+    return b;
+  }
+  function month(iso) {
+    return new Date(iso + "T00:00:00Z").toLocaleDateString(LANG, { year: "numeric", month: "short", timeZone: "UTC" });
+  }
+  function year(iso) { return +iso.slice(0, 4); }
+  function articleOf(r) { return ARTICLE[r.name.toLowerCase()]; }
+
+  /* ---------- query parsing ----------
+     Free words must all match somewhere (name, description, tags, area,
+     language; README text too unless switched off). Qualifiers follow
+     GitHub's own search syntax so they need no explaining to anyone who
+     has used it. */
+  function range(v) {
+    var m;
+    if ((m = /^(\d{4})\.\.(\d{4})$/.exec(v))) return [+m[1], +m[2]];
+    if ((m = /^>=?(\d{4})$/.exec(v))) return [+m[1] + (v[1] === "=" ? 0 : 1), 9999];
+    if ((m = /^<=?(\d{4})$/.exec(v))) return [0, +m[1] - (v[1] === "=" ? 0 : 1)];
+    if ((m = /^(\d{4})$/.exec(v))) return [+m[1], +m[1]];
+    return null;
+  }
+  function parse(text) {
+    var out = { words: [], phrases: [], nots: [], lang: [], area: [], tag: [], is: [], has: [], created: null, pushed: null, stars: 0 };
+    var re = /(-?)(?:(\w+):)?(?:"([^"]*)"|(\S+))/g, m;
+    while ((m = re.exec(text))) {
+      var neg = m[1] === "-", key = (m[2] || "").toLowerCase(), val = (m[3] != null ? m[3] : m[4] || "").toLowerCase();
+      if (!val) continue;
+      if (key === "lang" || key === "language") out.lang.push(val);
+      else if (key === "area") out.area.push(val);
+      else if (key === "tag" || key === "topic") out.tag.push(val);
+      else if (key === "is") out.is.push(val);
+      else if (key === "has") out.has.push(val);
+      else if (key === "created" || key === "year") out.created = range(val);
+      else if (key === "pushed" || key === "updated") out.pushed = range(val);
+      else if (key === "stars") out.stars = +(val.replace(/[^\d]/g, "")) + (/^>\d/.test(val) ? 1 : 0);
+      else {
+        var w = (key ? key + ":" : "") + val;
+        if (neg) out.nots.push(w);
+        else if (m[3] != null) out.phrases.push(w);
+        else out.words.push(w);
+      }
+    }
+    return out;
+  }
+
+  /* ---------- search index ---------- */
+  function norm(s) { return String(s || "").toLowerCase(); }
+  function prep(r) {
+    r._name = norm(r.name);
+    r._nameWords = r._name.replace(/[-_.]+/g, " ");
+    r._desc = norm(r.desc);
+    r._tags = r.tags.map(norm);
+    r._meta = [r._tags.join(" "), norm(r.lang), r.areas.map(function (a) { return norm(AREA[a]) + " " + a; }).join(" ")].join(" ");
+    r._readme = norm(r.readme);
+    r._post = articleOf(r);
+  }
+  /* 0 = no match; higher is better. */
+  function wordScore(r, w, readme) {
+    if (r._name === w) return 100;
+    if (r._nameWords.split(" ").indexOf(w) >= 0) return 40;
+    if (r._name.indexOf(w) >= 0 || r._nameWords.indexOf(w) >= 0) return 25;
+    if (r._tags.indexOf(w) >= 0) return 20;
+    if (r._meta.indexOf(w) >= 0) return 12;
+    if (r._desc.indexOf(w) >= 0) return 10;
+    if (readme && r._readme.indexOf(w) >= 0) return 3;
+    return 0;
+  }
+
+  /* ---------- state <-> URL ---------- */
+  var S = {};
+  var DEFAULTS = { q: "", kind: "all", area: [], lang: [], sort: "best", view: "cards", adv: false,
+    cf: 0, ct: 0, pf: 0, pt: 0, art: false, demo: false, forks: false, rm: true, stars: 0 };
+  function readURL() {
+    var p = new URLSearchParams(location.search);
+    Object.keys(DEFAULTS).forEach(function (k) {
+      var d = DEFAULTS[k], v = p.get(k);
+      if (v == null) S[k] = Array.isArray(d) ? d.slice() : d;
+      else if (Array.isArray(d)) S[k] = v ? v.split(",") : [];
+      else if (typeof d === "boolean") S[k] = v === "1";
+      else if (typeof d === "number") S[k] = +v || 0;
+      else S[k] = v;
+    });
+  }
+  function writeURL() {
+    var p = new URLSearchParams(location.search);
+    Object.keys(DEFAULTS).forEach(function (k) {
+      var d = DEFAULTS[k], v = S[k];
+      var same = Array.isArray(d) ? !v.length : v === d;
+      if (same) p.delete(k);
+      else p.set(k, Array.isArray(d) ? v.join(",") : typeof d === "boolean" ? (v ? "1" : "0") : String(v));
+    });
+    var s = p.toString();
+    try { history.replaceState(null, "", location.pathname + (s ? "?" + s : "") + location.hash); } catch (e) {}
+  }
+  function filtersActive() {
+    return Object.keys(DEFAULTS).some(function (k) {
+      if (k === "sort" || k === "view" || k === "adv") return false;
+      var d = DEFAULTS[k], v = S[k];
+      return Array.isArray(d) ? v.length > 0 : v !== d;
+    });
+  }
+
+  /* ---------- filtering ---------- */
+  function inRange(y, lo, hi) { return (!lo || y >= lo) && (!hi || y <= hi); }
+  /* skip names one facet, so that facet's counts show what picking another
+     value of it would give rather than collapsing to the current pick. */
+  function filter(skip) {
+    var P = parse(S.q), words = P.words;
+    var kinds = P.is.length ? P.is : (S.kind !== "all" ? [S.kind] : null);
+    var out = [];
+    repos.forEach(function (r) {
+      if (skip !== "kind") {
+        if (kinds) { if (kinds.indexOf(r.kind) < 0 && !(kinds.indexOf("archived") >= 0 && r.archived)) return; }
+        else if (r.kind === "fork" && !S.forks) return;
+      }
+      if (skip !== "area" && S.area.length && !S.area.some(function (a) { return r.areas.indexOf(a) >= 0; })) return;
+      if (skip !== "lang" && S.lang.length && S.lang.indexOf(r.lang || "—") < 0) return;
+      if (P.area.length && !P.area.some(function (a) { return r.areas.indexOf(a) >= 0 || norm(AREA[r.areas[0]]).indexOf(a) >= 0; })) return;
+      if (P.lang.length && !P.lang.some(function (l) { return norm(r.lang) === l || r.langs.some(function (x) { return norm(x[0]) === l; }); })) return;
+      if (P.tag.length && !P.tag.every(function (t) { return r._tags.indexOf(t) >= 0; })) return;
+      if ((S.art || P.has.indexOf("article") >= 0) && !r._post) return;
+      if ((S.demo || P.has.indexOf("demo") >= 0) && !r.homepage) return;
+      if (P.has.indexOf("license") >= 0 && !r.license) return;
+      var cy = year(r.created), py = year(r.pushed);
+      if (!inRange(cy, S.cf, S.ct)) return;
+      if (!inRange(py, S.pf, S.pt)) return;
+      if (P.created && !inRange(cy, P.created[0], P.created[1])) return;
+      if (P.pushed && !inRange(py, P.pushed[0], P.pushed[1])) return;
+      var minStars = Math.max(S.stars || 0, P.stars || 0);
+      if (minStars && r.stars < minStars) return;
+      var hay = r._name + " " + r._nameWords + " " + r._desc + " " + r._meta + (S.rm ? " " + r._readme : "");
+      if (P.nots.some(function (w) { return hay.indexOf(w) >= 0; })) return;
+      if (!P.phrases.every(function (w) { return hay.indexOf(w) >= 0; })) return;
+      var score = 0;
+      for (var i = 0; i < words.length; i++) {
+        var s = wordScore(r, words[i], S.rm);
+        if (!s) return;
+        score += s;
+      }
+      r._score = score + (r._post ? 2 : 0);
+      out.push(r);
+    });
+    return { list: out, words: words.concat(P.phrases) };
+  }
+
+  var SORTS = {
+    best: function (a, b) { return b._score - a._score || (b.pushed > a.pushed ? 1 : b.pushed < a.pushed ? -1 : 0); },
+    pushed: function (a, b) { return b.pushed > a.pushed ? 1 : b.pushed < a.pushed ? -1 : 0; },
+    created: function (a, b) { return b.created > a.created ? 1 : b.created < a.created ? -1 : 0; },
+    oldest: function (a, b) { return a.created > b.created ? 1 : a.created < b.created ? -1 : 0; },
+    stars: function (a, b) { return b.stars - a.stars || SORTS.pushed(a, b); },
+    name: function (a, b) { return a._name.localeCompare(b._name); }
+  };
+
+  /* ---------- rendering: one repo ---------- */
+  /* Wraps every occurrence of the search words in <mark>, as text nodes. */
+  function hl(text, words) {
+    var frag = document.createDocumentFragment();
+    text = String(text || "");
+    var ws = words.filter(function (w) { return w && w.indexOf(":") < 0; });
+    if (!ws.length) { frag.appendChild(document.createTextNode(text)); return frag; }
+    var esc = ws.map(function (w) { return w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); });
+    var re = new RegExp("(" + esc.join("|") + ")", "ig"), last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+      frag.appendChild(D.el("mark", null, m[0]));
+      last = m.index + m[0].length;
+      if (!m[0].length) re.lastIndex++;
+    }
+    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    return frag;
+  }
+
+  function badge(text, cls) { return D.el("span", "gh-badge " + (cls || ""), text); }
+
+  function actionLink(href, icon, text, cls, external) {
+    var a = external === false ? D.el("a", cls, null) : D.link(href, cls, null);
+    a.href = href;
+    if (icon) a.appendChild(glyph(icon));
+    a.appendChild(D.el("span", null, text));
+    return a;
+  }
+
+  function copyClone(r) {
+    var b = btn(null, "gh-act gh-copy");
+    b.title = T.copyClone;
+    b.setAttribute("aria-label", T.copyClone + ": " + r.name);
+    b.appendChild(glyph("i-terminal"));
+    b.appendChild(D.el("span", null, "git clone"));
+    b.addEventListener("click", function () {
+      var cmd = "git clone " + GH + user + "/" + r.name + ".git";
+      var done = function () {
+        b.classList.add("is-done");
+        b.lastChild.textContent = T.copied;
+        setTimeout(function () { b.classList.remove("is-done"); b.lastChild.textContent = "git clone"; }, 1600);
+      };
+      if (navigator.clipboard) navigator.clipboard.writeText(cmd).then(done, function () {});
+    });
+    return b;
+  }
+
+  function actions(r, learn) {
+    var row = D.el("div", "gh-acts");
+    if (r._post) row.appendChild(actionLink(r._post, "i-pen", T.article, "gh-act gh-act-post", false));
+    row.appendChild(actionLink(GH + user + "/" + r.name, "i-github", T.code, "gh-act"));
+    if (r.homepage) row.appendChild(actionLink(r.homepage, "i-rocket", T.demo, "gh-act"));
+    if (learn) {
+      var dev = actionLink("https://github.dev/" + user + "/" + r.name, "i-braces", "github.dev", "gh-act");
+      dev.title = T.openDev;
+      row.appendChild(dev);
+      row.appendChild(copyClone(r));
+    }
+    return row;
+  }
+
+  function tagChip(t) {
+    var b = btn(t, "gh-tag");
+    b.addEventListener("click", function () {
+      var tok = "tag:" + (/\s/.test(t) ? '"' + t + '"' : t);
+      if (S.q.split(/\s+/).indexOf(tok) < 0) S.q = (S.q + " " + tok).trim();
+      q.value = S.q;
+      shown = PAGE;
+      update();
+      q.scrollIntoView({ block: "nearest" });
+    });
+    return b;
+  }
+
+  function card(r, words) {
+    var li = D.el("li", "gh-repo");
+    li.id = "r-" + r.name;
+    var icon = areaIcon[r.areas[0]] || "i-doc";
+    li.dataset.ic = icon;
+    li.appendChild(chip(icon, "lg"));
+    var body = D.el("div", "gh-repo-body");
+    var h = D.el("h3", "gh-repo-name");
+    var a = D.link(GH + user + "/" + r.name, null, null);
+    a.appendChild(hl(r.name, words));
+    h.appendChild(a);
+    if (r.kind === "playground") h.appendChild(badge(T.badgePlayground, "is-play"));
+    if (r.kind === "fork") h.appendChild(badge(T.badgeFork, "is-fork"));
+    if (r.archived) h.appendChild(badge(T.badgeArchived, "is-arch"));
+    body.appendChild(h);
+    if (r.desc) body.appendChild(D.el("p", "gh-repo-desc")).appendChild(hl(r.desc, words));
+    if (r.parent) body.appendChild(D.el("p", "gh-repo-parent", D.fill(T.forkedFrom, { repo: r.parent })));
+    if (r.tags.length) {
+      var tags = D.el("div", "gh-tags");
+      r.tags.forEach(function (t) { tags.appendChild(tagChip(t)); });
+      body.appendChild(tags);
+    }
+    var meta = D.el("div", "gh-meta");
+    if (r.lang) {
+      var l = D.el("span", "gh-meta-lang");
+      l.appendChild(dot(r.lang));
+      l.appendChild(document.createTextNode(r.lang));
+      meta.appendChild(l);
+    }
+    if (r.stars) {
+      var st = D.el("span", "gh-meta-stars", "★ " + nf.format(r.stars));
+      st.title = D.fill(T.stars, { n: r.stars });
+      meta.appendChild(st);
+    }
+    var up = D.el("time", null, D.fill(T.updated, { date: month(r.pushed) }));
+    up.dateTime = r.pushed;
+    up.title = D.fill(T.created, { date: month(r.created) });
+    meta.appendChild(up);
+    body.appendChild(meta);
+    body.appendChild(actions(r, false));
+    li.appendChild(body);
+    return li;
+  }
+
+  function line(r, words) {
+    var li = D.el("li", "gh-line");
+    li.id = "r-" + r.name;
+    li.appendChild(dot(r.lang));
+    var a = D.link(GH + user + "/" + r.name, "gh-line-name", null);
+    a.appendChild(hl(r.name, words));
+    if (r.desc) a.title = r.desc;
+    li.appendChild(a);
+    if (r._post) {
+      var p = D.el("a", "gh-line-post");
+      p.href = r._post;
+      p.title = T.article;
+      p.setAttribute("aria-label", T.article + ": " + r.name);
+      p.appendChild(glyph("i-pen"));
+      li.appendChild(p);
+    }
+    li.appendChild(D.el("span", "gh-line-desc", r.desc || ""));
+    var t = D.el("time", "gh-line-date", r.pushed.slice(0, 7));
+    t.dateTime = r.pushed;
+    t.title = D.fill(T.updated, { date: month(r.pushed) });
+    li.appendChild(t);
+    return li;
+  }
+
+  /* ---------- rendering: the facets ---------- */
+  function counts(rs, key) {
+    var c = {};
+    rs.forEach(function (r) {
+      var vs = key === "area" ? r.areas : key === "lang" ? [r.lang || "—"] : [r.kind];
+      vs.forEach(function (v) { c[v] = (c[v] || 0) + 1; });
+    });
+    return c;
+  }
+
+  function toggle(arr, v) {
+    var i = arr.indexOf(v);
+    if (i >= 0) arr.splice(i, 1); else arr.push(v);
+  }
+
+  function renderAreas() {
+    var box = $("gh-areas"), c = counts(filter("area").list, "area");
+    box.textContent = "";
+    doc.areas.forEach(function (a) {
+      var n = c[a.key] || 0, on = S.area.indexOf(a.key) >= 0;
+      if (!n && !on) return;
+      var b = btn(null, "gh-chip" + (on ? " is-on" : ""));
+      b.dataset.ic = a.icon;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.appendChild(chip(a.icon));
+      b.appendChild(D.el("span", null, AREA[a.key] || a.key));
+      b.appendChild(D.el("span", "gh-n", nf.format(n)));
+      b.addEventListener("click", function () { toggle(S.area, a.key); shown = PAGE; update(); });
+      box.appendChild(b);
+    });
+  }
+
+  var langsOpen = false;
+  function renderLangs() {
+    var box = $("gh-langs"), c = counts(filter("lang").list, "lang");
+    var keys = Object.keys(c).sort(function (a, b) { return c[b] - c[a] || a.localeCompare(b); });
+    S.lang.forEach(function (l) { if (keys.indexOf(l) < 0) keys.push(l); });
+    var TOP = 10;
+    box.textContent = "";
+    keys.forEach(function (l, i) {
+      var on = S.lang.indexOf(l) >= 0;
+      if (i >= TOP && !langsOpen && !on) return;
+      var b = btn(null, "gh-chip gh-chip-lang" + (on ? " is-on" : ""));
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.appendChild(dot(l));
+      b.appendChild(D.el("span", null, l === "—" ? T.other : l));
+      b.appendChild(D.el("span", "gh-n", nf.format(c[l] || 0)));
+      b.addEventListener("click", function () { toggle(S.lang, l); shown = PAGE; update(); });
+      box.appendChild(b);
+    });
+    if (keys.length > TOP) {
+      var m = btn(langsOpen ? T.fewer : D.fill(T.more, { n: keys.length - TOP }), "gh-chip gh-chip-more");
+      m.setAttribute("aria-expanded", langsOpen ? "true" : "false");
+      m.addEventListener("click", function () { langsOpen = !langsOpen; renderLangs(); });
+      box.appendChild(m);
+    }
+  }
+
+  function renderKinds() {
+    var c = counts(filter("kind").list, "kind");
+    var total = (c.playground || 0) + (c.project || 0) + (S.forks ? c.fork || 0 : 0);
+    var P = parse(S.q), current = P.is.length === 1 ? P.is[0] : S.kind;
+    [].forEach.call($("gh-kind").children, function (b) {
+      var k = b.dataset.kind, on = k === current;
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-checked", on ? "true" : "false");
+      b.querySelector(".gh-n").textContent = nf.format(k === "all" ? total : c[k] || 0);
+    });
+  }
+
+  function renderHist() {
+    var box = $("gh-hist");
+    if (!box.childElementCount) {
+      var by = {}, lo = 9999, hi = 0, max = 0;
+      repos.forEach(function (r) {
+        if (r.kind === "fork") return;
+        var y = year(r.created);
+        by[y] = (by[y] || 0) + 1;
+        lo = Math.min(lo, y); hi = Math.max(hi, y);
+      });
+      for (var y = lo; y <= hi; y++) max = Math.max(max, by[y] || 0);
+      for (y = lo; y <= hi; y++) (function (y) {
+        var b = btn(null, "gh-bar");
+        b.dataset.year = y;
+        b.title = y + ": " + (by[y] || 0);
+        b.setAttribute("aria-label", y + ": " + (by[y] || 0));
+        var fillEl = D.el("span", "gh-bar-fill");
+        fillEl.style.height = Math.max(3, Math.round(100 * (by[y] || 0) / max)) + "%";
+        b.appendChild(fillEl);
+        b.appendChild(D.el("span", "gh-bar-y", "'" + String(y).slice(2)));
+        b.addEventListener("click", function () {
+          var only = S.cf === y && S.ct === y;
+          S.cf = only ? 0 : y; S.ct = only ? 0 : y;
+          shown = PAGE; update();
+        });
+        box.appendChild(b);
+      })(y);
+    }
+    [].forEach.call(box.children, function (b) {
+      var y = +b.dataset.year;
+      var on = (S.cf || S.ct) && inRange(y, S.cf, S.ct);
+      b.classList.toggle("is-on", !!on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  function syncControls() {
+    if (document.activeElement !== q) q.value = S.q;
+    $("gh-sort").value = S.sort;
+    ["cf", "ct", "pf", "pt"].forEach(function (k) { $("gh-" + k).value = String(S[k] || ""); });
+    $("gh-stars").value = S.stars ? String(S.stars) : "";
+    $("gh-art").checked = S.art; $("gh-demo").checked = S.demo;
+    $("gh-forks").checked = S.forks; $("gh-rm").checked = S.rm;
+    $("gh-adv").hidden = !S.adv;
+    $("gh-adv-toggle").setAttribute("aria-expanded", S.adv ? "true" : "false");
+    $("gh-adv-toggle").classList.toggle("is-on", S.adv);
+    [].forEach.call($("gh-view").children, function (b) {
+      var on = b.dataset.view === S.view;
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-checked", on ? "true" : "false");
+    });
+    list.classList.toggle("is-list", S.view === "list");
+    $("gh-clear").hidden = !filtersActive();
+  }
+
+  function renderList() {
+    var words = lastResults.words;
+    var rs = lastResults.list;
+    list.textContent = "";
+    if (!rs.length) {
+      var e = D.el("li", "gh-empty", T.none);
+      list.appendChild(e);
+    }
+    var make = S.view === "list" ? line : card;
+    rs.slice(0, shown).forEach(function (r) { list.appendChild(make(r, words)); });
+    moreBtn.hidden = rs.length <= shown;
+    $("gh-count").textContent = D.fill(T.showing, { shown: nf.format(Math.min(shown, rs.length)), total: nf.format(rs.length) });
+  }
+
+  function update() {
+    var res = filter();
+    var sort = S.sort === "best" && !parse(S.q).words.length ? "pushed" : S.sort;
+    res.list.sort(SORTS[sort] || SORTS.pushed);
+    lastResults = res;
+    syncControls();
+    renderKinds();
+    renderAreas();
+    renderLangs();
+    if (S.adv) renderHist();
+    renderList();
+    writeURL();
+  }
+
+  /* ---------- Learn ---------- */
+  function renderTracks() {
+    var box = $("gh-tracks");
+    box.textContent = "";
+    doc.tracks.forEach(function (t) {
+      if (!t.repos.length) return;
+      var b = btn(null, "gh-trackcard");
+      b.dataset.ic = t.icon;
+      b.dataset.track = t.key;
+      b.setAttribute("aria-controls", "gh-track");
+      b.appendChild(chip(t.icon, "lg"));
+      var tx = D.el("span", "gh-trackcard-text");
+      tx.appendChild(D.el("span", "gh-trackcard-title", (TRACK[t.key] || {}).title || t.key));
+      tx.appendChild(D.el("span", "gh-trackcard-blurb", (TRACK[t.key] || {}).blurb || ""));
+      tx.appendChild(D.el("span", "gh-n", D.fill(T.trackCount, { n: t.repos.length })));
+      b.appendChild(tx);
+      b.addEventListener("click", function () { openTrack(t.key, true); });
+      box.appendChild(b);
+    });
+  }
+
+  function openTrack(key, focus) {
+    var t = doc.tracks.filter(function (x) { return x.key === key; })[0];
+    var sec = $("gh-track");
+    var p = new URLSearchParams(location.search);
+    [].forEach.call($("gh-tracks").children, function (b) {
+      var on = b.dataset.track === key;
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-expanded", on ? "true" : "false");
+    });
+    if (!t) {
+      sec.hidden = true;
+      p.delete("track");
+    } else {
+      p.set("track", key);
+      renderTrack(t, sec, false);
+      sec.hidden = false;
+      if (focus) { sec.focus({ preventScroll: true }); sec.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+    var s = p.toString();
+    try { history.replaceState(null, "", location.pathname + (s ? "?" + s : "") + location.hash); } catch (e) {}
+  }
+
+  function renderTrack(t, sec, all) {
+    var byName = {};
+    repos.forEach(function (r) { byName[r.name] = r; });
+    sec.textContent = "";
+    sec.dataset.ic = t.icon;
+    var head = D.el("div", "gh-track-head");
+    head.appendChild(chip(t.icon, "lg"));
+    var tx = D.el("div", "gh-track-text");
+    tx.appendChild(D.el("h2", "gh-track-title", (TRACK[t.key] || {}).title || t.key));
+    tx.appendChild(D.el("p", "gh-track-blurb", (TRACK[t.key] || {}).blurb || ""));
+    head.appendChild(tx);
+    var close = btn("✕", "gh-track-close");
+    close.title = T.closeTrack;
+    close.setAttribute("aria-label", T.closeTrack);
+    close.addEventListener("click", function () {
+      openTrack(null);
+      $("gh-paths-h").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    head.appendChild(close);
+    sec.appendChild(head);
+
+    var ol = D.el("ol", "gh-steps");
+    var LIMIT = 8;
+    t.repos.slice(0, all ? t.repos.length : LIMIT).forEach(function (name, i) {
+      var r = byName[name];
+      if (!r) return;
+      var li = D.el("li", "gh-step");
+      li.appendChild(D.el("span", "gh-step-n", String(i + 1)));
+      var b = D.el("div", "gh-step-body");
+      var h = D.el("h3", "gh-repo-name");
+      h.appendChild(D.link(GH + user + "/" + r.name, null, r.name));
+      if (r.lang) {
+        var l = D.el("span", "gh-meta-lang");
+        l.appendChild(dot(r.lang));
+        l.appendChild(document.createTextNode(r.lang));
+        h.appendChild(l);
+      }
+      b.appendChild(h);
+      if (r.desc) b.appendChild(D.el("p", "gh-repo-desc", r.desc));
+      b.appendChild(actions(r, true));
+      li.appendChild(b);
+      ol.appendChild(li);
+    });
+    sec.appendChild(ol);
+
+    var foot = D.el("div", "gh-track-foot");
+    if (!all && t.repos.length > LIMIT) {
+      var more = btn(D.fill(T.showAll, { n: t.repos.length }), "gh-more gh-more-inline");
+      more.addEventListener("click", function () { renderTrack(t, sec, true); });
+      foot.appendChild(more);
+    }
+    var go = btn(null, "hub-all gh-linkbtn");
+    go.appendChild(document.createTextNode(T.inBrowse + " "));
+    go.appendChild(glyph("i-arrow"));
+    go.addEventListener("click", function () {
+      S.q = "";
+      S.area = []; S.lang = []; S.kind = "all";
+      var tr = doc.tracks.filter(function (x) { return x.key === t.key; })[0];
+      /* A path is a named set of repos; Browse gets the area it mostly
+         overlaps, which is the closest single filter to it. */
+      var c = {};
+      tr.repos.forEach(function (n) { var r = byName[n]; if (r) r.areas.forEach(function (a) { c[a] = (c[a] || 0) + 1; }); });
+      var best = Object.keys(c).sort(function (a, b) { return c[b] - c[a]; })[0];
+      if (best) S.area = [best];
+      shown = PAGE;
+      document.getElementById("tab-browse").click();
+      update();
+      q.focus({ preventScroll: true });
+      window.scrollTo({ top: document.querySelector(".ptabs").getBoundingClientRect().top + window.scrollY - 16, behavior: "smooth" });
+    });
+    foot.appendChild(go);
+    sec.appendChild(foot);
+  }
+
+  /* ---------- Timeline ---------- */
+  function renderTimeline() {
+    var box = $("gh-timeline"), by = {}, max = 0;
+    repos.forEach(function (r) {
+      if (r.kind === "fork") return;
+      var y = year(r.created);
+      (by[y] = by[y] || []).push(r);
+    });
+    var ys = Object.keys(by).sort(function (a, b) { return b - a; });
+    ys.forEach(function (y) { max = Math.max(max, by[y].length); });
+    ys.forEach(function (y) {
+      var sec = D.el("section", "gh-year");
+      var h = D.el("h2", "gh-year-h");
+      h.appendChild(D.el("span", "gh-year-y", y));
+      var bar = D.el("span", "gh-year-bar");
+      bar.appendChild(D.el("span")).style.width = Math.round(100 * by[y].length / max) + "%";
+      h.appendChild(bar);
+      h.appendChild(D.el("span", "gh-n", D.fill(T.trackCount, { n: by[y].length })));
+      sec.appendChild(h);
+      var ul = D.el("ul", "gh-year-list");
+      by[y].sort(function (a, b) { return a.created > b.created ? 1 : -1; }).forEach(function (r) {
+        var li = D.el("li");
+        var a = D.link(GH + user + "/" + r.name, "gh-pill", null);
+        a.appendChild(dot(r.lang));
+        a.appendChild(document.createTextNode(r.name));
+        a.title = (r.desc ? r.desc + " · " : "") + month(r.created);
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      sec.appendChild(ul);
+      box.appendChild(sec);
+    });
+  }
+
+  /* ---------- header ---------- */
+  function renderHead() {
+    var own = repos.filter(function (r) { return r.kind !== "fork"; });
+    var since = own.reduce(function (m, r) { return Math.min(m, year(r.created)); }, 9999);
+    $("gh-intro").textContent = D.fill(T.intro, { n: nf.format(repos.length), since: since });
+    var langs = {};
+    own.forEach(function (r) { langs[r.lang || "—"] = (langs[r.lang || "—"] || 0) + 1; });
+    var stat = {
+      repos: repos.length,
+      playgrounds: own.filter(function (r) { return r.kind === "playground"; }).length,
+      languages: Object.keys(langs).filter(function (l) { return l !== "—"; }).length,
+      articles: repos.filter(function (r) { return r._post; }).length
+    };
+    [].forEach.call($("gh-stats").querySelectorAll("dd"), function (dd) { dd.textContent = nf.format(stat[dd.dataset.stat]); });
+    $("gh-stats").hidden = false;
+
+    var keys = Object.keys(langs).filter(function (l) { return l !== "—"; }).sort(function (a, b) { return langs[b] - langs[a]; });
+    var top = keys.slice(0, 8), rest = own.length - top.reduce(function (s, l) { return s + langs[l]; }, 0);
+    var track = $("gh-langbar-track"), legend = $("gh-langbar-legend");
+    top.forEach(function (l) {
+      var seg = D.el("span", "gh-seg-part");
+      seg.style.width = (100 * langs[l] / own.length) + "%";
+      seg.style.backgroundColor = colors[l] || "#8d939e";
+      seg.title = l + " · " + langs[l];
+      track.appendChild(seg);
+      var b = btn(null, "gh-legend");
+      b.appendChild(dot(l));
+      b.appendChild(D.el("span", null, l));
+      b.appendChild(D.el("span", "gh-n", Math.round(100 * langs[l] / own.length) + "%"));
+      b.addEventListener("click", function () {
+        S.lang = [l]; shown = PAGE;
+        document.getElementById("tab-browse").click();
+        update();
+        $("gh-langs").scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      legend.appendChild(b);
+    });
+    if (rest > 0) {
+      var o = D.el("span", "gh-seg-part");
+      o.style.width = (100 * rest / own.length) + "%";
+      o.style.backgroundColor = "var(--border-strong)";
+      o.title = T.other + " · " + rest;
+      track.appendChild(o);
+      var ol = D.el("span", "gh-legend gh-legend-other");
+      ol.appendChild(D.el("span", "gh-dot gh-dot-other"));
+      ol.appendChild(D.el("span", null, T.other));
+      ol.appendChild(D.el("span", "gh-n", Math.round(100 * rest / own.length) + "%"));
+      legend.appendChild(ol);
+    }
+    $("gh-langbar").hidden = false;
+  }
+
+  function yearOptions() {
+    var lo = 9999, hi = 0;
+    repos.forEach(function (r) {
+      lo = Math.min(lo, year(r.created)); hi = Math.max(hi, year(r.pushed));
+    });
+    ["cf", "ct", "pf", "pt"].forEach(function (k) {
+      var s = $("gh-" + k);
+      var any = D.el("option", null, T.yearAny);
+      any.value = "";
+      s.appendChild(any);
+      for (var y = hi; y >= lo; y--) {
+        var o = D.el("option", null, String(y));
+        o.value = String(y);
+        s.appendChild(o);
+      }
+      s.addEventListener("change", function () { S[k] = +s.value || 0; shown = PAGE; update(); });
+    });
+  }
+
+  /* ---------- wiring ---------- */
+  function wire() {
+    var timer;
+    q.placeholder = D.fill(T.placeholder, { n: nf.format(repos.length) });
+    q.addEventListener("input", function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () { S.q = q.value.trim(); shown = PAGE; update(); }, 90);
+    });
+    q.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && q.value) { q.value = ""; S.q = ""; shown = PAGE; update(); }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+      var t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      if ($("panel-browse").hidden) return;
+      e.preventDefault();
+      q.focus();
+      q.select();
+    });
+    [].forEach.call($("gh-kind").children, function (b) {
+      b.addEventListener("click", function () {
+        S.kind = b.dataset.kind;
+        if (S.kind === "fork") S.forks = true;
+        /* A typed is: qualifier would override the buttons; drop it. */
+        S.q = S.q.replace(/(^|\s)is:\S+/g, " ").replace(/\s+/g, " ").trim();
+        shown = PAGE; update();
+      });
+    });
+    [].forEach.call($("gh-view").children, function (b) {
+      b.addEventListener("click", function () { S.view = b.dataset.view; update(); });
+    });
+    $("gh-sort").addEventListener("change", function () { S.sort = this.value; shown = PAGE; update(); });
+    $("gh-adv-toggle").addEventListener("click", function () { S.adv = !S.adv; update(); });
+    [["gh-art", "art"], ["gh-demo", "demo"], ["gh-forks", "forks"], ["gh-rm", "rm"]].forEach(function (p) {
+      $(p[0]).addEventListener("change", function () {
+        S[p[1]] = this.checked;
+        if (p[1] === "forks" && !this.checked && S.kind === "fork") S.kind = "all";
+        shown = PAGE; update();
+      });
+    });
+    $("gh-stars").addEventListener("input", function () { S.stars = Math.max(0, +this.value || 0); shown = PAGE; update(); });
+    $("gh-clear").addEventListener("click", function () {
+      var keep = { sort: S.sort, view: S.view, adv: S.adv };
+      Object.keys(DEFAULTS).forEach(function (k) { S[k] = Array.isArray(DEFAULTS[k]) ? [] : DEFAULTS[k]; });
+      S.sort = keep.sort; S.view = keep.view; S.adv = keep.adv;
+      q.value = "";
+      shown = PAGE; update();
+    });
+    moreBtn.addEventListener("click", function () { shown += PAGE * 2; renderList(); });
+    /* Keep loading as the reader nears the end, but only after they asked
+       once: a page that grows on its own under a footer is a trap. */
+    if ("IntersectionObserver" in window) {
+      var armed = false;
+      moreBtn.addEventListener("click", function () { armed = true; });
+      new IntersectionObserver(function (es) {
+        if (armed && es[0].isIntersecting && !moreBtn.hidden) { shown += PAGE * 2; renderList(); }
+      }, { rootMargin: "400px" }).observe(moreBtn);
+    }
+  }
+
+  readURL();
+  D.load("github")
+    .then(function (d) {
+      doc = d;
+      user = d.user || user;
+      colors = d.colors || {};
+      d.areas.forEach(function (a) { areaIcon[a.key] = a.icon; });
+      repos = d.repos;
+      repos.forEach(prep);
+      renderHead();
+      yearOptions();
+      wire();
+      update();
+      list.setAttribute("aria-busy", "false");
+      renderTracks();
+      var tk = new URLSearchParams(location.search).get("track");
+      if (tk) openTrack(tk, false);
+      renderTimeline();
+      var foot = $("gh-foot");
+      foot.textContent = D.fill(T.footnote, {
+        date: new Date(d.updated + "T00:00:00Z").toLocaleDateString(LANG, { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })
+      }) + " ";
+      var raw = D.el("a", null, "github.json");
+      raw.href = "/data/github.json";
+      foot.appendChild(raw);
+    })
+    .catch(function (e) {
+      if (window.console) console.error(e);
+      D.fail(list, T.error);
+    });
+})();
+</script>
+{{ partial "tabs-script.html" . }}
+{{ end }}

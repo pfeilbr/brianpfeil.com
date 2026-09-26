@@ -152,6 +152,7 @@ touching a template:
 | `/media/` | `data/media.yaml` (generated) | `layouts/_default/media.html` |
 | `/movies/` | `data/movies.json` (`make movies-refresh`) | `layouts/_default/movies.html` |
 | `/` (home) | `data/home.yaml` | `layouts/index.html` |
+| `/github/` | `data/github.json` (`make github-refresh`) | `layouts/_default/github.html` |
 
 - **Every data-driven page is drawn in the browser from `/data/<name>.json`.**
   `partials/publish-data.html` publishes each `data/` file there (media gets
@@ -168,9 +169,18 @@ touching a template:
   output, since a year match can pick a same-year namesake. Synopses, titles
   and genres come back in all nine languages from JustWatch, so they are
   data, not i18n. Set `"mpa"` on an entry to override a wrong rating.
-- **Nine nav links.** `.nav-row` is now `56rem` and the full row appears
-  from 900px, because Spanish needs ~873px. A tenth link means re-measuring.
+- **Ten nav links** (GitHub was the tenth). `.nav-row` is now `60rem` and the
+  full row appears from 980px, because Spanish needs ~950px with a legible
+  language label. An eleventh link means re-measuring every language.
 
+- **/github/:** `make github-refresh` re-fetches every *public* repo (via
+  `gh`, README excerpts included) and classifies it. Areas and learning
+  paths are token rules in `tools/github-repos/config.json` — area order and
+  glyphs mirror `partials/icons/topic-id.html`; a path's `exclude` keeps
+  look-alikes out (OpenSearch *Serverless* is not a Lambda lesson). Names are
+  i18n `gh_area_<key>` / `gh_track_<key>_title|_blurb`. Article links come
+  from the posts' `repoFullName` at build time, not from the JSON.
+  `check_page.py --public public` is the render check.
 - **Only publish what a stranger can actually open.** Private YouTube playlists
   403 and some public ones refuse to embed, so every embed was verified against
   `youtube.com/embed/videoseries?list=<id>` (or the IFrame Player API) before

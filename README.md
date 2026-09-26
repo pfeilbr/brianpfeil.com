@@ -106,6 +106,8 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make check-repo-links` | List posts whose repo link 404s for a visitor (live, needs network) |
 | **Movies** | |
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
+| **GitHub** | |
+| `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/` |
 | **Media** | |
 | `make media-deps` | Create the tool's venv |
 | `make media-stage` | Read the archive (or `EXPORT=…`), update the approve list, build the review sheet |
@@ -122,6 +124,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-media` | Python tests for the media tool |
 | `make test-layout` | Build `/media/` from a fixture; check `/data/media.json` and the page in all nine languages |
 | `make test-link-check` | Tests for the repo-link checker |
+| `make test-github` | Tests for the GitHub page's data refresher |
 | `make test-i18n` | Tests for, and a run of, the i18n consistency check |
 | `make test-docs` | Every Makefile target has help text and is in the README |
 | **Infrastructure** | |

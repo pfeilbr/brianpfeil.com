@@ -113,6 +113,47 @@
   </section>
   {{ end }}{{ end }}
 
+  {{- /* GitHub: the language mix as one bar, then the latest repos pushed to. */ -}}
+  {{ with hugo.Data.github }}{{ with .repos }}
+  {{ $own := where . "kind" "ne" "fork" }}
+  {{ $langs := dict }}
+  {{ range $own }}{{ with .lang }}{{ $langs = merge $langs (dict . (add (index $langs .| default 0) 1)) }}{{ end }}{{ end }}
+  {{ $rows := slice }}
+  {{ range $name, $n := $langs }}{{ $rows = $rows | append (dict "name" $name "n" $n) }}{{ end }}
+  <section class="hub-card hub-wide" data-ic="i-github" aria-labelledby="hub-github">
+    <div class="hub-card-head">
+      {{ partial "icons/chip.html" (dict "id" "i-github" "size" "lg") }}
+      <div class="hub-card-text">
+        <h3 id="hub-github" class="hub-card-title"><a href="{{ $prefix }}github/">{{ i18n "hub_github_title" }}</a></h3>
+        <p class="hub-card-blurb">{{ i18n "hub_github_blurb" }}</p>
+      </div>
+      <span class="hub-count">{{ i18n "hub_github_count" (dict "count" (len .)) }}</span>
+    </div>
+    <div class="gh-langbar hub-langbar" aria-hidden="true">
+      <div class="gh-langbar-track">
+        {{ range first 8 (sort $rows "n" "desc") }}
+        <span class="gh-seg-part" style="width:{{ div (mul .n 100.0) (len $own) }}%;background-color:{{ index hugo.Data.github.colors .name | default "#8d939e" | safeCSS }}" title="{{ .name }}"></span>
+        {{ end }}
+      </div>
+      <div class="gh-langbar-legend">
+        {{ range first 6 (sort $rows "n" "desc") }}
+        <span class="gh-legend"><span class="gh-dot" style="background-color:{{ index hugo.Data.github.colors .name | default "#8d939e" | safeCSS }}"></span>{{ .name }}</span>
+        {{ end }}
+      </div>
+    </div>
+    <ul class="hub-latest">
+      {{ range first 4 (sort $own "pushed" "desc") }}
+      <li>
+        <a href="https://github.com/pfeilbr/{{ .name }}" target="_blank" rel="noopener">{{ .name }}</a>
+        <time datetime="{{ .pushed }}">{{ (time.AsTime .pushed).Format "Jan 2006" }}</time>
+      </li>
+      {{ end }}
+    </ul>
+    <a class="hub-all" href="{{ $prefix }}github/">{{ i18n "hub_github_all" }}
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
+  </section>
+  {{ end }}{{ end }}
+
   {{- /* Everything else: one card, one link. */ -}}
   {{ range hugo.Data.home.sections }}
   {{ $count := "" }}

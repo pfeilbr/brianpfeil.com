@@ -598,3 +598,397 @@ other = "トピック別に記事を探す"
 [hub_tags_count]
 other = "{{ .count }} 件のトピック"
 
+
+# --- /github/ ---------------------------------------------------------------
+# Strings with {n}-style placeholders are filled in the browser by the page's
+# script, not by Hugo; keep the braces and the names inside them.
+
+[gh_intro]
+other = "{since} 以来の公開リポジトリ {n} 件。ほとんどは一つのことを学ぶために作った小さなプレイグラウンドです。検索したり、分野や言語で眺めたり、学習パスをたどったりできます。"
+
+[gh_profile]
+other = "GitHub のプロフィール"
+
+[gh_stat_repos]
+other = "リポジトリ"
+
+[gh_stat_playgrounds]
+other = "プレイグラウンド"
+
+[gh_stat_languages]
+other = "言語"
+
+[gh_stat_articles]
+other = "記事あり"
+
+[gh_lang_bar]
+other = "全リポジトリの主要言語"
+
+[gh_tabs_label]
+other = "探し方"
+
+[gh_tab_browse]
+other = "一覧"
+
+[gh_tab_learn]
+other = "学ぶ"
+
+[gh_tab_timeline]
+other = "年表"
+
+[gh_search_label]
+other = "リポジトリを検索"
+
+[gh_search_placeholder]
+other = "{n} 件のリポジトリを検索：lambda、react、lang:go など"
+
+[gh_advanced]
+other = "詳細検索"
+
+[gh_kind_label]
+other = "種類"
+
+[gh_kind_all]
+other = "すべて"
+
+[gh_kind_playground]
+other = "プレイグラウンド"
+
+[gh_kind_project]
+other = "プロジェクト"
+
+[gh_kind_fork]
+other = "フォーク"
+
+[gh_badge_playground]
+other = "プレイグラウンド"
+
+[gh_badge_fork]
+other = "フォーク"
+
+[gh_badge_archived]
+other = "アーカイブ済み"
+
+[gh_areas]
+other = "分野"
+
+[gh_languages]
+other = "言語"
+
+[gh_more]
+other = "ほか {n} 件"
+
+[gh_fewer]
+other = "閉じる"
+
+[gh_created]
+other = "作成日"
+
+[gh_pushed]
+other = "最終更新"
+
+[gh_year_any]
+other = "すべての年"
+
+[gh_year_from]
+other = "開始年"
+
+[gh_year_to]
+other = "終了年"
+
+[gh_only_article]
+other = "記事あり"
+
+[gh_only_demo]
+other = "ライブデモあり"
+
+[gh_include_forks]
+other = "フォークを含める"
+
+[gh_search_readme]
+other = "README の本文も検索"
+
+[gh_min_stars]
+other = "最小スター数"
+
+[gh_histogram]
+other = "年ごとに作成したリポジトリの数。棒をクリックするとその年で絞り込めます。"
+
+[gh_syntax_title]
+other = "検索構文"
+
+[gh_syntax_lang]
+other = "主要言語"
+
+[gh_syntax_area]
+other = "分野"
+
+[gh_syntax_tag]
+other = "タグ"
+
+[gh_syntax_is]
+other = "プレイグラウンド、プロジェクト、フォーク"
+
+[gh_syntax_has]
+other = "記事またはライブデモがある"
+
+[gh_syntax_created]
+other = "作成年、または年の範囲"
+
+[gh_syntax_pushed]
+other = "指定した年より後に更新"
+
+[gh_syntax_stars]
+other = "スター数がこの値以上"
+
+[gh_syntax_not]
+other = "この語を含むものを除外"
+
+[gh_syntax_phrase]
+other = "このフレーズに完全一致"
+
+[gh_sort_label]
+other = "並べ替え"
+
+[gh_sort_best]
+other = "関連度順"
+
+[gh_sort_pushed]
+other = "更新が新しい順"
+
+[gh_sort_created]
+other = "新しい順"
+
+[gh_sort_oldest]
+other = "古い順"
+
+[gh_sort_stars]
+other = "スターが多い順"
+
+[gh_sort_name]
+other = "名前順"
+
+[gh_view_label]
+other = "表示"
+
+[gh_view_cards]
+other = "カード"
+
+[gh_view_list]
+other = "リスト"
+
+[gh_showing]
+other = "{total} 件中 {shown} 件のリポジトリ"
+
+[gh_clear]
+other = "絞り込みを解除"
+
+[gh_show_more]
+other = "もっと見る"
+
+[gh_none]
+other = "一致するリポジトリはありません。絞り込みを一つ外してみてください。"
+
+[gh_updated]
+other = "{date} 更新"
+
+[gh_created_in]
+other = "{date} 作成"
+
+[gh_article]
+other = "記事"
+
+[gh_code]
+other = "コード"
+
+[gh_demo]
+other = "ライブデモ"
+
+[gh_open_dev]
+other = "ブラウザで開く（github.dev）"
+
+[gh_codespace]
+other = "Codespace で実行"
+
+[gh_copy_clone]
+other = "git clone コマンドをコピー"
+
+[gh_copied]
+other = "コピーしました"
+
+[gh_forked_from]
+other = "{repo} からフォーク"
+
+[gh_stars_title]
+other = "スター {n} 個"
+
+[gh_learn_intro]
+other = "これらの技術を学んでいるところですか？私のリポジトリの多くはプレイグラウンドです。小さくて単体で完結しており、どれもまさにその技術を学びながら作りました。下からパスを選んでください。解説記事のあるリポジトリが先に並びます。"
+
+[gh_learn_how]
+other = "プレイグラウンドの使い方"
+
+[gh_learn_step1]
+other = "記事があれば、まず読んでください。コードが何をしていて、なぜそうなのかを説明しています。"
+
+[gh_learn_step2]
+other = "github.dev でコードをブラウザで開きます。インストールは不要です。"
+
+[gh_learn_step3]
+other = "クローンして README に沿って動かし、何かが壊れるまでいじってみましょう。"
+
+[gh_track_pick]
+other = "学習パス"
+
+[gh_track_count]
+other = "{n} 件のリポジトリ"
+
+[gh_track_show_all]
+other = "{n} 件すべて表示"
+
+[gh_track_in_browse]
+other = "このパス内を検索"
+
+[gh_track_close]
+other = "すべてのパスに戻る"
+
+[gh_timeline_intro]
+other = "すべてのリポジトリを作成年ごとに並べています（フォークは除く）。名前にマウスを乗せると説明が表示されます。"
+
+[gh_load_error]
+other = "リポジトリ一覧を読み込めませんでした。しばらくしてからもう一度お試しください。"
+
+[gh_noscript]
+other = "このページは JavaScript で描画しています。元データは <a href=\"/data/github.json\">github.json</a> にあります。"
+
+[gh_footnote]
+other = "GitHub API より（{date} 時点）。"
+
+[gh_area_games]
+other = "ゲームとグラフィックス"
+
+[gh_area_ai]
+other = "AI と機械学習"
+
+[gh_area_security]
+other = "セキュリティと認証"
+
+[gh_area_mobile]
+other = "モバイルとデスクトップ"
+
+[gh_area_serverless]
+other = "Serverless と IaC"
+
+[gh_area_cloud]
+other = "クラウド"
+
+[gh_area_data]
+other = "データとデータベース"
+
+[gh_area_containers]
+other = "コンテナ"
+
+[gh_area_python]
+other = "Python とノートブック"
+
+[gh_area_web]
+other = "Web と JavaScript"
+
+[gh_area_systems]
+other = "システム言語"
+
+[gh_area_testing]
+other = "テストと DevOps"
+
+[gh_area_architecture]
+other = "API と連携"
+
+[gh_area_tools]
+other = "CLI と開発ツール"
+
+[gh_area_other]
+other = "その他"
+
+[gh_track_serverless_title]
+other = "AWS でサーバーレス"
+
+[gh_track_serverless_blurb]
+other = "Lambda、API Gateway、Step Functions、EventBridge と、それらをつなぐ仕組み"
+
+[gh_track_iac_title]
+other = "インフラのコード化"
+
+[gh_track_iac_blurb]
+other = "CDK、CloudFormation、SAM、Terraform。クラウドのリソースをソースコードで定義する"
+
+[gh_track_containers_title]
+other = "コンテナ"
+
+[gh_track_containers_blurb]
+other = "Docker、Kubernetes、ECS、Fargate"
+
+[gh_track_ai_title]
+other = "AI と LLM"
+
+[gh_track_ai_blurb]
+other = "Bedrock、OpenAI、エージェント、埋め込み、従来型の機械学習"
+
+[gh_track_frontend_title]
+other = "フロントエンド"
+
+[gh_track_frontend_blurb]
+other = "React、Vue、CSS など、ブラウザで動くもの"
+
+[gh_track_node_title]
+other = "Node.js と TypeScript"
+
+[gh_track_node_blurb]
+other = "サーバーサイド JavaScript。Express から Deno まで"
+
+[gh_track_python_title]
+other = "Python とノートブック"
+
+[gh_track_python_blurb]
+other = "スクリプト、Jupyter ノートブック、データ処理ツール"
+
+[gh_track_data_title]
+other = "データベースとストリーミング"
+
+[gh_track_data_blurb]
+other = "DynamoDB、Postgres、Redis、Kafka、データ分析"
+
+[gh_track_go_title]
+other = "Go"
+
+[gh_track_go_blurb]
+other = "Go の小さなプログラム、モジュール、ツール"
+
+[gh_track_systems_title]
+other = "C、C++、Rust"
+
+[gh_track_systems_blurb]
+other = "ネイティブコード、ビルドシステム、WebAssembly"
+
+[gh_track_mobile_title]
+other = "モバイル・デスクトップアプリ"
+
+[gh_track_mobile_blurb]
+other = "iOS、Swift、Android、React Native、Electron"
+
+[gh_track_security_title]
+other = "認証とセキュリティ"
+
+[gh_track_security_blurb]
+other = "OAuth、OIDC、Cognito、IAM、シークレット管理"
+
+[hub_github_title]
+other = "GitHub"
+
+[hub_github_blurb]
+other = "すべての公開リポジトリを検索でき、プレイグラウンドをめぐる学習パス付き"
+
+[hub_github_count]
+other = "{{ .count }} 件のリポジトリ"
+
+[hub_github_all]
+other = "すべてのリポジトリを見る"

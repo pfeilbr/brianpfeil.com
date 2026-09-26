@@ -598,3 +598,397 @@ other = "按主题浏览文章"
 [hub_tags_count]
 other = "{{ .count }} 个主题"
 
+
+# --- /github/ ---------------------------------------------------------------
+# Strings with {n}-style placeholders are filled in the browser by the page's
+# script, not by Hugo; keep the braces and the names inside them.
+
+[gh_intro]
+other = "自 {since} 以来的 {n} 个公开仓库，大多是为学习某一样东西而做的小练习项目。可以搜索、按领域或语言浏览，或跟着一条学习路径走。"
+
+[gh_profile]
+other = "GitHub 主页"
+
+[gh_stat_repos]
+other = "个仓库"
+
+[gh_stat_playgrounds]
+other = "个练习项目"
+
+[gh_stat_languages]
+other = "种语言"
+
+[gh_stat_articles]
+other = "附有文章"
+
+[gh_lang_bar]
+other = "所有仓库的主要语言分布"
+
+[gh_tabs_label]
+other = "浏览方式"
+
+[gh_tab_browse]
+other = "浏览"
+
+[gh_tab_learn]
+other = "学习"
+
+[gh_tab_timeline]
+other = "时间线"
+
+[gh_search_label]
+other = "搜索仓库"
+
+[gh_search_placeholder]
+other = "搜索 {n} 个仓库：试试 lambda、react 或 lang:go"
+
+[gh_advanced]
+other = "高级"
+
+[gh_kind_label]
+other = "类型"
+
+[gh_kind_all]
+other = "全部"
+
+[gh_kind_playground]
+other = "练习项目"
+
+[gh_kind_project]
+other = "项目"
+
+[gh_kind_fork]
+other = "复刻"
+
+[gh_badge_playground]
+other = "练习"
+
+[gh_badge_fork]
+other = "复刻"
+
+[gh_badge_archived]
+other = "已归档"
+
+[gh_areas]
+other = "领域"
+
+[gh_languages]
+other = "语言"
+
+[gh_more]
+other = "另外 {n} 个"
+
+[gh_fewer]
+other = "收起"
+
+[gh_created]
+other = "创建时间"
+
+[gh_pushed]
+other = "最后更新"
+
+[gh_year_any]
+other = "不限年份"
+
+[gh_year_from]
+other = "起始年份"
+
+[gh_year_to]
+other = "结束年份"
+
+[gh_only_article]
+other = "附有文章"
+
+[gh_only_demo]
+other = "有在线演示"
+
+[gh_include_forks]
+other = "包含复刻"
+
+[gh_search_readme]
+other = "同时搜索 README 内容"
+
+[gh_min_stars]
+other = "最少星标数"
+
+[gh_histogram]
+other = "每年创建的仓库数。点击柱形即可筛选该年份。"
+
+[gh_syntax_title]
+other = "搜索语法"
+
+[gh_syntax_lang]
+other = "主要语言"
+
+[gh_syntax_area]
+other = "领域"
+
+[gh_syntax_tag]
+other = "标签"
+
+[gh_syntax_is]
+other = "练习项目、项目或复刻"
+
+[gh_syntax_has]
+other = "附有文章或在线演示"
+
+[gh_syntax_created]
+other = "创建于某一年或某个年份区间"
+
+[gh_syntax_pushed]
+other = "某年之后仍有更新"
+
+[gh_syntax_stars]
+other = "星标数至少为此值"
+
+[gh_syntax_not]
+other = "排除含有该词的结果"
+
+[gh_syntax_phrase]
+other = "完全匹配此短语"
+
+[gh_sort_label]
+other = "排序"
+
+[gh_sort_best]
+other = "最佳匹配"
+
+[gh_sort_pushed]
+other = "最近更新"
+
+[gh_sort_created]
+other = "最新创建"
+
+[gh_sort_oldest]
+other = "最早创建"
+
+[gh_sort_stars]
+other = "星标最多"
+
+[gh_sort_name]
+other = "名称"
+
+[gh_view_label]
+other = "视图"
+
+[gh_view_cards]
+other = "卡片"
+
+[gh_view_list]
+other = "列表"
+
+[gh_showing]
+other = "{total} 个仓库中的 {shown} 个"
+
+[gh_clear]
+other = "清除筛选"
+
+[gh_show_more]
+other = "显示更多"
+
+[gh_none]
+other = "没有匹配的仓库。试试去掉一个筛选条件。"
+
+[gh_updated]
+other = "更新于 {date}"
+
+[gh_created_in]
+other = "创建于 {date}"
+
+[gh_article]
+other = "文章"
+
+[gh_code]
+other = "代码"
+
+[gh_demo]
+other = "在线演示"
+
+[gh_open_dev]
+other = "在浏览器中打开（github.dev）"
+
+[gh_codespace]
+other = "在 Codespace 中运行"
+
+[gh_copy_clone]
+other = "复制 git clone 命令"
+
+[gh_copied]
+other = "已复制"
+
+[gh_forked_from]
+other = "复刻自 {repo}"
+
+[gh_stars_title]
+other = "{n} 个星标"
+
+[gh_learn_intro]
+other = "正在学习其中某项技术？我的大多数仓库都是练习项目：小巧、自成一体，每个都是我在学习同一样东西时做的。在下面挑一条路径吧。附有讲解文章的仓库排在前面。"
+
+[gh_learn_how]
+other = "如何使用练习项目"
+
+[gh_learn_step1]
+other = "如果有文章，先读文章。它会解释代码做了什么、为什么这样做。"
+
+[gh_learn_step2]
+other = "用 github.dev 在浏览器里打开代码，无需安装任何东西。"
+
+[gh_learn_step3]
+other = "克隆下来，按 README 操作，然后不断修改，直到把它弄坏。"
+
+[gh_track_pick]
+other = "学习路径"
+
+[gh_track_count]
+other = "{n} 个仓库"
+
+[gh_track_show_all]
+other = "显示全部 {n} 个"
+
+[gh_track_in_browse]
+other = "在此路径中搜索"
+
+[gh_track_close]
+other = "返回所有路径"
+
+[gh_timeline_intro]
+other = "按创建年份列出的全部仓库，不含复刻。将鼠标悬停在名称上可查看简介。"
+
+[gh_load_error]
+other = "无法加载仓库列表，请稍后再试。"
+
+[gh_noscript]
+other = "本页面由 JavaScript 绘制。背后的数据位于 <a href=\"/data/github.json\">github.json</a>。"
+
+[gh_footnote]
+other = "数据来自 GitHub API，{date}。"
+
+[gh_area_games]
+other = "游戏与图形"
+
+[gh_area_ai]
+other = "AI 与机器学习"
+
+[gh_area_security]
+other = "安全与认证"
+
+[gh_area_mobile]
+other = "移动与桌面"
+
+[gh_area_serverless]
+other = "Serverless 与 IaC"
+
+[gh_area_cloud]
+other = "云"
+
+[gh_area_data]
+other = "数据与数据库"
+
+[gh_area_containers]
+other = "容器"
+
+[gh_area_python]
+other = "Python 与笔记本"
+
+[gh_area_web]
+other = "Web 与 JavaScript"
+
+[gh_area_systems]
+other = "系统编程语言"
+
+[gh_area_testing]
+other = "测试与 DevOps"
+
+[gh_area_architecture]
+other = "API 与集成"
+
+[gh_area_tools]
+other = "命令行与开发工具"
+
+[gh_area_other]
+other = "其他"
+
+[gh_track_serverless_title]
+other = "AWS 上的 Serverless"
+
+[gh_track_serverless_blurb]
+other = "Lambda、API Gateway、Step Functions、EventBridge 以及把它们连起来的部分"
+
+[gh_track_iac_title]
+other = "基础设施即代码"
+
+[gh_track_iac_blurb]
+other = "CDK、CloudFormation、SAM 和 Terraform：在源码中定义云资源"
+
+[gh_track_containers_title]
+other = "容器"
+
+[gh_track_containers_blurb]
+other = "Docker、Kubernetes、ECS 和 Fargate"
+
+[gh_track_ai_title]
+other = "AI 与 LLM"
+
+[gh_track_ai_blurb]
+other = "Bedrock、OpenAI、智能体、嵌入向量和经典机器学习"
+
+[gh_track_frontend_title]
+other = "前端"
+
+[gh_track_frontend_blurb]
+other = "React、Vue、CSS 以及所有在浏览器里运行的东西"
+
+[gh_track_node_title]
+other = "Node.js 与 TypeScript"
+
+[gh_track_node_blurb]
+other = "服务器端 JavaScript，从 Express 到 Deno"
+
+[gh_track_python_title]
+other = "Python 与笔记本"
+
+[gh_track_python_blurb]
+other = "脚本、Jupyter 笔记本和数据工具"
+
+[gh_track_data_title]
+other = "数据库与流处理"
+
+[gh_track_data_blurb]
+other = "DynamoDB、Postgres、Redis、Kafka 以及数据分析"
+
+[gh_track_go_title]
+other = "Go"
+
+[gh_track_go_blurb]
+other = "小型 Go 程序、模块和工具"
+
+[gh_track_systems_title]
+other = "C、C++ 与 Rust"
+
+[gh_track_systems_blurb]
+other = "原生代码、构建系统和 WebAssembly"
+
+[gh_track_mobile_title]
+other = "移动与桌面应用"
+
+[gh_track_mobile_blurb]
+other = "iOS、Swift、Android、React Native 和 Electron"
+
+[gh_track_security_title]
+other = "认证与安全"
+
+[gh_track_security_blurb]
+other = "OAuth、OIDC、Cognito、IAM 和密钥管理"
+
+[hub_github_title]
+other = "GitHub"
+
+[hub_github_blurb]
+other = "全部公开仓库，可搜索，并附有贯穿练习项目的学习路径"
+
+[hub_github_count]
+other = "{{ .count }} 个仓库"
+
+[hub_github_all]
+other = "浏览全部仓库"

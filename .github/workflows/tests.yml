@@ -41,6 +41,8 @@ jobs:
       # hand with `make check-repo-links`.
       - name: link-check tests
         run: python -m unittest discover -s tools/link-check -p 'test_*.py' -v
+      - name: github-repos tests
+        run: python -m unittest discover -s tools/github-repos -p 'test_*.py' -v
       - name: i18n-check tests
         run: python -m unittest discover -s tools/i18n-check -p 'test_*.py' -v
       - name: docs check (every Makefile target documented)
@@ -67,6 +69,8 @@ jobs:
       # Builds /media/ from a fixture and with no data, then checks
       # /data/media.json (whitelisted, no coordinates) and the page shell in
       # all nine languages.
+      - name: GitHub page render check
+        run: python3 tools/github-repos/check_page.py --public public
       - name: Media page render check
         run: python3 tools/instagram-media/tests/check_layout.py --build
 

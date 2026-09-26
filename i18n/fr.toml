@@ -600,3 +600,397 @@ other = "Parcourir les articles par sujet"
 [hub_tags_count]
 other = "{{ .count }} sujets"
 
+
+# --- /github/ ---------------------------------------------------------------
+# Strings with {n}-style placeholders are filled in the browser by the page's
+# script, not by Hugo; keep the braces and the names inside them.
+
+[gh_intro]
+other = "{n} dépôts publics depuis {since}, pour la plupart de petits bacs à sable créés pour apprendre une seule chose. Cherchez-y, parcourez-les par domaine ou par langage, ou suivez un parcours d'apprentissage."
+
+[gh_profile]
+other = "Profil sur GitHub"
+
+[gh_stat_repos]
+other = "dépôts"
+
+[gh_stat_playgrounds]
+other = "bacs à sable"
+
+[gh_stat_languages]
+other = "langages"
+
+[gh_stat_articles]
+other = "avec un article"
+
+[gh_lang_bar]
+other = "Langages principaux sur l'ensemble des dépôts"
+
+[gh_tabs_label]
+other = "Façons d'explorer"
+
+[gh_tab_browse]
+other = "Parcourir"
+
+[gh_tab_learn]
+other = "Apprendre"
+
+[gh_tab_timeline]
+other = "Chronologie"
+
+[gh_search_label]
+other = "Rechercher dans les dépôts"
+
+[gh_search_placeholder]
+other = "Chercher parmi {n} dépôts : essayez lambda, react ou lang:go"
+
+[gh_advanced]
+other = "Avancé"
+
+[gh_kind_label]
+other = "Type"
+
+[gh_kind_all]
+other = "Tous"
+
+[gh_kind_playground]
+other = "Bacs à sable"
+
+[gh_kind_project]
+other = "Projets"
+
+[gh_kind_fork]
+other = "Forks"
+
+[gh_badge_playground]
+other = "Bac à sable"
+
+[gh_badge_fork]
+other = "Fork"
+
+[gh_badge_archived]
+other = "Archivé"
+
+[gh_areas]
+other = "Domaines"
+
+[gh_languages]
+other = "Langages"
+
+[gh_more]
+other = "+{n} de plus"
+
+[gh_fewer]
+other = "Afficher moins"
+
+[gh_created]
+other = "Création"
+
+[gh_pushed]
+other = "Dernière mise à jour"
+
+[gh_year_any]
+other = "Toute année"
+
+[gh_year_from]
+other = "Depuis l'année"
+
+[gh_year_to]
+other = "Jusqu'à l'année"
+
+[gh_only_article]
+other = "Avec un article"
+
+[gh_only_demo]
+other = "Avec une démo en ligne"
+
+[gh_include_forks]
+other = "Inclure les forks"
+
+[gh_search_readme]
+other = "Chercher aussi dans le README"
+
+[gh_min_stars]
+other = "Étoiles minimum"
+
+[gh_histogram]
+other = "Dépôts créés par année. Cliquez sur une barre pour filtrer sur cette année."
+
+[gh_syntax_title]
+other = "Syntaxe de recherche"
+
+[gh_syntax_lang]
+other = "langage principal"
+
+[gh_syntax_area]
+other = "domaine"
+
+[gh_syntax_tag]
+other = "étiquette"
+
+[gh_syntax_is]
+other = "bac à sable, projet ou fork"
+
+[gh_syntax_has]
+other = "a un article ou une démo en ligne"
+
+[gh_syntax_created]
+other = "créé une année donnée ou sur une plage d'années"
+
+[gh_syntax_pushed]
+other = "mis à jour après une année donnée"
+
+[gh_syntax_stars]
+other = "au moins ce nombre d'étoiles"
+
+[gh_syntax_not]
+other = "exclure tout ce qui contient ce mot"
+
+[gh_syntax_phrase]
+other = "cette expression exacte"
+
+[gh_sort_label]
+other = "Trier"
+
+[gh_sort_best]
+other = "Pertinence"
+
+[gh_sort_pushed]
+other = "Mis à jour récemment"
+
+[gh_sort_created]
+other = "Plus récents"
+
+[gh_sort_oldest]
+other = "Plus anciens"
+
+[gh_sort_stars]
+other = "Plus d'étoiles"
+
+[gh_sort_name]
+other = "Nom"
+
+[gh_view_label]
+other = "Affichage"
+
+[gh_view_cards]
+other = "Cartes"
+
+[gh_view_list]
+other = "Liste"
+
+[gh_showing]
+other = "{shown} dépôts sur {total}"
+
+[gh_clear]
+other = "Effacer les filtres"
+
+[gh_show_more]
+other = "Afficher plus"
+
+[gh_none]
+other = "Aucun dépôt ne correspond. Essayez de retirer un filtre."
+
+[gh_updated]
+other = "Mis à jour le {date}"
+
+[gh_created_in]
+other = "Créé le {date}"
+
+[gh_article]
+other = "Article"
+
+[gh_code]
+other = "Code"
+
+[gh_demo]
+other = "Démo en ligne"
+
+[gh_open_dev]
+other = "Ouvrir dans le navigateur (github.dev)"
+
+[gh_codespace]
+other = "Lancer dans un Codespace"
+
+[gh_copy_clone]
+other = "Copier la commande git clone"
+
+[gh_copied]
+other = "Copié"
+
+[gh_forked_from]
+other = "Fork de {repo}"
+
+[gh_stars_title]
+other = "{n} étoiles"
+
+[gh_learn_intro]
+other = "Vous apprenez l'une de ces technologies ? La plupart de mes dépôts sont des bacs à sable : petits, autonomes, chacun créé pendant que j'apprenais justement cela. Choisissez un parcours ci-dessous. Les dépôts accompagnés d'un article explicatif passent en premier."
+
+[gh_learn_how]
+other = "Comment utiliser un bac à sable"
+
+[gh_learn_step1]
+other = "Lisez l'article, s'il y en a un. Il explique ce que fait le code et pourquoi."
+
+[gh_learn_step2]
+other = "Ouvrez le code dans votre navigateur avec github.dev. Rien à installer."
+
+[gh_learn_step3]
+other = "Clonez-le, suivez le README et modifiez des choses jusqu'à ce que quelque chose casse."
+
+[gh_track_pick]
+other = "Parcours d'apprentissage"
+
+[gh_track_count]
+other = "{n} dépôts"
+
+[gh_track_show_all]
+other = "Afficher les {n}"
+
+[gh_track_in_browse]
+other = "Chercher dans ce parcours"
+
+[gh_track_close]
+other = "Retour à tous les parcours"
+
+[gh_timeline_intro]
+other = "Tous les dépôts par année de création, forks exclus. Survolez un nom pour voir sa description."
+
+[gh_load_error]
+other = "Impossible de charger la liste des dépôts. Réessayez plus tard."
+
+[gh_noscript]
+other = "Cette page est dessinée en JavaScript. Les données sont disponibles dans <a href=\"/data/github.json\">github.json</a>."
+
+[gh_footnote]
+other = "Depuis l'API GitHub, le {date}."
+
+[gh_area_games]
+other = "Jeux et graphisme"
+
+[gh_area_ai]
+other = "IA et apprentissage automatique"
+
+[gh_area_security]
+other = "Sécurité et authentification"
+
+[gh_area_mobile]
+other = "Mobile et bureau"
+
+[gh_area_serverless]
+other = "Serverless et IaC"
+
+[gh_area_cloud]
+other = "Cloud"
+
+[gh_area_data]
+other = "Données et bases de données"
+
+[gh_area_containers]
+other = "Conteneurs"
+
+[gh_area_python]
+other = "Python et notebooks"
+
+[gh_area_web]
+other = "Web et JavaScript"
+
+[gh_area_systems]
+other = "Langages système"
+
+[gh_area_testing]
+other = "Tests et DevOps"
+
+[gh_area_architecture]
+other = "API et intégrations"
+
+[gh_area_tools]
+other = "CLI et outils de dev"
+
+[gh_area_other]
+other = "Autres"
+
+[gh_track_serverless_title]
+other = "Serverless sur AWS"
+
+[gh_track_serverless_blurb]
+other = "Lambda, API Gateway, Step Functions, EventBridge et tout ce qui les relie"
+
+[gh_track_iac_title]
+other = "Infrastructure en tant que code"
+
+[gh_track_iac_blurb]
+other = "CDK, CloudFormation, SAM et Terraform : des ressources cloud définies dans le code source"
+
+[gh_track_containers_title]
+other = "Conteneurs"
+
+[gh_track_containers_blurb]
+other = "Docker, Kubernetes, ECS et Fargate"
+
+[gh_track_ai_title]
+other = "IA et LLM"
+
+[gh_track_ai_blurb]
+other = "Bedrock, OpenAI, agents, embeddings et apprentissage automatique classique"
+
+[gh_track_frontend_title]
+other = "Frontend"
+
+[gh_track_frontend_blurb]
+other = "React, Vue, CSS et tout ce qui tourne dans le navigateur"
+
+[gh_track_node_title]
+other = "Node.js et TypeScript"
+
+[gh_track_node_blurb]
+other = "JavaScript côté serveur, d'Express à Deno"
+
+[gh_track_python_title]
+other = "Python et notebooks"
+
+[gh_track_python_blurb]
+other = "Scripts, notebooks Jupyter et outils de données"
+
+[gh_track_data_title]
+other = "Bases de données et streaming"
+
+[gh_track_data_blurb]
+other = "DynamoDB, Postgres, Redis, Kafka et analytique"
+
+[gh_track_go_title]
+other = "Go"
+
+[gh_track_go_blurb]
+other = "Petits programmes, modules et outils en Go"
+
+[gh_track_systems_title]
+other = "C, C++ et Rust"
+
+[gh_track_systems_blurb]
+other = "Code natif, systèmes de build et WebAssembly"
+
+[gh_track_mobile_title]
+other = "Applis mobiles et de bureau"
+
+[gh_track_mobile_blurb]
+other = "iOS, Swift, Android, React Native et Electron"
+
+[gh_track_security_title]
+other = "Authentification et sécurité"
+
+[gh_track_security_blurb]
+other = "OAuth, OIDC, Cognito, IAM et gestion des secrets"
+
+[hub_github_title]
+other = "GitHub"
+
+[hub_github_blurb]
+other = "Tous les dépôts publics, consultables, avec des parcours d'apprentissage à travers les bacs à sable"
+
+[hub_github_count]
+other = "{{ .count }} dépôts"
+
+[hub_github_all]
+other = "Explorer tous les dépôts"

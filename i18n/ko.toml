@@ -598,3 +598,397 @@ other = "주제별로 글 둘러보기"
 [hub_tags_count]
 other = "주제 {{ .count }}개"
 
+
+# --- /github/ ---------------------------------------------------------------
+# Strings with {n}-style placeholders are filled in the browser by the page's
+# script, not by Hugo; keep the braces and the names inside them.
+
+[gh_intro]
+other = "{since}년부터 만든 공개 저장소 {n}개. 대부분 한 가지를 배우려고 만든 작은 실습 저장소입니다. 검색하거나, 분야나 언어별로 둘러보거나, 학습 경로를 따라가 보세요."
+
+[gh_profile]
+other = "GitHub 프로필"
+
+[gh_stat_repos]
+other = "저장소"
+
+[gh_stat_playgrounds]
+other = "실습 저장소"
+
+[gh_stat_languages]
+other = "언어"
+
+[gh_stat_articles]
+other = "글 있음"
+
+[gh_lang_bar]
+other = "전체 저장소의 주요 언어"
+
+[gh_tabs_label]
+other = "둘러보는 방법"
+
+[gh_tab_browse]
+other = "둘러보기"
+
+[gh_tab_learn]
+other = "배우기"
+
+[gh_tab_timeline]
+other = "타임라인"
+
+[gh_search_label]
+other = "저장소 검색"
+
+[gh_search_placeholder]
+other = "저장소 {n}개 검색: lambda, react, lang:go 등"
+
+[gh_advanced]
+other = "고급"
+
+[gh_kind_label]
+other = "종류"
+
+[gh_kind_all]
+other = "전체"
+
+[gh_kind_playground]
+other = "실습"
+
+[gh_kind_project]
+other = "프로젝트"
+
+[gh_kind_fork]
+other = "포크"
+
+[gh_badge_playground]
+other = "실습"
+
+[gh_badge_fork]
+other = "포크"
+
+[gh_badge_archived]
+other = "보관됨"
+
+[gh_areas]
+other = "분야"
+
+[gh_languages]
+other = "언어"
+
+[gh_more]
+other = "+{n}개 더"
+
+[gh_fewer]
+other = "접기"
+
+[gh_created]
+other = "생성일"
+
+[gh_pushed]
+other = "최근 업데이트"
+
+[gh_year_any]
+other = "모든 연도"
+
+[gh_year_from]
+other = "시작 연도"
+
+[gh_year_to]
+other = "끝 연도"
+
+[gh_only_article]
+other = "글 있음"
+
+[gh_only_demo]
+other = "라이브 데모 있음"
+
+[gh_include_forks]
+other = "포크 포함"
+
+[gh_search_readme]
+other = "README 본문도 검색"
+
+[gh_min_stars]
+other = "최소 스타 수"
+
+[gh_histogram]
+other = "연도별로 만든 저장소 수. 막대를 클릭하면 그 해로 필터링됩니다."
+
+[gh_syntax_title]
+other = "검색 문법"
+
+[gh_syntax_lang]
+other = "주요 언어"
+
+[gh_syntax_area]
+other = "분야"
+
+[gh_syntax_tag]
+other = "태그"
+
+[gh_syntax_is]
+other = "실습, 프로젝트, 포크"
+
+[gh_syntax_has]
+other = "글 또는 라이브 데모가 있음"
+
+[gh_syntax_created]
+other = "특정 연도 또는 연도 범위에 생성됨"
+
+[gh_syntax_pushed]
+other = "특정 연도 이후에 업데이트됨"
+
+[gh_syntax_stars]
+other = "스타가 이 수 이상"
+
+[gh_syntax_not]
+other = "이 단어가 들어간 것은 제외"
+
+[gh_syntax_phrase]
+other = "이 구문과 정확히 일치"
+
+[gh_sort_label]
+other = "정렬"
+
+[gh_sort_best]
+other = "관련도순"
+
+[gh_sort_pushed]
+other = "최근 업데이트순"
+
+[gh_sort_created]
+other = "최신순"
+
+[gh_sort_oldest]
+other = "오래된순"
+
+[gh_sort_stars]
+other = "스타 많은순"
+
+[gh_sort_name]
+other = "이름순"
+
+[gh_view_label]
+other = "보기"
+
+[gh_view_cards]
+other = "카드"
+
+[gh_view_list]
+other = "목록"
+
+[gh_showing]
+other = "저장소 {total}개 중 {shown}개"
+
+[gh_clear]
+other = "필터 지우기"
+
+[gh_show_more]
+other = "더 보기"
+
+[gh_none]
+other = "일치하는 저장소가 없습니다. 필터를 하나 빼 보세요."
+
+[gh_updated]
+other = "{date} 업데이트"
+
+[gh_created_in]
+other = "{date} 생성"
+
+[gh_article]
+other = "글"
+
+[gh_code]
+other = "코드"
+
+[gh_demo]
+other = "라이브 데모"
+
+[gh_open_dev]
+other = "브라우저에서 열기(github.dev)"
+
+[gh_codespace]
+other = "Codespace에서 실행"
+
+[gh_copy_clone]
+other = "git clone 명령 복사"
+
+[gh_copied]
+other = "복사됨"
+
+[gh_forked_from]
+other = "{repo}에서 포크함"
+
+[gh_stars_title]
+other = "스타 {n}개"
+
+[gh_learn_intro]
+other = "이 기술들 중 하나를 배우고 있나요? 제 저장소 대부분은 실습 저장소입니다. 작고 독립적이며, 모두 바로 그것을 배우면서 만들었습니다. 아래에서 경로를 골라 보세요. 설명하는 글이 있는 저장소가 먼저 나옵니다."
+
+[gh_learn_how]
+other = "실습 저장소 활용법"
+
+[gh_learn_step1]
+other = "글이 있다면 먼저 읽어 보세요. 코드가 무엇을 하고 왜 그런지 설명합니다."
+
+[gh_learn_step2]
+other = "github.dev로 브라우저에서 코드를 엽니다. 설치할 것은 없습니다."
+
+[gh_learn_step3]
+other = "클론해서 README를 따라 해 보고, 뭔가 망가질 때까지 이것저것 바꿔 보세요."
+
+[gh_track_pick]
+other = "학습 경로"
+
+[gh_track_count]
+other = "저장소 {n}개"
+
+[gh_track_show_all]
+other = "{n}개 모두 보기"
+
+[gh_track_in_browse]
+other = "이 경로에서 검색"
+
+[gh_track_close]
+other = "전체 경로로 돌아가기"
+
+[gh_timeline_intro]
+other = "모든 저장소를 만든 연도별로 보여 줍니다(포크 제외). 이름에 마우스를 올리면 설명이 나옵니다."
+
+[gh_load_error]
+other = "저장소 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
+
+[gh_noscript]
+other = "이 페이지는 JavaScript로 그려집니다. 바탕 데이터는 <a href=\"/data/github.json\">github.json</a>에 있습니다."
+
+[gh_footnote]
+other = "GitHub API 기준, {date}."
+
+[gh_area_games]
+other = "게임과 그래픽"
+
+[gh_area_ai]
+other = "AI와 머신러닝"
+
+[gh_area_security]
+other = "보안과 인증"
+
+[gh_area_mobile]
+other = "모바일과 데스크톱"
+
+[gh_area_serverless]
+other = "서버리스와 IaC"
+
+[gh_area_cloud]
+other = "클라우드"
+
+[gh_area_data]
+other = "데이터와 데이터베이스"
+
+[gh_area_containers]
+other = "컨테이너"
+
+[gh_area_python]
+other = "Python과 노트북"
+
+[gh_area_web]
+other = "웹과 JavaScript"
+
+[gh_area_systems]
+other = "시스템 언어"
+
+[gh_area_testing]
+other = "테스트와 DevOps"
+
+[gh_area_architecture]
+other = "API와 연동"
+
+[gh_area_tools]
+other = "CLI와 개발 도구"
+
+[gh_area_other]
+other = "기타"
+
+[gh_track_serverless_title]
+other = "AWS 서버리스"
+
+[gh_track_serverless_blurb]
+other = "Lambda, API Gateway, Step Functions, EventBridge와 이들을 잇는 부분"
+
+[gh_track_iac_title]
+other = "코드형 인프라"
+
+[gh_track_iac_blurb]
+other = "CDK, CloudFormation, SAM, Terraform: 소스 코드로 정의하는 클라우드 리소스"
+
+[gh_track_containers_title]
+other = "컨테이너"
+
+[gh_track_containers_blurb]
+other = "Docker, Kubernetes, ECS, Fargate"
+
+[gh_track_ai_title]
+other = "AI와 LLM"
+
+[gh_track_ai_blurb]
+other = "Bedrock, OpenAI, 에이전트, 임베딩, 고전적인 머신러닝"
+
+[gh_track_frontend_title]
+other = "프런트엔드"
+
+[gh_track_frontend_blurb]
+other = "React, Vue, CSS 등 브라우저에서 돌아가는 모든 것"
+
+[gh_track_node_title]
+other = "Node.js와 TypeScript"
+
+[gh_track_node_blurb]
+other = "서버 쪽 JavaScript, Express부터 Deno까지"
+
+[gh_track_python_title]
+other = "Python과 노트북"
+
+[gh_track_python_blurb]
+other = "스크립트, Jupyter 노트북, 데이터 도구"
+
+[gh_track_data_title]
+other = "데이터베이스와 스트리밍"
+
+[gh_track_data_blurb]
+other = "DynamoDB, Postgres, Redis, Kafka, 데이터 분석"
+
+[gh_track_go_title]
+other = "Go"
+
+[gh_track_go_blurb]
+other = "작은 Go 프로그램, 모듈, 도구"
+
+[gh_track_systems_title]
+other = "C, C++, Rust"
+
+[gh_track_systems_blurb]
+other = "네이티브 코드, 빌드 시스템, WebAssembly"
+
+[gh_track_mobile_title]
+other = "모바일·데스크톱 앱"
+
+[gh_track_mobile_blurb]
+other = "iOS, Swift, Android, React Native, Electron"
+
+[gh_track_security_title]
+other = "인증과 보안"
+
+[gh_track_security_blurb]
+other = "OAuth, OIDC, Cognito, IAM, 시크릿 관리"
+
+[hub_github_title]
+other = "GitHub"
+
+[hub_github_blurb]
+other = "모든 공개 저장소를 검색할 수 있고, 실습 저장소를 잇는 학습 경로도 있습니다"
+
+[hub_github_count]
+other = "저장소 {{ .count }}개"
+
+[hub_github_all]
+other = "모든 저장소 둘러보기"

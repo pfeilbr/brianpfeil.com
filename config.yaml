@@ -115,6 +115,9 @@ languages:
         - name: "movies"
           url: "/movies/"
           weight: 38
+        - name: "GitHub"
+          url: "/github/"
+          weight: 39
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -158,6 +161,9 @@ languages:
         - name: "电影"
           url: "/zh/movies/"
           weight: 38
+        - name: "GitHub"
+          url: "/zh/github/"
+          weight: 39
         # Tags are generated from the English posts, so this points at the
         # English taxonomy rather than an empty /zh/tags/.
         - name: "标签"
@@ -203,6 +209,9 @@ languages:
         - name: "películas"
           url: "/es/movies/"
           weight: 38
+        - name: "GitHub"
+          url: "/es/github/"
+          weight: 39
         - name: "etiquetas"
           url: "/tags/"
           weight: 40
@@ -246,6 +255,9 @@ languages:
         - name: "filmes"
           url: "/pt/movies/"
           weight: 38
+        - name: "GitHub"
+          url: "/pt/github/"
+          weight: 39
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -289,6 +301,9 @@ languages:
         - name: "films"
           url: "/fr/movies/"
           weight: 38
+        - name: "GitHub"
+          url: "/fr/github/"
+          weight: 39
         - name: "étiquettes"
           url: "/tags/"
           weight: 40
@@ -332,6 +347,9 @@ languages:
         - name: "filme"
           url: "/de/movies/"
           weight: 38
+        - name: "GitHub"
+          url: "/de/github/"
+          weight: 39
         - name: "tags"
           url: "/tags/"
           weight: 40
@@ -375,6 +393,9 @@ languages:
         - name: "film"
           url: "/it/movies/"
           weight: 38
+        - name: "GitHub"
+          url: "/it/github/"
+          weight: 39
         - name: "tag"
           url: "/tags/"
           weight: 40
@@ -418,6 +439,9 @@ languages:
         - name: "映画"
           url: "/ja/movies/"
           weight: 38
+        - name: "GitHub"
+          url: "/ja/github/"
+          weight: 39
         - name: "タグ"
           url: "/tags/"
           weight: 40
@@ -461,6 +485,9 @@ languages:
         - name: "영화"
           url: "/ko/movies/"
           weight: 38
+        - name: "GitHub"
+          url: "/ko/github/"
+          weight: 39
         - name: "태그"
           url: "/tags/"
           weight: 40
