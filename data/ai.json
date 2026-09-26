@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated": "2026-09-26T07:16:22Z",
+ "generated": "2026-09-26T07:19:24Z",
  "window_days": 14,
  "sections": [
   "people",
@@ -16,7 +16,7 @@
    "name": "Simon Willison",
    "home": "https://simonwillison.net/",
    "status": "ok",
-   "checked": "2026-09-26T07:15:47Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "simonw",
    "pin": true,
    "via": [
@@ -29,7 +29,7 @@
    "name": "Andrej Karpathy",
    "home": "https://karpathy.bearblog.dev/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "karpathy"
   },
   {
@@ -38,7 +38,7 @@
    "name": "swyx · Latent Space",
    "home": "https://www.latent.space/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "swyx"
   },
   {
@@ -47,7 +47,7 @@
    "name": "Nathan Lambert · Interconnects",
    "home": "https://www.interconnects.ai/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "natolambert"
   },
   {
@@ -56,7 +56,7 @@
    "name": "Ethan Mollick · One Useful Thing",
    "home": "https://www.oneusefulthing.org/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "emollick"
   },
   {
@@ -64,18 +64,20 @@
    "section": "people",
    "name": "Jack Clark · Import AI",
    "home": "https://importai.substack.com/",
-   "status": "ok",
+   "status": "error",
    "checked": "2026-09-26T07:13:46Z",
-   "x": "jackclarkSF"
+   "x": "jackclarkSF",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "id": "zvi",
    "section": "people",
    "name": "Zvi Mowshowitz",
    "home": "https://thezvi.substack.com/",
-   "status": "ok",
+   "status": "error",
    "checked": "2026-09-26T07:13:46Z",
-   "x": "TheZvi"
+   "x": "TheZvi",
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "id": "mitsuhiko",
@@ -83,7 +85,7 @@
    "name": "Armin Ronacher",
    "home": "https://lucumr.pocoo.org/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "mitsuhiko",
    "via": [
     "feedly"
@@ -95,7 +97,7 @@
    "name": "Mitchell Hashimoto",
    "home": "https://mitchellh.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "mitchellh",
    "via": [
     "feedly"
@@ -107,7 +109,7 @@
    "name": "Thorsten Ball · Register Spill",
    "home": "https://registerspill.thorstenball.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "thorstenball",
    "via": [
     "x"
@@ -119,7 +121,7 @@
    "name": "Peter Steinberger",
    "home": "https://steipete.me/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "steipete"
   },
   {
@@ -128,7 +130,7 @@
    "name": "Mario Zechner",
    "home": "https://mariozechner.at/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "badlogicgames",
    "via": [
     "feedly"
@@ -140,7 +142,7 @@
    "name": "Sean Goedecke",
    "home": "https://www.seangoedecke.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "via": [
     "feedly"
    ]
@@ -151,7 +153,7 @@
    "name": "Martin Alderson",
    "home": "https://martinalderson.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "via": [
     "feedly"
    ]
@@ -162,7 +164,7 @@
    "name": "Max Woolf",
    "home": "https://minimaxir.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "minimaxir",
    "via": [
     "feedly"
@@ -174,7 +176,7 @@
    "name": "Geoffrey Litt",
    "home": "https://www.geoffreylitt.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "geoffreylitt",
    "via": [
     "feedly"
@@ -186,7 +188,7 @@
    "name": "Works on My Machine",
    "home": "https://worksonmymachine.ai/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "via": [
     "feedly"
    ]
@@ -196,12 +198,13 @@
    "section": "people",
    "name": "Gary Marcus",
    "home": "https://garymarcus.substack.com/",
-   "status": "ok",
+   "status": "error",
    "checked": "2026-09-26T07:13:46Z",
    "x": "GaryMarcus",
    "via": [
     "feedly"
-   ]
+   ],
+   "error": "HTTPError: HTTP Error 403: Forbidden"
   },
   {
    "id": "dwarkesh",
@@ -209,7 +212,7 @@
    "name": "Dwarkesh Patel",
    "home": "https://www.dwarkesh.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "dwarkesh_sp",
    "via": [
     "feedly"
@@ -221,7 +224,7 @@
    "name": "Lex Fridman",
    "home": "https://lexfridman.com/podcast/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "lexfridman",
    "via": [
     "x"
@@ -233,7 +236,7 @@
    "name": "Werner Vogels · All Things Distributed",
    "home": "https://www.allthingsdistributed.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "Werner",
    "via": [
     "feedly",
@@ -246,7 +249,7 @@
    "name": "Gergely Orosz · The Pragmatic Engineer",
    "home": "https://newsletter.pragmaticengineer.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "GergelyOrosz"
   },
   {
@@ -255,7 +258,7 @@
    "name": "Anthropic",
    "home": "https://www.anthropic.com/news",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "openai",
@@ -263,7 +266,7 @@
    "name": "OpenAI",
    "home": "https://openai.com/news/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "deepmind",
@@ -271,7 +274,7 @@
    "name": "Google DeepMind",
    "home": "https://deepmind.google/discover/blog/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "googleai",
@@ -279,7 +282,7 @@
    "name": "Google AI",
    "home": "https://blog.google/technology/ai/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "hfblog",
@@ -287,7 +290,7 @@
    "name": "Hugging Face",
    "home": "https://huggingface.co/blog",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "awsml",
@@ -295,7 +298,7 @@
    "name": "AWS Machine Learning Blog",
    "home": "https://aws.amazon.com/blogs/machine-learning/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "via": [
     "feedly"
    ]
@@ -306,7 +309,7 @@
    "name": "AWS What's New · Bedrock & SageMaker",
    "home": "https://aws.amazon.com/about-aws/whats-new/recent/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "via": [
     "feedly"
    ]
@@ -317,7 +320,7 @@
    "name": "Claude Code",
    "home": "https://github.com/anthropics/claude-code",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "codex",
@@ -325,7 +328,7 @@
    "name": "OpenAI Codex CLI",
    "home": "https://github.com/openai/codex",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "gemini-cli",
@@ -333,7 +336,7 @@
    "name": "Gemini CLI",
    "home": "https://github.com/google-gemini/gemini-cli",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "copilot-chat",
@@ -341,7 +344,7 @@
    "name": "GitHub Copilot Chat (VS Code)",
    "home": "https://github.com/microsoft/vscode-copilot-chat",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "vscode",
@@ -349,7 +352,7 @@
    "name": "VS Code release notes",
    "home": "https://code.visualstudio.com/updates",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "gh-changelog",
@@ -357,7 +360,7 @@
    "name": "GitHub Changelog · Copilot",
    "home": "https://github.blog/changelog/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "cursor",
@@ -365,7 +368,7 @@
    "name": "Cursor",
    "home": "https://cursor.com/changelog",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "chrome",
@@ -373,7 +376,7 @@
    "name": "Chrome for Developers · AI",
    "home": "https://developer.chrome.com/docs/ai",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "cline",
@@ -381,7 +384,7 @@
    "name": "Cline",
    "home": "https://github.com/cline/cline",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "opencode",
@@ -389,7 +392,7 @@
    "name": "OpenCode",
    "home": "https://github.com/sst/opencode",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "agent-sdk",
@@ -397,7 +400,7 @@
    "name": "Claude Agent SDK (Python)",
    "home": "https://github.com/anthropics/claude-agent-sdk-python",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "mcp",
@@ -405,7 +408,7 @@
    "name": "Model Context Protocol",
    "home": "https://modelcontextprotocol.io/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "ollama",
@@ -413,7 +416,7 @@
    "name": "Ollama",
    "home": "https://github.com/ollama/ollama",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "llamacpp",
@@ -421,7 +424,7 @@
    "name": "llama.cpp",
    "home": "https://github.com/ggml-org/llama.cpp",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "vllm",
@@ -429,7 +432,7 @@
    "name": "vLLM",
    "home": "https://github.com/vllm-project/vllm",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "hn",
@@ -437,7 +440,7 @@
    "name": "Hacker News",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "r-localllama",
@@ -445,7 +448,7 @@
    "name": "r/LocalLLaMA",
    "home": "https://www.reddit.com/r/LocalLLaMA/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "r-claudeai",
@@ -453,7 +456,7 @@
    "name": "r/ClaudeAI",
    "home": "https://www.reddit.com/r/ClaudeAI/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "r-chatgptcoding",
@@ -470,7 +473,7 @@
    "name": "AINews (smol.ai)",
    "home": "https://news.smol.ai/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z"
+   "checked": "2026-09-26T07:19:24Z"
   },
   {
    "id": "raschka",
@@ -478,7 +481,7 @@
    "name": "Sebastian Raschka · Ahead of AI",
    "home": "https://magazine.sebastianraschka.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "rasbt"
   },
   {
@@ -487,7 +490,7 @@
    "name": "Lilian Weng · Lil'Log",
    "home": "https://lilianweng.github.io/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "lilianweng"
   },
   {
@@ -496,7 +499,7 @@
    "name": "Hamel Husain",
    "home": "https://hamel.dev/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "HamelHusain"
   },
   {
@@ -505,7 +508,7 @@
    "name": "Eugene Yan",
    "home": "https://eugeneyan.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "eugeneyan"
   },
   {
@@ -514,7 +517,7 @@
    "name": "Chip Huyen",
    "home": "https://huyenchip.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "x": "chipro",
    "via": [
     "feedly"
@@ -526,7 +529,7 @@
    "name": "Giles Thomas · LLM from scratch",
    "home": "https://www.gilesthomas.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:13:46Z",
+   "checked": "2026-09-26T07:19:24Z",
    "via": [
     "feedly"
    ]
@@ -608,6 +611,17 @@
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "hexagon: find software divide calls using binary inspection tool ( #29449 ) hex-scripts: fix table alignment hex-scripts: find sw div calls using binary inspection tool Website: https://llama.app Attestations: https://github.com/ggml-org/llama.cpp/attestations/50359675…",
    "kind": "release"
+  },
+  {
+   "id": "060590757cce",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "I turned a Stream Deck+XL into a flight engineer style panel for a rented GPU farm of 32x5090s (Opus 5.5)",
+   "url": "https://v.redd.it/wbxc04g19srh1",
+   "published": "2026-09-26T03:20:17Z",
+   "first_seen": "2026-09-26T07:19:24Z",
+   "summary": "what could POSSIBLY go wrong",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqfwku/i_turned_a_stream_deckxl_into_a_flight_engineer/"
   },
   {
    "id": "f30ed81094b6",
@@ -879,8 +893,8 @@
    "published": "2026-09-25T21:09:27Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
-   "points": 407,
-   "comments": 246,
+   "points": 414,
+   "comments": 249,
    "discuss": "https://news.ycombinator.com/item?id=49849985"
   },
   {
@@ -947,8 +961,8 @@
    "published": "2026-09-25T18:33:50Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
-   "points": 409,
-   "comments": 112,
+   "points": 411,
+   "comments": 113,
    "discuss": "https://news.ycombinator.com/item?id=49848269"
   },
   {
@@ -974,7 +988,7 @@
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
    "points": 103,
-   "comments": 58,
+   "comments": 59,
    "discuss": "https://news.ycombinator.com/item?id=49848033",
    "also": [
     "anthropic"
@@ -1089,7 +1103,7 @@
    "published": "2026-09-25T15:29:25Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
-   "points": 435,
+   "points": 436,
    "comments": 747,
    "discuss": "https://news.ycombinator.com/item?id=49845977"
   },
@@ -1887,6 +1901,16 @@
    "summary": "This was the month the world took notice that AI might kill everyone."
   },
   {
+   "id": "46d27c31e09b",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "AWS Glue Data Quality delivers context-specific rule recommendations in seconds",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/glue-data-quality-rule-recommendations/",
+   "published": "2026-09-22T08:00:00Z",
+   "first_seen": "2026-09-26T07:19:24Z",
+   "summary": "AWS Glue Data Quality now generates data quality rules in seconds, reducing the time to establish data quality checks for your tables in the AWS Glue Data Catalog. You get a ready-to-use set of rules with full coverage across every column, with no manual setup—so you can move…"
+  },
+  {
    "id": "49c023466b3c",
    "source": "vllm",
    "section": "tools",
@@ -2078,6 +2102,16 @@
    "published": "2026-09-18T15:15:00Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "Amazon Bedrock continues to expand its open weight model portfolio with the same security and governance that customers rely on. Today, Kimi K3 from Moonshot AI is generally available on Amazon Bedrock, giving you a powerful new option for coding and knowledge work. According to…"
+  },
+  {
+   "id": "eb71135e162f",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "Amazon SNS now supports message payloads up to 1 MiB",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/amazon-sns-1mib-support",
+   "published": "2026-09-18T15:00:00Z",
+   "first_seen": "2026-09-26T07:19:24Z",
+   "summary": "Amazon Simple Notification Service (Amazon SNS) now supports message payloads up to 1 MiB, a 4x increase from the previous 256 KiB limit, so you can publish larger messages to your SNS topics. Amazon SNS is a fully managed pub/sub messaging service that enables you to decouple…"
   },
   {
    "id": "c72f60fcf6ad",
@@ -3462,7 +3496,7 @@
    {
     "id": "abenzerps/Qwen-Image-2.1-Uncensored-GGUF",
     "task": "text-to-image",
-    "likes": 1833,
+    "likes": 1834,
     "downloads": 715906,
     "created": "2026-09-20T15:51:13Z",
     "url": "https://huggingface.co/abenzerps/Qwen-Image-2.1-Uncensored-GGUF"
@@ -3502,7 +3536,7 @@
    {
     "id": "Edge0/Audio8-ASR-Infinite",
     "task": "automatic-speech-recognition",
-    "likes": 649,
+    "likes": 652,
     "downloads": 2853,
     "created": "2026-09-21T15:03:21Z",
     "url": "https://huggingface.co/Edge0/Audio8-ASR-Infinite"
@@ -3518,7 +3552,7 @@
    {
     "id": "TaichuAI/ZDTaichu5.0-9B",
     "task": "image-text-to-text",
-    "likes": 1129,
+    "likes": 1131,
     "downloads": 9498,
     "created": "2026-09-04T02:55:48Z",
     "url": "https://huggingface.co/TaichuAI/ZDTaichu5.0-9B"
@@ -3604,8 +3638,8 @@
     "url": "https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base"
    }
   ],
-  "new_checked": "2026-09-26T07:16:22Z",
-  "trending_checked": "2026-09-26T07:16:22Z"
+  "new_checked": "2026-09-26T07:19:24Z",
+  "trending_checked": "2026-09-26T07:19:24Z"
  },
  "mine": [
   {
