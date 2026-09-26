@@ -66,6 +66,29 @@
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
   </section>
 
+  {{- /* Learn: every goal on /learn/ as a link straight to that path. */ -}}
+  {{ with hugo.Data.learn }}
+  {{ $n := 0 }}{{ range .paths }}{{ $n = add $n (len .items) }}{{ end }}
+  <section class="hub-card hub-wide" data-ic="i-cap" aria-labelledby="hub-learn">
+    <div class="hub-card-head">
+      {{ partial "icons/chip.html" (dict "id" "i-cap" "size" "lg") }}
+      <div class="hub-card-text">
+        <h3 id="hub-learn" class="hub-card-title"><a href="{{ $prefix }}learn/">{{ i18n "hub_learn_title" }}</a></h3>
+        <p class="hub-card-blurb">{{ i18n "hub_learn_blurb" }}</p>
+      </div>
+      <span class="hub-count">{{ i18n "hub_learn_count" (dict "count" $n) }}</span>
+    </div>
+    <ul class="hub-goals">
+      {{ range .paths }}
+      <li><a href="{{ $prefix }}learn/#{{ .key }}" data-ic="{{ .icon }}">
+        {{ partial "icons/chip.html" (dict "id" .icon "size" "sm") }}
+        <span>{{ i18n (printf "learn_path_%s" .key) }}</span>
+      </a></li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
   {{- /* Media: a strip of the newest tiles, each opening that item. */ -}}
   {{ if and $media $media.items }}
   <section class="hub-card hub-wide" data-ic="i-camera" aria-labelledby="hub-media">

@@ -1,0 +1,131 @@
+{
+  "_comment": "The /learn/ page (layouts/_default/learn.html). Structure and links only: each path's title and blurb are i18n keys learn_path_<key> / learn_path_blurb_<key>, each resource's blurb is learn_res_<key>, and a `group` is learn_group_<group>. `by` and `name` are brand names, so they are not translated. `page` points at a project on this site; its title and description come from that page, in each language. Every url must open for a visitor who isn't signed in -- make check-learn-links.",
+  "paths": [
+    {
+      "key": "code",
+      "icon": "i-braces",
+      "items": [
+        { "key": "cs50", "name": "CS50x", "by": "Harvard", "url": "https://cs50.harvard.edu/x/", "pick": true },
+        { "key": "freecodecamp", "name": "freeCodeCamp", "url": "https://www.freecodecamp.org/" },
+        { "key": "odin", "name": "The Odin Project", "url": "https://www.theodinproject.com/" },
+        { "key": "khan_computing", "name": "Computing", "by": "Khan Academy", "url": "https://www.khanacademy.org/computing" },
+        { "key": "mdn_learn", "name": "Learn web development", "by": "MDN", "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development" },
+        { "key": "missing_semester", "name": "The Missing Semester", "by": "MIT", "url": "https://missing.csail.mit.edu/", "pick": true }
+      ]
+    },
+    {
+      "key": "university",
+      "icon": "i-layers",
+      "items": [
+        { "key": "mit_ocw", "name": "OpenCourseWare", "by": "MIT", "url": "https://ocw.mit.edu/", "pick": true },
+        { "key": "mitx", "name": "MITx", "by": "MIT", "url": "https://learn.mit.edu/c/unit/mitx" },
+        { "key": "mit_oll", "name": "Open Learning Library", "by": "MIT", "url": "https://openlearning.mit.edu/courses-programs/open-learning-library" },
+        { "key": "cmu_oli", "name": "Open Learning Initiative", "by": "Carnegie Mellon", "url": "https://oli.cmu.edu/" },
+        { "key": "stanford_free", "name": "Free courses", "by": "Stanford Online", "url": "https://online.stanford.edu/free-courses" },
+        { "key": "coursera", "name": "Coursera", "url": "https://www.coursera.org/" },
+        { "key": "edx", "name": "edX", "url": "https://www.edx.org/" },
+        { "key": "ossu", "name": "OSSU Computer Science", "url": "https://github.com/ossu/computer-science", "pick": true },
+        { "key": "teach_yourself_cs", "name": "Teach Yourself Computer Science", "url": "https://teachyourselfcs.com/" },
+        { "key": "cs_video_courses", "name": "CS video courses", "url": "https://github.com/Developer-Y/cs-video-courses" },
+        { "key": "open_culture", "name": "Free online courses", "by": "Open Culture", "url": "https://www.openculture.com/freeonlinecourses" },
+        { "key": "neetcode", "name": "NeetCode", "url": "https://neetcode.io/" }
+      ]
+    },
+    {
+      "key": "cloud",
+      "grouped": true,
+      "icon": "i-cloud",
+      "items": [
+        { "key": "aws_skill_builder", "name": "Skill Builder", "by": "AWS", "url": "https://skillbuilder.aws/", "pick": true },
+        { "key": "aws_builders_library", "name": "Builders' Library", "by": "AWS", "url": "https://builder.aws.com/learn/topics/builders-library", "pick": true },
+        { "key": "aws_workshops", "name": "Workshops", "by": "AWS", "url": "https://builder.aws.com/build/workshops" },
+        { "key": "aws_hands_on", "name": "Hands-on tutorials", "by": "AWS", "url": "https://aws.amazon.com/getting-started/hands-on/" },
+        { "key": "aws_wa_labs", "name": "Well-Architected Labs", "by": "AWS", "url": "https://www.wellarchitectedlabs.com/" },
+        { "key": "aws_prescriptive", "name": "Prescriptive Guidance", "by": "AWS", "url": "https://aws.amazon.com/prescriptive-guidance/" },
+        { "key": "trailhead", "name": "Trailhead", "by": "Salesforce", "url": "https://trailhead.salesforce.com/" },
+        { "key": "ms_learn", "name": "Microsoft Learn for Azure", "by": "Microsoft Azure", "url": "https://learn.microsoft.com/en-us/training/azure/" },
+        { "key": "gcp_skills", "name": "Google Skills", "by": "Google Cloud", "url": "https://www.skills.google/" },
+        { "key": "gcp_arch", "name": "Architecture Center", "by": "Google Cloud", "url": "https://docs.cloud.google.com/architecture" },
+        { "key": "cf_learning", "name": "Learning Center", "by": "Cloudflare", "url": "https://www.cloudflare.com/learning/" },
+        { "key": "system_design_primer", "name": "System Design Primer", "group": "neutral", "url": "https://github.com/donnemartin/system-design-primer" },
+        { "key": "microservices_io", "name": "microservices.io", "group": "neutral", "url": "https://microservices.io/" }
+      ]
+    },
+    {
+      "key": "ai",
+      "icon": "i-sparkles",
+      "items": [
+        { "key": "karpathy_z2h", "name": "Neural Networks: Zero to Hero", "by": "Andrej Karpathy", "url": "https://karpathy.ai/zero-to-hero.html", "pick": true },
+        { "key": "threeb1b", "name": "Neural networks", "by": "3Blue1Brown", "url": "https://www.3blue1brown.com/?topic=neural-networks", "pick": true },
+        { "key": "fastai", "name": "Practical Deep Learning", "by": "fast.ai", "url": "https://course.fast.ai/" },
+        { "key": "google_ml_crash", "name": "Machine Learning Crash Course", "by": "Google", "url": "https://developers.google.com/machine-learning/crash-course" },
+        { "key": "mit_6s191", "name": "Introduction to Deep Learning (6.S191)", "by": "MIT", "url": "https://introtodeeplearning.com/" },
+        { "key": "dlai", "name": "Courses", "by": "DeepLearning.AI", "url": "https://www.deeplearning.ai/courses" },
+        { "key": "hf_llm", "name": "LLM Course", "by": "Hugging Face", "url": "https://huggingface.co/learn/llm-course" },
+        { "key": "hf_agents", "name": "AI Agents Course", "by": "Hugging Face", "url": "https://huggingface.co/learn/agents-course" },
+        { "key": "d2l", "name": "Dive into Deep Learning", "url": "https://d2l.ai/" },
+        { "key": "nielsen", "name": "Neural Networks and Deep Learning", "by": "Michael Nielsen", "url": "http://neuralnetworksanddeeplearning.com/" },
+        { "key": "islr", "name": "An Introduction to Statistical Learning", "url": "https://www.statlearning.com/" },
+        { "key": "dl_book", "name": "Deep Learning", "by": "Goodfellow, Bengio & Courville", "url": "https://www.deeplearningbook.org/" },
+        { "key": "sutton_barto", "name": "Reinforcement Learning: An Introduction", "by": "Sutton & Barto", "url": "http://incompleteideas.net/book/the-book-2nd.html" },
+        { "key": "ai_canon", "name": "AI Canon", "by": "a16z", "url": "https://a16z.com/ai-canon/" }
+      ]
+    },
+    {
+      "key": "models",
+      "grouped": true,
+      "icon": "i-chip",
+      "items": [
+        { "key": "anthropic_academy", "name": "Anthropic Academy", "by": "Anthropic · Claude", "url": "https://anthropic.skilljar.com/", "pick": true },
+        { "key": "anthropic_courses", "name": "Courses on GitHub", "by": "Anthropic · Claude", "url": "https://github.com/anthropics/courses" },
+        { "key": "anthropic_prompt_tutorial", "name": "Interactive prompt engineering tutorial", "by": "Anthropic · Claude", "url": "https://github.com/anthropics/prompt-eng-interactive-tutorial" },
+        { "key": "anthropic_cookbook", "name": "Claude Cookbooks", "by": "Anthropic · Claude", "url": "https://github.com/anthropics/claude-cookbooks" },
+        { "key": "claude_docs", "name": "Claude docs", "by": "Anthropic · Claude", "url": "https://platform.claude.com/docs/en/home" },
+        { "key": "claude_code_docs", "name": "Claude Code docs", "by": "Anthropic · Claude", "url": "https://code.claude.com/docs/en/overview" },
+        { "key": "openai_academy", "name": "OpenAI Academy", "by": "OpenAI · ChatGPT", "url": "https://academy.openai.com/" },
+        { "key": "openai_cookbook", "name": "OpenAI Cookbook", "by": "OpenAI · ChatGPT", "url": "https://developers.openai.com/cookbook" },
+        { "key": "openai_docs", "name": "API docs", "by": "OpenAI · ChatGPT", "url": "https://developers.openai.com/api/docs" },
+        { "key": "gemini_docs", "name": "Gemini API docs", "by": "Google · Gemini", "url": "https://ai.google.dev/gemini-api/docs" },
+        { "key": "ai_studio", "name": "Google AI Studio", "by": "Google · Gemini", "url": "https://aistudio.google.com/" },
+        { "key": "gemini_cookbook", "name": "Gemini Cookbook", "by": "Google · Gemini", "url": "https://github.com/google-gemini/cookbook" },
+        { "key": "llama_cookbook", "name": "Llama Cookbook", "by": "Meta · Llama", "url": "https://github.com/meta-llama/llama-cookbook" },
+        { "key": "mistral_docs", "name": "Mistral docs", "by": "Mistral AI", "url": "https://docs.mistral.ai/" },
+        { "key": "ollama", "name": "Ollama", "group": "local", "url": "https://ollama.com/" },
+        { "key": "mlx_lm", "name": "MLX LM", "group": "local", "url": "https://github.com/ml-explore/mlx-lm" },
+        { "key": "llama_cpp", "name": "llama.cpp", "group": "local", "url": "https://github.com/ggml-org/llama.cpp" }
+      ]
+    },
+    {
+      "key": "kids",
+      "icon": "i-gamepad",
+      "items": [
+        { "key": "scratch", "name": "Scratch", "by": "MIT", "url": "https://scratch.mit.edu/", "pick": true },
+        { "key": "code_org", "name": "Code.org", "url": "https://code.org/" },
+        { "key": "khan_kids", "name": "Khan Academy Kids", "url": "https://learn.khanacademy.org/khan-academy-kids/" },
+        { "key": "lightbot", "name": "Lightbot", "url": "https://lightbot.com/" },
+        { "key": "app_inventor", "name": "App Inventor", "by": "MIT", "url": "https://appinventor.mit.edu/" },
+        { "key": "swift_playgrounds", "name": "Swift Playgrounds", "by": "Apple", "url": "https://developer.apple.com/swift-playground/" },
+        { "key": "roblox_create", "name": "Roblox Creator Hub", "by": "Roblox", "url": "https://create.roblox.com/docs" },
+        { "key": "minecraft_edu", "name": "Minecraft Education", "url": "https://education.minecraft.net/" },
+        { "key": "coderdojo", "name": "CoderDojo", "url": "https://codeclub.org/en/coderdojo-community" },
+        { "key": "p_mathmon", "group": "made_here", "page": "/projects/pokemon-game" },
+        { "key": "p_animal_fun", "group": "made_here", "page": "/projects/animal-fun" },
+        { "key": "p_alpha_sound", "group": "made_here", "page": "/projects/alpha-sound" },
+        { "key": "p_vehicle_fun", "group": "made_here", "page": "/projects/vehicle-fun-for-kids" }
+      ]
+    },
+    {
+      "key": "papers",
+      "icon": "i-bookmark",
+      "items": [
+        { "key": "attention", "name": "Attention Is All You Need", "by": "Vaswani et al., 2017", "url": "https://arxiv.org/abs/1706.03762", "pick": true },
+        { "key": "dynamo", "name": "Dynamo: Amazon's Highly Available Key-value Store", "by": "DeCandia et al., 2007", "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf", "pick": true },
+        { "key": "papers_we_love", "name": "Papers We Love", "url": "https://github.com/papers-we-love/papers-we-love" },
+        { "key": "morning_paper", "name": "The Morning Paper", "by": "Adrian Colyer", "url": "https://blog.acolyer.org/" },
+        { "key": "arxiv", "name": "arXiv", "url": "https://arxiv.org/" },
+        { "key": "martin_fowler", "name": "martinfowler.com", "by": "Martin Fowler", "url": "https://martinfowler.com/" },
+        { "key": "high_scalability", "name": "High Scalability", "url": "https://highscalability.com/" }
+      ]
+    }
+  ]
+}

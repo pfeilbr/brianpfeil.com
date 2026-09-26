@@ -1,0 +1,225 @@
+{{ define "main" }}
+{{- /* Drawn in the browser from /data/learn.json. The template supplies the
+   shell, the goal buttons and every translated string: path titles and
+   resource blurbs are looked up per key here (learn_path_<key>,
+   learn_res_<key>, learn_group_<key>), so the JSON holds links only. Items
+   that point at one of this site's projects take their title, blurb and
+   URL from that page, in this language. */ -}}
+{{ $data := hugo.Data.learn }}
+{{ $paths := dict }}
+{{ $res := dict }}
+{{ $pages := dict }}
+{{ $total := 0 }}
+{{ range $data.paths }}
+  {{ $paths = merge $paths (dict .key (dict "label" (i18n (printf "learn_path_%s" .key)) "blurb" (i18n (printf "learn_path_blurb_%s" .key)))) }}
+  {{ range .items }}
+    {{ $total = add $total 1 }}
+    {{ if .page }}
+      {{ with site.GetPage .page }}
+        {{ $pages = merge $pages (dict .File.ContentBaseName (dict "name" .Title "blurb" .Description "url" .RelPermalink)) }}
+      {{ end }}
+    {{ else }}
+      {{ $res = merge $res (dict .key (i18n (printf "learn_res_%s" .key))) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $groups := dict }}
+{{ range slice "neutral" "local" "made_here" }}
+  {{ $groups = merge $groups (dict . (i18n (printf "learn_group_%s" .))) }}
+{{ end }}
+{{ $T := dict
+  "intro" (i18n "learn_intro" "{count}")
+  "count" (i18n "learn_count" "{n}")
+  "none" (i18n "learn_none" "{q}")
+  "pick" (i18n "learn_pick")
+  "error" (i18n "data_load_error")
+  "paths" $paths
+  "res" $res
+  "pages" $pages
+  "groups" $groups
+}}
+<article class="learn">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600" id="learn-intro">{{ replace (i18n "learn_intro" "{count}") "{count}" (string $total) }}</p>
+  </header>
+
+  <div class="prose">{{ .Content }}</div>
+  <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/learn.json") | safeHTML }}</p></noscript>
+
+  {{/* ---------- Goals: one button per path, doubling as the filter ---------- */}}
+  <section class="music-section learn-top" aria-labelledby="learn-goals-h">
+    <h2 id="learn-goals-h" class="music-h2">{{ i18n "learn_goal_heading" }}</h2>
+    <div class="learn-goals" role="group" aria-labelledby="learn-goals-h" id="learn-goals">
+      {{ range $data.paths }}
+      <button type="button" class="learn-goal" data-path="{{ .key }}" data-ic="{{ .icon }}" aria-pressed="false">
+        {{ partial "icons/chip.html" (dict "id" .icon "size" "sm") }}
+        <span class="learn-goal-text">
+          <span class="learn-goal-name">{{ i18n (printf "learn_path_%s" .key) }}</span>
+          <span class="learn-goal-n">{{ replace (i18n "learn_count" "{n}") "{n}" (string (len .items)) }}</span>
+        </span>
+      </button>
+      {{ end }}
+    </div>
+    <div class="learn-tools">
+      <button type="button" class="chip is-on" id="learn-all" aria-pressed="true">{{ i18n "learn_all" }} <span class="chip-n">{{ $total }}</span></button>
+      <label class="learn-search">
+        <span class="sr-only">{{ i18n "learn_search_label" }}</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        <input type="search" id="learn-q" placeholder="{{ i18n "learn_search_placeholder" }}" autocomplete="off">
+      </label>
+    </div>
+  </section>
+
+  <div id="learn-paths" aria-busy="true" aria-live="polite"></div>
+  <p class="music-sub learn-none" id="learn-none" hidden></p>
+
+  <p class="music-foot">{{ i18n "learn_footnote" }}</p>
+</article>
+
+{{- /* The resources as an ItemList, rendered at build time so a crawler that
+   never runs the script still sees what the page links to. */ -}}
+{{ $list := slice }}
+{{ range $data.paths }}{{ range .items }}{{ with .url }}
+  {{ $list = $list | append (dict "@type" "ListItem" "position" (add (len $list) 1) "url" .) }}
+{{ end }}{{ end }}{{ end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "ItemList" "name" .Title "description" .Description "numberOfItems" (len $list) "itemListElement" $list | jsonify | safeJS }}</script>
+
+{{ partial "data-render.html" . }}
+<script>
+/* Every path from learn.json becomes a section of link cards. Two cheap
+   behaviours on top:
+   1. Goal buttons show one path at a time (and set #<path>, so a goal can be
+      linked to); "Everything" shows them all.
+   2. The search box narrows whatever is showing by name, provider and blurb.
+   Both are show/hide only -- nothing is re-fetched. */
+(function () {
+  var D = window.DataPage, el = D.el.bind(D);
+  var T = {{ $T | jsonify | safeJS }};
+  var ARROW = '<svg class="learn-ext" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+  var out = document.getElementById("learn-paths");
+  var none = document.getElementById("learn-none");
+  var q = document.getElementById("learn-q");
+  var all = document.getElementById("learn-all");
+  var goals = [].slice.call(document.querySelectorAll(".learn-goal"));
+  var current = "all";
+
+  function slug(item) { return item.page ? item.page.split("/").pop() : ""; }
+
+  /* In a grouped path the provider is already the sub-heading. */
+  function card(item, grouped) {
+    var local = item.page ? T.pages[slug(item)] : null;
+    if (item.page && !local) return null;
+    var name = local ? local.name : item.name;
+    var blurb = local ? local.blurb : (T.res[item.key] || "");
+    var a = local ? el("a", "learn-card") : D.link(item.url, "learn-card");
+    if (local) a.href = local.url;
+    var top = el("span", "learn-card-top");
+    top.appendChild(el("span", "learn-name", name));
+    if (item.pick) top.appendChild(el("span", "learn-pick", T.pick));
+    if (!local) top.insertAdjacentHTML("beforeend", ARROW);
+    a.appendChild(top);
+    if (item.by && !grouped) a.appendChild(el("span", "learn-by", item.by));
+    a.appendChild(el("span", "learn-blurb", blurb));
+    a.dataset.text = [name, item.by || "", blurb].join(" ").toLowerCase();
+    return a;
+  }
+
+  /* Consecutive items share a sub-heading when they share a `group` (a
+     translated label) or, in a path marked `grouped`, a provider. */
+  function groupOf(path, item) {
+    if (item.group) return { id: "g:" + item.group, label: T.groups[item.group] || item.group };
+    if (path.grouped && item.by) return { id: "b:" + item.by, label: item.by };
+    return { id: "", label: "" };
+  }
+
+  function section(path) {
+    var info = T.paths[path.key] || {};
+    var sec = el("section", "learn-path");
+    sec.id = "path-" + path.key;
+    sec.dataset.path = path.key;
+    sec.setAttribute("aria-labelledby", "learn-h-" + path.key);
+    var head = el("div", "learn-path-head");
+    head.dataset.ic = path.icon;
+    head.insertAdjacentHTML("beforeend",
+      '<span class="ic ic-sm" data-ic="' + path.icon + '" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#' + path.icon + '"/></svg></span>');
+    var h = el("h2", "learn-path-title", info.label || path.key);
+    h.id = "learn-h-" + path.key;
+    head.appendChild(h);
+    sec.appendChild(head);
+    sec.appendChild(el("p", "music-sub", info.blurb || ""));
+
+    var block = null, last = null;
+    path.items.forEach(function (item) {
+      var c = card(item, path.grouped);
+      if (!c) return;
+      var g = groupOf(path, item);
+      if (!block || g.id !== last) {
+        block = el("div", "learn-group");
+        if (g.label) block.appendChild(el("h3", "learn-group-title", g.label));
+        block.appendChild(el("div", "learn-grid"));
+        sec.appendChild(block);
+        last = g.id;
+      }
+      block.lastChild.appendChild(c);
+    });
+    return sec;
+  }
+
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var shown = 0;
+    out.querySelectorAll(".learn-path").forEach(function (sec) {
+      var onPath = current === "all" || sec.dataset.path === current;
+      var inSec = 0;
+      sec.querySelectorAll(".learn-group").forEach(function (g) {
+        var n = 0;
+        g.querySelectorAll(".learn-card").forEach(function (c) {
+          var hit = onPath && (!term || c.dataset.text.indexOf(term) !== -1);
+          c.hidden = !hit;
+          if (hit) n++;
+        });
+        g.hidden = n === 0;
+        inSec += n;
+      });
+      sec.hidden = inSec === 0;
+      shown += inSec;
+    });
+    none.hidden = shown !== 0;
+    if (!shown) none.textContent = D.fill(T.none, { q: q.value.trim() });
+  }
+
+  function select(key, push) {
+    current = key;
+    all.classList.toggle("is-on", key === "all");
+    all.setAttribute("aria-pressed", String(key === "all"));
+    goals.forEach(function (b) {
+      var on = b.dataset.path === key;
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
+    if (push) history.replaceState(null, "", key === "all" ? location.pathname : "#" + key);
+    apply();
+  }
+
+  goals.forEach(function (b) {
+    b.addEventListener("click", function () {
+      select(current === b.dataset.path ? "all" : b.dataset.path, true);
+      var target = document.getElementById("learn-paths");
+      if (target.getBoundingClientRect().top < 0) target.scrollIntoView({ block: "start" });
+    });
+  });
+  all.addEventListener("click", function () { select("all", true); });
+  q.addEventListener("input", apply);
+
+  D.load("learn").then(function (data) {
+    var n = 0;
+    data.paths.forEach(function (p) { n += p.items.length; out.appendChild(section(p)); });
+    document.getElementById("learn-intro").textContent = D.fill(T.intro, { count: n });
+    out.setAttribute("aria-busy", "false");
+    var hash = location.hash.slice(1);
+    select(goals.some(function (b) { return b.dataset.path === hash; }) ? hash : "all", false);
+  }).catch(function () { D.fail(out, T.error); });
+})();
+</script>
+{{ end }}

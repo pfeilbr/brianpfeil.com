@@ -151,6 +151,7 @@ touching a template:
 | `/subscriptions/` | `data/subscriptions.yaml`, `data/twitch.yaml` | `layouts/_default/subscriptions.html` |
 | `/media/` | `data/media.yaml` (generated) | `layouts/_default/media.html` |
 | `/movies/` | `data/movies.json` (`make movies-refresh`) | `layouts/_default/movies.html` |
+| `/learn/` | `data/learn.json` (`make check-learn-links`) | `layouts/_default/learn.html` |
 | `/` (home) | `data/home.yaml` | `layouts/index.html` |
 | `/github/` | `data/github.json` (`make github-refresh`) | `layouts/_default/github.html` |
 
@@ -169,6 +170,11 @@ touching a template:
   output, since a year match can pick a same-year namesake. Synopses, titles
   and genres come back in all nine languages from JustWatch, so they are
   data, not i18n. Set `"mpa"` on an entry to override a wrong rating.
+- **/learn/:** add `{"key", "name", "by", "url"}` to a path in
+  `data/learn.json`, its blurb as `learn_res_<key>` in all nine i18n files,
+  then `make check-learn-links` — only list what opens without signing in.
+  `page` instead of `url` links one of this site's projects in the visitor's
+  language. Learn took Archive's nav slot; Archive is still a home card.
 - **Ten nav links** (GitHub was the tenth). `.nav-row` is now `60rem` and the
   full row appears from 980px, because Spanish needs ~950px with a legible
   language label. An eleventh link means re-measuring every language.

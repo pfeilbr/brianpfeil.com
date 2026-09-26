@@ -121,9 +121,9 @@ languages:
         - name: "tags"
           url: "/tags/"
           weight: 40
-        - name: "archive"
-          url: "/archive/"
-          weight: 50
+        - name: "learn"
+          url: "/learn/"
+          weight: 32
 
   zh:
     locale: "zh-CN"
@@ -169,9 +169,9 @@ languages:
         - name: "标签"
           url: "/tags/"
           weight: 40
-        - name: "归档"
-          url: "/zh/archive/"
-          weight: 50
+        - name: "学习"
+          url: "/zh/learn/"
+          weight: 32
 
   es:
     locale: "es-es"
@@ -215,9 +215,9 @@ languages:
         - name: "etiquetas"
           url: "/tags/"
           weight: 40
-        - name: "archivo"
-          url: "/es/archive/"
-          weight: 50
+        - name: "aprender"
+          url: "/es/learn/"
+          weight: 32
 
   pt:
     locale: "pt-br"
@@ -261,9 +261,9 @@ languages:
         - name: "tags"
           url: "/tags/"
           weight: 40
-        - name: "arquivo"
-          url: "/pt/archive/"
-          weight: 50
+        - name: "aprender"
+          url: "/pt/learn/"
+          weight: 32
 
   fr:
     locale: "fr-fr"
@@ -307,9 +307,9 @@ languages:
         - name: "étiquettes"
           url: "/tags/"
           weight: 40
-        - name: "archives"
-          url: "/fr/archive/"
-          weight: 50
+        - name: "apprendre"
+          url: "/fr/learn/"
+          weight: 32
 
   de:
     locale: "de-de"
@@ -353,9 +353,9 @@ languages:
         - name: "tags"
           url: "/tags/"
           weight: 40
-        - name: "archiv"
-          url: "/de/archive/"
-          weight: 50
+        - name: "lernen"
+          url: "/de/learn/"
+          weight: 32
 
   it:
     locale: "it-it"
@@ -399,9 +399,9 @@ languages:
         - name: "tag"
           url: "/tags/"
           weight: 40
-        - name: "archivio"
-          url: "/it/archive/"
-          weight: 50
+        - name: "impara"
+          url: "/it/learn/"
+          weight: 32
 
   ja:
     locale: "ja-jp"
@@ -445,9 +445,9 @@ languages:
         - name: "タグ"
           url: "/tags/"
           weight: 40
-        - name: "アーカイブ"
-          url: "/ja/archive/"
-          weight: 50
+        - name: "学ぶ"
+          url: "/ja/learn/"
+          weight: 32
 
   ko:
     locale: "ko-kr"
@@ -491,6 +491,6 @@ languages:
         - name: "태그"
           url: "/tags/"
           weight: 40
-        - name: "아카이브"
-          url: "/ko/archive/"
-          weight: 50
+        - name: "배우기"
+          url: "/ko/learn/"
+          weight: 32

@@ -516,6 +516,329 @@ other = "このページのデータを読み込めませんでした。再読�
 [data_noscript]
 other = "このページは JavaScript で表示しています。データは <a href=\"{{ .url }}\">{{ .url }}</a> にあります。"
 
+# --- /learn/ (layouts/_default/learn.html, data/learn.json) ---
+
+[learn_intro]
+other = "無料で学べる場所を {count} 件、やりたいことごとにまとめました。どれも無料で始められ、リンクから私に収入が入ることもありません。友だちに勧めるならここ、という場所を集めただけです。"
+
+[learn_goal_heading]
+other = "目標を選ぶ"
+
+[learn_all]
+other = "すべて"
+
+[learn_search_label]
+other = "リソースを検索"
+
+[learn_search_placeholder]
+other = "検索（例：Python、AWS、Claude）"
+
+[learn_pick]
+other = "まずはここから"
+
+[learn_count]
+other = "{n} 件のリソース"
+
+[learn_none]
+other = "「{q}」に一致するものはありません。"
+
+[learn_footnote]
+other = "どのリンクも、ログインしていない訪問者が開けることを確認済みです。Skill Builder、Trailhead、Coursera など一部は、進捗を記録するために無料アカウントが必要です。Coursera と edX で有料なのは修了証だけです。「まずはここから」は、私ならここから始めるという目印です。"
+
+[learn_group_neutral]
+other = "クラウドを問わず"
+
+[learn_group_local]
+other = "自分のマシンでモデルを動かす"
+
+[learn_group_made_here]
+other = "このサイト製"
+
+[learn_path_code]
+other = "ゼロからプログラミングを学ぶ"
+
+[learn_path_blurb_code]
+other = "コードを一行も書いたことがない人は、ここから。"
+
+[learn_path_university]
+other = "大学のようにコンピューターサイエンスを学ぶ"
+
+[learn_path_blurb_university]
+other = "本物の大学の講義、授業、カリキュラム一式が無料で。"
+
+[learn_path_cloud]
+other = "クラウドを学ぶ"
+
+[learn_path_blurb_cloud]
+other = "各クラウド事業者の公式トレーニングと、そのすべてに共通するアーキテクチャの考え方。"
+
+[learn_path_ai]
+other = "AI の仕組みを理解する"
+
+[learn_path_blurb_ai]
+other = "ニューロン一つの数学から、自分だけの言語モデル作りまで。"
+
+[learn_path_models]
+other = "特定の AI モデルを使いこなす"
+
+[learn_path_blurb_models]
+other = "各社の公式コース、クックブック、ドキュメント（Claude、ChatGPT、Gemini、Llama、Mistral）と、オープンモデルを自分で動かす方法。"
+
+[learn_path_kids]
+other = "子どものプログラミングの第一歩に"
+
+[learn_path_blurb_kids]
+other = "ブロックプログラミング、ゲーム、はじめてのアプリ作り。"
+
+[learn_path_papers]
+other = "元になった論文を読む"
+
+[learn_path_blurb_papers]
+other = "原点となるアイデアを、原典から直接。"
+
+[learn_res_cs50]
+other = "Harvard のコンピューターサイエンス入門。この種の講座で最も人気があります。Scratch、C、Python、SQL、Web を扱います。"
+
+[learn_res_freecodecamp]
+other = "何千時間分ものインタラクティブなレッスンとプロジェクト。修了認定も無料です。"
+
+[learn_res_odin]
+other = "自分のマシンで本物のプロジェクトを作りながら進める、フルスタック Web のカリキュラム。"
+
+[learn_res_khan_computing]
+other = "やさしく、手を動かしながら学べるプログラミングとコンピューターサイエンスのレッスン。"
+
+[learn_res_mdn_learn]
+other = "Web のリファレンスを書いている人たちが教える HTML、CSS、JavaScript。"
+
+[learn_res_missing_semester]
+other = "シェル、git、エディター、デバッグ。学校では教えてくれない道具たち。"
+
+[learn_res_mit_ocw]
+other = "2,500 以上の実際の MIT の授業から、講義ノート、動画、試験を公開。"
+
+[learn_res_mitx]
+other = "MIT のオンライン講座。無料で聴講できます。"
+
+[learn_res_mit_oll]
+other = "いつでも自分のペースで取り組める MIT の講座教材。"
+
+[learn_res_cmu_oli]
+other = "カーネギーメロン大学の研究に基づく講座。学習状況に合わせて内容が変わります。"
+
+[learn_res_stanford_free]
+other = "Stanford の無料講座と講義の録画。コンピューターサイエンスもあります。"
+
+[learn_res_coursera]
+other = "無料で聴講できる大学の講座。お金がかかるのは修了証だけです。"
+
+[learn_res_edx]
+other = "Harvard や MIT などの講座を無料で聴講できます。"
+
+[learn_res_ossu]
+other = "無料の講座を組み合わせた、コンピューターサイエンスの学位相当のカリキュラム。"
+
+[learn_res_teach_yourself_cs]
+other = "ソフトウェアエンジニアが知っておくべき 9 分野を、それぞれ本 1 冊と講義シリーズ 1 つで。"
+
+[learn_res_cs_video_courses]
+other = "無料の講義動画がある大学のコンピューターサイエンス講座の、巨大な索引。"
+
+[learn_res_open_culture]
+other = "一流大学による 1,700 以上の無料講座。あらゆる分野を網羅。"
+
+[learn_res_neetcode]
+other = "コーディング面接の練習。問題ごとにわかりやすい解説動画付き。"
+
+[learn_res_aws_skill_builder]
+other = "AWS 公式のトレーニングと認定試験対策。数百の講座が無料です。"
+
+[learn_res_aws_builders_library]
+other = "Amazon が実際にシステムをどう作り、どう運用しているか。シニアエンジニア自身による解説。"
+
+[learn_res_aws_workshops]
+other = "ほぼすべての AWS サービスを、手順どおりに試せるハンズオンラボ。"
+
+[learn_res_aws_hands_on]
+other = "最後には必ず動くものができる、短いチュートリアル。"
+
+[learn_res_aws_wa_labs]
+other = "よく設計されたシステムを作るためのラボ。セキュリティ、信頼性、コスト。"
+
+[learn_res_aws_prescriptive]
+other = "AWS 自身のコンサルタントによる、実績あるパターンとガイド。"
+
+[learn_res_trailhead]
+other = "Salesforce のゲーム感覚の学習。バッジ、トレイル、ハンズオン環境。"
+
+[learn_res_ms_learn]
+other = "Microsoft による Azure のラーニングパスと認定試験対策。"
+
+[learn_res_gcp_skills]
+other = "Google Cloud のハンズオンラボと講座（旧 Cloud Skills Boost）。"
+
+[learn_res_gcp_arch]
+other = "Google Cloud のリファレンスアーキテクチャとベストプラクティス。"
+
+[learn_res_cf_learning]
+other = "DNS、CDN、DDoS、そしてインターネットの仕組みを平易なことばで解説。"
+
+[learn_res_system_design_primer]
+other = "大規模システムの設計方法を、具体例とともに。"
+
+[learn_res_microservices_io]
+other = "Chris Richardson によるマイクロサービスアーキテクチャのパターン集。"
+
+[learn_res_karpathy_z2h]
+other = "ニューラルネットワークをコードでゼロから作り、GPT までたどり着きます。"
+
+[learn_res_threeb1b]
+other = "ニューラルネットワークと Transformer の仕組みを、どこよりもわかりやすく図解。"
+
+[learn_res_fastai]
+other = "すでにプログラミングができる人向けの、トップダウンでコード中心のディープラーニング講座。"
+
+[learn_res_google_ml_crash]
+other = "Google による、テンポよく実践的な機械学習入門。"
+
+[learn_res_mit_6s191]
+other = "MIT のディープラーニング入門。講義とラボが毎年無料で公開されます。"
+
+[learn_res_dlai]
+other = "Andrew Ng のプラットフォーム。LLM やエージェントについての 1 時間ほどの無料ショートコースが数十本。"
+
+[learn_res_hf_llm]
+other = "Hugging Face のライブラリで学ぶ Transformer、ファインチューニング、LLM。"
+
+[learn_res_hf_agents]
+other = "基礎からフレームワークまで、AI エージェントの作り方。修了証付き。"
+
+[learn_res_d2l]
+other = "実行できるコード付きのインタラクティブなディープラーニング教科書。500 以上の大学で採用。"
+
+[learn_res_nielsen]
+other = "ニューラルネットワークがどう学習するかを、最もわかりやすく説明した無料の本。"
+
+[learn_res_islr]
+other = "統計的学習の定番教科書。PDF で無料、R と Python のラボ付き。"
+
+[learn_res_dl_book]
+other = "ディープラーニングの教科書の決定版。オンラインで無料で読めます。"
+
+[learn_res_sutton_barto]
+other = "強化学習の標準的な教科書。オンラインで無料。"
+
+[learn_res_ai_canon]
+other = "現代の AI に追いつくための厳選リーディングリスト。"
+
+[learn_res_anthropic_academy]
+other = "Anthropic の無料講座。Claude 101、Claude Code、API、MCP。"
+
+[learn_res_anthropic_courses]
+other = "Anthropic のノートブック形式の講座。API の基礎、プロンプト、評価、ツール利用。"
+
+[learn_res_anthropic_prompt_tutorial]
+other = "全 9 章、手を動かして学ぶプロンプトエンジニアリング講座。"
+
+[learn_res_anthropic_cookbook]
+other = "Claude で作るための、そのまま使えるレシピ集。RAG、ツール、エージェントなど。"
+
+[learn_res_claude_docs]
+other = "Claude API のドキュメント、ガイド、プロンプトライブラリ。"
+
+[learn_res_claude_code_docs]
+other = "Anthropic のコーディングエージェント Claude Code を、ターミナルやエディターで使う方法。"
+
+[learn_res_openai_academy]
+other = "OpenAI による、あらゆるレベル向けの無料講座、ライブ配信、イベント。"
+
+[learn_res_openai_cookbook]
+other = "OpenAI のモデルで開発するためのサンプルコードとガイド。"
+
+[learn_res_openai_docs]
+other = "OpenAI の API ガイドとリファレンス。"
+
+[learn_res_gemini_docs]
+other = "Google の Gemini モデルで開発するためのガイドとクイックスタート。"
+
+[learn_res_ai_studio]
+other = "ブラウザで Gemini モデルを無料で試し、動くコードを書き出せます。"
+
+[learn_res_gemini_cookbook]
+other = "Gemini API のノートブックとサンプル。"
+
+[learn_res_llama_cookbook]
+other = "Llama モデルの実行、ファインチューニング、開発のための Meta 公式レシピ。"
+
+[learn_res_mistral_docs]
+other = "Mistral のオープンモデルと商用モデルのガイド。"
+
+[learn_res_ollama]
+other = "自分のノートパソコンでオープンモデルを動かす、いちばん簡単な方法。"
+
+[learn_res_mlx_lm]
+other = "Apple silicon の Mac で、言語モデルを高速に実行・ファインチューニング。"
+
+[learn_res_llama_cpp]
+other = "ローカルモデルを普通のハードウェアで動かせるようにしたエンジン。"
+
+[learn_res_scratch]
+other = "MIT による子ども向けのドラッグ＆ドロップ式プログラミング。共有された作品は数百万。"
+
+[learn_res_code_org]
+other = "Hour of Code と、全学年向けの本格的な講座。"
+
+[learn_res_khan_kids]
+other = "2〜8 歳向けの無料学習アプリ。"
+
+[learn_res_lightbot]
+other = "コードを一切打たずにプログラミングの考え方が身につくパズルゲーム。"
+
+[learn_res_app_inventor]
+other = "ブロックで本物のスマホアプリを作れます。"
+
+[learn_res_swift_playgrounds]
+other = "iPad や Mac で Swift のプログラミングを学べる Apple のアプリ。"
+
+[learn_res_roblox_create]
+other = "Roblox 公式から、Lua で Roblox のゲームを作る方法を学べます。"
+
+[learn_res_minecraft_edu]
+other = "Minecraft の中で学ぶプログラミングと STEM の授業。"
+
+[learn_res_coderdojo]
+other = "世界中にある、ボランティアが運営する若者向けの無料プログラミングクラブ。"
+
+[learn_res_attention]
+other = "現代のあらゆる AI モデルの土台である Transformer を提案した、2017 年の論文。"
+
+[learn_res_dynamo]
+other = "分散データベースの一世代を形づくった、2007 年の論文。"
+
+[learn_res_papers_we_love]
+other = "コミュニティが選んだ、読む価値のあるコンピューターサイエンス論文のライブラリ。"
+
+[learn_res_morning_paper]
+other = "重要な CS 論文を平日に一本ずつ、わかりやすく解説してきた数年分の記事。"
+
+[learn_res_arxiv]
+other = "AI とコンピューターサイエンスの新しい研究が最初に出る場所。無料で読めます。"
+
+[learn_res_martin_fowler]
+other = "ソフトウェア設計、リファクタリング、アーキテクチャについての数十年分の明快な文章。"
+
+[learn_res_high_scalability]
+other = "実在の企業が大規模システムをどう作ったかのケーススタディ。"
+
+[hub_learn_title]
+other = "学ぶ"
+
+[hub_learn_blurb]
+other = "コード、クラウド、AI の無料講座とドキュメントを目標別に"
+
+[hub_learn_count]
+other = "{{ .count }} 件の無料リソース"
+
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]
 other = "テクノロジーでものを作り、学んだことを書いています。ブログとして始まったこのサイトには、今ではプロジェクト、写真と動画、音楽、フォローしているチャンネルもまとめています。"

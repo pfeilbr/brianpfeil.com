@@ -515,6 +515,328 @@ other = "Impossibile caricare i dati di questa pagina. Prova a ricaricarla."
 
 [data_noscript]
 other = "Questa pagina è disegnata con JavaScript. I dati si trovano in <a href=\"{{ .url }}\">{{ .url }}</a>."
+# --- /learn/ (layouts/_default/learn.html, data/learn.json) ---
+
+[learn_intro]
+other = "{count} posti gratuiti dove imparare, ordinati in base a ciò che vuoi fare. Nessuno costa nulla per iniziare e nessuno di questi link mi fa guadagnare niente — sono semplicemente quelli che consiglierei a un amico."
+
+[learn_goal_heading]
+other = "Scegli un obiettivo"
+
+[learn_all]
+other = "Tutto"
+
+[learn_search_label]
+other = "Cerca tra le risorse"
+
+[learn_search_placeholder]
+other = "Cerca — prova Python, AWS o Claude"
+
+[learn_pick]
+other = "Inizia da qui"
+
+[learn_count]
+other = "{n} risorse"
+
+[learn_none]
+other = "Nessun risultato per «{q}»."
+
+[learn_footnote]
+other = "Ogni link è stato verificato: si apre anche per un visitatore non registrato. Alcuni — Skill Builder, Trailhead, Coursera — chiedono un account gratuito per tenere traccia dei tuoi progressi, e Coursera ed edX fanno pagare solo i certificati. «Inizia da qui» indica da dove partirei io."
+
+[learn_group_neutral]
+other = "Qualsiasi cloud"
+
+[learn_group_local]
+other = "Esegui i modelli sul tuo computer"
+
+[learn_group_made_here]
+other = "Fatto qui"
+
+[learn_path_code]
+other = "Imparare a programmare da zero"
+
+[learn_path_blurb_code]
+other = "Non hai mai scritto una riga di codice? Inizia da qui."
+
+[learn_path_university]
+other = "Studiare informatica come all'università"
+
+[learn_path_blurb_university]
+other = "Veri corsi universitari, lezioni e interi piani di studio, gratis."
+
+[learn_path_cloud]
+other = "Imparare il cloud"
+
+[learn_path_blurb_cloud]
+other = "La formazione ufficiale di ogni provider, più i principi di architettura che li accomunano tutti."
+
+[learn_path_ai]
+other = "Capire come funziona l'IA"
+
+[learn_path_blurb_ai]
+other = "Dalla matematica di un neurone alla costruzione del tuo modello linguistico."
+
+[learn_path_models]
+other = "Padroneggiare un modello di IA"
+
+[learn_path_blurb_models]
+other = "Corsi, cookbook e documentazione di ogni laboratorio — Claude, ChatGPT, Gemini, Llama, Mistral — e come eseguire da te i modelli aperti."
+
+[learn_path_kids]
+other = "Avviare un bambino al coding"
+
+[learn_path_blurb_kids]
+other = "Programmazione a blocchi, giochi e prime app per i più giovani."
+
+[learn_path_papers]
+other = "Leggere gli articoli originali"
+
+[learn_path_blurb_papers]
+other = "Le idee originali, direttamente dalla fonte."
+
+[learn_res_cs50]
+other = "L'introduzione all'informatica di Harvard, il corso più seguito del suo genere. Scratch, C, Python, SQL e il web."
+
+[learn_res_freecodecamp]
+other = "Migliaia di ore di lezioni interattive e progetti, con certificazioni gratuite."
+
+[learn_res_odin]
+other = "Un percorso completo di sviluppo web full-stack in cui realizzi progetti veri sul tuo computer."
+
+[learn_res_khan_computing]
+other = "Lezioni interattive e graduali di programmazione e informatica."
+
+[learn_res_mdn_learn]
+other = "HTML, CSS e JavaScript insegnati da chi scrive la documentazione di riferimento del web."
+
+[learn_res_missing_semester]
+other = "La shell, git, gli editor e il debugging — gli strumenti che a scuola non insegnano mai."
+
+[learn_res_mit_ocw]
+other = "Appunti, video ed esami di oltre 2.500 veri corsi del MIT."
+
+[learn_res_mitx]
+other = "I corsi online del MIT, gratuiti in modalità uditore."
+
+[learn_res_mit_oll]
+other = "Materiale dei corsi del MIT da seguire al tuo ritmo, quando vuoi."
+
+[learn_res_cmu_oli]
+other = "I corsi di Carnegie Mellon, basati sulla ricerca, che si adattano mentre impari."
+
+[learn_res_stanford_free]
+other = "I corsi gratuiti e le lezioni registrate di Stanford, informatica compresa."
+
+[learn_res_coursera]
+other = "Corsi universitari da seguire gratis come uditore; paghi solo se vuoi il certificato."
+
+[learn_res_edx]
+other = "Corsi di Harvard, MIT e altri, gratuiti in modalità uditore."
+
+[learn_res_ossu]
+other = "Un'intera laurea in informatica messa insieme con corsi gratuiti."
+
+[learn_res_teach_yourself_cs]
+other = "Le nove materie che ogni ingegnere del software dovrebbe conoscere, con un libro e un ciclo di lezioni per ciascuna."
+
+[learn_res_cs_video_courses]
+other = "Un enorme indice di corsi universitari di informatica con videolezioni gratuite."
+
+[learn_res_open_culture]
+other = "Oltre 1.700 corsi gratuiti delle migliori università, in ogni materia."
+
+[learn_res_neetcode]
+other = "Allenamento per i colloqui tecnici, con una chiara spiegazione video per ogni problema."
+
+[learn_res_aws_skill_builder]
+other = "La formazione ufficiale di AWS e la preparazione alle certificazioni; centinaia di corsi sono gratuiti."
+
+[learn_res_aws_builders_library]
+other = "Come Amazon costruisce e gestisce davvero i suoi sistemi, raccontato dai suoi ingegneri senior."
+
+[learn_res_aws_workshops]
+other = "Laboratori pratici, passo dopo passo, per quasi ogni servizio AWS."
+
+[learn_res_aws_hands_on]
+other = "Brevi tutorial che finiscono tutti con qualcosa che funziona."
+
+[learn_res_aws_wa_labs]
+other = "Laboratori per costruire sistemi ben architettati: sicurezza, affidabilità e costi."
+
+[learn_res_aws_prescriptive]
+other = "Pattern e guide collaudati, firmati dai consulenti di AWS."
+
+[learn_res_trailhead]
+other = "L'apprendimento a gioco di Salesforce: badge, percorsi e ambienti pratici."
+
+[learn_res_ms_learn]
+other = "I percorsi di apprendimento di Microsoft e la preparazione alle certificazioni Azure."
+
+[learn_res_gcp_skills]
+other = "Laboratori pratici e corsi di Google Cloud (in precedenza Cloud Skills Boost)."
+
+[learn_res_gcp_arch]
+other = "Architetture di riferimento e best practice per Google Cloud."
+
+[learn_res_cf_learning]
+other = "Spiegazioni semplici su DNS, CDN, DDoS e su come funziona Internet."
+
+[learn_res_system_design_primer]
+other = "Come progettare sistemi su larga scala, con esempi svolti."
+
+[learn_res_microservices_io]
+other = "Il catalogo di pattern per architetture a microservizi di Chris Richardson."
+
+[learn_res_karpathy_z2h]
+other = "Costruisci reti neurali da zero, in codice, fino ad arrivare a GPT."
+
+[learn_res_threeb1b]
+other = "La migliore spiegazione visiva di come funzionano le reti neurali e i transformer."
+
+[learn_res_fastai]
+other = "Un corso di deep learning dall'alto verso il basso, centrato sul codice, per chi sa già programmare."
+
+[learn_res_google_ml_crash]
+other = "L'introduzione rapida e pratica di Google al machine learning."
+
+[learn_res_mit_6s191]
+other = "L'introduzione al deep learning del MIT, con lezioni e laboratori pubblicati gratis ogni anno."
+
+[learn_res_dlai]
+other = "La piattaforma di Andrew Ng, con decine di brevi corsi gratuiti di un'ora su LLM e agenti."
+
+[learn_res_hf_llm]
+other = "Transformer, fine-tuning e LLM con le librerie di Hugging Face."
+
+[learn_res_hf_agents]
+other = "Costruisci agenti IA, dalle basi ai framework, con tanto di certificato."
+
+[learn_res_d2l]
+other = "Un manuale interattivo di deep learning con codice eseguibile; adottato in oltre 500 università."
+
+[learn_res_nielsen]
+other = "Il libro gratuito più chiaro su come imparano le reti neurali."
+
+[learn_res_islr]
+other = "Il classico manuale di apprendimento statistico, gratis in PDF, con laboratori in R e Python."
+
+[learn_res_dl_book]
+other = "Il manuale di riferimento sul deep learning, da leggere gratis online."
+
+[learn_res_sutton_barto]
+other = "Il manuale standard sull'apprendimento per rinforzo, gratis online."
+
+[learn_res_ai_canon]
+other = "Una lista di letture selezionate per mettersi al passo con l'IA moderna."
+
+[learn_res_anthropic_academy]
+other = "I corsi gratuiti di Anthropic: Claude 101, Claude Code, l'API e MCP."
+
+[learn_res_anthropic_courses]
+other = "I corsi in notebook di Anthropic: fondamenti dell'API, prompting, valutazioni e uso degli strumenti."
+
+[learn_res_anthropic_prompt_tutorial]
+other = "Un corso pratico di prompt engineering in nove capitoli."
+
+[learn_res_anthropic_cookbook]
+other = "Ricette pronte da copiare per costruire con Claude: RAG, strumenti, agenti e altro."
+
+[learn_res_claude_docs]
+other = "La documentazione dell'API di Claude, le guide e la libreria di prompt."
+
+[learn_res_claude_code_docs]
+other = "Come usare Claude Code, l'agente di programmazione di Anthropic, nel terminale e nell'editor."
+
+[learn_res_openai_academy]
+other = "Corsi gratuiti, dirette ed eventi di OpenAI per ogni livello."
+
+[learn_res_openai_cookbook]
+other = "Codice di esempio e guide per costruire con i modelli di OpenAI."
+
+[learn_res_openai_docs]
+other = "Le guide e il riferimento dell'API di OpenAI."
+
+[learn_res_gemini_docs]
+other = "Guide e quickstart per costruire con i modelli Gemini di Google."
+
+[learn_res_ai_studio]
+other = "Prova i modelli Gemini nel browser, gratis, ed esporta codice funzionante."
+
+[learn_res_gemini_cookbook]
+other = "Notebook ed esempi per l'API di Gemini."
+
+[learn_res_llama_cookbook]
+other = "Le ricette di Meta per eseguire, fare fine-tuning e costruire con i modelli Llama."
+
+[learn_res_mistral_docs]
+other = "Guide ai modelli aperti e commerciali di Mistral."
+
+[learn_res_ollama]
+other = "Il modo più semplice per eseguire modelli aperti sul tuo portatile."
+
+[learn_res_mlx_lm]
+other = "Esegui e fai fine-tuning di modelli linguistici, velocemente, sui Mac con Apple silicon."
+
+[learn_res_llama_cpp]
+other = "Il motore che fa girare i modelli locali su hardware di tutti i giorni."
+
+[learn_res_scratch]
+other = "La programmazione a trascinamento del MIT per bambini, con milioni di progetti condivisi."
+
+[learn_res_code_org]
+other = "Hour of Code e corsi completi per ogni classe."
+
+[learn_res_khan_kids]
+other = "Un'app gratuita per imparare, dai 2 agli 8 anni."
+
+[learn_res_lightbot]
+other = "Un gioco di rompicapi che insegna la logica della programmazione senza scrivere codice."
+
+[learn_res_app_inventor]
+other = "Crea vere app per telefono con i blocchi."
+
+[learn_res_swift_playgrounds]
+other = "L'app di Apple per imparare a programmare in Swift su iPad o Mac."
+
+[learn_res_roblox_create]
+other = "Impara a creare giochi Roblox in Lua, direttamente da Roblox."
+
+[learn_res_minecraft_edu]
+other = "Lezioni di coding e materie STEM dentro Minecraft."
+
+[learn_res_coderdojo]
+other = "Club di programmazione gratuiti, guidati da volontari, per ragazzi di tutto il mondo."
+
+[learn_res_attention]
+other = "L'articolo del 2017 che ha introdotto il transformer alla base di ogni modello di IA moderno."
+
+[learn_res_dynamo]
+other = "L'articolo del 2007 che ha plasmato una generazione di database distribuiti."
+
+[learn_res_papers_we_love]
+other = "Una biblioteca curata dalla community di articoli di informatica che vale la pena leggere."
+
+[learn_res_morning_paper]
+other = "Anni di sintesi accessibili di importanti articoli di informatica, una per ogni giorno feriale."
+
+[learn_res_arxiv]
+other = "Dove la nuova ricerca su IA e informatica appare per prima, da leggere gratis."
+
+[learn_res_martin_fowler]
+other = "Decenni di scritti chiari su progettazione del software, refactoring e architettura."
+
+[learn_res_high_scalability]
+other = "Casi di studio su come aziende reali hanno costruito sistemi su larga scala."
+
+[hub_learn_title]
+other = "Impara"
+
+[hub_learn_blurb]
+other = "Corsi e documentazione gratuiti su codice, cloud e IA, ordinati per obiettivo"
+
+[hub_learn_count]
+other = "{{ .count }} risorse gratuite"
 
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]

@@ -516,6 +516,329 @@ other = "无法加载此页面的数据，请刷新重试。"
 [data_noscript]
 other = "此页面由 JavaScript 绘制。数据见 <a href=\"{{ .url }}\">{{ .url }}</a>。"
 
+# --- /learn/ (layouts/_default/learn.html, data/learn.json) ---
+
+[learn_intro]
+other = "{count} 个免费的学习去处，按你想做的事分类。每一个都能免费开始，这些链接也不会给我带来任何收益——它们只是我会推荐给朋友的地方。"
+
+[learn_goal_heading]
+other = "选择一个目标"
+
+[learn_all]
+other = "全部"
+
+[learn_search_label]
+other = "搜索资源"
+
+[learn_search_placeholder]
+other = "搜索——试试 Python、AWS 或 Claude"
+
+[learn_pick]
+other = "从这里开始"
+
+[learn_count]
+other = "{n} 个资源"
+
+[learn_none]
+other = "没有与“{q}”匹配的结果。"
+
+[learn_footnote]
+other = "每个链接都确认过，未登录的访客也能打开。其中少数几个——Skill Builder、Trailhead、Coursera——需要注册免费账号来记录学习进度；Coursera 和 edX 只对证书收费。“从这里开始”标出的是我会先看的那个。"
+
+[learn_group_neutral]
+other = "不限云平台"
+
+[learn_group_local]
+other = "在自己的电脑上运行模型"
+
+[learn_group_made_here]
+other = "本站出品"
+
+[learn_path_code]
+other = "零基础学编程"
+
+[learn_path_blurb_code]
+other = "从没写过一行代码？从这里开始。"
+
+[learn_path_university]
+other = "像大学生一样学计算机科学"
+
+[learn_path_blurb_university]
+other = "真正的大学课程、讲座和完整课程体系，全部免费。"
+
+[learn_path_cloud]
+other = "学习云计算"
+
+[learn_path_blurb_cloud]
+other = "各家云服务商自己的培训，以及贯穿所有云平台的架构思想。"
+
+[learn_path_ai]
+other = "理解 AI 的原理"
+
+[learn_path_blurb_ai]
+other = "从单个神经元的数学，到亲手构建自己的语言模型。"
+
+[learn_path_models]
+other = "精通某个 AI 模型"
+
+[learn_path_blurb_models]
+other = "各家实验室自己的课程、cookbook 和文档——Claude、ChatGPT、Gemini、Llama、Mistral——以及如何自己运行开源模型。"
+
+[learn_path_kids]
+other = "带孩子入门编程"
+
+[learn_path_blurb_kids]
+other = "面向小朋友的积木编程、游戏和第一个应用。"
+
+[learn_path_papers]
+other = "阅读背后的论文"
+
+[learn_path_blurb_papers]
+other = "最初的思想，直接来自原始出处。"
+
+[learn_res_cs50]
+other = "Harvard 的计算机科学入门课，同类课程中最受欢迎的一门。涵盖 Scratch、C、Python、SQL 和 Web。"
+
+[learn_res_freecodecamp]
+other = "数千小时的互动课程和项目，还有免费证书。"
+
+[learn_res_odin]
+other = "一套全栈 Web 课程，在自己的电脑上动手做真实项目。"
+
+[learn_res_khan_computing]
+other = "循序渐进、可互动的编程和计算机科学课程。"
+
+[learn_res_mdn_learn]
+other = "由编写 Web 参考文档的人来教 HTML、CSS 和 JavaScript。"
+
+[learn_res_missing_semester]
+other = "Shell、git、编辑器和调试——学校从来不教的那些工具。"
+
+[learn_res_mit_ocw]
+other = "来自 2,500 多门真实 MIT 课程的讲义、视频和考试。"
+
+[learn_res_mitx]
+other = "MIT 的在线课程，可免费旁听。"
+
+[learn_res_mit_oll]
+other = "可按自己节奏随时学习的 MIT 课程资料。"
+
+[learn_res_cmu_oli]
+other = "卡内基梅隆大学基于研究设计的课程，会随你的学习进度自动调整。"
+
+[learn_res_stanford_free]
+other = "Stanford 的免费课程和讲座录像，包括计算机科学。"
+
+[learn_res_coursera]
+other = "可免费旁听的大学课程，只有证书需要付费。"
+
+[learn_res_edx]
+other = "来自 Harvard、MIT 等学校的课程，可免费旁听。"
+
+[learn_res_ossu]
+other = "用免费课程拼出的一套完整计算机科学学位。"
+
+[learn_res_teach_yourself_cs]
+other = "每个软件工程师都该掌握的九门学科，每门配一本书和一套讲座。"
+
+[learn_res_cs_video_courses]
+other = "一份庞大的大学计算机课程索引，都附有免费讲座视频。"
+
+[learn_res_open_culture]
+other = "来自顶尖大学的 1,700 多门免费课程，涵盖各个学科。"
+
+[learn_res_neetcode]
+other = "编程面试练习，每道题都配有清晰的视频讲解。"
+
+[learn_res_aws_skill_builder]
+other = "AWS 官方的培训和认证备考平台，数百门课程免费。"
+
+[learn_res_aws_builders_library]
+other = "Amazon 实际如何构建和运行系统，由其资深工程师亲笔撰写。"
+
+[learn_res_aws_workshops]
+other = "几乎覆盖每项 AWS 服务的动手实验，一步一步来。"
+
+[learn_res_aws_hands_on]
+other = "简短的教程，每篇最后都能做出一个能用的东西。"
+
+[learn_res_aws_wa_labs]
+other = "构建良好架构系统的实验：安全、可靠性和成本。"
+
+[learn_res_aws_prescriptive]
+other = "来自 AWS 自家顾问、经过验证的模式和指南。"
+
+[learn_res_trailhead]
+other = "Salesforce 的游戏化学习：徽章、学习路线和动手练习环境。"
+
+[learn_res_ms_learn]
+other = "Microsoft 的 Azure 学习路径和认证备考。"
+
+[learn_res_gcp_skills]
+other = "Google Cloud 的动手实验和课程（原名 Cloud Skills Boost）。"
+
+[learn_res_gcp_arch]
+other = "Google Cloud 的参考架构和最佳实践。"
+
+[learn_res_cf_learning]
+other = "用大白话讲解 DNS、CDN、DDoS 以及互联网是如何运作的。"
+
+[learn_res_system_design_primer]
+other = "如何设计大规模系统，附带完整示例。"
+
+[learn_res_microservices_io]
+other = "Chris Richardson 整理的微服务架构模式目录。"
+
+[learn_res_karpathy_z2h]
+other = "用代码从零构建神经网络，一路做到 GPT。"
+
+[learn_res_threeb1b]
+other = "讲解神经网络和 Transformer 原理最好的可视化教程。"
+
+[learn_res_fastai]
+other = "自顶向下、代码优先的深度学习课程，适合已经会编程的人。"
+
+[learn_res_google_ml_crash]
+other = "Google 节奏紧凑、注重实践的机器学习入门。"
+
+[learn_res_mit_6s191]
+other = "MIT 的深度学习入门课，每年免费公开讲座和实验。"
+
+[learn_res_dlai]
+other = "吴恩达的平台，有几十门关于 LLM 和智能体、时长一小时的免费短课。"
+
+[learn_res_hf_llm]
+other = "用 Hugging Face 的库学习 Transformer、微调和 LLM。"
+
+[learn_res_hf_agents]
+other = "构建 AI 智能体，从基础到框架，还能拿证书。"
+
+[learn_res_d2l]
+other = "一本附可运行代码的互动式深度学习教材，被 500 多所大学采用。"
+
+[learn_res_nielsen]
+other = "讲神经网络如何学习的免费书中，最清晰的一本。"
+
+[learn_res_islr]
+other = "经典的统计学习教材，免费提供 PDF，附 R 和 Python 实验。"
+
+[learn_res_dl_book]
+other = "那本深度学习教材，可免费在线阅读。"
+
+[learn_res_sutton_barto]
+other = "强化学习的标准教材，可免费在线阅读。"
+
+[learn_res_ai_canon]
+other = "一份精选阅读清单，帮你快速跟上现代 AI。"
+
+[learn_res_anthropic_academy]
+other = "Anthropic 的免费课程：Claude 101、Claude Code、API 和 MCP。"
+
+[learn_res_anthropic_courses]
+other = "Anthropic 的 notebook 课程：API 基础、提示词、评估和工具调用。"
+
+[learn_res_anthropic_prompt_tutorial]
+other = "共九章、动手实践的提示词工程课程。"
+
+[learn_res_anthropic_cookbook]
+other = "可直接复制的 Claude 开发示例：RAG、工具、智能体等。"
+
+[learn_res_claude_docs]
+other = "Claude API 文档、指南和提示词库。"
+
+[learn_res_claude_code_docs]
+other = "如何在终端和编辑器里使用 Anthropic 的编程智能体 Claude Code。"
+
+[learn_res_openai_academy]
+other = "OpenAI 面向各个水平的免费课程、直播和活动。"
+
+[learn_res_openai_cookbook]
+other = "使用 OpenAI 模型进行开发的示例代码和指南。"
+
+[learn_res_openai_docs]
+other = "OpenAI 的 API 指南和参考文档。"
+
+[learn_res_gemini_docs]
+other = "使用 Google Gemini 模型进行开发的指南和快速入门。"
+
+[learn_res_ai_studio]
+other = "在浏览器里免费试用 Gemini 模型，并导出可运行的代码。"
+
+[learn_res_gemini_cookbook]
+other = "Gemini API 的 notebook 和示例。"
+
+[learn_res_llama_cookbook]
+other = "Meta 关于运行、微调和使用 Llama 模型开发的示例。"
+
+[learn_res_mistral_docs]
+other = "Mistral 开源及商用模型的指南。"
+
+[learn_res_ollama]
+other = "在自己的笔记本电脑上运行开源模型的最简单方式。"
+
+[learn_res_mlx_lm]
+other = "在 Apple silicon Mac 上快速运行和微调语言模型。"
+
+[learn_res_llama_cpp]
+other = "让本地模型能在普通硬件上运行的引擎。"
+
+[learn_res_scratch]
+other = "MIT 为孩子设计的拖拽式编程，有数百万个分享的作品。"
+
+[learn_res_code_org]
+other = "Hour of Code，以及面向各个年级的完整课程。"
+
+[learn_res_khan_kids]
+other = "面向 2 到 8 岁孩子的免费学习应用。"
+
+[learn_res_lightbot]
+other = "一款益智游戏，不用敲代码就能学会编程逻辑。"
+
+[learn_res_app_inventor]
+other = "用积木搭出真正的手机应用。"
+
+[learn_res_swift_playgrounds]
+other = "Apple 出品的应用，在 iPad 或 Mac 上学习用 Swift 编程。"
+
+[learn_res_roblox_create]
+other = "直接跟 Roblox 官方学习用 Lua 制作 Roblox 游戏。"
+
+[learn_res_minecraft_edu]
+other = "在 Minecraft 里上编程和 STEM 课。"
+
+[learn_res_coderdojo]
+other = "遍布全球、由志愿者带领的免费青少年编程俱乐部。"
+
+[learn_res_attention]
+other = "2017 年提出 Transformer 的论文，所有现代 AI 模型都建立在它之上。"
+
+[learn_res_dynamo]
+other = "2007 年的这篇论文，影响了整整一代分布式数据库。"
+
+[learn_res_papers_we_love]
+other = "由社区整理、值得一读的计算机科学论文库。"
+
+[learn_res_morning_paper]
+other = "多年来每个工作日一篇，通俗解读重要的计算机科学论文。"
+
+[learn_res_arxiv]
+other = "新的 AI 和计算机科学研究最先发布的地方，免费阅读。"
+
+[learn_res_martin_fowler]
+other = "几十年来关于软件设计、重构和架构的清晰文章。"
+
+[learn_res_high_scalability]
+other = "真实公司如何构建大规模系统的案例研究。"
+
+[hub_learn_title]
+other = "学习"
+
+[hub_learn_blurb]
+other = "关于代码、云和 AI 的免费课程与文档，按目标分类"
+
+[hub_learn_count]
+other = "{{ .count }} 个免费资源"
+
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]
 other = "我喜欢用技术动手做东西，并把学到的写下来。这里最初是个博客，如今也收录我的项目、照片和视频、音乐，以及我关注的频道。"
