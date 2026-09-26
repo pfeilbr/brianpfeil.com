@@ -428,6 +428,34 @@ other = "シェアした投稿"
 [media_reshare_own]
 other = "シェアしたリール"
 
+# Media page: sections (Instagram, then categories from Google Photos)
+[media_sections]
+other = "セクション"
+
+[media_instagram]
+other = "Instagram"
+
+[media_photos_note]
+other = "自分のフォトライブラリから、アクティビティ別に選んでいます。"
+
+[media_cat_skiing]
+other = "スキー"
+
+[media_cat_mountain-biking]
+other = "マウンテンバイク"
+
+[media_cat_kayaking]
+other = "カヤック"
+
+[media_cat_swimming]
+other = "水泳"
+
+[media_cat_beach]
+other = "ビーチ"
+
+[media_cat_hiking]
+other = "ハイキング"
+
 # Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
 # by the page script, not by Hugo.
 [movies_intro]

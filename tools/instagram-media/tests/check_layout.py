@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Check the built /media/ page and its data against tests/fixtures/media.yaml.
+"""Check the built /media/ page and its data against tests/fixtures/media.yaml
+(Instagram) and tests/fixtures/photos.yaml (the Google Photos categories).
 
 /media/ is drawn in the browser from /data/media.json, the whitelisted payload
 that partials/media-payload.html builds from data/media.yaml. So this checks
@@ -41,6 +42,9 @@ VIEWER_STRINGS = ("data-instagram", "data-likes", "data-with", "data-location", 
 class MediaPage(HTMLParser):
     def __init__(self):
         super().__init__()
+        self.cat_names: dict[str, str] = {}
+        self._cat = None
+        self.sections_nav = False
         self.tiles = 0
         self.empty_state = False
         self.inline_payload = False
@@ -57,6 +61,15 @@ class MediaPage(HTMLParser):
             self.inline_payload = True
         if "media-strings" in classes:
             self.strings = {k: v or "" for k, v in a.items() if k.startswith("data-")}
+        if tag == "nav" and "media-sections" in classes:
+            self.sections_nav = True
+        if tag == "li" and a.get("data-key"):
+            self._cat = a["data-key"]
+
+    def handle_data(self, data):
+        if self._cat and data.strip():
+            self.cat_names[self._cat] = data.strip()
+            self._cat = None
 
 
 def page_for(public: Path, lang: str) -> Path:
@@ -170,8 +183,48 @@ def check_payload(public: Path) -> list[str]:
     return errors
 
 
+ENGLISH_CATS = {"skiing": "Skiing", "beach": "Beach"}
+
+
+def check_photos(public: Path) -> list[str]:
+    """The category half: its payload, and its names in every language."""
+    errors = []
+    path = public / "data" / "photos.json"
+    if not path.exists():
+        return ["/data/photos.json: not published"]
+    text = path.read_text(encoding="utf-8")
+    data = json.loads(text)
+    if data.get("categories") != ["skiing", "beach"]:
+        errors.append(f"photos categories are {data.get('categories')!r}")
+    posts, media = data.get("posts") or [], data.get("media") or []
+    if [p.get("cat") for p in posts] != ["skiing", "beach"]:
+        errors.append("photos posts lost their category")
+    if len(media) != 2 or any(not (0 <= r.get("i", -1) < len(posts)) for r in media):
+        errors.append(f"bad photos media rows {media!r}")
+    video = next((r for r in media if r.get("k") == "v"), {})
+    if video.get("p") != "photos/20250301-gaaaa111111/v-p.jpg" or video.get("d") != 15 or video.get("m") != "Sunlit":
+        errors.append(f"photos video row incomplete: {video!r}")
+    for leak in ("should not ship", "Secret Place", "40.1234", "AF1QipSECRETKEY"):
+        if leak in text:
+            errors.append(f"/data/photos.json leaks {leak!r}")
+    for lang in LANGS:
+        label = f"/{lang}/media/" if lang else "/media/"
+        page = MediaPage()
+        page.feed(page_for(public, lang).read_text(encoding="utf-8"))
+        if not page.sections_nav:
+            errors.append(f"{label}: no section nav")
+        if set(page.cat_names) != {"skiing", "beach"}:
+            errors.append(f"{label}: category names {page.cat_names!r}")
+        elif lang and page.cat_names == ENGLISH_CATS:
+            errors.append(f"{label}: category names fell back to English")
+        for attr in ("data-instagram-label", "data-photos-note"):
+            if not page.strings.get(attr):
+                errors.append(f"{label}: missing {attr}")
+    return errors
+
+
 def check_populated(public: Path) -> list[str]:
-    return check_shell(public) + check_payload(public)
+    return check_shell(public) + check_payload(public) + check_photos(public)
 
 
 def check_empty(public: Path) -> list[str]:
@@ -179,6 +232,8 @@ def check_empty(public: Path) -> list[str]:
     path = public / "data" / "media.json"
     if path.exists() and (json.loads(path.read_text(encoding="utf-8")).get("posts") or []):
         errors.append("/data/media.json has posts with no data file")
+    if (public / "data" / "photos.json").exists():
+        errors.append("/data/photos.json published with no data file")
     return errors
 
 
@@ -193,32 +248,38 @@ def build_and_check() -> int:
     import tempfile
 
     repo = Path(__file__).resolve().parents[3]
-    data = repo / "data" / "media.yaml"
-    fixture = Path(__file__).resolve().parent / "fixtures" / "media.yaml"
+    fixtures = Path(__file__).resolve().parent / "fixtures"
+    names = ("media.yaml", "photos.yaml")
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
-        stash = tmp / "media.yaml.real"
-        had_real = data.exists()
-        if had_real:
-            shutil.move(data, stash)
+        stashed = []
+        for name in names:
+            real = repo / "data" / name
+            if real.exists():
+                shutil.move(real, tmp / f"{name}.real")
+                stashed.append(name)
         try:
             results = []
-            for mode, source in (("fixture", fixture), ("empty", None)):
-                if source:
-                    shutil.copy(source, data)
-                elif data.exists():
-                    data.unlink()
+            for mode in ("fixture", "empty"):
+                for name in names:
+                    target = repo / "data" / name
+                    if mode == "fixture":
+                        shutil.copy(fixtures / name, target)
+                    elif target.exists():
+                        target.unlink()
                 out = tmp / f"public-{mode}"
                 subprocess.run(["hugo", "--minify", "--quiet", "-d", str(out)],
                                cwd=repo, check=True)
                 errors = check_empty(out) if mode == "empty" else check_populated(out)
                 results.append((mode, errors))
         finally:
-            if data.exists():
-                data.unlink()
-            if had_real:
-                shutil.move(stash, data)
+            for name in names:
+                target = repo / "data" / name
+                if target.exists():
+                    target.unlink()
+                if name in stashed:
+                    shutil.move(tmp / f"{name}.real", target)
 
     failed = False
     for mode, errors in results:

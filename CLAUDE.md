@@ -61,6 +61,17 @@ posts, 9 of B's own reels — `igmedia/stories.py`), silent stories given
 music, pushed live.
 Download it within four days of Meta's email; it needs B's password.
 
+**Below Instagram: activity sections from Google Photos** (skiing, mountain
+biking, kayaking, swimming, beach, hiking), with a row of links at the top of
+/media/ to jump between them. B picks them in a local web app,
+`make media-picker` (http://127.0.0.1:8790), which only suggests what passed
+screening: only B (Apple Vision people count + Google's own face matching of
+`exclude_people` — his sons must never appear), no plates, addresses or
+documents. The browser does all fetching from Google (a bookmarklet), since
+Google's image host refuses anything without B's session. Details and the one
+known screening gap: `tools/instagram-media/README.md`, "Google Photos
+categories". Never publish a pick B didn't make.
+
 `aws sso login` first if the session has expired — `publish` checks before encoding.
 
 `make verify` runs every test suite (Go post generator, Python media tool,
@@ -149,7 +160,7 @@ touching a template:
 | --- | --- | --- |
 | `/music/` | `data/music.yaml` | `layouts/_default/music.html` |
 | `/subscriptions/` | `data/subscriptions.yaml`, `data/twitch.yaml` | `layouts/_default/subscriptions.html` |
-| `/media/` | `data/media.yaml` (generated) | `layouts/_default/media.html` |
+| `/media/` | `data/media.yaml`, `data/photos.yaml` (both generated) | `layouts/_default/media.html` |
 | `/movies/` | `data/movies.json` (`make movies-refresh`) | `layouts/_default/movies.html` |
 | `/learn/` | `data/learn.json` (`make check-learn-links`) | `layouts/_default/learn.html` |
 | `/courses/` | `data/courses.json` (`make courses-sync`) | `layouts/courses/` |

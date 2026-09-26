@@ -1,0 +1,25 @@
+{{- /* The /media/ category sections' data, as published at /data/photos.json.
+   Built from data/photos.yaml (written by the Google Photos picker) the same
+   way media-payload.html builds the Instagram half: fields are copied one by
+   one, so nothing the generator ever adds reaches the site unlisted.
+
+   {base, categories: [key…] in page order, posts: [{id, date, year, kind,
+   cat}], media: [{i, k, s, t, p, w, h, g, c, d, m}]} — the same compact
+   rows as media.json, so the page merges the two and one viewer pages
+   through both. No captions, places or people: there are none to publish. */ -}}
+{{- $m := hugo.Data.photos -}}
+{{- $posts := slice -}}
+{{- $media := slice -}}
+{{- range $idx, $it := $m.items -}}
+  {{- $posts = $posts | append (dict "id" $it.id "date" $it.date "year" $it.year "kind" $it.kind "cat" $it.category) -}}
+  {{- range $it.media -}}
+    {{- $row := dict "i" $idx "k" (cond (eq .kind "video") "v" "p")
+          "s" .src "t" .thumb "p" (default "" (index . "poster")) "w" .w "h" .h -}}
+    {{- with index . "grid" }}{{ $row = merge $row (dict "g" .) }}{{ end -}}
+    {{- with index . "color" }}{{ if findRE `^#[0-9a-f]{6}$` . }}{{ $row = merge $row (dict "c" .) }}{{ end }}{{ end -}}
+    {{- with index . "duration" }}{{ $row = merge $row (dict "d" (int (math.Round .))) }}{{ end -}}
+    {{- with index . "music" }}{{ $row = merge $row (dict "m" .) }}{{ end -}}
+    {{- $media = $media | append $row -}}
+  {{- end -}}
+{{- end -}}
+{{- return (dict "base" $m.base_url "categories" (default slice $m.categories) "posts" $posts "media" $media) -}}

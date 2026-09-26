@@ -428,6 +428,34 @@ other = "Publicação compartilhada"
 [media_reshare_own]
 other = "Reel compartilhado"
 
+# Media page: sections (Instagram, then categories from Google Photos)
+[media_sections]
+other = "Seções"
+
+[media_instagram]
+other = "Instagram"
+
+[media_photos_note]
+other = "Da minha própria fototeca, separadas por atividade."
+
+[media_cat_skiing]
+other = "Esqui"
+
+[media_cat_mountain-biking]
+other = "Mountain bike"
+
+[media_cat_kayaking]
+other = "Caiaque"
+
+[media_cat_swimming]
+other = "Natação"
+
+[media_cat_beach]
+other = "Praia"
+
+[media_cat_hiking]
+other = "Trilhas"
+
 # Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
 # by the page script, not by Hugo.
 [movies_intro]

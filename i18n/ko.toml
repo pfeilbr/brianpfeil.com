@@ -428,6 +428,34 @@ other = "공유한 게시물"
 [media_reshare_own]
 other = "공유한 릴스"
 
+# Media page: sections (Instagram, then categories from Google Photos)
+[media_sections]
+other = "섹션"
+
+[media_instagram]
+other = "Instagram"
+
+[media_photos_note]
+other = "제 사진 보관함에서 활동별로 골랐습니다."
+
+[media_cat_skiing]
+other = "스키"
+
+[media_cat_mountain-biking]
+other = "산악자전거"
+
+[media_cat_kayaking]
+other = "카약"
+
+[media_cat_swimming]
+other = "수영"
+
+[media_cat_beach]
+other = "해변"
+
+[media_cat_hiking]
+other = "하이킹"
+
 # Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
 # by the page script, not by Hugo.
 [movies_intro]

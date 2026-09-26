@@ -120,6 +120,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make media-release` | `media-publish`, then commit and push only the media files |
 | `make media-sync` | Archive to live in one step: stage, approve every item, release (no-op when nothing is new) |
 | `make media-status` | What is approved and what is live |
+| `make media-picker` | Google Photos picker on http://127.0.0.1:8790: suggests photos and video of B alone by activity, publishes the picks |
 | `make media-audit` | Every file the page references exists on the CDN (exits 1 if not) |
 | `make media-watch-install` | Install the launchd agent that stages exports from `~/Downloads` |
 | `make media-watch-uninstall` | Remove the Downloads watcher |

@@ -61,6 +61,12 @@ media-watch-uninstall: ## Remove the Downloads watcher
 media-watch-status: ## Is the watcher loaded, and its last runs
 	tools/instagram-media/.venv/bin/python tools/instagram-media/watch_downloads.py --status
 
+# The Google Photos picker: a local web app that suggests photos and videos
+# of B alone (screened on-device with Apple Vision) for the category
+# sections of /media/, and publishes the picks. See tools/instagram-media/README.md.
+media-picker: ## Google Photos picker on http://127.0.0.1:8790 (suggest, pick, publish)
+	cd tools/instagram-media && .venv/bin/python pull.py picker
+
 test-media: ## Python tests for the media tool
 	cd tools/instagram-media && .venv/bin/python -m unittest discover -s tests
 

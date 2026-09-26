@@ -428,6 +428,34 @@ other = "转发的帖子"
 [media_reshare_own]
 other = "转发的 Reels"
 
+# Media page: sections (Instagram, then categories from Google Photos)
+[media_sections]
+other = "栏目"
+
+[media_instagram]
+other = "Instagram"
+
+[media_photos_note]
+other = "选自我自己的相册，按活动分类。"
+
+[media_cat_skiing]
+other = "滑雪"
+
+[media_cat_mountain-biking]
+other = "山地骑行"
+
+[media_cat_kayaking]
+other = "皮划艇"
+
+[media_cat_swimming]
+other = "游泳"
+
+[media_cat_beach]
+other = "海滩"
+
+[media_cat_hiking]
+other = "徒步"
+
 # Movies page (/movies/). {n}, {names}, {title} and {date} are filled in
 # by the page script, not by Hugo.
 [movies_intro]

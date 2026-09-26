@@ -1533,6 +1533,50 @@ nav details > summary {
 
 .media-section { margin-bottom: 2rem; }
 
+/* Instagram and the activity sections. The row stays on screen; with it
+   there, the year row sticks just below it instead of at the very top. */
+.media-sections {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  gap: 0.375rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 0 1rem;
+  padding: 0.5rem 0;
+  background-color: var(--bg);
+}
+
+.media-sections::-webkit-scrollbar { display: none; }
+
+.media-sections a {
+  flex: 0 0 auto;
+  padding: 0.25rem 0.875rem;
+  border-radius: 9999px;
+  background-color: var(--bg-muted);
+  color: var(--text-strong);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.media-sections a:hover { color: var(--brand); }
+
+.has-sections .media-years { top: 2.75rem; }
+.has-sections .media-h2 { scroll-margin-top: 6.25rem; }
+
+.media-part { margin-bottom: 2.5rem; scroll-margin-top: 3.25rem; }
+
+.media-part-h {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 0.5rem;
+}
+
+#media-cats > .media-sub { margin-bottom: 1rem; }
+
 .media-years {
   position: sticky;
   top: 0;

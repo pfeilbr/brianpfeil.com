@@ -24,3 +24,26 @@ archive_dir: "~/projects/instagram/archive"
 # reshares someone else's post, or one of the reels already on the page, is
 # published with a "reshared" label. Missing file = no labels.
 story_inventory: "~/projects/instagram/harvest/iphone/story-inventory.jsonl"
+
+# Google Photos, chosen by hand in the picker (make media-picker). Candidates
+# come from Google Photos searches: "<person> <query>" finds shots Google
+# matched to B's face, and "<query>" alone finds scenes, which are only
+# offered when nobody at all is in them. See igmedia/screen.py for the rules.
+# Order here is the order of the sections and the nav on /media/; each key
+# needs media_cat_<key> in all nine i18n files.
+gphotos:
+  person: "Brian Pfeil"
+  # Named face groups in Google Photos who must never appear. Everything
+  # Google matches to them in a category's search is blocked.
+  exclude_people: ["Wyatt Pfeil", "Max"]
+  picks: "picks.yaml"
+  lock_file: "photos.lock.json"
+  s3_prefix: "photos"
+  data_file: "data/photos.yaml"
+  categories:
+    - {key: skiing, query: "skiing"}
+    - {key: mountain-biking, query: "mountain biking"}
+    - {key: kayaking, query: "kayaking"}
+    - {key: swimming, query: "swimming"}
+    - {key: beach, query: "beach"}
+    - {key: hiking, query: "hiking"}

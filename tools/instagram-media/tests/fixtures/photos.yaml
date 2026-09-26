@@ -1,0 +1,37 @@
+# Fixture for check_layout.py: two categories, a photo and a video. The
+# caption, place and key are things the generator never writes; they are
+# here to prove the payload would not pass them on if it did.
+base_url: https://cdn.example.test/
+count: 2
+categories: [skiing, beach]
+items:
+- id: 20250301-gaaaa111111
+  date: '2025-03-01'
+  year: '2025'
+  category: skiing
+  kind: video
+  caption: should not ship
+  location: {name: Secret Place, lat: 40.1234}
+  key: AF1QipSECRETKEY
+  media:
+  - kind: video
+    src: photos/20250301-gaaaa111111/v.mp4
+    thumb: photos/20250301-gaaaa111111/v-t.jpg
+    poster: photos/20250301-gaaaa111111/v-p.jpg
+    w: 1280
+    h: 720
+    duration: 14.6
+    grid: [photos/20250301-gaaaa111111/v-g360.webp, photos/20250301-gaaaa111111/v-g720.webp]
+    color: '#334455'
+    music: Sunlit
+- id: 20240701-gbbbb222222
+  date: '2024-07-01'
+  year: '2024'
+  category: beach
+  kind: photo
+  media:
+  - kind: photo
+    src: photos/20240701-gbbbb222222/p.jpg
+    thumb: photos/20240701-gbbbb222222/p-t.jpg
+    w: 1600
+    h: 1200

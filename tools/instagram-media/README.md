@@ -142,6 +142,64 @@ is the only source. `--export` reads it alongside the stories. One that was
 archived and later restored is already in the archive project, and is
 skipped by matching the second it was posted.
 
+## Google Photos categories
+
+Below Instagram, `/media/` has a section per activity — skiing, mountain
+biking, kayaking, swimming, beach, hiking (`gphotos.categories` in
+`config.yaml`) — with a row of links at the top to jump between Instagram
+and each of them. The picks come from Google Photos, chosen by hand in a
+local web app:
+
+    make media-picker        # http://127.0.0.1:8790
+
+**Only B, nothing private.** Candidates come from Google Photos' own
+search. "Brian Pfeil skiing" finds shots Google matched to B's face; plain
+"skiing" finds scenes, which are only offered if nobody is in them (POV
+clips, landscapes). Then:
+
+- every candidate is screened on this Mac with Apple Vision
+  (`vision/screen.swift`, policy in `igmedia/screen.py`): a "me" shot must
+  show exactly one person and a visible face; people are counted by face,
+  body, upper body and person segmentation, and the highest count wins;
+- anything Google matched to someone in `gphotos.exclude_people` (B's sons)
+  is blocked, whatever else found it — "Wyatt Pfeil skiing" and so on are
+  harvested for that alone;
+- readable text that looks like a number plate, house number, phone number,
+  street, email or a page of writing blocks it; other text (a logo, a trail
+  sign) is shown as a warning; receipts, screenshots and documents are blocked;
+- publishing screens each pick again from the file it is published from;
+- nothing is published with a caption, place, date-and-time or person: only
+  the media and its date. Metadata (GPS included) is stripped by the same
+  encode Instagram media goes through.
+
+Screening has one known gap: two people pressed together in a selfie, both
+in goggles and one in a balaclava, can read as one. B looks at everything
+before including it; the picker says so.
+
+**The picker.** Categories down the side, best suggestions first, bursts of
+near-identical shots folded behind the best one ("+3 similar", `e` to open).
+Click or space to include, `x` to skip, `s` to skip everything else on
+screen, `1`–`9` to include into another category, enter to see it large
+(videos play on hover), `z` to undo. Every decision is written to
+`picks.yaml` at once; skipped items are never suggested again. **Publish**
+encodes, uploads to `s3://brianpfeil-media01/photos/`, writes
+`data/photos.yaml`, and commits and pushes just those two files.
+
+**Getting more from Google Photos.** Google has no API that can read a
+library any more, and its image host only answers B's signed-in browser, so
+the browser does the fetching. "Get more from Google Photos" in the picker
+has a **Send to picker** bookmarklet and a link to every search. Open a
+search, click the bookmarklet: it scrolls the results, sends them to the
+picker, then downloads what the picker asks for (thumbnails and screening
+copies, and 1080p video for picks) and posts the bytes to 127.0.0.1. No
+cookie leaves Chrome. The first time, Chrome asks whether photos.google.com
+may reach devices on the local network — allow it. The bookmarklet only
+loads `picker/harvest.js` from the picker, so changes to it need no re-drag.
+
+What stays local: `build/gphotos/` (candidates, their Google URLs, thumbnails,
+screening results) is never committed. `picks.yaml` is — it holds Google's
+opaque media keys and decisions, nothing else.
+
 ## Checking it
 
 `make media-audit` compares every file `data/media.yaml` references with what
@@ -179,6 +237,12 @@ Re-running over the same export does nothing twice:
 | `igmedia/manifest.py` | the approve list |
 | `igmedia/review.py` | the local contact sheet |
 | `igmedia/publish.py` | `aws s3 sync` and `data/media.yaml` |
+| `igmedia/picker.py` | the Google Photos picker's server (`make media-picker`) |
+| `igmedia/gphotos.py` | harvested candidates and `picks.yaml` |
+| `igmedia/screen.py` | the screening policy: only B, nothing private |
+| `igmedia/gphotos_publish.py` | picks to `data/photos.yaml` |
+| `vision/screen.swift` | Apple Vision: people, text, aesthetics |
+| `picker/` | the picker page and the harvest script |
 | `tests/` | `make test-media`; `make_fixture.py` builds a synthetic export |
 
 Requires ffmpeg and an AWS CLI that is already logged in; uploads use whatever

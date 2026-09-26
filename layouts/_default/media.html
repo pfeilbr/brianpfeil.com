@@ -12,11 +12,26 @@
   <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/media.json") | safeHTML }}</p></noscript>
 
   <p class="media-empty" hidden>{{ i18n "media_empty" }}</p>
-  <p class="media-sub" hidden></p>
-  {{/* A row of the years that have posts, kept on screen while scrolling,
-     each linking to its section's heading. */}}
-  <nav class="media-years" aria-label="{{ i18n "media_years" }}" hidden></nav>
-  <div id="media-grid" aria-busy="true"></div>
+  {{/* Instagram, then a section per activity from Google Photos
+     (/data/photos.json). Kept on screen while scrolling; only drawn when
+     there is more than Instagram to go to. */}}
+  <nav class="media-sections" aria-label="{{ i18n "media_sections" }}" hidden></nav>
+  <section id="instagram" class="media-part">
+    <h2 class="media-part-h" hidden>{{ i18n "media_instagram" }}</h2>
+    <p class="media-sub" hidden></p>
+    {{/* A row of the years that have posts, kept on screen while scrolling,
+       each linking to its section's heading. */}}
+    <nav class="media-years" aria-label="{{ i18n "media_years" }}" hidden></nav>
+    <div id="media-grid" aria-busy="true"></div>
+  </section>
+  <div id="media-cats"></div>
+  {{/* Category names, by key. A list rather than data-* attributes, whose
+     names can't be built in a template. Every key needs media_cat_<key>. */}}
+  <ul class="media-cat-names" hidden>
+    {{- with hugo.Data.photos }}{{ range .categories }}
+    <li data-key="{{ . }}">{{ i18n (printf "media_cat_%s" .) }}</li>
+    {{- end }}{{ end }}
+  </ul>
 
   <div class="media-strings"
        data-count="{{ i18n "media_count" (dict "count" "%count") }}"
@@ -42,7 +57,9 @@
        data-story="{{ i18n "media_story" }}"
        data-archived="{{ i18n "media_archived" }}"
        data-reshare-other="{{ i18n "media_reshare_other" }}"
-       data-reshare-own="{{ i18n "media_reshare_own" }}"></div>
+       data-reshare-own="{{ i18n "media_reshare_own" }}"
+       data-instagram-label="{{ i18n "media_instagram" }}"
+       data-photos-note="{{ i18n "media_photos_note" }}"></div>
 </article>
 
 <script>
@@ -55,14 +72,15 @@ window.MediaGrid = function (raw, strings) {
   var s = strings.dataset;
   var grid = document.getElementById("media-grid");
   var years = [];
-  raw.posts.forEach(function (p) { if (years.indexOf(p.year) < 0) years.push(p.year); });
+  raw.posts.forEach(function (p) { if (!p.cat && years.indexOf(p.year) < 0) years.push(p.year); });
   var first = {};
   raw.media.forEach(function (m) { if (!(m.i in first)) first[m.i] = m; });
   var perPost = {};
   raw.media.forEach(function (m) { perPost[m.i] = (perPost[m.i] || 0) + 1; });
 
   var sub = document.querySelector(".media-sub");
-  sub.textContent = s.count.replace("%count", raw.posts.length) + " \u2014 " + s.hint;
+  var igCount = raw.posts.filter(function (p) { return !p.cat; }).length;
+  sub.textContent = s.count.replace("%count", igCount) + " \u2014 " + s.hint;
   sub.hidden = false;
 
   if (years.length > 1) {
@@ -79,6 +97,51 @@ window.MediaGrid = function (raw, strings) {
   /* The first rows are on screen at load: eager, and high priority for the
      first few so they win the race against everything else on the page. */
   var tile = 0;
+  function makeTile(p, idx) {
+    var m = first[idx];
+    var a = document.createElement("a");
+    a.className = "media-tile" + (p.story ? " media-tile-story" : "");
+    a.href = raw.base + m.s;
+    a.dataset.item = p.id;
+    var text = (p.caption || "").replace(/\s+/g, " ").trim();
+    var label = text ? (text.length > 120 ? text.slice(0, 119) + "\u2026" : text) : s.untitled;
+    a.setAttribute("aria-label", label + " \u2014 " + s.open);
+    /* Checked again here, though the payload already only carries hex. */
+    if (m.c && /^#[0-9a-f]{6}$/.test(m.c)) a.style.backgroundColor = m.c;
+    tile++;
+    var img = document.createElement("img");
+    img.src = raw.base + (m.g ? m.g[0] : m.t);
+    if (m.g) {
+      img.srcset = raw.base + m.g[0] + " 360w, " + raw.base + m.g[1] + " 720w";
+      img.sizes = "(min-width: 640px) 162px, 31vw";
+    }
+    img.alt = "";
+    img.loading = tile <= 8 ? "eager" : "lazy";
+    if (tile <= 4) img.fetchPriority = "high";
+    img.decoding = "async";
+    a.appendChild(img);
+    if (p.kind === "video") {
+      /* Play glyph plus the clip's length, as m:ss, when it's known. */
+      var b = document.createElement("span");
+      b.className = "media-badge media-badge-video";
+      b.setAttribute("aria-hidden", "true");
+      b.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+      if (m.d > 0) {
+        var t = document.createElement("span");
+        t.textContent = Math.floor(m.d / 60) + ":" + String(m.d % 60).padStart(2, "0");
+        b.appendChild(t);
+      }
+      a.appendChild(b);
+    } else if (p.kind === "album") {
+      var c = document.createElement("span");
+      c.className = "media-badge media-badge-count";
+      c.setAttribute("aria-hidden", "true");
+      c.textContent = perPost[idx];
+      a.appendChild(c);
+    }
+    return a;
+  }
+
   years.forEach(function (y) {
     var sec = document.createElement("section");
     sec.className = "media-section";
@@ -91,56 +154,58 @@ window.MediaGrid = function (raw, strings) {
     var g = document.createElement("div");
     g.className = "media-grid";
     raw.posts.forEach(function (p, idx) {
-      if (p.year !== y || !first[idx]) return;
-      var m = first[idx];
-      var a = document.createElement("a");
-      a.className = "media-tile" + (p.story ? " media-tile-story" : "");
-      a.href = raw.base + m.s;
-      a.dataset.item = p.id;
-      var text = (p.caption || "").replace(/\s+/g, " ").trim();
-      var label = text ? (text.length > 120 ? text.slice(0, 119) + "\u2026" : text) : s.untitled;
-      a.setAttribute("aria-label", label + " \u2014 " + s.open);
-      /* Checked again here, though the payload already only carries hex. */
-      if (m.c && /^#[0-9a-f]{6}$/.test(m.c)) a.style.backgroundColor = m.c;
-      tile++;
-      var img = document.createElement("img");
-      img.src = raw.base + (m.g ? m.g[0] : m.t);
-      if (m.g) {
-        img.srcset = raw.base + m.g[0] + " 360w, " + raw.base + m.g[1] + " 720w";
-        img.sizes = "(min-width: 640px) 162px, 31vw";
-      }
-      img.alt = "";
-      img.loading = tile <= 8 ? "eager" : "lazy";
-      if (tile <= 4) img.fetchPriority = "high";
-      img.decoding = "async";
-      a.appendChild(img);
-      if (p.kind === "video") {
-        /* Play glyph plus the clip's length, as m:ss, when it's known. */
-        var b = document.createElement("span");
-        b.className = "media-badge media-badge-video";
-        b.setAttribute("aria-hidden", "true");
-        b.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
-        if (m.d > 0) {
-          var t = document.createElement("span");
-          t.textContent = Math.floor(m.d / 60) + ":" + String(m.d % 60).padStart(2, "0");
-          b.appendChild(t);
-        }
-        a.appendChild(b);
-      } else if (p.kind === "album") {
-        var c = document.createElement("span");
-        c.className = "media-badge media-badge-count";
-        c.setAttribute("aria-hidden", "true");
-        c.textContent = perPost[idx];
-        a.appendChild(c);
-      }
-      g.appendChild(a);
+      if (p.cat || p.year !== y || !first[idx]) return;
+      g.appendChild(makeTile(p, idx));
     });
     sec.appendChild(g);
     grid.appendChild(sec);
   });
+
+  /* A section per activity, after Instagram, in the order the payload lists
+     them — which is also the order its items come in, so the viewer pages
+     through the page top to bottom. */
+  var names = {};
+  document.querySelectorAll(".media-cat-names li").forEach(function (li) { names[li.dataset.key] = li.textContent; });
+  var cats = (raw.cats || []).filter(function (k) {
+    return names[k] && raw.posts.some(function (p) { return p.cat === k; });
+  });
+  var holder = document.getElementById("media-cats");
+  cats.forEach(function (k) {
+    var sec = document.createElement("section");
+    sec.className = "media-part";
+    sec.id = k;
+    var h = document.createElement("h2");
+    h.className = "media-part-h";
+    h.textContent = names[k];
+    sec.appendChild(h);
+    var g = document.createElement("div");
+    g.className = "media-grid";
+    raw.posts.forEach(function (p, idx) {
+      if (p.cat === k && first[idx]) g.appendChild(makeTile(p, idx));
+    });
+    sec.appendChild(g);
+    holder.appendChild(sec);
+  });
+  if (cats.length) {
+    var note = document.createElement("p");
+    note.className = "media-sub";
+    note.textContent = s.photosNote;
+    holder.insertBefore(note, holder.firstChild);
+    document.querySelector("#instagram .media-part-h").hidden = false;
+    var nav = document.querySelector(".media-sections");
+    [["instagram", s.instagramLabel]].concat(cats.map(function (k) { return [k, names[k]]; }))
+      .forEach(function (pair) {
+        var a = document.createElement("a");
+        a.href = "#" + pair[0];
+        a.textContent = pair[1];
+        nav.appendChild(a);
+      });
+    nav.hidden = false;
+    document.querySelector(".media").classList.add("has-sections");
+  }
   grid.setAttribute("aria-busy", "false");
-  /* The browser looked for #year-2019 before the section existed. */
-  if (/^#year-/.test(location.hash)) {
+  /* The browser looked for #year-2019 (or #skiing) before the section existed. */
+  if (/^#(year-|instagram$)/.test(location.hash) || cats.indexOf(location.hash.slice(1)) >= 0) {
     var target = document.getElementById(location.hash.slice(1));
     if (target) target.scrollIntoView();
   }
@@ -156,9 +221,29 @@ window.MediaGrid = function (raw, strings) {
     document.getElementById("media-grid").setAttribute("aria-busy", "false");
     document.querySelector(".media-empty").hidden = false;
   }
-  fetch("/data/media.json")
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (raw) {
+  function load(url) {
+    return fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+  }
+  /* Instagram, plus the Google Photos categories when there are any. The
+     two are merged into one list — photos after Instagram, posts re-indexed —
+     so the grid and the viewer treat them alike. */
+  Promise.all([load("/data/media.json"), load("/data/photos.json").catch(function () { return null; })])
+    .then(function (both) {
+      var raw = both[0], photos = both[1];
+      if (photos && photos.posts && photos.posts.length) {
+        var offset = raw.posts.length;
+        raw.posts = raw.posts.concat(photos.posts);
+        raw.media = raw.media.concat(photos.media.map(function (m) {
+          var row = {};
+          for (var k in m) row[k] = m[k];
+          row.i = m.i + offset;
+          return row;
+        }));
+        raw.cats = photos.categories;
+        /* Both halves live on the same CDN; if they ever don't, say so
+           loudly rather than show broken tiles. */
+        if (photos.base !== raw.base) console.warn("media: photos.json has a different base URL");
+      }
       if (!raw.posts || !raw.posts.length) return empty();
       window.MediaGrid(raw, strings);
       viewer(raw);

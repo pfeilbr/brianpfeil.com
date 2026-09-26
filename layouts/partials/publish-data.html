@@ -4,11 +4,13 @@
    covers both. Called once, from the English home page; resources publish
    to the site root either way.
 
-   media is the exception: it gets the whitelisted payload from
-   partials/media-payload.html, never the raw file. */ -}}
+   media and photos are the exceptions: they get the whitelisted payloads
+   from partials/media-payload.html and photos-payload.html, never the raw
+   files. */ -}}
 {{- range $name, $d := hugo.Data -}}
   {{- $out := $d -}}
   {{- if eq $name "media" }}{{ $out = partial "media-payload.html" . }}{{ end -}}
+  {{- if eq $name "photos" }}{{ $out = partial "photos-payload.html" . }}{{ end -}}
   {{- with resources.FromString (printf "data/%s.json" $name) (jsonify $out) -}}
     {{- .Publish -}}
   {{- end -}}

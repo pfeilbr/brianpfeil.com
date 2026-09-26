@@ -262,6 +262,12 @@ def add_source(parser) -> None:
                         help="use the export alone, posts and reels included")
 
 
+def cmd_picker(args, cfg) -> int:
+    from igmedia import picker
+    picker.serve(TOOL_DIR, REPO_ROOT, cfg, port=args.port)
+    return 0
+
+
 def main() -> int:
     cfg = load_config()
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -302,6 +308,10 @@ def main() -> int:
 
     status = sub.add_parser("status", help="what is approved and what is live")
     status.set_defaults(func=cmd_status)
+
+    pick = sub.add_parser("picker", help="the Google Photos picker: a local web app on 127.0.0.1")
+    pick.add_argument("--port", type=int, default=8790)
+    pick.set_defaults(func=cmd_picker)
 
     args = parser.parse_args()
     return args.func(args, cfg)

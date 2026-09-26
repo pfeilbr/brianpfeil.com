@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media picker</title>
+<style>
+:root {
+  --bg: #f6f6f4; --panel: #fff; --ink: #1d1d1b; --muted: #6b6b66; --line: #e3e2dd;
+  --accent: #2563eb; --ok: #16a34a; --warn: #d97706; --bad: #dc2626; --tile: 190px;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #151514; --panel: #1e1e1c; --ink: #ecebe6; --muted: #9a9993; --line: #33332f; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.4 system-ui, -apple-system, sans-serif; }
+header { position: sticky; top: 0; z-index: 5; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--line); }
+header h1 { font-size: 16px; margin: 0 8px 0 0; }
+.tabs { display: flex; gap: 2px; background: var(--bg); padding: 2px; border-radius: 8px; }
+.tabs button { border: 0; background: none; color: var(--muted); padding: 5px 10px; border-radius: 6px; cursor: pointer; font: inherit; }
+.tabs button.on { background: var(--panel); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+.spacer { flex: 1; }
+.status { color: var(--muted); font-size: 13px; }
+.btn { border: 1px solid var(--line); background: var(--panel); color: var(--ink); padding: 6px 12px; border-radius: 8px; cursor: pointer; font: inherit; }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn:disabled { opacity: .5; cursor: default; }
+main { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 54px); }
+nav { border-right: 1px solid var(--line); padding: 12px 8px; background: var(--panel); }
+nav button { display: flex; width: 100%; justify-content: space-between; gap: 8px; border: 0; background: none; color: var(--ink);
+  padding: 8px 10px; border-radius: 8px; cursor: pointer; font: inherit; text-align: left; }
+nav button.on { background: var(--bg); font-weight: 600; }
+nav .n { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 12px; }
+nav .n b { color: var(--ok); font-weight: 600; }
+nav kbd, .help kbd { font: 11px ui-monospace, monospace; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; color: var(--muted); }
+.help { margin: 16px 6px 0; color: var(--muted); font-size: 12px; line-height: 1.9; }
+section.content { padding: 12px 16px 80px; }
+.bar { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+.bar .count { color: var(--muted); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--tile), 1fr)); gap: 8px; }
+.tile { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: var(--line); cursor: pointer;
+  outline: 3px solid transparent; outline-offset: 2px; }
+.tile img, .tile video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tile:focus-visible, .tile.focus { outline-color: var(--accent); }
+.tile.include { outline-color: var(--ok); }
+.tile.include::after { content: "\2713"; position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--ok); color: #fff; display: grid; place-items: center; font-weight: 700; }
+.tile.skip img, .tile.skip video { opacity: .3; filter: grayscale(1); }
+.tile.blocked img { opacity: .45; filter: blur(2px) grayscale(.6); }
+.badge { position: absolute; left: 6px; bottom: 6px; display: flex; gap: 4px; }
+.badge span { background: rgba(0,0,0,.65); color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 6px; }
+.badge .w { background: var(--warn); }
+.badge .b { background: var(--bad); }
+.badge .sim { background: var(--accent); cursor: pointer; }
+.notice { color: var(--muted); font-size: 12.5px; margin: -4px 0 12px; max-width: 70em; }
+.notice code { font-size: 11.5px; }
+.empty { color: var(--muted); padding: 40px 0; text-align: center; }
+.harvest { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; }
+.harvest h2 { font-size: 14px; margin: 0 0 6px; }
+.harvest ul { margin: 8px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 4px 16px; }
+.harvest a { color: var(--accent); }
+.bookmarklet { display: inline-block; padding: 4px 10px; border-radius: 6px; background: var(--accent); color: #fff !important; text-decoration: none; }
+#viewer { position: fixed; inset: 0; z-index: 10; background: rgba(0,0,0,.92); display: none; grid-template-rows: 1fr auto; }
+#viewer.open { display: grid; }
+#viewer .stage { display: grid; place-items: center; min-height: 0; padding: 16px; }
+#viewer .stage img, #viewer .stage video { max-width: 100%; max-height: calc(100vh - 110px); object-fit: contain; }
+#viewer .meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding: 12px 20px; color: #ddd; background: #000; }
+#viewer .meta .reasons { color: #fbbf24; }
+#viewer .meta .blocked { color: #f87171; }
+#log { position: fixed; right: 16px; bottom: 16px; width: min(520px, calc(100vw - 32px)); max-height: 40vh; overflow: auto; z-index: 8;
+  background: #111; color: #ddd; font: 12px/1.5 ui-monospace, monospace; padding: 10px 12px; border-radius: 10px; display: none; white-space: pre-wrap; }
+#log.open { display: block; }
+@media (max-width: 700px) { main { grid-template-columns: 1fr; } nav { border-right: 0; border-bottom: 1px solid var(--line); } :root { --tile: 120px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Media picker</h1>
+  <div class="tabs" id="tabs">
+    <button data-view="suggested" class="on">Suggested</button>
+    <button data-view="all">All safe</button>
+    <button data-view="include">Included</button>
+    <button data-view="skip">Skipped</button>
+    <button data-view="blocked">Blocked</button>
+  </div>
+  <div class="spacer"></div>
+  <span class="status" id="status"></span>
+  <button class="btn" id="harvest-toggle">Get more from Google Photos</button>
+  <button class="btn primary" id="publish">Publish</button>
+</header>
+<main>
+  <nav id="cats"></nav>
+  <section class="content">
+    <div class="harvest" id="harvest" hidden></div>
+    <div class="bar">
+      <strong id="title"></strong><span class="count" id="count"></span>
+      <div class="spacer"></div>
+      <label class="status"><input type="range" id="size" min="120" max="340" value="190"> size</label>
+      <button class="btn" id="skip-rest" title="Skip every undecided item on screen (S)">Skip the rest on screen</button>
+    </div>
+    <p class="notice">Suggestions are screened on this Mac: anything with a second person, a face Google matched to
+      someone in <code>exclude_people</code>, or readable plates, addresses or documents never shows up here. One thing slips
+      past the screening: two people in goggles and a balaclava, pressed together in a selfie. Look at each one before you include it.</p>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty" hidden></p>
+  </section>
+</main>
+<div id="viewer" role="dialog" aria-modal="true"><div class="stage"></div><div class="meta"></div></div>
+<pre id="log"></pre>
+
+<script>
+"use strict";
+const LABELS = { "skiing": "Skiing", "mountain-biking": "Mountain biking", "kayaking": "Kayaking",
+  "swimming": "Swimming", "beach": "Beach", "hiking": "Hiking" };
+const $ = (s) => document.querySelector(s);
+// The bookmarklet only loads picker/harvest.js from this server, so the
+// script can change without re-dragging it. Google Photos enforces Trusted
+// Types, hence the policy.
+const LOADER = "(async()=>{const p=trustedTypes.createPolicy('picker'+Date.now(),{createScript:s=>s});" +
+  "const c=await(await fetch('http://127.0.0.1:8790/harvest.js?'+Date.now())).text();(0,eval)(p.createScript(c))})()";
+let S = null;                 // last /api/state
+let cat = null, view = "suggested", focus = 0, expanded = new Set(), undo = [];
+let shown = [];               // items currently in the grid, in order
+
+const label = (k) => LABELS[k] || k.replace(/-/g, " ");
+const ok = (it) => it.screen && (it.screen.status === "ok" || it.screen.status === "warn");
+const score = (it) => (it.screen && it.screen.score != null ? it.screen.score : -9);
+
+async function api(path, body) {
+  const r = await fetch(path, body ? { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) } : {});
+  return r.json();
+}
+
+function inCat(it) { return it.decision === "include" ? it.category === cat : it.categories.includes(cat); }
+
+function visible() {
+  const items = S.items.filter(inCat);
+  let list;
+  if (view === "suggested") {
+    // Undecided, safe, best of each burst — unless its burst is expanded.
+    list = items.filter((it) => ok(it) && !it.decision && (it.leader === it.key || expanded.has(it.leader)));
+  } else if (view === "all") list = items.filter((it) => ok(it));
+  else if (view === "include") list = items.filter((it) => it.decision === "include");
+  else if (view === "skip") list = items.filter((it) => it.decision === "skip");
+  else list = items.filter((it) => it.screen && !ok(it));
+  // Videos and photos together, best first; a burst's members follow their leader.
+  return list.sort((a, b) => (a.leader === b.leader ? score(b) - score(a) : 0) ||
+    score(S.byKey[b.leader] || b) - score(S.byKey[a.leader] || a) || (a.leader < b.leader ? -1 : 1));
+}
+
+function burstSize(it) { return S.items.filter((x) => x.leader === it.key && ok(x) && !x.decision && inCat(x)).length; }
+
+function renderCats() {
+  const nav = $("#cats");
+  nav.innerHTML = "";
+  for (const c of S.categories) {
+    const items = S.items.filter((it) => it.decision === "include" ? it.category === c.key : it.categories.includes(c.key));
+    const inc = items.filter((it) => it.decision === "include").length;
+    const todo = items.filter((it) => ok(it) && !it.decision && it.leader === it.key).length;
+    const b = document.createElement("button");
+    b.className = c.key === cat ? "on" : "";
+    b.innerHTML = `<span></span><span class="n"><b>${inc}</b> · ${todo} to look at</span>`;
+    b.firstChild.textContent = label(c.key);
+    b.onclick = () => { cat = c.key; focus = 0; expanded.clear(); render(); };
+    nav.appendChild(b);
+  }
+  const h = document.createElement("div");
+  h.className = "help";
+  h.innerHTML = "<kbd>click</kbd> / <kbd>space</kbd> include<br><kbd>x</kbd> skip · <kbd>s</kbd> skip rest on screen<br>" +
+    "<kbd>←→↑↓</kbd> move · <kbd>enter</kbd> view<br><kbd>1</kbd>–<kbd>9</kbd> include into category<br>" +
+    "<kbd>e</kbd> show similar · <kbd>z</kbd> undo";
+  nav.appendChild(h);
+}
+
+function tile(it, i) {
+  const d = document.createElement("div");
+  d.className = "tile" + (it.decision ? " " + it.decision : "") + (!ok(it) && it.screen ? " blocked" : "") + (i === focus ? " focus" : "");
+  d.tabIndex = -1;
+  const img = document.createElement("img");
+  img.loading = "lazy";
+  img.src = `/small/${it.key}.jpg`;
+  img.alt = "";
+  d.appendChild(img);
+  if (it.kind === "video") {
+    d.onmouseenter = () => {
+      const v = document.createElement("video");
+      v.src = `/preview/${it.key}.mp4`; v.muted = true; v.autoplay = true; v.loop = true; v.playsInline = true;
+      v.onplaying = () => { img.style.display = "none"; };
+      d.insertBefore(v, img);
+    };
+    d.onmouseleave = () => { const v = d.querySelector("video"); if (v) { v.remove(); img.style.display = ""; } };
+  }
+  const badge = document.createElement("div");
+  badge.className = "badge";
+  const add = (text, cls, title) => { const s = document.createElement("span"); s.textContent = text; if (cls) s.className = cls; if (title) s.title = title; badge.appendChild(s); return s; };
+  if (it.kind === "video") add("▶ " + (it.duration ? Math.round(it.duration) + "s" : ""));
+  if (it.taken) add(it.taken.slice(0, 4));
+  if (it.tier === "scene") add("no people", null, "Found by the activity search; nobody is in it");
+  const st = it.screen || {};
+  if (st.status === "warn") add("text", "w", st.reasons.join("\n"));
+  if (st.status === "blocked" || st.status === "error") add(st.status, "b", (st.reasons || []).join("\n"));
+  if (view === "suggested" && it.leader === it.key) {
+    const n = burstSize(it) - 1;
+    if (n > 0) add(`+${n} similar`, "sim").onclick = (e) => { e.stopPropagation(); toggleBurst(it.key); };
+  }
+  d.appendChild(badge);
+  d.onclick = () => { focus = i; toggle(it); };
+  d.ondblclick = () => { focus = i; openViewer(); };
+  return d;
+}
+
+function render() {
+  if (!S) return;
+  S.byKey = Object.fromEntries(S.items.map((it) => [it.key, it]));
+  if (!cat) cat = S.categories[0].key;
+  document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("on", b.dataset.view === view));
+  renderCats();
+  shown = visible();
+  focus = Math.max(0, Math.min(focus, shown.length - 1));
+  const g = $("#grid");
+  g.innerHTML = "";
+  shown.forEach((it, i) => g.appendChild(tile(it, i)));
+  $("#title").textContent = label(cat);
+  $("#count").textContent = `${shown.length} shown`;
+  const empty = $("#empty");
+  empty.hidden = shown.length > 0;
+  const catItems = S.items.filter(inCat);
+  empty.textContent = !catItems.length
+    ? "Nothing harvested for this category yet — open “Get more from Google Photos”."
+    : view === "suggested" ? "Nothing left to look at here. 🎉" : "Nothing here.";
+  renderStatus();
+  const f = g.children[focus];
+  if (f && document.activeElement !== f) f.focus({ preventScroll: true });
+}
+
+function renderStatus() {
+  const inc = S.items.filter((it) => it.decision === "include").length;
+  const screened = S.items.filter((it) => it.screen).length;
+  $("#status").textContent = `${S.items.length} found · ${screened} screened` + (S.pending ? ` · screening ${S.pending}…` : "") + ` · ${inc} included`;
+  const p = $("#publish");
+  p.disabled = S.publishing;
+  p.textContent = S.publishing ? "Publishing…" : `Publish ${inc}`;
+  const log = $("#log");
+  if (S.log && S.log.length) { log.classList.add("open"); log.textContent = S.log.join("\n"); log.scrollTop = log.scrollHeight; }
+}
+
+function renderHarvest() {
+  const h = $("#harvest");
+  h.innerHTML = `<h2>Get more from Google Photos</h2>
+    <div>Drag <a class="bookmarklet" id="bm">Send to picker</a> to the bookmarks bar once. Then open a search below in Google Photos
+    (signed in), wait for results, and click the bookmark. It scrolls the results and sends them here; screening starts on its own.
+    The first time, Chrome asks whether photos.google.com may reach devices on your local network — allow it.</div><ul id="searches"></ul>`;
+  $("#bm").href = "javascript:" + encodeURIComponent(LOADER);
+  const ul = $("#searches");
+  for (const c of S.categories) for (const q of c.searches) {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = "https://photos.google.com/search/" + encodeURIComponent(q);
+    a.target = "_blank"; a.rel = "noopener";
+    a.textContent = q;
+    li.appendChild(a);
+    const done = S.harvests[q];
+    if (done) li.appendChild(document.createTextNode(` — ${done.count} sent at ${done.at}`));
+    ul.appendChild(li);
+  }
+}
+
+async function decide(items, decision, category) {
+  undo.push(items.map((it) => ({ key: it.key, decision: it.decision, category: it.category })));
+  for (const it of items) { it.decision = decision; it.category = decision === "include" ? category : null; }
+  await api("/api/decide", { keys: items.map((it) => it.key), decision, category });
+}
+
+async function toggle(it, category) {
+  if (!ok(it)) return;
+  const target = category || cat;
+  if (it.decision === "include" && it.category === target) await decide([it], null);
+  else await decide([it], "include", target);
+  render();
+}
+
+async function skip(it) { if (it) { await decide([it], it.decision === "skip" ? null : "skip"); render(); } }
+
+async function skipRest() {
+  const rest = shown.filter((it) => !it.decision && ok(it));
+  if (!rest.length) return;
+  // Skipping a burst leader skips the shots folded behind it, too.
+  const keys = new Set(rest.map((it) => it.key));
+  const all = S.items.filter((it) => !it.decision && ok(it) && inCat(it) && (keys.has(it.key) || keys.has(it.leader)));
+  await decide(all, "skip");
+  focus = 0;
+  render();
+}
+
+async function undoLast() {
+  const last = undo.pop();
+  if (!last) return;
+  for (const prev of last) {
+    const it = S.byKey[prev.key];
+    it.decision = prev.decision; it.category = prev.category;
+    await api("/api/decide", { keys: [prev.key], decision: prev.decision || null, category: prev.category });
+  }
+  render();
+}
+
+function toggleBurst(key) { expanded.has(key) ? expanded.delete(key) : expanded.add(key); render(); }
+
+// --- viewer --------------------------------------------------------------------
+const viewer = $("#viewer");
+function openViewer() { viewer.classList.add("open"); drawViewer(); }
+function closeViewer() { viewer.classList.remove("open"); viewer.querySelector(".stage").innerHTML = ""; render(); }
+function drawViewer() {
+  const it = shown[focus];
+  if (!it) return closeViewer();
+  const stage = viewer.querySelector(".stage");
+  stage.innerHTML = "";
+  if (it.kind === "video") {
+    const v = document.createElement("video");
+    v.src = `/preview/${it.key}.mp4`; v.controls = true; v.autoplay = true; v.playsInline = true;
+    stage.appendChild(v);
+  } else {
+    const img = document.createElement("img");
+    img.src = `/large/${it.key}.jpg`;
+    stage.appendChild(img);
+  }
+  const m = viewer.querySelector(".meta");
+  m.innerHTML = "";
+  const t = (s, cls) => { const e = document.createElement("span"); e.textContent = s; if (cls) e.className = cls; m.appendChild(e); };
+  t(`${focus + 1} / ${shown.length}`);
+  t(it.taken ? it.taken.replace("T", " ") : "undated");
+  t(it.decision === "include" ? `✓ included in ${label(it.category)}` : it.decision === "skip" ? "skipped" : "undecided");
+  const st = it.screen || {};
+  if (st.reasons && st.reasons.length) t(st.reasons.join(" · "), ok(it) ? "reasons" : "blocked");
+  if (st.labels) t(st.labels.join(", "));
+  t("space include · x skip · ←/→ next · esc close");
+}
+
+// --- keys ----------------------------------------------------------------------
+function cols() {
+  const g = $("#grid");
+  if (!g.children.length) return 1;
+  const top = g.children[0].offsetTop;
+  let n = 0;
+  for (const c of g.children) { if (c.offsetTop !== top) break; n++; }
+  return n || 1;
+}
+function move(d) {
+  focus = Math.max(0, Math.min(shown.length - 1, focus + d));
+  if (viewer.classList.contains("open")) return drawViewer();
+  document.querySelectorAll(".tile.focus").forEach((t) => t.classList.remove("focus"));
+  const t = $("#grid").children[focus];
+  if (t) { t.classList.add("focus"); t.focus({ preventScroll: true }); t.scrollIntoView({ block: "nearest" }); }
+}
+document.addEventListener("keydown", async (e) => {
+  if (e.target.tagName === "INPUT" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const it = shown[focus];
+  const inViewer = viewer.classList.contains("open");
+  const k = e.key;
+  if (k === "ArrowRight") move(1);
+  else if (k === "ArrowLeft") move(-1);
+  else if (k === "ArrowDown" && !inViewer) move(cols());
+  else if (k === "ArrowUp" && !inViewer) move(-cols());
+  else if (k === " ") { if (it) { await toggle(it); if (inViewer) drawViewer(); } }
+  else if (k === "x") { await skip(it); if (inViewer) drawViewer(); }
+  else if (k === "s" && !inViewer) await skipRest();
+  else if (k === "z") await undoLast();
+  else if (k === "e" && it) toggleBurst(it.leader);
+  else if (k === "Enter" && !inViewer) openViewer();
+  else if (k === "Escape" && inViewer) closeViewer();
+  else if (/^[1-9]$/.test(k) && it && S.categories[+k - 1]) await toggle(it, S.categories[+k - 1].key);
+  else return;
+  e.preventDefault();
+});
+viewer.addEventListener("click", (e) => { if (e.target === viewer || e.target.classList.contains("stage")) closeViewer(); });
+
+$("#tabs").onclick = (e) => { if (e.target.dataset.view) { view = e.target.dataset.view; focus = 0; render(); } };
+$("#skip-rest").onclick = skipRest;
+$("#size").oninput = (e) => document.documentElement.style.setProperty("--tile", e.target.value + "px");
+$("#harvest-toggle").onclick = () => { const h = $("#harvest"); h.hidden = !h.hidden; if (!h.hidden) renderHarvest(); };
+$("#publish").onclick = async () => {
+  const inc = S.items.filter((it) => it.decision === "include").length;
+  if (!confirm(`Encode ${inc} item(s), upload them, and push data/photos.yaml live?`)) return;
+  await api("/api/publish", {});
+  poll(true);
+};
+
+// Refresh while something is happening in the background, without losing
+// your place: the grid is only redrawn when what it would show has changed.
+let lastSig = "";
+async function poll(force) {
+  const next = await api("/api/state");
+  const sig = next.items.map((it) => it.key + (it.screen ? it.screen.status : "")).join() + next.pending;
+  // Keep local decisions (they are already saved) and only redraw on change.
+  S = next;
+  if (force || sig !== lastSig) { lastSig = sig; if (!viewer.classList.contains("open")) render(); }
+  else renderStatus();
+  if (!$("#harvest").hidden) renderHarvest();
+}
+poll(true);
+setInterval(() => { if (S && (S.pending || S.publishing || document.hasFocus())) poll(false); }, 3000);
+</script>
+</body>
+</html>
