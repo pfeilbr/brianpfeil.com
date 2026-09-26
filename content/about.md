@@ -10,20 +10,17 @@ layout = "page"
 
 <img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
-Hello, I'm Brian Pfeil. I'm passionate about technology and building things. This is my personal blog where I write about those and other interests.
+Hello, I'm Brian Pfeil. I've spent 30 years building things with technology, and I write about what I learn so others can learn from that experience.
 
 I currently work at <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a> as a Principal Cloud Architect.
 
 I'm an [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
-Most of what's here started as a playground repo — a small, self-contained project
-for learning something by building with it, from AWS services and infrastructure
-tooling to language runtimes and machine learning. Lately I've been shipping small
-browser apps instead: a chess game with monster pieces, an FPS aim trainer, a
-Mandarin phrase prompter, a maths-powered creature battler. All client-side, all
-open source.
+Most of the writing started as a playground repo — a small, self-contained project for learning something by building with it, from AWS services and infrastructure tooling to language runtimes, machine learning and AI. Lately I've also been shipping small browser apps: a chess game with monster pieces, an FPS aim trainer, a Mandarin phrase prompter, a maths-powered creature battler. All client-side, all open source.
 
-Browse the [projects](/projects/), or see [everything by year](/archive/).
+The site has grown beyond the blog. [Learn](/learn/) gathers free courses and docs for code, cloud and AI, sorted by goal, and [GitHub](/github/) lists every public repo with learning paths through the playgrounds. There are also my [photos and video](/media/), [music](/music/) playlists, the YouTube and Twitch [channels I follow](/subscriptions/), favorite [movies](/movies/) and my [résumé](/resume-full/).
+
+Start with the [posts](/post/) or [projects](/projects/), browse by [tag](/tags/), or see [everything by year](/archive/).
 
 
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">

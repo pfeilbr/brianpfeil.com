@@ -10,15 +10,17 @@ layout = "page"
 
 <img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
-こんにちは、Brian Pfeil です。技術と、ものをつくることが好きです。ここはその話や、それ以外の関心事について書いている個人ブログです。
+こんにちは、Brian Pfeil です。30 年にわたりテクノロジーでものを作ってきました。その経験がほかの人の学びに役立つよう、学んだことを書いています。
 
 現在は <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a> でプリンシパル・クラウドアーキテクトとして働いています。
 
 [AWS Community Builder（Serverless）](https://aws.amazon.com/developer/community/community-builders/) でもあります。
 
-ここにあるものの多くは、実験用のリポジトリから始まりました。何かを学ぶために手を動かしてつくる、小さくて完結したプロジェクトです。AWS のサービスやインフラのツールから、言語のランタイム、機械学習まで。最近はもっぱら小さなブラウザアプリをつくっています。駒がモンスターのチェス、FPS のエイム練習ツール、中国語のフレーズを耳元で読み上げるアプリ、算数で戦うモンスターバトル。どれも完全にクライアントサイドで動き、どれもオープンソースです。
+記事の多くは、実験用のリポジトリから始まりました。何かを学ぶために手を動かしてつくる、小さくて完結したプロジェクトです。AWS のサービスやインフラのツールから、言語のランタイム、機械学習、AI まで。最近は小さなブラウザアプリもつくっています。駒がモンスターのチェス、FPS のエイム練習ツール、中国語のフレーズを耳元で読み上げるアプリ、算数で戦うモンスターバトル。どれも完全にクライアントサイドで動き、どれもオープンソースです。
 
-[プロジェクト](/ja/projects/)を見るか、[年ごとの一覧](/ja/archive/)からどうぞ。
+このサイトはもうブログだけではありません。[学ぶ](/ja/learn/)ではコード、クラウド、AI の無料講座やドキュメントを目的別にまとめ、[GitHub](/ja/github/) ではすべての公開リポジトリを、実験用リポジトリをたどる学習パスとともに載せています。ほかにも[写真と動画](/ja/media/)、[音楽](/ja/music/)のプレイリスト、フォローしている YouTube と Twitch の[チャンネル](/ja/subscriptions/)、好きな[映画](/ja/movies/)、そして[経歴](/ja/resume-full/)があります。
+
+[記事](/ja/post/)や[プロジェクト](/ja/projects/)から始めるか、[タグ](/ja/tags/)で探すか、[年ごとの一覧](/ja/archive/)からどうぞ。
 
 
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">

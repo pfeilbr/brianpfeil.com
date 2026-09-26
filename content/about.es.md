@@ -10,21 +10,17 @@ layout = "page"
 
 <img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
-Hola, soy Brian Pfeil. Me apasiona la tecnología y construir cosas. Este es mi blog personal, donde escribo sobre eso y sobre otros intereses.
+Hola, soy Brian Pfeil. Llevo 30 años construyendo cosas con tecnología y escribo sobre lo que aprendo para que otros aprovechen esa experiencia.
 
 Actualmente trabajo en <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a> como Arquitecto Principal de Cloud.
 
 Soy [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
-Casi todo lo que hay aquí empezó como un repositorio de pruebas: un proyecto
-pequeño y autocontenido para aprender algo construyéndolo, desde servicios de AWS
-y herramientas de infraestructura hasta entornos de ejecución de lenguajes y
-aprendizaje automático. Últimamente publico más bien pequeñas aplicaciones de
-navegador: un ajedrez con piezas monstruo, un entrenador de puntería para FPS, un
-apuntador de frases en mandarín, un combate de criaturas movido por matemáticas.
-Todo del lado del cliente, todo de código abierto.
+Casi todo lo escrito empezó como un repositorio de pruebas: un proyecto pequeño y autocontenido para aprender algo construyéndolo, desde servicios de AWS y herramientas de infraestructura hasta entornos de ejecución de lenguajes, aprendizaje automático e IA. Últimamente también publico pequeñas aplicaciones de navegador: un ajedrez con piezas monstruo, un entrenador de puntería para FPS, un apuntador de frases en mandarín, un combate de criaturas movido por matemáticas. Todo del lado del cliente, todo de código abierto.
 
-Echa un vistazo a los [proyectos](/es/projects/), o mira [todo por año](/es/archive/).
+El sitio ya es más que un blog. [Aprender](/es/learn/) reúne cursos y documentación gratuitos de programación, nube e IA, ordenados por objetivo, y [GitHub](/es/github/) lista todos mis repositorios públicos con rutas de aprendizaje a través de las pruebas. También están mis [fotos y vídeos](/es/media/), mis listas de [música](/es/music/), los [canales que sigo](/es/subscriptions/) en YouTube y Twitch, mis [películas](/es/movies/) favoritas y mi [currículum](/es/resume-full/).
+
+Empieza por las [publicaciones](/es/post/) o los [proyectos](/es/projects/), explora por [etiqueta](/es/tags/) o mira [todo por año](/es/archive/).
 
 
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">

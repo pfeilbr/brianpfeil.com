@@ -10,19 +10,17 @@ layout = "page"
 
 <img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
-안녕하세요, Brian Pfeil입니다. 저는 기술을 좋아하고 무언가를 직접 만드는 일을 좋아합니다. 이곳은 그런 관심사와 그 밖의 이야기를 적어 두는 개인 블로그입니다.
+안녕하세요, Brian Pfeil입니다. 30년 동안 기술로 무언가를 만들어 왔고, 그 경험이 다른 사람들의 배움에 도움이 되도록 배운 것을 글로 씁니다.
 
 현재 <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a>에서 Principal Cloud Architect로 일하고 있습니다.
 
 저는 [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/)입니다
 
-여기 있는 대부분은 연습용 저장소에서 시작했습니다. 직접 만들어 보며 무언가를 익히기 위한
-작고 독립적인 프로젝트들로, AWS 서비스와 인프라 도구부터 언어 런타임과 머신러닝까지
-다양합니다. 요즘은 대신 작은 브라우저 앱을 만들어 내놓고 있습니다. 말이 몬스터인 체스 게임,
-FPS 에임 트레이너, 중국어 문장 프롬프터, 수학 문제로 굴러가는 몬스터 배틀 게임 같은
-것들입니다. 전부 클라이언트에서만 돌아가고, 전부 오픈 소스입니다.
+글의 대부분은 연습용 저장소에서 시작했습니다. 직접 만들어 보며 무언가를 익히기 위한 작고 독립적인 프로젝트들로, AWS 서비스와 인프라 도구부터 언어 런타임, 머신러닝, AI까지 다양합니다. 요즘은 작은 브라우저 앱도 만들어 내놓고 있습니다. 말이 몬스터인 체스 게임, FPS 에임 트레이너, 중국어 문장 프롬프터, 수학 문제로 굴러가는 몬스터 배틀 게임 같은 것들입니다. 전부 클라이언트에서만 돌아가고, 전부 오픈 소스입니다.
 
-[프로젝트](/ko/projects/)를 둘러보거나, [연도별 전체 글](/ko/archive/)을 확인해 보세요.
+이제 이 사이트는 블로그 그 이상입니다. [배우기](/ko/learn/)에는 코드, 클라우드, AI 무료 강좌와 문서를 목표별로 모아 두었고, [GitHub](/ko/github/)에는 모든 공개 저장소를 연습용 저장소를 잇는 학습 경로와 함께 정리했습니다. 그 밖에 [사진과 영상](/ko/media/), [음악](/ko/music/) 플레이리스트, 구독 중인 YouTube·Twitch [채널](/ko/subscriptions/), 좋아하는 [영화](/ko/movies/), 그리고 [이력서](/ko/resume-full/)도 있습니다.
+
+[글](/ko/post/)이나 [프로젝트](/ko/projects/)부터 시작하거나, [태그](/ko/tags/)로 둘러보거나, [연도별 전체 글](/ko/archive/)을 확인해 보세요.
 
 
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">

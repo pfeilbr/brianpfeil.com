@@ -10,20 +10,17 @@ layout = "page"
 
 <img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
-Hallo, ich bin Brian Pfeil. Ich begeistere mich für Technik und dafür, Dinge zu bauen. Das hier ist mein persönlicher Blog, in dem ich darüber und über andere Interessen schreibe.
+Hallo, ich bin Brian Pfeil. Seit 30 Jahren baue ich Dinge mit Technik und schreibe über das, was ich dabei lerne, damit andere von dieser Erfahrung profitieren.
 
 Ich arbeite derzeit bei <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a> als Principal Cloud Architect.
 
 Ich bin [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
-Das meiste hier hat als Spielwiesen-Repo angefangen — ein kleines, in sich geschlossenes Projekt,
-um etwas zu lernen, indem man damit baut: von AWS-Diensten und Infrastruktur-Werkzeugen
-bis zu Sprach-Runtimes und Machine Learning. In letzter Zeit baue ich stattdessen kleine
-Browser-Apps: ein Schachspiel mit Monsterfiguren, einen FPS-Aim-Trainer, einen
-Mandarin-Sprachtrainer, einen mathegetriebenen Kreaturen-Kampf. Alles im Browser,
-alles Open Source.
+Das meiste Geschriebene hat als Spielwiesen-Repo angefangen — ein kleines, in sich geschlossenes Projekt, um etwas zu lernen, indem man damit baut: von AWS-Diensten und Infrastruktur-Werkzeugen bis zu Sprach-Runtimes, Machine Learning und KI. In letzter Zeit baue ich außerdem kleine Browser-Apps: ein Schachspiel mit Monsterfiguren, einen FPS-Aim-Trainer, einen Mandarin-Sprachtrainer, einen mathegetriebenen Kreaturen-Kampf. Alles im Browser, alles Open Source.
 
-Schau dir die [Projekte](/de/projects/) an oder [alles nach Jahren](/de/archive/).
+Die Seite ist längst mehr als ein Blog. [Lernen](/de/learn/) sammelt kostenlose Kurse und Dokumentation zu Code, Cloud und KI, sortiert nach Ziel, und [GitHub](/de/github/) listet alle meine öffentlichen Repos mit Lernpfaden durch die Spielwiesen. Außerdem gibt es meine [Fotos und Videos](/de/media/), [Musik](/de/music/)-Playlists, die YouTube- und Twitch-[Kanäle, denen ich folge](/de/subscriptions/), Lieblings[filme](/de/movies/) und meinen [Lebenslauf](/de/resume-full/).
+
+Fang mit den [Beiträgen](/de/post/) oder [Projekten](/de/projects/) an, stöbere nach [Schlagwort](/de/tags/) oder sieh dir [alles nach Jahren](/de/archive/) an.
 
 
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">

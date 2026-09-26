@@ -10,21 +10,17 @@ layout = "page"
 
 <img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
-Ciao, sono Brian Pfeil. Mi appassionano la tecnologia e il costruire cose. Questo è il mio blog personale, dove scrivo di questo e di altri interessi.
+Ciao, sono Brian Pfeil. Da 30 anni costruisco cose con la tecnologia e scrivo di ciò che imparo perché altri possano trarre beneficio da questa esperienza.
 
 Attualmente lavoro in <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a> come Principal Cloud Architect.
 
 Sono un [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
-Quasi tutto quello che trovi qui è nato come repository di prova: un progetto
-piccolo e autonomo per imparare qualcosa costruendoci sopra, dai servizi AWS e
-dagli strumenti per l'infrastruttura fino ai runtime dei linguaggi e al machine
-learning. Ultimamente invece pubblico piccole app per il browser: una partita a
-scacchi con pezzi mostruosi, un allenatore di mira per FPS, un suggeritore di frasi
-in mandarino, un gioco di battaglie tra creature a colpi di matematica. Tutto lato
-client, tutto open source.
+Quasi tutto ciò che ho scritto è nato come repository di prova: un progetto piccolo e autonomo per imparare qualcosa costruendoci sopra, dai servizi AWS e dagli strumenti per l'infrastruttura fino ai runtime dei linguaggi, al machine learning e all'IA. Ultimamente pubblico anche piccole app per il browser: una partita a scacchi con pezzi mostruosi, un allenatore di mira per FPS, un suggeritore di frasi in mandarino, un gioco di battaglie tra creature a colpi di matematica. Tutto lato client, tutto open source.
 
-Dai un'occhiata ai [progetti](/it/projects/), oppure guarda [tutto per anno](/it/archive/).
+Il sito ormai è più di un blog. [Impara](/it/learn/) raccoglie corsi e documentazione gratuiti su codice, cloud e IA, ordinati per obiettivo, e [GitHub](/it/github/) elenca tutti i miei repository pubblici con percorsi di apprendimento tra i progetti di prova. Ci sono anche le mie [foto e video](/it/media/), le playlist di [musica](/it/music/), i [canali che seguo](/it/subscriptions/) su YouTube e Twitch, i miei [film](/it/movies/) preferiti e il mio [curriculum](/it/resume-full/).
+
+Inizia dai [post](/it/post/) o dai [progetti](/it/projects/), sfoglia per [tag](/it/tags/) oppure guarda [tutto per anno](/it/archive/).
 
 
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">

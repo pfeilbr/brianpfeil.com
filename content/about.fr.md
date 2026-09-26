@@ -10,23 +10,17 @@ layout = "page"
 
 <img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
-
-Bonjour, je suis Brian Pfeil. La technologie et la fabrication d'objets me passionnent. Ce blog personnel est l'endroit où j'écris à ce sujet, et sur le reste de ce qui m'intéresse.
+Bonjour, je suis Brian Pfeil. Depuis 30 ans, je construis des choses avec la technologie et j'écris sur ce que j'apprends pour que d'autres profitent de cette expérience.
 
 Je travaille actuellement chez <a href="https://merck.com" target="_blank" rel="noopener noreferrer">Merck</a> comme architecte cloud principal.
 
 Je suis [AWS Community Builder (Serverless)](https://aws.amazon.com/developer/community/community-builders/)
 
-L'essentiel de ce qui se trouve ici a commencé comme un dépôt bac à sable — un petit
-projet autonome pour apprendre quelque chose en le construisant, des services AWS et
-des outils d'infrastructure jusqu'aux environnements d'exécution de langages et à
-l'apprentissage automatique. Ces derniers temps, je publie plutôt de petites
-applications web : un jeu d'échecs dont les pièces sont des monstres, un entraîneur de
-visée FPS, un souffleur de phrases en mandarin, un combat de créatures propulsé par les
-maths. Tout côté client, tout en open source.
+L'essentiel des articles a commencé comme un dépôt bac à sable — un petit projet autonome pour apprendre quelque chose en le construisant, des services AWS et des outils d'infrastructure jusqu'aux environnements d'exécution de langages, à l'apprentissage automatique et à l'IA. Ces derniers temps, je publie aussi de petites applications web : un jeu d'échecs dont les pièces sont des monstres, un entraîneur de visée FPS, un souffleur de phrases en mandarin, un combat de créatures propulsé par les maths. Tout côté client, tout en open source.
 
-Parcourez les [projets](/fr/projects/), ou voyez [tout, année par année](/fr/archive/).
+Le site dépasse désormais le blog. [Apprendre](/fr/learn/) rassemble des cours et documentations gratuits sur le code, le cloud et l'IA, classés par objectif, et [GitHub](/fr/github/) liste tous mes dépôts publics avec des parcours d'apprentissage à travers les bacs à sable. On y trouve aussi mes [photos et vidéos](/fr/media/), mes playlists de [musique](/fr/music/), les [chaînes que je suis](/fr/subscriptions/) sur YouTube et Twitch, mes [films](/fr/movies/) préférés et mon [CV](/fr/resume-full/).
 
+Commencez par les [articles](/fr/post/) ou les [projets](/fr/projects/), parcourez par [étiquette](/fr/tags/), ou voyez [tout, année par année](/fr/archive/).
 
 
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">

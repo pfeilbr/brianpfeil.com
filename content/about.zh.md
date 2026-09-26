@@ -10,15 +10,17 @@ layout = "page"
 
 <img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
-你好，我是 Brian Pfeil。我热爱技术，也热爱动手把东西做出来。这是我的个人博客，记录这些兴趣以及其他一些想法。
+你好，我是 Brian Pfeil。我在技术领域动手做东西已有 30 年，并把学到的写下来，希望这些经验能帮助别人学习。
 
 我目前在 <a href="https://merck.com" target="_blank" rel="noopener noreferrer">默沙东（Merck）</a> 担任首席云架构师。
 
 我是 [AWS 社区建设者（Serverless 方向）](https://aws.amazon.com/developer/community/community-builders/)
 
-这里的大部分内容都始于一个「练手仓库」—— 一个小而完整的项目，靠亲手搭建来学会某样东西，从 AWS 服务、基础设施工具，到各种语言运行时和机器学习。最近我转而在做一些小型浏览器应用：一款棋子是怪兽的国际象棋、一个 FPS 瞄准训练器、一个中文口语提示器、一个用数学题驱动的怪兽对战游戏。全部纯客户端运行，全部开源。
+这里的大部分文章都始于一个「练手仓库」—— 一个小而完整的项目，靠亲手搭建来学会某样东西，从 AWS 服务、基础设施工具，到各种语言运行时、机器学习和 AI。最近我也在做一些小型浏览器应用：一款棋子是怪兽的国际象棋、一个 FPS 瞄准训练器、一个中文口语提示器、一个用数学题驱动的怪兽对战游戏。全部纯客户端运行，全部开源。
 
-浏览[项目](/zh/projects/)，或者[按年份查看全部文章](/zh/archive/)。
+这个网站早已不只是博客。[学习](/zh/learn/)按目标整理了编程、云和 AI 的免费课程与文档；[GitHub](/zh/github/) 列出我所有的公开仓库，并附有贯穿练手项目的学习路径。此外还有我的[照片和视频](/zh/media/)、[音乐](/zh/music/)歌单、我关注的 YouTube 和 Twitch [频道](/zh/subscriptions/)、喜爱的[电影](/zh/movies/)，以及我的[简历](/zh/resume-full/)。
+
+可以从[文章](/zh/post/)或[项目](/zh/projects/)开始，按[标签](/zh/tags/)浏览，或者[按年份查看全部内容](/zh/archive/)。
 
 
 <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 24px;">
