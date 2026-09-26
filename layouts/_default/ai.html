@@ -1,0 +1,439 @@
+{{ define "main" }}
+{{- /* /ai/ -- drawn in the browser from /data/ai.json, which
+   tools/ai-radar/radar.py rewrites every morning (.github/workflows/ai-radar.yml).
+   The template supplies the shell and the translated strings; the only thing
+   it reads from the data is the list of source ids, to look up each person's
+   one-line description (ai_role_<id>), which is prose and so lives in i18n.
+
+   The script checks schema_version and refuses a file newer than it knows,
+   rather than drawing half a page from fields that changed meaning. */ -}}
+{{ $roles := dict }}
+{{ with hugo.Data.ai }}{{ range where .sources "section" "people" }}
+  {{ $k := printf "ai_role_%s" .id }}
+  {{ $v := i18n $k }}
+  {{ if $v }}{{ $roles = merge $roles (dict .id $v) }}{{ end }}
+{{ end }}{{ end }}
+{{ $T := dict
+  "updated" (i18n "ai_updated" (dict "when" "{when}" "n" "{n}"))
+  "viaFeedly" (i18n "ai_via_feedly")
+  "viaX" (i18n "ai_via_x" "{handle}")
+  "onX" (i18n "ai_on_x" "{handle}")
+  "showAll" (i18n "ai_show_all" "{n}")
+  "showFewer" (i18n "ai_show_fewer")
+  "openWeights" (i18n "ai_open_weights")
+  "context" (i18n "ai_context" "{n}")
+  "price" (i18n "ai_price" (dict "in" "{in}" "out" "{out}"))
+  "free" (i18n "ai_free")
+  "points" (i18n "ai_points" "{n}")
+  "comments" (i18n "ai_comments" "{n}")
+  "also" (i18n "ai_also" "{list}")
+  "earlier" (i18n "ai_earlier")
+  "likes" (i18n "ai_likes" "{n}")
+  "downloads" (i18n "ai_downloads" "{n}")
+  "all" (i18n "ai_all")
+  "empty" (i18n "ai_empty")
+  "failed" (i18n "ai_source_failed" "{when}")
+  "never" (i18n "ai_source_never")
+  "error" (i18n "data_load_error")
+  "newer" (i18n "ai_schema_newer")
+  "roles" $roles
+}}
+<article class="ai-page">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600">{{ i18n "ai_intro" }}</p>
+    <p class="ai-stamp" id="ai-stamp"></p>
+  </header>
+
+  <div class="prose">{{ .Content }}</div>
+  <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/ai.json") | safeHTML }}</p></noscript>
+
+  {{/* ---------- People: the writers B actually reads, first ---------- */}}
+  <section class="ai-section" aria-labelledby="ai-people-h">
+    <h2 id="ai-people-h" class="music-h2">{{ i18n "ai_people" }}</h2>
+    <p class="music-sub">{{ i18n "ai_people_note" }}</p>
+    <div class="ai-people" id="ai-people" aria-busy="true"></div>
+    <button type="button" class="ai-more" id="ai-people-more" hidden></button>
+  </section>
+
+  {{/* ---------- Everything else, one tab per kind ---------- */}}
+  {{ $tabs := slice
+    (dict "k" "latest" "ic" "i-bolt")
+    (dict "k" "labs" "ic" "i-beaker")
+    (dict "k" "models" "ic" "i-chip")
+    (dict "k" "tools" "ic" "i-terminal")
+    (dict "k" "community" "ic" "i-rss")
+    (dict "k" "learning" "ic" "i-doc")
+    (dict "k" "mine" "ic" "i-pen")
+  }}
+  <div class="ptabs ai-tabs" role="tablist" aria-label="{{ i18n "ai_sections" }}">
+    {{ range $n, $t := $tabs }}
+    <button type="button" class="ptab{{ if eq $n 0 }} is-on{{ end }}" role="tab" id="tab-{{ $t.k }}"
+            aria-controls="panel-{{ $t.k }}" aria-selected="{{ if eq $n 0 }}true{{ else }}false{{ end }}"
+            {{- if ne $n 0 }} tabindex="-1"{{ end }} data-panel="{{ $t.k }}">
+      {{ partial "icons/chip.html" (dict "id" $t.ic "size" "sm") }}
+      <span class="ptab-name">{{ i18n (printf "ai_tab_%s" $t.k) }}</span>
+      <span class="ptab-count" data-count="{{ $t.k }}"></span>
+    </button>
+    {{ end }}
+  </div>
+
+  <div class="ptab-panel" id="panel-latest" role="tabpanel" aria-labelledby="tab-latest">
+    <section class="music-section">
+      <p class="music-sub music-sub-lead">{{ i18n "ai_latest_note" }}</p>
+      <ol class="ai-list" data-list="latest" aria-busy="true"></ol>
+    </section>
+  </div>
+
+  <div class="ptab-panel" id="panel-labs" role="tabpanel" aria-labelledby="tab-labs">
+    <section class="music-section">
+      <p class="music-sub music-sub-lead">{{ i18n "ai_labs_note" }}</p>
+      <div class="chips ai-filter" data-filter="labs"></div>
+      <ol class="ai-list" data-list="labs" aria-busy="true"></ol>
+    </section>
+  </div>
+
+  <div class="ptab-panel" id="panel-models" role="tabpanel" aria-labelledby="tab-models">
+    <section class="music-section">
+      <h3 class="ai-h3">{{ i18n "ai_models_new" }}</h3>
+      <p class="music-sub">{{ i18n "ai_models_new_note" }}</p>
+      <div class="ai-models" data-list="models" aria-busy="true"></div>
+    </section>
+    <section class="music-section">
+      <h3 class="ai-h3">{{ i18n "ai_models_trending" }}</h3>
+      <p class="music-sub">{{ i18n "ai_models_trending_note" }}</p>
+      <ol class="ai-trending" data-list="trending"></ol>
+    </section>
+  </div>
+
+  <div class="ptab-panel" id="panel-tools" role="tabpanel" aria-labelledby="tab-tools">
+    <section class="music-section">
+      <p class="music-sub music-sub-lead">{{ i18n "ai_tools_note" }}</p>
+      <div class="ai-tools" data-list="tools" aria-busy="true"></div>
+    </section>
+  </div>
+
+  <div class="ptab-panel" id="panel-community" role="tabpanel" aria-labelledby="tab-community">
+    <section class="music-section">
+      <p class="music-sub music-sub-lead">{{ i18n "ai_community_note" }}</p>
+      <div class="chips ai-filter" data-filter="community"></div>
+      <ol class="ai-list" data-list="community" aria-busy="true"></ol>
+    </section>
+  </div>
+
+  <div class="ptab-panel" id="panel-learning" role="tabpanel" aria-labelledby="tab-learning">
+    <section class="music-section">
+      <p class="music-sub music-sub-lead">{{ i18n "ai_learning_note" }}</p>
+      <ol class="ai-list" data-list="learning" aria-busy="true"></ol>
+    </section>
+  </div>
+
+  <div class="ptab-panel" id="panel-mine" role="tabpanel" aria-labelledby="tab-mine">
+    <section class="music-section">
+      <p class="music-sub music-sub-lead">{{ i18n "ai_mine_note" }}</p>
+      <ol class="ai-list" data-list="mine" aria-busy="true"></ol>
+    </section>
+  </div>
+
+  <details class="ai-sources">
+    <summary>{{ i18n "ai_sources_title" }}</summary>
+    <p class="music-sub">{{ i18n "ai_sources_note" }}</p>
+    <ul class="ai-source-list" id="ai-sources"></ul>
+  </details>
+
+  <p class="music-foot">{{ i18n "ai_footnote" }}</p>
+</article>
+
+{{ partial "data-render.html" . }}
+<script>
+/* /ai/ from /data/ai.json. Every string from the data is set as text. */
+(function () {
+  var SCHEMA = 1;
+  var PEOPLE_SHOWN = 9;
+  var LATEST_HOURS = 48;
+  var D = window.DataPage, el = D.el.bind(D);
+  var T = {{ $T | jsonify | safeJS }};
+  var lang = document.documentElement.lang || "en";
+  var rtf = window.Intl && Intl.RelativeTimeFormat ? new Intl.RelativeTimeFormat(lang, { numeric: "auto" }) : null;
+  var nf = new Intl.NumberFormat(lang, { notation: "compact", maximumFractionDigits: 1 });
+  var df = new Intl.DateTimeFormat(lang, { month: "short", day: "numeric" });
+  var dfY = new Intl.DateTimeFormat(lang, { year: "numeric", month: "short", day: "numeric" });
+  var now = Date.now();
+
+  function ago(iso) {
+    var t = Date.parse(iso);
+    if (!t) return "";
+    var s = (t - now) / 1000, a = Math.abs(s);
+    if (a > 300 * 86400) return dfY.format(new Date(t));
+    if (!rtf || a > 30 * 86400) return df.format(new Date(t));
+    if (a < 3600) return rtf.format(Math.round(s / 60), "minute");
+    if (a < 86400) return rtf.format(Math.round(s / 3600), "hour");
+    return rtf.format(Math.round(s / 86400), "day");
+  }
+  function time(iso) {
+    var t = el("time", "ai-when", ago(iso));
+    t.dateTime = iso;
+    t.title = new Date(iso).toLocaleString(lang);
+    return t;
+  }
+  function money(n) {
+    return n === 0 ? T.free : "$" + (n < 1 ? n.toFixed(2).replace(/0$/, "") : n.toFixed(n % 1 ? 2 : 0));
+  }
+
+  function row(i, src, opts) {
+    opts = opts || {};
+    var li = el("li", "ai-row");
+    var top = el("div", "ai-row-top");
+    if (opts.showSource !== false && src) top.appendChild(el("span", "ai-src", src.name));
+    top.appendChild(time(i.published));
+    li.appendChild(top);
+    li.appendChild(D.link(i.url, "ai-title", i.title));
+    if (i.summary && opts.summary !== false) li.appendChild(el("p", "ai-sum", i.summary));
+    var meta = [];
+    if (i.points) meta.push(D.fill(T.points, { n: nf.format(i.points) }));
+    if (i.discuss) {
+      var d = D.link(i.discuss, "ai-discuss", D.fill(T.comments, { n: nf.format(i.comments || 0) }));
+      meta.push(d);
+    }
+    if (i.also && i.also.length) {
+      meta.push(D.fill(T.also, { list: i.also.map(function (s) { return (SRC[s] || { name: s }).name; }).join(", ") }));
+    }
+    if (meta.length) {
+      var m = el("p", "ai-meta");
+      meta.forEach(function (x, n) {
+        if (n) m.appendChild(document.createTextNode(" · "));
+        m.appendChild(typeof x === "string" ? document.createTextNode(x) : x);
+      });
+      li.appendChild(m);
+    }
+    return li;
+  }
+
+  function fillList(name, items, opts) {
+    var ol = document.querySelector('[data-list="' + name + '"]');
+    ol.setAttribute("aria-busy", "false");
+    ol.textContent = "";
+    if (!items.length) { ol.appendChild(el("li", "ai-empty", T.empty)); return; }
+    items.forEach(function (i) { ol.appendChild(row(i, SRC[i.source], opts)); });
+  }
+
+  function count(name, n) {
+    var c = document.querySelector('[data-count="' + name + '"]');
+    if (c) c.textContent = nf.format(n);
+  }
+
+  /* Source chips above a list: "All" plus one per source that has items. */
+  function filter(name, items, render) {
+    var box = document.querySelector('[data-filter="' + name + '"]');
+    var ids = [];
+    items.forEach(function (i) { if (ids.indexOf(i.source) < 0) ids.push(i.source); });
+    if (ids.length < 2) { render(items); return; }
+    function chip(label, id, n) {
+      var b = el("button", "chip" + (id ? "" : " is-on"));
+      b.type = "button";
+      b.appendChild(document.createTextNode(label));
+      b.appendChild(el("span", "chip-n", String(n)));
+      b.setAttribute("aria-pressed", id ? "false" : "true");
+      b.addEventListener("click", function () {
+        [].forEach.call(box.children, function (c) { c.classList.remove("is-on"); c.setAttribute("aria-pressed", "false"); });
+        b.classList.add("is-on");
+        b.setAttribute("aria-pressed", "true");
+        render(id ? items.filter(function (i) { return i.source === id; }) : items);
+      });
+      return b;
+    }
+    box.appendChild(chip(T.all, null, items.length));
+    ids.forEach(function (id) {
+      box.appendChild(chip(SRC[id].name, id, items.filter(function (i) { return i.source === id; }).length));
+    });
+    render(items);
+  }
+
+  var SRC = {};
+
+  function people(doc, bySource) {
+    var box = document.getElementById("ai-people");
+    box.setAttribute("aria-busy", "false");
+    var ps = doc.sources.filter(function (s) { return s.section === "people"; });
+    function latest(s) { var l = bySource[s.id]; return l && l.length ? l[0].published : ""; }
+    ps.sort(function (a, b) {
+      if (!!a.pin !== !!b.pin) return a.pin ? -1 : 1;
+      return latest(b) < latest(a) ? -1 : latest(b) > latest(a) ? 1 : 0;
+    });
+    ps.forEach(function (s, n) {
+      var card = el("section", "ai-person" + (s.pin ? " is-pin" : ""));
+      if (n >= PEOPLE_SHOWN) card.hidden = true;
+      var head = el("div", "ai-person-head");
+      var h = el("h3", "ai-person-name");
+      h.appendChild(D.link(s.home, "", s.name));
+      head.appendChild(h);
+      var badges = el("div", "ai-badges");
+      var via = s.via || [];
+      if (via.indexOf("feedly") >= 0) badges.appendChild(el("span", "ai-badge ai-badge-feedly", T.viaFeedly));
+      if (s.x) {
+        var followed = via.indexOf("x") >= 0;
+        badges.appendChild(D.link("https://x.com/" + encodeURIComponent(s.x),
+          "ai-badge " + (followed ? "ai-badge-x" : "ai-badge-link"),
+          D.fill(followed ? T.viaX : T.onX, { handle: "@" + s.x })));
+      }
+      head.appendChild(badges);
+      card.appendChild(head);
+      if (T.roles[s.id]) card.appendChild(el("p", "ai-role", T.roles[s.id]));
+      var ul = el("ul", "ai-person-posts");
+      (bySource[s.id] || []).slice(0, s.pin ? 6 : 3).forEach(function (i) {
+        var li = el("li");
+        li.appendChild(D.link(i.url, "", i.title));
+        li.appendChild(time(i.published));
+        ul.appendChild(li);
+      });
+      if (!ul.children.length) ul.appendChild(el("li", "ai-empty", T.empty));
+      card.appendChild(ul);
+      box.appendChild(card);
+    });
+    var more = document.getElementById("ai-people-more");
+    if (ps.length > PEOPLE_SHOWN) {
+      more.hidden = false;
+      more.textContent = D.fill(T.showAll, { n: ps.length });
+      more.addEventListener("click", function () {
+        var open = more.getAttribute("aria-expanded") === "true";
+        [].forEach.call(box.children, function (c, n) { if (n >= PEOPLE_SHOWN) c.hidden = open; });
+        more.setAttribute("aria-expanded", open ? "false" : "true");
+        more.textContent = open ? D.fill(T.showAll, { n: ps.length }) : T.showFewer;
+      });
+    }
+  }
+
+  function models(doc) {
+    var box = document.querySelector('[data-list="models"]');
+    box.setAttribute("aria-busy", "false");
+    var list = (doc.models && doc.models.new) || [];
+    if (!list.length) box.appendChild(el("p", "ai-empty", T.empty));
+    list.forEach(function (m) {
+      var c = el("div", "ai-model");
+      var top = el("div", "ai-row-top");
+      top.appendChild(el("span", "ai-src", m.provider));
+      top.appendChild(time(m.created));
+      if (m.open_weights) top.appendChild(D.link("https://huggingface.co/" + m.open_weights, "ai-badge ai-badge-open", T.openWeights));
+      c.appendChild(top);
+      c.appendChild(D.link(m.url, "ai-title", m.name));
+      if (m.summary) c.appendChild(el("p", "ai-sum", m.summary));
+      var facts = [];
+      if (m.context) facts.push(D.fill(T.context, { n: nf.format(m.context) }));
+      facts.push(D.fill(T.price, { "in": money(m.price_in), out: money(m.price_out) }));
+      c.appendChild(el("p", "ai-meta", facts.join(" · ")));
+      box.appendChild(c);
+    });
+    var ol = document.querySelector('[data-list="trending"]');
+    ((doc.models && doc.models.trending) || []).forEach(function (m) {
+      var li = el("li", "ai-trend");
+      li.appendChild(D.link(m.url, "ai-title", m.id));
+      var bits = [];
+      if (m.task) bits.push(m.task);
+      bits.push(D.fill(T.likes, { n: nf.format(m.likes) }));
+      if (m.downloads) bits.push(D.fill(T.downloads, { n: nf.format(m.downloads) }));
+      li.appendChild(el("span", "ai-meta", bits.join(" · ")));
+      ol.appendChild(li);
+    });
+    count("models", list.length);
+  }
+
+  /* One card per tool: the newest release up top, earlier ones as links. */
+  function tools(doc, bySource) {
+    var box = document.querySelector('[data-list="tools"]');
+    box.setAttribute("aria-busy", "false");
+    var ts = doc.sources.filter(function (s) { return s.section === "tools" && bySource[s.id]; });
+    ts.sort(function (a, b) { return bySource[b.id][0].published < bySource[a.id][0].published ? -1 : 1; });
+    ts.forEach(function (s) {
+      var items = bySource[s.id], i = items[0];
+      var c = el("section", "ai-tool");
+      var head = el("div", "ai-row-top");
+      head.appendChild(D.link(s.home, "ai-tool-name", s.name));
+      head.appendChild(time(i.published));
+      c.appendChild(head);
+      c.appendChild(D.link(i.url, "ai-title", i.title));
+      if (i.summary) c.appendChild(el("p", "ai-sum", i.summary));
+      if (items.length > 1) {
+        var p = el("p", "ai-meta");
+        p.appendChild(document.createTextNode(T.earlier + " "));
+        items.slice(1, 5).forEach(function (e, n) {
+          if (n) p.appendChild(document.createTextNode(", "));
+          p.appendChild(D.link(e.url, "", e.title));
+        });
+        c.appendChild(p);
+      }
+      box.appendChild(c);
+    });
+    count("tools", ts.length);
+  }
+
+  function sources(doc) {
+    var ul = document.getElementById("ai-sources");
+    doc.sources.forEach(function (s) {
+      var li = el("li", "ai-source is-" + s.status);
+      li.appendChild(D.link(s.home, "", s.name));
+      if (s.status === "error") {
+        li.appendChild(el("span", "ai-source-state", s.checked ? D.fill(T.failed, { when: ago(s.checked) }) : T.never));
+      }
+      ul.appendChild(li);
+    });
+  }
+
+  D.load("ai").then(function (doc) {
+    if (!doc || doc.schema_version > SCHEMA) throw new Error("schema");
+    doc.sources.forEach(function (s) { SRC[s.id] = s; });
+    var bySource = {}, bySection = {};
+    doc.items.slice().sort(function (a, b) { return a.published < b.published ? 1 : -1; }).forEach(function (i) {
+      (bySource[i.source] = bySource[i.source] || []).push(i);
+      (bySection[i.section] = bySection[i.section] || []).push(i);
+    });
+
+    var ok = doc.sources.filter(function (s) { return s.status === "ok"; }).length;
+    document.getElementById("ai-stamp").textContent = D.fill(T.updated, { when: ago(doc.generated), n: ok });
+
+    people(doc, bySource);
+
+    /* Latest: the last two days from every section but people (they have
+       their own cards) and tools (their own tab). A story several sources
+       picked up floats to the top. */
+    var cutoff = new Date(now - LATEST_HOURS * 3600e3).toISOString();
+    var latest = doc.items.filter(function (i) {
+      return i.published >= cutoff && i.section !== "tools" && i.section !== "people";
+    });
+    latest.sort(function (a, b) {
+      var sa = (a.also || []).length, sb = (b.also || []).length;
+      return sb - sa || (a.published < b.published ? 1 : -1);
+    });
+    fillList("latest", latest);
+    count("latest", latest.length);
+
+    var labs = bySection.labs || [];
+    filter("labs", labs, function (l) { fillList("labs", l); });
+    count("labs", labs.length);
+
+    var comm = (bySection.community || []).slice().sort(function (a, b) {
+      return (b.points || 0) - (a.points || 0) || (a.published < b.published ? 1 : -1);
+    });
+    filter("community", comm, function (l) { fillList("community", l); });
+    count("community", comm.length);
+
+    var learn = bySection.learning || [];
+    fillList("learning", learn);
+    count("learning", learn.length);
+
+    models(doc);
+    tools(doc, bySource);
+
+    fillList("mine", (doc.mine || []).map(function (p) {
+      return { title: p.title, url: p.url, published: p.published, summary: p.tags.join(" · ") };
+    }), { showSource: false });
+    [].forEach.call(document.querySelectorAll('[data-list="mine"] a'), function (a) { a.removeAttribute("target"); a.removeAttribute("rel"); });
+    count("mine", (doc.mine || []).length);
+
+    sources(doc);
+  }).catch(function (e) {
+    D.fail(document.querySelector(".ai-page"), e && e.message === "schema" ? T.newer : T.error);
+  });
+})();
+</script>
+{{ partial "tabs-script.html" . }}
+{{ end }}

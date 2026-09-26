@@ -1,0 +1,7 @@
+{"data":[
+ {"id":"acme/closed-1","name":"Acme: Closed One","created":1790100000,"context_length":400000,"pricing":{"prompt":"0.000003","completion":"0.000015"},"architecture":{"input_modalities":["text","image"]},"hugging_face_id":null,"description":"A [frontier](https://x) model."},
+ {"id":"acme/closed-1:free","name":"Acme: Closed One (free)","created":1790100000,"pricing":{"prompt":"0","completion":"0"}},
+ {"id":"open/weights-7b","name":"Open Weights 7B","created":1790000000,"context_length":32768,"pricing":{"prompt":"0.0000001","completion":"0.0000002"},"hugging_face_id":"open/weights-7b","description":""},
+ {"id":"router/auto","name":"Router","created":1790200000,"pricing":{"prompt":"-1","completion":"-1"}},
+ {"id":"old/model","name":"Old","created":1700000000,"pricing":{"prompt":"0.000001","completion":"0.000001"}}
+]}

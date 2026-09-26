@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Simon Willison's Weblog</title>
+  <entry>
+    <title>Trying out a new &lt;em&gt;model&lt;/em&gt;</title>
+    <link href="https://simonwillison.net/2026/Sep/25/new-model/" rel="alternate"/>
+    <published>2026-09-25T18:04:00+00:00</published>
+    <summary type="html">&lt;p&gt;I ran it through my &lt;strong&gt;pelican&lt;/strong&gt; benchmark.&lt;/p&gt;</summary>
+    <author><name>Simon Willison</name></author>
+  </entry>
+  <entry>
+    <title>Older post</title>
+    <link href="https://simonwillison.net/2026/Sep/01/older/"/>
+    <updated>2026-09-01T09:00:00Z</updated>
+    <content type="html">Body</content>
+  </entry>
+  <entry>
+    <title>No link, dropped</title>
+    <updated>2026-09-01T09:00:00Z</updated>
+  </entry>
+</feed>

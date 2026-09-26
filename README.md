@@ -109,6 +109,9 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
 | **GitHub** | |
 | `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/` |
+| **AI radar** | |
+| `make ai-refresh` | Fetch every `/ai/` source and rewrite `data/ai.json` (the daily Action does this) |
+| `make ai-i18n` | Write the `/ai/` UI strings into all nine i18n files |
 | **Media** | |
 | `make media-deps` | Create the tool's venv |
 | `make media-stage` | Read the archive (or `EXPORT=…`), update the approve list, build the review sheet |
@@ -129,6 +132,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-learn-links` | Tests for the /learn/ link checker, and its offline check of data/learn.json |
 | `make test-i18n` | Tests for, and a run of, the i18n consistency check |
 | `make test-docs` | Every Makefile target has help text and is in the README |
+| `make test-ai` | Unit tests for the AI radar, and its i18n block is current |
 | **Infrastructure** | |
 | `make tf-init` / `tf-plan` / `tf-validate` | Terraform, both stacks, S3 backend |
 

@@ -43,6 +43,10 @@ jobs:
         run: python -m unittest discover -s tools/link-check -p 'test_*.py' -v
       - name: github-repos tests
         run: python -m unittest discover -s tools/github-repos -p 'test_*.py' -v
+      - name: ai-radar tests
+        run: |
+          python -m unittest discover -s tools/ai-radar/tests -v
+          python tools/ai-radar/i18n_strings.py --check
       - name: i18n-check tests
         run: python -m unittest discover -s tools/i18n-check -p 'test_*.py' -v
       - name: docs check (every Makefile target documented)

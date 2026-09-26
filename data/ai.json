@@ -1,0 +1,3683 @@
+{
+ "schema_version": 1,
+ "generated": "2026-09-26T07:16:22Z",
+ "window_days": 14,
+ "sections": [
+  "people",
+  "labs",
+  "tools",
+  "community",
+  "learning"
+ ],
+ "sources": [
+  {
+   "id": "simonw",
+   "section": "people",
+   "name": "Simon Willison",
+   "home": "https://simonwillison.net/",
+   "status": "ok",
+   "checked": "2026-09-26T07:15:47Z",
+   "x": "simonw",
+   "pin": true,
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "karpathy",
+   "section": "people",
+   "name": "Andrej Karpathy",
+   "home": "https://karpathy.bearblog.dev/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "karpathy"
+  },
+  {
+   "id": "latentspace",
+   "section": "people",
+   "name": "swyx · Latent Space",
+   "home": "https://www.latent.space/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "swyx"
+  },
+  {
+   "id": "interconnects",
+   "section": "people",
+   "name": "Nathan Lambert · Interconnects",
+   "home": "https://www.interconnects.ai/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "natolambert"
+  },
+  {
+   "id": "mollick",
+   "section": "people",
+   "name": "Ethan Mollick · One Useful Thing",
+   "home": "https://www.oneusefulthing.org/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "emollick"
+  },
+  {
+   "id": "importai",
+   "section": "people",
+   "name": "Jack Clark · Import AI",
+   "home": "https://importai.substack.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "jackclarkSF"
+  },
+  {
+   "id": "zvi",
+   "section": "people",
+   "name": "Zvi Mowshowitz",
+   "home": "https://thezvi.substack.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "TheZvi"
+  },
+  {
+   "id": "mitsuhiko",
+   "section": "people",
+   "name": "Armin Ronacher",
+   "home": "https://lucumr.pocoo.org/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "mitsuhiko",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "mitchellh",
+   "section": "people",
+   "name": "Mitchell Hashimoto",
+   "home": "https://mitchellh.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "mitchellh",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "thorstenball",
+   "section": "people",
+   "name": "Thorsten Ball · Register Spill",
+   "home": "https://registerspill.thorstenball.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "thorstenball",
+   "via": [
+    "x"
+   ]
+  },
+  {
+   "id": "steipete",
+   "section": "people",
+   "name": "Peter Steinberger",
+   "home": "https://steipete.me/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "steipete"
+  },
+  {
+   "id": "badlogic",
+   "section": "people",
+   "name": "Mario Zechner",
+   "home": "https://mariozechner.at/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "badlogicgames",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "seangoedecke",
+   "section": "people",
+   "name": "Sean Goedecke",
+   "home": "https://www.seangoedecke.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "alderson",
+   "section": "people",
+   "name": "Martin Alderson",
+   "home": "https://martinalderson.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "minimaxir",
+   "section": "people",
+   "name": "Max Woolf",
+   "home": "https://minimaxir.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "minimaxir",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "geoffreylitt",
+   "section": "people",
+   "name": "Geoffrey Litt",
+   "home": "https://www.geoffreylitt.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "geoffreylitt",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "worksonmymachine",
+   "section": "people",
+   "name": "Works on My Machine",
+   "home": "https://worksonmymachine.ai/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "garymarcus",
+   "section": "people",
+   "name": "Gary Marcus",
+   "home": "https://garymarcus.substack.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "GaryMarcus",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "dwarkesh",
+   "section": "people",
+   "name": "Dwarkesh Patel",
+   "home": "https://www.dwarkesh.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "dwarkesh_sp",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "lexfridman",
+   "section": "people",
+   "name": "Lex Fridman",
+   "home": "https://lexfridman.com/podcast/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "lexfridman",
+   "via": [
+    "x"
+   ]
+  },
+  {
+   "id": "werner",
+   "section": "people",
+   "name": "Werner Vogels · All Things Distributed",
+   "home": "https://www.allthingsdistributed.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "Werner",
+   "via": [
+    "feedly",
+    "x"
+   ]
+  },
+  {
+   "id": "pragmatic",
+   "section": "people",
+   "name": "Gergely Orosz · The Pragmatic Engineer",
+   "home": "https://newsletter.pragmaticengineer.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "GergelyOrosz"
+  },
+  {
+   "id": "anthropic",
+   "section": "labs",
+   "name": "Anthropic",
+   "home": "https://www.anthropic.com/news",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "openai",
+   "section": "labs",
+   "name": "OpenAI",
+   "home": "https://openai.com/news/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "deepmind",
+   "section": "labs",
+   "name": "Google DeepMind",
+   "home": "https://deepmind.google/discover/blog/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "googleai",
+   "section": "labs",
+   "name": "Google AI",
+   "home": "https://blog.google/technology/ai/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "hfblog",
+   "section": "labs",
+   "name": "Hugging Face",
+   "home": "https://huggingface.co/blog",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "awsml",
+   "section": "labs",
+   "name": "AWS Machine Learning Blog",
+   "home": "https://aws.amazon.com/blogs/machine-learning/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "awsnew",
+   "section": "labs",
+   "name": "AWS What's New · Bedrock & SageMaker",
+   "home": "https://aws.amazon.com/about-aws/whats-new/recent/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "claude-code",
+   "section": "tools",
+   "name": "Claude Code",
+   "home": "https://github.com/anthropics/claude-code",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "codex",
+   "section": "tools",
+   "name": "OpenAI Codex CLI",
+   "home": "https://github.com/openai/codex",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "gemini-cli",
+   "section": "tools",
+   "name": "Gemini CLI",
+   "home": "https://github.com/google-gemini/gemini-cli",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "copilot-chat",
+   "section": "tools",
+   "name": "GitHub Copilot Chat (VS Code)",
+   "home": "https://github.com/microsoft/vscode-copilot-chat",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "vscode",
+   "section": "tools",
+   "name": "VS Code release notes",
+   "home": "https://code.visualstudio.com/updates",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "gh-changelog",
+   "section": "tools",
+   "name": "GitHub Changelog · Copilot",
+   "home": "https://github.blog/changelog/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "cursor",
+   "section": "tools",
+   "name": "Cursor",
+   "home": "https://cursor.com/changelog",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "chrome",
+   "section": "tools",
+   "name": "Chrome for Developers · AI",
+   "home": "https://developer.chrome.com/docs/ai",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "cline",
+   "section": "tools",
+   "name": "Cline",
+   "home": "https://github.com/cline/cline",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "opencode",
+   "section": "tools",
+   "name": "OpenCode",
+   "home": "https://github.com/sst/opencode",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "agent-sdk",
+   "section": "tools",
+   "name": "Claude Agent SDK (Python)",
+   "home": "https://github.com/anthropics/claude-agent-sdk-python",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "mcp",
+   "section": "tools",
+   "name": "Model Context Protocol",
+   "home": "https://modelcontextprotocol.io/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "ollama",
+   "section": "tools",
+   "name": "Ollama",
+   "home": "https://github.com/ollama/ollama",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "llamacpp",
+   "section": "tools",
+   "name": "llama.cpp",
+   "home": "https://github.com/ggml-org/llama.cpp",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "vllm",
+   "section": "tools",
+   "name": "vLLM",
+   "home": "https://github.com/vllm-project/vllm",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "hn",
+   "section": "community",
+   "name": "Hacker News",
+   "home": "https://news.ycombinator.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "r-localllama",
+   "section": "community",
+   "name": "r/LocalLLaMA",
+   "home": "https://www.reddit.com/r/LocalLLaMA/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "r-claudeai",
+   "section": "community",
+   "name": "r/ClaudeAI",
+   "home": "https://www.reddit.com/r/ClaudeAI/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "r-chatgptcoding",
+   "section": "community",
+   "name": "r/ChatGPTCoding",
+   "home": "https://www.reddit.com/r/ChatGPTCoding/",
+   "status": "error",
+   "checked": null,
+   "error": "HTTPError: HTTP Error 429: Too Many Requests"
+  },
+  {
+   "id": "smolai",
+   "section": "community",
+   "name": "AINews (smol.ai)",
+   "home": "https://news.smol.ai/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z"
+  },
+  {
+   "id": "raschka",
+   "section": "learning",
+   "name": "Sebastian Raschka · Ahead of AI",
+   "home": "https://magazine.sebastianraschka.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "rasbt"
+  },
+  {
+   "id": "lilianweng",
+   "section": "learning",
+   "name": "Lilian Weng · Lil'Log",
+   "home": "https://lilianweng.github.io/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "lilianweng"
+  },
+  {
+   "id": "hamel",
+   "section": "learning",
+   "name": "Hamel Husain",
+   "home": "https://hamel.dev/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "HamelHusain"
+  },
+  {
+   "id": "eugeneyan",
+   "section": "learning",
+   "name": "Eugene Yan",
+   "home": "https://eugeneyan.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "eugeneyan"
+  },
+  {
+   "id": "chiphuyen",
+   "section": "learning",
+   "name": "Chip Huyen",
+   "home": "https://huyenchip.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "x": "chipro",
+   "via": [
+    "feedly"
+   ]
+  },
+  {
+   "id": "gilesthomas",
+   "section": "learning",
+   "name": "Giles Thomas · LLM from scratch",
+   "home": "https://www.gilesthomas.com/",
+   "status": "ok",
+   "checked": "2026-09-26T07:13:46Z",
+   "via": [
+    "feedly"
+   ]
+  }
+ ],
+ "items": [
+  {
+   "id": "6013f6b9ef18",
+   "source": "thorstenball",
+   "section": "people",
+   "title": "Joy & Curiosity #101",
+   "url": "https://registerspill.thorstenball.com/p/joy-and-curiosity-101",
+   "published": "2026-09-26T05:52:02Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Interesting & joyful things from the previous week"
+  },
+  {
+   "id": "e32f1f8615b1",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "What are you doing between prompts?",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqidhr/what_are_you_doing_between_prompts/",
+   "published": "2026-09-26T05:34:30Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "My local prompts take twenty minutes to three hours as of now. Curious for others what are you doing while it’s working?",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqidhr/what_are_you_doing_between_prompts/"
+  },
+  {
+   "id": "ba3c37b71bf4",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "built an entire text adventure game with claude in one evening and my kid has not stopped playing it",
+   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wqgq5y/built_an_entire_text_adventure_game_with_claude/",
+   "published": "2026-09-26T04:03:41Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "my eight year old is obsessed with a video game and wanted a story version. so we sat down together and described the world, the characters, and the rules, and built a little text adventure over one evening. the magic was doing it with her. she would say i want a dragon that is…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqgq5y/built_an_entire_text_adventure_game_with_claude/"
+  },
+  {
+   "id": "839ad4f3b082",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "Opus 5.5 built this cozy 3D pixel art game",
+   "url": "https://v.redd.it/uvkdv9qjfsrh1",
+   "published": "2026-09-26T03:56:44Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "So I don’t usually take on such projects cuz of the limits on the $20 plan, but with opus 5.5, it’s actually pretty good. Willowmere: you move to a small seaside town, fix the dark lighthouse and bring back the Lantern Festival. Along the way there's farming, fishing, decorating…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqgl6b/opus_55_built_this_cozy_3d_pixel_art_game/"
+  },
+  {
+   "id": "743504462dd8",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "WTF?",
+   "url": "https://v.redd.it/98im1kf5esrh1",
+   "published": "2026-09-26T03:49:22Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Made with claude OPUS 5.5 \"make a dynamic 15-second motion graphics video that shows what an incredible motion designer you are, like it's your showreel for a résumé. go all out.\" That's it.. credits: ajith_io on X.",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqgg66/wtf/"
+  },
+  {
+   "id": "9d96a5b68477",
+   "source": "llamacpp",
+   "section": "tools",
+   "title": "b11194",
+   "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b11194",
+   "published": "2026-09-26T03:41:47Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "opencl: add A8 Q8_0 non-MoE dp4a binary kernel ( #29439 )",
+   "kind": "release"
+  },
+  {
+   "id": "d52908aba216",
+   "source": "llamacpp",
+   "section": "tools",
+   "title": "b11193",
+   "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b11193",
+   "published": "2026-09-26T03:33:14Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "hexagon: find software divide calls using binary inspection tool ( #29449 ) hex-scripts: fix table alignment hex-scripts: find sw div calls using binary inspection tool Website: https://llama.app Attestations: https://github.com/ggml-org/llama.cpp/attestations/50359675…",
+   "kind": "release"
+  },
+  {
+   "id": "f30ed81094b6",
+   "source": "cline",
+   "section": "tools",
+   "title": "Desktop v0.0.37",
+   "url": "https://github.com/cline/cline/releases/tag/desktop-v0.0.37",
+   "published": "2026-09-26T02:28:03Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Settings has a new About page. It shows your version and channel, has Check for updates and Restart to update buttons, and lists the release notes for recent versions with links to each GitHub release and the full changelog. Report an issue is there too After an update, a…",
+   "kind": "release"
+  },
+  {
+   "id": "ac8c66660502",
+   "source": "codex",
+   "section": "tools",
+   "title": "0.157.1",
+   "url": "https://github.com/openai/codex/releases/tag/rust-v0.157.1",
+   "published": "2026-09-26T01:04:09Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Chores Release highlights could not be determined: the supplied PR index is empty, and the GitHub tag comparison returned 404. Changelog Full Changelog: rust-v0.157.0...rust-v0.157.1",
+   "kind": "release"
+  },
+  {
+   "id": "f9499cf844bd",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Ling Tiny 3.0 is a glimpse of the future",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqcrly/ling_tiny_30_is_a_glimpse_of_the_future/",
+   "published": "2026-09-26T00:40:52Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "I've been playing around with Ling 3.0 Tiny, which is an 8 billion parameter model (MoE, 1B active). And I've had a lot of poignant thoughts as a result. Just for fun, I got it running with llama.cpp on an old laptop. This is a laptop from 2017 with a 7th gen i5 and 8 gigs of…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqcrly/ling_tiny_30_is_a_glimpse_of_the_future/"
+  },
+  {
+   "id": "43569542041a",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Custom Models in Oh My Pi: vLLM, llama.cpp, SGLang and More",
+   "url": "https://doug.sh/posts/oh-my-pi-custom-models/",
+   "published": "2026-09-26T00:31:03Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqcki2/custom_models_in_oh_my_pi_vllm_llamacpp_sglang/"
+  },
+  {
+   "id": "d6851e638df6",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Blabbermouth AI coding agents hate this one weird trick!",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqcil9/blabbermouth_ai_coding_agents_hate_this_one_weird/",
+   "published": "2026-09-26T00:28:30Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "The conceited little fuckers love to inundate you with unnecessary details, noisy caveats, what's 'load bearing' and what's not, waste your time with a wall of text every time it reports back to you. They think human PP times are as fast as theirs, but they're not! It takes time…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqcil9/blabbermouth_ai_coding_agents_hate_this_one_weird/"
+  },
+  {
+   "id": "49b6665e523d",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "Aight I get it, Opus 5.5 is actually peak",
+   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wqcara/aight_i_get_it_opus_55_is_actually_peak/",
+   "published": "2026-09-26T00:18:15Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "I didn't understand what everybody was talking about, it felt better and stopped pushing back artificially like previous models, but the quality of the code and the model's understanding didn't seem that special... Tonight I was bored and asked it to do a product video for the…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqcara/aight_i_get_it_opus_55_is_actually_peak/"
+  },
+  {
+   "id": "8af20e21aaf2",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Are there still any hidden gem gpu's left?",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqc09e/are_there_still_any_hidden_gem_gpus_left/",
+   "published": "2026-09-26T00:04:34Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "you read about gpu's like the Tesla P40, V100, AMD M150 etc that people pick up for cheap. probably many others as well. Most are either server gpu's being phased out or mining discards, right? The problem of course is that whenever someone discovers these, they then make a…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqc09e/are_there_still_any_hidden_gem_gpus_left/"
+  },
+  {
+   "id": "7132e446104e",
+   "source": "seangoedecke",
+   "section": "people",
+   "title": "Advice to a beginning software engineer",
+   "url": "https://seangoedecke.com/advice-to-a-beginning-software-engineer/",
+   "published": "2026-09-26T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "In general, you should be suspicious of engineers who are trying to give you advice. Even during ordinary times, this industry is so wide and changes so quickly that nobody really knows anything for sure. And we are not in ordinary times. The advent of LLMs and AI agents is the…"
+  },
+  {
+   "id": "06fc6ddab390",
+   "source": "opencode",
+   "section": "tools",
+   "title": "v2.0.18",
+   "url": "https://github.com/anomalyco/opencode/releases/tag/v2.0.18",
+   "published": "2026-09-25T23:57:32Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "release: v2.0.18",
+   "kind": "release"
+  },
+  {
+   "id": "4bf72efe3ccc",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "GPT user here. Tried Opus 5.5. It’s insane.",
+   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wqbd5u/gpt_user_here_tried_opus_55_its_insane/",
+   "published": "2026-09-25T23:35:14Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "I subscribed to Claude because my Codex subscription had honestly become pretty unusable for me, and I also wanted to give Opus a try. I'm genuinely impressed. It really does feel almost magical. It constantly notices things in the code I never even asked about, points out…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqbd5u/gpt_user_here_tried_opus_55_its_insane/"
+  },
+  {
+   "id": "123d8dcecccf",
+   "source": "gh-changelog",
+   "section": "tools",
+   "title": "Enterprise managed settings in-product validator",
+   "url": "https://github.blog/changelog/2026-09-25-enterprise-managed-settings-in-product-validator",
+   "published": "2026-09-25T23:24:57Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "You can now use an in-product validator for enterprise managed settings for GitHub Copilot. The validator detects malformed JSON, unsupported configurations, invalid team mappings, and other errors that can prevent… The post Enterprise managed settings in-product validator…"
+  },
+  {
+   "id": "f770d2ed16b5",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "I made this playable Pokémon battle demo using Opus 5.5",
+   "url": "https://v.redd.it/x3cgjarp0rrh1",
+   "published": "2026-09-25T23:20:40Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Hi all, Like many others, I'm blown away with how good the new Opus model is. I was inspired by this tweet and decided to see if I could turn it into something playable. A couple of hours later, I was able to make this demo! Check it out! ->…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqb1ur/i_made_this_playable_pokémon_battle_demo_using/"
+  },
+  {
+   "id": "c5617bc48a5c",
+   "source": "latentspace",
+   "section": "people",
+   "title": "OpenRouter: from Seed to Stripe — with OpenRouter’s Alex Atallah & AMP’s Anjney Midha",
+   "url": "https://www.latent.space/p/openrouter",
+   "published": "2026-09-25T23:14:41Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "In 2023 most people doubted that there could be more than 1 or 2 frontier model labs. Now there are dozens.... and Stripe just bought the best known one for $7B."
+  },
+  {
+   "id": "3d9726f9e3e1",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Kev 4B topped out in every Tetris game I ran. Mica v0.1 4B cleared about 4x more lines and survived two of them to the end",
+   "url": "https://v.redd.it/zvog867xxqrh1",
+   "published": "2026-09-25T22:56:19Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "I had Mica (my 4B decision model) and Kev 4B play the same Tetris games, same seed and same piece order, one RTX 3090. For context, this is a side project. Training and all the experiments ran on rented 3090s, about $30 in total. Every turn both get the board and 4 possible…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqai4b/kev_4b_topped_out_in_every_tetris_game_i_ran_mica/"
+  },
+  {
+   "id": "856157c9d378",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Mica v0.1 4B got an iron pickaxe in real Minecraft without generating a single token",
+   "url": "https://v.redd.it/ba75tm1qxqrh1",
+   "published": "2026-09-25T22:55:19Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Mica v0.1 4B playing a real Minecraft 1.20.4 server. Video attached. How it works - Each step the bot's live game state (inventory, nearby blocks, entities, last result) is written out as text. - Mica scores the candidate commands and picks the next one. It never generates text…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqahbz/mica_v01_4b_got_an_iron_pickaxe_in_real_minecraft/"
+  },
+  {
+   "id": "c8ebc1e45da2",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Mica v0.1 4B: open Jev-style decision model (yes/no, choice, score) that runs on an 8 GB GPU — trained for under $30 of GPU time",
+   "url": "https://www.reddit.com/gallery/1wqag1i",
+   "published": "2026-09-25T22:53:41Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "I've been building a small decision model for agent loops: gates, routers, \"should I ask the user or just act\" checks. It's out now as Mica v0.1 4B (Apache-2.0). What it does You give it a state, a question and the allowed answers, and it returns a calibrated probability for…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqag1i/mica_v01_4b_open_jevstyle_decision_model_yesno/"
+  },
+  {
+   "id": "c422d5c0ebf2",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "Claude 5.5 Rainbow generation and video editing skill is stunning!",
+   "url": "https://v.redd.it/w5kxt0ajuqrh1",
+   "published": "2026-09-25T22:42:57Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Watch with sound on - the composed dramatic soundtrack is synced to the video! I often test new AI models with a prompt such as 'Draw an interactive rainbow scene. Make it as realistic, pretty and interactive as you can'. Claude 5.5 feels a generation above the rest. I asked it…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqa770/claude_55_rainbow_generation_and_video_editing/"
+  },
+  {
+   "id": "7affb7cdb39e",
+   "source": "agent-sdk",
+   "section": "tools",
+   "title": "v0.2.160",
+   "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.160",
+   "published": "2026-09-25T22:32:31Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Bug Fixes Fixed follow-up turns failing after background subagents : When using with hooks, , or SDK MCP servers, stdin was closed too early if a subagent finished just before the turn's result arrived. Follow-up turns would then fail with \"Stream closed\" and the model would…",
+   "kind": "release"
+  },
+  {
+   "id": "f690d66e3006",
+   "source": "garymarcus",
+   "section": "people",
+   "title": "BREAKING: OpenAI’s security fiasco explodes — and could tank Jensen Huang’s reputation",
+   "url": "https://garymarcus.substack.com/p/breaking-openais-security-fiasco",
+   "published": "2026-09-25T21:58:42Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "OpenAI’s software didn’t just attack HuggingFace."
+  },
+  {
+   "id": "698a7c41cdb9",
+   "source": "claude-code",
+   "section": "tools",
+   "title": "v2.1.283",
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.283",
+   "published": "2026-09-25T21:50:12Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "What's changed Added to the gateway hint headers so LLM gateways can group the requests that serve one user prompt; opt in with Added managed setting: with , an entry allows only the model version it names, so new releases stay blocked until listed Added managed setting to block…",
+   "kind": "release"
+  },
+  {
+   "id": "e8b59ccb0418",
+   "source": "anthropic",
+   "section": "labs",
+   "title": "Claude computes a nine-loop amplitude in N=4 super-Yang-Mills",
+   "url": "https://www.anthropic.com/research/yes-claude-can-do-nine-loops",
+   "published": "2026-09-25T21:38:13Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Claude computes a nine-loop amplitude in N=4 super-Yang-Mills",
+   "also": [
+    "hn"
+   ]
+  },
+  {
+   "id": "02636d6ab647",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "How long can I expect to wait until the local ~30B A3B frontier catches up to GLM 5.3 Flash quality?",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wq8e5u/how_long_can_i_expect_to_wait_until_the_local_30b/",
+   "published": "2026-09-25T21:24:54Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "The jump from Qwen3 Coder 30B A3B to current-day Qwen 3.6 35B A3B is crazy, especially with all the fine-tunes, and that was around 6 months (I didn't care for local AI back then, or AI at all, apart from as a toy so I don't know). Is around a year until I will never need cloud…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wq8e5u/how_long_can_i_expect_to_wait_until_the_local_30b/"
+  },
+  {
+   "id": "aa86efbe760d",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "Do you guys trust Claude with your personal computers?",
+   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wq884b/do_you_guys_trust_claude_with_your_personal/",
+   "published": "2026-09-25T21:17:55Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "I have been thinking about powerful it has become and that has made me worried it can delete or damage important files on my computer Do you guys run it in a container?",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wq884b/do_you_guys_trust_claude_with_your_personal/"
+  },
+  {
+   "id": "0447a6245098",
+   "source": "gh-changelog",
+   "section": "tools",
+   "title": "Usage metrics API adds pull request review stages",
+   "url": "https://github.blog/changelog/2026-09-25-usage-metrics-api-adds-pull-request-review-stages",
+   "published": "2026-09-25T21:09:40Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "The enterprise and organization repository-level Copilot usage metrics reports now break down how long pull requests spend in each stage of review. A new pull_request_review_times array on each repos-1-day row… The post Usage metrics API adds pull request review stages appeared…"
+  },
+  {
+   "id": "893cb7d78a9c",
+   "source": "hn",
+   "section": "community",
+   "title": "Revealing the details of how OpenAI agents hacked Hugging Face",
+   "url": "https://swarmtraces.org/",
+   "published": "2026-09-25T21:09:27Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 407,
+   "comments": 246,
+   "discuss": "https://news.ycombinator.com/item?id=49849985"
+  },
+  {
+   "id": "6dd97f536f33",
+   "source": "opencode",
+   "section": "tools",
+   "title": "v2.0.17",
+   "url": "https://github.com/anomalyco/opencode/releases/tag/v2.0.17",
+   "published": "2026-09-25T21:09:04Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "release: v2.0.17",
+   "kind": "release"
+  },
+  {
+   "id": "1039751cf18e",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "4-5 days replacing Claude w Qwen 3.8 Next",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wq7e74/45_days_replacing_claude_w_qwen_38_next/",
+   "published": "2026-09-25T20:44:10Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Hi, human here with rambling thoughts to share. Feel free to skip Overall, I don’t feel like I’m missing much; if anything. On my hardware(M1 ultra w 128Gb) it’s probably not as fast as Claude but I’ve been using opencode for research and other business related tasks and it’s…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wq7e74/45_days_replacing_claude_w_qwen_38_next/"
+  },
+  {
+   "id": "3a9d213a3cc2",
+   "source": "hn",
+   "section": "community",
+   "title": "Too AI; Didn't Read",
+   "url": "https://www.tai-dr.com/",
+   "published": "2026-09-25T20:37:56Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 107,
+   "comments": 105,
+   "discuss": "https://news.ycombinator.com/item?id=49849625"
+  },
+  {
+   "id": "d2d497e5eee4",
+   "source": "openai",
+   "section": "labs",
+   "title": "Proaction boosts sales 60% and saves 75+ hours with Codex",
+   "url": "https://openai.com/index/proaction",
+   "published": "2026-09-25T19:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "With Codex, GPT-Live-1, and GPT-6 Astra, Proaction builds, operates, and sells modern fleet management faster."
+  },
+  {
+   "id": "20351b5d6558",
+   "source": "anthropic",
+   "section": "labs",
+   "title": "Project Swap: What happens when agents trade for us?",
+   "url": "https://www.anthropic.com/research/project-swap",
+   "published": "2026-09-25T18:52:10Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "To see what works and what breaks when agents are sent into a market, we made a miniature market of Claudes."
+  },
+  {
+   "id": "d1defbaf4de8",
+   "source": "hn",
+   "section": "community",
+   "title": "Ollaya – Ollama for open-source, Jev-style decision models",
+   "url": "https://ollaya.dev/",
+   "published": "2026-09-25T18:33:50Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 409,
+   "comments": 112,
+   "discuss": "https://news.ycombinator.com/item?id=49848269"
+  },
+  {
+   "id": "5e83e0d22a04",
+   "source": "hn",
+   "section": "community",
+   "title": "Meta's Muse appears to use an OpenAI model labeled muse-special",
+   "url": "https://mouse.dev/blog/muse-special/",
+   "published": "2026-09-25T18:18:06Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 129,
+   "comments": 47,
+   "discuss": "https://news.ycombinator.com/item?id=49848095"
+  },
+  {
+   "id": "e8b59ccb0418",
+   "source": "hn",
+   "section": "community",
+   "title": "Yes, Claude can do nine loops",
+   "url": "https://www.anthropic.com/research/yes-claude-can-do-nine-loops",
+   "published": "2026-09-25T18:11:48Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 103,
+   "comments": 58,
+   "discuss": "https://news.ycombinator.com/item?id=49848033",
+   "also": [
+    "anthropic"
+   ]
+  },
+  {
+   "id": "925b830b81ef",
+   "source": "gh-changelog",
+   "section": "tools",
+   "title": "Agentic autofix now uses Copilot Memory",
+   "url": "https://github.blog/changelog/2026-09-25-agentic-autofix-now-uses-copilot-memory",
+   "published": "2026-09-25T17:25:50Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Agentic autofix now uses Copilot Memory for customers who’ve enabled it. When you use agentic autofix, it reviews existing memories for context that can help resolve security alerts. When it… The post Agentic autofix now uses Copilot Memory appeared first on The GitHub Blog ."
+  },
+  {
+   "id": "44842586bfdd",
+   "source": "simonw",
+   "section": "people",
+   "title": "Quoting John Gruber",
+   "url": "https://simonwillison.net/2026/Sep/25/john-gruber/",
+   "published": "2026-09-25T17:22:01Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "Muse is getting a lot of attention — including mine — because it’s both groundbreaking technically (each user gets their own entire persistent Linux VM running in Meta’s cloud) and because it’s packaged in an easy-to-install easy-to-use way. It’s literally presented as a cute…"
+  },
+  {
+   "id": "6edfaac73238",
+   "source": "gh-changelog",
+   "section": "tools",
+   "title": "GitHub Copilot weekly releases — September 21",
+   "url": "https://github.blog/changelog/2026-09-25-github-copilot-weekly-releases-september-21",
+   "published": "2026-09-25T16:42:48Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "This week’s releases add new models to Copilot, local sandboxing in the Copilot app, and updates to Copilot in Slack, Microsoft Teams, JetBrains, and VS Code. GitHub Copilot Claude Opus… The post GitHub Copilot weekly releases — September 21 appeared first on The GitHub Blog ."
+  },
+  {
+   "id": "e15c9f988be2",
+   "source": "gh-changelog",
+   "section": "tools",
+   "title": "Updates to GitHub Copilot for Slack and Microsoft Teams",
+   "url": "https://github.blog/changelog/2026-09-25-updates-to-github-copilot-for-slack-and-microsoft-teams",
+   "published": "2026-09-25T16:33:42Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "GitHub Copilot in Slack and Microsoft Teams now gives you more context, more control, and a clearer path from conversation to GitHub work. Whether you’re sharing files in Slack or… The post Updates to GitHub Copilot for Slack and Microsoft Teams appeared first on The GitHub Blog…"
+  },
+  {
+   "id": "f3a074486b06",
+   "source": "awsml",
+   "section": "labs",
+   "title": "Scaling MoE reinforcement learning on Amazon EKS with EFA and DeepEP with 40% more throughput",
+   "url": "https://aws.amazon.com/blogs/machine-learning/scaling-moe-reinforcement-learning-on-amazon-eks-with-efa-and-deepep-with-40-more-throughput/",
+   "published": "2026-09-25T16:29:50Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Learn how to scale Mixture-of-Experts (MoE) reinforcement learning on Amazon EKS using Elastic Fabric Adapter (EFA) and DeepEP. This post presents an architecture that combines Amazon EKS, EFA, and Amazon S3 and increased aggregate reinforcement learning rollout throughput by…"
+  },
+  {
+   "id": "44df1f0ad2a5",
+   "source": "awsml",
+   "section": "labs",
+   "title": "Accelerate multimodal RL training with SkyRL on Amazon SageMaker HyperPod",
+   "url": "https://aws.amazon.com/blogs/machine-learning/accelerate-multimodal-rl-training-with-skyrl-on-amazon-sagemaker-hyperpod/",
+   "published": "2026-09-25T16:18:07Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Learn how to run SkyRL, an open-source reinforcement learning framework, on Amazon SageMaker HyperPod to post-train a Qwen3-VL-8B vision-language model with GRPO. This walkthrough covers building the container image, launching a Ray cluster from SageMaker Studio, submitting and…"
+  },
+  {
+   "id": "5c491d084833",
+   "source": "awsml",
+   "section": "labs",
+   "title": "NarrateAI: production-ready LLM quality assurance on Amazon Bedrock",
+   "url": "https://aws.amazon.com/blogs/machine-learning/narrateai-production-ready-llm-quality-assurance-on-amazon-bedrock/",
+   "published": "2026-09-25T16:15:22Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "NarrateAI delivers production-ready LLM quality assurance on Amazon Bedrock. This post details five techniques—adaptive pipeline orchestration, cross-account multi-model failover, real-time streaming evaluation, composite evaluation, and data accuracy verification—that reach…"
+  },
+  {
+   "id": "fbfeb983c98c",
+   "source": "awsml",
+   "section": "labs",
+   "title": "Deploying real-time personalized speech with Qwen3-TTS on Amazon SageMaker AI",
+   "url": "https://aws.amazon.com/blogs/machine-learning/deploying-real-time-personalized-speech-with-qwen3-tts-on-amazon-sagemaker-ai/",
+   "published": "2026-09-25T16:09:46Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Deploy the publicly available Qwen3-TTS-12Hz-1.7B-Base text-to-speech model from Amazon SageMaker JumpStart to a fully managed, real-time endpoint, and clone a voice from a short reference clip. Cross-lingual cloning preserves the speaker's identity across languages."
+  },
+  {
+   "id": "3d3961d3118f",
+   "source": "awsml",
+   "section": "labs",
+   "title": "How Datacor built self-service rental analytics with Amazon Quick Sight",
+   "url": "https://aws.amazon.com/blogs/machine-learning/how-datacor-built-self-service-rental-analytics-with-amazon-quick-sight/",
+   "published": "2026-09-25T15:54:42Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Learn how Datacor built a self-service rental analytics experience for gas and welding distributors by embedding Amazon Quick Sight dashboards and natural language querying into its TrackAbout platform, powered by an automated cross-cloud data pipeline and multi-tenant row-level…"
+  },
+  {
+   "id": "4ac4a69f34d4",
+   "source": "awsml",
+   "section": "labs",
+   "title": "Multi-Region training with Amazon SageMaker HyperPod and Qumulo",
+   "url": "https://aws.amazon.com/blogs/machine-learning/multi-region-training-with-amazon-sagemaker-hyperpod-and-qumulo/",
+   "published": "2026-09-25T15:49:44Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Amazon SageMaker HyperPod and Cloud Native Qumulo let you place training compute in one AWS Region while keeping your dataset in another. This post shares the architecture and validation results from a cross-Region training run, where a remote cluster matched a co-located…"
+  },
+  {
+   "id": "b005ba80ec50",
+   "source": "hn",
+   "section": "community",
+   "title": "U.S. appeals court upholds designation of Anthropic as supply chain risk",
+   "url": "https://www.cnbc.com/2026/09/25/pentagon-anthropic-ai-risk-appeals-court.html",
+   "published": "2026-09-25T15:29:25Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 435,
+   "comments": 747,
+   "discuss": "https://news.ycombinator.com/item?id=49845977"
+  },
+  {
+   "id": "dd48f8c31e9f",
+   "source": "hn",
+   "section": "community",
+   "title": "Classified estimates show the NSA is paying billions to test AI models",
+   "url": "https://www.washingtonsun.com/technology/classified-estimates-nsa-paying-billions-to-test-ai-models",
+   "published": "2026-09-25T15:27:35Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 171,
+   "comments": 101,
+   "discuss": "https://news.ycombinator.com/item?id=49845952"
+  },
+  {
+   "id": "55849388fec7",
+   "source": "ollama",
+   "section": "tools",
+   "title": "v0.40.0",
+   "url": "https://github.com/ollama/ollama/releases/tag/v0.40.0-rc0",
+   "published": "2026-09-25T15:22:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "What's Changed Models run on MLX on Apple Silicon by default In this release, on Apple Silicon devices, model architectures supported by the MLX runtime will automatically run on MLX. During the pre-release we will be testing and enabling additional models. Full Changelog…",
+   "kind": "release"
+  },
+  {
+   "id": "cb028b10481e",
+   "source": "hn",
+   "section": "community",
+   "title": "Microsoft abandons personal AI chatbot race with Copilot reboot",
+   "url": "https://www.bloomberg.com/news/articles/2026-09-25/microsoft-abandons-personal-ai-chatbot-race-with-copilot-reboot",
+   "published": "2026-09-25T14:07:08Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 115,
+   "comments": 104,
+   "discuss": "https://news.ycombinator.com/item?id=49844896"
+  },
+  {
+   "id": "6350a3baccee",
+   "source": "zvi",
+   "section": "people",
+   "title": "On Ezra Klein’s Podcast With Jensen Huang",
+   "url": "https://thezvi.substack.com/p/on-ezra-kleins-podcast-with-jensen",
+   "published": "2026-09-25T11:55:55Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Jensen Huang accidentally called for shutting down OpenAI and intentionally called for spending vastly more on safety."
+  },
+  {
+   "id": "df81f422265d",
+   "source": "cline",
+   "section": "tools",
+   "title": "Desktop v0.0.36",
+   "url": "https://github.com/cline/cline/releases/tag/desktop-v0.0.36",
+   "published": "2026-09-25T09:21:29Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "The app now starts on machines that set a system HTTP(S) proxy, such as Clash, v2ray, or a corporate proxy. Before, the backend sent its local connection checks through the proxy, so it couldn't find its own hub and failed with \"No compatible hub runtime is available.\" Local…",
+   "kind": "release"
+  },
+  {
+   "id": "86ae669071a3",
+   "source": "latentspace",
+   "section": "people",
+   "title": "[AINews] The Future of Latent Space",
+   "url": "https://www.latent.space/p/ainews-the-future-of-latent-space",
+   "published": "2026-09-25T05:37:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "A quiet day lets us discuss the work behind the scenes - now open for business!"
+  },
+  {
+   "id": "648837e3af7f",
+   "source": "gh-changelog",
+   "section": "tools",
+   "title": "Default Enablement of Copilot features for Copilot Business and Enterprise",
+   "url": "https://github.blog/changelog/2026-09-24-default-enablement-of-copilot-features-for-copilot-business-and-enterprise",
+   "published": "2026-09-25T03:13:23Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "We’re introducing a new global default policy for generally available GitHub Copilot features and supported client capabilities in enterprise and organization Copilot settings. For the next 28 days, you can… The post Default Enablement of Copilot features for Copilot Business…"
+  },
+  {
+   "id": "a58162400433",
+   "source": "simonw",
+   "section": "people",
+   "title": "Northern Gannet, Great Blue Heron, California Brown Pelican",
+   "url": "https://simonwillison.net/2026/Sep/25/sighting-403293902/",
+   "published": "2026-09-25T02:07:04Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "Northern Gannet, Great Blue Heron, California Brown Pelican, in Monterey Bay National Marine Sanctuary, CA, US, CA New 200-800mm Canon EF lens got me my best photo of Morris yet. They really like hanging out under that sign in the harbor! Tags: photography , wildlife"
+  },
+  {
+   "id": "cf1f7303557f",
+   "source": "latentspace",
+   "section": "people",
+   "title": "Runway’s WorldPrompt and the Engineering of Real-Time Worlds",
+   "url": "https://www.latent.space/p/runway",
+   "published": "2026-09-25T01:30:57Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "GWM Worlds 2 uses persistent context and timed actions to steer a world model generating video and audio in real time."
+  },
+  {
+   "id": "787da3b8772a",
+   "source": "seangoedecke",
+   "section": "people",
+   "title": "You should all be asking way more questions",
+   "url": "https://seangoedecke.com/you-should-all-be-asking-way-more-questions/",
+   "published": "2026-09-25T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "When someone is explaining something to me, I ask on average one question every thirty seconds. I’m sure this is frustrating to some people, but it’s actually a good habit and you should do it too. Trying to understand Most of the questions I ask are very short, and require very…"
+  },
+  {
+   "id": "603669123c5d",
+   "source": "simonw",
+   "section": "people",
+   "title": "Note on 24th September 2026",
+   "url": "https://simonwillison.net/2026/Sep/24/harder/",
+   "published": "2026-09-24T23:31:08Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "The more time I spend working with coding agents, the more convinced I am that they make software engineering even harder. We can do amazing things with them, but unlocking their full potential requires extraordinary discipline and knowledge. Tags: coding-agents , ai , llms"
+  },
+  {
+   "id": "5ce7db5e400b",
+   "source": "simonw",
+   "section": "people",
+   "title": "commit-rewriter 0.2",
+   "url": "https://simonwillison.net/2026/Sep/24/commit-rewriter/",
+   "published": "2026-09-24T20:06:53Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "Release: commit-rewriter 0.2 Support for branches other than the default branch. Use to run against another branch. #3 Tags: git"
+  },
+  {
+   "id": "f46c8b71254c",
+   "source": "simonw",
+   "section": "people",
+   "title": "datasette 1.0a41",
+   "url": "https://simonwillison.net/2026/Sep/24/datasette/",
+   "published": "2026-09-24T19:15:23Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "Release: datasette 1.0a41 Alec Garcia added support for OpenTelemetry to Datasette in this release. I've also refactored all of Datasette's modal dialogs to a single Web Component, which is now documented for other plugins to use . Tags: javascript , datasette , web-components…"
+  },
+  {
+   "id": "b28faeb337e6",
+   "source": "hn",
+   "section": "community",
+   "title": "Using LLMs to trace alchemical knowledge and decode 17th century letters",
+   "url": "https://resobscura.substack.com/p/ai-labs-need-to-start-funding-historical",
+   "published": "2026-09-24T19:14:27Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 166,
+   "comments": 43,
+   "discuss": "https://news.ycombinator.com/item?id=49835531"
+  },
+  {
+   "id": "cd3a2bc67e95",
+   "source": "claude-code",
+   "section": "tools",
+   "title": "v2.1.282",
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.282",
+   "published": "2026-09-24T18:38:05Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "What's changed Added a setting that caps the width of Claude's prose in wide terminals while tables and code blocks keep the full width Added a startup notice, and and entries, listing telemetry variables in a project's settings files that were ignored or that turned telemetry…",
+   "kind": "release"
+  },
+  {
+   "id": "53a9cbbf3142",
+   "source": "pragmatic",
+   "section": "people",
+   "title": "The Pulse: RoR creator sparks new “death of coding by hand” debate",
+   "url": "https://newsletter.pragmaticengineer.com/p/the-pulse-end-of-coding-by-hand",
+   "published": "2026-09-24T16:44:27Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "37signals – the creator of Ruby on Rails (RoR) – moves over to agents generating nearly all its code. Also: Amazon and Meta struggle to hire engineers, code reviews will probably also go away and more"
+  },
+  {
+   "id": "91625e27c986",
+   "source": "deepmind",
+   "section": "labs",
+   "title": "Introducing Gemini 3.8 Live with Live Avatar",
+   "url": "https://deepmind.google/blog/introducing-gemini-38-live-with-live-avatar/",
+   "published": "2026-09-24T16:20:39Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "0233da31629c",
+   "source": "cline",
+   "section": "tools",
+   "title": "v4.1.21",
+   "url": "https://github.com/cline/cline/releases/tag/v4.1.21",
+   "published": "2026-09-24T16:16:10Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Added New provider: ai&, an OpenAI-compatible endpoint serving open-weight models from Japan. Changed Refreshed the model catalog to 6,386 models across 209 providers. The resolved default model changes for 19 providers that do not pin one, 11 of them to Claude Opus 5.5…",
+   "kind": "release"
+  },
+  {
+   "id": "733f60d0c466",
+   "source": "hn",
+   "section": "community",
+   "title": "Tutoring company tells parents to save their money and 'use AI instead'",
+   "url": "https://www.afr.com/policy/health-and-education/tutoring-company-tell-parents-to-save-their-money-and-use-ai-instead-20260923-p60z0r",
+   "published": "2026-09-24T15:09:38Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 136,
+   "comments": 223,
+   "discuss": "https://news.ycombinator.com/item?id=49831690"
+  },
+  {
+   "id": "70819f21132e",
+   "source": "latentspace",
+   "section": "people",
+   "title": "Foundries vs Navigators: Lowering the Cost of Science",
+   "url": "https://www.latent.space/p/foundries-vs-navigators-lowering",
+   "published": "2026-09-24T15:03:16Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Guest Post: In science, thinking has gotten cheap but doing has not. This asymmetry is reshaping how research companies operate, largely inconspicuously."
+  },
+  {
+   "id": "d328da34511b",
+   "source": "zvi",
+   "section": "people",
+   "title": "AI #187: Coming Into Play",
+   "url": "https://thezvi.substack.com/p/ai-187-coming-into-play",
+   "published": "2026-09-24T14:49:23Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Opus 5.5 was released on Tuesday."
+  },
+  {
+   "id": "415d0f35c647",
+   "source": "hn",
+   "section": "community",
+   "title": "AI safety is mostly a sex cult in Berkeley",
+   "url": "https://www.verysane.ai/p/ai-safety-is-mostly-a-sex-cult-in",
+   "published": "2026-09-24T14:38:31Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 119,
+   "comments": 30,
+   "discuss": "https://news.ycombinator.com/item?id=49831269"
+  },
+  {
+   "id": "5bd0bd4954bf",
+   "source": "hn",
+   "section": "community",
+   "title": "Best LLM for every budget, updated daily",
+   "url": "https://bestmodelforyourbudget.terrydjony.com/",
+   "published": "2026-09-24T14:09:57Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 180,
+   "comments": 111,
+   "discuss": "https://news.ycombinator.com/item?id=49830866"
+  },
+  {
+   "id": "c2a53f233272",
+   "source": "hfblog",
+   "section": "labs",
+   "title": "Accelerating vision-language models with LFM2.5-VL-DSpark",
+   "url": "https://huggingface.co/blog/LiquidAI/lfm2-5-vl-dspark",
+   "published": "2026-09-24T14:08:57Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "3a94dd6391c9",
+   "source": "hn",
+   "section": "community",
+   "title": "Google’s Project Suncatcher to put ML infrastructure in space",
+   "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/google-project-suncatcher-facts/",
+   "published": "2026-09-24T13:53:29Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 227,
+   "comments": 516,
+   "discuss": "https://news.ycombinator.com/item?id=49830606"
+  },
+  {
+   "id": "f7873f72fc61",
+   "source": "garymarcus",
+   "section": "people",
+   "title": "“I think the answer is we have to shut the labs down” - Jensen Huang",
+   "url": "https://garymarcus.substack.com/p/i-think-the-answer-is-we-have-to",
+   "published": "2026-09-24T12:27:50Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "OpenAI hacks a foreign government — and the US faces its most critical AI test yet."
+  },
+  {
+   "id": "1e0af95cc497",
+   "source": "hn",
+   "section": "community",
+   "title": "'That's so AI ' What gen Alpha's biggest insult tells us",
+   "url": "https://www.theguardian.com/society/2026/sep/24/thats-so-ai-what-gen-alphas-biggest-insult-tells-us",
+   "published": "2026-09-24T12:23:41Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 201,
+   "comments": 303,
+   "discuss": "https://news.ycombinator.com/item?id=49829650"
+  },
+  {
+   "id": "225478237654",
+   "source": "hn",
+   "section": "community",
+   "title": "Hackers influence ChatGPT and Gemini to direct users to scam centers",
+   "url": "https://medium.com/@arielsimon/dark-sourcery-how-hackers-manipulate-ai-to-scam-you-88df434d2073",
+   "published": "2026-09-24T11:54:38Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 141,
+   "comments": 52,
+   "discuss": "https://news.ycombinator.com/item?id=49829387"
+  },
+  {
+   "id": "8c50fe1c6153",
+   "source": "anthropic",
+   "section": "labs",
+   "title": "Claude discovers a novel enzyme system",
+   "url": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
+   "published": "2026-09-24T10:25:16Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "In early results from our new life sciences research lab, Claude agents found an enzyme system whose function is still unknown."
+  },
+  {
+   "id": "07762c6dcbee",
+   "source": "hn",
+   "section": "community",
+   "title": "Meta takes down a critical video about meta AI Glasses after filming at Meta",
+   "url": "https://www.reddit.com/r/facebook/comments/1wotwrk/meta_takes_down_a_critical_video_about_meta_ai/",
+   "published": "2026-09-24T08:23:03Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "",
+   "points": 626,
+   "comments": 379,
+   "discuss": "https://news.ycombinator.com/item?id=49827794"
+  },
+  {
+   "id": "5bc873cae3e1",
+   "source": "latentspace",
+   "section": "people",
+   "title": "[AINews] Meta Connect 2026: Muse glasses, voice, video, and Charm",
+   "url": "https://www.latent.space/p/ainews-meta-connect-2026-muse-glasses",
+   "published": "2026-09-24T08:12:59Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Team Zuck is absolutely on fire."
+  },
+  {
+   "id": "7aab91de3c53",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "Amazon SageMaker HyperPod Inference Gateway for scalable LLM inference",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/sagemaker-hyperpod-inference-gateway/",
+   "published": "2026-09-24T08:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Amazon SageMaker HyperPod Inference Gateway is a Kubernetes-native, GPU-aware routing system that deploys as a single EKS managed add-on on existing SageMaker HyperPod infrastructure with zero application changes. By replacing unintelligent round-robin load balancing with…"
+  },
+  {
+   "id": "31c8bef6e1b9",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "Run interactive workloads on Amazon EMR on EKS with Spark Connect",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/emr-eks-spark-connect-interactive/",
+   "published": "2026-09-24T08:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Amazon EMR on EKS now supports interactive Apache Spark sessions with Spark Connect. Data engineers and data scientists can develop and debug Apache Spark applications interactively from managed notebooks in Amazon SageMaker Unified Studio and their own IDEs, such as Jupyter and…"
+  },
+  {
+   "id": "b06ce5c788b2",
+   "source": "opencode",
+   "section": "tools",
+   "title": "v2.0.16",
+   "url": "https://github.com/anomalyco/opencode/releases/tag/v2.0.16",
+   "published": "2026-09-24T06:34:09Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "release: v2.0.16",
+   "kind": "release"
+  },
+  {
+   "id": "5bf514798a84",
+   "source": "ollama",
+   "section": "tools",
+   "title": "v0.34.4",
+   "url": "https://github.com/ollama/ollama/releases/tag/v0.34.4",
+   "published": "2026-09-24T04:45:43Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "What's Changed Structured outputs on thinking models now apply in a single pass, making them faster and more reliable. Fixed intermittent \"model not found\" errors with a large local library Fixed the macOS app becoming unresponsive when checking if ChatGPT or Codex is running…",
+   "kind": "release"
+  },
+  {
+   "id": "e81407e8dd92",
+   "source": "gemini-cli",
+   "section": "tools",
+   "title": "Release v0.61.0",
+   "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.61.0",
+   "published": "2026-09-23T23:59:15Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "What's Changed Changelog for v0.60.0-preview.0 by @gemini-cli-robot in #29251 chore(release): bump version to 0.61.0-nightly.20260908.gc647533d6 by @gemini-cli-robot in #29254 Changelog for v0.59.0 by @gemini-cli-robot in #29253 fix(core): preserve explicit versioned Flash model…",
+   "kind": "release"
+  },
+  {
+   "id": "3ea6ecc54843",
+   "source": "garymarcus",
+   "section": "people",
+   "title": "Historic UN Security Council Briefing on AI",
+   "url": "https://garymarcus.substack.com/p/historic-un-security-council-briefing",
+   "published": "2026-09-23T21:46:40Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "We all agree on what needs to be done. Now let’s do it."
+  },
+  {
+   "id": "09b4b1afc6ee",
+   "source": "zvi",
+   "section": "people",
+   "title": "Claude Opus 5.5: The System Card",
+   "url": "https://thezvi.substack.com/p/claude-opus-55-the-system-card",
+   "published": "2026-09-23T21:08:43Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Introducing the world’s most powerful model, at least by some measures like Artificial Analysis or any standard benchmark list, which is now Claude Opus 5.5."
+  },
+  {
+   "id": "90dafa5b3f95",
+   "source": "agent-sdk",
+   "section": "tools",
+   "title": "v0.2.159",
+   "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.159",
+   "published": "2026-09-23T20:27:36Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Internal/Other Changes Updated bundled Claude CLI to version 2.1.281 Pinned default model for e2e tests to to work around CI failures with the CLI's new default model ( #1287 ) PyPI: https://pypi.org/project/claude-agent-sdk/0.2.159/",
+   "kind": "release"
+  },
+  {
+   "id": "57339196ea2e",
+   "source": "claude-code",
+   "section": "tools",
+   "title": "v2.1.281",
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.281",
+   "published": "2026-09-23T19:19:15Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "What's changed Added Claude apps gateway support for newer Claude Desktop keys in policy blocks, including and Added on Claude apps gateway Bedrock upstreams: the gateway calls Bedrock as an IAM role it assumes through STS, in another AWS account if needed, optionally one…",
+   "kind": "release"
+  },
+  {
+   "id": "a70f8ac64edf",
+   "source": "hfblog",
+   "section": "labs",
+   "title": "How to Use NVIDIA Warp and MjWarp to Accelerate Robotics Simulation and Learning Workflows",
+   "url": "https://huggingface.co/blog/nvidia/how-to-use-nvidia-warp-and-mjwarp",
+   "published": "2026-09-23T18:41:40Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "e896566878a9",
+   "source": "googleai",
+   "section": "labs",
+   "title": "Google Beam expands with new regions, partners, and customers",
+   "url": "https://blog.google/innovation-and-ai/technology/research/google-beam-expansion/",
+   "published": "2026-09-23T18:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "We’re expanding Google Beam to five new countries, and partnering with Industrious for an extended network."
+  },
+  {
+   "id": "d208605f0dc5",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "Amazon Bedrock Managed Knowledge Base now supports Salesforce and Zendesk as native data source connectors",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/amazon-bedrock-managed-knowledge-base-salesforce-zendesk-native-data-source-connectors/",
+   "published": "2026-09-23T17:41:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "AWS announces Salesforce and Zendesk data source connectors for Amazon Bedrock Managed Knowledge Base, a fully managed retrieval-augmented generation (RAG) service. Customers can now sync Salesforce knowledge articles and Zendesk articles and community posts directly into their…"
+  },
+  {
+   "id": "e61359e960f8",
+   "source": "simonw",
+   "section": "people",
+   "title": "Gemini 3.8 TTS Playground",
+   "url": "https://simonwillison.net/2026/Sep/23/gemini-tts-playground/",
+   "published": "2026-09-23T17:12:27Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "Tool: Gemini 3.8 TTS Playground Google released two new Gemini text-to-speech models today - and . They come with a library of over 2,000 voices, plus the ability to create a custom voice with \"just a 30-second audio sample of your voice or a voice you have the rights to use\". I…"
+  },
+  {
+   "id": "3a35425568c4",
+   "source": "pragmatic",
+   "section": "people",
+   "title": "Design Engineering with Maggie Appleton",
+   "url": "https://newsletter.pragmaticengineer.com/p/design-engineering-with-maggie-appleton",
+   "published": "2026-09-23T17:07:22Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Maggie Appleton on what engineers can learn from designers, working with AI agents, and why human judgment still matters."
+  },
+  {
+   "id": "dff539682bf2",
+   "source": "vscode",
+   "section": "tools",
+   "title": "Visual Studio Code 1.139",
+   "url": "https://code.visualstudio.com/updates/v1_139",
+   "published": "2026-09-23T17:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Learn what is new in Visual Studio Code 1.139 Read the full article"
+  },
+  {
+   "id": "4ac08839bdb3",
+   "source": "simonw",
+   "section": "people",
+   "title": "Shadow roots, explained with live examples",
+   "url": "https://simonwillison.net/2026/Sep/23/shadow-roots/",
+   "published": "2026-09-23T16:37:18Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "Tool: Shadow roots, explained with live examples Prompt to Fable 5.1 Medium: Tags: css"
+  },
+  {
+   "id": "cd8117c6d35f",
+   "source": "deepmind",
+   "section": "labs",
+   "title": "Advancing Private AI Compute with secure, server-side memory",
+   "url": "https://deepmind.google/blog/advancing-private-ai-compute-with-secure-server-side-memory/",
+   "published": "2026-09-23T16:00:57Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Introducing private, server-side memory to Private AI Compute for personal AI."
+  },
+  {
+   "id": "9d02eeb8cef1",
+   "source": "openai",
+   "section": "labs",
+   "title": "Two years of OpenAI Academy",
+   "url": "https://openai.com/index/two-years-of-openai-academy",
+   "published": "2026-09-23T16:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Marking two years of OpenAI Academy and bringing AI skills to even more communities."
+  },
+  {
+   "id": "914ed32ad555",
+   "source": "deepmind",
+   "section": "labs",
+   "title": "Gemini 3.8 text-to-speech says hello",
+   "url": "https://deepmind.google/blog/say-hello-to-gemini-38-text-to-speech/",
+   "published": "2026-09-23T15:25:14Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "1d77064cbebb",
+   "source": "openai",
+   "section": "labs",
+   "title": "OpenAI extends cyber access to Ukraine for civilian defense",
+   "url": "https://openai.com/index/openai-extends-cyber-access-to-ukraine-for-civilian-defense",
+   "published": "2026-09-23T13:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "OpenAI is extending access to its Daybreak program to the Government of Ukraine to support the cyber defense of civilian infrastructure."
+  },
+  {
+   "id": "01d4e543c941",
+   "source": "openai",
+   "section": "labs",
+   "title": "Sam Altman’s remarks at the United Nations Security Council",
+   "url": "https://openai.com/index/sam-altman-un-security-council-remarks",
+   "published": "2026-09-23T12:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "OpenAI CEO Sam Altman discusses AI safety, human control, and international cooperation in remarks to the United Nations Security Council."
+  },
+  {
+   "id": "f7558dc5c9de",
+   "source": "openai",
+   "section": "labs",
+   "title": "Harvey turns legal context into stronger drafts with GPT-6 Astra",
+   "url": "https://openai.com/index/harvey-from-context-to-confidence-with-astra",
+   "published": "2026-09-23T12:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "GPT-6 Astra produces more structured, context-aware legal documents, freeing lawyers to focus on strategy."
+  },
+  {
+   "id": "7357353a1f1d",
+   "source": "openai",
+   "section": "labs",
+   "title": "How invideo improves color grading 3x with GPT‑6 Astra",
+   "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
+   "published": "2026-09-23T12:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "With GPT‑6 Astra, invideo plans edits with greater precision, improves color correction and grading threefold, and produces 50 custom effects in one day."
+  },
+  {
+   "id": "7cff1964bf19",
+   "source": "openai",
+   "section": "labs",
+   "title": "Ringg’s AI agents resolve up to 65% of customer calls with OpenAI",
+   "url": "https://openai.com/index/ringg",
+   "published": "2026-09-23T12:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Using GPT-5.6, Ringg powers multilingual agents across voice, chat, WhatsApp, and web for 90% less cost vs. GPT-4.1."
+  },
+  {
+   "id": "1d5a9cc2d950",
+   "source": "openai",
+   "section": "labs",
+   "title": "Introducing MentalHealthBench",
+   "url": "https://openai.com/index/introducing-mentalhealthbench",
+   "published": "2026-09-23T10:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "MentalHealthBench is an expert-informed benchmark for evaluating helpful and safe AI responses across realistic mental health conversations."
+  },
+  {
+   "id": "99856cab1039",
+   "source": "vllm",
+   "section": "tools",
+   "title": "v0.30.1rc0: [ROCm][CI] Add MI355 dense NVFP4 and MoRI kernel mirrors (#58281)",
+   "url": "https://github.com/vllm-project/vllm/releases/tag/v0.30.1rc0",
+   "published": "2026-09-23T08:06:15Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Signed-off-by: Andreas Karatzas akaratza@amd.com Co-authored-by: OpenAI Codex noreply@openai.com",
+   "kind": "release"
+  },
+  {
+   "id": "50fdf1ad73b0",
+   "source": "simonw",
+   "section": "people",
+   "title": "SF October 14th: A Birds of a Feather Session on Agentic Engineering",
+   "url": "https://simonwillison.net/2026/Sep/23/bof-agentic-engineering/",
+   "published": "2026-09-23T02:53:19Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "SF October 14th: A Birds of a Feather Session on Agentic Engineering I'm hosting an evening event with Jesse Vincent in San Francisco on Wednesday 14th October for people who are building weird and interesting things with and on top of coding agents. Think of it as an agentic…"
+  },
+  {
+   "id": "1dd9ce125c6e",
+   "source": "openai",
+   "section": "labs",
+   "title": "ChatGPT Ads expands to Southeast Asia and Taiwan",
+   "url": "https://openai.com/index/chatgpt-ads-expands-southeast-asia-taiwan",
+   "published": "2026-09-23T02:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "ChatGPT Ads is expanding to Southeast Asia and Taiwan, giving eligible businesses new ways to reach people across more than 60 countries."
+  },
+  {
+   "id": "8874bd8a6c05",
+   "source": "agent-sdk",
+   "section": "tools",
+   "title": "v0.2.158",
+   "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.158",
+   "published": "2026-09-23T01:40:27Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "New Features option : Added (default ). When , user messages are delivered to the CLI exactly as written — no file expansion and no slash-command dispatch. This prevents untrusted text inlined into prompts from triggering unintended file reads or command execution. Works with…",
+   "kind": "release"
+  },
+  {
+   "id": "73fafdf6f45f",
+   "source": "openai",
+   "section": "labs",
+   "title": "Airbnb widens access to GPT-6 Astra and OpenAI frontier models",
+   "url": "https://openai.com/index/airbnb-gpt-6-astra",
+   "published": "2026-09-23T01:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Learn how Airbnb is expanding access to GPT-6 Astra and OpenAI frontier models to help engineering teams solve bugs, design systems, and ship faster."
+  },
+  {
+   "id": "09a0c6dbf1c6",
+   "source": "openai",
+   "section": "labs",
+   "title": "Grab and OpenAI bring practical AI skills to Southeast Asia",
+   "url": "https://openai.com/index/grab-openai-ai-skills-southeast-asia",
+   "published": "2026-09-23T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "OpenAI and Grab launch GO Forward with AI, a regional programme helping 30,000 partners build practical AI skills across Southeast Asia."
+  },
+  {
+   "id": "b39bf31f6b2f",
+   "source": "vscode",
+   "section": "tools",
+   "title": "Building the new GitHub Copilot Inline Suggestions Model: Part Two",
+   "url": "https://code.visualstudio.com/blogs/2026/09/23/building-the-github-copilot-inline-suggestions-model-part-two",
+   "published": "2026-09-23T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "See how GitHub Copilot added completions to its unified inline suggestions model, refined ghost text and editor behavior, and improved user satisfaction. Read the full article"
+  },
+  {
+   "id": "089c4ff63dd0",
+   "source": "cursor",
+   "section": "tools",
+   "title": "Rollouts and Security Review",
+   "url": "https://cursor.com/changelog/rollouts-and-security-reviewer",
+   "published": "2026-09-23T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Two bots for the last mile of shipping code: Rollouts watches every change as it deploys, and Security Review reports exploitable bugs on every pull request."
+  },
+  {
+   "id": "4a34b417a079",
+   "source": "simonw",
+   "section": "people",
+   "title": "Claude Opus 5.5, GPT-6 Sol, GPT-6 Luna, and a new price war",
+   "url": "https://simonwillison.net/2026/Sep/22/opus-and-sol-and-luna/",
+   "published": "2026-09-22T23:46:41Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Yesterday was Grok 4.7 ( pelicans ) and MiMo v2.6 Flash/Pro ( more pelicans ). Today Anthropic released Claude Opus 5.5 , and around an hour later OpenAI released GPT-6 Sol and GPT-6 Luna . It's going to take a while to get a good read on all of these new models, but here are my…"
+  },
+  {
+   "id": "b6b1e4118cdb",
+   "source": "openai",
+   "section": "labs",
+   "title": "Better prompt caching for GPT-6",
+   "url": "https://openai.com/index/better-prompt-caching-for-gpt-6",
+   "published": "2026-09-22T21:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Learn how GPT-6 improves prompt caching with higher cache hit rates, new diagnostics, explicit breakpoints, and controls that reduce latency and costs."
+  },
+  {
+   "id": "d0b8add964d8",
+   "source": "ollama",
+   "section": "tools",
+   "title": "v0.34.3",
+   "url": "https://github.com/ollama/ollama/releases/tag/v0.34.3",
+   "published": "2026-09-22T20:42:48Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "What's Changed now advertises each model's thinking controls and default: Available in the CLI with: Available in the API with: Also available on ollama.com directly for cloud models. Nemotron H vision models are now supported on Apple Silicon with MLX Ollama's macOS app will…",
+   "kind": "release"
+  },
+  {
+   "id": "1b1371e9ec40",
+   "source": "simonw",
+   "section": "people",
+   "title": "llm 0.36",
+   "url": "https://simonwillison.net/2026/Sep/22/llm/",
+   "published": "2026-09-22T18:48:37Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "Release: llm 0.36 New OpenAI models: for GPT-6 Sol and for GPT-6 Luna . #1702 Model plugins can now declare for models that only accept single-turn prompts. LLM raises when these models receive assistant or tool history, and rejects them before starting a session. See Models…"
+  },
+  {
+   "id": "79b810a72cca",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "OpenAI GPT-6 Sol and GPT-6 Luna are now generally available on Amazon Bedrock",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/openai-gpt-6-sol-luna-on-amazon-bedrock/",
+   "published": "2026-09-22T18:09:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Today, AWS announces the general availability of GPT-6 Sol and GPT-6 Luna from OpenAI on Amazon Bedrock. Expanding the GPT-6 family alongside Astra, these two models give teams more ways to balance intelligence, speed, and cost across every workload. Sol is the daily model for…"
+  },
+  {
+   "id": "bbd1dec96414",
+   "source": "simonw",
+   "section": "people",
+   "title": "Quoting @therealcornpop",
+   "url": "https://simonwillison.net/2026/Sep/22/therealcornpop/",
+   "published": "2026-09-22T18:03:21Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "Hey, you know it's like super obvious if you're using AI to write your scripts for TikTok and YouTube, right? [...] It's not just the general AI-isms of \"it's not X, it's Y\", or the rule of three, or the really weird broken staccato-like way of writing where you just say a lot…"
+  },
+  {
+   "id": "a1905b81ace1",
+   "source": "pragmatic",
+   "section": "people",
+   "title": "How will AI change operating systems? Part 2: Windows",
+   "url": "https://newsletter.pragmaticengineer.com/p/windows-and-ai",
+   "published": "2026-09-22T17:17:31Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Deepdive into the Windows team’s efforts to make the OS “AI agent-friendly” and win back developers by going all-in on Linux on Windows, local models, GPUs, & more"
+  },
+  {
+   "id": "81ac4d38e589",
+   "source": "simonw",
+   "section": "people",
+   "title": "llm-anthropic 0.29",
+   "url": "https://simonwillison.net/2026/Sep/22/llm-anthropic/",
+   "published": "2026-09-22T17:14:55Z",
+   "first_seen": "2026-09-26T07:15:47Z",
+   "summary": "Release: llm-anthropic 0.29 Adds support for Claude Opus 5.5 : Tags: llm , anthropic"
+  },
+  {
+   "id": "11e6cde07112",
+   "source": "claude-code",
+   "section": "tools",
+   "title": "v2.1.280",
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.280",
+   "published": "2026-09-22T16:38:14Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "What's changed Added Claude Opus 5.5 ( ), now the default Opus model — 1M context, $4/$20 per Mtok with $0.20/Mtok cache reads Added mouse support to more lists in fullscreen mode: the wheel scrolls the list, and a skill's state options in can be clicked Added to change the…",
+   "kind": "release"
+  },
+  {
+   "id": "0647ffff84a0",
+   "source": "interconnects",
+   "section": "people",
+   "title": "Debating RSI, the US-China Gap, and Jaggedness with JS Denain of Epoch AI",
+   "url": "https://www.interconnects.ai/p/debating-rsi-the-us-china-gap-and",
+   "published": "2026-09-22T13:37:45Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Podcast #19"
+  },
+  {
+   "id": "7c8557f1e146",
+   "source": "zvi",
+   "section": "people",
+   "title": "Politics Gets Interested In Those Trying Not To Die",
+   "url": "https://thezvi.substack.com/p/politics-gets-interested-in-those",
+   "published": "2026-09-22T12:58:51Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "This was the month the world took notice that AI might kill everyone."
+  },
+  {
+   "id": "49c023466b3c",
+   "source": "vllm",
+   "section": "tools",
+   "title": "v0.30.0",
+   "url": "https://github.com/vllm-project/vllm/releases/tag/v0.30.0",
+   "published": "2026-09-22T05:20:54Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "v0.30.0 Highlights This release features 762 commits from 315 contributors (104 new)! New models : DeepSeek-V4.1-Flash ( #56214 , #56228 , #56208 ) with the whole KV stored in MXFP8 through the FlashMLA V4.1 record on SM100 ( #56893 ), DeepGEMM Mega-mHC ( #56962 ), and async…",
+   "kind": "release"
+  },
+  {
+   "id": "2960c64a019e",
+   "source": "hfblog",
+   "section": "labs",
+   "title": "How UK AISI and EvalEval Are Making Benchmark Results Reproducible",
+   "url": "https://huggingface.co/blog/evaleval-aisi",
+   "published": "2026-09-22T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "98acfe91fd30",
+   "source": "hfblog",
+   "section": "labs",
+   "title": "Transformers now runs llama.cpp quants",
+   "url": "https://huggingface.co/blog/transformers-llama-cpp-quants",
+   "published": "2026-09-22T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "fb8ad85c459c",
+   "source": "hfblog",
+   "section": "labs",
+   "title": "Jun Kim, oMLX creator and maintainer, joins Hugging Face to support the MLX community",
+   "url": "https://huggingface.co/blog/omlx",
+   "published": "2026-09-22T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "bab2d7bf8d41",
+   "source": "anthropic",
+   "section": "labs",
+   "title": "How Claude is uplifting biomolecular modeling",
+   "url": "https://www.anthropic.com/research/claude-uplifts-biomolecular-modeling",
+   "published": "2026-09-21T23:14:52Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems."
+  },
+  {
+   "id": "82b7c1ad7628",
+   "source": "simonw",
+   "section": "people",
+   "title": "Jev introduces a new shape of LLM - System One, aka Decision Models",
+   "url": "https://simonwillison.net/2026/Sep/21/jev/",
+   "published": "2026-09-21T23:09:20Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Last week TypeSafe AI unveiled Jev , their first example of a new category of model that they are calling \"System One models\" (I'm with Maggie Appleton, I think \"decision models\" is a better name for these). Jev is an interesting variant on the usual LLM format: it still accepts…"
+  },
+  {
+   "id": "4365ab95abe0",
+   "source": "minimaxir",
+   "section": "people",
+   "title": "Writing Rust code that's faster than state-of-the-art libraries by asking agents to make the code faster",
+   "url": "https://minimaxir.com/2026/09/agentic-iteration/",
+   "published": "2026-09-21T16:30:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "c’mon, try doing a breakthrough"
+  },
+  {
+   "id": "c056c2e41db1",
+   "source": "importai",
+   "section": "people",
+   "title": "Import AI 473: The US's superintelligence strategy; human brain in a mouse skull; and machine hermeneutics",
+   "url": "https://importai.substack.com/p/import-ai-473-the-uss-superintelligence",
+   "published": "2026-09-21T12:31:04Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Is the wall AI is hitting in the room with us right now?"
+  },
+  {
+   "id": "9b44d7e44f1c",
+   "source": "interconnects",
+   "section": "people",
+   "title": "The current balance of power in open models",
+   "url": "https://www.interconnects.ai/p/the-current-balance-of-power-in-open",
+   "published": "2026-09-21T11:56:56Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "The expanded form of a testimony I prepared for Congress."
+  },
+  {
+   "id": "5709a0147094",
+   "source": "thorstenball",
+   "section": "people",
+   "title": "Joy & Curiosity #100",
+   "url": "https://registerspill.thorstenball.com/p/joy-and-curiosity-100",
+   "published": "2026-09-20T06:23:08Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Interesting & joyful things from the previous week"
+  },
+  {
+   "id": "a2b1dfc0df30",
+   "source": "seangoedecke",
+   "section": "people",
+   "title": "System One models like Jev can train their own replacements",
+   "url": "https://seangoedecke.com/system-one-models-can-train-their-own-replacements/",
+   "published": "2026-09-20T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "“System One” models like Jev are fast general classifiers. Classifiers have existed since 1958 , but they have to be trained for specific tasks: if you build a classifier to identify images of dogs, it can’t be used to tell you if a streetlight is red, or if a letter is urgent…"
+  },
+  {
+   "id": "533d95f1b4ed",
+   "source": "seangoedecke",
+   "section": "people",
+   "title": "Grit your teeth and ship it",
+   "url": "https://seangoedecke.com/grit-your-teeth-and-ship-it/",
+   "published": "2026-09-20T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Being good at building and being good at shipping are two separate skills. In the short term, they’re actually countervailing: if you have a gift for building, you’re likely to be worse at shipping. Ira Glass has a classic quote about this. All of us who do creative work, we get…"
+  },
+  {
+   "id": "172fc02df49f",
+   "source": "interconnects",
+   "section": "people",
+   "title": "Why I still haven’t bought into true RSI",
+   "url": "https://www.interconnects.ai/p/where-i-stand-on-rsi",
+   "published": "2026-09-19T15:42:20Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "An “AI moderate’s” view on recent events and the trajectory of frontier models."
+  },
+  {
+   "id": "28367d69f519",
+   "source": "claude-code",
+   "section": "tools",
+   "title": "v2.1.278",
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.278",
+   "published": "2026-09-19T03:10:40Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "What's changed Changed auto mode for Claude API and Enterprise users, and on Bedrock, Vertex, Foundry and gateways, to default to the server-side classifier, which does not charge for classifier overhead ( opts out on Bedrock, Vertex, Foundry and gateways); warns on billed…",
+   "kind": "release"
+  },
+  {
+   "id": "8e0875f123d1",
+   "source": "vllm",
+   "section": "tools",
+   "title": "v0.30.0rc2",
+   "url": "https://github.com/vllm-project/vllm/releases/tag/v0.30.0rc2",
+   "published": "2026-09-18T21:15:44Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "[Bugfix][NIXL] Avoid receive reports for notification-only requests (…",
+   "kind": "release"
+  },
+  {
+   "id": "879ba832b5d6",
+   "source": "anthropic",
+   "section": "labs",
+   "title": "Partnering with Accenture on embedded evaluation",
+   "url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+   "published": "2026-09-18T20:02:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "We’re partnering with Accenture on independent evaluation of frontier AI—part of our recent commitment to embed evaluators at Anthropic. Both we and Accenture expect to invest at least $1 billion to build capacity in this area over the next five years."
+  },
+  {
+   "id": "a84fff8827c5",
+   "source": "mollick",
+   "section": "people",
+   "title": "The Overhang",
+   "url": "https://www.oneusefulthing.org/p/the-overhang",
+   "published": "2026-09-18T17:54:32Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Using your deep knowledge, wide knowledge, taste, and agency"
+  },
+  {
+   "id": "b68c82da697a",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "AWS Resilience Hub adds three new capabilities",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/resilience-hub-eks-dependency-policy/",
+   "published": "2026-09-18T16:49:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "The next generation of AWS Resilience Hub is a central location in the AWS that helps platform engineering and site reliability teams assess and strengthen the resilience of their workloads running on AWS. It provides automated dependency discovery, generative AI-powered failure…"
+  },
+  {
+   "id": "5a3c949823f5",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "Kimi K3 by Moonshot AI is now generally available on Amazon Bedrock",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/moonshot-ai-kimi-k3-on-amazon-bedrock/",
+   "published": "2026-09-18T15:15:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Amazon Bedrock continues to expand its open weight model portfolio with the same security and governance that customers rely on. Today, Kimi K3 from Moonshot AI is generally available on Amazon Bedrock, giving you a powerful new option for coding and knowledge work. According to…"
+  },
+  {
+   "id": "c72f60fcf6ad",
+   "source": "googleai",
+   "section": "labs",
+   "title": "New experts join Google’s AI & Economy team",
+   "url": "https://blog.google/innovation-and-ai/technology/ai/expanding-ai-economy-research-bench/",
+   "published": "2026-09-18T14:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "We are expanding our AI & Economy team with world-class academic advisors, fellows, and core internal researchers."
+  },
+  {
+   "id": "94ad9f737cb6",
+   "source": "googleai",
+   "section": "labs",
+   "title": "Co-creating the future of fashion with Google",
+   "url": "https://blog.google/innovation-and-ai/technology/ai/google-flow-fashion-week/",
+   "published": "2026-09-18T13:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Google worked side-by-side with designers Jane Wade and Sergio Hudson to custom-design Google Flow tools to prep for NYFW."
+  },
+  {
+   "id": "b8fcb7456281",
+   "source": "hamel",
+   "section": "learning",
+   "title": "AI Evals: Everything You Need to Know",
+   "url": "https://hamel.dev/blog/posts/evals-faq/",
+   "published": "2026-09-18T07:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "This document curates the most common questions Shreya and I received while teaching 5,000+ engineers and PMs AI Evals. Warning: These are sharp opinions about what works in most cases. They are not universal truths. Use your judgment. How to use this FAQ Browse the questions…"
+  },
+  {
+   "id": "aa617abcb5b6",
+   "source": "seangoedecke",
+   "section": "people",
+   "title": "Two techniques for working with System One models",
+   "url": "https://seangoedecke.com/two-techniques-for-working-with-system-one-models/",
+   "published": "2026-09-18T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "I recently wrote about Jev , a new “System One” language model that only outputs decisions : the answers to a set of user-provided multiple-choice questions. This means it’s nowhere near as flexible 1 as a traditional LLM like ChatGPT, but in return it’s consistently fast. We…"
+  },
+  {
+   "id": "7d2409ba8601",
+   "source": "anthropic",
+   "section": "labs",
+   "title": "An alignment assessment of recent cybersecurity incidents",
+   "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents",
+   "published": "2026-09-17T23:46:13Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "We present an alignment assessment of four incidents in which Claude models gained unauthorized access to real third-party systems."
+  },
+  {
+   "id": "819f22112f1b",
+   "source": "anthropic",
+   "section": "labs",
+   "title": "Introducing the Life Sciences Verification Program",
+   "url": "https://www.anthropic.com/news/life-sciences-verification-program",
+   "published": "2026-09-17T20:15:21Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems."
+  },
+  {
+   "id": "df4ade904b04",
+   "source": "googleai",
+   "section": "labs",
+   "title": "Making global data easier to explore",
+   "url": "https://blog.google/innovation-and-ai/technology/ai/google-un-data-commons-platform/",
+   "published": "2026-09-17T20:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Google and the UN system have launched the UN System Data Commons, a new open platform making global statistics accessible and easy to search."
+  },
+  {
+   "id": "a357b00b9cf8",
+   "source": "dwarkesh",
+   "section": "people",
+   "title": "Noam Brown – Agent swarms, alignment, & recursive self-improvement",
+   "url": "https://www.dwarkesh.com/p/noam-brown",
+   "published": "2026-09-17T15:38:13Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "“We never want to be in a situation again where we underestimate the AI.”"
+  },
+  {
+   "id": "f94aebde26a5",
+   "source": "vllm",
+   "section": "tools",
+   "title": "proto-v0.3.0",
+   "url": "https://github.com/vllm-project/vllm/releases/tag/proto-v0.3.0",
+   "published": "2026-09-17T03:47:02Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Release vllm-proto 0.3.0",
+   "kind": "release"
+  },
+  {
+   "id": "fdb8de2269af",
+   "source": "vscode",
+   "section": "tools",
+   "title": "Visual Studio Code 1.138",
+   "url": "https://code.visualstudio.com/updates/v1_138",
+   "published": "2026-09-16T17:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Learn what is new in Visual Studio Code 1.138 Read the full article"
+  },
+  {
+   "id": "af15d0951d03",
+   "source": "vllm",
+   "section": "tools",
+   "title": "proto-v0.2.0: vllm-proto 0.2.0",
+   "url": "https://github.com/vllm-project/vllm/releases/tag/proto-v0.2.0",
+   "published": "2026-09-16T08:32:41Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Validated by PR #56538 CI at fa2a26f .",
+   "kind": "release"
+  },
+  {
+   "id": "2f92a8ca47fb",
+   "source": "deepmind",
+   "section": "labs",
+   "title": "Introducing Gemini 3.8 Live and 3.8 Live Extended Thinking",
+   "url": "https://deepmind.google/blog/introducing-gemini-3-8-live-and-3-8-live-extended-thinking/",
+   "published": "2026-09-15T17:05:57Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "149a852934bd",
+   "source": "googleai",
+   "section": "labs",
+   "title": "AI for Societal Impact",
+   "url": "https://blog.google/innovation-and-ai/technology/ai/ai-for-societal-impact/",
+   "published": "2026-09-15T16:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Explore this collection to see how experts and local leaders are using AI breakthroughs to ensure everyone can share the opportunity of AI."
+  },
+  {
+   "id": "a92a5d7b9e73",
+   "source": "mitsuhiko",
+   "section": "people",
+   "title": "Interpreting Pangram",
+   "url": "https://lucumr.pocoo.org/2026/9/14/interpreting-pangram/",
+   "published": "2026-09-14T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Yesterday David Sacks wrote a tweet and within a few minutes people did, what they usually do, and they asked Pangram if it was AI. And Pangram said it’s entirely AI generated . To which David replied that these AI detectors are bogus . Now Pangram has a pretty low false…"
+  },
+  {
+   "id": "2981ecf752e1",
+   "source": "simonw",
+   "section": "people",
+   "title": "Generating running routes with GPT-6 Astra and ChatGPT Work",
+   "url": "https://simonwillison.net/2026/Sep/12/astra-running-routes/",
+   "published": "2026-09-12T23:56:42Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Here's a neat thing I had ChatGPT Work with GPT-6 Astra (Max) do this morning: It worked for 27 minutes and produced exactly what I'd asked for, as both an embedded visualization and downloadable GPX file and GeoJSON files. Here's that 5K route: When I asked it how it had…"
+  },
+  {
+   "id": "9fa8651f2be7",
+   "source": "thorstenball",
+   "section": "people",
+   "title": "Joy & Curiosity #99",
+   "url": "https://registerspill.thorstenball.com/p/joy-and-curiosity-99",
+   "published": "2026-09-12T15:00:18Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Interesting & joyful things from the previous week"
+  },
+  {
+   "id": "a865e994fffa",
+   "source": "mitsuhiko",
+   "section": "people",
+   "title": "P(doom)",
+   "url": "https://lucumr.pocoo.org/2026/9/12/pdoom/",
+   "published": "2026-09-12T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "This week some flavor of “AI is going to kill us all” went viral. In particular one where an employee put his personal probability of that happening above 10%. Which made me go to the Wikipedia page of P(doom) and I realized that Dario Amodei’s apparent probability of something…"
+  },
+  {
+   "id": "3d98c72f4ee4",
+   "source": "dwarkesh",
+   "section": "people",
+   "title": "AI researchers debate how close we are to recursive self-improvement",
+   "url": "https://www.dwarkesh.com/p/john-beren-charlie",
+   "published": "2026-09-11T16:28:11Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "“We're nowhere near the ceiling.”"
+  },
+  {
+   "id": "aa714299e964",
+   "source": "gilesthomas",
+   "section": "learning",
+   "title": "Extending Raschka's GPT-2: an MoE trained from scratch on an RTX 3090",
+   "url": "https://www.gilesthomas.com/2026/09/gpt-2-to-moe",
+   "published": "2026-09-10T18:45:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Mixture-of-experts models are really nifty. You get inference speed close to a small model's, with a lot of the smarts and knowledge of a large one. While they use as much memory as an equivalently-sized dense (non-MoE) model, they're much faster. The frontier labs don't publish…"
+  },
+  {
+   "id": "44084287147f",
+   "source": "raschka",
+   "section": "learning",
+   "title": "GPT-6 Astra, Looped Transformers, and Hidden Reasoning",
+   "url": "https://magazine.sebastianraschka.com/p/gpt-6-astra-looped-transformers-and",
+   "published": "2026-09-09T11:14:25Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "A Look at Recurrent Depth, Hidden Chains of Thought, and Recent Research on Looping Transformer Blocks"
+  },
+  {
+   "id": "aa42fa82a69f",
+   "source": "dwarkesh",
+   "section": "people",
+   "title": "Pretraining progress is mostly coming from data",
+   "url": "https://www.dwarkesh.com/p/pretraining-progress-is-mostly-data",
+   "published": "2026-09-08T16:10:16Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Breaking down 6 years of pretraining progress into data vs model improvements"
+  },
+  {
+   "id": "70b5f0acd703",
+   "source": "werner",
+   "section": "people",
+   "title": "The oldest architecture in computing",
+   "url": "https://www.allthingsdistributed.com/2026/09/the-oldest-architecture-in-computing.html?utm_campaign=inbound&utm_source=rss",
+   "published": "2026-09-08T14:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "A GPU burns 700 watts and hundreds of thousands of tries to learn Pong. A human brain does it on 20 watts in a handful of attempts. So what can the oldest architecture in computing teach us about where agents and memory are headed?"
+  },
+  {
+   "id": "ef3a54d6ef5a",
+   "source": "importai",
+   "section": "people",
+   "title": "Import AI 472: DeepMind's cheating math agents; populist AI policies; and Forethought theorizes a nightwatchman",
+   "url": "https://importai.substack.com/p/import-ai-472-deepminds-cheating",
+   "published": "2026-09-07T12:26:31Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Plus, a machine hermeneutics story"
+  },
+  {
+   "id": "369127da9acb",
+   "source": "mitsuhiko",
+   "section": "people",
+   "title": "Astra for Coding: Why Are We Doing This Again?",
+   "url": "https://lucumr.pocoo.org/2026/9/7/astra-why/",
+   "published": "2026-09-07T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "I’m more and more convinced that all of AI engineering is Neijuan (内卷, meaning curl inwards). In China it describes a system that demands ever more effort and competition without improving output. The way in which it sometimes shows up in the West is the 996 nonsense . The…"
+  },
+  {
+   "id": "7cd9cbd432cc",
+   "source": "alderson",
+   "section": "people",
+   "title": "Have the frontier labs mixed up AI safety and security?",
+   "url": "https://martinalderson.com/posts/ai-safety-vs-security/?utm_source=rss&utm_medium=rss&utm_campaign=feed",
+   "published": "2026-09-06T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "The recent agent sandbox escapes at OpenAI and Anthropic look less like a technical failure and more like a philosophical one - treating security controls as though they only need to work most of the time."
+  },
+  {
+   "id": "40e40ee84009",
+   "source": "gilesthomas",
+   "section": "learning",
+   "title": "Putting my JAX-trained models on the Hugging Face Hub",
+   "url": "https://www.gilesthomas.com/2026/09/jax-models-on-hugging-face",
+   "published": "2026-09-03T18:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "I hadn't uploaded the models that I trained using JAX to the Hugging Face Hub because Transformers has been PyTorch-only since version 5 (though they say they're working to add interoperability with JAX in the future), so it would have been tough to get them working natively…"
+  },
+  {
+   "id": "ae5537717b51",
+   "source": "importai",
+   "section": "people",
+   "title": "Import AI 471: Why Hugging Face worries me; space mining; FIve Eyes on AI",
+   "url": "https://importai.substack.com/p/import-ai-471-why-hugging-face-worries",
+   "published": "2026-08-31T13:31:06Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Plus, a live event with Robin Sloan!"
+  },
+  {
+   "id": "43c454f4aa35",
+   "source": "mollick",
+   "section": "people",
+   "title": "Agency and Agents",
+   "url": "https://www.oneusefulthing.org/p/agency-and-agents",
+   "published": "2026-08-31T00:24:35Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "From the Hugging Face Incident to Twilight Factories"
+  },
+  {
+   "id": "cfbfdce47c63",
+   "source": "alderson",
+   "section": "people",
+   "title": "Reducing codebase cognitive debt through... quizzes?",
+   "url": "https://martinalderson.com/posts/codebase-cognitive-debt-quizzes/?utm_source=rss&utm_medium=rss&utm_campaign=feed",
+   "published": "2026-08-31T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "A simple technique for keeping up with a codebase that coding agents are changing faster than you can read: ask the agent to quiz you on it."
+  },
+  {
+   "id": "e6cc5ca4171c",
+   "source": "alderson",
+   "section": "people",
+   "title": "What GLM-5.3 Flash running on Chinese hardware actually means",
+   "url": "https://martinalderson.com/posts/glm-5-3-flash-chinese-hardware/?utm_source=rss&utm_medium=rss&utm_campaign=feed",
+   "published": "2026-08-29T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Z.AI ran a full model release on domestically manufactured Chinese chips. Impressive, but EUV lithography is a hard wall and the gap with Western inference hardware is more likely to widen than close."
+  },
+  {
+   "id": "7155c4d26446",
+   "source": "gilesthomas",
+   "section": "learning",
+   "title": "Why do OpenAI's GPT-2 weights beat mine? Part four: digging into dropout",
+   "url": "https://www.gilesthomas.com/2026/08/why-do-openai-gpt2-weights-beat-mine-4-ift-dropout",
+   "published": "2026-08-27T19:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "I'm still digging into a mystery about the models I've been training; although an increasing number of them beat the OpenAI GPT-2 small weights on the narrow technical measure of the loss they get on a test set, they're not as good at an instruction-fine-tuning test . While…"
+  },
+  {
+   "id": "396f18c22dc4",
+   "source": "lexfridman",
+   "section": "people",
+   "title": "#501 – DHH: Future of Programming, AI, Agentic Engineering, Vibe Coding & Linux",
+   "url": "https://lexfridman.com/dhh-2/?utm_source=rss&utm_medium=rss&utm_campaign=dhh-2",
+   "published": "2026-08-26T21:47:04Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "DHH is the creator of Ruby on Rails, Omarchy Linux, CTO of 37signals, and a racecar driver. Thank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep501-sc See below for timestamps, transcript, and to give feedback, submit questions, contact Lex, etc…"
+  },
+  {
+   "id": "df5399c7f9d2",
+   "source": "raschka",
+   "section": "learning",
+   "title": "How Claude Watermarks AI-Generated Text",
+   "url": "https://magazine.sebastianraschka.com/p/claude-watermarking",
+   "published": "2026-08-22T11:11:39Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "A 48-minute video walkthrough of token sampling, watermark detection, and removal"
+  },
+  {
+   "id": "53ddef6230f1",
+   "source": "raschka",
+   "section": "learning",
+   "title": "Building an AI Text Detector From Scratch",
+   "url": "https://magazine.sebastianraschka.com/p/ai-detector-from-scratch",
+   "published": "2026-08-15T11:54:24Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "An End-to-End Project With Dataset Construction, Model Training, Local Deployment, and RLVR"
+  },
+  {
+   "id": "8e67caa3b283",
+   "source": "mitchellh",
+   "section": "people",
+   "title": "Superlogical",
+   "url": "https://mitchellh.com/writing/superlogical",
+   "published": "2026-07-29T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "fe5f893fdeb7",
+   "source": "mollick",
+   "section": "people",
+   "title": "An opinionated guide to which AI to use to do stuff",
+   "url": "https://www.oneusefulthing.org/p/an-opinionated-guide-to-which-ai-b22",
+   "published": "2026-07-23T18:05:24Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "The Summer 2026 Edition"
+  },
+  {
+   "id": "7a431cf2a51e",
+   "source": "minimaxir",
+   "section": "people",
+   "title": "LLMs break down in funny ways when told the Jacobian Conjecture counterargument",
+   "url": "https://minimaxir.com/2026/07/jacobian-conjecture/",
+   "published": "2026-07-23T16:15:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Cognitohazards can affect machines too."
+  },
+  {
+   "id": "2a21281a6027",
+   "source": "mitchellh",
+   "section": "people",
+   "title": "Everyone Should Know SIMD",
+   "url": "https://mitchellh.com/writing/everyone-should-know-simd",
+   "published": "2026-07-22T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "2087c81ffa1f",
+   "source": "minimaxir",
+   "section": "people",
+   "title": "What's the deal with all the random weekly quota resets for agents lately?",
+   "url": "https://minimaxir.com/2026/07/agent-quota-reset/",
+   "published": "2026-07-18T19:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "I’m going to be the weirdo who complains about literally getting free stuff."
+  },
+  {
+   "id": "f4072691237e",
+   "source": "hamel",
+   "section": "learning",
+   "title": "Do Automated Evals Work?",
+   "url": "https://hamel.dev/",
+   "published": "2026-07-11T07:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "We compared 100 human annotated traces against automated eval systems. Here's what we found."
+  },
+  {
+   "id": "b44fa46ddb29",
+   "source": "lilianweng",
+   "section": "learning",
+   "title": "Harness Engineering for Self-Improvement",
+   "url": "https://lilianweng.github.io/posts/2026-07-04-harness/",
+   "published": "2026-07-04T00:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "The concept of recursive self-improvement (RSI) dates back to I. J. Good (1965) , where he defined an “ultraintelligent machine” as a system that can surpass humans in all intellectual activities and design better machines to improve itself. Yudkowsky (2008) used the phrase…"
+  },
+  {
+   "id": "da87069e0975",
+   "source": "geoffreylitt",
+   "section": "people",
+   "title": "Understanding is the new bottleneck",
+   "url": "https://geoffreylitt.com/2026/07/02/understanding-is-the-new-bottleneck.html",
+   "published": "2026-07-02T10:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "July 2026 Understanding is the new bottleneck This is a written version of a talk I gave at the AI Engineer conference in July 2026, also shared as a tweet thread. Hot take: I think it's still important to understand the code that our agents..."
+  },
+  {
+   "id": "f41228624352",
+   "source": "hamel",
+   "section": "learning",
+   "title": "“It’s Hard to Eval” Is a Product Smell",
+   "url": "https://hamel.dev/blog/posts/eval-smell/",
+   "published": "2026-06-29T07:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "For the past 3 years, AI evals have been my professional focus. 1 The most common objection I hear to evals is “our product is hard to eval”. This objection is a product smell. Artifacts that are hard for you to verify are often hard for users too. In the worst case, users have…"
+  },
+  {
+   "id": "480567089286",
+   "source": "lilianweng",
+   "section": "learning",
+   "title": "Scaling Laws, Carefully",
+   "url": "https://lilianweng.github.io/posts/2026-06-24-scaling-laws/",
+   "published": "2026-06-24T00:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Scaling laws are one of the most critical empirical findings in deep learning. The observation is simple in form: the training loss $L$ decreases predictably as we scale up model size $N$, dataset size $D$, and compute $C$, following a power-law curve, which appears as a…"
+  },
+  {
+   "id": "980a4517ad9d",
+   "source": "mitchellh",
+   "section": "people",
+   "title": "Pledging Another $400,000 to the Zig Software Foundation",
+   "url": "https://mitchellh.com/writing/zig-donation-2026",
+   "published": "2026-06-21T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": ""
+  },
+  {
+   "id": "256663348b94",
+   "source": "eugeneyan",
+   "section": "learning",
+   "title": "Patterns for Building Cybersecurity Evals",
+   "url": "https://eugeneyan.com//writing/cybersecurity-evals/",
+   "published": "2026-06-21T00:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "A sandboxed target, inputs that influence task difficulty, tools, and a grader."
+  },
+  {
+   "id": "30be0b1b4958",
+   "source": "badlogic",
+   "section": "people",
+   "title": "How to build a shitty robot",
+   "url": "https://mariozechner.at/posts/2026-05-30-shitty-robot",
+   "published": "2026-05-30T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "A work in progress post about building a shitty robot."
+  },
+  {
+   "id": "0f53c3741b1b",
+   "source": "eugeneyan",
+   "section": "learning",
+   "title": "Using LLMs to Secure Source Code",
+   "url": "https://eugeneyan.com//writing/secure-source-code/",
+   "published": "2026-05-27T00:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Build a threat model, discover vulnerabilities, verify, triage, and patch."
+  },
+  {
+   "id": "83f44aa585d6",
+   "source": "worksonmymachine",
+   "section": "people",
+   "title": "The Wizard With the Very Defensible Pond",
+   "url": "https://worksonmymachine.ai/p/the-wizard-with-the-very-defensible",
+   "published": "2026-05-24T16:12:49Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "There was once a wizard who lived beside a pond."
+  },
+  {
+   "id": "1cf1ecb47cb3",
+   "source": "worksonmymachine",
+   "section": "people",
+   "title": "Here Comes (Forward Deployed) Everybody",
+   "url": "https://worksonmymachine.ai/p/here-comes-forward-deployed-everybody",
+   "published": "2026-05-17T13:45:56Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Note: I just enabled paid subscriptions for $8/month."
+  },
+  {
+   "id": "9f523b90c0ac",
+   "source": "eugeneyan",
+   "section": "learning",
+   "title": "How to Work and Compound with AI",
+   "url": "https://eugeneyan.com//writing/working-with-ai/",
+   "published": "2026-05-03T00:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Context as infra, taste as config, verification for autonomy, scale via delegation, closing the loop."
+  },
+  {
+   "id": "3c3845f75f98",
+   "source": "karpathy",
+   "section": "people",
+   "title": "Sequoia Ascent 2026 summary",
+   "url": "https://karpathy.bearblog.dev/sequoia-ascent-2026/",
+   "published": "2026-04-30T16:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Summary of my talk at Sequoia Ascent"
+  },
+  {
+   "id": "971018aa6a66",
+   "source": "worksonmymachine",
+   "section": "people",
+   "title": "Artifacts Are Alive (And Photographs are Dead)",
+   "url": "https://worksonmymachine.ai/p/artifacts-are-alive-and-photographs",
+   "published": "2026-04-25T13:50:50Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "There is a photograph of a coral reef on the wall of my dentist’s office."
+  },
+  {
+   "id": "8c1d96edd592",
+   "source": "badlogic",
+   "section": "people",
+   "title": "I've sold out",
+   "url": "https://mariozechner.at/posts/2026-04-08-ive-sold-out",
+   "published": "2026-04-08T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "I've sold out"
+  },
+  {
+   "id": "e9b43800d94f",
+   "source": "badlogic",
+   "section": "people",
+   "title": "Thoughts on slowing the fuck down",
+   "url": "https://mariozechner.at/posts/2026-03-25-thoughts-on-slowing-the-fuck-down",
+   "published": "2026-03-25T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Thoughts on slowing the fuck down"
+  },
+  {
+   "id": "e61dd843cac2",
+   "source": "lexfridman",
+   "section": "people",
+   "title": "#494 – Jensen Huang: NVIDIA – The $4 Trillion Company & the AI Revolution",
+   "url": "https://lexfridman.com/jensen-huang/?utm_source=rss&utm_medium=rss&utm_campaign=jensen-huang",
+   "published": "2026-03-23T16:28:42Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Jensen Huang is the co-founder and CEO of NVIDIA, the world’s most valuable company and the engine powering the AI computing revolution. Thank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep494-sc See below for timestamps, transcript, and to give…"
+  },
+  {
+   "id": "b506d8bd9680",
+   "source": "werner",
+   "section": "people",
+   "title": "A chat with Byron Cook on automated reasoning and trust in AI systems",
+   "url": "https://www.allthingsdistributed.com/2026/02/a-chat-with-byron-cook-on-automated-reasoning-and-trust-in-ai-systems.html?utm_campaign=inbound&utm_source=rss",
+   "published": "2026-02-17T14:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Over the past decade, Byron's team has proven the correctness of our authorization engine, our cryptographic implementations, and our virtualization layer. Now they're taking those same techniques and applying them to agentic systems."
+  },
+  {
+   "id": "d14db014f4e9",
+   "source": "steipete",
+   "section": "people",
+   "title": "OpenClaw, OpenAI and the future",
+   "url": "https://steipete.me/posts/2026/openclaw/",
+   "published": "2026-02-15T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "I'm joining OpenAI to work on bringing agents to everyone. OpenClaw will move to a foundation and stay open and independent."
+  },
+  {
+   "id": "fd1f9dc80e11",
+   "source": "lexfridman",
+   "section": "people",
+   "title": "#491 – OpenClaw: The Viral AI Agent that Broke the Internet – Peter Steinberger",
+   "url": "https://lexfridman.com/peter-steinberger/?utm_source=rss&utm_medium=rss&utm_campaign=peter-steinberger",
+   "published": "2026-02-12T03:10:39Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Peter Steinberger is the creator of OpenClaw, an open-source AI agent framework that’s the fastest-growing project in GitHub history. Thank you for listening ❤ Check out our sponsors: https://lexfridman.com/sponsors/ep491-sc See below for timestamps, transcript, and to give…"
+  },
+  {
+   "id": "4eb89daeb9d0",
+   "source": "steipete",
+   "section": "people",
+   "title": "Shipping at Inference-Speed",
+   "url": "https://steipete.me/posts/2025/shipping-at-inference-speed/",
+   "published": "2025-12-28T11:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Why I stopped reading code and started watching it stream by."
+  },
+  {
+   "id": "9b35b2ab1d76",
+   "source": "karpathy",
+   "section": "people",
+   "title": "2025 LLM Year in Review",
+   "url": "https://karpathy.bearblog.dev/year-in-review-2025/",
+   "published": "2025-12-19T18:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "2025 Year in Review of LLM paradigm changes"
+  },
+  {
+   "id": "6bd10e647abb",
+   "source": "karpathy",
+   "section": "people",
+   "title": "Chemical hygiene",
+   "url": "https://karpathy.bearblog.dev/chemical-hygiene/",
+   "published": "2025-12-18T18:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "An evolving guide of protecting your health from a pricemaxxing industry."
+  },
+  {
+   "id": "f643afad1a82",
+   "source": "steipete",
+   "section": "people",
+   "title": "The Signature Flicker",
+   "url": "https://steipete.me/posts/2025/signature-flicker/",
+   "published": "2025-12-18T00:00:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Hell froze over. Anthropic fixed Claude Code's signature flicker in their latest update (2.0.72)"
+  },
+  {
+   "id": "c955625564f7",
+   "source": "geoffreylitt",
+   "section": "people",
+   "title": "Code like a surgeon",
+   "url": "https://geoffreylitt.com/2025/10/24/code-like-a-surgeon.html",
+   "published": "2025-10-24T14:59:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "A lot of people say AI will make us all “managers” or “editors”…but I think this is a dangerously incomplete view! Personally, I’m trying to code like a surgeon. A surgeon isn’t a manager, they do the actual work! But their skills and time are highly..."
+  },
+  {
+   "id": "daa4dea0d727",
+   "source": "geoffreylitt",
+   "section": "people",
+   "title": "AI as teleportation",
+   "url": "https://geoffreylitt.com/2025/09/10/ai-as-teleportation.html",
+   "published": "2025-09-10T19:40:00Z",
+   "first_seen": "2026-09-26T07:08:00Z",
+   "summary": "Here’s a thought experiment for pondering the effects AI might have on society: What if we invented teleportation? A bit odd, I know, but bear with me… The year is 2035. The Auto Go Instant (AGI) teleporter has been invented. You can now go anywhere..."
+  },
+  {
+   "id": "7c3d2110aab5",
+   "source": "lilianweng",
+   "section": "learning",
+   "title": "Why We Think",
+   "url": "https://lilianweng.github.io/posts/2025-05-01-thinking/",
+   "published": "2025-05-01T00:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Special thanks to John Schulman for a lot of super valuable feedback and direct edits on this post. Test time compute ( Graves et al. 2016 , Ling, et al. 2017 , Cobbe et al. 2021 ) and Chain-of-thought (CoT) ( Wei et al. 2022 , Nye et al. 2021 ), have led to significant…"
+  },
+  {
+   "id": "8b57107d8c76",
+   "source": "chiphuyen",
+   "section": "learning",
+   "title": "Common pitfalls when building generative AI applications",
+   "url": "https://huyenchip.com//2025/01/16/ai-engineering-pitfalls.html",
+   "published": "2025-01-16T00:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "As we’re still in the early days of building applications with foundation models, it’s normal to make mistakes. This is a quick note with examples of some of the most common pitfalls that I’ve seen, both from public case studies and from my personal experience. Because these…"
+  },
+  {
+   "id": "adfd540de302",
+   "source": "chiphuyen",
+   "section": "learning",
+   "title": "Agents",
+   "url": "https://huyenchip.com//2025/01/07/agents.html",
+   "published": "2025-01-07T00:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "Intelligent agents are considered by many to be the ultimate goal of AI. The classic book by Stuart Russell and Peter Norvig, Artificial Intelligence: A Modern Approach (Prentice Hall, 1995), defines the field of AI research as “ the study and design of rational agents. ” The…"
+  },
+  {
+   "id": "21fea981794b",
+   "source": "chiphuyen",
+   "section": "learning",
+   "title": "Building A Generative AI Platform",
+   "url": "https://huyenchip.com//2024/07/25/genai-platform.html",
+   "published": "2024-07-25T00:00:00Z",
+   "first_seen": "2026-09-26T07:13:46Z",
+   "summary": "After studying how companies deploy generative AI applications, I noticed many similarities in their platforms. This post outlines the common components of a generative AI platform, what they do, and how they are implemented. I try my best to keep the architecture general, but…"
+  }
+ ],
+ "models": {
+  "new": [
+   {
+    "id": "perceptron/perceptron-mk1.5",
+    "name": "Perceptron Mk1.5",
+    "provider": "Perceptron",
+    "created": "2026-09-25T16:11:01Z",
+    "context": 36864,
+    "price_in": 0.15,
+    "price_out": 1.5,
+    "modalities": [
+     "audio",
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": null,
+    "summary": "Perceptron Mk1.5 is Perceptron's embodied reasoning model for physical agents. It accepts text, image, video, and audio input, and answers with text plus optional structured annotations: points, boxes, polygons…",
+    "url": "https://openrouter.ai/perceptron/perceptron-mk1.5"
+   },
+   {
+    "id": "fireworks/ember-1",
+    "name": "Ember-1",
+    "provider": "Fireworks",
+    "created": "2026-09-24T00:07:41Z",
+    "context": 1048576,
+    "price_in": 3.0,
+    "price_out": 15.0,
+    "modalities": [
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Ember-1 is a specialized reasoning model from Fireworks Research, built on Kimi K3. It is designed to make every token go further: it produces shorter reasoning traces, using roughly 40%...",
+    "url": "https://openrouter.ai/fireworks/ember-1"
+   },
+   {
+    "id": "z-ai/glm-5.3-prime",
+    "name": "GLM 5.3 Prime",
+    "provider": "Z.ai",
+    "created": "2026-09-23T21:40:51Z",
+    "context": 1000000,
+    "price_in": 2.8,
+    "price_out": 8.8,
+    "modalities": [
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "GLM-5.3-Prime is the high-speed variant of Z.ai's GLM-5.3, inheriting its full capabilities while delivering 1.5–2× the output throughput through inference acceleration. It supports text input and output with a…",
+    "url": "https://openrouter.ai/z-ai/glm-5.3-prime"
+   },
+   {
+    "id": "qwen/qwen3.8-max-prime",
+    "name": "Qwen3.8 Max Prime",
+    "provider": "Qwen",
+    "created": "2026-09-23T19:20:28Z",
+    "context": 1000000,
+    "price_in": 4.0,
+    "price_out": 12.0,
+    "modalities": [
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": null,
+    "summary": "Qwen3.8 Max Prime is a higher-throughput variant of Qwen3.8 Max from Alibaba's Qwen team, served as a separate SKU at a higher price point. It accepts text, image, and video...",
+    "url": "https://openrouter.ai/qwen/qwen3.8-max-prime"
+   },
+   {
+    "id": "stealth/space-bunny-alpha",
+    "name": "Space Bunny Alpha",
+    "provider": "stealth",
+    "created": "2026-09-23T14:48:04Z",
+    "context": 1000000,
+    "price_in": 0.0,
+    "price_out": 0.0,
+    "modalities": [
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": null,
+    "summary": "Space Bunny Alpha is an anonymous large model with blazing-fast inference, strong coding capabilities and native multimodal input support. It delivers adjustable reasoning effort, and a 1M-token context window. Space...",
+    "url": "https://openrouter.ai/stealth/space-bunny-alpha"
+   },
+   {
+    "id": "aion-labs/aion-3.5-mini",
+    "name": "Aion 3.5 Mini",
+    "provider": "AionLabs",
+    "created": "2026-09-23T13:42:42Z",
+    "context": 262144,
+    "price_in": 0.7,
+    "price_out": 1.4,
+    "modalities": [
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Aion 3.5 Mini is a multi-model roleplaying and storytelling system from AionLabs, built on the GLM family of models. It is the smaller, lower-cost sibling of Aion 3.5 and uses...",
+    "url": "https://openrouter.ai/aion-labs/aion-3.5-mini"
+   },
+   {
+    "id": "aion-labs/aion-3.5",
+    "name": "Aion 3.5",
+    "provider": "AionLabs",
+    "created": "2026-09-23T13:42:41Z",
+    "context": 262144,
+    "price_in": 3.0,
+    "price_out": 6.0,
+    "modalities": [
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Aion 3.5 is a multi-model roleplaying and storytelling system from AionLabs, built on the GLM family of models. It uses a collaborative generation process in which multiple specialized models each...",
+    "url": "https://openrouter.ai/aion-labs/aion-3.5"
+   },
+   {
+    "id": "upstage/solar-mini4",
+    "name": "Solar Mini 4",
+    "provider": "Upstage",
+    "created": "2026-09-23T10:45:58Z",
+    "context": 524288,
+    "price_in": 0.05,
+    "price_out": 0.2,
+    "modalities": [
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Solar Mini 4 is Upstage's compact, cost-efficient language model, a 35B-parameter mixture-of-experts with 3B active parameters and a 524K context window. It is built for agentic use cases where response...",
+    "url": "https://openrouter.ai/upstage/solar-mini4"
+   },
+   {
+    "id": "cohere/command-a-plus",
+    "name": "Command A+",
+    "provider": "Cohere",
+    "created": "2026-09-22T18:48:16Z",
+    "context": 192000,
+    "price_in": 0.3,
+    "price_out": 1.5,
+    "modalities": [
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Command A+ is Cohere's flagship model for enterprise agentic workflows. It accepts text and image inputs with a 192K context window, supports native tool calling with strict tool schemas, structured...",
+    "url": "https://openrouter.ai/cohere/command-a-plus"
+   },
+   {
+    "id": "openai/gpt-6-luna-pro",
+    "name": "GPT-6 Luna Pro",
+    "provider": "OpenAI",
+    "created": "2026-09-22T18:13:11Z",
+    "context": 1050000,
+    "price_in": 0.1,
+    "price_out": 0.5,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "GPT-6 Luna Pro is the same underlying model as GPT-6 Luna, served with `reasoning.mode` set to `pro` for higher-quality responses on complex tasks. Learn more in OpenAI's docs…",
+    "url": "https://openrouter.ai/openai/gpt-6-luna-pro"
+   },
+   {
+    "id": "openai/gpt-6-luna",
+    "name": "GPT-6 Luna",
+    "provider": "OpenAI",
+    "created": "2026-09-22T18:13:06Z",
+    "context": 1050000,
+    "price_in": 0.1,
+    "price_out": 0.5,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "GPT-6 Luna is the fast, cost-efficient model in OpenAI's GPT-6 series, positioned below GPT-6 Sol. It is suited for high-volume and latency-sensitive workloads such as chat, classification, and lightweight agentic...",
+    "url": "https://openrouter.ai/openai/gpt-6-luna"
+   },
+   {
+    "id": "openai/gpt-6-sol-pro",
+    "name": "GPT-6 Sol Pro",
+    "provider": "OpenAI",
+    "created": "2026-09-22T18:13:01Z",
+    "context": 1050000,
+    "price_in": 2.0,
+    "price_out": 10.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "GPT-6 Sol Pro is the same underlying model as GPT-6 Sol, served with `reasoning.mode` set to `pro` for higher-quality responses on complex tasks. Learn more in OpenAI's docs…",
+    "url": "https://openrouter.ai/openai/gpt-6-sol-pro"
+   },
+   {
+    "id": "openai/gpt-6-sol",
+    "name": "GPT-6 Sol",
+    "provider": "OpenAI",
+    "created": "2026-09-22T18:12:55Z",
+    "context": 1050000,
+    "price_in": 2.0,
+    "price_out": 10.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "GPT-6 Sol is the cost-efficient high-end model in OpenAI's GPT-6 series, positioned below the flagship GPT-6 Astra and above the fast GPT-6 Luna tier. It is suited for demanding professional...",
+    "url": "https://openrouter.ai/openai/gpt-6-sol"
+   },
+   {
+    "id": "anthropic/claude-opus-5.5",
+    "name": "Claude Opus 5.5",
+    "provider": "Anthropic",
+    "created": "2026-09-22T16:32:12Z",
+    "context": 1000000,
+    "price_in": 4.0,
+    "price_out": 20.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Claude Opus 5.5 is Anthropic's flagship model for demanding reasoning, coding, and long-horizon agentic work, succeeding Claude Opus 5. It is particularly strong at multi-step changes in large codebases, code...",
+    "url": "https://openrouter.ai/anthropic/claude-opus-5.5"
+   },
+   {
+    "id": "xiaomi/mimo-v2.6-pro-ultraspeed",
+    "name": "MiMo-V2.6-Pro-UltraSpeed",
+    "provider": "Xiaomi",
+    "created": "2026-09-21T20:07:47Z",
+    "context": 1048576,
+    "price_in": 4.35,
+    "price_out": 8.7,
+    "modalities": [
+     "audio",
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": null,
+    "summary": "MiMo-V2.6-Pro-UltraSpeed is the fast speed edition of Xiaomi's flagship foundation model, MiMo-V2.6-Pro. Built from the same 1T MiMo-V2.6-Pro checkpoint, it matches the original model in quality while delivering roughly…",
+    "url": "https://openrouter.ai/xiaomi/mimo-v2.6-pro-ultraspeed"
+   },
+   {
+    "id": "xiaomi/mimo-v2.6-flash",
+    "name": "MiMo-V2.6-Flash",
+    "provider": "Xiaomi",
+    "created": "2026-09-21T20:07:44Z",
+    "context": 1048576,
+    "price_in": 0.14,
+    "price_out": 0.28,
+    "modalities": [
+     "audio",
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": "XiaomiMiMo/MiMo-V2.6-Flash-RL",
+    "summary": "MiMo-V2.6-Flash is an open-source foundation model developed by Xiaomi. Built on a Mixture-of-Experts architecture with 309B total parameters and 15B activated per token, it employs a hybrid attention mechanism for...",
+    "url": "https://openrouter.ai/xiaomi/mimo-v2.6-flash"
+   },
+   {
+    "id": "xiaomi/mimo-v2.6-pro",
+    "name": "MiMo-V2.6-Pro",
+    "provider": "Xiaomi",
+    "created": "2026-09-21T20:07:39Z",
+    "context": 1050000,
+    "price_in": 0.435,
+    "price_out": 0.87,
+    "modalities": [
+     "audio",
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": "XiaomiMiMo/MiMo-V2.6-Pro-RL",
+    "summary": "MiMo-V2.6-Pro is the flagship foundation model developed by Xiaomi. Built at a scale of over 1T parameters, it is designed to push the ceiling of capability for the most demanding...",
+    "url": "https://openrouter.ai/xiaomi/mimo-v2.6-pro"
+   },
+   {
+    "id": "x-ai/grok-4.7",
+    "name": "Grok 4.7",
+    "provider": "SpaceXAI",
+    "created": "2026-09-21T16:19:01Z",
+    "context": 500000,
+    "price_in": 1.6,
+    "price_out": 4.8,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Grok 4.7 is SpaceXAI's flagship model for coding, agentic tasks, and knowledge work, succeeding Grok 4.6. It is particularly strong at long-running software engineering tasks, verifying its own work, and...",
+    "url": "https://openrouter.ai/x-ai/grok-4.7"
+   },
+   {
+    "id": "qwen/qwen3.8-omni-flash",
+    "name": "Qwen3.8 Omni Flash",
+    "provider": "Qwen",
+    "created": "2026-09-21T03:05:54Z",
+    "context": 1000000,
+    "price_in": 0.15,
+    "price_out": 0.47,
+    "modalities": [
+     "audio",
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": null,
+    "summary": "Qwen3.8 Omni Flash is an omni-modal reasoning model from Alibaba, the first Qwen model built around agentic capabilities with native audio-video understanding. It is suited for audio-video analysis and summarization,...",
+    "url": "https://openrouter.ai/qwen/qwen3.8-omni-flash"
+   },
+   {
+    "id": "prism-ml/ternary-bonsai-2-27b",
+    "name": "Ternary Bonsai 2 27B",
+    "provider": "PrismML",
+    "created": "2026-09-18T17:54:06Z",
+    "context": 262144,
+    "price_in": 0.075,
+    "price_out": 0.5,
+    "modalities": [
+     "image",
+     "text"
+    ],
+    "open_weights": "prism-ml/Ternary-Bonsai-2-27B-gguf",
+    "summary": "Bonsai 2 27B is a 27B-parameter reasoning model from PrismML derived from Qwen3.8-27B. It supports coding, mathematics, tool calling, and image understanding with a 262K-token context window. Ternary compression…",
+    "url": "https://openrouter.ai/prism-ml/ternary-bonsai-2-27b"
+   },
+   {
+    "id": "z-ai/glm-5.3-flashx",
+    "name": "GLM 5.3 FlashX",
+    "provider": "Z.ai",
+    "created": "2026-09-18T15:07:00Z",
+    "context": 1048576,
+    "price_in": 0.37,
+    "price_out": 1.25,
+    "modalities": [
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": null,
+    "summary": "GLM-5.3-FlashX is the high-speed variant of Z.ai's GLM-5.3-Flash, a native multimodal model delivering inference speeds of up to 200 tokens/s. Built on the same hybrid sparse and linear attention architecture...",
+    "url": "https://openrouter.ai/z-ai/glm-5.3-flashx"
+   },
+   {
+    "id": "unbiased/pareto",
+    "name": "Pareto",
+    "provider": "unbiased",
+    "created": "2026-09-17T23:02:58Z",
+    "context": 262144,
+    "price_in": 2.5,
+    "price_out": 7.5,
+    "modalities": [
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Pareto is a multimodal composite model built for research, coding, and agentic workflows, while delivering frontier-level performance across a broad range of general-purpose tasks.",
+    "url": "https://openrouter.ai/unbiased/pareto"
+   },
+   {
+    "id": "~deepseek/deepseek-pro-latest",
+    "name": "DeepSeek Pro Latest",
+    "provider": "DeepSeek",
+    "created": "2026-09-14T15:19:34Z",
+    "context": 1048576,
+    "price_in": 0.25,
+    "price_out": 3.5,
+    "modalities": [
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "This model always redirects to the latest model in the DeepSeek Pro family.",
+    "url": "https://openrouter.ai/~deepseek/deepseek-pro-latest"
+   },
+   {
+    "id": "~deepseek/deepseek-flash-latest",
+    "name": "DeepSeek Flash Latest",
+    "provider": "DeepSeek",
+    "created": "2026-09-14T15:19:10Z",
+    "context": 1048576,
+    "price_in": 0.035,
+    "price_out": 0.29,
+    "modalities": [
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "This model always redirects to the latest model in the DeepSeek Flash family.",
+    "url": "https://openrouter.ai/~deepseek/deepseek-flash-latest"
+   },
+   {
+    "id": "inference-net/schematron-v2-turbo",
+    "name": "Schematron V2 Turbo",
+    "provider": "Inference.net",
+    "created": "2026-09-12T01:35:49Z",
+    "context": 128000,
+    "price_in": 0.03,
+    "price_out": 0.15,
+    "modalities": [
+     "text"
+    ],
+    "open_weights": "inference-net/schematron-v2-granite-4.0-h-micro",
+    "summary": "Schematron V2 Turbo is a 3B-parameter HTML-to-JSON extraction model from Inference.net. It prioritizes throughput for high-volume extraction workloads. Extraction instructions must be supplied through a JSON schema in…",
+    "url": "https://openrouter.ai/inference-net/schematron-v2-turbo"
+   },
+   {
+    "id": "inference-net/schematron-v2-small",
+    "name": "Schematron V2 Small",
+    "provider": "Inference.net",
+    "created": "2026-09-12T01:35:33Z",
+    "context": 128000,
+    "price_in": 0.05,
+    "price_out": 0.23,
+    "modalities": [
+     "text"
+    ],
+    "open_weights": "inference-net/schematron-v2-llama-3.2-3b",
+    "summary": "Schematron V2 Small is a 3B-parameter HTML-to-JSON extraction model from Inference.net. It prioritizes extraction quality for complex schemas and long pages. Extraction instructions must be supplied through a JSON…",
+    "url": "https://openrouter.ai/inference-net/schematron-v2-small"
+   },
+   {
+    "id": "~openai/gpt-astra-latest",
+    "name": "GPT Astra Latest",
+    "provider": "OpenAI",
+    "created": "2026-09-11T12:48:52Z",
+    "context": 1050000,
+    "price_in": 10.0,
+    "price_out": 50.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "This model always redirects to the latest model in the GPT Astra family.",
+    "url": "https://openrouter.ai/~openai/gpt-astra-latest"
+   },
+   {
+    "id": "~openai/gpt-sol-latest",
+    "name": "GPT Sol Latest",
+    "provider": "OpenAI",
+    "created": "2026-09-11T12:48:48Z",
+    "context": 1050000,
+    "price_in": 2.0,
+    "price_out": 10.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "This model always redirects to the latest model in the GPT Sol family.",
+    "url": "https://openrouter.ai/~openai/gpt-sol-latest"
+   },
+   {
+    "id": "~openai/gpt-terra-latest",
+    "name": "GPT Terra Latest",
+    "provider": "OpenAI",
+    "created": "2026-09-11T12:48:45Z",
+    "context": 1050000,
+    "price_in": 2.0,
+    "price_out": 12.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "This model always redirects to the latest model in the GPT Terra family.",
+    "url": "https://openrouter.ai/~openai/gpt-terra-latest"
+   },
+   {
+    "id": "~openai/gpt-luna-latest",
+    "name": "GPT Luna Latest",
+    "provider": "OpenAI",
+    "created": "2026-09-11T12:48:42Z",
+    "context": 1050000,
+    "price_in": 0.1,
+    "price_out": 0.5,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "This model always redirects to the latest model in the GPT Luna family.",
+    "url": "https://openrouter.ai/~openai/gpt-luna-latest"
+   },
+   {
+    "id": "sakana/fugu-ultra-v2",
+    "name": "Fugu Ultra v2",
+    "provider": "Sakana",
+    "created": "2026-09-11T05:43:03Z",
+    "context": 1000000,
+    "price_in": 5.0,
+    "price_out": 30.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Fugu Ultra v2 is the higher-performance model in Sakana AI's Fugu family. Rather than a single monolithic model, Fugu is a learned multi-agent orchestration system: a language model trained to...",
+    "url": "https://openrouter.ai/sakana/fugu-ultra-v2"
+   },
+   {
+    "id": "sakana/fugu-max",
+    "name": "Fugu Max",
+    "provider": "Sakana",
+    "created": "2026-09-11T05:32:51Z",
+    "context": 1000000,
+    "price_in": 2.0,
+    "price_out": 6.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Fugu Max is the cost-performance model in Sakana AI's Fugu family. Rather than a single monolithic model, Fugu is a learned multi-agent orchestration system: a language model trained to route...",
+    "url": "https://openrouter.ai/sakana/fugu-max"
+   },
+   {
+    "id": "inclusionai/ling-3.0-flash-vl",
+    "name": "Ling 3.0 Flash VL",
+    "provider": "inclusionAI",
+    "created": "2026-09-10T16:01:54Z",
+    "context": 262144,
+    "price_in": 0.021,
+    "price_out": 0.0616,
+    "modalities": [
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": "inclusionAI/Ling-3.0-flash-VL",
+    "summary": "Ling 3.0 Flash VL builds on Ling 3.0 Flash (124B total / 5.5B active MoE from InclusionAI), further strengthening its language capabilities while adding native visual perception and advanced visual...",
+    "url": "https://openrouter.ai/inclusionai/ling-3.0-flash-vl"
+   },
+   {
+    "id": "deepseek/deepseek-v4.1-flash",
+    "name": "DeepSeek V4.1 Flash",
+    "provider": "DeepSeek",
+    "created": "2026-09-10T06:21:25Z",
+    "context": 1048576,
+    "price_in": 0.3,
+    "price_out": 1.2,
+    "modalities": [
+     "image",
+     "text"
+    ],
+    "open_weights": "deepseek-ai/DeepSeek-V4.1-Flash",
+    "summary": "DeepSeek V4.1 Flash is a sparse mixture-of-experts model from DeepSeek, and the first built on the company's Causal Encoder-Decoder (CED) architecture. It activates 8B parameters on input and 16B on...",
+    "url": "https://openrouter.ai/deepseek/deepseek-v4.1-flash"
+   },
+   {
+    "id": "inception/mercury-2.5",
+    "name": "Mercury 2.5",
+    "provider": "Inception",
+    "created": "2026-09-08T18:28:57Z",
+    "context": 260000,
+    "price_in": 0.04,
+    "price_out": 0.15,
+    "modalities": [
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "Mercury 2.5 is the fastest reasoning LLM, and the latest diffusion LLM (dLLM) from Inception. Instead of generating tokens sequentially, Mercury 2.5 produces and refines multiple tokens in parallel, achieving...",
+    "url": "https://openrouter.ai/inception/mercury-2.5"
+   },
+   {
+    "id": "openai/gpt-6-astra",
+    "name": "GPT-6 Astra",
+    "provider": "OpenAI",
+    "created": "2026-09-04T20:13:58Z",
+    "context": 1050000,
+    "price_in": 10.0,
+    "price_out": 50.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "GPT-6 Astra is OpenAI's flagship model for demanding end-to-end work. It is suited for advanced analysis, software engineering, deep research, scientific work, and document creation, with particular strengths in…",
+    "url": "https://openrouter.ai/openai/gpt-6-astra"
+   },
+   {
+    "id": "openai/gpt-6-astra-pro",
+    "name": "GPT-6 Astra Pro",
+    "provider": "OpenAI",
+    "created": "2026-09-04T20:13:55Z",
+    "context": 1050000,
+    "price_in": 10.0,
+    "price_out": 50.0,
+    "modalities": [
+     "file",
+     "image",
+     "text"
+    ],
+    "open_weights": null,
+    "summary": "GPT-6 Astra Pro is the same underlying model as GPT-6 Astra, served with `reasoning.mode` set to `pro` for higher-quality responses on complex tasks. Learn more in OpenAI's docs…",
+    "url": "https://openrouter.ai/openai/gpt-6-astra-pro"
+   },
+   {
+    "id": "qwen/qwen3.8-max-0902",
+    "name": "Qwen3.8 Max (0902)",
+    "provider": "Qwen",
+    "created": "2026-09-03T21:08:24Z",
+    "context": 1000000,
+    "price_in": 2.0,
+    "price_out": 6.0,
+    "modalities": [
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": null,
+    "summary": "Qwen3.8 Max 0902 is an updated snapshot of Qwen3.8 Max from Alibaba's Qwen team. It is a 2.4-trillion-parameter mixture-of-experts model that accepts text, image, and video input and returns text,...",
+    "url": "https://openrouter.ai/qwen/qwen3.8-max-0902"
+   },
+   {
+    "id": "meta/muse-spark-1.3-contributor",
+    "name": "Muse Spark 1.3 Contributor",
+    "provider": "Meta",
+    "created": "2026-09-02T20:38:39Z",
+    "context": 1048576,
+    "price_in": 0.1,
+    "price_out": 0.2,
+    "modalities": [
+     "audio",
+     "file",
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": null,
+    "summary": "Muse Spark 1.3 Contributor is the cost-efficient contributor tier of Meta’s multimodal reasoning model for experimentation, learning, and early-stage agentic, multi-agent, and coding workflows. It is designed to track…",
+    "url": "https://openrouter.ai/meta/muse-spark-1.3-contributor"
+   },
+   {
+    "id": "meta/muse-spark-1.3",
+    "name": "Muse Spark 1.3",
+    "provider": "Meta",
+    "created": "2026-09-02T19:45:59Z",
+    "context": 1048576,
+    "price_in": 1.25,
+    "price_out": 4.25,
+    "modalities": [
+     "audio",
+     "file",
+     "image",
+     "text",
+     "video"
+    ],
+    "open_weights": null,
+    "summary": "Muse Spark 1.3 is a multimodal reasoning model from Meta for long-running agentic, multi-agent, and coding workflows. It is designed to keep track of information across extended tasks, work through...",
+    "url": "https://openrouter.ai/meta/muse-spark-1.3"
+   }
+  ],
+  "trending": [
+   {
+    "id": "convaiinnovations/laya",
+    "task": "text-classification",
+    "likes": 3731,
+    "downloads": 0,
+    "created": "2026-09-18T05:05:55Z",
+    "url": "https://huggingface.co/convaiinnovations/laya"
+   },
+   {
+    "id": "Qwen/Qwen-Image-2.1",
+    "task": "text-to-image",
+    "likes": 2341,
+    "downloads": 42469,
+    "created": "2026-09-14T03:47:26Z",
+    "url": "https://huggingface.co/Qwen/Qwen-Image-2.1"
+   },
+   {
+    "id": "abenzerps/Qwen-Image-2.1-Uncensored-GGUF",
+    "task": "text-to-image",
+    "likes": 1833,
+    "downloads": 715906,
+    "created": "2026-09-20T15:51:13Z",
+    "url": "https://huggingface.co/abenzerps/Qwen-Image-2.1-Uncensored-GGUF"
+   },
+   {
+    "id": "XingChen-AGI/Xing4.0-29B-A4B",
+    "task": "text-generation",
+    "likes": 1690,
+    "downloads": 42950,
+    "created": "2026-09-16T06:44:40Z",
+    "url": "https://huggingface.co/XingChen-AGI/Xing4.0-29B-A4B"
+   },
+   {
+    "id": "prism-ml/Ternary-Bonsai-2-27B-gguf",
+    "task": "text-generation",
+    "likes": 2103,
+    "downloads": 3109078,
+    "created": "2026-09-16T23:40:56Z",
+    "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf"
+   },
+   {
+    "id": "Comfy-Org/Qwen-Image-2.1",
+    "task": null,
+    "likes": 739,
+    "downloads": 3266380,
+    "created": "2026-09-15T19:41:09Z",
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1"
+   },
+   {
+    "id": "Altworld/Hemmingway-1",
+    "task": "text-generation",
+    "likes": 684,
+    "downloads": 4978,
+    "created": "2026-09-20T12:10:31Z",
+    "url": "https://huggingface.co/Altworld/Hemmingway-1"
+   },
+   {
+    "id": "Edge0/Audio8-ASR-Infinite",
+    "task": "automatic-speech-recognition",
+    "likes": 649,
+    "downloads": 2853,
+    "created": "2026-09-21T15:03:21Z",
+    "url": "https://huggingface.co/Edge0/Audio8-ASR-Infinite"
+   },
+   {
+    "id": "XiaomiMiMo/MiMo-V2.6-Pro-RL",
+    "task": "text-generation",
+    "likes": 506,
+    "downloads": 42062,
+    "created": "2026-09-21T15:39:33Z",
+    "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL"
+   },
+   {
+    "id": "TaichuAI/ZDTaichu5.0-9B",
+    "task": "image-text-to-text",
+    "likes": 1129,
+    "downloads": 9498,
+    "created": "2026-09-04T02:55:48Z",
+    "url": "https://huggingface.co/TaichuAI/ZDTaichu5.0-9B"
+   },
+   {
+    "id": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
+    "task": "image-text-to-text",
+    "likes": 480,
+    "downloads": 6652,
+    "created": "2026-09-21T18:18:40Z",
+    "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"
+   },
+   {
+    "id": "Qwen/Qwen3.8-27B",
+    "task": "image-text-to-text",
+    "likes": 16301,
+    "downloads": 6579319,
+    "created": "2026-08-05T08:22:59Z",
+    "url": "https://huggingface.co/Qwen/Qwen3.8-27B"
+   },
+   {
+    "id": "XiaomiMiMo/MiMo-V2.6-Flash-RL",
+    "task": "text-generation",
+    "likes": 469,
+    "downloads": 20473,
+    "created": "2026-09-21T15:39:51Z",
+    "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL"
+   },
+   {
+    "id": "AlexWortega/openjev",
+    "task": "text-classification",
+    "likes": 581,
+    "downloads": 0,
+    "created": "2026-09-16T18:25:10Z",
+    "url": "https://huggingface.co/AlexWortega/openjev"
+   },
+   {
+    "id": "deepseek-ai/DeepSeek-V4.1-Flash",
+    "task": "image-text-to-text",
+    "likes": 3757,
+    "downloads": 621396,
+    "created": "2026-09-10T02:17:58Z",
+    "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"
+   },
+   {
+    "id": "Lightricks/LTX-2.5",
+    "task": "image-to-video",
+    "likes": 5133,
+    "downloads": 1598133,
+    "created": "2026-07-23T07:55:24Z",
+    "url": "https://huggingface.co/Lightricks/LTX-2.5"
+   },
+   {
+    "id": "nvidia/Nemotron-3-Diarization",
+    "task": "voice-activity-detection",
+    "likes": 352,
+    "downloads": 11459,
+    "created": "2026-09-01T13:16:57Z",
+    "url": "https://huggingface.co/nvidia/Nemotron-3-Diarization"
+   },
+   {
+    "id": "netease-youdao/Confucius4-R2T2",
+    "task": "automatic-speech-recognition",
+    "likes": 416,
+    "downloads": 5827,
+    "created": "2026-09-10T12:16:21Z",
+    "url": "https://huggingface.co/netease-youdao/Confucius4-R2T2"
+   },
+   {
+    "id": "ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF",
+    "task": "image-text-to-text",
+    "likes": 1711,
+    "downloads": 1510016,
+    "created": "2026-08-28T18:38:03Z",
+    "url": "https://huggingface.co/ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF"
+   },
+   {
+    "id": "yandex/AliceAI-Foundation-80B-A3B-Base",
+    "task": "text-generation",
+    "likes": 336,
+    "downloads": 2911,
+    "created": "2026-09-12T10:32:07Z",
+    "url": "https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base"
+   }
+  ],
+  "new_checked": "2026-09-26T07:16:22Z",
+  "trending_checked": "2026-09-26T07:16:22Z"
+ },
+ "mine": [
+  {
+   "title": "Instructor",
+   "url": "/post/instructor/",
+   "published": "2024-01-14T00:00:00Z",
+   "tags": [
+    "ai",
+    "llm"
+   ]
+  },
+  {
+   "title": "VectorDB",
+   "url": "/post/vectordb/",
+   "published": "2023-11-26T00:00:00Z",
+   "tags": [
+    "ai",
+    "llm"
+   ]
+  },
+  {
+   "title": "Mojo",
+   "url": "/post/mojo/",
+   "published": "2023-11-24T00:00:00Z",
+   "tags": [
+    "machine-learning"
+   ]
+  },
+  {
+   "title": "Amazon Bedrock",
+   "url": "/post/amazon-bedrock/",
+   "published": "2023-10-19T00:00:00Z",
+   "tags": [
+    "ai",
+    "genai",
+    "llm"
+   ]
+  },
+  {
+   "title": "PyTorch",
+   "url": "/post/pytorch/",
+   "published": "2023-06-03T00:00:00Z",
+   "tags": [
+    "ai",
+    "machine-learning"
+   ]
+  },
+  {
+   "title": "LangChain Python",
+   "url": "/post/langchain-python/",
+   "published": "2023-05-25T00:00:00Z",
+   "tags": [
+    "genai",
+    "llm"
+   ]
+  },
+  {
+   "title": "OpenAI Nodejs",
+   "url": "/post/openai-nodejs/",
+   "published": "2023-05-18T00:00:00Z",
+   "tags": [
+    "ai",
+    "llm"
+   ]
+  },
+  {
+   "title": "R and RStudio",
+   "url": "/post/r-and-rstudio/",
+   "published": "2022-07-06T00:00:00Z",
+   "tags": [
+    "machine-learning"
+   ]
+  }
+ ]
+}

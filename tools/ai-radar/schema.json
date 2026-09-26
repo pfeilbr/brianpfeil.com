@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brianpfeil.com/data/ai.schema.json",
+  "title": "data/ai.json -- the /ai/ page",
+  "description": "Written by tools/ai-radar/radar.py. Bump schema_version (and add a MIGRATIONS step in radar.py) whenever a field is renamed, removed or changes meaning; adding an optional field does not need a bump. The page refuses a schema_version newer than it knows.",
+  "type": "object",
+  "required": ["schema_version", "generated", "window_days", "sections", "sources", "items", "models", "mine"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "integer", "enum": [1]},
+    "generated": {"type": "string", "format": "date-time"},
+    "window_days": {"type": "integer"},
+    "sections": {"type": "array", "items": {"type": "string", "enum": ["people", "labs", "tools", "community", "learning"]}},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "section", "name", "home", "status", "checked"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string"},
+          "section": {"type": "string", "enum": ["people", "labs", "tools", "community", "learning"]},
+          "name": {"type": "string"},
+          "home": {"type": "string"},
+          "x": {"type": "string"},
+          "pin": {"type": "boolean"},
+          "via": {"type": "array", "items": {"type": "string", "enum": ["feedly", "x"]}},
+          "status": {"type": "string", "enum": ["ok", "error", "pending"]},
+          "checked": {"type": ["string", "null"]},
+          "error": {"type": "string"}
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "source", "section", "title", "url", "published", "first_seen", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string"},
+          "source": {"type": "string"},
+          "section": {"type": "string", "enum": ["people", "labs", "tools", "community", "learning"]},
+          "title": {"type": "string"},
+          "url": {"type": "string"},
+          "published": {"type": "string", "format": "date-time"},
+          "first_seen": {"type": "string", "format": "date-time"},
+          "summary": {"type": "string"},
+          "kind": {"type": "string", "enum": ["release"]},
+          "points": {"type": "integer"},
+          "comments": {"type": "integer"},
+          "discuss": {"type": "string"},
+          "also": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "models": {
+      "type": "object",
+      "required": ["new", "trending"],
+      "additionalProperties": false,
+      "properties": {
+        "new": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "provider", "created", "price_in", "price_out", "url"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string"},
+              "name": {"type": "string"},
+              "provider": {"type": "string"},
+              "created": {"type": "string", "format": "date-time"},
+              "context": {"type": ["integer", "null"]},
+              "price_in": {"type": "number"},
+              "price_out": {"type": "number"},
+              "modalities": {"type": "array", "items": {"type": "string"}},
+              "open_weights": {"type": ["string", "null"]},
+              "summary": {"type": "string"},
+              "url": {"type": "string"}
+            }
+          }
+        },
+        "trending": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "likes", "downloads", "url"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"type": "string"},
+              "task": {"type": ["string", "null"]},
+              "likes": {"type": "integer"},
+              "downloads": {"type": "integer"},
+              "created": {"type": ["string", "null"]},
+              "url": {"type": "string"}
+            }
+          }
+        },
+        "new_checked": {"type": "string"},
+        "new_error": {"type": "string"},
+        "trending_checked": {"type": "string"},
+        "trending_error": {"type": "string"}
+      }
+    },
+    "mine": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "url", "published", "tags"],
+        "additionalProperties": false,
+        "properties": {
+          "title": {"type": "string"},
+          "url": {"type": "string"},
+          "published": {"type": ["string", "null"]},
+          "tags": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

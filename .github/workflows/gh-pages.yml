@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+  # The daily AI radar (ai-radar.yml) commits with GITHUB_TOKEN, and pushes
+  # made with that token never trigger other workflows, so it dispatches
+  # this one explicitly.
+  workflow_dispatch:
 
 permissions:
   contents: read

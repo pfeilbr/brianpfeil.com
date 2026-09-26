@@ -152,6 +152,7 @@ touching a template:
 | `/media/` | `data/media.yaml` (generated) | `layouts/_default/media.html` |
 | `/movies/` | `data/movies.json` (`make movies-refresh`) | `layouts/_default/movies.html` |
 | `/learn/` | `data/learn.json` (`make check-learn-links`) | `layouts/_default/learn.html` |
+| `/ai/` | `data/ai.json` (daily Action, `make ai-refresh`) | `layouts/_default/ai.html` |
 | `/` (home) | `data/home.yaml` | `layouts/index.html` |
 | `/github/` | `data/github.json` (`make github-refresh`) | `layouts/_default/github.html` |
 
@@ -175,6 +176,15 @@ touching a template:
   then `make check-learn-links` — only list what opens without signing in.
   `page` instead of `url` links one of this site's projects in the visitor's
   language. Learn took Archive's nav slot; Archive is still a home card.
+- **/ai/ refreshes itself.** `.github/workflows/ai-radar.yml` runs
+  `tools/ai-radar/radar.py` every morning, commits `data/ai.json` and
+  dispatches the deploy (a `GITHUB_TOKEN` push does not trigger it). Sources
+  are `tools/ai-radar/config.json`; the file's shape is
+  `tools/ai-radar/schema.json`, versioned, with migrations — see
+  `tools/ai-radar/README.md` before changing a field. Its UI strings live in
+  `tools/ai-radar/i18n_strings.py` (`make ai-i18n` writes them into the nine
+  toml files between markers), so after a merge conflict in `i18n/`, re-run
+  that rather than hand-merging the block.
 - **Ten nav links** (GitHub was the tenth). `.nav-row` is now `60rem` and the
   full row appears from 980px, because Spanish needs ~950px with a legible
   language label. An eleventh link means re-measuring every language.

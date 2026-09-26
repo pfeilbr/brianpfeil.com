@@ -88,6 +88,33 @@
     </ul>
   </section>
   {{ end }}
+  {{- /* AI radar: today's headlines, rebuilt every morning from data/ai.json
+     (tools/ai-radar). Labs and community only -- the same pool the page's
+     Latest tab starts from. */ -}}
+  {{ with hugo.Data.ai }}{{ with .items }}
+  {{ $heads := first 4 (sort (where . "section" "in" (slice "labs" "community")) "published" "desc") }}
+  {{ if $heads }}
+  <section class="hub-card hub-wide" data-ic="i-sparkles" aria-labelledby="hub-ai">
+    <div class="hub-card-head">
+      {{ partial "icons/chip.html" (dict "id" "i-sparkles" "size" "lg") }}
+      <div class="hub-card-text">
+        <h3 id="hub-ai" class="hub-card-title"><a href="{{ $prefix }}ai/">{{ i18n "hub_ai_title" }}</a></h3>
+        <p class="hub-card-blurb">{{ i18n "hub_ai_blurb" }}</p>
+      </div>
+    </div>
+    <ul class="hub-latest">
+      {{ range $heads }}
+      <li>
+        <a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>
+        <time datetime="{{ .published }}">{{ (time .published).Format "Jan 2" }}</time>
+      </li>
+      {{ end }}
+    </ul>
+    <a class="hub-all" href="{{ $prefix }}ai/">{{ i18n "hub_ai_all" }}
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
+  </section>
+  {{ end }}
+  {{ end }}{{ end }}
 
   {{- /* Media: a strip of the newest tiles, each opening that item. */ -}}
   {{ if and $media $media.items }}
