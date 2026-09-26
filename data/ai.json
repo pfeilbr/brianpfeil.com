@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated": "2026-09-26T07:19:24Z",
+ "generated": "2026-09-26T07:21:04Z",
  "window_days": 14,
  "sections": [
   "people",
@@ -1901,16 +1901,6 @@
    "summary": "This was the month the world took notice that AI might kill everyone."
   },
   {
-   "id": "46d27c31e09b",
-   "source": "awsnew",
-   "section": "labs",
-   "title": "AWS Glue Data Quality delivers context-specific rule recommendations in seconds",
-   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/glue-data-quality-rule-recommendations/",
-   "published": "2026-09-22T08:00:00Z",
-   "first_seen": "2026-09-26T07:19:24Z",
-   "summary": "AWS Glue Data Quality now generates data quality rules in seconds, reducing the time to establish data quality checks for your tables in the AWS Glue Data Catalog. You get a ready-to-use set of rules with full coverage across every column, with no manual setup—so you can move…"
-  },
-  {
    "id": "49c023466b3c",
    "source": "vllm",
    "section": "tools",
@@ -2102,16 +2092,6 @@
    "published": "2026-09-18T15:15:00Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "Amazon Bedrock continues to expand its open weight model portfolio with the same security and governance that customers rely on. Today, Kimi K3 from Moonshot AI is generally available on Amazon Bedrock, giving you a powerful new option for coding and knowledge work. According to…"
-  },
-  {
-   "id": "eb71135e162f",
-   "source": "awsnew",
-   "section": "labs",
-   "title": "Amazon SNS now supports message payloads up to 1 MiB",
-   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/amazon-sns-1mib-support",
-   "published": "2026-09-18T15:00:00Z",
-   "first_seen": "2026-09-26T07:19:24Z",
-   "summary": "Amazon Simple Notification Service (Amazon SNS) now supports message payloads up to 1 MiB, a 4x increase from the previous 256 KiB limit, so you can publish larger messages to your SNS topics. Amazon SNS is a fully managed pub/sub messaging service that enables you to decouple…"
   },
   {
    "id": "c72f60fcf6ad",
