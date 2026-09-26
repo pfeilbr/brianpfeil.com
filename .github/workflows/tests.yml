@@ -12,8 +12,8 @@ jobs:
     name: generate-posts (Go)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
         with:
           go-version-file: tools/generate-posts/go.mod
           cache-dependency-path: tools/generate-posts/go.sum
@@ -24,8 +24,8 @@ jobs:
     name: instagram-media (Python)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
           cache: pip
@@ -71,7 +71,7 @@ jobs:
     name: hugo build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: peaceiris/actions-hugo@v3
         with:
           # Same pin as the deploy workflow; bump them together.
@@ -102,8 +102,8 @@ jobs:
     name: terraform fmt + validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: hashicorp/setup-terraform@v3
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: "1.16.3"
       - name: fmt
