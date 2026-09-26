@@ -221,7 +221,12 @@ touching a template:
   look-alikes out (OpenSearch *Serverless* is not a Lambda lesson). Names are
   i18n `gh_area_<key>` / `gh_track_<key>_title|_blurb`. Article links come
   from the posts' `repoFullName` at build time, not from the JSON.
-  `check_page.py --public public` is the render check.
+  `check_page.py --public public` is the render check. It refreshes itself
+  every Monday (`.github/workflows/github-refresh.yml`); a run that changes
+  nothing but the date writes nothing, and one that loses >10% of repos
+  refuses to write (`--force` by hand if that is real). The query language
+  lives in `assets/js/gh-search.js` (no DOM) and is tested with
+  `node --test tools/github-repos/search.test.mjs`.
 - **Only publish what a stranger can actually open.** Private YouTube playlists
   403 and some public ones refuse to embed, so every embed was verified against
   `youtube.com/embed/videoseries?list=<id>` (or the IFrame Player API) before

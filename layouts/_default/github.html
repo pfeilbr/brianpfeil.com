@@ -123,11 +123,11 @@
       </button>
     </div>
 
-    <div class="gh-seg" role="radiogroup" aria-label="{{ i18n "gh_kind_label" }}" id="gh-kind">
-      <button type="button" role="radio" data-kind="all">{{ i18n "gh_kind_all" }} <span class="gh-n"></span></button>
-      <button type="button" role="radio" data-kind="playground">{{ i18n "gh_kind_playground" }} <span class="gh-n"></span></button>
-      <button type="button" role="radio" data-kind="project">{{ i18n "gh_kind_project" }} <span class="gh-n"></span></button>
-      <button type="button" role="radio" data-kind="fork">{{ i18n "gh_kind_fork" }} <span class="gh-n"></span></button>
+    <div class="gh-seg" role="group" aria-label="{{ i18n "gh_kind_label" }}" id="gh-kind">
+      <button type="button" aria-pressed="false" data-kind="all">{{ i18n "gh_kind_all" }} <span class="gh-n"></span></button>
+      <button type="button" aria-pressed="false" data-kind="playground">{{ i18n "gh_kind_playground" }} <span class="gh-n"></span></button>
+      <button type="button" aria-pressed="false" data-kind="project">{{ i18n "gh_kind_project" }} <span class="gh-n"></span></button>
+      <button type="button" aria-pressed="false" data-kind="fork">{{ i18n "gh_kind_fork" }} <span class="gh-n"></span></button>
     </div>
 
     <div class="gh-facet">
@@ -186,7 +186,10 @@
     </section>
 
     <div class="gh-toolbar">
-      <span class="gh-count" id="gh-count" aria-live="polite"></span>
+      <span class="gh-count" id="gh-count"></span>
+      {{- /* The visible count changes on every keystroke; screen readers get
+         it once typing settles, from this region. */}}
+      <span class="sr-only" id="gh-status" role="status"></span>
       <button type="button" class="gh-clear" id="gh-clear" hidden>{{ i18n "gh_clear" }}</button>
       <label class="gh-sort">
         <span class="sr-only">{{ i18n "gh_sort_label" }}</span>
@@ -199,11 +202,11 @@
           <option value="name">{{ i18n "gh_sort_name" }}</option>
         </select>
       </label>
-      <div class="gh-view" role="radiogroup" aria-label="{{ i18n "gh_view_label" }}" id="gh-view">
-        <button type="button" role="radio" data-view="cards" title="{{ i18n "gh_view_cards" }}" aria-label="{{ i18n "gh_view_cards" }}">
+      <div class="gh-view" role="group" aria-label="{{ i18n "gh_view_label" }}" id="gh-view">
+        <button type="button" aria-pressed="false" data-view="cards" title="{{ i18n "gh_view_cards" }}" aria-label="{{ i18n "gh_view_cards" }}">
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="4" width="17" height="7" rx="1.5"/><rect x="3.5" y="13" width="17" height="7" rx="1.5"/></svg>
         </button>
-        <button type="button" role="radio" data-view="list" title="{{ i18n "gh_view_list" }}" aria-label="{{ i18n "gh_view_list" }}">
+        <button type="button" aria-pressed="false" data-view="list" title="{{ i18n "gh_view_list" }}" aria-label="{{ i18n "gh_view_list" }}">
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
         </button>
       </div>
@@ -239,9 +242,11 @@
 </article>
 
 {{ partial "data-render.html" . }}
+{{ $search := resources.Get "js/gh-search.js" | minify | fingerprint }}
+<script src="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}"></script>
 <script>
 (function () {
-  var D = window.DataPage;
+  var D = window.DataPage, G = window.GhSearch;
   var LANG = {{ $lang }};
   var T = {{ $strings | jsonify | safeJS }};
   var AREA = {{ $areas | jsonify | safeJS }};
@@ -251,9 +256,11 @@
   var PAGE = 30;
   var $ = function (id) { return document.getElementById(id); };
   var q = $("gh-q"), list = $("gh-list"), moreBtn = $("gh-more");
-  var doc, repos = [], user = "pfeilbr", colors = {}, areaIcon = {};
-  var shown = PAGE, lastResults = [];
+  var doc, repos = [], byName = {}, user = "pfeilbr", colors = {}, areaIcon = {};
+  var shown = PAGE, results = { list: [], words: [] }, rendered = 0;
   var nf = new Intl.NumberFormat(LANG);
+  var reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SCROLL = reduceMotion ? "auto" : "smooth";
 
   /* ---------- small DOM helpers ---------- */
   var SVG = "http://www.w3.org/2000/svg";
@@ -290,76 +297,25 @@
     b.type = "button";
     return b;
   }
+  function pressed(b, on) {
+    b.classList.toggle("is-on", on);
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+  }
   function month(iso) {
     return new Date(iso + "T00:00:00Z").toLocaleDateString(LANG, { year: "numeric", month: "short", timeZone: "UTC" });
   }
-  function year(iso) { return +iso.slice(0, 4); }
-  function articleOf(r) { return ARTICLE[r.name.toLowerCase()]; }
-
-  /* ---------- query parsing ----------
-     Free words must all match somewhere (name, description, tags, area,
-     language; README text too unless switched off). Qualifiers follow
-     GitHub's own search syntax so they need no explaining to anyone who
-     has used it. */
-  function range(v) {
-    var m;
-    if ((m = /^(\d{4})\.\.(\d{4})$/.exec(v))) return [+m[1], +m[2]];
-    if ((m = /^>=?(\d{4})$/.exec(v))) return [+m[1] + (v[1] === "=" ? 0 : 1), 9999];
-    if ((m = /^<=?(\d{4})$/.exec(v))) return [0, +m[1] - (v[1] === "=" ? 0 : 1)];
-    if ((m = /^(\d{4})$/.exec(v))) return [+m[1], +m[1]];
-    return null;
-  }
-  function parse(text) {
-    var out = { words: [], phrases: [], nots: [], lang: [], area: [], tag: [], is: [], has: [], created: null, pushed: null, stars: 0 };
-    var re = /(-?)(?:(\w+):)?(?:"([^"]*)"|(\S+))/g, m;
-    while ((m = re.exec(text))) {
-      var neg = m[1] === "-", key = (m[2] || "").toLowerCase(), val = (m[3] != null ? m[3] : m[4] || "").toLowerCase();
-      if (!val) continue;
-      if (key === "lang" || key === "language") out.lang.push(val);
-      else if (key === "area") out.area.push(val);
-      else if (key === "tag" || key === "topic") out.tag.push(val);
-      else if (key === "is") out.is.push(val);
-      else if (key === "has") out.has.push(val);
-      else if (key === "created" || key === "year") out.created = range(val);
-      else if (key === "pushed" || key === "updated") out.pushed = range(val);
-      else if (key === "stars") out.stars = +(val.replace(/[^\d]/g, "")) + (/^>\d/.test(val) ? 1 : 0);
-      else {
-        var w = (key ? key + ":" : "") + val;
-        if (neg) out.nots.push(w);
-        else if (m[3] != null) out.phrases.push(w);
-        else out.words.push(w);
-      }
-    }
-    return out;
-  }
-
-  /* ---------- search index ---------- */
-  function norm(s) { return String(s || "").toLowerCase(); }
-  function prep(r) {
-    r._name = norm(r.name);
-    r._nameWords = r._name.replace(/[-_.]+/g, " ");
-    r._desc = norm(r.desc);
-    r._tags = r.tags.map(norm);
-    r._meta = [r._tags.join(" "), norm(r.lang), r.areas.map(function (a) { return norm(AREA[a]) + " " + a; }).join(" ")].join(" ");
-    r._readme = norm(r.readme);
-    r._post = articleOf(r);
-  }
-  /* 0 = no match; higher is better. */
-  function wordScore(r, w, readme) {
-    if (r._name === w) return 100;
-    if (r._nameWords.split(" ").indexOf(w) >= 0) return 40;
-    if (r._name.indexOf(w) >= 0 || r._nameWords.indexOf(w) >= 0) return 25;
-    if (r._tags.indexOf(w) >= 0) return 20;
-    if (r._meta.indexOf(w) >= 0) return 12;
-    if (r._desc.indexOf(w) >= 0) return 10;
-    if (readme && r._readme.indexOf(w) >= 0) return 3;
-    return 0;
-  }
+  function repoURL(r) { return GH + user + "/" + r.name; }
+  function scrollToEl(el, block) { el.scrollIntoView({ behavior: SCROLL, block: block || "start" }); }
 
   /* ---------- state <-> URL ---------- */
   var S = {};
   var DEFAULTS = { q: "", kind: "all", area: [], lang: [], sort: "best", view: "cards", adv: false,
     cf: 0, ct: 0, pf: 0, pt: 0, art: false, demo: false, forks: false, rm: true, stars: 0 };
+  function reset(keepView) {
+    var keep = { sort: S.sort, view: S.view, adv: S.adv };
+    Object.keys(DEFAULTS).forEach(function (k) { S[k] = Array.isArray(DEFAULTS[k]) ? [] : DEFAULTS[k]; });
+    if (keepView) { S.sort = keep.sort; S.view = keep.view; S.adv = keep.adv; }
+  }
   function readURL() {
     var p = new URLSearchParams(location.search);
     Object.keys(DEFAULTS).forEach(function (k) {
@@ -371,16 +327,21 @@
       else S[k] = v;
     });
   }
-  function writeURL() {
+  function setQuery(mutate) {
     var p = new URLSearchParams(location.search);
-    Object.keys(DEFAULTS).forEach(function (k) {
-      var d = DEFAULTS[k], v = S[k];
-      var same = Array.isArray(d) ? !v.length : v === d;
-      if (same) p.delete(k);
-      else p.set(k, Array.isArray(d) ? v.join(",") : typeof d === "boolean" ? (v ? "1" : "0") : String(v));
-    });
+    mutate(p);
     var s = p.toString();
     try { history.replaceState(null, "", location.pathname + (s ? "?" + s : "") + location.hash); } catch (e) {}
+  }
+  function writeURL() {
+    setQuery(function (p) {
+      Object.keys(DEFAULTS).forEach(function (k) {
+        var d = DEFAULTS[k], v = S[k];
+        var same = Array.isArray(d) ? !v.length : v === d;
+        if (same) p.delete(k);
+        else p.set(k, Array.isArray(d) ? v.join(",") : typeof d === "boolean" ? (v ? "1" : "0") : String(v));
+      });
+    });
   }
   function filtersActive() {
     return Object.keys(DEFAULTS).some(function (k) {
@@ -389,58 +350,6 @@
       return Array.isArray(d) ? v.length > 0 : v !== d;
     });
   }
-
-  /* ---------- filtering ---------- */
-  function inRange(y, lo, hi) { return (!lo || y >= lo) && (!hi || y <= hi); }
-  /* skip names one facet, so that facet's counts show what picking another
-     value of it would give rather than collapsing to the current pick. */
-  function filter(skip) {
-    var P = parse(S.q), words = P.words;
-    var kinds = P.is.length ? P.is : (S.kind !== "all" ? [S.kind] : null);
-    var out = [];
-    repos.forEach(function (r) {
-      if (skip !== "kind") {
-        if (kinds) { if (kinds.indexOf(r.kind) < 0 && !(kinds.indexOf("archived") >= 0 && r.archived)) return; }
-        else if (r.kind === "fork" && !S.forks) return;
-      }
-      if (skip !== "area" && S.area.length && !S.area.some(function (a) { return r.areas.indexOf(a) >= 0; })) return;
-      if (skip !== "lang" && S.lang.length && S.lang.indexOf(r.lang || "—") < 0) return;
-      if (P.area.length && !P.area.some(function (a) { return r.areas.indexOf(a) >= 0 || norm(AREA[r.areas[0]]).indexOf(a) >= 0; })) return;
-      if (P.lang.length && !P.lang.some(function (l) { return norm(r.lang) === l || r.langs.some(function (x) { return norm(x[0]) === l; }); })) return;
-      if (P.tag.length && !P.tag.every(function (t) { return r._tags.indexOf(t) >= 0; })) return;
-      if ((S.art || P.has.indexOf("article") >= 0) && !r._post) return;
-      if ((S.demo || P.has.indexOf("demo") >= 0) && !r.homepage) return;
-      if (P.has.indexOf("license") >= 0 && !r.license) return;
-      var cy = year(r.created), py = year(r.pushed);
-      if (!inRange(cy, S.cf, S.ct)) return;
-      if (!inRange(py, S.pf, S.pt)) return;
-      if (P.created && !inRange(cy, P.created[0], P.created[1])) return;
-      if (P.pushed && !inRange(py, P.pushed[0], P.pushed[1])) return;
-      var minStars = Math.max(S.stars || 0, P.stars || 0);
-      if (minStars && r.stars < minStars) return;
-      var hay = r._name + " " + r._nameWords + " " + r._desc + " " + r._meta + (S.rm ? " " + r._readme : "");
-      if (P.nots.some(function (w) { return hay.indexOf(w) >= 0; })) return;
-      if (!P.phrases.every(function (w) { return hay.indexOf(w) >= 0; })) return;
-      var score = 0;
-      for (var i = 0; i < words.length; i++) {
-        var s = wordScore(r, words[i], S.rm);
-        if (!s) return;
-        score += s;
-      }
-      r._score = score + (r._post ? 2 : 0);
-      out.push(r);
-    });
-    return { list: out, words: words.concat(P.phrases) };
-  }
-
-  var SORTS = {
-    best: function (a, b) { return b._score - a._score || (b.pushed > a.pushed ? 1 : b.pushed < a.pushed ? -1 : 0); },
-    pushed: function (a, b) { return b.pushed > a.pushed ? 1 : b.pushed < a.pushed ? -1 : 0; },
-    created: function (a, b) { return b.created > a.created ? 1 : b.created < a.created ? -1 : 0; },
-    oldest: function (a, b) { return a.created > b.created ? 1 : a.created < b.created ? -1 : 0; },
-    stars: function (a, b) { return b.stars - a.stars || SORTS.pushed(a, b); },
-    name: function (a, b) { return a._name.localeCompare(b._name); }
-  };
 
   /* ---------- rendering: one repo ---------- */
   /* Wraps every occurrence of the search words in <mark>, as text nodes. */
@@ -471,20 +380,44 @@
     return a;
   }
 
+  /* navigator.clipboard needs a secure context and permission; the old
+     execCommand path covers the rest, and failing both the command is shown
+     so it can be copied by hand. */
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function () { return legacyCopy(text); });
+    }
+    return legacyCopy(text);
+  }
+  function legacyCopy(text) {
+    return new Promise(function (ok, fail) {
+      var ta = D.el("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      var done = false;
+      try { done = document.execCommand("copy"); } catch (e) {}
+      ta.remove();
+      if (done) ok(); else fail();
+    });
+  }
+
   function copyClone(r) {
     var b = btn(null, "gh-act gh-copy");
     b.title = T.copyClone;
     b.setAttribute("aria-label", T.copyClone + ": " + r.name);
     b.appendChild(glyph("i-terminal"));
-    b.appendChild(D.el("span", null, "git clone"));
+    var label = b.appendChild(D.el("span", null, "git clone"));
     b.addEventListener("click", function () {
-      var cmd = "git clone " + GH + user + "/" + r.name + ".git";
-      var done = function () {
+      var cmd = "git clone " + repoURL(r) + ".git";
+      copyText(cmd).then(function () {
         b.classList.add("is-done");
-        b.lastChild.textContent = T.copied;
-        setTimeout(function () { b.classList.remove("is-done"); b.lastChild.textContent = "git clone"; }, 1600);
-      };
-      if (navigator.clipboard) navigator.clipboard.writeText(cmd).then(done, function () {});
+        label.textContent = T.copied;
+        announce(T.copied);
+        setTimeout(function () { b.classList.remove("is-done"); label.textContent = "git clone"; }, 1600);
+      }, function () { window.prompt(T.copyClone, cmd); });
     });
     return b;
   }
@@ -492,8 +425,9 @@
   function actions(r, learn) {
     var row = D.el("div", "gh-acts");
     if (r._post) row.appendChild(actionLink(r._post, "i-pen", T.article, "gh-act gh-act-post", false));
-    row.appendChild(actionLink(GH + user + "/" + r.name, "i-github", T.code, "gh-act"));
-    if (r.homepage) row.appendChild(actionLink(r.homepage, "i-rocket", T.demo, "gh-act"));
+    row.appendChild(actionLink(repoURL(r), "i-github", T.code, "gh-act"));
+    var home = G.safeHref(r.homepage);
+    if (home) row.appendChild(actionLink(home, "i-rocket", T.demo, "gh-act"));
     if (learn) {
       var dev = actionLink("https://github.dev/" + user + "/" + r.name, "i-braces", "github.dev", "gh-act");
       dev.title = T.openDev;
@@ -511,7 +445,7 @@
       q.value = S.q;
       shown = PAGE;
       update();
-      q.scrollIntoView({ block: "nearest" });
+      scrollToEl(q, "nearest");
     });
     return b;
   }
@@ -524,7 +458,7 @@
     li.appendChild(chip(icon, "lg"));
     var body = D.el("div", "gh-repo-body");
     var h = D.el("h3", "gh-repo-name");
-    var a = D.link(GH + user + "/" + r.name, null, null);
+    var a = D.link(repoURL(r), null, null);
     a.appendChild(hl(r.name, words));
     h.appendChild(a);
     if (r.kind === "playground") h.appendChild(badge(T.badgePlayground, "is-play"));
@@ -564,7 +498,7 @@
     var li = D.el("li", "gh-line");
     li.id = "r-" + r.name;
     li.appendChild(dot(r.lang));
-    var a = D.link(GH + user + "/" + r.name, "gh-line-name", null);
+    var a = D.link(repoURL(r), "gh-line-name", null);
     a.appendChild(hl(r.name, words));
     if (r.desc) a.title = r.desc;
     li.appendChild(a);
@@ -584,72 +518,91 @@
     return li;
   }
 
-  /* ---------- rendering: the facets ---------- */
-  function counts(rs, key) {
-    var c = {};
-    rs.forEach(function (r) {
-      var vs = key === "area" ? r.areas : key === "lang" ? [r.lang || "—"] : [r.kind];
-      vs.forEach(function (v) { c[v] = (c[v] || 0) + 1; });
+  /* ---------- search ---------- */
+  /* One parse per change; each repo is matched once for the results and
+     once per facet (with that facet ignored) for the counts. */
+  function search() {
+    var P = G.parse(S.q), out = [], c = { kind: {}, area: {}, lang: {} };
+    function bump(map, keys) { keys.forEach(function (k) { map[k] = (map[k] || 0) + 1; }); }
+    repos.forEach(function (r) {
+      var score = G.match(r, P, S);
+      if (score >= 0) { r._score = score; out.push(r); }
+      if (G.match(r, P, S, "kind") >= 0) bump(c.kind, [r.kind]);
+      if (G.match(r, P, S, "area") >= 0) bump(c.area, r.areas);
+      if (G.match(r, P, S, "lang") >= 0) bump(c.lang, [r.lang || "—"]);
     });
-    return c;
+    var sort = S.sort === "best" && !P.words.length ? "pushed" : S.sort;
+    out.sort(G.SORTS[sort] || G.SORTS.pushed);
+    return { list: out, words: P.words.concat(P.phrases), counts: c, P: P };
   }
 
+  /* ---------- rendering: the facets ----------
+     Buttons are made once and then only re-counted and re-ordered, so a
+     click never throws away the button that has keyboard focus. */
   function toggle(arr, v) {
     var i = arr.indexOf(v);
     if (i >= 0) arr.splice(i, 1); else arr.push(v);
   }
 
-  function renderAreas() {
-    var box = $("gh-areas"), c = counts(filter("area").list, "area");
-    box.textContent = "";
+  var areaBtns = {};
+  function renderAreas(c) {
+    var box = $("gh-areas");
     doc.areas.forEach(function (a) {
+      var b = areaBtns[a.key];
+      if (!b) {
+        b = areaBtns[a.key] = btn(null, "gh-chip");
+        b.dataset.ic = a.icon;
+        b.appendChild(chip(a.icon));
+        b.appendChild(D.el("span", null, AREA[a.key] || a.key));
+        b.appendChild(D.el("span", "gh-n"));
+        b.addEventListener("click", function () { toggle(S.area, a.key); shown = PAGE; update(); });
+        box.appendChild(b);
+      }
       var n = c[a.key] || 0, on = S.area.indexOf(a.key) >= 0;
-      if (!n && !on) return;
-      var b = btn(null, "gh-chip" + (on ? " is-on" : ""));
-      b.dataset.ic = a.icon;
-      b.setAttribute("aria-pressed", on ? "true" : "false");
-      b.appendChild(chip(a.icon));
-      b.appendChild(D.el("span", null, AREA[a.key] || a.key));
-      b.appendChild(D.el("span", "gh-n", nf.format(n)));
-      b.addEventListener("click", function () { toggle(S.area, a.key); shown = PAGE; update(); });
-      box.appendChild(b);
+      pressed(b, on);
+      b.lastChild.textContent = nf.format(n);
+      b.hidden = !n && !on;
     });
   }
 
-  var langsOpen = false;
-  function renderLangs() {
-    var box = $("gh-langs"), c = counts(filter("lang").list, "lang");
+  var langsOpen = false, langBtns = {}, langMore = null;
+  var LANG_TOP = 10;
+  function renderLangs(c) {
+    var box = $("gh-langs");
     var keys = Object.keys(c).sort(function (a, b) { return c[b] - c[a] || a.localeCompare(b); });
     S.lang.forEach(function (l) { if (keys.indexOf(l) < 0) keys.push(l); });
-    var TOP = 10;
-    box.textContent = "";
+    Object.keys(langBtns).forEach(function (l) { if (keys.indexOf(l) < 0) langBtns[l].hidden = true; });
     keys.forEach(function (l, i) {
+      var b = langBtns[l];
+      if (!b) {
+        b = langBtns[l] = btn(null, "gh-chip gh-chip-lang");
+        b.appendChild(dot(l));
+        b.appendChild(D.el("span", null, l === "—" ? T.other : l));
+        b.appendChild(D.el("span", "gh-n"));
+        b.addEventListener("click", function () { toggle(S.lang, l); shown = PAGE; update(); });
+      }
       var on = S.lang.indexOf(l) >= 0;
-      if (i >= TOP && !langsOpen && !on) return;
-      var b = btn(null, "gh-chip gh-chip-lang" + (on ? " is-on" : ""));
-      b.setAttribute("aria-pressed", on ? "true" : "false");
-      b.appendChild(dot(l));
-      b.appendChild(D.el("span", null, l === "—" ? T.other : l));
-      b.appendChild(D.el("span", "gh-n", nf.format(c[l] || 0)));
-      b.addEventListener("click", function () { toggle(S.lang, l); shown = PAGE; update(); });
-      box.appendChild(b);
+      pressed(b, on);
+      b.lastChild.textContent = nf.format(c[l] || 0);
+      b.hidden = i >= LANG_TOP && !langsOpen && !on;
+      box.appendChild(b);  /* moves it into count order */
     });
-    if (keys.length > TOP) {
-      var m = btn(langsOpen ? T.fewer : D.fill(T.more, { n: keys.length - TOP }), "gh-chip gh-chip-more");
-      m.setAttribute("aria-expanded", langsOpen ? "true" : "false");
-      m.addEventListener("click", function () { langsOpen = !langsOpen; renderLangs(); });
-      box.appendChild(m);
+    if (!langMore) {
+      langMore = btn(null, "gh-chip gh-chip-more");
+      langMore.addEventListener("click", function () { langsOpen = !langsOpen; renderLangs(results.counts.lang); });
     }
+    langMore.hidden = keys.length <= LANG_TOP;
+    langMore.textContent = langsOpen ? T.fewer : D.fill(T.more, { n: keys.length - LANG_TOP });
+    langMore.setAttribute("aria-expanded", langsOpen ? "true" : "false");
+    box.appendChild(langMore);
   }
 
-  function renderKinds() {
-    var c = counts(filter("kind").list, "kind");
+  function renderKinds(c, P) {
     var total = (c.playground || 0) + (c.project || 0) + (S.forks ? c.fork || 0 : 0);
-    var P = parse(S.q), current = P.is.length === 1 ? P.is[0] : S.kind;
+    var current = P.is.length === 1 ? P.is[0] : S.kind;
     [].forEach.call($("gh-kind").children, function (b) {
-      var k = b.dataset.kind, on = k === current;
-      b.classList.toggle("is-on", on);
-      b.setAttribute("aria-checked", on ? "true" : "false");
+      var k = b.dataset.kind;
+      pressed(b, k === current);
       b.querySelector(".gh-n").textContent = nf.format(k === "all" ? total : c[k] || 0);
     });
   }
@@ -660,9 +613,8 @@
       var by = {}, lo = 9999, hi = 0, max = 0;
       repos.forEach(function (r) {
         if (r.kind === "fork") return;
-        var y = year(r.created);
-        by[y] = (by[y] || 0) + 1;
-        lo = Math.min(lo, y); hi = Math.max(hi, y);
+        by[r._cy] = (by[r._cy] || 0) + 1;
+        lo = Math.min(lo, r._cy); hi = Math.max(hi, r._cy);
       });
       for (var y = lo; y <= hi; y++) max = Math.max(max, by[y] || 0);
       for (y = lo; y <= hi; y++) (function (y) {
@@ -683,10 +635,7 @@
       })(y);
     }
     [].forEach.call(box.children, function (b) {
-      var y = +b.dataset.year;
-      var on = (S.cf || S.ct) && inRange(y, S.cf, S.ct);
-      b.classList.toggle("is-on", !!on);
-      b.setAttribute("aria-pressed", on ? "true" : "false");
+      pressed(b, !!(S.cf || S.ct) && G.inRange(+b.dataset.year, S.cf, S.ct));
     });
   }
 
@@ -694,59 +643,64 @@
     if (document.activeElement !== q) q.value = S.q;
     $("gh-sort").value = S.sort;
     ["cf", "ct", "pf", "pt"].forEach(function (k) { $("gh-" + k).value = String(S[k] || ""); });
-    $("gh-stars").value = S.stars ? String(S.stars) : "";
+    if (document.activeElement !== $("gh-stars")) $("gh-stars").value = S.stars ? String(S.stars) : "";
     $("gh-art").checked = S.art; $("gh-demo").checked = S.demo;
     $("gh-forks").checked = S.forks; $("gh-rm").checked = S.rm;
     $("gh-adv").hidden = !S.adv;
     $("gh-adv-toggle").setAttribute("aria-expanded", S.adv ? "true" : "false");
     $("gh-adv-toggle").classList.toggle("is-on", S.adv);
-    [].forEach.call($("gh-view").children, function (b) {
-      var on = b.dataset.view === S.view;
-      b.classList.toggle("is-on", on);
-      b.setAttribute("aria-checked", on ? "true" : "false");
-    });
+    [].forEach.call($("gh-view").children, function (b) { pressed(b, b.dataset.view === S.view); });
     list.classList.toggle("is-list", S.view === "list");
     $("gh-clear").hidden = !filtersActive();
   }
 
-  function renderList() {
-    var words = lastResults.words;
-    var rs = lastResults.list;
-    list.textContent = "";
-    if (!rs.length) {
-      var e = D.el("li", "gh-empty", T.none);
-      list.appendChild(e);
+  /* Screen readers hear the result count once typing settles, not per key. */
+  var statusTimer;
+  function announce(text) {
+    clearTimeout(statusTimer);
+    statusTimer = setTimeout(function () { $("gh-status").textContent = text; }, 700);
+  }
+
+  /* Draws rows up to `shown`. "Show more" only appends; anything else that
+     changes the results starts the list over. */
+  function renderList(append) {
+    var rs = results.list, make = S.view === "list" ? line : card;
+    if (!append) {
+      list.textContent = "";
+      rendered = 0;
+      if (!rs.length) list.appendChild(D.el("li", "gh-empty", T.none));
     }
-    var make = S.view === "list" ? line : card;
-    rs.slice(0, shown).forEach(function (r) { list.appendChild(make(r, words)); });
+    var frag = document.createDocumentFragment();
+    rs.slice(rendered, shown).forEach(function (r) { frag.appendChild(make(r, results.words)); });
+    list.appendChild(frag);
+    rendered = Math.min(shown, rs.length);
     moreBtn.hidden = rs.length <= shown;
-    $("gh-count").textContent = D.fill(T.showing, { shown: nf.format(Math.min(shown, rs.length)), total: nf.format(rs.length) });
+    var text = D.fill(T.showing, { shown: nf.format(rendered), total: nf.format(rs.length) });
+    $("gh-count").textContent = text;
+    announce(text);
   }
 
   function update() {
-    var res = filter();
-    var sort = S.sort === "best" && !parse(S.q).words.length ? "pushed" : S.sort;
-    res.list.sort(SORTS[sort] || SORTS.pushed);
-    lastResults = res;
+    results = search();
     syncControls();
-    renderKinds();
-    renderAreas();
-    renderLangs();
+    renderKinds(results.counts.kind, results.P);
+    renderAreas(results.counts.area);
+    renderLangs(results.counts.lang);
     if (S.adv) renderHist();
-    renderList();
+    renderList(false);
     writeURL();
   }
 
   /* ---------- Learn ---------- */
   function renderTracks() {
     var box = $("gh-tracks");
-    box.textContent = "";
     doc.tracks.forEach(function (t) {
       if (!t.repos.length) return;
       var b = btn(null, "gh-trackcard");
       b.dataset.ic = t.icon;
       b.dataset.track = t.key;
       b.setAttribute("aria-controls", "gh-track");
+      b.setAttribute("aria-expanded", "false");
       b.appendChild(chip(t.icon, "lg"));
       var tx = D.el("span", "gh-trackcard-text");
       tx.appendChild(D.el("span", "gh-trackcard-title", (TRACK[t.key] || {}).title || t.key));
@@ -758,31 +712,24 @@
     });
   }
 
+  function trackCard(key) { return document.querySelector('.gh-trackcard[data-track="' + key + '"]'); }
+
   function openTrack(key, focus) {
     var t = doc.tracks.filter(function (x) { return x.key === key; })[0];
     var sec = $("gh-track");
-    var p = new URLSearchParams(location.search);
     [].forEach.call($("gh-tracks").children, function (b) {
-      var on = b.dataset.track === key;
+      var on = !!t && b.dataset.track === key;
       b.classList.toggle("is-on", on);
       b.setAttribute("aria-expanded", on ? "true" : "false");
     });
-    if (!t) {
-      sec.hidden = true;
-      p.delete("track");
-    } else {
-      p.set("track", key);
-      renderTrack(t, sec, false);
-      sec.hidden = false;
-      if (focus) { sec.focus({ preventScroll: true }); sec.scrollIntoView({ behavior: "smooth", block: "start" }); }
-    }
-    var s = p.toString();
-    try { history.replaceState(null, "", location.pathname + (s ? "?" + s : "") + location.hash); } catch (e) {}
+    setQuery(function (p) { if (t) p.set("track", key); else p.delete("track"); });
+    if (!t) { sec.hidden = true; return; }
+    renderTrack(t, sec, false);
+    sec.hidden = false;
+    if (focus) { sec.focus({ preventScroll: true }); scrollToEl(sec); }
   }
 
   function renderTrack(t, sec, all) {
-    var byName = {};
-    repos.forEach(function (r) { byName[r.name] = r; });
     sec.textContent = "";
     sec.dataset.ic = t.icon;
     var head = D.el("div", "gh-track-head");
@@ -796,7 +743,9 @@
     close.setAttribute("aria-label", T.closeTrack);
     close.addEventListener("click", function () {
       openTrack(null);
-      $("gh-paths-h").scrollIntoView({ behavior: "smooth", block: "start" });
+      /* Back to the card that opened it, so keyboard users land where they were. */
+      var card = trackCard(t.key);
+      if (card) { card.focus({ preventScroll: true }); scrollToEl(card, "center"); }
     });
     head.appendChild(close);
     sec.appendChild(head);
@@ -810,7 +759,7 @@
       li.appendChild(D.el("span", "gh-step-n", String(i + 1)));
       var b = D.el("div", "gh-step-body");
       var h = D.el("h3", "gh-repo-name");
-      h.appendChild(D.link(GH + user + "/" + r.name, null, r.name));
+      h.appendChild(D.link(repoURL(r), null, r.name));
       if (r.lang) {
         var l = D.el("span", "gh-meta-lang");
         l.appendChild(dot(r.lang));
@@ -828,27 +777,31 @@
     var foot = D.el("div", "gh-track-foot");
     if (!all && t.repos.length > LIMIT) {
       var more = btn(D.fill(T.showAll, { n: t.repos.length }), "gh-more gh-more-inline");
-      more.addEventListener("click", function () { renderTrack(t, sec, true); });
+      more.addEventListener("click", function () {
+        renderTrack(t, sec, true);
+        /* The step after the old last one takes focus rather than the page top. */
+        var next = sec.querySelectorAll(".gh-step a")[LIMIT];
+        if (next) next.focus();
+      });
       foot.appendChild(more);
     }
     var go = btn(null, "hub-all gh-linkbtn");
     go.appendChild(document.createTextNode(T.inBrowse + " "));
     go.appendChild(glyph("i-arrow"));
     go.addEventListener("click", function () {
-      S.q = "";
-      S.area = []; S.lang = []; S.kind = "all";
-      var tr = doc.tracks.filter(function (x) { return x.key === t.key; })[0];
+      reset(true);
+      q.value = "";
       /* A path is a named set of repos; Browse gets the area it mostly
          overlaps, which is the closest single filter to it. */
       var c = {};
-      tr.repos.forEach(function (n) { var r = byName[n]; if (r) r.areas.forEach(function (a) { c[a] = (c[a] || 0) + 1; }); });
+      t.repos.forEach(function (n) { var r = byName[n]; if (r) r.areas.forEach(function (a) { c[a] = (c[a] || 0) + 1; }); });
       var best = Object.keys(c).sort(function (a, b) { return c[b] - c[a]; })[0];
       if (best) S.area = [best];
       shown = PAGE;
-      document.getElementById("tab-browse").click();
+      $("tab-browse").click();
       update();
       q.focus({ preventScroll: true });
-      window.scrollTo({ top: document.querySelector(".ptabs").getBoundingClientRect().top + window.scrollY - 16, behavior: "smooth" });
+      scrollToEl(document.querySelector(".ptabs"));
     });
     foot.appendChild(go);
     sec.appendChild(foot);
@@ -859,16 +812,17 @@
     var box = $("gh-timeline"), by = {}, max = 0;
     repos.forEach(function (r) {
       if (r.kind === "fork") return;
-      var y = year(r.created);
-      (by[y] = by[y] || []).push(r);
+      (by[r._cy] = by[r._cy] || []).push(r);
     });
     var ys = Object.keys(by).sort(function (a, b) { return b - a; });
     ys.forEach(function (y) { max = Math.max(max, by[y].length); });
+    var frag = document.createDocumentFragment();
     ys.forEach(function (y) {
       var sec = D.el("section", "gh-year");
       var h = D.el("h2", "gh-year-h");
       h.appendChild(D.el("span", "gh-year-y", y));
       var bar = D.el("span", "gh-year-bar");
+      bar.setAttribute("aria-hidden", "true");
       bar.appendChild(D.el("span")).style.width = Math.round(100 * by[y].length / max) + "%";
       h.appendChild(bar);
       h.appendChild(D.el("span", "gh-n", D.fill(T.trackCount, { n: by[y].length })));
@@ -876,7 +830,7 @@
       var ul = D.el("ul", "gh-year-list");
       by[y].sort(function (a, b) { return a.created > b.created ? 1 : -1; }).forEach(function (r) {
         var li = D.el("li");
-        var a = D.link(GH + user + "/" + r.name, "gh-pill", null);
+        var a = D.link(repoURL(r), "gh-pill", null);
         a.appendChild(dot(r.lang));
         a.appendChild(document.createTextNode(r.name));
         a.title = (r.desc ? r.desc + " · " : "") + month(r.created);
@@ -884,14 +838,37 @@
         ul.appendChild(li);
       });
       sec.appendChild(ul);
-      box.appendChild(sec);
+      frag.appendChild(sec);
+    });
+    box.appendChild(frag);
+  }
+
+  /* Learn and Timeline are drawn the first time they are shown, not on load:
+     most visits never open them, and the timeline alone is ~400 links. */
+  var drawn = {};
+  function drawPanel(name) {
+    if (drawn[name] || !doc) return;
+    drawn[name] = true;
+    if (name === "learn") {
+      renderTracks();
+      var tk = new URLSearchParams(location.search).get("track");
+      if (tk) openTrack(tk, false);
+    }
+    if (name === "timeline") renderTimeline();
+  }
+  function watchPanels() {
+    ["learn", "timeline"].forEach(function (name) {
+      var panel = $("panel-" + name);
+      if (!panel.hidden) drawPanel(name);
+      new MutationObserver(function () { if (!panel.hidden) drawPanel(name); })
+        .observe(panel, { attributes: true, attributeFilter: ["hidden"] });
     });
   }
 
   /* ---------- header ---------- */
   function renderHead() {
     var own = repos.filter(function (r) { return r.kind !== "fork"; });
-    var since = own.reduce(function (m, r) { return Math.min(m, year(r.created)); }, 9999);
+    var since = own.reduce(function (m, r) { return Math.min(m, r._cy); }, 9999);
     $("gh-intro").textContent = D.fill(T.intro, { n: nf.format(repos.length), since: since });
     var langs = {};
     own.forEach(function (r) { langs[r.lang || "—"] = (langs[r.lang || "—"] || 0) + 1; });
@@ -907,6 +884,7 @@
     var keys = Object.keys(langs).filter(function (l) { return l !== "—"; }).sort(function (a, b) { return langs[b] - langs[a]; });
     var top = keys.slice(0, 8), rest = own.length - top.reduce(function (s, l) { return s + langs[l]; }, 0);
     var track = $("gh-langbar-track"), legend = $("gh-langbar-legend");
+    function pct(n) { return Math.round(100 * n / own.length) + "%"; }
     top.forEach(function (l) {
       var seg = D.el("span", "gh-seg-part");
       seg.style.width = (100 * langs[l] / own.length) + "%";
@@ -916,12 +894,12 @@
       var b = btn(null, "gh-legend");
       b.appendChild(dot(l));
       b.appendChild(D.el("span", null, l));
-      b.appendChild(D.el("span", "gh-n", Math.round(100 * langs[l] / own.length) + "%"));
+      b.appendChild(D.el("span", "gh-n", pct(langs[l])));
       b.addEventListener("click", function () {
         S.lang = [l]; shown = PAGE;
-        document.getElementById("tab-browse").click();
+        $("tab-browse").click();
         update();
-        $("gh-langs").scrollIntoView({ behavior: "smooth", block: "center" });
+        scrollToEl($("gh-langs"), "center");
       });
       legend.appendChild(b);
     });
@@ -934,7 +912,7 @@
       var ol = D.el("span", "gh-legend gh-legend-other");
       ol.appendChild(D.el("span", "gh-dot gh-dot-other"));
       ol.appendChild(D.el("span", null, T.other));
-      ol.appendChild(D.el("span", "gh-n", Math.round(100 * rest / own.length) + "%"));
+      ol.appendChild(D.el("span", "gh-n", pct(rest)));
       legend.appendChild(ol);
     }
     $("gh-langbar").hidden = false;
@@ -942,9 +920,7 @@
 
   function yearOptions() {
     var lo = 9999, hi = 0;
-    repos.forEach(function (r) {
-      lo = Math.min(lo, year(r.created)); hi = Math.max(hi, year(r.pushed));
-    });
+    repos.forEach(function (r) { lo = Math.min(lo, r._cy); hi = Math.max(hi, r._py); });
     ["cf", "ct", "pf", "pt"].forEach(function (k) {
       var s = $("gh-" + k);
       var any = D.el("option", null, T.yearAny);
@@ -960,6 +936,8 @@
   }
 
   /* ---------- wiring ---------- */
+  function more() { shown += PAGE * 2; renderList(true); }
+
   function wire() {
     var timer;
     q.placeholder = D.fill(T.placeholder, { n: nf.format(repos.length) });
@@ -985,6 +963,7 @@
         if (S.kind === "fork") S.forks = true;
         /* A typed is: qualifier would override the buttons; drop it. */
         S.q = S.q.replace(/(^|\s)is:\S+/g, " ").replace(/\s+/g, " ").trim();
+        q.value = S.q;
         shown = PAGE; update();
       });
     });
@@ -1002,20 +981,19 @@
     });
     $("gh-stars").addEventListener("input", function () { S.stars = Math.max(0, +this.value || 0); shown = PAGE; update(); });
     $("gh-clear").addEventListener("click", function () {
-      var keep = { sort: S.sort, view: S.view, adv: S.adv };
-      Object.keys(DEFAULTS).forEach(function (k) { S[k] = Array.isArray(DEFAULTS[k]) ? [] : DEFAULTS[k]; });
-      S.sort = keep.sort; S.view = keep.view; S.adv = keep.adv;
+      reset(true);
       q.value = "";
       shown = PAGE; update();
+      q.focus();
     });
-    moreBtn.addEventListener("click", function () { shown += PAGE * 2; renderList(); });
+    moreBtn.addEventListener("click", more);
     /* Keep loading as the reader nears the end, but only after they asked
        once: a page that grows on its own under a footer is a trap. */
     if ("IntersectionObserver" in window) {
       var armed = false;
       moreBtn.addEventListener("click", function () { armed = true; });
       new IntersectionObserver(function (es) {
-        if (armed && es[0].isIntersecting && !moreBtn.hidden) { shown += PAGE * 2; renderList(); }
+        if (armed && es[0].isIntersecting && !moreBtn.hidden) more();
       }, { rootMargin: "400px" }).observe(moreBtn);
     }
   }
@@ -1026,18 +1004,19 @@
       doc = d;
       user = d.user || user;
       colors = d.colors || {};
-      d.areas.forEach(function (a) { areaIcon[a.key] = a.icon; });
-      repos = d.repos;
-      repos.forEach(prep);
+      (d.areas || []).forEach(function (a) { areaIcon[a.key] = a.icon; });
+      d.tracks = d.tracks || [];
+      repos = (d.repos || []).filter(function (r) { return r && r.name; });
+      repos.forEach(function (r) {
+        G.prep(r, AREA, ARTICLE[r.name.toLowerCase()]);
+        byName[r.name] = r;
+      });
       renderHead();
       yearOptions();
       wire();
       update();
       list.setAttribute("aria-busy", "false");
-      renderTracks();
-      var tk = new URLSearchParams(location.search).get("track");
-      if (tk) openTrack(tk, false);
-      renderTimeline();
+      watchPanels();
       var foot = $("gh-foot");
       foot.textContent = D.fill(T.footnote, {
         date: new Date(d.updated + "T00:00:00Z").toLocaleDateString(LANG, { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })

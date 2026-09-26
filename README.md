@@ -109,7 +109,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | **Movies** | |
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
 | **GitHub** | |
-| `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/` |
+| `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/`. Also runs every Monday (`.github/workflows/github-refresh.yml`), committing only when something changed |
 | **AI radar** | |
 | `make ai-refresh` | Fetch every `/ai/` source and rewrite `data/ai.json` (the daily Action does this) |
 | `make ai-i18n` | Write the `/ai/` UI strings into all nine i18n files |
@@ -130,7 +130,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-media` | Python tests for the media tool |
 | `make test-layout` | Build `/media/` from a fixture; check `/data/media.json` and the page in all nine languages |
 | `make test-link-check` | Tests for the repo-link checker |
-| `make test-github` | Tests for the GitHub page's data refresher |
+| `make test-github` | Tests for the GitHub page's data refresher (Python) and its search (node) |
 | `make test-learn-links` | Tests for the /learn/ link checker, and its offline check of data/learn.json |
 | `make test-courses` | Tests for the course sync, and a privacy check of every published lesson |
 | `make test-indexnow` | Tests for the IndexNow change detector |

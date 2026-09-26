@@ -105,8 +105,9 @@ movies-refresh: ## Fill in and refresh data/movies.json (posters, scores, traile
 github-refresh: ## Refresh data/github.json from GitHub (repos, READMEs, areas, learning paths)
 	python3 tools/github-repos/refresh.py
 
-test-github: ## Tests for the GitHub page's data refresher
+test-github: ## Tests for the GitHub page's data refresher and its search
 	python3 -m unittest discover -s tools/github-repos -p 'test_*.py'
+	node --test tools/github-repos/search.test.mjs
 
 # /ai/: the daily AI radar. The GitHub Action ai-radar.yml runs ai-refresh
 # every morning and deploys; run it by hand to see today's sources locally.

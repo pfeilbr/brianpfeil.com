@@ -3111,3 +3111,15 @@ a.ai-badge:hover { color: var(--brand); border-color: var(--brand); }
 .nl-fine a { color: inherit; text-decoration: underline; }
 .prose + .newsletter, .newsletter + nav { margin-top: 2rem; }
 @media print { .newsletter { display: none; } }
+
+/* Keyboard focus on /github/'s custom controls; the browser default ring is
+   clipped by their rounded, overflow-hidden containers. */
+.gh-chip:focus-visible, .gh-seg button:focus-visible, .gh-view button:focus-visible,
+.gh-bar:focus-visible, .gh-trackcard:focus-visible, .gh-act:focus-visible, .gh-tag:focus-visible,
+.gh-legend:focus-visible, .gh-adv-toggle:focus-visible, .gh-more:focus-visible,
+.gh-track-close:focus-visible, .gh-pill:focus-visible, .gh-clear:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+.gh-view:focus-within { overflow: visible; }
+.gh-track:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }

@@ -32,6 +32,7 @@ import json
 import re
 import subprocess
 import sys
+import time
 import tomllib
 from pathlib import Path
 
@@ -73,14 +74,32 @@ query($cursor: String) {
 
 # --- fetching ---------------------------------------------------------------
 
+def gh_graphql(cursor, tries=4, run=subprocess.run, sleep=time.sleep):
+    """One page of the query. Retries GitHub's occasional 502/timeout with
+    backoff; a missing or signed-out `gh` fails at once with what to do."""
+    args = ["gh", "api", "graphql", "-f", "query=" + QUERY]
+    if cursor:
+        args += ["-f", "cursor=" + cursor]
+    for attempt in range(tries):
+        try:
+            res = run(args, capture_output=True, text=True)
+        except FileNotFoundError:
+            raise SystemExit("refresh: the GitHub CLI (gh) is not installed")
+        if res.returncode == 0:
+            return json.loads(res.stdout)
+        err = (res.stderr or "").strip()
+        if "auth login" in err or "GH_TOKEN" in err or "401" in err:
+            raise SystemExit("refresh: gh is not signed in -- run `gh auth login` or set GH_TOKEN")
+        if attempt == tries - 1:
+            raise SystemExit(f"refresh: GitHub API failed after {tries} tries: {err}")
+        print(f"  retrying after: {err[:120]}", file=sys.stderr)
+        sleep(2 ** attempt * 3)
+
+
 def fetch_all():
     repos, cursor = [], None
     while True:
-        args = ["gh", "api", "graphql", "-f", "query=" + QUERY]
-        if cursor:
-            args += ["-f", "cursor=" + cursor]
-        page = json.loads(subprocess.run(args, check=True, capture_output=True, text=True).stdout)
-        conn = page["data"]["user"]["repositories"]
+        conn = gh_graphql(cursor)["data"]["user"]["repositories"]
         repos += conn["nodes"]
         print(f"  fetched {len(repos)}", file=sys.stderr)
         if not conn["pageInfo"]["hasNextPage"]:
@@ -153,6 +172,17 @@ def readme_text(md):
         if len(re.sub(r"[^A-Za-z]", "", text)) >= 3:
             paras.append(text)
     return paras
+
+
+def safe_url(url):
+    """A homepage is shown as a link, so only http(s) gets through; a bare
+    "example.com" (GitHub allows it) is given a scheme."""
+    url = (url or "").strip()
+    if not url or re.search(r"\s", url):
+        return ""
+    if not re.match(r"[a-z][a-z0-9+.-]*:", url, re.I):
+        url = "https://" + url
+    return url if re.match(r"https?://[^/\s]+", url, re.I) else ""
 
 
 def same_words(a, b):
@@ -233,7 +263,7 @@ def beginner_score(r, depth=0):
         s += 1
     if r.get("readme"):
         s += 1
-    if r["size"] and r["size"] < 2000:
+    if r["_size"] and r["_size"] < 2000:
         s += 1
     s += min(depth, 3)
     if len(re.split(r"[-_.]+", r["name"])) <= 3:
@@ -268,24 +298,23 @@ def slim(repo, tags, cfg, vocab, posted):
     out = {
         "name": repo["name"],
         "desc": desc or summary_from(paras),
-        "desc_src": "github" if desc else ("readme" if paras else ""),
         "lang": lang.get("name") or "",
         "langs": langs,
         "areas": areas,
-        "tracks": [t["key"] for t in cfg["tracks"] if matches(toks, t)],
+        "_tracks": [t["key"] for t in cfg["tracks"] if matches(toks, t)],
         "_depth": {t["key"]: len(toks & set(t["match"])) for t in cfg["tracks"]},
         "tags": display_tags(toks | set(topics), vocab, lang.get("name")),
         "kind": "fork" if repo["isFork"] else ("playground" if "playground" in repo["name"].lower() else "project"),
         "stars": repo["stargazerCount"],
-        "forks": repo["forkCount"],
         "created": repo["createdAt"][:10],
         "pushed": repo["pushedAt"][:10] if repo.get("pushedAt") else repo["createdAt"][:10],
-        "size": repo.get("diskUsage") or 0,
+        "_size": repo.get("diskUsage") or 0,
         "readme": clip(" ".join(paras), 600),
         "post": repo["name"].lower() in posted,
     }
-    if repo.get("homepageUrl"):
-        out["homepage"] = repo["homepageUrl"].strip()
+    home = safe_url(repo.get("homepageUrl"))
+    if home:
+        out["homepage"] = home
     if (repo.get("licenseInfo") or {}).get("spdxId") not in (None, "NOASSERTION"):
         out["license"] = repo["licenseInfo"]["spdxId"]
     if repo.get("parent"):
@@ -315,12 +344,14 @@ def build(raw, posts, cfg, today):
 
     tracks = []
     for t in cfg["tracks"]:
-        members = [r for r in repos if t["key"] in r["tracks"] and r["kind"] != "fork"]
+        members = [r for r in repos if t["key"] in r["_tracks"] and r["kind"] != "fork"]
         members.sort(key=lambda r: beginner_score(r, r["_depth"][t["key"]]), reverse=True)
         tracks.append({"key": t["key"], "icon": t["icon"], "repos": [r["name"] for r in members]})
 
+    # Working fields for ranking only; the page never reads them.
     for r in repos:
-        del r["_depth"]
+        for k in [k for k in r if k.startswith("_")]:
+            del r[k]
     return {
         "user": USER,
         "updated": today,
@@ -332,9 +363,29 @@ def build(raw, posts, cfg, today):
     }
 
 
+# A partial API answer must never empty the page: a drop this large is far
+# more likely a GitHub hiccup than a week of deleting repos.
+MAX_DROP = 0.10
+
+
+def decide(new, old, force=False):
+    """What to do with a freshly built doc given the committed one:
+    "same" (nothing but the date moved -- leave the file alone, so a weekly
+    run with no news makes no commit), "shrunk" (refuse), or "write"."""
+    if old is None:
+        return "write"
+    strip = lambda d: {k: v for k, v in d.items() if k != "updated"}
+    if strip(new) == strip(old):
+        return "same"
+    if not force and new["count"] < old.get("count", 0) * (1 - MAX_DROP):
+        return "shrunk"
+    return "write"
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--cached", action="store_true", help="reuse the last fetch instead of calling GitHub")
+    ap.add_argument("--force", action="store_true", help="write even if more than 10%% of repos vanished")
     args = ap.parse_args()
     cfg = json.loads(CONFIG.read_text())
     if args.cached and CACHE.exists():
@@ -344,6 +395,14 @@ def main():
         CACHE.parent.mkdir(exist_ok=True)
         CACHE.write_text(json.dumps(raw))
     doc = build(raw, post_tags(), cfg, datetime.date.today().isoformat())
+    old = json.loads(OUT.read_text()) if OUT.exists() else None
+    verdict = decide(doc, old, args.force)
+    if verdict == "same":
+        print(f"{OUT.relative_to(ROOT)}: unchanged ({doc['count']} repos)")
+        return
+    if verdict == "shrunk":
+        sys.exit(f"refresh: {doc['count']} repos, down from {old['count']}; not writing "
+                 f"(re-run with --force if that is real)")
     OUT.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     kinds = {}
     for r in doc["repos"]:

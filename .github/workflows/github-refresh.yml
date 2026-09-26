@@ -1,0 +1,62 @@
+name: GitHub refresh
+
+# Rewrites data/github.json (the /github/ page) every Monday and deploys it.
+# The refresher reads only public repos, which GITHUB_TOKEN can see, and it
+# leaves the file alone when nothing but the date would change, so a quiet
+# week makes no commit. It refuses to write if more than 10% of repos vanish
+# (a partial API answer), and the run then fails instead of emptying the page.
+on:
+  schedule:
+    - cron: "43 9 * * 1"   # Mondays 09:43 UTC, off the top of the hour
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: github-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Tests
+        run: |
+          python -m unittest discover -s tools/github-repos -p 'test_*.py'
+          node --test tools/github-repos/search.test.mjs
+      - name: Fetch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/github-repos/refresh.py
+      - name: Check the refreshed file
+        run: python -m unittest discover -s tools/github-repos -p 'test_*.py'
+      - name: Commit and push
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/github.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -q -m "GitHub refresh: $(date -u +%Y-%m-%d)"
+          # data/github.json is only written here, so a rebase never conflicts on it.
+          for i in 1 2 3; do
+            git pull -q --rebase origin main && git push -q origin HEAD:main && break
+            sleep 5
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # Pushes made with GITHUB_TOKEN never trigger other workflows, so the
+      # deploy is dispatched explicitly (gh-pages.yml has workflow_dispatch).
+      - name: Deploy
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run gh-pages.yml --ref main

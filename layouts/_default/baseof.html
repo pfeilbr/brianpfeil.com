@@ -85,6 +85,10 @@
   {{ if and (eq .Layout "media") hugo.Data.media hugo.Data.media.base_url }}
   <link rel="preconnect" href="{{ strings.TrimSuffix "/" hugo.Data.media.base_url }}">
   {{ end }}
+  {{- /* /github/ is drawn from this JSON; fetching it alongside the CSS
+     instead of after the scripts saves a round trip. crossorigin matches
+     fetch()'s same-origin credentials mode, so the preload is reused. */}}
+  {{ if eq .Layout "github" }}<link rel="preload" href="/data/github.json" as="fetch" crossorigin>{{ end }}
   {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ template "_internal/google_analytics.html" . }}
