@@ -1639,6 +1639,81 @@ other = "Could not be reached yet"
 [ai_schema_newer]
 other = "This page's data is newer than the page itself. Reload to get the latest version."
 
+[ai_briefing]
+other = "Today's briefing"
+
+[ai_briefing_by]
+other = "Summarized by {{ .model }} from the items on this page, {{ .when }}. Each point links to its sources."
+
+[ai_briefing_sources]
+other = "Sources"
+
+[ai_briefing_earlier]
+other = "Earlier briefings"
+
+[ai_briefing_feed]
+other = "Subscribe to the daily briefing (RSS)"
+
+[ai_briefing_feed_title]
+other = "AI briefing · Brian Pfeil"
+
+[ai_search_label]
+other = "Search the AI radar"
+
+[ai_search_placeholder]
+other = "Search titles, people, sources…"
+
+[ai_search_results]
+other = "{{ . }} matching items"
+
+[ai_search_none]
+other = "Nothing matches “{{ . }}”."
+
+[ai_topics]
+other = "Topics in the last two days"
+
+[ai_new]
+other = "New"
+
+[ai_new_since]
+other = "{{ . }} new since your last visit."
+
+[ai_show_more]
+other = "Show {{ . }} more"
+
+[ai_hn]
+other = "Hacker News: {{ .points }} points, {{ .comments }} comments"
+
+[ai_stale]
+other = "This page last updated {{ . }}; the twice-daily refresh may be stuck."
+
+[ai_source_streak]
+other = "failed {{ . }} runs in a row"
+
+[ai_models_vision]
+other = "Takes images"
+
+[ai_mod_image]
+other = "Images"
+
+[ai_mod_audio]
+other = "Audio"
+
+[ai_mod_video]
+other = "Video"
+
+[ai_sort]
+other = "Sort"
+
+[ai_sort_newest]
+other = "Newest"
+
+[ai_sort_cheapest]
+other = "Cheapest"
+
+[ai_sort_context]
+other = "Largest context"
+
 [ai_role_simonw]
 other = "Datasette and the LLM CLI; the most useful daily read on LLMs"
 

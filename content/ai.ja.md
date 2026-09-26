@@ -5,4 +5,5 @@ description = "毎朝の AI の新着情報：私が読んでいる人たち、�
 slug = "ai"
 title = "AI レーダー"
 layout = "ai"
+outputs = ["html", "rss"]
 +++

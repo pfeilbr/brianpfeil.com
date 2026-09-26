@@ -178,6 +178,8 @@ class Improvements(unittest.TestCase):
         self.assertEqual(got.get("Qwen"), 2)
         self.assertEqual(got.get("Open weights"), 2)
         self.assertNotIn("Gemini", got, "a single mention is not a topic")
+        self.assertEqual(items[3]["topics"], ["Qwen", "Open weights"])
+        self.assertEqual(items[2]["topics"], ["Gemini"], "items are tagged even below the chip threshold")
 
     def test_busy_source_is_capped(self):
         old = [item("awsml", n, 0.1 * n, "labs") for n in range(radar.SOURCE_KEEP + 5)]

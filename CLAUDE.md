@@ -202,7 +202,10 @@ touching a template:
   `page` instead of `url` links one of this site's projects in the visitor's
   language. Learn took Archive's nav slot; Archive is still a home card.
 - **/ai/ refreshes itself.** `.github/workflows/ai-radar.yml` runs
-  `tools/ai-radar/radar.py` every morning, commits `data/ai.json` and
+  `tools/ai-radar/radar.py` twice a day, then `digest.py` (the daily Claude
+  briefing, nine languages, a no-op without the `ANTHROPIC_API_KEY` secret),
+  commits `data/ai.json` + `data/ai-digests.json` — never commit local
+  copies of those — and
   dispatches the deploy (a `GITHUB_TOKEN` push does not trigger it). Sources
   are `tools/ai-radar/config.json`; the file's shape is
   `tools/ai-radar/schema.json`, versioned, with migrations — see

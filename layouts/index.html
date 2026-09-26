@@ -102,6 +102,10 @@
         <p class="hub-card-blurb">{{ i18n "hub_ai_blurb" }}</p>
       </div>
     </div>
+    {{- /* The day's briefing headline, in this language, when there is one. */ -}}
+    {{ with hugo.Data.ai.digest }}{{ with index .lang $lang | default (index .lang "en") }}
+    <p class="hub-ai-headline">{{ .headline }}</p>
+    {{ end }}{{ end }}
     <ul class="hub-latest">
       {{ range $heads }}
       <li>

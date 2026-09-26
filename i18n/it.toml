@@ -1637,6 +1637,81 @@ other = "Non ancora raggiungibile"
 [ai_schema_newer]
 other = "I dati di questa pagina sono più recenti della pagina stessa. Ricarica per avere l'ultima versione."
 
+[ai_briefing]
+other = "Il punto di oggi"
+
+[ai_briefing_by]
+other = "Riassunto da {{ .model }} a partire dai contenuti di questa pagina, {{ .when }}. Ogni punto rimanda alle sue fonti."
+
+[ai_briefing_sources]
+other = "Fonti"
+
+[ai_briefing_earlier]
+other = "Punti precedenti"
+
+[ai_briefing_feed]
+other = "Iscriviti al punto quotidiano (RSS)"
+
+[ai_briefing_feed_title]
+other = "Il punto IA · Brian Pfeil"
+
+[ai_search_label]
+other = "Cerca nel radar IA"
+
+[ai_search_placeholder]
+other = "Cerca titoli, persone, fonti…"
+
+[ai_search_results]
+other = "{{ . }} risultati"
+
+[ai_search_none]
+other = "Nessun risultato per «{{ . }}»."
+
+[ai_topics]
+other = "Temi degli ultimi due giorni"
+
+[ai_new]
+other = "Nuovo"
+
+[ai_new_since]
+other = "{{ . }} novità dalla tua ultima visita."
+
+[ai_show_more]
+other = "Mostra altri {{ . }}"
+
+[ai_hn]
+other = "Hacker News: {{ .points }} punti, {{ .comments }} commenti"
+
+[ai_stale]
+other = "Ultimo aggiornamento {{ . }}; l'aggiornamento due volte al giorno potrebbe essersi bloccato."
+
+[ai_source_streak]
+other = "fallita {{ . }} volte di fila"
+
+[ai_models_vision]
+other = "Accetta immagini"
+
+[ai_mod_image]
+other = "Immagini"
+
+[ai_mod_audio]
+other = "Audio"
+
+[ai_mod_video]
+other = "Video"
+
+[ai_sort]
+other = "Ordina"
+
+[ai_sort_newest]
+other = "Più recenti"
+
+[ai_sort_cheapest]
+other = "Più economici"
+
+[ai_sort_context]
+other = "Contesto più ampio"
+
 [ai_role_simonw]
 other = "Datasette e la CLI LLM; la lettura quotidiana più utile sugli LLM"
 

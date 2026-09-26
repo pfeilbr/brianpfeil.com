@@ -5,4 +5,5 @@ description = "每天早上的 AI 新动态：我关注的作者、各大实验�
 slug = "ai"
 title = "AI 雷达"
 layout = "ai"
+outputs = ["html", "rss"]
 +++

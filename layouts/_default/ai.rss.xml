@@ -1,0 +1,42 @@
+{{- /* The daily AI briefing as a feed, one per language (/ai/index.xml,
+   /ja/ai/index.xml, ...). Built from data/ai-digests.json, which
+   tools/ai-radar/digest.py appends to each morning; each item is one day's
+   briefing in this page's language, with its sources linked. */ -}}
+{{- $lang := site.Language.Lang -}}
+{{- $digests := slice -}}
+{{- with index hugo.Data "ai-digests" }}{{ $digests = first 30 .digests }}{{ end -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ i18n "ai_briefing_feed_title" }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ i18n "ai_intro" }}</description>
+    <generator>Hugo</generator>
+    <language>{{ $lang }}</language>
+    {{- with $digests }}
+    <lastBuildDate>{{ (time (index . 0).generated).Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+    {{- end }}
+    {{- with .OutputFormats.Get "rss" }}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+    {{- end }}
+    {{- $page := . }}
+    {{- range $digests }}
+    {{- $v := index .lang $lang | default (index .lang "en") }}
+    {{- $refs := .refs }}
+    {{- $body := "<ol>" }}
+    {{- range $v.points }}
+      {{- $cites := slice }}
+      {{- range .refs }}{{ with index $refs . }}{{ $cites = $cites | append (printf "<a href=\"%s\">%s</a>" .url (.source | htmlEscape)) }}{{ end }}{{ end }}
+      {{- $body = printf "%s<li>%s <small>%s</small></li>" $body (.text | htmlEscape) (delimit $cites ", ") }}
+    {{- end }}
+    {{- $body = printf "%s</ol>" $body }}
+    <item>
+      <title>{{ $v.headline }}</title>
+      <link>{{ $page.Permalink }}</link>
+      <pubDate>{{ (time .generated).Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      <guid isPermaLink="false">{{ $page.Permalink }}#briefing-{{ .date }}</guid>
+      <description>{{ $body | transform.XMLEscape | safeHTML }}</description>
+    </item>
+    {{- end }}
+  </channel>
+</rss>

@@ -4,7 +4,7 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs test-github test-ai ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs test-github test-ai test-ai-page ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
 	python3 tools/site-check/check_site.py --public public
@@ -125,6 +125,12 @@ test-ai: ## Unit tests for the AI radar, and a check that its i18n block is curr
 	python3 -m unittest discover -s tools/ai-radar/tests
 	python3 tools/ai-radar/i18n_strings.py --check
 
+test-ai-page: ## Build /ai/ from a fixture and with no data; check page, briefing, feed and home card in all nine languages
+	python3 tools/ai-radar/check_page.py --build
+
+ai-digest: ## Write today's AI briefing with Claude (needs ANTHROPIC_API_KEY and the tool's venv)
+	cd tools/ai-radar && ([ -d .venv ] || (python3 -m venv .venv && .venv/bin/pip install -q -r requirements.txt)) && .venv/bin/python digest.py
+
 check-repo-links: ## List posts whose repo link 404s for a visitor (live, needs network)
 	python3 tools/link-check/check_repo_links.py
 
@@ -165,4 +171,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: help dev build verify generate-posts movies-refresh ai-refresh ai-i18n test-ai github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize tf-init tf-plan tf-validate
+.PHONY: help dev build verify generate-posts movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize tf-init tf-plan tf-validate

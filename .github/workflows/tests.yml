@@ -93,6 +93,10 @@ jobs:
         run: python3 tools/site-check/check_site.py --public public
       - name: Media page render check
         run: python3 tools/instagram-media/tests/check_layout.py --build
+      # Builds /ai/ from a fixture briefing and with no data; checks the page
+      # shell, meta description, briefing feed and home card in every language.
+      - name: AI radar page render check
+        run: python3 tools/ai-radar/check_page.py --build
 
   terraform:
     name: terraform fmt + validate

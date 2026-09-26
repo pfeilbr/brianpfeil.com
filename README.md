@@ -115,6 +115,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | **AI radar** | |
 | `make ai-refresh` | Fetch every `/ai/` source and rewrite `data/ai.json` (the daily Action does this) |
 | `make ai-i18n` | Write the `/ai/` UI strings into all nine i18n files |
+| `make ai-digest` | Write today's briefing with Claude (needs `ANTHROPIC_API_KEY`; the daily Action does this) |
 | **Media** | |
 | `make media-deps` | Create the tool's venv |
 | `make media-stage` | Read the archive (or `EXPORT=…`), update the approve list, build the review sheet |
@@ -140,6 +141,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-i18n` | Tests for, and a run of, the i18n consistency check |
 | `make test-docs` | Every Makefile target has help text and is in the README |
 | `make test-ai` | Unit tests for the AI radar, and its i18n block is current |
+| `make test-ai-page` | Build `/ai/` from a fixture and with no data; check page, briefing, feed and home card in all nine languages |
 | **Infrastructure** | |
 | `make tf-init` / `tf-plan` / `tf-validate` | Terraform, both stacks, S3 backend |
 

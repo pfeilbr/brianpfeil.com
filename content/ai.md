@@ -5,4 +5,5 @@ description = "What's new in AI every morning: the people I read, the labs, new 
 slug = "ai"
 title = "AI Radar"
 layout = "ai"
+outputs = ["html", "rss"]
 +++

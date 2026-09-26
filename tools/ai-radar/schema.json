@@ -205,6 +205,13 @@
               }
             },
             "description": "the Hacker News thread about the same story"
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "topic names (radar.TOPICS) the item mentions"
           }
         }
       }

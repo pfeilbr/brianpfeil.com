@@ -1638,6 +1638,81 @@ other = "尚未成功访问"
 [ai_schema_newer]
 other = "此页面的数据比页面本身更新。请刷新以获取最新版本。"
 
+[ai_briefing]
+other = "今日简报"
+
+[ai_briefing_by]
+other = "由 {{ .model }} 根据本页内容总结，{{ .when }}。每一条都附有来源链接。"
+
+[ai_briefing_sources]
+other = "来源"
+
+[ai_briefing_earlier]
+other = "往期简报"
+
+[ai_briefing_feed]
+other = "订阅每日简报（RSS）"
+
+[ai_briefing_feed_title]
+other = "AI 简报 · Brian Pfeil"
+
+[ai_search_label]
+other = "搜索 AI 雷达"
+
+[ai_search_placeholder]
+other = "搜索标题、作者、来源…"
+
+[ai_search_results]
+other = "{{ . }} 条匹配"
+
+[ai_search_none]
+other = "没有与“{{ . }}”匹配的内容。"
+
+[ai_topics]
+other = "近两天的话题"
+
+[ai_new]
+other = "新"
+
+[ai_new_since]
+other = "自上次访问以来新增 {{ . }} 条。"
+
+[ai_show_more]
+other = "再显示 {{ . }} 条"
+
+[ai_hn]
+other = "Hacker News：{{ .points }} 分，{{ .comments }} 条评论"
+
+[ai_stale]
+other = "本页最后更新于{{ . }}；每日两次的刷新可能出了问题。"
+
+[ai_source_streak]
+other = "已连续失败 {{ . }} 次"
+
+[ai_models_vision]
+other = "支持图像输入"
+
+[ai_mod_image]
+other = "图像"
+
+[ai_mod_audio]
+other = "音频"
+
+[ai_mod_video]
+other = "视频"
+
+[ai_sort]
+other = "排序"
+
+[ai_sort_newest]
+other = "最新"
+
+[ai_sort_cheapest]
+other = "最便宜"
+
+[ai_sort_context]
+other = "上下文最大"
+
 [ai_role_simonw]
 other = "Datasette 和 LLM 命令行工具作者；关于 LLM 最有用的每日读物"
 

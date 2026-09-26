@@ -1638,6 +1638,81 @@ other = "아직 접속하지 못했습니다"
 [ai_schema_newer]
 other = "이 페이지의 데이터가 페이지보다 최신입니다. 새로 고침해 최신 버전을 받으세요."
 
+[ai_briefing]
+other = "오늘의 브리핑"
+
+[ai_briefing_by]
+other = "이 페이지의 항목을 바탕으로 {{ .model }}가 요약했습니다({{ .when }}). 각 항목에 출처 링크가 있습니다."
+
+[ai_briefing_sources]
+other = "출처"
+
+[ai_briefing_earlier]
+other = "지난 브리핑"
+
+[ai_briefing_feed]
+other = "매일 브리핑 구독(RSS)"
+
+[ai_briefing_feed_title]
+other = "AI 브리핑 · Brian Pfeil"
+
+[ai_search_label]
+other = "AI 레이더 검색"
+
+[ai_search_placeholder]
+other = "제목, 사람, 소스 검색…"
+
+[ai_search_results]
+other = "{{ . }}개 일치"
+
+[ai_search_none]
+other = "“{{ . }}”와 일치하는 항목이 없습니다."
+
+[ai_topics]
+other = "최근 이틀간의 주제"
+
+[ai_new]
+other = "새 글"
+
+[ai_new_since]
+other = "지난 방문 이후 새 항목 {{ . }}개."
+
+[ai_show_more]
+other = "{{ . }}개 더 보기"
+
+[ai_hn]
+other = "Hacker News: {{ .points }}점, 댓글 {{ .comments }}개"
+
+[ai_stale]
+other = "마지막 업데이트: {{ . }}. 하루 두 번 하는 새로 고침이 멈췄을 수 있습니다."
+
+[ai_source_streak]
+other = "{{ . }}회 연속 실패"
+
+[ai_models_vision]
+other = "이미지 입력 지원"
+
+[ai_mod_image]
+other = "이미지"
+
+[ai_mod_audio]
+other = "오디오"
+
+[ai_mod_video]
+other = "동영상"
+
+[ai_sort]
+other = "정렬"
+
+[ai_sort_newest]
+other = "최신순"
+
+[ai_sort_cheapest]
+other = "저렴한 순"
+
+[ai_sort_context]
+other = "컨텍스트 큰 순"
+
 [ai_role_simonw]
 other = "Datasette와 LLM CLI 제작자. LLM에 관해 매일 읽기 가장 유용한 곳"
 

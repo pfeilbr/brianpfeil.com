@@ -5,4 +5,5 @@ description = "Neues aus der KI, jeden Morgen: die Leute, die ich lese, die Labo
 slug = "ai"
 title = "KI-Radar"
 layout = "ai"
+outputs = ["html", "rss"]
 +++

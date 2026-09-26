@@ -1,9 +1,13 @@
 {{ define "main" }}
 {{- /* /ai/ -- drawn in the browser from /data/ai.json, which
-   tools/ai-radar/radar.py rewrites every morning (.github/workflows/ai-radar.yml).
+   tools/ai-radar/radar.py rewrites twice a day (.github/workflows/ai-radar.yml);
+   the briefing comes from digest.py, the archive of briefings from
+   /data/ai-digests.json (loaded only when someone opens it).
+
    The template supplies the shell and the translated strings; the only thing
    it reads from the data is the list of source ids, to look up each person's
    one-line description (ai_role_<id>), which is prose and so lives in i18n.
+   The briefing itself is data: digest.py writes it in all nine languages.
 
    The script checks schema_version and refuses a file newer than it knows,
    rather than drawing half a page from fields that changed meaning. */ -}}
@@ -20,12 +24,14 @@
   "onX" (i18n "ai_on_x" "{handle}")
   "showAll" (i18n "ai_show_all" "{n}")
   "showFewer" (i18n "ai_show_fewer")
+  "showMore" (i18n "ai_show_more" "{n}")
   "openWeights" (i18n "ai_open_weights")
   "context" (i18n "ai_context" "{n}")
   "price" (i18n "ai_price" (dict "in" "{in}" "out" "{out}"))
   "free" (i18n "ai_free")
   "points" (i18n "ai_points" "{n}")
   "comments" (i18n "ai_comments" "{n}")
+  "hn" (i18n "ai_hn" (dict "points" "{points}" "comments" "{comments}"))
   "also" (i18n "ai_also" "{list}")
   "earlier" (i18n "ai_earlier")
   "likes" (i18n "ai_likes" "{n}")
@@ -33,20 +39,64 @@
   "all" (i18n "ai_all")
   "empty" (i18n "ai_empty")
   "failed" (i18n "ai_source_failed" "{when}")
+  "streak" (i18n "ai_source_streak" "{n}")
   "never" (i18n "ai_source_never")
   "error" (i18n "data_load_error")
   "newer" (i18n "ai_schema_newer")
+  "stale" (i18n "ai_stale" "{when}")
+  "newSince" (i18n "ai_new_since" "{n}")
+  "isNew" (i18n "ai_new")
+  "by" (i18n "ai_briefing_by" (dict "model" "{model}" "when" "{when}"))
+  "sources" (i18n "ai_briefing_sources")
+  "results" (i18n "ai_search_results" "{n}")
+  "noResults" (i18n "ai_search_none" "{q}")
+  "vision" (i18n "ai_models_vision")
+  "mod" (dict "image" (i18n "ai_mod_image") "audio" (i18n "ai_mod_audio") "video" (i18n "ai_mod_video"))
   "roles" $roles
 }}
 <article class="ai-page">
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
     <p class="text-gray-600">{{ i18n "ai_intro" }}</p>
-    <p class="ai-stamp" id="ai-stamp"></p>
+    <p class="ai-stamp" id="ai-stamp" aria-live="polite"></p>
+    <p class="ai-stale" id="ai-stale" role="status" hidden></p>
   </header>
 
   <div class="prose">{{ .Content }}</div>
   <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/ai.json") | safeHTML }}</p></noscript>
+
+  {{/* ---------- The day's briefing (hidden until there is one) ---------- */}}
+  <section class="ai-briefing" id="ai-briefing" aria-labelledby="ai-briefing-h" hidden>
+    <div class="ai-briefing-head">
+      {{ partial "icons/chip.html" (dict "id" "i-sparkles" "size" "sm") }}
+      <h2 id="ai-briefing-h" class="ai-briefing-kicker">{{ i18n "ai_briefing" }}</h2>
+      {{ with .OutputFormats.Get "rss" }}
+      <a class="ai-feed" href="{{ .RelPermalink }}" title="{{ i18n "ai_briefing_feed" }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-rss"/></svg>
+        <span>RSS</span></a>
+      {{ end }}
+    </div>
+    <p class="ai-briefing-headline" id="ai-briefing-headline"></p>
+    <ol class="ai-briefing-points" id="ai-briefing-points"></ol>
+    <p class="ai-briefing-by" id="ai-briefing-by"></p>
+    <details class="ai-briefing-archive" id="ai-briefing-archive">
+      <summary>{{ i18n "ai_briefing_earlier" }}</summary>
+      <ol class="ai-archive-list" id="ai-archive-list" aria-busy="true"></ol>
+    </details>
+  </section>
+
+  {{/* ---------- Search and today's topics ---------- */}}
+  <div class="ai-search" role="search">
+    <label class="sr-only" for="ai-q">{{ i18n "ai_search_label" }}</label>
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="ai-q" type="search" autocomplete="off" spellcheck="false" placeholder="{{ i18n "ai_search_placeholder" }}">
+    <kbd class="ai-kbd" aria-hidden="true">/</kbd>
+  </div>
+  <p class="ai-results" id="ai-results" aria-live="polite" hidden></p>
+  <div class="ai-topics" id="ai-topics" hidden>
+    <span class="ai-topics-label">{{ i18n "ai_topics" }}</span>
+    <div class="chips" id="ai-topic-chips"></div>
+  </div>
 
   {{/* ---------- People: the writers B actually reads, first ---------- */}}
   <section class="ai-section" aria-labelledby="ai-people-h">
@@ -97,6 +147,17 @@
     <section class="music-section">
       <h3 class="ai-h3">{{ i18n "ai_models_new" }}</h3>
       <p class="music-sub">{{ i18n "ai_models_new_note" }}</p>
+      <div class="ai-model-controls">
+        <div class="chips" id="ai-model-filter"></div>
+        <label class="ai-sort">
+          <span>{{ i18n "ai_sort" }}</span>
+          <select id="ai-model-sort">
+            <option value="newest">{{ i18n "ai_sort_newest" }}</option>
+            <option value="cheapest">{{ i18n "ai_sort_cheapest" }}</option>
+            <option value="context">{{ i18n "ai_sort_context" }}</option>
+          </select>
+        </label>
+      </div>
       <div class="ai-models" data-list="models" aria-busy="true"></div>
     </section>
     <section class="music-section">
@@ -151,14 +212,25 @@
   var SCHEMA = 1;
   var PEOPLE_SHOWN = 9;
   var LATEST_HOURS = 48;
+  var PAGE = 25;            /* rows per list before "Show more" */
+  var STALE_HOURS = 36;     /* the refresh runs twice a day */
+  var VISIT_KEY = "ai.lastVisit";
   var D = window.DataPage, el = D.el.bind(D);
   var T = {{ $T | jsonify | safeJS }};
   var lang = document.documentElement.lang || "en";
+  var lang2 = lang.slice(0, 2).toLowerCase();
   var rtf = window.Intl && Intl.RelativeTimeFormat ? new Intl.RelativeTimeFormat(lang, { numeric: "auto" }) : null;
   var nf = new Intl.NumberFormat(lang, { notation: "compact", maximumFractionDigits: 1 });
   var df = new Intl.DateTimeFormat(lang, { month: "short", day: "numeric" });
   var dfY = new Intl.DateTimeFormat(lang, { year: "numeric", month: "short", day: "numeric" });
+  var dfLong = new Intl.DateTimeFormat(lang, { weekday: "long", month: "long", day: "numeric" });
   var now = Date.now();
+
+  /* "New since your last visit": a per-browser convenience, so it lives in
+     localStorage and the page works the same when storage is unavailable. */
+  var lastVisit = null;
+  try { lastVisit = localStorage.getItem(VISIT_KEY); } catch (e) {}
+  function isNew(i) { return !!lastVisit && (i.first_seen || i.published) > lastVisit; }
 
   function ago(iso) {
     var t = Date.parse(iso);
@@ -179,24 +251,47 @@
   function money(n) {
     return n === 0 ? T.free : "$" + (n < 1 ? n.toFixed(2).replace(/0$/, "") : n.toFixed(n % 1 ? 2 : 0));
   }
+  function newDot() { return el("span", "ai-new", T.isNew); }
+
+  var SRC = {};
+
+  /* ---------- search ---------- */
+  var query = "", topic = null;
+  function norm(s) { return String(s || "").toLowerCase().replace(/[-_]+/g, " "); }
+  function haystack(i) {
+    return norm(i.title + " " + (i.summary || "") + " " + ((SRC[i.source] || {}).name || "") + " " + (i.topics || []).join(" "));
+  }
+  function matches(i) {
+    if (topic && (i.topics || []).indexOf(topic) < 0) return false;
+    if (!query) return true;
+    var h = i._h || (i._h = haystack(i));
+    return norm(query).split(/\s+/).every(function (w) { return h.indexOf(w) >= 0; });
+  }
+  var redraws = [];
+  function onRedraw(f) { redraws.push(f); f(); }
+  function redraw() {
+    redraws.forEach(function (f) { f(); });
+  }
 
   function row(i, src, opts) {
     opts = opts || {};
     var li = el("li", "ai-row");
     var top = el("div", "ai-row-top");
+    if (isNew(i)) top.appendChild(newDot(i));
     if (opts.showSource !== false && src) top.appendChild(el("span", "ai-src", src.name));
     top.appendChild(time(i.published));
     li.appendChild(top);
-    li.appendChild(D.link(i.url, "ai-title", i.title));
+    var a = D.link(i.url, "ai-title", i.title);
+    if (opts.local) { a.removeAttribute("target"); a.removeAttribute("rel"); }
+    li.appendChild(a);
     if (i.summary && opts.summary !== false) li.appendChild(el("p", "ai-sum", i.summary));
     var meta = [];
     if (i.points) meta.push(D.fill(T.points, { n: nf.format(i.points) }));
-    if (i.discuss) {
-      var d = D.link(i.discuss, "ai-discuss", D.fill(T.comments, { n: nf.format(i.comments || 0) }));
-      meta.push(d);
-    }
-    if (i.also && i.also.length) {
-      meta.push(D.fill(T.also, { list: i.also.map(function (s) { return (SRC[s] || { name: s }).name; }).join(", ") }));
+    if (i.discuss) meta.push(D.link(i.discuss, "ai-discuss", D.fill(T.comments, { n: nf.format(i.comments || 0) })));
+    if (i.hn) meta.push(D.link(i.hn.url, "ai-discuss", D.fill(T.hn, { points: nf.format(i.hn.points), comments: nf.format(i.hn.comments) })));
+    var also = (i.also || []).filter(function (s) { return !(i.hn && s === "hn"); });
+    if (also.length) {
+      meta.push(D.fill(T.also, { list: also.map(function (s) { return (SRC[s] || { name: s }).name; }).join(", ") }));
     }
     if (meta.length) {
       var m = el("p", "ai-meta");
@@ -209,12 +304,28 @@
     return li;
   }
 
+  /* A list shows PAGE rows, then a button for the next PAGE. */
   function fillList(name, items, opts) {
     var ol = document.querySelector('[data-list="' + name + '"]');
     ol.setAttribute("aria-busy", "false");
     ol.textContent = "";
-    if (!items.length) { ol.appendChild(el("li", "ai-empty", T.empty)); return; }
-    items.forEach(function (i) { ol.appendChild(row(i, SRC[i.source], opts)); });
+    var more = ol.nextElementSibling && ol.nextElementSibling.classList.contains("ai-more") ? ol.nextElementSibling : null;
+    if (!more) {
+      more = el("button", "ai-more");
+      more.type = "button";
+      ol.parentNode.insertBefore(more, ol.nextSibling);
+    }
+    more.hidden = true;
+    if (!items.length) { ol.appendChild(el("li", "ai-empty", query || topic ? D.fill(T.noResults, { q: query || topic }) : T.empty)); return; }
+    var shown = 0;
+    function page() {
+      items.slice(shown, shown + PAGE).forEach(function (i) { ol.appendChild(row(i, SRC[i.source], opts)); });
+      shown = Math.min(items.length, shown + PAGE);
+      more.hidden = shown >= items.length;
+      more.textContent = D.fill(T.showMore, { n: Math.min(PAGE, items.length - shown) });
+    }
+    more.onclick = page;
+    page();
   }
 
   function count(name, n) {
@@ -225,32 +336,106 @@
   /* Source chips above a list: "All" plus one per source that has items. */
   function filter(name, items, render) {
     var box = document.querySelector('[data-filter="' + name + '"]');
-    var ids = [];
+    var ids = [], picked = null;
     items.forEach(function (i) { if (ids.indexOf(i.source) < 0) ids.push(i.source); });
-    if (ids.length < 2) { render(items); return; }
-    function chip(label, id, n) {
-      var b = el("button", "chip" + (id ? "" : " is-on"));
-      b.type = "button";
-      b.appendChild(document.createTextNode(label));
-      b.appendChild(el("span", "chip-n", String(n)));
-      b.setAttribute("aria-pressed", id ? "false" : "true");
-      b.addEventListener("click", function () {
-        [].forEach.call(box.children, function (c) { c.classList.remove("is-on"); c.setAttribute("aria-pressed", "false"); });
-        b.classList.add("is-on");
-        b.setAttribute("aria-pressed", "true");
-        render(id ? items.filter(function (i) { return i.source === id; }) : items);
-      });
-      return b;
+    function show() {
+      var l = items.filter(matches);
+      render(picked ? l.filter(function (i) { return i.source === picked; }) : l);
     }
-    box.appendChild(chip(T.all, null, items.length));
-    ids.forEach(function (id) {
-      box.appendChild(chip(SRC[id].name, id, items.filter(function (i) { return i.source === id; }).length));
-    });
-    render(items);
+    if (ids.length >= 2) {
+      function chip(label, id, n) {
+        var b = el("button", "chip" + (id ? "" : " is-on"));
+        b.type = "button";
+        b.appendChild(document.createTextNode(label));
+        b.appendChild(el("span", "chip-n", String(n)));
+        b.setAttribute("aria-pressed", id ? "false" : "true");
+        b.addEventListener("click", function () {
+          [].forEach.call(box.children, function (c) { c.classList.remove("is-on"); c.setAttribute("aria-pressed", "false"); });
+          b.classList.add("is-on");
+          b.setAttribute("aria-pressed", "true");
+          picked = id;
+          show();
+        });
+        return b;
+      }
+      box.appendChild(chip(T.all, null, items.length));
+      ids.forEach(function (id) {
+        box.appendChild(chip(SRC[id].name, id, items.filter(function (i) { return i.source === id; }).length));
+      });
+    }
+    onRedraw(show);
   }
 
-  var SRC = {};
+  /* ---------- the briefing ---------- */
+  /* "claude-opus-5" -> "Claude Opus 5", "claude-opus-4-8" -> "Claude Opus 4.8" */
+  function modelName(id) {
+    var parts = String(id).replace(/^claude-/, "").split("-");
+    var words = parts.filter(function (p) { return !/^\d+$/.test(p); });
+    var nums = parts.filter(function (p) { return /^\d+$/.test(p); });
+    return "Claude " + words.map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(" ") +
+      (nums.length ? " " + nums.join(".") : "");
+  }
+  function briefingIn(d) { return (d.lang && (d.lang[lang2] || d.lang.en)) || null; }
+  function points(ol, d) {
+    var v = briefingIn(d);
+    v.points.forEach(function (p) {
+      var li = el("li", "ai-point");
+      li.appendChild(el("span", "ai-point-text", p.text + " "));
+      var cites = el("span", "ai-cites");
+      cites.setAttribute("aria-label", T.sources);
+      var seen = {};
+      p.refs.forEach(function (r) {
+        var ref = (d.refs || {})[r];
+        if (!ref) return;
+        /* Two threads from one source read "Hacker News", "Hacker News 2". */
+        seen[ref.source] = (seen[ref.source] || 0) + 1;
+        var a = D.link(ref.url, "ai-cite", ref.source + (seen[ref.source] > 1 ? " " + seen[ref.source] : ""));
+        a.title = ref.title;
+        cites.appendChild(a);
+      });
+      li.appendChild(cites);
+      ol.appendChild(li);
+    });
+  }
+  function briefing(doc) {
+    var d = doc.digest;
+    if (!d || !briefingIn(d)) return;
+    var box = document.getElementById("ai-briefing");
+    box.hidden = false;
+    document.getElementById("ai-briefing-headline").textContent = briefingIn(d).headline;
+    points(document.getElementById("ai-briefing-points"), d);
+    document.getElementById("ai-briefing-by").textContent =
+      D.fill(T.by, { model: modelName(d.model), when: ago(d.generated) });
+    var archive = document.getElementById("ai-briefing-archive");
+    var loaded = false;
+    archive.addEventListener("toggle", function () {
+      if (!archive.open || loaded) return;
+      loaded = true;
+      var ol = document.getElementById("ai-archive-list");
+      D.load("ai-digests").then(function (a) {
+        ol.setAttribute("aria-busy", "false");
+        (a.digests || []).filter(function (x) { return x.date !== d.date && briefingIn(x); }).forEach(function (x) {
+          var li = el("li", "ai-archive-day");
+          var det = el("details");
+          var sum = el("summary");
+          sum.appendChild(el("span", "ai-archive-date", dfLong.format(new Date(x.date + "T12:00:00Z"))));
+          sum.appendChild(el("span", "ai-archive-headline", briefingIn(x).headline));
+          det.appendChild(sum);
+          var pts = el("ol", "ai-briefing-points");
+          points(pts, x);
+          det.appendChild(pts);
+          li.appendChild(det);
+          ol.appendChild(li);
+        });
+        if (!ol.children.length) ol.appendChild(el("li", "ai-empty", T.empty));
+      }).catch(function () {
+        ol.setAttribute("aria-busy", "false");
+        ol.appendChild(el("li", "ai-empty", T.error));
+      });
+    });
+  }
 
+  /* ---------- people ---------- */
   function people(doc, bySource) {
     var box = document.getElementById("ai-people");
     box.setAttribute("aria-busy", "false");
@@ -260,9 +445,8 @@
       if (!!a.pin !== !!b.pin) return a.pin ? -1 : 1;
       return latest(b) < latest(a) ? -1 : latest(b) > latest(a) ? 1 : 0;
     });
-    ps.forEach(function (s, n) {
+    var cards = ps.map(function (s) {
       var card = el("section", "ai-person" + (s.pin ? " is-pin" : ""));
-      if (n >= PEOPLE_SHOWN) card.hidden = true;
       var head = el("div", "ai-person-head");
       var h = el("h3", "ai-person-name");
       h.appendChild(D.link(s.home, "", s.name));
@@ -280,40 +464,74 @@
       card.appendChild(head);
       if (T.roles[s.id]) card.appendChild(el("p", "ai-role", T.roles[s.id]));
       var ul = el("ul", "ai-person-posts");
-      (bySource[s.id] || []).slice(0, s.pin ? 6 : 3).forEach(function (i) {
-        var li = el("li");
-        li.appendChild(D.link(i.url, "", i.title));
-        li.appendChild(time(i.published));
-        ul.appendChild(li);
-      });
-      if (!ul.children.length) ul.appendChild(el("li", "ai-empty", T.empty));
       card.appendChild(ul);
       box.appendChild(card);
+      return { s: s, card: card, ul: ul, text: norm(s.name + " " + (T.roles[s.id] || "")) };
     });
     var more = document.getElementById("ai-people-more");
-    if (ps.length > PEOPLE_SHOWN) {
-      more.hidden = false;
-      more.textContent = D.fill(T.showAll, { n: ps.length });
-      more.addEventListener("click", function () {
-        var open = more.getAttribute("aria-expanded") === "true";
-        [].forEach.call(box.children, function (c, n) { if (n >= PEOPLE_SHOWN) c.hidden = open; });
-        more.setAttribute("aria-expanded", open ? "false" : "true");
-        more.textContent = open ? D.fill(T.showAll, { n: ps.length }) : T.showFewer;
+    var expanded = false;
+    more.addEventListener("click", function () {
+      expanded = !expanded;
+      more.setAttribute("aria-expanded", expanded ? "true" : "false");
+      show();
+    });
+    function show() {
+      var filtering = !!(query || topic), visible = 0;
+      cards.forEach(function (c) {
+        var posts = bySource[c.s.id] || [];
+        var hit = filtering ? posts.filter(matches) : posts;
+        var nameHit = filtering && !topic && norm(query).split(/\s+/).every(function (w) { return c.text.indexOf(w) >= 0; });
+        if (nameHit) hit = posts;
+        c.ul.textContent = "";
+        hit.slice(0, c.s.pin && !filtering ? 6 : 3).forEach(function (i) {
+          var li = el("li");
+          if (isNew(i)) li.appendChild(newDot(i));
+          li.appendChild(D.link(i.url, "", i.title));
+          li.appendChild(time(i.published));
+          c.ul.appendChild(li);
+        });
+        if (!c.ul.children.length) c.ul.appendChild(el("li", "ai-empty", T.empty));
+        var show = filtering ? hit.length > 0 : (expanded || visible < PEOPLE_SHOWN);
+        c.card.hidden = !show;
+        if (show) visible++;
       });
+      more.hidden = filtering || ps.length <= PEOPLE_SHOWN;
+      more.textContent = expanded ? T.showFewer : D.fill(T.showAll, { n: ps.length });
     }
+    onRedraw(show);
   }
 
+  /* ---------- models ---------- */
   function models(doc) {
     var box = document.querySelector('[data-list="models"]');
     box.setAttribute("aria-busy", "false");
     var list = (doc.models && doc.models.new) || [];
-    if (!list.length) box.appendChild(el("p", "ai-empty", T.empty));
-    list.forEach(function (m) {
+    var mode = "all", sort = "newest";
+    var fbox = document.getElementById("ai-model-filter");
+    [["all", T.all], ["open", T.openWeights], ["vision", T.vision]].forEach(function (f, n) {
+      var b = el("button", "chip" + (n ? "" : " is-on"), f[1]);
+      b.type = "button";
+      b.setAttribute("aria-pressed", n ? "false" : "true");
+      b.addEventListener("click", function () {
+        [].forEach.call(fbox.children, function (c) { c.classList.remove("is-on"); c.setAttribute("aria-pressed", "false"); });
+        b.classList.add("is-on");
+        b.setAttribute("aria-pressed", "true");
+        mode = f[0];
+        show();
+      });
+      fbox.appendChild(b);
+    });
+    document.getElementById("ai-model-sort").addEventListener("change", function (e) { sort = e.target.value; show(); });
+    function card(m) {
       var c = el("div", "ai-model");
       var top = el("div", "ai-row-top");
+      if (lastVisit && m.created > lastVisit) top.appendChild(newDot(m));
       top.appendChild(el("span", "ai-src", m.provider));
       top.appendChild(time(m.created));
       if (m.open_weights) top.appendChild(D.link("https://huggingface.co/" + m.open_weights, "ai-badge ai-badge-open", T.openWeights));
+      (m.modalities || []).forEach(function (k) {
+        if (T.mod[k]) top.appendChild(el("span", "ai-badge ai-badge-mod", T.mod[k]));
+      });
       c.appendChild(top);
       c.appendChild(D.link(m.url, "ai-title", m.name));
       if (m.summary) c.appendChild(el("p", "ai-sum", m.summary));
@@ -321,8 +539,28 @@
       if (m.context) facts.push(D.fill(T.context, { n: nf.format(m.context) }));
       facts.push(D.fill(T.price, { "in": money(m.price_in), out: money(m.price_out) }));
       c.appendChild(el("p", "ai-meta", facts.join(" · ")));
-      box.appendChild(c);
-    });
+      return c;
+    }
+    function show() {
+      var l = list.filter(function (m) {
+        if (mode === "open" && !m.open_weights) return false;
+        if (mode === "vision" && (m.modalities || []).indexOf("image") < 0) return false;
+        if (!query && !topic) return true;
+        if (topic) return norm(m.name + " " + m.provider + " " + m.summary).indexOf(norm(topic)) >= 0;
+        var h = norm(m.name + " " + m.provider + " " + (m.summary || ""));
+        return norm(query).split(/\s+/).every(function (w) { return h.indexOf(w) >= 0; });
+      });
+      l.sort(function (a, b) {
+        if (sort === "cheapest") return (a.price_in + a.price_out) - (b.price_in + b.price_out);
+        if (sort === "context") return (b.context || 0) - (a.context || 0);
+        return a.created < b.created ? 1 : -1;
+      });
+      box.textContent = "";
+      if (!l.length) box.appendChild(el("p", "ai-empty", T.empty));
+      l.forEach(function (m) { box.appendChild(card(m)); });
+      count("models", l.length);
+    }
+    onRedraw(show);
     var ol = document.querySelector('[data-list="trending"]');
     ((doc.models && doc.models.trending) || []).forEach(function (m) {
       var li = el("li", "ai-trend");
@@ -334,36 +572,48 @@
       li.appendChild(el("span", "ai-meta", bits.join(" · ")));
       ol.appendChild(li);
     });
-    count("models", list.length);
   }
 
-  /* One card per tool: the newest release up top, earlier ones as links. */
+  /* ---------- tools: one card per tool, newest release up top ---------- */
   function tools(doc, bySource) {
     var box = document.querySelector('[data-list="tools"]');
     box.setAttribute("aria-busy", "false");
     var ts = doc.sources.filter(function (s) { return s.section === "tools" && bySource[s.id]; });
     ts.sort(function (a, b) { return bySource[b.id][0].published < bySource[a.id][0].published ? -1 : 1; });
-    ts.forEach(function (s) {
-      var items = bySource[s.id], i = items[0];
-      var c = el("section", "ai-tool");
-      var head = el("div", "ai-row-top");
-      head.appendChild(D.link(s.home, "ai-tool-name", s.name));
-      head.appendChild(time(i.published));
-      c.appendChild(head);
-      c.appendChild(D.link(i.url, "ai-title", i.title));
-      if (i.summary) c.appendChild(el("p", "ai-sum", i.summary));
-      if (items.length > 1) {
-        var p = el("p", "ai-meta");
-        p.appendChild(document.createTextNode(T.earlier + " "));
-        items.slice(1, 5).forEach(function (e, n) {
-          if (n) p.appendChild(document.createTextNode(", "));
-          p.appendChild(D.link(e.url, "", e.title));
-        });
-        c.appendChild(p);
-      }
-      box.appendChild(c);
-    });
-    count("tools", ts.length);
+    function show() {
+      box.textContent = "";
+      var n = 0;
+      ts.forEach(function (s) {
+        var items = bySource[s.id];
+        var hits = (query || topic) ? items.filter(matches) : items;
+        if (!hits.length && !(query && norm(s.name).indexOf(norm(query)) >= 0)) return;
+        if (!hits.length) hits = items;
+        var i = hits[0];
+        n++;
+        var c = el("section", "ai-tool");
+        var head = el("div", "ai-row-top");
+        if (isNew(i)) head.appendChild(newDot(i));
+        head.appendChild(D.link(s.home, "ai-tool-name", s.name));
+        head.appendChild(time(i.published));
+        c.appendChild(head);
+        c.appendChild(D.link(i.url, "ai-title", i.title));
+        if (i.summary) c.appendChild(el("p", "ai-sum", i.summary));
+        var rest = items.filter(function (e) { return e !== i; });
+        if (rest.length) {
+          var p = el("p", "ai-meta");
+          p.appendChild(document.createTextNode(T.earlier + " "));
+          rest.slice(0, 4).forEach(function (e, k) {
+            if (k) p.appendChild(document.createTextNode(", "));
+            p.appendChild(D.link(e.url, "", e.title));
+          });
+          c.appendChild(p);
+        }
+        box.appendChild(c);
+      });
+      if (!n) box.appendChild(el("p", "ai-empty", D.fill(T.noResults, { q: query || topic })));
+      count("tools", n);
+    }
+    onRedraw(show);
   }
 
   function sources(doc) {
@@ -372,9 +622,62 @@
       var li = el("li", "ai-source is-" + s.status);
       li.appendChild(D.link(s.home, "", s.name));
       if (s.status === "error") {
-        li.appendChild(el("span", "ai-source-state", s.checked ? D.fill(T.failed, { when: ago(s.checked) }) : T.never));
+        var msg = s.checked ? D.fill(T.failed, { when: ago(s.checked) }) : T.never;
+        if (s.fail_streak > 1) msg += " · " + D.fill(T.streak, { n: s.fail_streak });
+        li.appendChild(el("span", "ai-source-state", msg));
       }
       ul.appendChild(li);
+    });
+  }
+
+  function topicsBar(doc) {
+    var ts = doc.topics || [];
+    if (!ts.length) return;
+    document.getElementById("ai-topics").hidden = false;
+    var box = document.getElementById("ai-topic-chips");
+    ts.forEach(function (t) {
+      var b = el("button", "chip");
+      b.type = "button";
+      b.appendChild(document.createTextNode(t.key));
+      b.appendChild(el("span", "chip-n", String(t.n)));
+      b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function () {
+        var on = topic !== t.key;
+        topic = on ? t.key : null;
+        [].forEach.call(box.children, function (c) { c.classList.remove("is-on"); c.setAttribute("aria-pressed", "false"); });
+        if (on) { b.classList.add("is-on"); b.setAttribute("aria-pressed", "true"); }
+        redraw();
+        results(doc);
+      });
+      box.appendChild(b);
+    });
+  }
+
+  function results(doc) {
+    var p = document.getElementById("ai-results");
+    if (!query && !topic) { p.hidden = true; return; }
+    var n = doc.items.filter(matches).length;
+    p.hidden = false;
+    p.textContent = n ? D.fill(T.results, { n: n }) : D.fill(T.noResults, { q: query || topic });
+  }
+
+  function search(doc) {
+    var q = document.getElementById("ai-q");
+    var timer;
+    q.addEventListener("input", function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () { query = q.value.trim(); redraw(); results(doc); }, 120);
+    });
+    /* "/" jumps to the search box, as on /post/ and /github/. */
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+      var t = e.target;
+      if (t && (t.isContentEditable || /^(input|textarea|select)$/i.test(t.tagName))) return;
+      e.preventDefault();
+      q.focus();
+    });
+    q.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && q.value) { q.value = ""; query = ""; redraw(); results(doc); }
     });
   }
 
@@ -382,14 +685,26 @@
     if (!doc || doc.schema_version > SCHEMA) throw new Error("schema");
     doc.sources.forEach(function (s) { SRC[s.id] = s; });
     var bySource = {}, bySection = {};
-    doc.items.slice().sort(function (a, b) { return a.published < b.published ? 1 : -1; }).forEach(function (i) {
+    doc.items.sort(function (a, b) { return a.published < b.published ? 1 : -1; });
+    doc.items.forEach(function (i) {
       (bySource[i.source] = bySource[i.source] || []).push(i);
       (bySection[i.section] = bySection[i.section] || []).push(i);
     });
 
     var ok = doc.sources.filter(function (s) { return s.status === "ok"; }).length;
-    document.getElementById("ai-stamp").textContent = D.fill(T.updated, { when: ago(doc.generated), n: ok });
+    var stamp = D.fill(T.updated, { when: ago(doc.generated), n: ok });
+    var fresh = lastVisit ? doc.items.filter(isNew).length : 0;
+    if (fresh) stamp += " " + D.fill(T.newSince, { n: fresh });
+    document.getElementById("ai-stamp").textContent = stamp;
+    if (now - Date.parse(doc.generated) > STALE_HOURS * 3600e3) {
+      var st = document.getElementById("ai-stale");
+      st.hidden = false;
+      st.textContent = D.fill(T.stale, { when: ago(doc.generated) });
+    }
 
+    briefing(doc);
+    topicsBar(doc);
+    search(doc);
     people(doc, bySource);
 
     /* Latest: the last two days from every section but people (they have
@@ -403,33 +718,36 @@
       var sa = (a.also || []).length, sb = (b.also || []).length;
       return sb - sa || (a.published < b.published ? 1 : -1);
     });
-    fillList("latest", latest);
-    count("latest", latest.length);
+    onRedraw(function () { var l = latest.filter(matches); fillList("latest", l); count("latest", l.length); });
 
     var labs = bySection.labs || [];
-    filter("labs", labs, function (l) { fillList("labs", l); });
-    count("labs", labs.length);
+    filter("labs", labs, function (l) { fillList("labs", l); count("labs", l.length); });
 
     var comm = (bySection.community || []).slice().sort(function (a, b) {
       return (b.points || 0) - (a.points || 0) || (a.published < b.published ? 1 : -1);
     });
-    filter("community", comm, function (l) { fillList("community", l); });
-    count("community", comm.length);
+    filter("community", comm, function (l) { fillList("community", l); count("community", l.length); });
 
     var learn = bySection.learning || [];
-    fillList("learning", learn);
-    count("learning", learn.length);
+    onRedraw(function () { var l = learn.filter(matches); fillList("learning", l); count("learning", l.length); });
 
     models(doc);
     tools(doc, bySource);
 
-    fillList("mine", (doc.mine || []).map(function (p) {
-      return { title: p.title, url: p.url, published: p.published, summary: p.tags.join(" · ") };
-    }), { showSource: false });
-    [].forEach.call(document.querySelectorAll('[data-list="mine"] a'), function (a) { a.removeAttribute("target"); a.removeAttribute("rel"); });
-    count("mine", (doc.mine || []).length);
+    var mine = (doc.mine || []).map(function (p) {
+      return { title: p.title, url: p.url, published: p.published, summary: p.tags.join(" · "), topics: p.tags, source: "" };
+    });
+    onRedraw(function () {
+      var l = mine.filter(matches);
+      fillList("mine", l, { showSource: false, local: true });
+      count("mine", l.length);
+    });
 
     sources(doc);
+
+    /* Remember this visit for next time -- after drawing, so this view
+       still marks what was new since the last one. */
+    try { localStorage.setItem(VISIT_KEY, new Date(now).toISOString()); } catch (e) {}
   }).catch(function (e) {
     D.fail(document.querySelector(".ai-page"), e && e.message === "schema" ? T.newer : T.error);
   });

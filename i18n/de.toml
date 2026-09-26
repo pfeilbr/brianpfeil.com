@@ -1640,6 +1640,81 @@ other = "Noch nicht erreichbar"
 [ai_schema_newer]
 other = "Die Daten dieser Seite sind neuer als die Seite selbst. Neu laden, um die aktuelle Version zu bekommen."
 
+[ai_briefing]
+other = "Das Briefing von heute"
+
+[ai_briefing_by]
+other = "Von {{ .model }} aus den Einträgen dieser Seite zusammengefasst, {{ .when }}. Jeder Punkt verlinkt seine Quellen."
+
+[ai_briefing_sources]
+other = "Quellen"
+
+[ai_briefing_earlier]
+other = "Frühere Briefings"
+
+[ai_briefing_feed]
+other = "Das tägliche Briefing abonnieren (RSS)"
+
+[ai_briefing_feed_title]
+other = "KI-Briefing · Brian Pfeil"
+
+[ai_search_label]
+other = "Im KI-Radar suchen"
+
+[ai_search_placeholder]
+other = "Titel, Personen, Quellen suchen…"
+
+[ai_search_results]
+other = "{{ . }} Treffer"
+
+[ai_search_none]
+other = "Nichts passt zu „{{ . }}“."
+
+[ai_topics]
+other = "Themen der letzten zwei Tage"
+
+[ai_new]
+other = "Neu"
+
+[ai_new_since]
+other = "{{ . }} neue seit deinem letzten Besuch."
+
+[ai_show_more]
+other = "{{ . }} weitere zeigen"
+
+[ai_hn]
+other = "Hacker News: {{ .points }} Punkte, {{ .comments }} Kommentare"
+
+[ai_stale]
+other = "Zuletzt aktualisiert {{ . }}; die zweimal tägliche Aktualisierung hängt womöglich."
+
+[ai_source_streak]
+other = "{{ . }}-mal in Folge fehlgeschlagen"
+
+[ai_models_vision]
+other = "Versteht Bilder"
+
+[ai_mod_image]
+other = "Bilder"
+
+[ai_mod_audio]
+other = "Audio"
+
+[ai_mod_video]
+other = "Video"
+
+[ai_sort]
+other = "Sortieren"
+
+[ai_sort_newest]
+other = "Neueste"
+
+[ai_sort_cheapest]
+other = "Günstigste"
+
+[ai_sort_context]
+other = "Größter Kontext"
+
 [ai_role_simonw]
 other = "Datasette und die LLM-CLI; die nützlichste tägliche Lektüre zu LLMs"
 

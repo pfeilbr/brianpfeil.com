@@ -1638,6 +1638,81 @@ other = "Ainda não foi possível ler"
 [ai_schema_newer]
 other = "Os dados desta página são mais novos do que a própria página. Recarregue para obter a versão mais recente."
 
+[ai_briefing]
+other = "O resumo de hoje"
+
+[ai_briefing_by]
+other = "Resumido por {{ .model }} a partir do que esta página reúne, {{ .when }}. Cada ponto leva às suas fontes."
+
+[ai_briefing_sources]
+other = "Fontes"
+
+[ai_briefing_earlier]
+other = "Resumos anteriores"
+
+[ai_briefing_feed]
+other = "Assine o resumo diário (RSS)"
+
+[ai_briefing_feed_title]
+other = "Resumo de IA · Brian Pfeil"
+
+[ai_search_label]
+other = "Pesquisar no radar de IA"
+
+[ai_search_placeholder]
+other = "Pesquise títulos, pessoas, fontes…"
+
+[ai_search_results]
+other = "{{ . }} resultados"
+
+[ai_search_none]
+other = "Nada corresponde a “{{ . }}”."
+
+[ai_topics]
+other = "Temas dos últimos dois dias"
+
+[ai_new]
+other = "Novo"
+
+[ai_new_since]
+other = "{{ . }} novidades desde a sua última visita."
+
+[ai_show_more]
+other = "Mostrar mais {{ . }}"
+
+[ai_hn]
+other = "Hacker News: {{ .points }} pontos, {{ .comments }} comentários"
+
+[ai_stale]
+other = "Esta página foi atualizada pela última vez {{ . }}; a atualização de duas vezes ao dia pode estar travada."
+
+[ai_source_streak]
+other = "falhou {{ . }} vezes seguidas"
+
+[ai_models_vision]
+other = "Aceita imagens"
+
+[ai_mod_image]
+other = "Imagens"
+
+[ai_mod_audio]
+other = "Áudio"
+
+[ai_mod_video]
+other = "Vídeo"
+
+[ai_sort]
+other = "Ordenar"
+
+[ai_sort_newest]
+other = "Mais recentes"
+
+[ai_sort_cheapest]
+other = "Mais baratos"
+
+[ai_sort_context]
+other = "Maior contexto"
+
 [ai_role_simonw]
 other = "Datasette e a CLI LLM; a leitura diária mais útil sobre LLMs"
 

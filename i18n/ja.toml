@@ -1638,6 +1638,81 @@ other = "まだ取得できていません"
 [ai_schema_newer]
 other = "このページのデータはページ本体より新しくなっています。再読み込みして最新版を表示してください。"
 
+[ai_briefing]
+other = "今日のブリーフィング"
+
+[ai_briefing_by]
+other = "このページの項目をもとに {{ .model }} が要約（{{ .when }}）。各項目に出典へのリンクがあります。"
+
+[ai_briefing_sources]
+other = "出典"
+
+[ai_briefing_earlier]
+other = "過去のブリーフィング"
+
+[ai_briefing_feed]
+other = "毎日のブリーフィングを購読（RSS）"
+
+[ai_briefing_feed_title]
+other = "AI ブリーフィング · Brian Pfeil"
+
+[ai_search_label]
+other = "AI レーダーを検索"
+
+[ai_search_placeholder]
+other = "タイトル・人・ソースを検索…"
+
+[ai_search_results]
+other = "{{ . }} 件が一致"
+
+[ai_search_none]
+other = "「{{ . }}」に一致するものはありません。"
+
+[ai_topics]
+other = "直近 2 日間の話題"
+
+[ai_new]
+other = "新着"
+
+[ai_new_since]
+other = "前回の訪問から {{ . }} 件の新着。"
+
+[ai_show_more]
+other = "さらに {{ . }} 件表示"
+
+[ai_hn]
+other = "Hacker News：{{ .points }} ポイント、コメント {{ .comments }} 件"
+
+[ai_stale]
+other = "最終更新は{{ . }}です。1 日 2 回の更新が止まっている可能性があります。"
+
+[ai_source_streak]
+other = "{{ . }} 回連続で失敗"
+
+[ai_models_vision]
+other = "画像入力対応"
+
+[ai_mod_image]
+other = "画像"
+
+[ai_mod_audio]
+other = "音声"
+
+[ai_mod_video]
+other = "動画"
+
+[ai_sort]
+other = "並べ替え"
+
+[ai_sort_newest]
+other = "新しい順"
+
+[ai_sort_cheapest]
+other = "安い順"
+
+[ai_sort_context]
+other = "コンテキストが大きい順"
+
 [ai_role_simonw]
 other = "Datasette と LLM CLI の作者。LLM について毎日読むならここ"
 

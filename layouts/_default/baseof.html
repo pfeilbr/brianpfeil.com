@@ -14,6 +14,9 @@
   {{- end }}
   {{- /* Posts (and therefore the feed) only exist on the default-language site. */}}
   <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ printf "%sindex.xml" hugo.Sites.Default.Home.Permalink }}">
+  {{- if eq .Layout "ai" }}{{ with .OutputFormats.Get "rss" }}
+  <link rel="alternate" type="application/rss+xml" title="{{ i18n "ai_briefing_feed_title" }}" href="{{ .Permalink }}">
+  {{- end }}{{ end }}
   {{- /* hreflang alternates for the languages this page actually has. */}}
   {{- if and .IsTranslated (ne .Kind "404") }}
   {{- range .AllTranslations }}

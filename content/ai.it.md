@@ -5,4 +5,5 @@ description = "Le novità sull'IA ogni mattina: le persone che leggo, i laborato
 slug = "ai"
 title = "Radar IA"
 layout = "ai"
+outputs = ["html", "rss"]
 +++

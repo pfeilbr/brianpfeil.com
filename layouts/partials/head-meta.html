@@ -1,6 +1,8 @@
 {{- $default := i18n "site_description" -}}
 {{- $desc := "" -}}
 {{- with .Description }}{{ $desc = . }}{{ end -}}
+{{- /* /ai/ describes itself with the day's briefing headline, in this language. */ -}}
+{{- if eq .Layout "ai" }}{{ with hugo.Data.ai }}{{ with .digest }}{{ with index .lang $.Site.Language.Lang }}{{ $desc = .headline }}{{ end }}{{ end }}{{ end }}{{ end -}}
 {{- if and (eq $desc "") (eq .Kind "term") }}{{ $desc = i18n "tag_desc" (dict "tag" (.Data.Term | default .Title)) }}{{ end -}}
 {{- /* Section and taxonomy lists (/post/ and its pages, /projects/, /tags/)
    reuse their home-page card blurb rather than the site-wide default. */ -}}

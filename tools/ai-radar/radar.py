@@ -567,16 +567,23 @@ def crosslink(items):
 
 def topics(items, now, hours=48, limit=TOPIC_LIMIT):
     """What today's items keep mentioning: known names counted once per
-    item across the last two days, most-mentioned first."""
+    item across the last two days, most-mentioned first. Tags each item
+    with the names it mentions (`topics`) as a side effect."""
     cutoff = iso(now - dt.timedelta(hours=hours))
     counts = {}
     for i in items:
+        text = i["title"] + " " + i.get("summary", "")[:200]
+        found = [key for key, rx in TOPICS if rx.search(text)]
+        # Every item is tagged, so a topic chip filters exactly; only the
+        # last two days (tools aside) count towards which chips show.
+        if found:
+            i["topics"] = found
+        else:
+            i.pop("topics", None)
         if i["published"] < cutoff or i["section"] == "tools":
             continue
-        text = i["title"] + " " + i.get("summary", "")[:200]
-        for key, rx in TOPICS:
-            if rx.search(text):
-                counts[key] = counts.get(key, 0) + 1
+        for key in found:
+            counts[key] = counts.get(key, 0) + 1
     ranked = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
     return [{"key": k, "n": n} for k, n in ranked if n >= 2][:limit]
 
