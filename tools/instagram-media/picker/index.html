@@ -54,6 +54,28 @@ section.content { padding: 12px 16px 80px; }
 .badge .sim { background: var(--accent); cursor: pointer; }
 .notice { color: var(--muted); font-size: 12.5px; margin: -4px 0 12px; max-width: 70em; }
 .notice code { font-size: 11.5px; }
+.picked { position: sticky; top: 54px; z-index: 4; background: var(--bg); padding: 8px 0 10px; margin-bottom: 8px;
+  border-bottom: 1px solid var(--line); }
+.picked h2 { font-size: 13px; margin: 0 0 6px; color: var(--muted); font-weight: 600; }
+.picked h2 b { color: var(--ok); }
+.picked .row { display: flex; gap: 6px; overflow-x: auto; min-height: 64px; align-items: center; }
+.picked .none { color: var(--muted); font-size: 12.5px; }
+.pk { position: relative; flex: 0 0 auto; width: 64px; height: 64px; border-radius: 8px; overflow: hidden; cursor: pointer;
+  outline: 2px solid var(--ok); outline-offset: -2px; background: var(--line); }
+.pk img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pk .x { position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; border: 0; padding: 0;
+  background: rgba(0,0,0,.7); color: #fff; font-size: 12px; line-height: 18px; cursor: pointer; display: none; }
+.pk:hover .x { display: block; }
+.pk.bad { outline-color: var(--bad); }
+.pk.bad img { opacity: .4; }
+.pk .v { position: absolute; left: 3px; bottom: 2px; color: #fff; font-size: 11px; text-shadow: 0 0 3px #000; }
+.play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 52px; height: 52px; border-radius: 50%;
+  border: 0; background: rgba(0,0,0,.55); color: #fff; font-size: 22px; cursor: pointer; display: grid; place-items: center; }
+.play:hover { background: var(--accent); }
+.tile video + img { display: none; }
+#viewer .meta .btn { padding: 5px 12px; }
+#viewer .meta .btn.inc { background: var(--ok); border-color: var(--ok); color: #fff; }
+#viewer .meta .btn.skp { background: #333; color: #eee; border-color: #444; }
 .empty { color: var(--muted); padding: 40px 0; text-align: center; }
 .harvest { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; }
 .harvest h2 { font-size: 14px; margin: 0 0 6px; }
@@ -101,6 +123,7 @@ section.content { padding: 12px 16px 80px; }
     <p class="notice">Suggestions are screened on this Mac: anything with a second person, a face Google matched to
       someone in <code>exclude_people</code>, or readable plates, addresses or documents never shows up here. One thing slips
       past the screening: two people in goggles and a balaclava, pressed together in a selfie. Look at each one before you include it.</p>
+    <div class="picked" id="picked"></div>
     <div class="grid" id="grid"></div>
     <p class="empty" id="empty" hidden></p>
   </section>
@@ -138,7 +161,9 @@ function visible() {
   let list;
   if (view === "suggested") {
     // Undecided, safe, best of each burst — unless its burst is expanded.
-    list = items.filter((it) => ok(it) && !it.decision && (it.leader === it.key || expanded.has(it.leader)));
+    // Picked ones stay where they are, ticked, so the grid doesn't jump.
+    list = items.filter((it) => ok(it) && it.decision !== "skip" &&
+      (it.leader === it.key || expanded.has(it.leader) || it.decision === "include"));
   } else if (view === "all") list = items.filter((it) => ok(it));
   else if (view === "include") list = items.filter((it) => it.decision === "include");
   else if (view === "skip") list = items.filter((it) => it.decision === "skip");
@@ -166,8 +191,8 @@ function renderCats() {
   }
   const h = document.createElement("div");
   h.className = "help";
-  h.innerHTML = "<kbd>click</kbd> / <kbd>space</kbd> include<br><kbd>x</kbd> skip · <kbd>s</kbd> skip rest on screen<br>" +
-    "<kbd>←→↑↓</kbd> move · <kbd>enter</kbd> view<br><kbd>1</kbd>–<kbd>9</kbd> include into category<br>" +
+  h.innerHTML = "<kbd>i</kbd> / <kbd>click</kbd> include<br><kbd>enter</kbd> / <kbd>p</kbd> / <kbd>\u25B6</kbd> view &amp; play<br><kbd>x</kbd> skip · <kbd>s</kbd> skip rest on screen<br>" +
+    "<kbd>←→↑↓</kbd> move<br><kbd>1</kbd>–<kbd>9</kbd> include into category<br>" +
     "<kbd>e</kbd> show similar · <kbd>z</kbd> undo";
   nav.appendChild(h);
 }
@@ -204,9 +229,61 @@ function tile(it, i) {
     if (n > 0) add(`+${n} similar`, "sim").onclick = (e) => { e.stopPropagation(); toggleBurst(it.key); };
   }
   d.appendChild(badge);
+  if (it.kind === "video") {
+    // Watch it with sound before deciding; the tile itself still includes.
+    const b = document.createElement("button");
+    b.className = "play";
+    b.title = "Play (enter)";
+    b.textContent = "\u25B6";
+    b.onclick = (e) => { e.stopPropagation(); focus = i; openViewer(); };
+    d.appendChild(b);
+  }
   d.onclick = () => { focus = i; toggle(it); };
   d.ondblclick = () => { focus = i; openViewer(); };
   return d;
+}
+
+function renderPicked() {
+  const box = $("#picked");
+  const picked = S.items.filter((it) => it.decision === "include" && it.category === cat)
+    .sort((a, b) => (b.taken || "").localeCompare(a.taken || ""));
+  box.innerHTML = "";
+  const h = document.createElement("h2");
+  h.innerHTML = `Picked for <span></span>: <b>${picked.length}</b>`;
+  h.querySelector("span").textContent = label(cat);
+  box.appendChild(h);
+  const row = document.createElement("div");
+  row.className = "row";
+  if (!picked.length) {
+    const n = document.createElement("span");
+    n.className = "none";
+    n.textContent = "Nothing yet. Press i (or click a tile) to include it; it shows up here.";
+    row.appendChild(n);
+  }
+  picked.forEach((it, k) => {
+    const d = document.createElement("div");
+    // A pick that no longer passes screening (the rules got stricter) is red.
+    const bad = it.screen && !ok(it);
+    d.className = "pk" + (bad ? " bad" : "");
+    d.title = bad ? "Blocked now: " + (it.screen.reasons || []).join("; ") + " \u2014 \u00d7 to remove"
+                  : "Click to view · \u00d7 to remove";
+    const img = document.createElement("img");
+    img.src = `/small/${it.key}.jpg`;
+    img.alt = "";
+    d.appendChild(img);
+    if (it.kind === "video") { const v = document.createElement("span"); v.className = "v"; v.textContent = "\u25B6"; d.appendChild(v); }
+    const x = document.createElement("button");
+    x.className = "x";
+    x.textContent = "\u00d7";
+    x.title = "Remove from picks";
+    x.onclick = async (e) => { e.stopPropagation(); await decide([it], null); render(); };
+    d.appendChild(x);
+    d.onclick = () => openViewer(picked, k);
+    row.appendChild(d);
+  });
+  box.appendChild(row);
+  // Stick just under the header, however many rows it wraps to.
+  box.style.top = document.querySelector("header").offsetHeight + "px";
 }
 
 function render() {
@@ -215,6 +292,7 @@ function render() {
   if (!cat) cat = S.categories[0].key;
   document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("on", b.dataset.view === view));
   renderCats();
+  renderPicked();
   shown = visible();
   focus = Math.max(0, Math.min(focus, shown.length - 1));
   const g = $("#grid");
@@ -310,16 +388,36 @@ function toggleBurst(key) { expanded.has(key) ? expanded.delete(key) : expanded.
 
 // --- viewer --------------------------------------------------------------------
 const viewer = $("#viewer");
-function openViewer() { viewer.classList.add("open"); drawViewer(); }
-function closeViewer() { viewer.classList.remove("open"); viewer.querySelector(".stage").innerHTML = ""; render(); }
+// The viewer pages through a list: the grid, or the picked strip.
+let vlist = null, vpos = 0;
+function openViewer(list, pos) {
+  vlist = list || shown;
+  vpos = list ? pos : focus;
+  viewer.classList.add("open");
+  drawViewer();
+}
+function closeViewer() {
+  viewer.classList.remove("open");
+  const v = viewer.querySelector("video");
+  if (v) v.pause();
+  viewer.querySelector(".stage").innerHTML = "";
+  render();
+}
+function vmove(d) {
+  vpos = Math.max(0, Math.min(vlist.length - 1, vpos + d));
+  if (vlist === shown) focus = vpos;
+  drawViewer();
+}
 function drawViewer() {
-  const it = shown[focus];
+  const it = vlist && vlist[vpos];
   if (!it) return closeViewer();
   const stage = viewer.querySelector(".stage");
   stage.innerHTML = "";
   if (it.kind === "video") {
     const v = document.createElement("video");
-    v.src = `/preview/${it.key}.mp4`; v.controls = true; v.autoplay = true; v.playsInline = true;
+    // With sound: opening it was a click or a key press, which is the
+    // gesture browsers want before playing audio.
+    v.src = `/preview/${it.key}.mp4`; v.controls = true; v.autoplay = true; v.playsInline = true; v.loop = true;
     stage.appendChild(v);
   } else {
     const img = document.createElement("img");
@@ -329,13 +427,18 @@ function drawViewer() {
   const m = viewer.querySelector(".meta");
   m.innerHTML = "";
   const t = (s, cls) => { const e = document.createElement("span"); e.textContent = s; if (cls) e.className = cls; m.appendChild(e); };
-  t(`${focus + 1} / ${shown.length}`);
+  const btn = (text, cls, fn) => { const b = document.createElement("button"); b.className = "btn " + cls; b.textContent = text; b.onclick = fn; m.appendChild(b); };
+  btn(it.decision === "include" ? "\u2713 Included \u2014 undo (i)" : "Include (i)", "inc", async () => { await toggle(it); drawViewer(); });
+  btn(it.decision === "skip" ? "Skipped \u2014 undo (x)" : "Skip (x)", "skp", async () => { await skip(it); drawViewer(); });
+  btn("\u2190", "skp", () => vmove(-1));
+  btn("\u2192", "skp", () => vmove(1));
+  t(`${vpos + 1} / ${vlist.length}`);
   t(it.taken ? it.taken.replace("T", " ") : "undated");
   t(it.decision === "include" ? `✓ included in ${label(it.category)}` : it.decision === "skip" ? "skipped" : "undecided");
   const st = it.screen || {};
   if (st.reasons && st.reasons.length) t(st.reasons.join(" · "), ok(it) ? "reasons" : "blocked");
   if (st.labels) t(st.labels.join(", "));
-  t("space include · x skip · ←/→ next · esc close");
+  t("esc close");
 }
 
 // --- keys ----------------------------------------------------------------------
@@ -359,16 +462,27 @@ document.addEventListener("keydown", async (e) => {
   const it = shown[focus];
   const inViewer = viewer.classList.contains("open");
   const k = e.key;
+  if (inViewer) {
+    const cur = vlist[vpos];
+    if (k === "ArrowRight") vmove(1);
+    else if (k === "ArrowLeft") vmove(-1);
+    else if ((k === "i" || k === " ") && cur) { await toggle(cur); drawViewer(); }
+    else if (k === "x" && cur) { await skip(cur); drawViewer(); }
+    else if (k === "Escape") closeViewer();
+    else return;
+    e.preventDefault();
+    return;
+  }
   if (k === "ArrowRight") move(1);
   else if (k === "ArrowLeft") move(-1);
   else if (k === "ArrowDown" && !inViewer) move(cols());
   else if (k === "ArrowUp" && !inViewer) move(-cols());
-  else if (k === " ") { if (it) { await toggle(it); if (inViewer) drawViewer(); } }
+  else if (k === "i" || k === " ") { if (it) await toggle(it); }
   else if (k === "x") { await skip(it); if (inViewer) drawViewer(); }
   else if (k === "s" && !inViewer) await skipRest();
   else if (k === "z") await undoLast();
   else if (k === "e" && it) toggleBurst(it.leader);
-  else if (k === "Enter" && !inViewer) openViewer();
+  else if ((k === "Enter" || k === "p") && !inViewer) openViewer();
   else if (k === "Escape" && inViewer) closeViewer();
   else if (/^[1-9]$/.test(k) && it && S.categories[+k - 1]) await toggle(it, S.categories[+k - 1].key);
   else return;

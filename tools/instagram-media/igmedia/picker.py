@@ -193,7 +193,7 @@ class Picker:
             return  # the browser has not sent it yet; queued again when it does
         if c["kind"] == "video":
             with tempfile.TemporaryDirectory() as tmp:
-                images = fetch.frames(self.preview(key), Path(tmp))
+                images = fetch.frames(self.preview(key), Path(tmp), count=10)
                 results = screen.run_vision(self.vision_bin, images)
             dur = fetch.duration(self.preview(key))
         else:

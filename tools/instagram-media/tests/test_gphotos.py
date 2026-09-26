@@ -131,8 +131,13 @@ class ScreenTest(unittest.TestCase):
         self.assertIn("can't be confirmed", v["reasons"][0])
 
     def test_far_away_speck_is_not_a_person(self):
-        v = screen.verdict([frame(faces=[0.05, 0.0001], humans=[0.4, 0.001], persons=[0.3, 0.002])], "me")
+        v = screen.verdict([frame(faces=[0.05, 0.0001], humans=[0.4, 0.0003], persons=[0.3, 0.0004])], "me")
         self.assertEqual(v["status"], "ok")
+
+    def test_small_distant_riders_count(self):
+        # Kids on bikes across a slope, 360p: only an upper body at 0.002.
+        v = screen.verdict([frame(upper=[0.0021])], "scene")
+        self.assertEqual(v["status"], "blocked")
 
     def test_scene_must_be_empty(self):
         self.assertEqual(screen.verdict([frame()], "scene")["status"], "ok")

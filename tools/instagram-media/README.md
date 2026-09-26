@@ -160,7 +160,8 @@ clips, landscapes). Then:
 - every candidate is screened on this Mac with Apple Vision
   (`vision/screen.swift`, policy in `igmedia/screen.py`): a "me" shot must
   show exactly one person and a visible face; people are counted by face,
-  body, upper body and person segmentation, and the highest count wins;
+  body, upper body and person segmentation, and the highest count wins —
+  bodies down to 0.1% of the frame, so kids riding far off still count;
 - anything Google matched to someone in `gphotos.exclude_people` (B's sons)
   is blocked, whatever else found it — "Wyatt Pfeil skiing" and so on are
   harvested for that alone;
@@ -178,9 +179,12 @@ before including it; the picker says so.
 
 **The picker.** Categories down the side, best suggestions first, bursts of
 near-identical shots folded behind the best one ("+3 similar", `e` to open).
-Click or space to include, `x` to skip, `s` to skip everything else on
-screen, `1`–`9` to include into another category, enter to see it large
-(videos play on hover), `z` to undo. Every decision is written to
+`i` (or a click) to include, `x` to skip, `s` to skip everything else on
+screen, `1`–`9` to include into another category, `z` to undo. What is
+picked for the category sits in a strip above the grid (× to remove; red if
+it no longer passes screening). Enter, `p` or a video's ▶ opens it large —
+videos play with sound, and the viewer has Include and Skip buttons.
+Videos also play silently on hover. Every decision is written to
 `picks.yaml` at once; skipped items are never suggested again. **Publish**
 encodes, uploads to `s3://brianpfeil-media01/photos/`, writes
 `data/photos.yaml`, and commits and pushes just those two files.

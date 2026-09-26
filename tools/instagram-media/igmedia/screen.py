@@ -29,10 +29,12 @@ import subprocess
 from pathlib import Path
 
 # Fractions of the frame's area. A face at 0.0008 is about 3% of the width —
-# roughly the smallest face a stranger could recognise.
+# roughly the smallest face a stranger could recognise. Bodies count from
+# much smaller: three kids on bikes across a ski slope measured 0.002 in a
+# 360p clip, and a figure that small is still someone B knows.
 MIN_FACE_AREA = 0.0008
-MIN_HUMAN_AREA = 0.004
-MIN_PERSON_AREA = 0.004  # segmentation mask coverage
+MIN_HUMAN_AREA = 0.001
+MIN_PERSON_AREA = 0.001  # segmentation mask coverage
 
 DIGITS = re.compile(r"\d{3,}")
 PLATE = re.compile(r"\b[A-Z0-9]{2,4}[- ]?[A-Z0-9]{3,4}\b")
