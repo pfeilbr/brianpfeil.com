@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated": "2026-09-26T07:21:04Z",
+ "generated": "2026-09-26T07:24:06Z",
  "window_days": 14,
  "sections": [
   "people",
@@ -16,7 +16,7 @@
    "name": "Simon Willison",
    "home": "https://simonwillison.net/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "simonw",
    "pin": true,
    "via": [
@@ -29,7 +29,7 @@
    "name": "Andrej Karpathy",
    "home": "https://karpathy.bearblog.dev/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "karpathy"
   },
   {
@@ -38,7 +38,7 @@
    "name": "swyx · Latent Space",
    "home": "https://www.latent.space/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "swyx"
   },
   {
@@ -47,7 +47,7 @@
    "name": "Nathan Lambert · Interconnects",
    "home": "https://www.interconnects.ai/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "natolambert"
   },
   {
@@ -56,7 +56,7 @@
    "name": "Ethan Mollick · One Useful Thing",
    "home": "https://www.oneusefulthing.org/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "emollick"
   },
   {
@@ -64,20 +64,18 @@
    "section": "people",
    "name": "Jack Clark · Import AI",
    "home": "https://importai.substack.com/",
-   "status": "error",
-   "checked": "2026-09-26T07:13:46Z",
-   "x": "jackclarkSF",
-   "error": "HTTPError: HTTP Error 403: Forbidden"
+   "status": "ok",
+   "checked": "2026-09-26T07:24:06Z",
+   "x": "jackclarkSF"
   },
   {
    "id": "zvi",
    "section": "people",
    "name": "Zvi Mowshowitz",
    "home": "https://thezvi.substack.com/",
-   "status": "error",
-   "checked": "2026-09-26T07:13:46Z",
-   "x": "TheZvi",
-   "error": "HTTPError: HTTP Error 403: Forbidden"
+   "status": "ok",
+   "checked": "2026-09-26T07:24:06Z",
+   "x": "TheZvi"
   },
   {
    "id": "mitsuhiko",
@@ -85,7 +83,7 @@
    "name": "Armin Ronacher",
    "home": "https://lucumr.pocoo.org/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "mitsuhiko",
    "via": [
     "feedly"
@@ -97,7 +95,7 @@
    "name": "Mitchell Hashimoto",
    "home": "https://mitchellh.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "mitchellh",
    "via": [
     "feedly"
@@ -109,7 +107,7 @@
    "name": "Thorsten Ball · Register Spill",
    "home": "https://registerspill.thorstenball.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "thorstenball",
    "via": [
     "x"
@@ -121,7 +119,7 @@
    "name": "Peter Steinberger",
    "home": "https://steipete.me/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "steipete"
   },
   {
@@ -130,7 +128,7 @@
    "name": "Mario Zechner",
    "home": "https://mariozechner.at/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "badlogicgames",
    "via": [
     "feedly"
@@ -142,7 +140,7 @@
    "name": "Sean Goedecke",
    "home": "https://www.seangoedecke.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "via": [
     "feedly"
    ]
@@ -153,7 +151,7 @@
    "name": "Martin Alderson",
    "home": "https://martinalderson.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "via": [
     "feedly"
    ]
@@ -164,7 +162,7 @@
    "name": "Max Woolf",
    "home": "https://minimaxir.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "minimaxir",
    "via": [
     "feedly"
@@ -176,7 +174,7 @@
    "name": "Geoffrey Litt",
    "home": "https://www.geoffreylitt.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "geoffreylitt",
    "via": [
     "feedly"
@@ -188,7 +186,7 @@
    "name": "Works on My Machine",
    "home": "https://worksonmymachine.ai/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "via": [
     "feedly"
    ]
@@ -198,13 +196,12 @@
    "section": "people",
    "name": "Gary Marcus",
    "home": "https://garymarcus.substack.com/",
-   "status": "error",
-   "checked": "2026-09-26T07:13:46Z",
+   "status": "ok",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "GaryMarcus",
    "via": [
     "feedly"
-   ],
-   "error": "HTTPError: HTTP Error 403: Forbidden"
+   ]
   },
   {
    "id": "dwarkesh",
@@ -212,7 +209,7 @@
    "name": "Dwarkesh Patel",
    "home": "https://www.dwarkesh.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "dwarkesh_sp",
    "via": [
     "feedly"
@@ -224,7 +221,7 @@
    "name": "Lex Fridman",
    "home": "https://lexfridman.com/podcast/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "lexfridman",
    "via": [
     "x"
@@ -236,7 +233,7 @@
    "name": "Werner Vogels · All Things Distributed",
    "home": "https://www.allthingsdistributed.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "Werner",
    "via": [
     "feedly",
@@ -249,7 +246,7 @@
    "name": "Gergely Orosz · The Pragmatic Engineer",
    "home": "https://newsletter.pragmaticengineer.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "GergelyOrosz"
   },
   {
@@ -258,7 +255,7 @@
    "name": "Anthropic",
    "home": "https://www.anthropic.com/news",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "openai",
@@ -266,7 +263,7 @@
    "name": "OpenAI",
    "home": "https://openai.com/news/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "deepmind",
@@ -274,7 +271,7 @@
    "name": "Google DeepMind",
    "home": "https://deepmind.google/discover/blog/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "googleai",
@@ -282,7 +279,7 @@
    "name": "Google AI",
    "home": "https://blog.google/technology/ai/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "hfblog",
@@ -290,7 +287,7 @@
    "name": "Hugging Face",
    "home": "https://huggingface.co/blog",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "awsml",
@@ -298,7 +295,7 @@
    "name": "AWS Machine Learning Blog",
    "home": "https://aws.amazon.com/blogs/machine-learning/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "via": [
     "feedly"
    ]
@@ -309,7 +306,7 @@
    "name": "AWS What's New · Bedrock & SageMaker",
    "home": "https://aws.amazon.com/about-aws/whats-new/recent/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "via": [
     "feedly"
    ]
@@ -320,7 +317,7 @@
    "name": "Claude Code",
    "home": "https://github.com/anthropics/claude-code",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "codex",
@@ -328,7 +325,7 @@
    "name": "OpenAI Codex CLI",
    "home": "https://github.com/openai/codex",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "gemini-cli",
@@ -336,7 +333,7 @@
    "name": "Gemini CLI",
    "home": "https://github.com/google-gemini/gemini-cli",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "copilot-chat",
@@ -344,7 +341,7 @@
    "name": "GitHub Copilot Chat (VS Code)",
    "home": "https://github.com/microsoft/vscode-copilot-chat",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "vscode",
@@ -352,7 +349,7 @@
    "name": "VS Code release notes",
    "home": "https://code.visualstudio.com/updates",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "gh-changelog",
@@ -360,7 +357,7 @@
    "name": "GitHub Changelog · Copilot",
    "home": "https://github.blog/changelog/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "cursor",
@@ -368,7 +365,7 @@
    "name": "Cursor",
    "home": "https://cursor.com/changelog",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "chrome",
@@ -376,7 +373,7 @@
    "name": "Chrome for Developers · AI",
    "home": "https://developer.chrome.com/docs/ai",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "cline",
@@ -384,7 +381,7 @@
    "name": "Cline",
    "home": "https://github.com/cline/cline",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "opencode",
@@ -392,7 +389,7 @@
    "name": "OpenCode",
    "home": "https://github.com/sst/opencode",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "agent-sdk",
@@ -400,7 +397,7 @@
    "name": "Claude Agent SDK (Python)",
    "home": "https://github.com/anthropics/claude-agent-sdk-python",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "mcp",
@@ -408,7 +405,7 @@
    "name": "Model Context Protocol",
    "home": "https://modelcontextprotocol.io/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "ollama",
@@ -416,7 +413,7 @@
    "name": "Ollama",
    "home": "https://github.com/ollama/ollama",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "llamacpp",
@@ -424,7 +421,7 @@
    "name": "llama.cpp",
    "home": "https://github.com/ggml-org/llama.cpp",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "vllm",
@@ -432,7 +429,7 @@
    "name": "vLLM",
    "home": "https://github.com/vllm-project/vllm",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "hn",
@@ -440,7 +437,7 @@
    "name": "Hacker News",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "r-localllama",
@@ -448,24 +445,24 @@
    "name": "r/LocalLLaMA",
    "home": "https://www.reddit.com/r/LocalLLaMA/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "r-claudeai",
    "section": "community",
    "name": "r/ClaudeAI",
    "home": "https://www.reddit.com/r/ClaudeAI/",
-   "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "status": "error",
+   "checked": "2026-09-26T07:19:24Z",
+   "error": "HTTPError: HTTP Error 429: Too Many Requests"
   },
   {
    "id": "r-chatgptcoding",
    "section": "community",
    "name": "r/ChatGPTCoding",
    "home": "https://www.reddit.com/r/ChatGPTCoding/",
-   "status": "error",
-   "checked": null,
-   "error": "HTTPError: HTTP Error 429: Too Many Requests"
+   "status": "ok",
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "smolai",
@@ -473,7 +470,7 @@
    "name": "AINews (smol.ai)",
    "home": "https://news.smol.ai/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z"
+   "checked": "2026-09-26T07:24:06Z"
   },
   {
    "id": "raschka",
@@ -481,7 +478,7 @@
    "name": "Sebastian Raschka · Ahead of AI",
    "home": "https://magazine.sebastianraschka.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "rasbt"
   },
   {
@@ -490,7 +487,7 @@
    "name": "Lilian Weng · Lil'Log",
    "home": "https://lilianweng.github.io/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "lilianweng"
   },
   {
@@ -499,7 +496,7 @@
    "name": "Hamel Husain",
    "home": "https://hamel.dev/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "HamelHusain"
   },
   {
@@ -508,7 +505,7 @@
    "name": "Eugene Yan",
    "home": "https://eugeneyan.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "eugeneyan"
   },
   {
@@ -517,7 +514,7 @@
    "name": "Chip Huyen",
    "home": "https://huyenchip.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "x": "chipro",
    "via": [
     "feedly"
@@ -529,7 +526,7 @@
    "name": "Giles Thomas · LLM from scratch",
    "home": "https://www.gilesthomas.com/",
    "status": "ok",
-   "checked": "2026-09-26T07:19:24Z",
+   "checked": "2026-09-26T07:24:06Z",
    "via": [
     "feedly"
    ]
@@ -556,6 +553,17 @@
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "My local prompts take twenty minutes to three hours as of now. Curious for others what are you doing while it’s working?",
    "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqidhr/what_are_you_doing_between_prompts/"
+  },
+  {
+   "id": "50793db0c748",
+   "source": "r-chatgptcoding",
+   "section": "community",
+   "title": "One OpenAI ban somehow got my wife banned too — is there any way back?",
+   "url": "https://www.reddit.com/r/ChatGPTCoding/comments/1wqgypi/one_openai_ban_somehow_got_my_wife_banned_too_is/",
+   "published": "2026-09-26T04:16:27Z",
+   "first_seen": "2026-09-26T07:24:06Z",
+   "summary": "New user here. I’m a pretty heavy OpenAI user (ChatGPT + Codex), so I had three accounts — two personal and one work account. My work account got banned for “Cyber Abuse.” Within weeks, both of my personal accounts were banned for “recidivism.” Then my wife’s account got banned…",
+   "discuss": "https://www.reddit.com/r/ChatGPTCoding/comments/1wqgypi/one_openai_ban_somehow_got_my_wife_banned_too_is/"
   },
   {
    "id": "ba3c37b71bf4",
@@ -893,8 +901,8 @@
    "published": "2026-09-25T21:09:27Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
-   "points": 414,
-   "comments": 249,
+   "points": 415,
+   "comments": 251,
    "discuss": "https://news.ycombinator.com/item?id=49849985"
   },
   {
@@ -933,6 +941,17 @@
    "discuss": "https://news.ycombinator.com/item?id=49849625"
   },
   {
+   "id": "268baa15d9bd",
+   "source": "r-chatgptcoding",
+   "section": "community",
+   "title": "How do you keep large test suites from overwhelming AI coding agents?",
+   "url": "https://www.reddit.com/r/ChatGPTCoding/comments/1wq4wlk/how_do_you_keep_large_test_suites_from/",
+   "published": "2026-09-25T19:05:26Z",
+   "first_seen": "2026-09-26T07:24:06Z",
+   "summary": "We have \\\\\\~35k backend and frontend tests. We want to reduce maintenance effort while preserving useful regression coverage. Tests, mocks, and fixtures also dominate code searches and fill up the agent’s context. \\\\- How do you handle this? \\\\- How do you decide which tests to…",
+   "discuss": "https://www.reddit.com/r/ChatGPTCoding/comments/1wq4wlk/how_do_you_keep_large_test_suites_from/"
+  },
+  {
    "id": "d2d497e5eee4",
    "source": "openai",
    "section": "labs",
@@ -961,7 +980,7 @@
    "published": "2026-09-25T18:33:50Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
-   "points": 411,
+   "points": 413,
    "comments": 113,
    "discuss": "https://news.ycombinator.com/item?id=49848269"
   },
@@ -1095,6 +1114,17 @@
    "summary": "Amazon SageMaker HyperPod and Cloud Native Qumulo let you place training compute in one AWS Region while keeping your dataset in another. This post shares the architecture and validation results from a cross-Region training run, where a remote cluster matched a co-located…"
   },
   {
+   "id": "f353f988e1ab",
+   "source": "r-chatgptcoding",
+   "section": "community",
+   "title": "Looking for investigate and reflect on my AI usage patterns as it pertains to budget usage on my AI tools.",
+   "url": "https://www.reddit.com/r/ChatGPTCoding/comments/1wpzqtq/looking_for_investigate_and_reflect_on_my_ai/",
+   "published": "2026-09-25T15:44:46Z",
+   "first_seen": "2026-09-26T07:24:06Z",
+   "summary": "I have picked up little tidbits of info here and there about how to be efficient with my AI usage budget. I am curious what the leading strategy and advice is on this matter. I have lots of questions and thoughts. Is there even any benefit in obsessing about how I use AI to…",
+   "discuss": "https://www.reddit.com/r/ChatGPTCoding/comments/1wpzqtq/looking_for_investigate_and_reflect_on_my_ai/"
+  },
+  {
    "id": "b005ba80ec50",
    "source": "hn",
    "section": "community",
@@ -1104,7 +1134,7 @@
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
    "points": 436,
-   "comments": 747,
+   "comments": 748,
    "discuss": "https://news.ycombinator.com/item?id=49845977"
   },
   {
@@ -1132,6 +1162,17 @@
    "kind": "release"
   },
   {
+   "id": "0e8050011d24",
+   "source": "r-chatgptcoding",
+   "section": "community",
+   "title": "AI coding users: do you use multiple AI models for the same coding task?",
+   "url": "https://www.reddit.com/r/ChatGPTCoding/comments/1wpykeu/ai_coding_users_do_you_use_multiple_ai_models_for/",
+   "published": "2026-09-25T14:58:34Z",
+   "first_seen": "2026-09-26T07:24:06Z",
+   "summary": "​ Hey everyone, I’m doing some research on how people actually use AI for coding, especially vibe coders / indie hackers. I’m curious about one specific workflow: When you’re working on a difficult coding task, do you ever give the same prompt to multiple AI coding models (for…",
+   "discuss": "https://www.reddit.com/r/ChatGPTCoding/comments/1wpykeu/ai_coding_users_do_you_use_multiple_ai_models_for/"
+  },
+  {
    "id": "cb028b10481e",
    "source": "hn",
    "section": "community",
@@ -1140,9 +1181,20 @@
    "published": "2026-09-25T14:07:08Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
-   "points": 115,
-   "comments": 104,
+   "points": 116,
+   "comments": 106,
    "discuss": "https://news.ycombinator.com/item?id=49844896"
+  },
+  {
+   "id": "6ca9bc180091",
+   "source": "r-chatgptcoding",
+   "section": "community",
+   "title": "Stretch your ChatGPT usage with this one simple trick",
+   "url": "https://www.reddit.com/r/ChatGPTCoding/comments/1wpwj21/stretch_your_chatgpt_usage_with_this_one_simple/",
+   "published": "2026-09-25T13:35:31Z",
+   "first_seen": "2026-09-26T07:24:06Z",
+   "summary": "Paste this prompt into ChatGPT: I swear my ChatGPT usage burn rate dropped substantially... this is anecdotal of course. sensiblechuckle.gif",
+   "discuss": "https://www.reddit.com/r/ChatGPTCoding/comments/1wpwj21/stretch_your_chatgpt_usage_with_this_one_simple/"
   },
   {
    "id": "6350a3baccee",
@@ -1901,6 +1953,16 @@
    "summary": "This was the month the world took notice that AI might kill everyone."
   },
   {
+   "id": "46d27c31e09b",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "AWS Glue Data Quality delivers context-specific rule recommendations in seconds",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/glue-data-quality-rule-recommendations/",
+   "published": "2026-09-22T08:00:00Z",
+   "first_seen": "2026-09-26T07:24:06Z",
+   "summary": "AWS Glue Data Quality now generates data quality rules in seconds, reducing the time to establish data quality checks for your tables in the AWS Glue Data Catalog. You get a ready-to-use set of rules with full coverage across every column, with no manual setup—so you can move…"
+  },
+  {
    "id": "49c023466b3c",
    "source": "vllm",
    "section": "tools",
@@ -2092,6 +2154,16 @@
    "published": "2026-09-18T15:15:00Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "Amazon Bedrock continues to expand its open weight model portfolio with the same security and governance that customers rely on. Today, Kimi K3 from Moonshot AI is generally available on Amazon Bedrock, giving you a powerful new option for coding and knowledge work. According to…"
+  },
+  {
+   "id": "eb71135e162f",
+   "source": "awsnew",
+   "section": "labs",
+   "title": "Amazon SNS now supports message payloads up to 1 MiB",
+   "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/amazon-sns-1mib-support",
+   "published": "2026-09-18T15:00:00Z",
+   "first_seen": "2026-09-26T07:24:06Z",
+   "summary": "Amazon Simple Notification Service (Amazon SNS) now supports message payloads up to 1 MiB, a 4x increase from the previous 256 KiB limit, so you can publish larger messages to your SNS topics. Amazon SNS is a fully managed pub/sub messaging service that enables you to decouple…"
   },
   {
    "id": "c72f60fcf6ad",
@@ -3516,7 +3588,7 @@
    {
     "id": "Edge0/Audio8-ASR-Infinite",
     "task": "automatic-speech-recognition",
-    "likes": 652,
+    "likes": 655,
     "downloads": 2853,
     "created": "2026-09-21T15:03:21Z",
     "url": "https://huggingface.co/Edge0/Audio8-ASR-Infinite"
@@ -3532,7 +3604,7 @@
    {
     "id": "TaichuAI/ZDTaichu5.0-9B",
     "task": "image-text-to-text",
-    "likes": 1131,
+    "likes": 1133,
     "downloads": 9498,
     "created": "2026-09-04T02:55:48Z",
     "url": "https://huggingface.co/TaichuAI/ZDTaichu5.0-9B"
@@ -3618,8 +3690,8 @@
     "url": "https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base"
    }
   ],
-  "new_checked": "2026-09-26T07:19:24Z",
-  "trending_checked": "2026-09-26T07:19:24Z"
+  "new_checked": "2026-09-26T07:24:06Z",
+  "trending_checked": "2026-09-26T07:24:06Z"
  },
  "mine": [
   {
