@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 5 · Sets &amp; Choosing a Container</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/cpp-standard-library/" style="color:inherit;text-decoration:none">&larr; C++ Standard Library</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">C++ Standard Library · Lesson 5</div>
+    <h1>Sets &amp; Choosing a Container</h1>
+    <p class="sub">The set — a collection of unique things with instant membership tests — and then the payoff: one flowchart to pick the right container for any access pattern.</p>
+    <span class="missiontag">🎯 The whole point: grab the right container, fast</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>A <code class="inl">set</code> is a <strong>map with keys and no values</strong> — a collection of <em>unique</em> elements answering "is this in here?" fast. Once you know sets, you've met every container family — so this lesson ends with the <strong>selection rule</strong>: choose by access pattern, not by habit.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> set &amp; unordered_set — membership and dedup</h2>
+    <p class="lead">When you only care <em>whether</em> something is present (not a value attached to it), use a set. Like maps, there's an ordered tree version and a hashed version — same trade-off as Lesson 4.</p>
+
+    <pre><span class="y">#include</span> <span class="g">&lt;unordered_set&gt;</span>
+
+std::<span class="b">unordered_set</span>&lt;std::<span class="b">string</span>&gt; seen;
+
+seen.insert(<span class="g">"ada"</span>);
+seen.insert(<span class="g">"ada"</span>);            <span class="c1">// no-op — sets hold UNIQUE elements</span>
+seen.size();                   <span class="c1">// 1</span>
+
+<span class="y">if</span> (seen.contains(<span class="g">"ada"</span>)) { }    <span class="c1">// C++20; O(1) average membership test</span>
+<span class="y">if</span> (seen.count(<span class="g">"bob"</span>)) { }       <span class="c1">// 0 or 1 — works pre-C++20</span>
+seen.erase(<span class="g">"ada"</span>);</pre>
+    <div class="runlater">Run on <a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt.org</a> (<code class="inl">-std=c++17</code>+; <code class="inl">contains</code> needs C++20).</div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>Dedup in two lines</h4>
+        <p>Drop a range into a set and the duplicates vanish: <code class="inl">std::unordered_set&lt;int&gt; u(v.begin(), v.end());</code> gives the unique values.</p>
+      </div>
+      <div class="card">
+        <h4>"Have I seen this?"</h4>
+        <p>The canonical use: track visited nodes, processed IDs, seen tokens. <code class="inl">if (!seen.insert(x).second) continue;</code> — <code class="inl">insert</code> returns whether it was new.</p>
+      </div>
+      <div class="card">
+        <h4>ordered <code class="inl">set</code> bonus</h4>
+        <p><code class="inl">std::set</code> keeps elements <strong>sorted</strong> and supports range queries (<code class="inl">lower_bound</code>/<code class="inl">upper_bound</code>) — a sorted unique collection for free.</p>
+      </div>
+    </div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/container/unordered_set" target="_blank" rel="noopener">cppreference — std::unordered_set</a> · <a href="https://en.cppreference.com/w/cpp/container/set" target="_blank" rel="noopener">std::set</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The decision: pick by access pattern</h2>
+    <p>You now know all the families. The skill the mission is after is choosing among them without thinking hard. Ask one question first — <strong>"how do I need to reach my data?"</strong> — and follow the tree:</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 840 470" role="img" aria-label="Container selection flowchart. Do you look up by key? Yes and need order: map; no order: unordered_map. Just membership of unique items? ordered: set; unordered: unordered_set. Otherwise it's a sequence: restricted access LIFO is stack, FIFO is queue, largest-first is priority_queue; general access with fixed compile-time size is array, fast at both ends is deque, otherwise vector.">
+        <!-- root -->
+        <rect x="300" y="14" width="240" height="40" rx="8" fill="var(--accent)" opacity="0.16" stroke="var(--accent)"/>
+        <text x="420" y="39" text-anchor="middle" font-size="14" font-weight="700" fill="var(--fg)">How do you reach the data?</text>
+
+        <!-- branch 1: by key -->
+        <line x1="360" y1="54" x2="150" y2="90" stroke="var(--muted)"/>
+        <rect x="40" y="90" width="230" height="36" rx="7" fill="var(--panel)" stroke="var(--accent)"/>
+        <text x="155" y="113" text-anchor="middle" font-size="12.5" fill="var(--fg)">Look up a value BY KEY?</text>
+        <rect x="40" y="138" width="110" height="34" rx="7" fill="var(--accent)" opacity="0.12" stroke="var(--accent)"/>
+        <text x="95" y="160" text-anchor="middle" font-size="12" font-family="monospace" fill="var(--fg)">map</text>
+        <text x="95" y="186" text-anchor="middle" font-size="10" fill="var(--muted)">sorted keys</text>
+        <rect x="160" y="138" width="120" height="34" rx="7" fill="var(--accent-2)" opacity="0.14" stroke="var(--accent-2)"/>
+        <text x="220" y="160" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--fg)">unordered_map</text>
+        <text x="220" y="186" text-anchor="middle" font-size="10" fill="var(--muted)">just fast (default)</text>
+
+        <!-- branch 2: membership -->
+        <line x1="420" y1="54" x2="420" y2="90" stroke="var(--muted)"/>
+        <rect x="300" y="90" width="240" height="36" rx="7" fill="var(--panel)" stroke="var(--accent)"/>
+        <text x="420" y="113" text-anchor="middle" font-size="12.5" fill="var(--fg)">Just MEMBERSHIP of unique items?</text>
+        <rect x="305" y="138" width="105" height="34" rx="7" fill="var(--accent)" opacity="0.12" stroke="var(--accent)"/>
+        <text x="357" y="160" text-anchor="middle" font-size="12" font-family="monospace" fill="var(--fg)">set</text>
+        <text x="357" y="186" text-anchor="middle" font-size="10" fill="var(--muted)">sorted</text>
+        <rect x="418" y="138" width="120" height="34" rx="7" fill="var(--accent-2)" opacity="0.14" stroke="var(--accent-2)"/>
+        <text x="478" y="160" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--fg)">unordered_set</text>
+        <text x="478" y="186" text-anchor="middle" font-size="10" fill="var(--muted)">just fast (default)</text>
+
+        <!-- branch 3: sequence -->
+        <line x1="480" y1="54" x2="690" y2="90" stroke="var(--muted)"/>
+        <rect x="575" y="90" width="230" height="36" rx="7" fill="var(--panel)" stroke="var(--warn)"/>
+        <text x="690" y="113" text-anchor="middle" font-size="12.5" fill="var(--fg)">No — it's an ORDERED SEQUENCE</text>
+
+        <!-- sequence: restricted access -->
+        <text x="690" y="150" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--warn)">Restricted access?</text>
+        <rect x="575" y="162" width="72" height="32" rx="6" fill="var(--warn)" opacity="0.12" stroke="var(--warn)"/>
+        <text x="611" y="182" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--fg)">stack</text>
+        <rect x="649" y="162" width="72" height="32" rx="6" fill="var(--warn)" opacity="0.12" stroke="var(--warn)"/>
+        <text x="685" y="182" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--fg)">queue</text>
+        <rect x="723" y="162" width="100" height="32" rx="6" fill="var(--warn)" opacity="0.12" stroke="var(--warn)"/>
+        <text x="773" y="182" text-anchor="middle" font-size="10" font-family="monospace" fill="var(--fg)">priority_queue</text>
+        <text x="611" y="208" text-anchor="middle" font-size="9.5" fill="var(--muted)">LIFO</text>
+        <text x="685" y="208" text-anchor="middle" font-size="9.5" fill="var(--muted)">FIFO</text>
+        <text x="773" y="208" text-anchor="middle" font-size="9.5" fill="var(--muted)">max first</text>
+
+        <!-- sequence: general access -->
+        <text x="690" y="248" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--accent)">General access?</text>
+        <rect x="575" y="260" width="80" height="32" rx="6" fill="var(--accent)" opacity="0.12" stroke="var(--accent)"/>
+        <text x="615" y="280" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--fg)">array</text>
+        <rect x="657" y="260" width="80" height="32" rx="6" fill="var(--accent)" opacity="0.12" stroke="var(--accent)"/>
+        <text x="697" y="280" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--fg)">deque</text>
+        <rect x="739" y="260" width="84" height="32" rx="6" fill="var(--mark)" opacity="0.16" stroke="var(--mark)"/>
+        <text x="781" y="280" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--fg)">vector</text>
+        <text x="615" y="306" text-anchor="middle" font-size="9" fill="var(--muted)">fixed N</text>
+        <text x="697" y="306" text-anchor="middle" font-size="9" fill="var(--muted)">both ends</text>
+        <text x="781" y="306" text-anchor="middle" font-size="9" fill="var(--muted)">DEFAULT</text>
+
+        <!-- bottom rule -->
+        <rect x="120" y="360" width="600" height="86" rx="10" fill="var(--accent)" opacity="0.07"/>
+        <text x="420" y="390" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--accent)">When two fit, prefer the simpler / contiguous one.</text>
+        <text x="420" y="414" text-anchor="middle" font-size="12.5" fill="var(--fg)">Start at <tspan font-family="monospace">vector</tspan>. Move only when an access pattern above forces it.</text>
+        <text x="420" y="434" text-anchor="middle" font-size="11" fill="var(--muted)">"No order needed" &#8594; pick the hashed (unordered_) version.</text>
+      </svg>
+      <figcaption>Three questions in order: lookup by key? &#8594; membership only? &#8594; otherwise a sequence. The leaf is your container.</figcaption>
+    </figure>
+    <p class="cite">Source: synthesized from <a href="https://en.cppreference.com/w/cpp/container" target="_blank" rel="noopener">cppreference — Containers</a> &amp; <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rsl-vector" target="_blank" rel="noopener">Core Guidelines SL.con.2</a>. The same chart lives in the <a href="../reference/cpp-stdlib-cheatsheet.html">cheat sheet</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The selection table</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>What you need</th><th>Container</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>A growable list, index access</td><td><code class="inl">vector</code></td><td>contiguous, O(1) index, the default</td></tr>
+          <tr><td>Fixed size known at compile time</td><td><code class="inl">array</code></td><td>no heap, no growth, zero overhead</td></tr>
+          <tr><td>Fast push/pop at both ends</td><td><code class="inl">deque</code></td><td>O(1) at front and back</td></tr>
+          <tr><td>Look up a value by key</td><td><code class="inl">unordered_map</code> / <code class="inl">map</code></td><td>O(1) avg / O(log n) sorted</td></tr>
+          <tr><td>Unique items, "is it in here?"</td><td><code class="inl">unordered_set</code> / <code class="inl">set</code></td><td>fast membership; set is sorted</td></tr>
+          <tr><td>Last-in-first-out</td><td><code class="inl">stack</code></td><td>LIFO discipline (Lesson 6)</td></tr>
+          <tr><td>First-in-first-out</td><td><code class="inl">queue</code></td><td>FIFO discipline (Lesson 6)</td></tr>
+          <tr><td>Always pull the largest/smallest next</td><td><code class="inl">priority_queue</code></td><td>a heap (Lesson 6)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key"><span class="h">💡 The 90% rule</span>
+      In real code, <code class="inl">vector</code> and <code class="inl">unordered_map</code> cover the large majority of needs. Knowing precisely <em>when</em> to leave them — that's the expertise this chart encodes.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Gut-check: name the container</h2>
+    <div class="cards">
+      <div class="card"><h4>Phone book: name → number</h4><p class="truth"><b>unordered_map&lt;string,string&gt;</b> — lookup by key, order irrelevant.</p></div>
+      <div class="card"><h4>Leaderboard, top score first</h4><p class="truth"><b>priority_queue</b> (or a sorted <code class="inl">vector</code>) — always want the max.</p></div>
+      <div class="card"><h4>Unique visitor IDs today</h4><p class="truth"><b>unordered_set&lt;long&gt;</b> — membership + automatic dedup.</p></div>
+      <div class="card"><h4>Undo history</h4><p class="truth"><b>stack</b> — last action undone first (LIFO).</p></div>
+      <div class="card"><h4>RGB pixel rows to process in order</h4><p class="truth"><b>vector</b> — sequence, index access, iterate fast.</p></div>
+      <div class="card"><h4>Events sorted by timestamp, range queries</h4><p class="truth"><b>map&lt;time,Event&gt;</b> — need sorted keys + ranges.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">A <code class="inl">set</code> is best described as:</div>
+        <button class="opt">A list that allows duplicates</button>
+        <button class="opt">A collection of unique elements with fast membership tests — a map without values</button>
+        <button class="opt">A fixed-size array</button>
+        <button class="opt">A FIFO queue</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">You need to remember which user IDs you've already processed. Best fit?</div>
+        <button class="opt"><code class="inl">unordered_set</code></button>
+        <button class="opt"><code class="inl">vector</code> + linear search</button>
+        <button class="opt"><code class="inl">stack</code></button>
+        <button class="opt"><code class="inl">array</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">First question to ask when picking a container is:</div>
+        <button class="opt">Which one is fastest in benchmarks?</button>
+        <button class="opt">Which one has the shortest name?</button>
+        <button class="opt">Which did I use last time?</button>
+        <button class="opt">How do I need to reach the data — by key, by membership, or as a sequence?</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">You need a unique collection that you also iterate in <em>sorted</em> order. Pick:</div>
+        <button class="opt"><code class="inl">unordered_set</code></button>
+        <button class="opt"><code class="inl">vector</code></button>
+        <button class="opt"><code class="inl">set</code></button>
+        <button class="opt"><code class="inl">queue</code></button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What is a <code class="inl">set</code>?</summary><div class="a">A: A collection of <strong>unique</strong> elements with fast membership testing — conceptually a map with keys and no values. <code class="inl">set</code> is sorted (tree); <code class="inl">unordered_set</code> is hashed.</div></details>
+    <details class="fc"><summary>Q: How do you dedup a vector's values?</summary><div class="a">A: Construct a set from its range: <code class="inl">unordered_set&lt;T&gt; u(v.begin(), v.end());</code> — duplicates collapse automatically.</div></details>
+    <details class="fc"><summary>Q: What's the first question for choosing a container?</summary><div class="a">A: "How do I reach the data?" — by key (map), by membership (set), or as a sequence (vector/deque/array, or an adaptor). The access pattern picks the container.</div></details>
+    <details class="fc"><summary>Q: Two containers cover most real code — which?</summary><div class="a">A: <code class="inl">vector</code> (sequences) and <code class="inl">unordered_map</code> (key lookup). Leave them only when an access pattern demands it.</div></details>
+    <details class="fc"><summary>Q: How does <code class="inl">insert</code> tell you if an element was new?</summary><div class="a">A: It returns a <code class="inl">pair&lt;iterator,bool&gt;</code>; the <code class="inl">.second</code> bool is <code class="inl">true</code> if it was inserted, <code class="inl">false</code> if it was already present.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Best drill for this lesson: throw me a scenario — <em>"I need to map URLs to hit counts and print the top 10"</em> — and I'll walk the flowchart with you and name the container(s). Then we move from data structures to <em>operating</em> on them.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0004-map-and-unordered-map.html"><span class="dir">↩ Previous</span><span class="ttl">map &amp; unordered_map</span></a>
+    <a href="0006-container-adaptors-stack-queue-priority-queue.html"><span class="dir">Up next →</span><span class="ttl">Adaptors: stack, queue, priority_queue</span></a>
+  </nav>
+
+  <footer>
+    C++ Standard Library · Lesson 5 · grounded in
+    <a href="https://en.cppreference.com/w/cpp/container" target="_blank" rel="noopener">cppreference</a>,
+    <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines" target="_blank" rel="noopener">C++ Core Guidelines</a> ·
+    <a href="../reference/cpp-stdlib-glossary.html">Glossary</a> ·
+    <a href="../reference/cpp-stdlib-cheatsheet.html">Cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eBPF & bpftrace Glossary</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+
+  /* ---- glossary-specific (reference doc, prints clean) ---- */
+  .toplinks{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+  .toplinks a{border:1px solid var(--line);border-radius:10px;padding:9px 14px;
+     background:var(--panel);font-size:.92rem;font-weight:600;text-decoration:none}
+  .toplinks a:hover{border-color:var(--accent)}
+  .azbar{position:sticky;top:0;z-index:5;background:var(--panel);border:1px solid var(--line);
+     border-radius:12px;padding:12px 14px;margin-top:22px;display:flex;flex-wrap:wrap;gap:6px;
+     box-shadow:0 2px 10px rgba(20,30,60,.05)}
+  .azbar a{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;
+     border-radius:8px;font-weight:700;font-size:.9rem;color:var(--accent);text-decoration:none;
+     border:1px solid var(--line);background:#fbfcff}
+  .azbar a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .azbar a.off{color:var(--muted);opacity:.4;pointer-events:none;border-color:transparent;background:transparent}
+  .letterhead{display:flex;align-items:center;gap:12px;margin:14px 0 2px;scroll-margin-top:70px}
+  .letterhead .L{font-size:1.5rem;font-weight:800;color:#fff;background:var(--accent);
+     border-radius:10px;width:42px;height:42px;display:flex;align-items:center;justify-content:center}
+  .letterhead .rule{flex:1;height:2px;background:var(--line)}
+  dl.gloss{margin:6px 0 0}
+  dl.gloss dt{font-weight:800;color:var(--ink);font-size:1.06rem;margin-top:18px;
+     scroll-margin-top:74px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  dl.gloss dt .tag{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+     color:var(--accent-2);background:#e9fbf4;border:1px solid #b6ecd8;border-radius:999px;padding:1px 9px}
+  dl.gloss dt .tag.bt{color:var(--accent);background:#eef4ff;border-color:#cdd9fb}
+  dl.gloss dt .tag.scope{color:var(--warn);background:#fff4ec;border-color:#ffd8b8}
+  dl.gloss dd{margin:.35em 0 0;color:#28303f}
+  dl.gloss dd .why{display:block;margin-top:.3em;font-size:.92rem;color:var(--muted)}
+  dl.gloss dd .why b{color:var(--accent-2);font-weight:700}
+  dl.gloss dd code.inl{white-space:nowrap}
+  .seealso{font-size:.86rem;color:var(--muted)}
+  .seealso a{border-bottom:1px dotted rgba(59,91,219,.4)}
+
+  @media print{
+    body{background:#fff;padding:0;color:#000;font-size:11.5pt;line-height:1.4}
+    .wrap{max-width:100%}
+    header.hero{box-shadow:none;border-radius:0;padding:18px 0;background:#fff;color:#000;
+       border-bottom:2px solid #000}
+    header.hero::after{display:none}
+    .kicker,header.hero p.sub{color:#000;opacity:1}
+    header.hero h1{color:#000}
+    .missiontag,.azbar,.teacher,.toplinks{display:none}
+    section{box-shadow:none;border:none;padding:0;margin-top:14px;page-break-inside:auto}
+    .letterhead{break-after:avoid}
+    dl.gloss dt{break-after:avoid;color:#000}
+    dl.gloss dt .tag{border:1px solid #999;color:#000;background:#fff}
+    dl.gloss dd,dl.gloss dt{break-inside:avoid}
+    a{color:#000;border:none}
+    .cite,footer{color:#444}
+  }
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Reference</div>
+    <h1>Glossary</h1>
+    <p class="sub">Compressed definitions for every term in the course — quick reference, built to print.</p>
+    <span class="missiontag">🎯 Observability &amp; tracing with bpftrace</span>
+  </header>
+
+  <div class="toplinks">
+    <a href="../lessons/0001-what-is-ebpf.html">↩ Start of course</a>
+    <a href="bpftrace-cheatsheet.html">bpftrace cheat sheet →</a>
+  </div>
+
+  <p class="lead" style="margin-top:20px">Every term you meet in the lessons, defined in plain language for someone
+  new to kernels — one to three sentences each, plus a one-liner on <em>why it matters</em> or where you run into it.
+  Terms are alphabetized; each has an <code class="inl">#id</code> anchor so the lessons can deep-link straight to it.
+  Tags mark <span style="color:var(--accent)">bpftrace</span> items and the one <span style="color:var(--warn)">out-of-scope</span> term.</p>
+
+  <!-- ============ A–Z JUMP BAR ============ -->
+  <nav class="azbar" aria-label="Jump to letter">
+    <a href="#A">A</a><a href="#B">B</a><a href="#C">C</a><a href="#D">D</a>
+    <a href="#E">E</a><a class="off">F</a><a href="#F">F</a><a class="off">G</a>
+    <a href="#H">H</a><a href="#I">I</a><a href="#J">J</a><a href="#K">K</a>
+    <a href="#L">L</a><a href="#M">M</a><a href="#N">N</a><a href="#O">O</a>
+    <a href="#P">P</a><a class="off">Q</a><a href="#R">R</a><a href="#S">S</a>
+    <a href="#T">T</a><a href="#U">U</a><a href="#V">V</a><a href="#X">X</a>
+  </nav>
+
+  <section>
+
+    <!-- ============================= A ============================= -->
+    <div class="letterhead" id="A"><span class="L">A</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="aggregation">Aggregation</dt>
+      <dd>Summarizing many events into a compact result <em>inside the kernel</em> — a count, sum, average, min/max,
+      or histogram — instead of shipping every raw event to user space. In bpftrace you aggregate into a map, e.g.
+      <code class="inl">@bytes = sum(args.count)</code> or <code class="inl">@[comm] = count()</code>.
+      <span class="why"><b>Why it matters:</b> aggregation is what makes tracing cheap enough for production — the kernel
+      does the math, so you read a tidy table, not a firehose.</span></dd>
+
+      <dt id="args"><code class="inl">args</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd>A struct holding the named arguments of the probed event — the fields of a <a href="#tracepoint">tracepoint</a>,
+      or the typed arguments of a kernel/user function. You read them by name, e.g. <code class="inl">args.filename</code>
+      or <code class="inl">args.count</code>.
+      <span class="why"><b>Where you meet it:</b> <code class="inl">tracepoint:syscalls:sys_enter_openat { printf("%s\n", str(args.filename)); }</code>
+      — far friendlier than positional <a href="#arg0-argn">arg0..argN</a>.</span></dd>
+
+      <dt id="arg0-argn"><code class="inl">arg0</code> … <code class="inl">argN</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd>The raw, positional arguments of a probed function as 64-bit values: <code class="inl">arg0</code> is the first
+      argument, <code class="inl">arg1</code> the second, and so on. Used with <a href="#kprobe">kprobes</a>/<a href="#uprobe">uprobes</a>,
+      where there is no type info to give you named <a href="#args">args</a>.
+      <span class="why"><b>Heads-up:</b> they're untyped integers — you often wrap them, e.g. <code class="inl">str(arg0)</code>
+      to read a string pointer, and you must know the function's signature yourself.</span></dd>
+
+    </dl>
+
+    <!-- ============================= B ============================= -->
+    <div class="letterhead" id="B"><span class="L">B</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="bcc">BCC (BPF Compiler Collection)</dt>
+      <dd>A toolkit (project <code class="inl">iovisor/bcc</code>) with a large collection of ready-made tracing tools plus
+      C and Python interfaces for building your own. You write the kernel half in C and the user-space orchestration in
+      Python (the Python front-end is now de-emphasized in favor of libbpf-style C).
+      <span class="why"><b>Where you meet it:</b> Brendan Gregg's guidance — "<a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">bcc is ideal for complex tools and daemons</a>";
+      reach for it when a bpftrace one-liner isn't enough.</span></dd>
+
+      <dt id="begin-end"><code class="inl">BEGIN</code> / <code class="inl">END</code> probes <span class="tag bt">bpftrace</span></dt>
+      <dd>Special probes that fire once at program start (<code class="inl">BEGIN</code>) and once at program exit
+      (<code class="inl">END</code>), not tied to any kernel event. Use <code class="inl">BEGIN</code> to print a header or
+      initialize state, and <code class="inl">END</code> to print final results.
+      <span class="why"><b>Where you meet it:</b> <code class="inl">END { print(@); }</code> — by default bpftrace already prints
+      maps on exit, but <code class="inl">END</code> lets you control or format the summary.</span></dd>
+
+      <dt id="bpf">BPF (classic BPF / cBPF) &amp; the name</dt>
+      <dd>BPF originally stood for <strong>Berkeley Packet Filter</strong>, a tiny in-kernel virtual machine from 1992 for
+      filtering network packets (e.g. for <code class="inl">tcpdump</code>). That original form is now called <strong>classic
+      BPF</strong> or <strong>cBPF</strong> to distinguish it from the modern <a href="#ebpf">eBPF</a>.
+      <span class="why"><b>Why it matters:</b> it explains the name's history — eBPF kept the "BPF" letters but long outgrew
+      packet filtering, so today "BPF" and "eBPF" are used interchangeably and no longer stand for anything.
+      <span class="cite"><a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io</a></span></span></dd>
+
+      <dt id="bpf-bytecode">BPF bytecode</dt>
+      <dd>The low-level, machine-independent instruction format the kernel expects an eBPF program to be loaded as. A
+      compiler (or bpftrace) turns your high-level source into this bytecode, which the kernel then verifies and runs.
+      <span class="why"><b>Why it matters:</b> bytecode is the universal "shipping format" — it's what the
+      <a href="#verifier">verifier</a> checks and what the <a href="#jit">JIT</a> turns into native CPU instructions.</span></dd>
+
+      <dt id="bpf-syscall"><code class="inl">bpf()</code> syscall</dt>
+      <dd>The single Linux system call through which all eBPF operations flow: loading a program, creating and reading/writing
+      <a href="#map">maps</a>, attaching programs, and more — selected by a command argument.
+      <span class="why"><b>Where you meet it:</b> you rarely call it by hand — bpftrace, BCC, and libbpf call <code class="inl">bpf()</code>
+      for you — but it's the kernel doorway every eBPF tool uses.
+      <span class="cite"><a href="https://man7.org/linux/man-pages/man2/bpf.2.html" target="_blank" rel="noopener">bpf(2)</a></span></span></dd>
+
+      <dt id="bpf-vm">BPF virtual machine</dt>
+      <dd>The abstract instruction-set "machine" that eBPF bytecode targets: a small set of registers and instructions the
+      kernel knows how to validate and execute. It's a sandbox model, not a real CPU — programs run inside it under the
+      kernel's control.
+      <span class="why"><b>Why it matters:</b> the VM abstraction is what lets the same bytecode be verified for safety and
+      then <a href="#jit">JIT-compiled</a> to whatever real CPU you're on.</span></dd>
+
+      <dt id="bpftrace">bpftrace <span class="tag bt">the course's anchor tool</span></dt>
+      <dd>A high-level tracing language and front-end for eBPF: you write short, awk-like scripts (<code class="inl">probe /filter/ { action }</code>)
+      and bpftrace compiles, loads, and runs them for you. Created by Alastair Robertson; ideal for ad-hoc one-liners and
+      short scripts.
+      <span class="why"><b>Why it matters:</b> it's the fastest way to ask the running kernel a question — "<a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">if you want to program your own, start with bpftrace</a>."</span></dd>
+
+      <dt id="btf">BTF (BPF Type Format)</dt>
+      <dd>A metadata format that encodes type and debug information (struct layouts, function signatures, source lines) about
+      BPF programs and the kernel itself. Modern kernels ship their own BTF so tools can learn the exact shape of kernel
+      data structures at runtime.
+      <span class="why"><b>Why it matters:</b> BTF is the foundation of <a href="#core">CO-RE</a> — it's how a program written
+      once can correctly find a struct field even on a kernel whose layout differs.
+      <span class="cite"><a href="https://docs.kernel.org/bpf/btf.html" target="_blank" rel="noopener">docs.kernel.org/bpf</a></span></span></dd>
+
+      <dt id="builtin">Builtin <span class="tag bt">bpftrace</span></dt>
+      <dd>A read-only variable bpftrace provides automatically inside a probe, giving context about the current event —
+      such as <a href="#comm">comm</a>, <a href="#pid-tid">pid</a>, <a href="#nsecs">nsecs</a>, <a href="#cpu">cpu</a>,
+      <a href="#retval">retval</a>, or <a href="#kstack-ustack">kstack</a>.
+      <span class="why"><b>Where you meet it:</b> builtins are the nouns of a bpftrace one-liner — you reference them directly,
+      no setup required.</span></dd>
+
+    </dl>
+
+    <!-- ============================= C ============================= -->
+    <div class="letterhead" id="C"><span class="L">C</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="cap-bpf">CAP_BPF / CAP_PERFMON</dt>
+      <dd>Fine-grained Linux <em>capabilities</em> (since kernel 5.8) that grant just the privileges eBPF needs, instead of
+      full root (<code class="inl">CAP_SYS_ADMIN</code>). <strong>CAP_BPF</strong> allows loading programs and creating maps;
+      <strong>CAP_PERFMON</strong> allows the performance-monitoring side (perf events and tracing programs).
+      <span class="why"><b>Why it matters:</b> together they let a tracing tool run without giving it the entire kernel — the
+      least-privilege way to permit bpftrace. In practice many setups still just use <code class="inl">sudo</code>.
+      <span class="cite"><a href="https://man7.org/linux/man-pages/man7/capabilities.7.html" target="_blank" rel="noopener">capabilities(7)</a></span></span></dd>
+
+      <dt id="comm"><code class="inl">comm</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd>The name of the current process (its "command" — the short executable name, e.g. <code class="inl">nginx</code> or
+      <code class="inl">node</code>).
+      <span class="why"><b>Where you meet it:</b> grouping by who's responsible — <code class="inl">@[comm] = count()</code> tells
+      you which programs are hitting a probe most.</span></dd>
+
+      <dt id="core">CO-RE (Compile Once – Run Everywhere)</dt>
+      <dd>A technique that lets a single compiled eBPF program run unchanged across many kernel versions, even when internal
+      struct layouts differ. The compiler records what fields the program needs; using <a href="#btf">BTF</a>, the loader
+      "relocates" those field accesses to match the kernel actually running.
+      <span class="why"><b>Why it matters:</b> CO-RE killed the old pain of recompiling a tool against each machine's kernel
+      headers — it's why portable eBPF tools (libbpf-based) ship as one binary.</span></dd>
+
+      <dt id="cpu"><code class="inl">cpu</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd>The ID of the logical CPU (processor) on which the probe is currently firing.
+      <span class="why"><b>Where you meet it:</b> spotting CPU imbalance or per-core behavior — e.g. <code class="inl">@[cpu] = count()</code>.</span></dd>
+
+      <dt id="curtask"><code class="inl">curtask</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd>A pointer to the kernel's <code class="inl">task_struct</code> for the currently running thread — the kernel's big
+      bookkeeping record for a task.
+      <span class="why"><b>Where you meet it:</b> advanced scripts that read scheduler or process fields directly from the
+      task struct; most one-liners never need it.</span></dd>
+
+    </dl>
+
+    <!-- ============================= D ============================= -->
+    <div class="letterhead" id="D"><span class="L">D</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="dynamic-tracing">Dynamic vs static tracing</dt>
+      <dd><strong>Dynamic</strong> tracing instruments any function on the fly with no prior planning (<a href="#kprobe">kprobes</a>,
+      <a href="#uprobe">uprobes</a>) — flexible, but the function names/arguments can change between versions.
+      <strong>Static</strong> tracing uses instrumentation points the developers deliberately placed and named
+      (<a href="#tracepoint">tracepoints</a>, <a href="#usdt">USDT</a>) — fewer, but a stable contract.
+      <span class="why"><b>Rule of thumb:</b> prefer a static tracepoint when one exists; fall back to a dynamic probe to reach
+      anywhere else.</span></dd>
+
+    </dl>
+
+    <!-- ============================= E ============================= -->
+    <div class="letterhead" id="E"><span class="L">E</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="ebpf">eBPF</dt>
+      <dd>A Linux-kernel technology that runs small, sandboxed programs in a privileged context (inside the kernel) in
+      response to events, safely and without changing kernel source or loading a module. "eBPF" is now a standalone term —
+      it no longer stands for anything (see <a href="#bpf">BPF</a> for the history).
+      <span class="why"><b>Why it matters:</b> it's the whole foundation — eBPF is how bpftrace can watch what the kernel and
+      your programs are doing, live, with near-zero overhead.
+      <span class="cite"><a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io</a></span></span></dd>
+
+      <dt id="ebpf-program">eBPF program</dt>
+      <dd>The actual unit of code that runs in the kernel: event-driven, attached to a <a href="#hook">hook</a>, and executed
+      whenever that hook is reached. It's loaded as <a href="#bpf-bytecode">bytecode</a>, checked by the
+      <a href="#verifier">verifier</a>, and usually <a href="#jit">JIT-compiled</a>.
+      <span class="why"><b>Where you meet it:</b> each bpftrace probe action becomes one eBPF program behind the scenes — you
+      write the script, bpftrace produces the programs.</span></dd>
+
+      <dt id="event">Event</dt>
+      <dd>Something happening in the system that an eBPF program can react to — a function being entered or returning, a
+      syscall, a timer tick, a tracepoint firing. eBPF is fundamentally <em>event-driven</em>: no event, no execution.
+      <span class="why"><b>Why it matters:</b> framing tracing as "run this tiny program every time event X happens" is the
+      core mental model for everything in the course.</span></dd>
+
+    </dl>
+
+    <!-- ============================= F ============================= -->
+    <div class="letterhead" id="F"><span class="L">F</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="flame-graph">Flame graph</dt>
+      <dd>A visualization of sampled <a href="#kstack-ustack">stack traces</a>: each box is a function, its width is how often
+      that function (and its callees) appeared in the samples, and depth shows the call stack. Invented by Brendan Gregg.
+      <span class="why"><b>Where you meet it:</b> the standard way to read CPU <a href="#on-off-cpu">profiles</a> — the widest
+      boxes are where time is going.
+      <span class="cite"><a href="https://www.brendangregg.com/flamegraphs.html" target="_blank" rel="noopener">brendangregg.com</a></span></span></dd>
+
+      <dt id="func"><code class="inl">func</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd>The name of the function the current probe is attached to.
+      <span class="why"><b>Where you meet it:</b> one probe spanning many functions (wildcards) — <code class="inl">printf("%s\n", func)</code>
+      tells you which one actually fired.</span></dd>
+
+    </dl>
+
+    <!-- ============================= H ============================= -->
+    <div class="letterhead" id="H"><span class="L">H</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="helper">Helper function</dt>
+      <dd>A predefined kernel function that an eBPF program is allowed to call — a small, stable, allow-listed API. Helpers do
+      things a sandboxed program can't do directly: read/write <a href="#map">maps</a>, get the current time, fetch the pid,
+      copy memory safely, capture a stack, and so on.
+      <span class="why"><b>Why it matters:</b> helpers are the program's only "system calls" — they're how a verified, sandboxed
+      program safely reaches the outside world.
+      <span class="cite"><a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io</a></span></span></dd>
+
+      <dt id="histogram">Histogram — <code class="inl">hist()</code> / <code class="inl">lhist()</code> <span class="tag bt">bpftrace</span></dt>
+      <dd>Aggregation functions that bucket values and print a text bar chart. <code class="inl">hist(v)</code> uses
+      <strong>power-of-two (log2)</strong> buckets — great for wide-ranging values like latency. <code class="inl">lhist(v, min, max, step)</code>
+      is a <strong>linear</strong> histogram with evenly sized buckets you choose.
+      <span class="why"><b>Where you meet it:</b> <code class="inl">@ = hist(retval)</code> to see a latency distribution at a glance —
+      the shape (and outliers) matter more than an average.</span></dd>
+
+      <dt id="hook">Hook / attach point</dt>
+      <dd>A defined place in the kernel or a program where an eBPF program can be attached so it runs when execution reaches
+      there. Pre-defined hooks include syscalls, function entry/exit, and tracepoints; <a href="#kprobe">kprobes</a> and
+      <a href="#uprobe">uprobes</a> let you create hooks almost anywhere.
+      <span class="why"><b>Why it matters:</b> picking the right hook <em>is</em> the act of tracing — it decides exactly which
+      events your program sees.</span></dd>
+
+    </dl>
+
+    <!-- ============================= I ============================= -->
+    <div class="letterhead" id="I"><span class="L">I</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="interval"><code class="inl">interval</code> probe <span class="tag bt">bpftrace</span></dt>
+      <dd>A probe that fires on a fixed time interval on a <strong>single CPU</strong> — e.g. <code class="inl">interval:s:1</code>
+      once per second. Used for periodic output and script-level timers.
+      <span class="why"><b>Where you meet it:</b> live dashboards — print and clear your maps every second:
+      <code class="inl">interval:s:1 { print(@); clear(@); }</code>. (Contrast with <a href="#profile">profile</a>, which fires
+      on <em>all</em> CPUs.)</span></dd>
+
+    </dl>
+
+    <!-- ============================= J ============================= -->
+    <div class="letterhead" id="J"><span class="L">J</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="jit">JIT compiler (Just-In-Time)</dt>
+      <dd>The kernel step that translates verified eBPF <a href="#bpf-bytecode">bytecode</a> into the native machine
+      instructions of the current CPU, so the program runs at near-native speed instead of being interpreted.
+      <span class="why"><b>Why it matters:</b> JIT is a big reason eBPF tracing is cheap enough for production — your probe
+      becomes real CPU code, not a slow interpreter loop.
+      <span class="cite"><a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io</a></span></span></dd>
+
+    </dl>
+
+    <!-- ============================= K ============================= -->
+    <div class="letterhead" id="K"><span class="L">K</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="kprobe"><code class="inl">kprobe</code> <span class="tag bt">bpftrace probe</span></dt>
+      <dd>A dynamic probe that fires when a <strong>kernel function is entered</strong>. You can attach one to almost any
+      kernel function by name, e.g. <code class="inl">kprobe:vfs_read</code>, and read its arguments via
+      <a href="#arg0-argn">arg0..argN</a>.
+      <span class="why"><b>Where you meet it:</b> reaching into kernel internals when no tracepoint covers what you need —
+      the flexible, "anywhere" probe.</span></dd>
+
+      <dt id="kretprobe"><code class="inl">kretprobe</code> <span class="tag bt">bpftrace probe</span></dt>
+      <dd>The companion to a kprobe that fires when the kernel function <strong>returns</strong>, giving you its
+      <a href="#retval">retval</a>. Pair it with the kprobe to measure how long the function took.
+      <span class="why"><b>Where you meet it:</b> latency measurement — timestamp on <code class="inl">kprobe</code>, subtract on
+      <code class="inl">kretprobe</code>, feed the delta to <a href="#histogram">hist()</a>.</span></dd>
+
+      <dt id="kstack-ustack"><code class="inl">kstack</code> / <code class="inl">ustack</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd>The current stack trace: <code class="inl">kstack</code> is the kernel-side call stack, <code class="inl">ustack</code>
+      the user-space call stack of the running thread. Both are capturable as map keys.
+      <span class="why"><b>Where you meet it:</b> answering "<em>how</em> did we get here?" — <code class="inl">@[kstack] = count()</code>
+      counts code paths and is the raw material for a <a href="#flame-graph">flame graph</a>.</span></dd>
+
+    </dl>
+
+    <!-- ============================= L ============================= -->
+    <div class="letterhead" id="L"><span class="L">L</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="libbpf">libbpf</dt>
+      <dd>The standard C library for loading and managing eBPF programs from user space. It handles talking to the
+      <a href="#bpf-syscall">bpf()</a> syscall, applying <a href="#core">CO-RE</a> relocations via <a href="#btf">BTF</a>, and
+      attaching programs.
+      <span class="why"><b>Where you meet it:</b> the modern foundation for portable, compiled eBPF tools (and the direction
+      <a href="#bcc">BCC</a> now points); you'll see it named when people talk "libbpf + CO-RE." Out of scope to write here,
+      but good to recognize.</span></dd>
+
+      <dt id="lhist"><code class="inl">lhist()</code> — linear histogram <span class="tag bt">bpftrace</span></dt>
+      <dd>See <a href="#histogram">Histogram</a>. <code class="inl">lhist(value, min, max, step)</code> places values into
+      evenly sized buckets between <code class="inl">min</code> and <code class="inl">max</code>.
+      <span class="why"><b>Where you meet it:</b> when you want uniform buckets (e.g. counts 0–20 by 1s) rather than
+      <code class="inl">hist()</code>'s widening power-of-two ranges.</span></dd>
+
+    </dl>
+
+    <!-- ============================= M ============================= -->
+    <div class="letterhead" id="M"><span class="L">M</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="map">Map</dt>
+      <dd>A kernel data structure (hash table, array, ring buffer, stack-trace store, and more) that eBPF programs use to
+      store state and to share data with user space. Maps can be read and written both by the in-kernel program and by the
+      user-space tool via the <a href="#bpf-syscall">bpf()</a> syscall.
+      <span class="why"><b>Why it matters:</b> maps are the bridge — every bpftrace <code class="inl">@variable</code> is a map,
+      and that's how your one-liner's results get from kernel to your terminal.
+      <span class="cite"><a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io</a></span></span></dd>
+
+    </dl>
+
+    <!-- ============================= N ============================= -->
+    <div class="letterhead" id="N"><span class="L">N</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="nsecs"><code class="inl">nsecs</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd>A timestamp in nanoseconds from a monotonic kernel clock (it counts up steadily; it's not wall-clock time).
+      <span class="why"><b>Where you meet it:</b> timing things — record <code class="inl">nsecs</code> at the start of an event,
+      subtract at the end to get a precise duration.</span></dd>
+
+    </dl>
+
+    <!-- ============================= O ============================= -->
+    <div class="letterhead" id="O"><span class="L">O</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="on-off-cpu">On-CPU vs off-CPU analysis</dt>
+      <dd><strong>On-CPU</strong> analysis studies where threads spend time <em>running</em> on a CPU (classic profiling).
+      <strong>Off-CPU</strong> analysis studies time threads spend <em>blocked</em> off-CPU — waiting on I/O, locks, timers,
+      or the scheduler — captured with stack traces.
+      <span class="why"><b>Why it matters:</b> they're complementary, so 100% of a thread's time can be explained. If your code
+      is slow but the CPU is idle, the answer is in off-CPU time, not the on-CPU profile.
+      <span class="cite"><a href="https://www.brendangregg.com/offcpuanalysis.html" target="_blank" rel="noopener">brendangregg.com</a></span></span></dd>
+
+    </dl>
+
+    <!-- ============================= P ============================= -->
+    <div class="letterhead" id="P"><span class="L">P</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="perf-buffer">Perf buffer</dt>
+      <dd>The older mechanism for streaming per-event data from kernel to user space, using one ring buffer
+      <strong>per CPU</strong>. Simple and widely supported, but it can waste memory and lose ordering across CPUs.
+      <span class="why"><b>Why it matters:</b> it's the predecessor to the <a href="#ring-buffer">ring buffer</a>; you'll see it
+      in older tools and BCC examples.</span></dd>
+
+      <dt id="pid-tid"><code class="inl">pid</code> / <code class="inl">tid</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd><code class="inl">pid</code> is the process ID (the kernel's thread-group ID — the number you see in
+      <code class="inl">ps</code>); <code class="inl">tid</code> is the thread ID of the specific thread that triggered the event.
+      <span class="why"><b>Where you meet it:</b> filtering to one process (<code class="inl">/pid == 1234/</code>) or attributing
+      events per-thread vs per-process.</span></dd>
+
+      <dt id="predicate">Predicate / filter <span class="tag bt">bpftrace</span></dt>
+      <dd>A condition in <code class="inl">/slashes/</code> right after a probe; the action runs only when it's true. Example:
+      <code class="inl">kprobe:vfs_read /comm == "node"/ { ... }</code> fires only for the <code class="inl">node</code> process.
+      <span class="why"><b>Why it matters:</b> predicates cut noise at the source — you filter in the kernel, so you process and
+      print far less.</span></dd>
+
+      <dt id="probe">Probe</dt>
+      <dd>In bpftrace, the part of a statement that names <em>what</em> to instrument and <em>when</em> to fire — i.e. the
+      <a href="#hook">hook</a>. Each statement is <code class="inl">probe /predicate/ { action }</code>; a probe has a type
+      (kprobe, tracepoint, uprobe, profile, …) and a target.
+      <span class="why"><b>Why it matters:</b> the probe is the first thing you write and the most important decision — choose it
+      and you've chosen your data.</span></dd>
+
+      <dt id="profile"><code class="inl">profile</code> probe <span class="tag bt">bpftrace</span></dt>
+      <dd>A probe that fires on a timed interval across <strong>all CPUs at once</strong> — timed sampling. For example
+      <code class="inl">profile:hz:99</code> samples 99 times per second on every CPU.
+      <span class="why"><b>Where you meet it:</b> CPU profiling — sample <a href="#kstack-ustack">stacks</a> and feed them to a
+      <a href="#flame-graph">flame graph</a>. (Contrast <a href="#interval">interval</a>, which fires on one CPU.)</span></dd>
+
+    </dl>
+
+    <!-- ============================= R ============================= -->
+    <div class="letterhead" id="R"><span class="L">R</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="retval"><code class="inl">retval</code> <span class="tag bt">bpftrace builtin</span></dt>
+      <dd>The return value of the probed function — available in return probes (<a href="#kretprobe">kretprobe</a> /
+      <a href="#uretprobe">uretprobe</a>) and in tracepoint exit events.
+      <span class="why"><b>Where you meet it:</b> checking outcomes — count failed syscalls with
+      <code class="inl">/retval &lt; 0/</code>, or measure how long a call took via its return.</span></dd>
+
+      <dt id="ring-buffer">Ring buffer (BPF ring buffer)</dt>
+      <dd>The newer (Linux 5.8+) mechanism for streaming per-event data to user space: a <strong>single shared</strong>
+      multi-producer/single-consumer buffer across all CPUs. It preserves event ordering and uses memory more efficiently
+      than the per-CPU <a href="#perf-buffer">perf buffer</a>.
+      <span class="why"><b>Why it matters:</b> it's the modern default for sending raw events out of the kernel — correct
+      ordering matters when you correlate things like fork → exec → exit.
+      <span class="cite"><a href="https://nakryiko.com/posts/bpf-ringbuf/" target="_blank" rel="noopener">nakryiko.com</a></span></span></dd>
+
+    </dl>
+
+    <!-- ============================= S ============================= -->
+    <div class="letterhead" id="S"><span class="L">S</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="system-call">System call (syscall)</dt>
+      <dd>The controlled doorway a user-space program uses to ask the kernel to do something privileged — open a file, read,
+      write, allocate memory, send on a socket. Each is a numbered request like <code class="inl">openat</code> or
+      <code class="inl">read</code>.
+      <span class="why"><b>Where you meet it:</b> syscalls are the richest tracing target — "what files is this opening?" is just
+      tracing the <code class="inl">openat</code> syscall <a href="#tracepoint">tracepoint</a>.</span></dd>
+
+    </dl>
+
+    <!-- ============================= T ============================= -->
+    <div class="letterhead" id="T"><span class="L">T</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="tracepoint"><code class="inl">tracepoint</code> <span class="tag bt">bpftrace probe</span></dt>
+      <dd>A <strong>static</strong>, developer-placed instrumentation point in the kernel with a stable name and documented
+      arguments — e.g. <code class="inl">tracepoint:syscalls:sys_enter_openat</code>. Arguments are read by name via
+      <a href="#args">args</a>.
+      <span class="why"><b>Why it matters:</b> tracepoints are the preferred kernel probe — a stable contract, so your script
+      keeps working across kernel versions where a <a href="#kprobe">kprobe</a> might break.</span></dd>
+
+    </dl>
+
+    <!-- ============================= U ============================= -->
+    <div class="letterhead" id="U"><span class="L">U</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="unprivileged-ebpf">Unprivileged eBPF</dt>
+      <dd>Whether a non-root user may call <a href="#bpf-syscall">bpf()</a> at all. Most distributions now disable it
+      (the <code class="inl">kernel.unprivileged_bpf_disabled</code> sysctl), so loading programs requires root or
+      <a href="#cap-bpf">CAP_BPF</a>/<code class="inl">CAP_PERFMON</code>.
+      <span class="why"><b>Why it matters:</b> it's why bpftrace commands need <code class="inl">sudo</code> — the kernel gates
+      tracing behind privilege for safety.
+      <span class="cite"><a href="https://docs.kernel.org/admin-guide/sysctl/kernel.html" target="_blank" rel="noopener">docs.kernel.org</a></span></span></dd>
+
+      <dt id="uprobe"><code class="inl">uprobe</code> <span class="tag bt">bpftrace probe</span></dt>
+      <dd>The user-space equivalent of a <a href="#kprobe">kprobe</a>: a dynamic probe that fires when a function in a
+      <strong>user-space</strong> binary or library is entered, e.g. <code class="inl">uprobe:/bin/bash:readline</code>.
+      <span class="why"><b>Where you meet it:</b> tracing inside an application or library — note it adds some latency to the
+      traced program, so use predicates to keep it targeted.</span></dd>
+
+      <dt id="uretprobe"><code class="inl">uretprobe</code> <span class="tag bt">bpftrace probe</span></dt>
+      <dd>Fires when a user-space function <strong>returns</strong>, giving its <a href="#retval">retval</a> — the user-space
+      partner to <a href="#kretprobe">kretprobe</a>.
+      <span class="why"><b>Where you meet it:</b> timing a user function (entry on uprobe, exit on uretprobe) or inspecting
+      what it returned.</span></dd>
+
+      <dt id="usdt">USDT (User Statically-Defined Tracing)</dt>
+      <dd>Stable, developer-placed tracepoints compiled <em>into a user-space program</em> (databases, language runtimes, etc.).
+      The user-space counterpart to kernel <a href="#tracepoint">tracepoints</a> — named, documented, low-overhead.
+      <span class="why"><b>Where you meet it:</b> tracing application-level events an app deliberately exposes (e.g. a query
+      start), instead of guessing at internal functions with a <a href="#uprobe">uprobe</a>.</span></dd>
+
+      <dt id="use-method">USE method</dt>
+      <dd>A performance checklist by Brendan Gregg: for every resource, check <strong>Utilization</strong> (how busy it was),
+      <strong>Saturation</strong> (how much extra work is queued waiting), and <strong>Errors</strong>. Walk every resource —
+      CPU, memory, disks, network — through U, S, E.
+      <span class="why"><b>Why it matters:</b> it's a fast, systematic way to find bottlenecks; it tells you <em>which</em>
+      resource to point your tracing at next.
+      <span class="cite"><a href="https://www.brendangregg.com/usemethod.html" target="_blank" rel="noopener">brendangregg.com</a></span></span></dd>
+
+      <dt id="user-kernel-space">User space vs kernel space</dt>
+      <dd>Two protected worlds. <strong>Kernel space</strong> is the privileged core that manages hardware, memory, and
+      processes; <strong>user space</strong> is where your applications run, isolated from each other and the kernel. They
+      communicate through <a href="#system-call">syscalls</a>.
+      <span class="why"><b>Why it matters:</b> this boundary is the heart of the course — eBPF runs <em>in the kernel</em>, which
+      is exactly why a bpftrace probe can see across all of user space at once, no app changes needed.</span></dd>
+
+    </dl>
+
+    <!-- ============================= V ============================= -->
+    <div class="letterhead" id="V"><span class="L">V</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="verifier">Verifier</dt>
+      <dd>The kernel safety checker every eBPF program must pass <em>before</em> it runs. It proves the program will terminate
+      (no unbounded loops), never reads uninitialized memory or accesses out of bounds, and stays within complexity limits —
+      by analyzing all possible execution paths.
+      <span class="why"><b>Why it matters:</b> the verifier is why running eBPF in the kernel is safe — a rejected program simply
+      won't load. Note it checks <em>safety</em>, not what the program is trying to <em>do</em>.
+      <span class="cite"><a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io</a></span></span></dd>
+
+    </dl>
+
+    <!-- ============================= X ============================= -->
+    <div class="letterhead" id="X"><span class="L">X</span><span class="rule"></span></div>
+    <dl class="gloss">
+
+      <dt id="xdp">XDP (eXpress Data Path) <span class="tag scope">out of scope</span></dt>
+      <dd>An eBPF hook at the very earliest point of network packet receive, used for ultra-fast packet processing (filtering,
+      load balancing, DDoS drop) before the kernel's normal networking stack.
+      <span class="why"><b>Why it's here:</b> you'll see "XDP" everywhere in eBPF writing — but it's <em>networking</em>, which
+      this observability-focused course deliberately leaves out. Defined so the term isn't a mystery.</span></dd>
+
+    </dl>
+
+  </section>
+
+  <div class="callout key" style="margin-top:22px">
+    <span class="h">💡 How to use this glossary</span>
+    Every term has a stable <code class="inl">#id</code> anchor — the lessons link straight here (e.g.
+    <code class="inl">glossary.html#verifier</code>). Press <kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>F</kbd> to find a term, or use the
+    A–Z bar to jump. Print to PDF for an offline cheat sheet — the layout is built for it.
+  </div>
+
+  <div class="toplinks" style="margin-top:22px">
+    <a href="../lessons/0001-what-is-ebpf.html">↩ Start of course</a>
+    <a href="bpftrace-cheatsheet.html">bpftrace cheat sheet →</a>
+  </div>
+
+  <footer>
+    eBPF Course · Reference · Glossary · grounded in
+    <a href="https://ebpf.io/" target="_blank" rel="noopener">ebpf.io</a>,
+    <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg</a>,
+    <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a>,
+    <a href="https://docs.kernel.org/bpf/" target="_blank" rel="noopener">docs.kernel.org/bpf</a> ·
+    see <a href="/courses/ebpf/#resources">RESOURCES.md</a> ·
+    <a href="bpftrace-cheatsheet.html">bpftrace cheat sheet</a>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 6 · Measuring Latency &amp; Timing</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Lesson 6</div>
+    <h1>Measuring Latency &amp; Timing</h1>
+    <p class="sub">Learn the single most useful tracing pattern — time any operation and see its latency distribution.</p>
+    <span class="missiontag">🎯 Answer "where's the latency?" in seconds, no code change</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>To measure how long something takes: <b>timestamp at the entry probe</b>, stash it in a map keyed by thread, <b>subtract at the matching return probe</b>, and drop the difference into a <code class="inl">hist()</code> — a latency distribution falls out for free.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The pattern in one picture</h2>
+    <p class="lead">Almost every "how slow is X?" question in the kernel is answered by the
+    <strong>same four-step move</strong>. Learn it once and you can time syscalls, disk I/O,
+    function calls, lock waits — anything that has a clear start and end.</p>
+
+    <p>The trick is that an eBPF program is just a tiny handler that fires when a probe
+    is hit. You get <em>two</em> firings — one when the operation <strong>begins</strong>, one when it
+    <strong>ends</strong> — and you need to carry a number from the first to the second. A
+    <strong>map</strong> (the key/value store from <a href="0005-maps-and-aggregation.html">Lesson 5</a>) is the
+    luggage that crosses that gap.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 320" role="img" aria-label="Timeline showing an entry probe storing a timestamp, the operation running, a return probe computing the delta, and the delta dropping into a histogram bucket">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+          </marker>
+          <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent-2)"/>
+          </marker>
+        </defs>
+
+        <!-- the timeline -->
+        <line x1="60" y1="90" x2="700" y2="90" stroke="var(--muted)" stroke-width="2"/>
+        <text x="60" y="72" font-size="12" fill="var(--muted)">time →</text>
+
+        <!-- t0 marker: entry probe -->
+        <line x1="150" y1="76" x2="150" y2="104" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="150" cy="90" r="6" fill="var(--accent)"/>
+        <text x="150" y="128" font-size="13" fill="var(--ink)" text-anchor="middle" font-weight="700">t0 · entry probe</text>
+        <text x="150" y="146" font-size="11.5" fill="var(--muted)" text-anchor="middle">store: @start[tid] = nsecs</text>
+
+        <!-- t1 marker: return probe -->
+        <line x1="560" y1="76" x2="560" y2="104" stroke="var(--accent-2)" stroke-width="2.5"/>
+        <circle cx="560" cy="90" r="6" fill="var(--accent-2)"/>
+        <text x="560" y="128" font-size="13" fill="var(--ink)" text-anchor="middle" font-weight="700">t1 · return probe</text>
+        <text x="560" y="146" font-size="11.5" fill="var(--muted)" text-anchor="middle">read @start[tid], subtract</text>
+
+        <!-- the operation runs between t0 and t1 -->
+        <rect x="150" y="50" width="410" height="22" rx="6" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-opacity="0.4"/>
+        <text x="355" y="66" font-size="12.5" fill="var(--ink)" text-anchor="middle">the operation runs…</text>
+
+        <!-- delta bracket -->
+        <path d="M150,176 L150,186 L560,186 L560,176" fill="none" stroke="var(--warn)" stroke-width="2"/>
+        <text x="355" y="206" font-size="13" fill="var(--warn)" text-anchor="middle" font-weight="700">delta = t1 − t0   (nanoseconds)</text>
+
+        <!-- arrow: delta drops into histogram -->
+        <path d="M355,214 L355,238" fill="none" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#arr)"/>
+
+        <!-- the histogram forming -->
+        <text x="60" y="262" font-size="12.5" fill="var(--ink)" font-weight="700">hist() buckets fill up:</text>
+        <g>
+          <rect x="60"  y="276" width="40" height="14" fill="var(--accent-2)" fill-opacity="0.30"/>
+          <rect x="60"  y="294" width="80" height="14" fill="var(--accent-2)" fill-opacity="0.55"/>
+          <rect x="60"  y="276" width="0"  height="0"/>
+        </g>
+        <text x="150" y="288" font-size="11" fill="var(--muted)">[2µs, 4µs)</text>
+        <rect x="240" y="276" width="150" height="14" fill="var(--accent)" fill-opacity="0.85"/>
+        <text x="400" y="288" font-size="11" fill="var(--muted)">[4µs, 8µs) ← most reads land here</text>
+        <rect x="240" y="294" width="60" height="14" fill="var(--accent)" fill-opacity="0.45"/>
+        <text x="310" y="306" font-size="11" fill="var(--muted)">[8µs, 16µs)</text>
+        <rect x="600" y="276" width="18" height="14" fill="var(--warn)" fill-opacity="0.8"/>
+        <text x="625" y="288" font-size="11" fill="var(--warn)">[1ms, 2ms) ← the slow tail</text>
+      </svg>
+      <figcaption>Stash a timestamp at entry, subtract at return, histogram the difference. The same four steps for any operation.</figcaption>
+    </figure>
+
+    <div class="callout key"><span class="h">💡 Why a histogram, not an average</span>
+    An average hides the truth. "Reads take 30µs on average" can mean <em>every</em> read is 30µs,
+    or that most are 5µs and a few are 50ms. The histogram shows the whole shape — and the
+    slow tail is usually what's hurting you.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> <code class="inl">nsecs</code> — reading a nanosecond clock</h2>
+    <p><code class="inl">nsecs</code> is a bpftrace <strong>builtin</strong>: a variable that's always
+    available inside a probe. It returns <strong>the current time in nanoseconds since the machine
+    booted</strong> — a steadily climbing integer. You don't set it; you just read it whenever a
+    probe fires.</p>
+
+    <p>On its own it's not very interesting. Its power is <em>relative</em>: read it at two moments,
+    and the difference is how much time passed between them, measured to the nanosecond.</p>
+
+    <pre><span class="c1"># Print the kernel's nanosecond clock once per second</span>
+sudo bpftrace -e <span class="y">'interval:s:1 { <span class="b">printf</span>(<span class="g">"now = %llu ns since boot\n"</span>, nsecs); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout key"><span class="h">💡 Nanoseconds, since boot</span>
+    1 second = 1,000,000,000 ns. 1 millisecond = 1,000,000 ns. 1 microsecond = 1,000 ns.
+    Because <code class="inl">nsecs</code> counts from boot (not from the epoch), only
+    <em>differences</em> are meaningful — and a difference is exactly what latency is.</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace language reference — builtins</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Storing the start time per-thread: <code class="inl">@start[tid] = nsecs</code></h2>
+    <p>When the entry probe fires, we record "the operation started <em>now</em>" by writing the
+    timestamp into a map. The line is exactly:</p>
+
+    <pre><span class="y">@start[tid] = nsecs;</span></pre>
+
+    <p>Two things are happening. <code class="inl">@start</code> is a <strong>map</strong> (the <code class="inl">@</code> prefix
+    means "global map"). The part in brackets, <code class="inl">[tid]</code>, is the <strong>key</strong>.
+    <code class="inl">tid</code> is another builtin: the <strong>thread ID</strong> of whatever is running right now.
+    So we're saying: "for this thread, remember the start time."</p>
+
+    <h3>Why key by <code class="inl">tid</code> and not, say, by process?</h3>
+    <p>Because <strong>many threads can be inside the same operation at the same time</strong>. Imagine
+    ten threads all calling <code class="inl">read()</code> at once. If you stored a single start time in a
+    plain variable, the tenth thread's timestamp would clobber the first nine, and every
+    subtraction would be garbage.</p>
+
+    <p>A thread, though, is strictly sequential: it enters the function, then returns from it,
+    then maybe enters again. It can't be in two places at once. So <code class="inl">tid</code> is the
+    perfect key — it gives <strong>each in-flight operation its own private slot</strong>, and the
+    return probe (running on that <em>same</em> thread) can look up exactly the right start time.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 230" role="img" aria-label="Three threads each writing their own start timestamp into separate slots of the @start map keyed by thread id">
+        <text x="60" y="30" font-size="13" fill="var(--ink)" font-weight="700">3 threads, all mid-read at once →</text>
+
+        <!-- three threads -->
+        <g>
+          <rect x="60"  y="50" width="150" height="40" rx="8" fill="var(--accent)" fill-opacity="0.10" stroke="var(--accent)"/>
+          <text x="135" y="75" font-size="12.5" fill="var(--ink)" text-anchor="middle">thread tid=1842</text>
+          <rect x="60"  y="100" width="150" height="40" rx="8" fill="var(--accent)" fill-opacity="0.10" stroke="var(--accent)"/>
+          <text x="135" y="125" font-size="12.5" fill="var(--ink)" text-anchor="middle">thread tid=1907</text>
+          <rect x="60"  y="150" width="150" height="40" rx="8" fill="var(--accent)" fill-opacity="0.10" stroke="var(--accent)"/>
+          <text x="135" y="175" font-size="12.5" fill="var(--ink)" text-anchor="middle">thread tid=2055</text>
+        </g>
+
+        <!-- arrows into the map -->
+        <defs>
+          <marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent-2)"/>
+          </marker>
+        </defs>
+        <path d="M210,70  L470,80"  fill="none" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#arr3)"/>
+        <path d="M210,120 L470,120" fill="none" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#arr3)"/>
+        <path d="M210,170 L470,160" fill="none" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#arr3)"/>
+
+        <!-- the map -->
+        <rect x="480" y="50" width="280" height="140" rx="10" fill="var(--panel)" stroke="var(--accent)" stroke-width="1.5"/>
+        <text x="620" y="44" font-size="13" fill="var(--accent)" text-anchor="middle" font-weight="700">@start  (one slot per tid)</text>
+        <line x1="620" y1="60" x2="620" y2="180" stroke="var(--line)"/>
+        <text x="500" y="88"  font-size="12.5" fill="var(--ink)">[1842]</text><text x="640" y="88"  font-size="12.5" fill="var(--muted)">→ 50000100 ns</text>
+        <text x="500" y="128" font-size="12.5" fill="var(--ink)">[1907]</text><text x="640" y="128" font-size="12.5" fill="var(--muted)">→ 50000420 ns</text>
+        <text x="500" y="168" font-size="12.5" fill="var(--ink)">[2055]</text><text x="640" y="168" font-size="12.5" fill="var(--muted)">→ 50000900 ns</text>
+      </svg>
+      <figcaption>Keying by <code>tid</code> gives every concurrent operation its own slot, so timestamps never collide.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The matching RETURN probe — and computing the delta</h2>
+    <p>Every kernel function you can hook on the way <em>in</em> with a <strong>kprobe</strong>, you can
+    also hook on the way <em>out</em> with a <strong>kretprobe</strong> (the "ret" = return). They come
+    as a pair, pointing at the same function:</p>
+
+    <div class="tablewrap"><table>
+      <thead><tr><th>Probe</th><th>Fires when…</th><th>Role in the pattern</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inl">kprobe:vfs_read</code></td><td>the kernel <em>enters</em> <code class="inl">vfs_read</code></td><td>save the start time</td></tr>
+        <tr><td><code class="inl">kretprobe:vfs_read</code></td><td>the kernel <em>returns</em> from <code class="inl">vfs_read</code></td><td>compute &amp; record latency</td></tr>
+      </tbody>
+    </table></div>
+
+    <p>At the return probe, the thread that's running is the <em>same</em> one that entered, so
+    <code class="inl">tid</code> still points at the right slot. The latency is just:</p>
+
+    <pre><span class="y">nsecs - @start[tid]</span>   <span class="c1"># time-now minus time-at-entry = elapsed ns</span></pre>
+
+    <div class="callout mission"><span class="h">🎯 Tracepoints work too</span>
+    For some operations you'll prefer a <strong>tracepoint</strong> entry→exit pair (e.g.
+    <code class="inl">tracepoint:syscalls:sys_enter_read</code> →
+    <code class="inl">sys_exit_read</code>) instead of kprobe/kretprobe. Tracepoints are stable,
+    documented hook points and survive kernel upgrades; kprobes can attach to <em>any</em>
+    function but the names can shift between kernel versions. The <strong>timing pattern is
+    identical</strong> either way — entry stores, exit subtracts.</div>
+    <p class="cite">Source: <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace one-liner tutorial — Lesson 7 (timing vfs_read)</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Cleanup &amp; guarding — don't trust a half-told story</h2>
+
+    <h3>Guard: only subtract if we actually saw the start</h3>
+    <p>bpftrace may attach your probes <em>mid-operation</em>. A thread could be sitting
+    <em>inside</em> <code class="inl">vfs_read</code> already when you start tracing — so the return fires,
+    but there's no matching <code class="inl">@start[tid]</code>. Reading a missing key gives
+    <code class="inl">0</code>, and <code class="inl">nsecs - 0</code> would record a fake latency of "billions of
+    nanoseconds." We guard against that with a <strong>predicate</strong> — the <code class="inl">/…/</code> filter
+    after the probe — so the action runs <em>only</em> when a start exists:</p>
+
+    <pre><span class="b">kretprobe</span>:vfs_read <span class="y">/@start[tid]/</span> {
+    <span class="c1"># only runs when @start[tid] is non-zero (a real start was seen)</span>
+}</pre>
+
+    <h3>Cleanup: delete the slot after you use it</h3>
+    <p>Once you've computed the latency, that thread's start time is spent — leave it in the
+    map and it just leaks memory. Remove it with <code class="inl">delete()</code>:</p>
+
+    <pre><span class="b">delete</span>(@start, tid);   <span class="c1"># current syntax: delete(map, key)</span></pre>
+
+    <div class="callout warn"><span class="h">⚠ A syntax note that bites people</span>
+    Older bpftrace wrote <code class="inl">delete(@start[tid])</code>. Current bpftrace prefers the
+    two-argument form <code class="inl">delete(@start, tid)</code> and flags the old one as deprecated.
+    Both still work on 0.21-era builds; write the new form so your scripts don't warn on
+    fresh installs. The guard <code class="inl">/@start[tid]/</code> + the <code class="inl">delete</code> together keep the
+    map small and the numbers honest.</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/stdlib.md" target="_blank" rel="noopener">bpftrace standard library — <code>delete()</code></a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Build the latency HISTOGRAM with <code class="inl">hist()</code></h2>
+    <p>Instead of printing one line per read (thousands per second — useless), we feed every
+    delta into <code class="inl">hist()</code>. It builds a <strong>power-of-2 (log2) histogram</strong> entirely
+    <em>in the kernel</em>: each value is dropped into a bucket like <code class="inl">[4K, 8K)</code>, and only
+    the bucket counts are sent up to user space. That's why it's cheap enough to leave
+    running in production.</p>
+
+    <pre><span class="y">@ns = hist(nsecs - @start[tid]);</span>   <span class="c1"># bucket the elapsed time</span></pre>
+
+    <p>Putting all five steps together — the complete, copy-later script that times every
+    <code class="inl">read()</code> reaching the VFS layer:</p>
+
+    <pre><span class="c1">#!/usr/bin/env bpftrace</span>
+<span class="c1"># read-latency.bt — distribution of vfs_read durations, in microseconds</span>
+
+<span class="b">BEGIN</span> {
+    <span class="b">printf</span>(<span class="g">"Tracing vfs_read latency. Hit Ctrl-C to end.\n"</span>);
+}
+
+<span class="b">kprobe</span>:vfs_read {
+    <span class="y">@start[tid] = nsecs;</span>              <span class="c1"># ① entry: remember start, per thread</span>
+}
+
+<span class="b">kretprobe</span>:vfs_read <span class="y">/@start[tid]/</span> {       <span class="c1"># ② guard: only if we saw the start</span>
+    <span class="y">@us = hist((nsecs - @start[tid]) / 1000);</span>  <span class="c1"># ③ delta → µs → histogram</span>
+    <span class="b">delete</span>(@start, tid);              <span class="c1"># ④ cleanup this thread's slot</span>
+}
+
+<span class="b">END</span> {
+    <span class="b">clear</span>(@start);                     <span class="c1"># tidy: drop any half-finished entries</span>
+}</pre>
+    <div class="runlater">Linux-only — save as <code class="inl">read-latency.bt</code> and run <code class="inl">sudo bpftrace read-latency.bt</code> later on a Linux box.</div>
+
+    <p>On Ctrl-C, bpftrace auto-prints every map. A realistic <code class="inl">@us</code> histogram looks
+    like this (left = latency bucket in µs, middle = count, right = ASCII bar):</p>
+
+    <pre><span class="c1">@us:</span>
+[1]                   24 |@@@                                                 |
+[2, 4)               418 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[4, 8)               392 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     |
+[8, 16)              153 |@@@@@@@@@@@@@@@@@@                                  |
+[16, 32)              41 |@@@@@                                               |
+[32, 64)              12 |@                                                   |
+[64, 128)              3 |                                                    |
+[128, 256)             0 |                                                    |
+[256, 512)             0 |                                                    |
+[512, 1K)              2 |                                                    |
+[1K, 2K)               7 |                                                    |</pre>
+
+    <div class="callout key"><span class="h">💡 What hist() saved you</span>
+    Those ~1,000 reads never crossed into user space individually. The kernel counted them
+    into 11 buckets; only 11 little numbers came up. <strong>That</strong> is in-kernel aggregation
+    (Lesson 5) doing the heavy lifting — the difference between "negligible overhead" and
+    "drowning in events."</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/stdlib.md" target="_blank" rel="noopener">bpftrace stdlib — <code>hist()</code> (log2 buckets)</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Interpreting the histogram — read the <em>shape</em></h2>
+    <p>The whole point of a distribution is that its <strong>shape</strong> tells a story an average can't.
+    Three things to look for:</p>
+
+    <div class="cards">
+      <div class="card"><h4>The bulk (the mode)</h4><p>Where's the tallest bar? In our run it's <code class="inl">[2, 4)</code> µs — the typical read is a few microseconds. That's your "normal."</p></div>
+      <div class="card"><h4>The tail</h4><p>Anything far to the right with a non-zero count. Here, those <code class="inl">[1K, 2K)</code> µs reads (1–2 ms!) are <b>hundreds of times slower</b> than typical — that's where a user-felt hiccup hides.</p></div>
+      <div class="card"><h4>Bimodality</h4><p>Two separate humps = two different code paths. Classic for disk I/O: a fast hump (cache hit) and a slow hump (cache miss). One number could never reveal that.</p></div>
+    </div>
+
+    <div class="callout mission"><span class="h">🎯 This is the debugging win</span>
+    A bug report says "the app feels laggy sometimes." The average latency looks fine, so
+    logs and dashboards shrug. The histogram instantly shows a fat tail at 1–2 ms — now you
+    know <em>some</em> reads are pathological, roughly how often, and how bad. You went from
+    "feels slow" to a measured, reproducible target, without touching the app.</div>
+
+    <div class="callout warn"><span class="h">⚠ Log2 buckets are coarse on purpose</span>
+    A bucket like <code class="inl">[512, 1K)</code> lumps everything from 512µs to 1023µs together —
+    great for spotting <em>orders of magnitude</em>, not for "was it 600 or 700µs." That
+    coarseness is exactly what makes it cheap. Need finer detail? <code class="inl">lhist()</code> (linear
+    histogram) lets you set explicit bucket ranges.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Variants — same pattern, new questions</h2>
+    <p>Once the entry/return/subtract/histogram shape is in your head, you bend it to ask
+    sharper questions just by changing the map key or the aggregator:</p>
+
+    <h3>Per-process latency (which program is slow?)</h3>
+    <p>Add <code class="inl">comm</code> (the process name) as a histogram key, so you get one histogram
+    <em>per program</em>:</p>
+    <pre><span class="b">kretprobe</span>:vfs_read <span class="y">/@start[tid]/</span> {
+    <span class="y">@us[comm] = hist((nsecs - @start[tid]) / 1000);</span>  <span class="c1"># split by process</span>
+    <span class="b">delete</span>(@start, tid);
+}</pre>
+    <div class="runlater">Linux-only — try later with <code class="inl">sudo bpftrace</code>.</div>
+
+    <h3>Count by bucket instead of a chart</h3>
+    <p>Don't need the visual? Just tally how many landed in each rough band with
+    <code class="inl">count()</code> keyed by a computed bucket — or keep <code class="inl">hist()</code> and read the count
+    column. Same data, leaner output.</p>
+
+    <div class="callout key"><span class="h">💡 The canonical real tool: <code class="inl">biolatency</code></span>
+    Brendan Gregg's <code class="inl">biolatency</code> times <strong>block-device I/O</strong> with this exact pattern,
+    but it can't key by <code class="inl">tid</code> — a disk request is <em>issued</em> by one thread and
+    <em>completed</em> later by an interrupt on a different thread. So it keys the start map by the
+    request's <strong>sector</strong> instead (<code class="inl">@start[args.sector] = nsecs</code>), then subtracts on the
+    completion tracepoint. <b>The four steps are identical</b> — only the key changes to whatever
+    uniquely identifies one in-flight operation.</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/tools/biolatency.bt" target="_blank" rel="noopener">bpftrace <code>tools/biolatency.bt</code></a> · <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — <em>BPF Performance Tools</em></a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">09</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="2">
+        <div class="stem">Why do we key the start-time map by <code class="inl">tid</code> (thread id) rather than by process or a single global variable?</div>
+        <button class="opt">Because threads are faster than processes</button>
+        <button class="opt">Because <code class="inl">tid</code> is the only key bpftrace allows in a map</button>
+        <button class="opt">Because many threads can be inside the operation at once; a per-thread slot keeps their start times from colliding</button>
+        <button class="opt">Because the return probe runs on a different thread, so we need the process id to find it</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">Which probe pair times a <em>kernel function</em> like <code class="inl">vfs_read</code> from entry to return?</div>
+        <button class="opt"><code class="inl">tracepoint</code> on entry and <code class="inl">interval</code> on exit</button>
+        <button class="opt"><code class="inl">kprobe:vfs_read</code> (entry) and <code class="inl">kretprobe:vfs_read</code> (return)</button>
+        <button class="opt">Two <code class="inl">kprobe:vfs_read</code> probes, one after the other</button>
+        <button class="opt"><code class="inl">uprobe</code> and <code class="inl">uretprobe</code> on <code class="inl">vfs_read</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">What does <code class="inl">hist(nsecs - @start[tid])</code> give you when you stop tracing?</div>
+        <button class="opt">A power-of-2 distribution of the latencies — buckets like <code class="inl">[2, 4)</code> with counts and a bar chart</button>
+        <button class="opt">The single average latency across all operations</button>
+        <button class="opt">One printed line for every operation that occurred</button>
+        <button class="opt">The exact start timestamp of the slowest operation</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">Why guard the return probe with <code class="inl">/@start[tid]/</code>?</div>
+        <button class="opt">To make the histogram print faster</button>
+        <button class="opt">To limit tracing to one thread at a time</button>
+        <button class="opt">Because if tracing started mid-operation there's no stored start; a missing key reads as 0, so <code class="inl">nsecs - 0</code> would record a huge bogus latency</button>
+        <button class="opt">Because <code class="inl">delete()</code> requires a predicate to be present</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">10</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What does the <code class="inl">nsecs</code> builtin return?</summary><div class="a">A: The current time in <b>nanoseconds since boot</b> — a steadily climbing integer. Only differences between two reads are meaningful, and a difference is exactly a duration/latency.</div></details>
+
+    <details class="fc"><summary>Q: What does <code class="inl">@start[tid] = nsecs</code> do, and why key by <code class="inl">tid</code>?</summary><div class="a">A: It stores the entry timestamp in the map <code class="inl">@start</code> under the key <code class="inl">tid</code> (the current thread id). Keying by thread gives every concurrent in-flight operation its own private slot, so simultaneous operations never overwrite each other's start time.</div></details>
+
+    <details class="fc"><summary>Q: How do <code class="inl">kprobe</code> and <code class="inl">kretprobe</code> pair up?</summary><div class="a">A: They point at the same kernel function. <code class="inl">kprobe:fn</code> fires on <b>entry</b> (store the start), <code class="inl">kretprobe:fn</code> fires on <b>return</b> (compute the latency). The return runs on the same thread, so <code class="inl">tid</code> still finds the right start slot. (A tracepoint enter/exit pair works the same way.)</div></details>
+
+    <details class="fc"><summary>Q: How is the latency delta computed at the return probe?</summary><div class="a">A: <code class="inl">nsecs - @start[tid]</code> — current time minus the stored entry time = elapsed nanoseconds. Divide by 1000 for microseconds, by 1e6 for milliseconds.</div></details>
+
+    <details class="fc"><summary>Q: What does <code class="inl">hist()</code> of a latency value produce, and why is it cheap?</summary><div class="a">A: A <b>power-of-2 (log2) histogram</b> — each delta is counted into a bucket like <code class="inl">[4, 8)</code>. The bucketing happens <b>in the kernel</b>; only the small bucket counts are sent to user space, so it adds almost no overhead even at high event rates.</div></details>
+
+    <details class="fc"><summary>Q: When reading a latency histogram, what does "the tail" mean and why care?</summary><div class="a">A: The tail is the far-right buckets with non-zero counts — the rare, much-slower operations. Averages hide it, but the tail is usually what users actually feel (the laggy 1-in-1000 request). A second separate hump (bimodal) means two code paths, e.g. cache hit vs. cache miss.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Curious where this pattern breaks, or how to adapt it? Ask me things like
+    <em>"why can't biolatency key by tid like the read example does?"</em> or
+    <em>"how would I time a userland function in my own app instead of a kernel one?"</em>
+    or <em>"what's the difference between hist() and lhist(), and when would I want linear buckets?"</em></p>
+  </div>
+
+  <nav class="next">
+    <a href="0005-maps-and-aggregation.html"><span class="dir">↩ Previous</span><span class="ttl">Maps &amp; In-Kernel Aggregation</span></a>
+    <a href="0007-cpu-profiling-and-flame-graphs.html"><span class="dir">Up next →</span><span class="ttl">CPU Profiling &amp; Flame Graphs</span></a>
+  </nav>
+
+  <footer>
+    eBPF Course · Lesson 6 · grounded in
+    <a href="https://ebpf.io/" target="_blank" rel="noopener">ebpf.io</a>,
+    <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg</a>,
+    <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a> ·
+    see <a href="/courses/ebpf/#resources">RESOURCES.md</a> ·
+    <a href="../reference/ebpf-glossary.html">Glossary</a> ·
+    <a href="../reference/bpftrace-cheatsheet.html">bpftrace cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  // Tight feedback loop for the self-check quiz.
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 9 · Running It Safely in Production</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Lesson 9</div>
+    <h1>Running It Safely in Production</h1>
+    <p class="sub">Use eBPF tracing on a live system with confidence — manage overhead, meet the requirements, and know its limits.</p>
+    <span class="missiontag">🎯 Trace the real production box — without being the outage</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>eBPF tracing is safe <em>by design</em> — but it isn't <em>free</em>. Manage probe overhead, mind the kernel and permission requirements, and know the handful of things it genuinely can't see.</p>
+  </div>
+
+  <!-- 01 WHY SAFE -->
+  <section>
+    <h2><span class="num">01</span> Why tracing is read-mostly &amp; safe</h2>
+    <p class="lead">You've spent eight lessons learning to ask the running kernel questions. The natural next worry for an app developer is: <strong>"Can I really point this at the production box without taking it down?"</strong> The honest answer is <strong>yes, with care</strong> — and this lesson is the "with care."</p>
+
+    <p>Start with why it's safe at all. Recall the <strong>verifier</strong> from Lesson 1: before <em>any</em> eBPF program runs, the kernel statically proves it will terminate, never reads uninitialized memory, and never touches memory out of bounds. A program that fails verification is <strong>rejected at load time</strong> — it never gets to run. There is no eBPF equivalent of "a bad tracer segfaulted the kernel." As the official docs put it, the verifier ensures programs "always run to completion" and "may not access memory out of bounds."</p>
+
+    <p>The second reason is the nature of <strong>observability</strong> programs specifically. The tracing tools you've met — <code class="inl">opensnoop</code>, <code class="inl">execsnoop</code>, your own <code class="inl">bpftrace</code> one-liners — are <strong>read-mostly</strong>. They attach to an event, read some state (a syscall argument, a timestamp, a stack), and write a number into a map. They don't <em>change</em> what the kernel does. They observe.</p>
+
+    <div class="callout key"><span class="h">💡 Two different verbs</span>eBPF can be used to <strong>observe</strong> (tracing — read state, count, time) or to <strong>act</strong> (drop a packet, block a syscall — networking/security, out of scope for this course). This whole course lives in the <em>observe</em> half, which is exactly the half that is safe to run live.</div>
+
+    <p class="cite">Source: <a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io — What is eBPF? (the verifier &amp; sandboxing)</a> · <a href="https://docs.kernel.org/bpf/verifier.html" target="_blank" rel="noopener">docs.kernel.org — the BPF verifier</a></p>
+  </section>
+
+  <!-- 02 WHERE OVERHEAD COMES FROM -->
+  <section>
+    <h2><span class="num">02</span> Where overhead actually comes from</h2>
+    <p>"Safe" and "free" are different claims. Every time your probe fires, the kernel runs a little extra code. One probe firing a hundred times a second is invisible. The <strong>same probe firing two million times a second</strong> is a tax you can feel. Overhead is driven almost entirely by one thing: <strong>how often the probe fires × how much it does each time.</strong></p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>① Event frequency</h4>
+        <p class="truth">The big one. A probe on a quiet path (process exec, file open) fires rarely. A probe on a <b>hot path</b> — the scheduler context-switch, a per-packet hook, a malloc wrapper — can fire millions of times a second. Cost scales with the firing rate.</p>
+      </div>
+      <div class="card">
+        <h4>② Per-event output</h4>
+        <p class="truth">Printing one line <em>per event</em> to user space (a <b>perf buffer</b>) means crossing the kernel/user boundary constantly. On a hot path that flood alone can dwarf the probe's real work. (Tie back to Lesson 5: this is the <code class="inl">printf</code>-per-event trap.)</p>
+      </div>
+      <div class="card">
+        <h4>③ uprobe cost</h4>
+        <p class="truth">User-space probes (<b>uprobes</b>) are pricier per hit than kernel probes — each one is a trap into and back out of the kernel. Fine for a function called occasionally; expensive on something called in a tight loop.</p>
+      </div>
+      <div class="card">
+        <h4>④ Copying work</h4>
+        <p class="truth">Grabbing a <b>string</b> (a filename, a query) or walking a <b>stack trace</b> on every event is real work — copying bytes, unwinding frames. Cheap once; costly a million times. Capture it only when you need it.</p>
+      </div>
+    </div>
+
+    <div class="callout warn"><span class="h">⚠ The phrase to remember</span>There is no such thing as "an expensive probe" in the abstract — there are <strong>expensive places to put a probe</strong> and <strong>expensive things to do on each hit</strong>. Same one-liner is free on <code class="inl">execve</code> and ruinous on the scheduler.</div>
+
+    <p class="cite">Source: <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — Linux eBPF Tracing Tools</a> (per-event perf output vs. summary maps).</p>
+  </section>
+
+  <!-- 03 THE GOLDEN RULE -->
+  <section>
+    <h2><span class="num">03</span> The golden rule: aggregate in the kernel</h2>
+    <p>Here is the single most important production habit, and it's the lesson Brendan Gregg repeats throughout his tools: <strong>do the math inside the kernel and ship out a summary, not a stream.</strong></p>
+
+    <p>Instead of sending one line per event to user space and counting them there, you keep a <strong>map</strong> (a histogram, a counter) in the kernel, update it on each event, and let your tool read the <em>finished summary</em> periodically. A million events become a handful of bucket counts. In Gregg's words, "the summarization is all done in kernel context, for efficiency."</p>
+
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Approach</th><th>What crosses to user space</th><th>Cost on a hot path</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Per-event</strong> — print/perf-buffer every hit</td>
+          <td>One record <em>per event</em> (millions/sec)</td>
+          <td><span class="no">Expensive</span> — boundary crossings flood the system</td>
+        </tr>
+        <tr>
+          <td><strong>In-kernel aggregate</strong> — a map / histogram, read on a timer</td>
+          <td>One small summary <em>per second</em> (or on exit)</td>
+          <td><span class="yes">Cheap</span> — the firehose stays in the kernel</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>In <code class="inl">bpftrace</code> this distinction is right there in the syntax. The right-hand version below builds the histogram in-kernel and only prints it when you hit Ctrl-C:</p>
+
+    <pre><span class="c1"># ✗ per-event: one printed line for EVERY read syscall — a flood on a busy box</span>
+bpftrace <span class="y">-e 'tracepoint:syscalls:sys_enter_read { <span class="b">printf</span>(<span class="g">"%s %d\n"</span>, comm, args.count); }'</span>
+
+<span class="c1"># ✓ in-kernel aggregate: build a histogram of read sizes, print ONCE at exit</span>
+bpftrace <span class="y">-e 'tracepoint:syscalls:sys_enter_read { @bytes = <span class="b">hist</span>(args.count); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <p>Three more moves keep you on the cheap side:</p>
+    <ul>
+      <li><strong>Filter early with a predicate.</strong> A <code class="inl">/comm == "nginx"/</code> filter runs <em>inside</em> the probe, so events you don't care about are dropped before any expensive work. Filter first, then do work.</li>
+      <li><strong>Don't <code class="inl">printf</code> on the hot path.</strong> If you must see individual events, scope them so the interesting ones are rare (filter to one PID, one filename).</li>
+      <li><strong>Prefer sampling over tracing for hot paths.</strong> To find <em>where CPU goes</em>, don't trace every function — <strong>sample</strong> the stack at a fixed low rate (e.g. 99&nbsp;Hz) with <code class="inl">profile</code>. You get the picture at a tiny, <em>fixed</em> cost that doesn't grow with workload.</li>
+    </ul>
+
+    <pre><span class="c1"># Sampling, not tracing: 99 stacks/sec per CPU — fixed cost, ideal for hot CPU paths</span>
+bpftrace <span class="y">-e 'profile:hz:99 { @[kstack] = <span class="b">count</span>(); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout key"><span class="h">💡 Why 99 and not 100?</span>Brendan Gregg samples at <strong>99 Hz</strong> on purpose: an odd, off-round rate avoids "lockstep" — sampling in phase with something that ticks at exactly 100 Hz, which would bias your results.</div>
+
+    <p class="cite">Source: <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — eBPF tools &amp; in-kernel summarization</a> · <a href="https://www.brendangregg.com/perf.html" target="_blank" rel="noopener">Gregg on sampling profiles (99 Hz)</a>.</p>
+  </section>
+
+  <!-- THE OVERHEAD SPECTRUM DIAGRAM -->
+  <section>
+    <h2><span class="num">04</span> The overhead spectrum — and how to move left</h2>
+    <p>Every tracing decision lands somewhere on a dial. The left end is cheap enough to leave running on production all day; the right end can perturb the very thing you're measuring. The good news: a few deliberate choices slide you leftward.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 360" role="img" aria-label="An overhead spectrum dial from cheap on the left to expensive on the right, annotated with the techniques that move a tracing workload leftward toward cheap">
+        <defs>
+          <linearGradient id="spect" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="var(--accent-2)"/>
+            <stop offset="55%" stop-color="#ffd43b"/>
+            <stop offset="100%" stop-color="var(--warn)"/>
+          </linearGradient>
+          <marker id="lhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent-2)"/>
+          </marker>
+        </defs>
+
+        <!-- the dial bar -->
+        <rect x="40" y="60" width="740" height="34" rx="17" fill="url(#spect)"/>
+        <text x="52" y="44" font-size="14" font-weight="700" fill="var(--accent-2)">CHEAP — safe to leave running</text>
+        <text x="768" y="44" font-size="14" font-weight="700" fill="var(--warn)" text-anchor="end">EXPENSIVE — can perturb the system</text>
+
+        <!-- ticks / example positions -->
+        <g font-size="11.5" fill="var(--ink)">
+          <!-- cheap end markers -->
+          <line x1="110" y1="56" x2="110" y2="98" stroke="var(--ink)" stroke-width="1.4"/>
+          <text x="110" y="120" text-anchor="middle">99 Hz profiling</text>
+          <text x="110" y="135" text-anchor="middle" fill="var(--muted)">fixed cost</text>
+
+          <line x1="250" y1="56" x2="250" y2="98" stroke="var(--ink)" stroke-width="1.4"/>
+          <text x="250" y="120" text-anchor="middle">Aggregated</text>
+          <text x="250" y="135" text-anchor="middle">tracepoints</text>
+
+          <line x1="410" y1="56" x2="410" y2="98" stroke="var(--ink)" stroke-width="1.4"/>
+          <text x="410" y="120" text-anchor="middle">Well-filtered</text>
+          <text x="410" y="135" text-anchor="middle">probe (predicate)</text>
+
+          <line x1="580" y1="56" x2="580" y2="98" stroke="var(--ink)" stroke-width="1.4"/>
+          <text x="580" y="120" text-anchor="middle">Per-event print</text>
+          <text x="580" y="135" text-anchor="middle" fill="var(--muted)">on busy path</text>
+
+          <line x1="730" y1="56" x2="730" y2="98" stroke="var(--warn)" stroke-width="1.6"/>
+          <text x="730" y="120" text-anchor="middle" fill="var(--warn)">Unfiltered uprobe,</text>
+          <text x="730" y="135" text-anchor="middle" fill="var(--warn)">hot path + stacks</text>
+        </g>
+
+        <!-- "move left" arrow -->
+        <line x1="600" y1="185" x2="120" y2="185" stroke="var(--accent-2)" stroke-width="2.4" marker-end="url(#lhead)"/>
+        <text x="360" y="177" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent-2)">these moves slide you LEFT (cheaper)</text>
+
+        <!-- techniques box -->
+        <rect x="40" y="205" width="740" height="130" rx="12" fill="#f0fbf6" stroke="#b6ecd8"/>
+        <g font-size="12.5" fill="var(--ink)">
+          <text x="60" y="232" font-weight="700" fill="var(--accent-2)">To move left:</text>
+          <text x="60" y="255">• Aggregate in-kernel (maps/histograms) instead of per-event output</text>
+          <text x="60" y="277">• Add a predicate to filter early — drop uninteresting events in the probe</text>
+          <text x="60" y="299">• Sample (profile) instead of trace when chasing a hot CPU path</text>
+          <text x="60" y="321">• Avoid hot-path probe points; skip string/stack copies unless you need them</text>
+        </g>
+      </svg>
+      <figcaption>The overhead dial: green = cheap (aggregated, sampled, filtered), orange = expensive (unfiltered per-event tracing of hot paths with string/stack copies). The same one-liner can sit at either end depending on these four choices.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 05 EVENT FLOODS -->
+  <section>
+    <h2><span class="num">05</span> Bounding event floods</h2>
+    <p>The failure mode that actually bites people isn't a crash — it's a <strong>flood</strong>. You attach a printing one-liner to a busy path, and suddenly your terminal (and the perf buffer feeding it) can't keep up. Two things happen: your output scrolls uselessly, and the kernel starts <strong>dropping events</strong> because the buffer is full. bpftrace will even warn you it lost events.</p>
+
+    <p>You bound a flood the same way you cut overhead — by <strong>reducing how many records leave the kernel</strong>:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>Predicate (filter)</h4>
+        <p class="truth">Scope the probe to what matters: one process, one file, slow cases only. Fewer events fire the action at all.</p>
+      </div>
+      <div class="card">
+        <h4>Aggregate</h4>
+        <p class="truth">Count or histogram in-kernel and print a summary. A flood of events collapses to a few numbers.</p>
+      </div>
+      <div class="card">
+        <h4>Sample</h4>
+        <p class="truth">Take 1-in-N or a fixed-rate sample instead of every event. The picture survives; the volume doesn't.</p>
+      </div>
+    </div>
+
+    <pre><span class="c1"># Flood-prone: prints EVERY scheduler switch — a busy box drowns instantly</span>
+bpftrace <span class="y">-e 'tracepoint:sched:sched_switch { <span class="b">printf</span>(<span class="g">"%s\n"</span>, comm); }'</span>
+
+<span class="c1"># Bounded: predicate (one process) + aggregate (count), summary at exit only</span>
+bpftrace <span class="y">-e 'tracepoint:sched:sched_switch /comm == <span class="g">"nginx"</span>/ { @[comm] = <span class="b">count</span>(); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout key"><span class="h">💡 Dropped events are a signal, not just noise</span>If bpftrace tells you it lost events, that's the tool warning you the firehose is too big for the channel — tighten the predicate, switch to an aggregate, or sample. Don't ignore it and trust the partial numbers.</div>
+  </section>
+
+  <!-- 06 REQUIREMENTS -->
+  <section>
+    <h2><span class="num">06</span> Requirements: kernel version, BTF &amp; CO-RE</h2>
+    <p>eBPF tracing is a <strong>kernel feature</strong>, so the kernel underneath you decides what you can do. There's no install-a-newer-eBPF; you get what your kernel ships.</p>
+
+    <h3>Kernel version</h3>
+    <p>Modern eBPF tracing wants a reasonably recent kernel. bpftrace runs on roughly <strong>4.9+</strong>, but the comfortable floor for the full toolkit is the <strong>5.x</strong> series, where the important pieces below are mainstream. Newer kernels keep adding probe types and builtins (e.g. richer attach points, BTF-typed tracepoints). Rule of thumb: <em>the older the kernel, the fewer probes and the more fiddly it gets.</em></p>
+
+    <h3>BTF and CO-RE — the portability story</h3>
+    <p><strong>BTF (BPF Type Format)</strong> is compact type information describing the kernel's own data structures — the layout of every struct, encoded in a space-efficient form the kernel can carry at runtime. When built with <code class="inl">CONFIG_DEBUG_INFO_BTF</code>, the kernel exposes its BTF at <code class="inl">/sys/kernel/btf/vmlinux</code>.</p>
+    <p>Why an app developer should care: BTF is what powers <strong>CO-RE (Compile Once – Run Everywhere)</strong>. Kernel struct layouts shift between versions, so historically a tracing tool had to compile against the <em>exact</em> kernel on each machine (the old BCC model, which dragged a compiler onto every host). With CO-RE, a program is compiled <strong>once</strong> with relocation hints, and the loader matches those hints against the <em>target kernel's</em> BTF at load time — adjusting field offsets so the same binary runs across many kernels, no on-box compiler needed.</p>
+
+    <div class="callout mission"><span class="h">🎯 What this buys you</span>BTF/CO-RE is why a modern tracing agent can be one small binary you drop onto a fleet of differently-versioned machines and have it "just work." For your bpftrace one-liners, BTF also means you can reference kernel struct fields by name and get readable output — without hand-copying kernel headers.</div>
+
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Capability</th><th>Needs a newer-ish kernel</th><th>Why it matters to you</th></tr></thead>
+      <tbody>
+        <tr><td>Basic kprobes / tracepoints</td><td>Old (4.x) is usually fine</td><td>Most "what's calling X / what's slow" one-liners work</td></tr>
+        <tr><td><strong>BTF</strong> exposed by the kernel</td><td>5.x mainstream (<code class="inl">CONFIG_DEBUG_INFO_BTF</code>)</td><td>Readable struct fields; foundation for CO-RE</td></tr>
+        <tr><td><strong>CO-RE</strong> portable binaries</td><td>5.x + BTF</td><td>One agent binary across many kernels</td></tr>
+        <tr><td>Newest probe types &amp; helpers</td><td>Whatever added them</td><td>Some advanced tracing simply isn't there on old kernels</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <pre><span class="c1"># Quick checks on a Linux box: kernel version, and whether BTF is present</span>
+<span class="b">uname</span> -r
+<span class="b">ls</span> /sys/kernel/btf/vmlinux   <span class="c1"># exists ⇒ kernel BTF available (CO-RE-ready)</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (the BTF check needs no sudo; tracing does).</div>
+
+    <p class="cite">Source: <a href="https://docs.kernel.org/bpf/btf.html" target="_blank" rel="noopener">docs.kernel.org — BPF Type Format (BTF)</a> · <a href="https://nakryiko.com/posts/bpf-portability-and-co-re/" target="_blank" rel="noopener">BPF CO-RE: portability across kernels</a> · <a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io</a>.</p>
+  </section>
+
+  <!-- 07 PERMISSIONS -->
+  <section>
+    <h2><span class="num">07</span> Permissions: who is allowed to trace</h2>
+    <p>Loading an eBPF program is a privileged operation — the kernel won't let just any process attach code to itself. For an app developer, this is the part most likely to surprise you, because "it works on my laptop as root" hides what's really required.</p>
+
+    <h3>The capabilities</h3>
+    <ul>
+      <li><strong>root / <code class="inl">CAP_SYS_ADMIN</code></strong> — the classic, blunt answer. Historically you needed full admin rights to load any BPF program. <code class="inl">sudo bpftrace …</code> is this path, and it's why every command in this course is prefixed with sudo.</li>
+      <li><strong><code class="inl">CAP_BPF</code> + <code class="inl">CAP_PERFMON</code></strong> — since <strong>Linux 5.8</strong>, BPF privileges were split into finer capabilities. To load <em>tracing</em> programs (tracepoints, kprobes, perf events), a process needs <strong><code class="inl">CAP_BPF</code> to use the bpf() syscall and create maps, plus <code class="inl">CAP_PERFMON</code> for the perf/tracing attach points</strong>. This lets a tracing agent run with far less than full root.</li>
+      <li><strong><code class="inl">CAP_NET_ADMIN</code></strong> — used <em>instead</em> of CAP_PERFMON for networking programs. Out of scope for us (observability), but worth recognizing: the required capability depends on <em>what kind</em> of program you load.</li>
+    </ul>
+
+    <div class="callout warn"><span class="h">⚠ Unprivileged eBPF is disabled by default</span>You may have heard eBPF can run "unprivileged." In practice, <strong>don't count on it.</strong> Unprivileged BPF is heavily restricted, and major distributions (Ubuntu, SUSE, and others) ship with it <strong>turned off by default</strong> for security hardening — controlled by the <code class="inl">kernel.unprivileged_bpf_disabled</code> sysctl. Assume you need privileges (root, or CAP_BPF+CAP_PERFMON) to trace.</div>
+
+    <h3>Containers &amp; Kubernetes</h3>
+    <p>This is where app developers get tripped up. There is <strong>one kernel</strong>, shared by the host and every container on it — containers are isolated processes, not separate kernels. So eBPF tracing reaches across that boundary, but <em>loading</em> a probe still needs host-level privilege:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>Shared host kernel</h4>
+        <p class="truth">A probe loaded from a pod sees the <b>whole host</b> — all processes, all containers. Powerful, and exactly why it needs privilege.</p>
+      </div>
+      <div class="card">
+        <h4>Privileged / capabilities</h4>
+        <p class="truth">A pod that traces typically needs to be <b>privileged</b> (or granted CAP_BPF + CAP_PERFMON / CAP_SYS_ADMIN) — ordinary pods can't load probes.</p>
+      </div>
+      <div class="card">
+        <h4>hostPID &amp; visibility</h4>
+        <p class="truth">To map kernel events back to the right processes you often need <b>hostPID: true</b> so the pod sees host PIDs, not just its own.</p>
+      </div>
+      <div class="card">
+        <h4>Node-level agent</h4>
+        <p class="truth">The clean pattern: a <b>DaemonSet</b> — one privileged tracing agent per node — rather than privilege scattered across app pods.</p>
+      </div>
+    </div>
+
+    <p class="cite">Source: <a href="https://docs.ebpf.io/linux/concepts/" target="_blank" rel="noopener">eBPF Docs — CAP_BPF / CAP_PERFMON (Linux 5.8)</a> · <a href="https://lwn.net/Articles/820560/" target="_blank" rel="noopener">LWN — Introducing CAP_BPF</a> · <a href="https://docs.kernel.org/admin-guide/sysctl/kernel.html" target="_blank" rel="noopener">docs.kernel.org — unprivileged_bpf_disabled sysctl</a>.</p>
+  </section>
+
+  <!-- 08 WHAT IT CANNOT DO -->
+  <section>
+    <h2><span class="num">08</span> What eBPF genuinely cannot do</h2>
+    <p>Confidence cuts both ways: knowing the limits keeps you from chasing answers eBPF can't give. None of these are bugs — they're inherent.</p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="myth">"If it runs, eBPF can trace it."</span>
+        <p class="truth"><b>No probe point, no visibility.</b> eBPF attaches to <em>existing</em> hooks — tracepoints, kprobes on kernel functions, uprobes on user functions. If there's no place to attach, there's nothing to see.</p>
+      </div>
+      <div class="card">
+        <span class="myth">"Every function is traceable."</span>
+        <p class="truth"><b>Inlined / optimized-away functions vanish.</b> The compiler may inline a small function into its caller — at runtime it isn't a separate function, so there's no entry point to probe.</p>
+      </div>
+      <div class="card">
+        <span class="myth">"Stack traces are always reliable."</span>
+        <p class="truth"><b>Missing symbols &amp; broken unwinding.</b> Stripped binaries, no frame pointers, or absent debug info give you addresses without names, or truncated stacks. The data's only as good as the symbols.</p>
+      </div>
+      <div class="card">
+        <span class="myth">"eBPF replaces my metrics &amp; logs."</span>
+        <p class="truth"><b>It complements them.</b> eBPF sees <em>system behavior</em> (syscalls, latency, scheduling) brilliantly, but it doesn't know your <em>business meaning</em> — "this is checkout step 3, for customer X." That's what app metrics, logs, and traces are for.</p>
+      </div>
+    </div>
+
+    <div class="callout key"><span class="h">💡 The right framing</span>eBPF is the <strong>x-ray of the running system</strong>: unmatched for "what is the kernel/process actually doing right now," with <em>no code change and no restart</em>. It sits <strong>alongside</strong> your application metrics, logs, and distributed traces — each answers questions the others can't.</div>
+
+    <p class="cite">Source: <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — eBPF tracing tools &amp; limitations</a> · <a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io — hooks &amp; program model</a>.</p>
+  </section>
+
+  <!-- 09 QUIZ -->
+  <section>
+    <h2><span class="num">09</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="2">
+        <div class="stem">You want to know where CPU time goes inside a process that runs a function millions of times per second. What's the cheapest, safest way to get the answer?</div>
+        <button class="opt">Put a uprobe on the hot function and printf the stack on every call</button>
+        <button class="opt">Trace every scheduler switch and print one line per switch</button>
+        <button class="opt">Sample stacks at a fixed low rate (e.g. profile at 99 Hz)</button>
+        <button class="opt">Disable the verifier so the probe runs faster</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">On a modern (5.8+) kernel, what is the minimal set of capabilities needed to load a <em>tracing</em> eBPF program without full root?</div>
+        <button class="opt">CAP_NET_ADMIN only</button>
+        <button class="opt">CAP_BPF plus CAP_PERFMON</button>
+        <button class="opt">No capabilities — unprivileged eBPF is on by default</button>
+        <button class="opt">CAP_BPF plus CAP_NET_ADMIN</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">Which of these is a genuine, inherent limitation of eBPF tracing?</div>
+        <button class="opt">It can crash the kernel if your probe has a bug</button>
+        <button class="opt">It can only run for 60 seconds at a time</button>
+        <button class="opt">It can only observe the container it runs in, never the host</button>
+        <button class="opt">A function that's been inlined by the compiler has no entry point to probe</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">Why is "build a histogram in a map and read it once per second" so much cheaper than "printf one line per event" on a busy path?</div>
+        <button class="opt">The firehose stays in the kernel; only a small summary crosses to user space</button>
+        <button class="opt">Histograms skip the verifier, so they load faster</button>
+        <button class="opt">printf is banned in eBPF, so it always errors out</button>
+        <button class="opt">Maps run on the GPU instead of the CPU</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section>
+    <h2><span class="num">10</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What two factors drive eBPF tracing overhead?</summary><div class="a">A: <b>How often the probe fires × how much it does each hit.</b> Hot paths (scheduler, per-packet, tight-loop uprobes) fire millions of times/sec; per-event output, string copies, and stack walks add per-hit cost. A probe is only "expensive" because of where it's placed and what it does.</div></details>
+
+    <details class="fc"><summary>Q: What's the golden rule for cheap, production-safe tracing?</summary><div class="a">A: <b>Aggregate in the kernel.</b> Keep a map/histogram updated on each event and ship out a periodic summary — instead of one record per event. A million events collapse to a few bucket counts; the firehose never crosses to user space. Also: filter early with predicates, and prefer sampling over tracing for hot paths.</div></details>
+
+    <details class="fc"><summary>Q: Since Linux 5.8, which capabilities let you load a tracing program without root?</summary><div class="a">A: <b>CAP_BPF + CAP_PERFMON.</b> CAP_BPF allows the bpf() syscall and creating maps; CAP_PERFMON allows attaching to tracing/perf points (tracepoints, kprobes, perf events). (Networking programs use CAP_BPF + CAP_NET_ADMIN instead.) Unprivileged eBPF is disabled by default on most distros, so assume you need privilege.</div></details>
+
+    <details class="fc"><summary>Q: What are BTF and CO-RE, and why do they matter?</summary><div class="a">A: <b>BTF</b> (BPF Type Format) is compact kernel type info, exposed at <code>/sys/kernel/btf/vmlinux</code> when built with <code>CONFIG_DEBUG_INFO_BTF</code>. <b>CO-RE</b> (Compile Once – Run Everywhere) uses it so one compiled program adapts its field offsets to whatever kernel it loads on — one binary runs across many kernel versions, no on-box compiler. Mainstream on 5.x kernels.</div></details>
+
+    <details class="fc"><summary>Q: What's the key caveat when tracing in Kubernetes / containers?</summary><div class="a">A: There's <b>one shared host kernel</b> — containers aren't separate kernels. A probe sees the whole host, so loading one needs host-level privilege: a <b>privileged</b> pod (or CAP_BPF+CAP_PERFMON), often <b>hostPID: true</b> to resolve host PIDs. The clean pattern is a node-level <b>DaemonSet</b> agent, not privilege scattered across app pods.</div></details>
+
+    <details class="fc"><summary>Q: Name things eBPF genuinely cannot see.</summary><div class="a">A: Anything with <b>no probe point</b> (no tracepoint/kprobe/uprobe to attach to); functions the compiler <b>inlined or optimized away</b> (no entry point); and reliable <b>stack traces</b> when symbols are stripped or frame pointers/debug info are missing (you get addresses, not names, or truncated stacks).</div></details>
+
+    <details class="fc"><summary>Q: Does eBPF replace application metrics, logs, and tracing?</summary><div class="a">A: <b>No — it complements them.</b> eBPF is the x-ray of <em>system behavior</em> (syscalls, latency, scheduling) with no code change or restart, but it doesn't know your <em>business meaning</em> ("checkout step 3 for customer X"). Use both: each answers questions the other can't.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Production safety is where the "but what if…" questions get good. Ask me things like: <em>"Walk me through rewriting one of my per-event one-liners into an in-kernel aggregate"</em>, <em>"How would I run a tracing agent on my Kubernetes nodes as a DaemonSet?"</em>, or <em>"My kernel has no <code class="inl">/sys/kernel/btf/vmlinux</code> — what am I limited to?"</em> I'll tailor it to your stack.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0008-the-observability-toolkit.html"><span class="dir">↩ Previous</span><span class="ttl">The eBPF Observability Toolkit</span></a>
+    <a href="0010-capstone-debugging-end-to-end.html"><span class="dir">Up next →</span><span class="ttl">Capstone: Debugging End-to-End</span></a>
+  </nav>
+
+  <footer>
+    eBPF Course · Lesson 9 · grounded in
+    <a href="https://ebpf.io/" target="_blank" rel="noopener">ebpf.io</a>,
+    <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg</a>,
+    <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a> ·
+    see <a href="/courses/ebpf/#resources">RESOURCES.md</a> ·
+    <a href="../reference/ebpf-glossary.html">Glossary</a> ·
+    <a href="../reference/bpftrace-cheatsheet.html">bpftrace cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  // Tight feedback loop for the self-check quiz.
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

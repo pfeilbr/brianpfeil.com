@@ -517,6 +517,91 @@ other = "Die Daten dieser Seite konnten nicht geladen werden. Bitte neu laden."
 
 [data_noscript]
 other = "Diese Seite wird mit JavaScript gezeichnet. Die Daten liegen unter <a href=\"{{ .url }}\">{{ .url }}</a>."
+# --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
+
+[courses_intro]
+other = "{count} kostenlose Kurse mit insgesamt {lessons} Lektionen. Jeden davon habe ich mit Claude geschrieben, während ich mich selbst Lektion für Lektion in das Thema eingearbeitet habe. Sie sind praxisnah und interaktiv und kostenlos lesbar, ganz ohne Anmeldung."
+
+[courses_english_note]
+other = "Die Lektionen sind auf Englisch."
+
+[courses_filter]
+other = "Nach Thema filtern"
+
+[courses_all]
+other = "Alles"
+
+[courses_lessons]
+other = "{n} Lektionen"
+
+[courses_updated]
+other = "Aktualisiert am {date}"
+
+[courses_start]
+other = "Mit Lektion 1 anfangen"
+
+[courses_lessons_h]
+other = "Lektionen"
+
+[courses_reference_h]
+other = "Kurzreferenz"
+
+[courses_resources_h]
+other = "Wie es weitergeht"
+
+[courses_resources_note]
+other = "Die Quellen, an denen jede Lektion geprüft wurde, und wo du Fragen stellen kannst."
+
+[courses_back]
+other = "Alle Kurse"
+
+[courses_footnote]
+other = "Jede Lektion ist eine einzelne, in sich geschlossene Seite: keine Anmeldung, kein Tracking, nichts zu installieren."
+
+[course_cat_ai_ml]
+other = "AI & ML"
+
+[course_cat_programming_languages]
+other = "Programmiersprachen"
+
+[course_cat_web_frontend]
+other = "Web & Frontend"
+
+[course_cat_mobile]
+other = "Mobile"
+
+[course_cat_backend_data]
+other = "Backend & Daten"
+
+[course_cat_devops_infra]
+other = "DevOps & Infrastruktur"
+
+[course_cat_security]
+other = "Sicherheit"
+
+[course_cat_hardware_systems]
+other = "Hardware & Systeme"
+
+[course_cat_productivity_tools]
+other = "Produktivität & Tools"
+
+[course_cat_science_math]
+other = "Wissenschaft & Mathe"
+
+[course_cat_other]
+other = "Sonstiges"
+
+[learn_courses_cta]
+other = "Lieber einen geführten Weg? Probier die kostenlosen Kurse, die ich Lektion für Lektion geschrieben habe."
+
+[hub_courses_title]
+other = "Kurse"
+
+[hub_courses_blurb]
+other = "Kostenlose Kurse mit mehreren Lektionen, geschrieben, während ich das jeweilige Thema selbst gelernt habe"
+
+[hub_courses_count]
+other = "{{ .count }} Kurse"
 
 # --- /learn/ (layouts/_default/learn.html, data/learn.json) ---
 

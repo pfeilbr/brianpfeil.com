@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1 · The Standard Library at a Glance</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/cpp-standard-library/" style="color:inherit;text-decoration:none">&larr; C++ Standard Library</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">C++ Standard Library · Lesson 1</div>
+    <h1>The Standard Library at a Glance</h1>
+    <p class="sub">A map of the whole toolkit: the handful of categories that hold the classes you'll actually use every day — and the one design idea that ties most of them together.</p>
+    <span class="missiontag">🎯 Reach for the right <code class="inl">std::</code> type by reflex</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>The standard library is enormous, but your <strong>daily</strong> surface is small and organized into a few <strong>categories</strong>. And the biggest one — the containers/algorithms world — is really just <strong>three things that snap together</strong>: containers hold data, iterators are a universal cursor over it, algorithms do the work through those cursors.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> What "the standard library" actually is</h2>
+    <p class="lead">Every conforming C++ compiler ships with a large library of ready-made types and functions, all living in the <code class="inl">std</code> namespace. You get at it with <code class="inl">#include</code> — one header per area — and refer to things as <code class="inl">std::vector</code>, <code class="inl">std::string</code>, and so on.</p>
+
+    <pre><span class="c1">// pull in the pieces you need, then use them via std::</span>
+<span class="y">#include</span> <span class="g">&lt;vector&gt;</span>
+<span class="y">#include</span> <span class="g">&lt;string&gt;</span>
+<span class="y">#include</span> <span class="g">&lt;iostream&gt;</span>
+
+<span class="b">int</span> main() {
+    std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt; v = {3, 1, 2};   <span class="c1">// a growable array of ints</span>
+    std::<span class="b">string</span> name = <span class="g">"Ada"</span>;        <span class="c1">// a real string, not char*</span>
+    std::cout &lt;&lt; name &lt;&lt; <span class="g">" has "</span> &lt;&lt; v.size() &lt;&lt; <span class="g">" numbers\n"</span>;
+}</pre>
+    <div class="runlater">Paste any code block in these lessons into <a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt.org</a> (Compiler Explorer) to run it — no local toolchain needed.</div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>It's mostly templates</h4>
+        <p>Containers like <code class="inl">vector&lt;T&gt;</code> work for <em>any</em> element type <code class="inl">T</code>. You'll <strong>use</strong> templates constantly; you won't have to <strong>write</strong> them to be productive.</p>
+      </div>
+      <div class="card">
+        <h4>"Header-only" surprises</h4>
+        <p>Most of the library is defined in headers, so there's nothing to link. <code class="inl">#include</code> the header and go.</p>
+      </div>
+      <div class="card">
+        <h4>"since C++NN"</h4>
+        <p>The library grows every 3 years. We target <strong>C++17</strong> and flag newer pieces (e.g. <code class="inl">span</code> since C++20). Your compiler picks the standard via <code class="inl">-std=c++17</code> / <code class="inl">c++20</code> / <code class="inl">c++23</code>.</p>
+      </div>
+    </div>
+
+    <div class="callout key"><span class="h">💡 STL vs "the standard library"</span>
+      People say <strong>"STL"</strong> loosely to mean the whole standard library. Strictly, the <em>STL</em> is the original containers + iterators + algorithms design (§02). Everything else — strings, streams, smart pointers, threads — is "standard library" too. This course covers the popular pieces of all of it.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/standard_library" target="_blank" rel="noopener">cppreference — C++ Standard Library overview</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The big idea: containers + iterators + algorithms</h2>
+    <p>The heart of the library is a deliberate split into three roles. <strong>Containers</strong> store your data. <strong>Algorithms</strong> (like <code class="inl">sort</code>, <code class="inl">find</code>) do generic work. They never touch each other directly — they meet through <strong>iterators</strong>, a common "cursor" interface that every container exposes via <code class="inl">begin()</code> and <code class="inl">end()</code>.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 340" role="img" aria-label="Containers connect to algorithms through iterators. Any container exposes begin/end iterators; algorithms operate on iterator ranges, so M containers and N algorithms need only M+N code, not M times N.">
+        <!-- Containers column -->
+        <text x="120" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">CONTAINERS</text>
+        <text x="120" y="52" text-anchor="middle" font-size="11" fill="var(--muted)">hold the data</text>
+        <rect x="30" y="68" width="180" height="34" rx="7" fill="var(--panel)" stroke="var(--accent)"/>
+        <text x="120" y="90" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">vector&lt;int&gt;</text>
+        <rect x="30" y="110" width="180" height="34" rx="7" fill="var(--panel)" stroke="var(--accent)"/>
+        <text x="120" y="132" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">map&lt;K,V&gt;</text>
+        <rect x="30" y="152" width="180" height="34" rx="7" fill="var(--panel)" stroke="var(--accent)"/>
+        <text x="120" y="174" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">list&lt;T&gt;</text>
+
+        <!-- Iterators middle -->
+        <rect x="300" y="84" width="220" height="118" rx="10" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)"/>
+        <text x="410" y="120" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent-2)">ITERATORS</text>
+        <text x="410" y="142" text-anchor="middle" font-size="12" fill="var(--muted)">a universal cursor</text>
+        <text x="410" y="166" text-anchor="middle" font-size="12" font-family="monospace" fill="var(--fg)">begin() … end()</text>
+        <text x="410" y="184" text-anchor="middle" font-size="11" fill="var(--muted)">[ half-open range )</text>
+
+        <!-- Algorithms column -->
+        <text x="700" y="34" text-anchor="middle" font-size="15" font-weight="700" fill="var(--warn)">ALGORITHMS</text>
+        <text x="700" y="52" text-anchor="middle" font-size="11" fill="var(--muted)">do generic work</text>
+        <rect x="610" y="68" width="180" height="34" rx="7" fill="var(--panel)" stroke="var(--warn)"/>
+        <text x="700" y="90" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">sort(b, e)</text>
+        <rect x="610" y="110" width="180" height="34" rx="7" fill="var(--panel)" stroke="var(--warn)"/>
+        <text x="700" y="132" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">find(b, e, x)</text>
+        <rect x="610" y="152" width="180" height="34" rx="7" fill="var(--panel)" stroke="var(--warn)"/>
+        <text x="700" y="174" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">count(b, e, x)</text>
+
+        <!-- connectors -->
+        <line x1="210" y1="127" x2="300" y2="135" stroke="var(--muted)" stroke-width="1.5"/>
+        <line x1="520" y1="135" x2="610" y2="127" stroke="var(--muted)" stroke-width="1.5"/>
+
+        <!-- punchline -->
+        <rect x="120" y="248" width="580" height="66" rx="10" fill="var(--accent)" opacity="0.08"/>
+        <text x="410" y="278" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">M containers &#215; N algorithms, glued by one iterator interface</text>
+        <text x="410" y="300" text-anchor="middle" font-size="13" fill="var(--fg)">&#8594; the library only needs M + N pieces, not M &#215; N. That's the whole trick.</text>
+      </svg>
+      <figcaption>Iterators are the contract in the middle. Because <code class="inl">sort</code> speaks "iterator," it can sort a <code class="inl">vector</code>, a <code class="inl">deque</code>, or your own type — without knowing what they are.</figcaption>
+    </figure>
+
+    <pre><span class="c1">// the three roles in one line each:</span>
+std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt; v = {3, 1, 2};        <span class="c1">// CONTAINER: holds the data</span>
+std::<span class="b">sort</span>(v.begin(), v.end());          <span class="c1">// ALGORITHM works over a range...</span>
+<span class="c1">//             ^^^^^^^^^^^^^^^^^^^^^^         ...described by two ITERATORS</span></pre>
+
+    <div class="callout key"><span class="h">💡 Why you should care</span>
+      This is <em>why</em> the same <code class="inl">std::sort</code> works on almost everything, and why learning one algorithm pays off across every container. Lessons 7–8 dig into iterators and algorithms; for now just hold the shape in your head.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/algorithm" target="_blank" rel="noopener">cppreference — Algorithms library</a> · <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines" target="_blank" rel="noopener">Core Guidelines P.1 "express intent — prefer algorithms to hand-written loops"</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The category map — the spine of this course</h2>
+    <p>Here's the whole toolkit by category, with the headline classes in each and the lesson where we cover them. This table <em>is</em> the course. Bookmark it.</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Category</th><th>Headline classes</th><th>Header(s)</th><th>Lesson</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sequence containers</strong></td><td><code class="inl">vector</code>, <code class="inl">array</code>, <code class="inl">deque</code>, <code class="inl">list</code></td><td><code class="inl">&lt;vector&gt;</code> …</td><td><a href="0002-vector-your-default-container.html">2</a> · <a href="0006-container-adaptors-stack-queue-priority-queue.html">6</a></td></tr>
+          <tr><td><strong>Strings</strong></td><td><code class="inl">string</code>, <code class="inl">string_view</code></td><td><code class="inl">&lt;string&gt;</code>, <code class="inl">&lt;string_view&gt;</code></td><td><a href="0003-string-and-string-view.html">3</a></td></tr>
+          <tr><td><strong>Associative (ordered)</strong></td><td><code class="inl">map</code>, <code class="inl">set</code>, <code class="inl">multimap</code></td><td><code class="inl">&lt;map&gt;</code>, <code class="inl">&lt;set&gt;</code></td><td><a href="0004-map-and-unordered-map.html">4</a> · <a href="0005-set-and-choosing-a-container.html">5</a></td></tr>
+          <tr><td><strong>Unordered (hashed)</strong></td><td><code class="inl">unordered_map</code>, <code class="inl">unordered_set</code></td><td><code class="inl">&lt;unordered_map&gt;</code> …</td><td><a href="0004-map-and-unordered-map.html">4</a></td></tr>
+          <tr><td><strong>Container adaptors</strong></td><td><code class="inl">stack</code>, <code class="inl">queue</code>, <code class="inl">priority_queue</code></td><td><code class="inl">&lt;stack&gt;</code>, <code class="inl">&lt;queue&gt;</code></td><td><a href="0006-container-adaptors-stack-queue-priority-queue.html">6</a></td></tr>
+          <tr><td><strong>Iterators &amp; ranges</strong></td><td>iterator categories, <code class="inl">ranges</code>, views</td><td><code class="inl">&lt;iterator&gt;</code>, <code class="inl">&lt;ranges&gt;</code></td><td><a href="0007-iterators-and-ranges.html">7</a></td></tr>
+          <tr><td><strong>Algorithms</strong></td><td><code class="inl">sort</code>, <code class="inl">find</code>, <code class="inl">transform</code>, <code class="inl">accumulate</code></td><td><code class="inl">&lt;algorithm&gt;</code>, <code class="inl">&lt;numeric&gt;</code></td><td><a href="0008-algorithms-the-workhorses.html">8</a></td></tr>
+          <tr><td><strong>Function objects</strong></td><td>lambdas, <code class="inl">std::function</code></td><td><code class="inl">&lt;functional&gt;</code></td><td><a href="0009-lambdas-and-std-function.html">9</a></td></tr>
+          <tr><td><strong>Smart pointers</strong></td><td><code class="inl">unique_ptr</code>, <code class="inl">shared_ptr</code>, <code class="inl">weak_ptr</code></td><td><code class="inl">&lt;memory&gt;</code></td><td><a href="0010-smart-pointers.html">10</a></td></tr>
+          <tr><td><strong>Vocabulary types</strong></td><td><code class="inl">pair</code>, <code class="inl">tuple</code>, <code class="inl">optional</code>, <code class="inl">variant</code></td><td><code class="inl">&lt;utility&gt;</code>, <code class="inl">&lt;optional&gt;</code> …</td><td><a href="0011-vocabulary-types-pair-tuple-optional-variant.html">11</a></td></tr>
+          <tr><td><strong>I/O streams</strong></td><td><code class="inl">cout</code>/<code class="inl">cin</code>, <code class="inl">stringstream</code>, <code class="inl">fstream</code></td><td><code class="inl">&lt;iostream&gt;</code>, <code class="inl">&lt;sstream&gt;</code>, <code class="inl">&lt;fstream&gt;</code></td><td><a href="0012-io-streams.html">12</a></td></tr>
+          <tr><td><strong>Concurrency</strong></td><td><code class="inl">thread</code>, <code class="inl">mutex</code>, <code class="inl">atomic</code>, <code class="inl">future</code></td><td><code class="inl">&lt;thread&gt;</code>, <code class="inl">&lt;mutex&gt;</code> …</td><td><a href="0013-concurrency-essentials.html">13</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cite">Source: container categories per <a href="https://en.cppreference.com/w/cpp/container" target="_blank" rel="noopener">cppreference — Containers library</a>. The full <a href="../reference/cpp-stdlib-cheatsheet.html">cheat sheet</a> expands this with complexity and selection rules.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Two ideas that make the library behave: value semantics &amp; RAII</h2>
+    <p>Coming from a language with garbage collection and references-everywhere, two C++ habits explain almost all the "wait, why?" moments ahead.</p>
+
+    <h3>Value semantics — objects own their stuff, copies are real copies</h3>
+    <p>A <code class="inl">std::vector</code> isn't a handle to some heap object — <em>it is</em> the collection. Copy it and you get a full, independent copy. Pass it to a function <em>by value</em> and the function gets its own copy.</p>
+    <pre>std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt; a = {1, 2, 3};
+std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt; b = a;   <span class="c1">// a DEEP copy — b has its own 1,2,3</span>
+b.push_back(4);              <span class="c1">// a is still {1,2,3}; b is {1,2,3,4}</span></pre>
+    <div class="callout warn"><span class="h">⚠ The flip side: accidental copies</span>
+      Because copies are deep, <code class="inl">void f(std::vector&lt;int&gt; v)</code> copies the whole vector on every call. Pass big objects by <code class="inl">const&amp;</code> (<code class="inl">const std::vector&lt;int&gt;&amp;</code>) to avoid it. <strong>Move semantics</strong> (Lesson 10) is the escape hatch when you want to transfer instead of copy.</div>
+
+    <h3>RAII — a destructor cleans up when the object dies</h3>
+    <p><strong>R</strong>esource <strong>A</strong>cquisition <strong>I</strong>s <strong>I</strong>nitialization: an object grabs a resource (memory, a file, a lock) in its constructor and releases it in its destructor — which runs <em>automatically</em> when the object goes out of scope. That's why you never <code class="inl">free()</code> a <code class="inl">vector</code> or close a <code class="inl">std::ifstream</code> by hand.</p>
+    <pre>{
+    std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt; v(1000);  <span class="c1">// allocates</span>
+    <span class="c1">// ... use v ...</span>
+}   <span class="c1">// &lt;- v's destructor runs HERE, frees the memory. No leak, no free().</span></pre>
+    <div class="callout key"><span class="h">💡 The throughline</span>
+      Value semantics + RAII are <em>why</em> the standard containers are safe and leak-free by default — and why smart pointers (Lesson 10) exist: to give raw <code class="inl">new</code>/<code class="inl">delete</code> the same automatic cleanup. See <a href="../reference/cpp-stdlib-glossary.html">the glossary</a> for tight definitions of both.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/language/raii" target="_blank" rel="noopener">cppreference — RAII</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Your two everyday tools: cppreference &amp; godbolt</h2>
+    <p>You will not memorize the library, and you shouldn't try. Two skills replace memorization:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>📖 Read cppreference</h4>
+        <p>Every type/function has a page listing members, <strong>complexity</strong>, and the <em>"(since C++NN)"</em> tag. When unsure, search <code class="inl">cppreference std::thing</code>. Learn to skim the signature and the complexity line.</p>
+      </div>
+      <div class="card">
+        <h4>▶ Run it on godbolt</h4>
+        <p><a href="https://godbolt.org/" target="_blank" rel="noopener">Compiler Explorer</a> compiles + runs snippets in the browser. Set the language standard (e.g. <code class="inl">-std=c++20</code>) and paste. Every code block in this course is meant to be run there.</p>
+      </div>
+    </div>
+    <div class="callout mission"><span class="h">🎯 Try it now (2 minutes)</span>
+      Open <a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt.org</a>, paste the very first snippet from §01, and run it. Seeing <code class="inl">Ada has 3 numbers</code> print is your tangible win for this lesson — and confirms your runner works for everything that follows.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">In the STL design, what connects containers to algorithms?</div>
+        <button class="opt">Inheritance — every container derives from a base class</button>
+        <button class="opt">Iterators — a common cursor interface (<code class="inl">begin()</code>/<code class="inl">end()</code>)</button>
+        <button class="opt">Pointers — algorithms take raw <code class="inl">T*</code> arguments</button>
+        <button class="opt">Nothing — each algorithm is rewritten per container</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">After <code class="inl">std::vector&lt;int&gt; b = a;</code>, you do <code class="inl">b.push_back(4)</code>. What happens to <code class="inl">a</code>?</div>
+        <button class="opt"><code class="inl">a</code> also gets a 4 — they share storage</button>
+        <button class="opt">It's undefined behavior</button>
+        <button class="opt"><code class="inl">a</code> is unchanged — <code class="inl">b</code> is a deep, independent copy</button>
+        <button class="opt"><code class="inl">a</code> becomes empty — it was moved from</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">Why don't you need to free a <code class="inl">std::vector</code>'s memory yourself?</div>
+        <button class="opt">RAII — its destructor runs automatically at end of scope and frees it</button>
+        <button class="opt">A garbage collector reclaims it later</button>
+        <button class="opt">Vectors live forever until the program exits</button>
+        <button class="opt">You do — you must call <code class="inl">v.free()</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">You need a growable list of numbers and haven't got a special reason otherwise. Which container is the default pick?</div>
+        <button class="opt"><code class="inl">std::list</code></button>
+        <button class="opt"><code class="inl">std::map</code></button>
+        <button class="opt"><code class="inl">std::stack</code></button>
+        <button class="opt"><code class="inl">std::vector</code></button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What are the three roles in the STL's core design?</summary><div class="a">A: <strong>Containers</strong> hold data, <strong>algorithms</strong> do generic work, and <strong>iterators</strong> are the common cursor interface that lets any algorithm operate on any container. M + N pieces instead of M &#215; N.</div></details>
+    <details class="fc"><summary>Q: What is "value semantics" in one line?</summary><div class="a">A: Standard objects <em>are</em> their data (not handles); copying is deep and independent. Pass big objects by <code class="inl">const&amp;</code> to avoid accidental copies.</div></details>
+    <details class="fc"><summary>Q: What does RAII stand for, and what does it buy you?</summary><div class="a">A: <strong>Resource Acquisition Is Initialization</strong>: an object acquires a resource in its constructor and releases it in its destructor, which runs automatically at end of scope — so no manual <code class="inl">free</code>/<code class="inl">close</code>, no leaks.</div></details>
+    <details class="fc"><summary>Q: STL vs "the standard library" — what's the difference?</summary><div class="a">A: Strictly, the <em>STL</em> is the containers + iterators + algorithms design. The <em>standard library</em> is everything in <code class="inl">std</code>: that, plus strings, streams, smart pointers, threads, and more. Casually people use "STL" for all of it.</div></details>
+    <details class="fc"><summary>Q: Where do you look things up, and where do you run code?</summary><div class="a">A: Look up signatures + complexity on <strong>cppreference.com</strong>; run snippets on <strong>godbolt.org</strong> (Compiler Explorer). Don't try to memorize the library.</div></details>
+    <details class="fc"><summary>Q: What does "(since C++17)" on a cppreference page mean for you?</summary><div class="a">A: That feature only exists if you compile with that standard or newer (e.g. <code class="inl">-std=c++17</code>). This course is C++17-baseline and flags C++20/23 additions explicitly.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Stuck on why C++ copies things, or what a template angle-bracket actually means? Ask. Good warm-ups: <em>"show me the M&#215;N idea with a concrete second container"</em>, or <em>"when is passing by value actually fine?"</em> When you're ready, head to Lesson 2.</p>
+  </div>
+
+  <nav class="next">
+    <a href="/courses/cpp-standard-library/"><span class="dir">↩ Course home</span><span class="ttl dim">C++ Standard Library</span></a>
+    <a href="0002-vector-your-default-container.html"><span class="dir">Up next →</span><span class="ttl">std::vector — Your Default Container</span></a>
+  </nav>
+
+  <footer>
+    C++ Standard Library · Lesson 1 · grounded in
+    <a href="https://en.cppreference.com/w/cpp/standard_library" target="_blank" rel="noopener">cppreference</a>,
+    <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines" target="_blank" rel="noopener">C++ Core Guidelines</a> ·
+    see <a href="/courses/cpp-standard-library/#resources">RESOURCES.md</a> ·
+    <a href="../reference/cpp-stdlib-glossary.html">Glossary</a> ·
+    <a href="../reference/cpp-stdlib-cheatsheet.html">Cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

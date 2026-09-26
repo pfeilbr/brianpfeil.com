@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 1 — System Extensions on Your Mac</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --fg:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7;
+    --accent:#bf4800; --accent2:#0066cc; --card:#fff; --code:#f5f5f7;
+    --warn:#9a6700; --warnbg:#fff8e6; --good:#1a7f37; --goodbg:#e8f6ec;
+    --keybg:#eef4ff; --shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#000; --fg:#f5f5f7; --muted:#98989d; --line:#3a3a3c;
+      --accent:#ff7a3d; --accent2:#4ea3ff; --card:#1c1c1e; --code:#161618;
+      --warn:#e0b341; --warnbg:#2a2410; --good:#5ed27e; --goodbg:#10240f;
+      --keybg:#0e1c2e; --shadow:0 1px 3px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.4);}
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;
+    padding:2.5rem 1.25rem 6rem;}
+  .wrap{max-width:880px;margin:0 auto}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* header */
+  header{border-bottom:2px solid var(--accent);padding-bottom:1.1rem;margin-bottom:1.6rem}
+  .kicker{color:var(--accent);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+  h1{font-size:2.1rem;margin:.35rem 0 .5rem;letter-spacing:-.02em;line-height:1.1}
+  .lede{color:var(--muted);margin:0;font-size:1.05rem}
+  .obj{display:flex;gap:.7rem;align-items:flex-start;background:var(--keybg);
+    border:1px solid var(--line);border-radius:12px;padding:.85rem 1rem;margin:1.2rem 0 0}
+  .obj b{color:var(--accent2)}
+  .obj .ic{font-size:1.2rem;line-height:1.4}
+
+  h2{font-size:1.35rem;margin:2.6rem 0 .7rem;letter-spacing:-.01em;padding-top:.3rem}
+  h2 .n{color:var(--accent);font:700 .8rem/1 ui-monospace,monospace;
+    border:1.5px solid var(--accent);border-radius:6px;padding:.25rem .45rem;margin-right:.55rem;vertical-align:middle}
+  h3{font-size:1.05rem;margin:1.6rem 0 .4rem}
+  p{margin:.7rem 0}
+  code{background:var(--code);border:1px solid var(--line);border-radius:5px;
+    padding:.08em .4em;font:.86em ui-monospace,SFMono-Regular,Menlo,monospace}
+  strong{font-weight:680}
+
+  /* stats strip */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin:1.4rem 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:.9rem .7rem;text-align:center;box-shadow:var(--shadow)}
+  .stat b{display:block;font-size:1.7rem;letter-spacing:-.02em;color:var(--accent)}
+  .stat span{display:block;font-size:.74rem;color:var(--muted);margin-top:.2rem;line-height:1.3}
+  @media (max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+  /* callouts */
+  .callout{border-radius:12px;padding:1rem 1.1rem;margin:1.3rem 0;border:1px solid var(--line)}
+  .callout .lbl{font-weight:700;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;display:block;margin-bottom:.3rem}
+  .callout.key{background:var(--keybg)}
+  .callout.key .lbl{color:var(--accent2)}
+  .callout.warn{background:var(--warnbg);border-color:#e8d48a}
+  .callout.warn .lbl{color:var(--warn)}
+  .callout.good{background:var(--goodbg)}
+  .callout.good .lbl{color:var(--good)}
+  .callout p{margin:.3rem 0}
+
+  /* command box */
+  .cmd{background:#0b0b0d;color:#e6e6e6;border-radius:10px;padding:.9rem 1rem;margin:.9rem 0;
+    font:.86rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-x:auto;border:1px solid #2a2a2e}
+  .cmd .p{color:#5ed27e;user-select:none}
+  .cmd .c{color:#7a7a85}
+  .cmd .o{color:#a9c7ff}
+  .cmd b{color:#ffd479;font-weight:600}
+  .runme{font:700 .68rem/1 -apple-system,sans-serif;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--accent);display:inline-block;margin:.2rem 0 -.2rem}
+
+  /* annotated terminal output */
+  figure{margin:1.2rem 0}
+  figcaption{color:var(--muted);font-size:.82rem;margin-top:.5rem;text-align:center}
+  .term{background:#0b0b0d;border-radius:10px;border:1px solid #2a2a2e;overflow:hidden;box-shadow:var(--shadow)}
+  .term .bar{background:#1a1a1e;padding:.5rem .8rem;display:flex;gap:.4rem;align-items:center}
+  .term .dot{width:11px;height:11px;border-radius:50%}
+  .term .bar .t{color:#9a9aa5;font:.74rem ui-monospace,monospace;margin-left:.5rem}
+  .term pre{margin:0;padding:.9rem 1rem;color:#e6e6e6;font:.8rem/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-x:auto;white-space:pre}
+  .term .hdr{color:#7a7a85}
+  .term .cat{color:#ff9d5c;font-weight:600}
+  .term .star{color:#5ed27e;font-weight:700}
+  .term .team{color:#c9a3ff}
+  .term .bid{color:#a9c7ff}
+  .term .nm{color:#ffd479}
+  .term .stA{color:#5ed27e}
+  .term .stW{color:#ffb454}
+
+  /* card grid */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem;margin:1.3rem 0}
+  @media (max-width:620px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.05rem 1.1rem;box-shadow:var(--shadow)}
+  .card h4{margin:0 0 .15rem;font-size:1.02rem;display:flex;align-items:center;gap:.45rem}
+  .card .pill{font:600 .62rem/1 ui-monospace,monospace;color:#fff;background:var(--accent2);border-radius:20px;padding:.25rem .5rem}
+  .card .pill.es{background:#b3261e}.card .pill.dk{background:#6a3fb3}.card .pill.cam{background:#1a7f37}
+  .card p{margin:.4rem 0 0;font-size:.92rem;color:var(--fg)}
+  .card .repl{margin-top:.55rem;font-size:.8rem;color:var(--muted)}
+  .card .repl b{color:var(--fg)}
+  .card .mine{margin-top:.55rem;font-size:.78rem;color:var(--good);font-weight:600}
+
+  /* tables */
+  .tbl{width:100%;border-collapse:collapse;margin:1.1rem 0;font-size:.9rem;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  .tbl th,.tbl td{text-align:left;padding:.6rem .8rem;border-bottom:1px solid var(--line);vertical-align:top}
+  .tbl th{background:var(--code);font-size:.74rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .tbl tr:last-child td{border-bottom:0}
+  .tbl code{font-size:.8em}
+  .yes{color:var(--good);font-weight:700}.no{color:#b3261e;font-weight:700}
+  @media (max-width:620px){.tbl{font-size:.82rem}.tbl th,.tbl td{padding:.5rem .55rem}}
+
+  /* diagram */
+  .diagram{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem;box-shadow:var(--shadow)}
+  .diagram svg{width:100%;height:auto;display:block}
+
+  /* quiz */
+  .quiz{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;margin:1.1rem 0;box-shadow:var(--shadow)}
+  .quiz .q{font-weight:600;margin:0 0 .7rem}
+  .quiz .opt{display:block;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);
+    border-radius:10px;padding:.65rem .8rem;margin:.4rem 0;cursor:pointer;font:inherit;color:var(--fg);transition:.12s}
+  .quiz .opt:hover{border-color:var(--accent2)}
+  .quiz .opt.correct{background:var(--goodbg);border-color:var(--good)}
+  .quiz .opt.wrong{background:#fbeaea;border-color:#b3261e}
+  @media (prefers-color-scheme:dark){.quiz .opt.wrong{background:#2a1212}}
+  .quiz .fb{margin:.6rem 0 0;font-size:.88rem;display:none}
+  .quiz .fb.show{display:block}
+  .quiz .fb.ok{color:var(--good)}.quiz .fb.no{color:#b3261e}
+  .qnum{font:700 .7rem/1 ui-monospace,monospace;color:var(--muted)}
+
+  /* flashcards */
+  details.fc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.7rem .95rem;margin:.5rem 0;box-shadow:var(--shadow)}
+  details.fc summary{cursor:pointer;font-weight:600;list-style:none}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::before{content:"Q ";color:var(--accent);font:700 .85rem ui-monospace,monospace}
+  details.fc[open] summary{margin-bottom:.5rem;border-bottom:1px solid var(--line);padding-bottom:.5rem}
+  details.fc p{margin:.2rem 0 0;color:var(--fg)}
+  details.fc p::before{content:"A ";color:var(--good);font:700 .85rem ui-monospace,monospace}
+
+  /* next + ask */
+  .next{display:grid;grid-template-columns:auto 1fr;gap:.8rem 1rem;align-items:start;
+    background:var(--keybg);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin:.5rem 0}
+  .next .st{font:700 .8rem ui-monospace,monospace;color:var(--accent2)}
+  .next .lb{font-size:.93rem}
+  .ask{border:1.5px dashed var(--accent);border-radius:12px;padding:1rem 1.1rem;margin:1.6rem 0;background:transparent}
+  .ask b{color:var(--accent)}
+
+  .footer{margin-top:3rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:1rem;line-height:1.8}
+  .tag{font:600 .65rem/1 ui-monospace,monospace;color:var(--accent2);border:1px solid var(--line);border-radius:6px;padding:.2rem .45rem;margin-left:.3rem}
+  @media print{body{padding:0;font-size:11pt}.card,.tbl,.term,.quiz,.diagram{break-inside:avoid;box-shadow:none}:root{--bg:#fff;--card:#fff}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: macos-kernel-extensions ---- */
+/* ============================================================================
+   macos-kernel-extensions adapter. This course ships its own apple-style
+   light/dark palette (burnt-orange --accent, blue --accent2). theme.css already
+   overrides the SHARED token names (--bg/--fg/--muted/--accent/--warn/--shadow),
+   so here we only re-point the course-SPECIFIC vars onto canonical tokens; they
+   then track light/dark automatically. The dark .term terminal widget is left
+   as-is on purpose (a terminal stays dark in both schemes).
+   ============================================================================ */
+:root{
+  --accent2:var(--accent-2) !important;
+  --line:var(--border) !important;
+  --card:var(--surface) !important;
+  --code:var(--surface) !important;
+  --good:var(--mark) !important;
+  --keybg:color-mix(in srgb,var(--accent) 9%,transparent) !important;
+  --warnbg:color-mix(in srgb,var(--warn) 11%,transparent) !important;
+  --goodbg:color-mix(in srgb,var(--mark) 12%,transparent) !important;
+}
+
+/* warn callout had a hardcoded amber border */
+.callout.warn{ border-color:color-mix(in srgb,var(--warn) 32%,transparent) !important; }
+
+/* coloured category pills keep white text. The base pill used --accent2 (now a
+   light teal) → give it a fixed dark teal so white reads, matching the other
+   fixed-colour category pills (.es red / .dk purple / .cam green, which override
+   via higher specificity). Shadow as extra insurance. */
+.card .pill{ background:#0e7c70 !important; text-shadow:0 1px 2px rgba(0,0,0,.5) !important; }
+
+/* bare inline <code> (the course only set its size) → accent tint, matching the
+   other courses. Code inside the dark terminal/pre keeps its own colours. */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent); color:var(--accent);
+  border-radius:6px; padding:1px 6px; }
+.term code,.cmd code,pre code,.term *{ background:none; }
+.term code,.cmd code,pre code{ color:inherit; padding:0; }
+
+/* "no" markers (✗) were a hardcoded red → danger token */
+.no{ color:var(--danger) !important; }
+
+/* contrast safety net: prose boxes use --fg (never the dark terminal or code) */
+.card,.card p,.card .repl b,.callout,.callout p,.fc,.fc .a,.obj,.tbl td,.ask,.next{ color:var(--fg) !important; }
+.card .repl,.lede,.tbl th,.stat span,.fnote,.muted{ color:var(--muted) !important; }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/macos-kernel-extensions/" style="color:inherit;text-decoration:none">&larr; macOS Kernel &amp; System Extensions</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+<header>
+  <div class="kicker">macOS Kernel &amp; System Extensions · Lesson 1</div>
+  <h1>System Extensions on Your Mac</h1>
+  <p class="lede">What the common extensions are, what languages you write them in — and how to read the three that are already running on this machine.</p>
+  <div class="obj">
+    <span class="ic">🎯</span>
+    <div><b>By the end of this lesson</b> you'll run one CLI command and correctly decode every column of <em>real</em> System Extension output from your own Mac — and you'll know exactly which kind you're going to build in the next lessons, and why.</div>
+  </div>
+</header>
+
+<p><strong>Mission tie-in.</strong> You want to <em>build, install, and watch a System Extension run on this Mac, entirely from the CLI</em>. Before you build one, you need the map: what kinds exist, what each one replaced, what language each uses, and how to see them. The fastest way in is that your Mac is already a live specimen — it's running three of them right now.</p>
+
+<div class="stats">
+  <div class="stat"><b>3</b><span>System Extensions running on <em>your</em> Mac right now</span></div>
+  <div class="stat"><b>4</b><span>families: Network · Endpoint Security · Driver · Camera</span></div>
+  <div class="stat"><b>0</b><span>third-party <em>kexts</em> in your kernel (all 257 are Apple's)</span></div>
+  <div class="stat"><b>2019</b><span>year Apple began deprecating kexts (macOS 10.15)</span></div>
+</div>
+
+<h2><span class="n">1</span>The one big idea</h2>
+<p>A <strong>kernel extension</strong> (<a href="../reference/glossary.html#">kext</a>) runs <em>inside</em> the kernel with full privileges — one bug is a system-wide <strong>kernel panic</strong>. A <strong>System Extension</strong> does the same <em>jobs</em> (filter network traffic, watch security events, drive hardware) but runs as an ordinary <strong>sandboxed user-space process</strong>. If it crashes, only that process dies — the OS keeps running.</p>
+
+<div class="callout key">
+  <span class="lbl">The shift in one sentence</span>
+  <p>Apple moved third-party extension code <strong>out of the kernel and into user space</strong>, so the whole class of "a vendor's driver panicked my Mac" problems goes away — and, crucially for you, <strong>System Extensions load with SIP fully enabled</strong>. No recovery reboots, no lowered security. That's why we're building one of these, not a kext.</p>
+</div>
+
+<h2><span class="n">2</span>Do this now — see your three live extensions</h2>
+<p>This is your tangible win. Run it in Terminal (no <code>sudo</code> needed):</p>
+<div class="cmd"><span class="runme">▶ run me</span><br><span class="p">$</span> systemextensionsctl list</div>
+
+<p>Here's the <strong>actual output from this Mac</strong>, annotated. Match it against what you see:</p>
+
+<figure>
+  <div class="term">
+    <div class="bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><span class="t">systemextensionsctl list</span></div>
+<pre><span class="hdr">3 extension(s)</span>
+<span class="cat">--- com.apple.system_extension.network_extension</span>
+<span class="hdr">enabled  active  teamID      bundleID (version)              name                          [state]</span>
+<span class="star">*</span>        <span class="star">*</span>       <span class="team">W5364U7YZB</span>  <span class="bid">io.tailscale.ipn.macsys.network-extension</span> (1.98.5/101.98.5)  <span class="nm">Tailscale Network Extension</span>  [<span class="stA">activated enabled</span>]
+<span class="cat">--- com.apple.system_extension.cmio</span>
+<span class="hdr">enabled  active  teamID      bundleID (version)              name                          [state]</span>
+         <span class="star">*</span>       <span class="team">2MMRE5MTB8</span>  <span class="bid">com.obsproject.obs-studio.mac-camera-extension</span> (32.1.2/…)  <span class="nm">OBS Virtual Camera</span>  [<span class="stW">activated waiting for user</span>]
+<span class="cat">--- com.apple.system_extension.endpoint_security</span>
+<span class="hdr">enabled  active  teamID      bundleID (version)              name                          [state]</span>
+<span class="star">*</span>        <span class="star">*</span>       <span class="team">4HMJQ7V3SX</span>  <span class="bid">com.swiftlydetecting.agent.securityextension</span> (2.1.0/1)  <span class="nm">Mac Monitor Security Extension</span>  [<span class="stA">activated enabled</span>]</pre>
+  </div>
+  <figcaption>Live output, 2026-06-16. Three different families on one machine — a perfect specimen.</figcaption>
+</figure>
+
+<h3>How to read a row</h3>
+<table class="tbl">
+  <tr><th>Column</th><th>Means</th></tr>
+  <tr><td><code>--- com.apple.system_extension.<b>network_extension</b></code></td><td>The <strong>category header</strong>. Everything below it until the next <code>---</code> is that family. You can see three categories here: <code>network_extension</code>, <code>cmio</code> (camera), <code>endpoint_security</code>.</td></tr>
+  <tr><td><span style="color:var(--good);font-weight:700">enabled</span> <code>*</code></td><td>The <strong>user has switched it on</strong> in System&nbsp;Settings → Login&nbsp;Items&nbsp;&amp;&nbsp;Extensions. Notice <strong>OBS has no star here</strong> — it's installed and running but still <em>"waiting for user"</em> to flip the toggle.</td></tr>
+  <tr><td><span style="color:var(--good);font-weight:700">active</span> <code>*</code></td><td>The extension process is <strong>currently loaded and running</strong>. OBS <em>is</em> active even though not user-enabled — the two columns are independent.</td></tr>
+  <tr><td><span style="color:#c9a3ff;font-weight:700">teamID</span></td><td>The 10-character <strong>Apple Developer Team ID</strong> that code-signed it. <code>W5364U7YZB</code> is Tailscale. This is how macOS pins an extension to a verified publisher.</td></tr>
+  <tr><td><span style="color:#a9c7ff;font-weight:700">bundleID</span> (version)</td><td>Reverse-DNS identifier and <code>(marketingVersion/buildVersion)</code>. The bundle ID is what your activation request names.</td></tr>
+  <tr><td><code>[<span style="color:var(--good)">state</span>]</code></td><td>Lifecycle state. <code>activated enabled</code> = fully live. <code>activated waiting for user</code> = installed but needs the System&nbsp;Settings toggle.</td></tr>
+</table>
+
+<div class="callout good">
+  <span class="lbl">✓ Win unlocked</span>
+  <p>You just read the live extension table on your own machine and can explain why OBS shows <em>active</em> but not <em>enabled</em>. That's the same command you'll use in Lesson 4 to confirm <strong>your own</strong> extension went live.</p>
+</div>
+
+<h2><span class="n">3</span>The four families (the "common ones")</h2>
+<p>"What are the common system extensions?" Almost everything third parties ship falls into one of four families. Here's each, what it replaced, and a real example — two of them are on your Mac.</p>
+
+<div class="cards">
+  <div class="card">
+    <h4>Network Extension <span class="pill">NE</span></h4>
+    <p>Inspect, filter, route, or tunnel network traffic in user space. Sub-types: <strong>content filter</strong>, <strong>DNS proxy</strong>, <strong>app proxy</strong>, <strong>packet tunnel</strong> (VPNs), <strong>transparent proxy</strong>.</p>
+    <p class="repl">Replaces <b>socket/IP filter kexts</b> (<code>sflt_*</code>, <code>ipf_*</code>)</p>
+    <p class="mine">▸ On your Mac: Tailscale</p>
+  </div>
+  <div class="card">
+    <h4>Endpoint Security <span class="pill es">ES</span></h4>
+    <p>Observe and <em>authorize</em> system events — process <code>exec</code>, file opens, mounts, signals. The backbone of EDR/antivirus/DLP tools.</p>
+    <p class="repl">Replaces <b>KAUTH</b> kexts (<code>kauth_*</code>) + the old MAC framework</p>
+    <p class="mine">▸ On your Mac: Mac Monitor</p>
+  </div>
+  <div class="card">
+    <h4>DriverKit / DEXT <span class="pill dk">DK</span></h4>
+    <p>Actual <strong>device drivers</strong> in user space — USB, HID, PCI, serial, audio, networking hardware. A built driver is a <code>.dext</code>.</p>
+    <p class="repl">Replaces <b>IOKit C++ kexts</b> subclassing <code>IOService</code></p>
+    <p class="repl">e.g. a vendor printer/USB-gadget driver</p>
+  </div>
+  <div class="card">
+    <h4>Camera (CMIO) <span class="pill cam">CAM</span></h4>
+    <p>Virtual cameras &amp; capture devices via Core Media I/O. Shows up under the same <code>systemextensionsctl</code> umbrella.</p>
+    <p class="repl">Replaces <b>DAL plug-ins</b> (the old <code>.plugin</code> camera path)</p>
+    <p class="mine">▸ On your Mac: OBS Virtual Camera</p>
+  </div>
+</div>
+
+<p>This is the deprecation story made concrete: every legacy kext category got a user-space replacement framework. (Full mapping lives in the <a href="../reference/glossary.html">course glossary</a> and <a href="https://developer.apple.com/support/kernel-extensions">Apple's deprecated-kext list</a>.)</p>
+
+<h2><span class="n">4</span>What language do I write one in?</h2>
+<p>Your direct question. The <strong>container app</strong> (the thing that ships and activates the extension) and the <strong>provider</strong> (the extension itself) can be different languages. Quick reference:</p>
+
+<table class="tbl">
+  <tr><th>You're writing…</th><th>Language(s)</th><th>API shape</th></tr>
+  <tr><td>Container / host app</td><td><strong>Swift</strong> or Objective-C</td><td>SwiftUI/AppKit + <code>OSSystemExtensionRequest</code></td></tr>
+  <tr><td>Network Extension provider</td><td><strong>Swift</strong> or Objective-C</td><td>Subclass <code>NEFilterDataProvider</code>, <code>NEDNSProxyProvider</code>, etc.</td></tr>
+  <tr><td>Endpoint Security client</td><td><strong>C</strong> (callable from C++/Obj-C/Swift)</td><td>C functions: <code>es_new_client()</code>, <code>es_subscribe()</code></td></tr>
+  <tr><td>DriverKit driver</td><td><strong>C++</strong> (a restricted dialect)</td><td>IOKit-style object model, <code>IOService</code> subclass</td></tr>
+  <tr><td><span class="tag">legacy</span> Kernel extension</td><td><strong>C / C++</strong> (+ a little asm)</td><td>IOKit (C++) or BSD/KPI (C), runs in-kernel</td></tr>
+</table>
+
+<div class="callout key">
+  <span class="lbl">For our build</span>
+  <p>We'll write a tiny <strong>SwiftUI container app + a Swift <code>NEFilterDataProvider</code></strong>. Modern, fully Swift, no C/C++ needed — and it runs with SIP on.</p>
+</div>
+
+<h2><span class="n">5</span>Anatomy: where an extension lives &amp; how it loads</h2>
+<p>A System Extension isn't a standalone install. It's an <code>.appex</code> bundle <em>nested inside a normal app</em>. The app asks the OS to activate it; the OS asks <em>you</em> to approve it; then a separate provider process runs.</p>
+
+<figure class="diagram">
+<svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,Helvetica,sans-serif" role="img" aria-label="Diagram: a container app in /Applications holds a system extension which activates via OSSystemExtensionRequest, sysextd, and user approval into a running user-space provider, contrasted with a kext loaded into the kernel.">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="var(--accent)"/>
+    </marker>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="var(--muted)"/>
+    </marker>
+  </defs>
+
+  <!-- user space band -->
+  <rect x="10" y="14" width="740" height="232" rx="12" fill="none" stroke="var(--line)" stroke-dasharray="5 5"/>
+  <text x="26" y="36" font-size="12" font-weight="700" fill="var(--muted)" letter-spacing="1">USER SPACE  (sandboxed · SIP on)</text>
+
+  <!-- container app -->
+  <rect x="34" y="58" width="250" height="150" rx="12" fill="var(--card)" stroke="var(--accent2)" stroke-width="1.5"/>
+  <text x="48" y="82" font-size="13" font-weight="700" fill="var(--fg)">MyFilter.app</text>
+  <text x="48" y="100" font-size="11" fill="var(--muted)">in /Applications</text>
+  <rect x="50" y="116" width="218" height="76" rx="9" fill="var(--keybg)" stroke="var(--line)"/>
+  <text x="62" y="136" font-size="10.5" fill="var(--muted)">Contents/Library/</text>
+  <text x="62" y="151" font-size="10.5" fill="var(--muted)">SystemExtensions/</text>
+  <rect x="74" y="158" width="182" height="26" rx="7" fill="var(--card)" stroke="var(--accent)" stroke-width="1.4"/>
+  <text x="84" y="175" font-size="11" font-weight="700" fill="var(--accent)">Filter.appex</text>
+
+  <!-- sysextd -->
+  <rect x="330" y="74" width="150" height="60" rx="11" fill="var(--card)" stroke="var(--line)"/>
+  <text x="405" y="100" font-size="12.5" font-weight="700" fill="var(--fg)" text-anchor="middle">sysextd</text>
+  <text x="405" y="118" font-size="10" fill="var(--muted)" text-anchor="middle">the OS broker</text>
+
+  <!-- user approval -->
+  <rect x="330" y="150" width="150" height="58" rx="11" fill="var(--warnbg)" stroke="#e8d48a"/>
+  <text x="405" y="173" font-size="12" font-weight="700" fill="var(--warn)" text-anchor="middle">User approves</text>
+  <text x="405" y="191" font-size="9.5" fill="var(--warn)" text-anchor="middle">System Settings toggle</text>
+
+  <!-- running provider -->
+  <rect x="528" y="74" width="200" height="134" rx="12" fill="var(--goodbg)" stroke="var(--good)" stroke-width="1.6"/>
+  <text x="628" y="100" font-size="13" font-weight="700" fill="var(--fg)" text-anchor="middle">Provider process</text>
+  <text x="628" y="118" font-size="10.5" fill="var(--muted)" text-anchor="middle">runs on its own</text>
+  <text x="628" y="146" font-size="11" fill="var(--good)" text-anchor="middle" font-weight="700">crash = just this</text>
+  <text x="628" y="162" font-size="11" fill="var(--good)" text-anchor="middle" font-weight="700">dies, OS lives</text>
+  <text x="628" y="190" font-size="10" fill="var(--muted)" text-anchor="middle">visible in `list`</text>
+
+  <!-- arrows user space -->
+  <line x1="284" y1="124" x2="326" y2="104" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="290" y="110" font-size="9.5" fill="var(--accent)">activate</text>
+  <line x1="405" y1="150" x2="405" y2="138" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="480" y1="104" x2="524" y2="120" stroke="var(--accent)" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="486" y="112" font-size="9.5" fill="var(--accent)">launch</text>
+
+  <!-- kernel band -->
+  <rect x="10" y="262" width="740" height="86" rx="12" fill="none" stroke="var(--line)"/>
+  <text x="26" y="284" font-size="12" font-weight="700" fill="var(--muted)" letter-spacing="1">KERNEL  (the old way)</text>
+  <rect x="528" y="294" width="200" height="42" rx="10" fill="var(--card)" stroke="#b3261e" stroke-width="1.4"/>
+  <text x="628" y="312" font-size="11.5" font-weight="700" fill="var(--fg)" text-anchor="middle">.kext loaded in-kernel</text>
+  <text x="628" y="327" font-size="9.5" fill="#b3261e" text-anchor="middle">crash = panic · needs SIP off</text>
+  <line x1="628" y1="208" x2="628" y2="292" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#arr2)"/>
+  <text x="636" y="252" font-size="9.5" fill="var(--muted)">what we're NOT doing</text>
+
+  <text x="48" y="234" font-size="11" fill="var(--accent2)">① App calls OSSystemExtensionRequest.activationRequest(…)</text>
+</svg>
+<figcaption>The activation path: the app embeds the <code>.appex</code>, asks <code>sysextd</code> to activate it, the user approves once, then the provider runs as its own user-space process — all with SIP enabled.</figcaption>
+</figure>
+
+<h2><span class="n">6</span>The entitlement reality check (why we pick Network Extension)</h2>
+<p>Two separate gates decide whether you can build <em>and run</em> your own extension. First: does the family need a <strong>special request form that only Apple can grant</strong>? Second: even once you can sign it, how does macOS let it <em>load</em>?</p>
+
+<table class="tbl">
+  <tr><th>Family</th><th>Needs Apple's special request form?</th><th>Notes</th></tr>
+  <tr><td><strong>Network Extension</strong></td><td class="yes">No</td><td>The capability is <strong>self-service</strong> in the Developer portal. You can build, sign, and provision it yourself.</td></tr>
+  <tr><td>Endpoint Security</td><td class="no">Yes</td><td>Needs <code>com.apple.developer.endpoint-security.client</code> — granted only via Apple's <a href="https://developer.apple.com/system-extensions/">System Extensions request form</a>.</td></tr>
+  <tr><td>DriverKit</td><td class="no">Yes</td><td>DriverKit entitlements are Apple-granted too; and you'd want real hardware to drive.</td></tr>
+  <tr><td>Camera (CMIO)</td><td class="yes">No</td><td>Self-service, but more moving parts (virtual-device plumbing) than a filter.</td></tr>
+</table>
+
+<div class="callout warn">
+  <span class="lbl">The second gate — verified on your Mac</span>
+  <p>Your signature carries <code>com.apple.developer.networking.networkextension</code>, which is a <strong>restricted</strong> entitlement. macOS only lets a restricted-entitlement extension load through one of two doors:</p>
+  <p>① <strong>A provisioning profile</strong> that authorizes the entitlement → it loads with <strong>SIP on</strong> (the pro path; the NE capability is self-service, so no Apple wait).<br>
+     ② <strong>Developer mode</strong> (<code>systemextensionsctl developer on</code>) → which on macOS&nbsp;15 <strong>requires SIP to be disabled first.</strong></p>
+  <p>Both were proven on <em>this</em> machine while building this course: a from-scratch build carrying the NE entitlement with no profile is <code>Killed: 9</code> at launch (that's AMFI, working as designed), and <code>developer on</code> refuses while SIP is enabled. Lesson&nbsp;5 walks the SIP-on provisioning door.</p>
+</div>
+
+<div class="callout key">
+  <span class="lbl">Decision for this course</span>
+  <p>Still a <strong>Network Extension content filter</strong> (<code>NEFilterDataProvider</code>): it's the only interesting family with <strong>no Apple request form</strong>, it sees <em>every</em> network flow (immediately observable with <code>log stream</code>), and your paid Developer account can provision it with SIP left on. Endpoint Security and DriverKit we cover conceptually — they're gated behind the form.</p>
+</div>
+
+<h2><span class="n">7</span>Quick check</h2>
+<p>Tap an answer — you'll get instant feedback. No score saved; this is just to make the ideas stick.</p>
+
+<div class="quiz" id="quiz">
+  <div data-q data-correct="1">
+    <p class="q"><span class="qnum">Q1.</span> Your <code>systemextensionsctl list</code> shows OBS with a star under <code>active</code> but <em>no</em> star under <code>enabled</code>. What does that mean?</p>
+    <button class="opt">It failed to install and isn't running.</button>
+    <button class="opt">It's loaded and running, but the user hasn't switched it on in System Settings yet.</button>
+    <button class="opt">It's a kernel extension, not a system extension.</button>
+    <div class="fb ok">Right. <code>active</code> = the process is loaded; <code>enabled</code> = the user toggled it on. They're independent — OBS is <em>"activated waiting for user."</em></div>
+    <div class="fb no">Not quite. <code>active</code> means it <em>is</em> running; the empty <code>enabled</code> column just means the user hasn't flipped the System Settings toggle. State reads <em>"activated waiting for user."</em></div>
+  </div>
+
+  <div data-q data-correct="2" style="margin-top:1.4rem">
+    <p class="q"><span class="qnum">Q2.</span> You want to build something on this Mac <em>today</em> without filing a request form and waiting on Apple. Which family?</p>
+    <button class="opt">Endpoint Security — it's the most powerful.</button>
+    <button class="opt">DriverKit — drivers are the classic example.</button>
+    <button class="opt">Network Extension — runnable locally with developer mode on.</button>
+    <div class="fb no">That one needs a <strong>restricted, Apple-granted entitlement</strong> via the request form — there's a wait, even for local dev.</div>
+    <div class="fb ok">Exactly. The Network Extension capability is <strong>self-service</strong> — no Apple request form. You provision it yourself (or use developer mode). That's why it's our build target.</div>
+  </div>
+
+  <div data-q data-correct="0" style="margin-top:1.4rem">
+    <p class="q"><span class="qnum">Q3.</span> The big safety win of a System Extension over a kext is…</p>
+    <button class="opt">It runs in a sandboxed user-space process, so a crash kills only that process — not the whole OS — and it loads with SIP on.</button>
+    <button class="opt">It runs faster because it's inside the kernel.</button>
+    <button class="opt">It doesn't need code signing.</button>
+    <div class="fb ok">Yes. Out of the kernel, into user space: a crash is a dead process, not a panic — and no need to reduce security.</div>
+    <div class="fb no">No — that describes a kext (in-kernel). The System Extension win is the opposite: <em>out</em> of the kernel, sandboxed, crash-isolated, SIP stays on.</div>
+  </div>
+</div>
+
+<h2><span class="n">8</span>Flashcards</h2>
+<details class="fc"><summary>What is a System Extension, in one line?</summary><p>A third-party extension that does kext-style jobs (network filtering, security monitoring, drivers) but runs as a sandboxed <strong>user-space</strong> process, loading with SIP enabled.</p></details>
+<details class="fc"><summary>Name the four System Extension families.</summary><p><strong>Network Extension</strong> (VPN/filter/DNS/proxy), <strong>Endpoint Security</strong> (EDR/security events), <strong>DriverKit</strong> (hardware drivers, <code>.dext</code>), and <strong>Camera/CMIO</strong> (virtual cameras).</p></details>
+<details class="fc"><summary>In <code>systemextensionsctl list</code>, what's the difference between the <code>active</code> and <code>enabled</code> columns?</summary><p><code>active</code> = the extension process is currently loaded/running. <code>enabled</code> = the user has switched it on in System Settings. They're independent (see OBS: active, not enabled).</p></details>
+<details class="fc"><summary>Where does the extension binary physically live?</summary><p>As an <code>.appex</code> inside the container app: <code>YourApp.app/Contents/Library/SystemExtensions/</code>. The app activates it via <code>OSSystemExtensionRequest</code>.</p></details>
+<details class="fc"><summary>Which two families need an Apple-granted restricted entitlement even for local dev?</summary><p><strong>Endpoint Security</strong> (<code>com.apple.developer.endpoint-security.client</code>) and <strong>DriverKit</strong>. Network Extensions can run locally with developer mode on.</p></details>
+<details class="fc"><summary>What language will <em>our</em> build use?</summary><p>All <strong>Swift</strong>: a SwiftUI container app plus a Swift <code>NEFilterDataProvider</code>. No C or C++ required.</p></details>
+<details class="fc"><summary>What are the two ways macOS will load a System Extension that carries a restricted entitlement?</summary><p>① a <strong>provisioning profile</strong> authorizing the entitlement (loads with <strong>SIP on</strong> — the path properly-shipped vendor extensions like Tailscale &amp; Mac Monitor use), or ② <strong>developer mode</strong> (<code>systemextensionsctl developer on</code>), which on macOS&nbsp;15 requires <strong>SIP off</strong>.</p></details>
+
+<h2><span class="n">9</span>What's next</h2>
+<div class="next">
+  <span class="st">L2 →</span><span class="lb"><strong>Developer mode + scaffold the container app.</strong> Run <code>systemextensionsctl developer on</code>, create the SwiftUI app, embed an empty <code>.appex</code>, and call <code>OSSystemExtensionRequest</code> — watch the approval prompt appear.</span>
+  <span class="st">L3 →</span><span class="lb"><strong>Write the content-filter provider.</strong> Subclass <code>NEFilterDataProvider</code>, return verdicts on new flows, wire up <code>Info.plist</code> / entitlements.</span>
+  <span class="st">L4 →</span><span class="lb"><strong>Build → install → watch it filter.</strong> Build from the CLI, activate, approve, then <code>sudo log stream</code> to watch your extension see your live traffic. The payoff.</span>
+</div>
+
+<div class="ask">
+  <b>💬 I'm your teacher — ask me anything.</b> Before Lesson 2: want me to explain what a "network flow" actually is, how <code>NEFilterDataProvider</code> decides allow/deny, or anything from the entitlement table? Or if you'd rather aim the build at a <em>DNS proxy</em> or <em>transparent proxy</em> instead of a content filter, say so and I'll re-plan. Just tell me to start Lesson 2 when you're ready.
+</div>
+
+<div class="footer">
+  <strong>macOS Kernel &amp; System Extensions</strong> · Lesson 1 of an evolving series ·
+  Reference: <a href="../reference/glossary.html">Course Glossary</a><br>
+  Sources:
+  <a href="https://developer.apple.com/documentation/systemextensions">Apple — System Extensions framework</a> ·
+  <a href="https://developer.apple.com/documentation/networkextension/filtering-network-traffic">Apple — Filtering network traffic</a> ·
+  <a href="https://developer.apple.com/system-extensions/">Apple — System Extensions &amp; entitlements</a> ·
+  <a href="https://developer.apple.com/support/kernel-extensions">Apple — Deprecated kernel extensions</a> ·
+  <a href="https://eclecticlight.co/2024/07/24/how-macos-is-moving-away-from-kernel-extensions/">Eclectic Light — moving away from kexts</a>
+</div>
+
+</div>
+
+<script>
+  document.querySelectorAll('#quiz [data-q]').forEach(function(block){
+    var correct = parseInt(block.getAttribute('data-correct'), 10);
+    var opts = block.querySelectorAll('.opt');
+    var fbs  = block.querySelectorAll('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; o.style.cursor='default'; });
+        opts[correct].classList.add('correct');
+        if(i !== correct) opt.classList.add('wrong');
+        (i === correct ? fbs[0] : fbs[1]).classList.add('show');
+      });
+    });
+  });
+</script>
+</body>
+</html>

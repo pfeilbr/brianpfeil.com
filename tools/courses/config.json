@@ -1,0 +1,24 @@
+{
+  "_comment": "Settings for sync_courses.py. `source` is the learn project's courses directory (a /teach workspace per course). Only lessons/ and reference/ are published -- MISSION.md, NOTES.md and learning-records/ are about the learner and stay private. `redact` is applied to every published page, in order, as regex -> replacement; `deny` is checked afterwards and any hit stops the sync, so a new lesson that mentions something personal can't slip out.",
+  "source": "~/projects/learn/public/courses",
+  "exclude": [],
+  "redact": [
+    ["Apple Development: Brian Pfeil \\([A-Z0-9]{10}\\)", "Apple Development: Your Name (TEAMID1234)"],
+    ["\\bBrian's\\b", "your"],
+    ["brian@example\\.com", "alex@example.com"],
+    ["\\bBrian\\b", "Alex"]
+  ],
+  "deny": [
+    "(?i)brian",
+    "(?i)pfeil",
+    "/Users/",
+    "(?i)merck",
+    "74RVUYRQ4F",
+    "(?i)@gmail\\.com",
+    "\\b100\\.(6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\\.[0-9]{1,3}\\.[0-9]{1,3}\\b",
+    "\\b192\\.168\\.[0-9]{1,3}\\.[0-9]{1,3}\\b",
+    "sk-ant-",
+    "\\bAKIA[0-9A-Z]{16}\\b",
+    "\\bghp_[A-Za-z0-9]{20,}"
+  ]
+}

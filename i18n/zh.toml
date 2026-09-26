@@ -515,6 +515,91 @@ other = "无法加载此页面的数据，请刷新重试。"
 
 [data_noscript]
 other = "此页面由 JavaScript 绘制。数据见 <a href=\"{{ .url }}\">{{ .url }}</a>。"
+# --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
+
+[courses_intro]
+other = "{count} 门免费课程，共 {lessons} 课。每一门都是我一边自学这个主题、一边和 Claude 一起逐课写成的。课程注重动手和互动，免费阅读，无需注册。"
+
+[courses_english_note]
+other = "课程内容为英文。"
+
+[courses_filter]
+other = "按主题筛选"
+
+[courses_all]
+other = "全部"
+
+[courses_lessons]
+other = "{n} 课"
+
+[courses_updated]
+other = "更新于 {date}"
+
+[courses_start]
+other = "从第 1 课开始"
+
+[courses_lessons_h]
+other = "课程目录"
+
+[courses_reference_h]
+other = "速查"
+
+[courses_resources_h]
+other = "下一步去哪儿"
+
+[courses_resources_note]
+other = "每一课核对过的资料来源，以及可以提问的地方。"
+
+[courses_back]
+other = "全部课程"
+
+[courses_footnote]
+other = "每一课都是一个独立的页面：无需注册，没有追踪，阅读时也不用安装任何东西。"
+
+[course_cat_ai_ml]
+other = "AI 与 ML"
+
+[course_cat_programming_languages]
+other = "编程语言"
+
+[course_cat_web_frontend]
+other = "Web 与前端"
+
+[course_cat_mobile]
+other = "移动开发"
+
+[course_cat_backend_data]
+other = "后端与数据"
+
+[course_cat_devops_infra]
+other = "DevOps 与基础设施"
+
+[course_cat_security]
+other = "安全"
+
+[course_cat_hardware_systems]
+other = "硬件与系统"
+
+[course_cat_productivity_tools]
+other = "效率与工具"
+
+[course_cat_science_math]
+other = "科学与数学"
+
+[course_cat_other]
+other = "其他"
+
+[learn_courses_cta]
+other = "想要有人带着学？试试我逐课写成的免费课程。"
+
+[hub_courses_title]
+other = "课程"
+
+[hub_courses_blurb]
+other = "我在学习各个主题时写下的免费多课时课程"
+
+[hub_courses_count]
+other = "{{ .count }} 门课程"
 
 # --- /learn/ (layouts/_default/learn.html, data/learn.json) ---
 

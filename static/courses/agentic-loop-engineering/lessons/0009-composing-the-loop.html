@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 9 — Choosing Gates & Composing Loops</title>
+<style>
+  :root{
+    --paper:#faf7f0; --ink:#1f2328; --soft:#5b6168; --line:#e4ddcf;
+    --accent:#0f766e; --accent-soft:#d7ede9; --gold:#b45309; --gold-soft:#fbe7cf;
+    --card:#fffdf8; --code:#2d2a26; --codeink:#eae3d6; --good:#2f9e44; --bad:#d64545;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:48px 24px}
+  .wrap{max-width:800px;margin:0 auto}
+  h1,h2,h3{font-family:Georgia,"Iowan Old Style",Charter,serif;line-height:1.18;letter-spacing:-.01em}
+  h1{font-size:2.3rem;margin:.1em 0 .15em} h2{font-size:1.5rem;margin:2.2em 0 .5em} h3{font-size:1.1rem;margin:1.4em 0 .3em}
+  .kicker{font:600 .74rem/1 system-ui;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .sub{color:var(--soft);font-size:1.12rem;max-width:62ch;margin:.3em 0 0}
+  p{margin:.7em 0} a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft)} a:hover{border-color:var(--accent)}
+  code{background:#efe9dd;padding:.12em .42em;border-radius:5px;font:.85em ui-monospace,Menlo,monospace}
+  .meta{display:flex;gap:14px;flex-wrap:wrap;margin:1.4em 0 0;font-size:.84rem;color:var(--soft)}
+  .meta span{background:var(--card);border:1px solid var(--line);padding:5px 12px;border-radius:99px}
+  hr{border:0;border-top:2px solid var(--line);margin:2.4em 0}
+  .cite{font-size:.8rem;color:var(--soft)}
+  .callout{background:var(--accent-soft);border-radius:12px;padding:16px 20px;margin:1.2em 0}
+  .callout strong{color:var(--accent)}
+  pre{background:var(--code);color:var(--codeink);border-radius:12px;padding:14px 16px;overflow:auto;font:12.5px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;margin:.6em 0}
+  pre .c{color:#8a8474} pre .s{color:#e0b070}
+  table{width:100%;border-collapse:collapse;margin:1em 0;font-size:.9rem}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font:600 .7rem/1.3 system-ui;letter-spacing:.07em;text-transform:uppercase;color:var(--soft);background:var(--card)}
+  tbody tr:nth-child(even){background:#fbf8f1}
+  .stack{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 20px 14px;margin:1.2em 0}
+  .stack .layer{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+  .stack .layer:last-child{border-bottom:0}
+  .stack .ico{font-size:1.3rem;flex:0 0 auto}
+  .stack .layer b{display:block;font-size:.95rem}
+  .stack .layer .d{color:var(--soft);font-size:.9rem}
+  .anti{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--bad);border-radius:12px;padding:12px 18px;margin:12px 0;font-size:.94rem}
+  .anti b{color:var(--bad)}
+  /* quiz */
+  .quiz{background:var(--card);border:2px solid var(--accent);border-radius:16px;padding:24px;margin:1.6em 0}
+  .qprog{font:600 .8rem system-ui;color:var(--soft);float:right}
+  .scenario{font-size:1rem;margin:.6em 0 1em;padding:14px 16px;background:var(--gold-soft);border-radius:10px;color:#4a3310}
+  .opts{display:grid;gap:10px}
+  .opt{text-align:left;font:inherit;font-size:.95rem;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:12px 16px;cursor:pointer;transition:.12s;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--accent);transform:translateY(-1px)} .opt:disabled{cursor:default;opacity:.95}
+  .opt.correct{border-color:var(--good);background:#eef8ee} .opt.wrong{border-color:var(--bad);background:#fdeeee}
+  .fb{margin:14px 0 0;padding:14px 16px;border-radius:10px;font-size:.96rem;display:none} .fb.show{display:block}
+  .fb.ok{background:#eef8ee;border:1px solid var(--good)} .fb.no{background:#fdeeee;border:1px solid var(--bad)} .fb b{display:block;margin-bottom:.2em}
+  .qnav{margin-top:16px;display:flex;justify-content:space-between;align-items:center}
+  .btn{font:600 .92rem system-ui;background:var(--accent);color:#fff;border:0;border-radius:9px;padding:10px 20px;cursor:pointer} .btn:disabled{opacity:.4;cursor:default}
+  .score{font-weight:700}
+  .done{text-align:center;padding:10px} .done .big{font-family:Georgia,serif;font-size:2.4rem;color:var(--accent)}
+  .ask{background:var(--gold-soft);border-radius:12px;padding:16px 20px;margin:1.4em 0;color:#5c3d12}
+  .next{display:flex;gap:14px;flex-wrap:wrap;margin-top:1em}
+  .next a{flex:1 1 200px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+  .next a b{color:var(--accent);display:block}
+  footer{margin-top:3em;padding-top:1.2em;border-top:2px solid var(--line);font-size:.82rem;color:var(--soft)}
+  @media(max-width:640px){body{padding:28px 14px}h1{font-size:1.8rem}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: agentic-loop-engineering ---- */
+/* ============================================================================
+   agentic-loop-engineering course adapter — re-skin this course's bespoke
+   "warm paper" component classes with the canonical tokens from
+   assets/theme.css. Injected AFTER theme.css and AFTER each lesson's own
+   <style>, so these rules win. The course hardcodes a single light palette
+   (--paper / --ink / --card / --gold / teal --accent) in its own :root plus a
+   set of dark transcript widgets (.session/.bubble/.tool/.gblock/.hookblock)
+   with baked-in dark hexes. We retokenise both onto the unified vocabulary so
+   the course matches ebpf/nix and gains real light + dark mode without
+   touching any lesson markup. !important is used wherever the course hardcodes
+   a colour, to guarantee the override. See scripts/theme_lessons.py.
+   ============================================================================ */
+
+/* ---- redirect the course's OWN palette vars onto the canonical tokens -------
+   The lessons reference these vars everywhere (background:var(--paper), etc.).
+   Re-pointing them is the cheapest, broadest fix and makes everything that
+   wasn't individually overridden below adapt to dark mode for free. */
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"]{
+  --paper:var(--bg);
+  --ink:var(--fg);
+  --soft:var(--muted);
+  --line:var(--border);
+  --card:var(--surface);
+  --accent-soft:color-mix(in srgb,var(--accent) 14%,transparent);
+  --gold:var(--warn);
+  --gold-soft:color-mix(in srgb,var(--warn) 14%,transparent);
+  --good:var(--mark);
+  --bad:var(--danger);
+  /* dark code panel in both themes */
+  --code:var(--code-bg);
+  --codeink:var(--code-ink);
+  /* reference-file syntax/legend helper vars */
+  --codecom:#7f8db3; --codekey:#74c0fc; --codestr:#63e6be;
+  /* reference taxonomy verdict chips */
+  --t1:color-mix(in srgb,var(--mark) 16%,transparent); --t1b:var(--mark);
+  --t2:color-mix(in srgb,var(--warn) 16%,transparent); --t2b:var(--warn);
+  --t3:color-mix(in srgb,var(--danger) 16%,transparent); --t3b:var(--danger);
+}
+
+/* ---- page shell: warm paper body → unified column on var(--bg) ---- */
+body{ background:var(--bg) !important; color:var(--fg) !important; }
+.wrap{ max-width:var(--maxw); margin:0 auto; }
+
+/* ---- headings (course uses serif teal accents) ---- */
+h1{ color:var(--fg) !important; }
+h2{ color:var(--fg) !important; }
+h3{ color:var(--accent) !important; }
+.kicker{ color:var(--accent) !important; }
+.sub,.lede{ color:var(--muted) !important; }
+.src,.cite{ color:var(--muted) !important; }
+
+/* ---- inline code ---- */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; border-radius:6px; }
+
+/* ---- code blocks: force light-on-dark in both themes ---- */
+pre{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; border-radius:12px !important; }
+pre code{ background:none !important; color:inherit !important; padding:0; }
+.fname{ color:var(--muted) !important;
+  background:color-mix(in srgb,var(--fg) 8%,transparent) !important;
+  border:1px solid var(--border) !important; border-bottom:0 !important; }
+
+/* syntax tokens (the terse 1-letter classes), remapped by role:
+   .c comment · .s string · .k keyword · .f function/punct · .bug error mark */
+pre .c{ color:#7f8db3 !important; }                 /* comments  */
+pre .s{ color:#63e6be !important; }                 /* strings   */
+pre .k{ color:#74c0fc !important; }                 /* keywords  */
+pre .f{ color:var(--accent-2) !important; }         /* func/punct */
+pre .bug{ background:color-mix(in srgb,var(--danger) 38%,transparent) !important;
+  border-radius:3px; }                              /* highlighted bug */
+
+/* ---- generic callout / card / box surfaces → unified neutral ---- */
+.callout{ background:color-mix(in srgb,var(--accent) 9%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--accent) 26%,transparent) !important;
+  border-radius:12px !important; }
+.callout strong{ color:var(--accent) !important; }
+.card,.spotlight,.tree,.gate,.vcard,.anatomy .p,.item,.stack,
+.twocol .col,.ladder .rung,.pillrow b,.legend{ background:var(--surface) !important;
+  border-color:var(--border) !important; }
+.tree b,.anatomy .p b{ color:var(--accent) !important; }
+.tree .note{ color:var(--muted) !important; }
+
+/* ---- gold / "ask" / scenario / rubric callouts → warn tint ---- */
+blockquote,.ask,.scenario,.anno,.rubricbox{
+  background:color-mix(in srgb,var(--warn) 11%,transparent) !important;
+  color:var(--fg) !important; }
+blockquote{ border-left:4px solid var(--warn) !important; }
+blockquote cite{ color:var(--muted) !important; }
+.anno .n{ background:var(--warn) !important; color:#fff !important; }
+
+/* ---- yes/no comparison columns ---- */
+.twocol .yes h3,.rec{ color:var(--mark) !important; }
+.twocol .no h3,.anti b,.star{ color:var(--accent) !important; }
+.star{ color:var(--warn) !important; }
+.anti,.fails .f1{ background:var(--surface) !important;
+  border-color:var(--border) !important;
+  border-top-color:var(--danger) !important; }
+
+/* ---- loop / node diagram chips ---- */
+.loop,.loopviz{ background:var(--surface) !important; border-color:var(--border) !important; }
+.loop .node,.loopviz .node,.loop span.node{
+  background:color-mix(in srgb,var(--accent) 16%,transparent) !important;
+  color:var(--accent) !important; }
+.loop .node.hot,.loopviz .node.hot,.loop span.node.hot{
+  background:color-mix(in srgb,var(--warn) 18%,transparent) !important;
+  color:var(--warn) !important; box-shadow:0 0 0 2px var(--warn) !important; }
+.loop .arr,.loopviz .arr{ color:var(--muted) !important; }
+
+/* ---- ladder rungs ---- */
+.ladder .rung .n{ background:var(--muted) !important; color:#fff !important; }
+.ladder .rung.hot{ background:color-mix(in srgb,var(--warn) 14%,transparent) !important;
+  border-color:var(--warn) !important; }
+.ladder .rung.hot .n{ background:var(--warn) !important; }
+
+/* ---- "gate" / vcard accent rails ---- */
+.gate{ border-left:4px solid var(--accent) !important; }
+.gate .lvl{ color:var(--accent) !important; }
+.vcard{ border-left:4px solid var(--accent) !important; }
+.vcard .tag,.tag{ background:color-mix(in srgb,var(--accent) 14%,transparent) !important;
+  color:var(--accent) !important; }
+.vcard .tag{ background:color-mix(in srgb,var(--warn) 16%,transparent) !important;
+  color:var(--warn) !important; }
+
+/* ---- dark transcript widgets: retokenise onto panel/surface, NOT raw dark ---- */
+.session{ background:var(--panel) !important; border:1px solid var(--border) !important; }
+.session pre{ background:var(--code-bg) !important; }
+.who{ color:var(--accent) !important; }
+.who.u{ color:var(--warn) !important; }
+.who.m{ color:var(--accent-2) !important; }
+.who.g{ color:var(--danger) !important; }
+.bubble{ background:var(--surface) !important; color:var(--fg) !important; }
+.u .bubble{ background:color-mix(in srgb,var(--warn) 12%,transparent) !important; }
+.m .bubble{ background:color-mix(in srgb,var(--accent-2) 12%,transparent) !important; }
+.tool{ color:var(--muted) !important; }
+.tool b{ color:var(--warn) !important; }
+
+/* gold/red/green inline transcript blocks → semantic tints */
+.gblock{ background:color-mix(in srgb,var(--warn) 12%,transparent) !important;
+  border-color:var(--warn) !important; color:var(--fg) !important; }
+.gblock .bubble{ background:color-mix(in srgb,var(--warn) 10%,transparent) !important; }
+.gblock .tool b{ color:var(--warn) !important; }
+.hookblock{ background:color-mix(in srgb,var(--danger) 10%,transparent) !important;
+  border-color:var(--danger) !important; color:var(--fg) !important; }
+.hookblock .who{ color:var(--danger) !important; }
+.hookblock pre{ background:var(--code-bg) !important; }
+.hookblock.allowed{ background:color-mix(in srgb,var(--mark) 10%,transparent) !important;
+  border-color:var(--mark) !important; }
+.hookblock.allowed .who{ color:var(--mark) !important; }
+.hookblock.allowed pre{ background:var(--code-bg) !important; }
+
+/* pass/fail + verification-line markers */
+.pass{ color:var(--mark) !important; }
+.fail{ color:var(--danger) !important; }
+.vline.p{ background:color-mix(in srgb,var(--mark) 16%,transparent) !important; color:var(--mark) !important; }
+.vline.f{ background:color-mix(in srgb,var(--danger) 16%,transparent) !important; color:var(--danger) !important; }
+
+/* badges — tinted pills (token text on a tint of the same token), legible in
+   light AND dark. A solid --warn/--mark fill + white text fails in dark mode,
+   where those tokens are light. */
+.badge{ background:color-mix(in srgb,var(--warn) 22%,transparent) !important;
+  color:var(--warn) !important; border:1px solid color-mix(in srgb,var(--warn) 45%,transparent) !important; }
+.badge.ok{ background:color-mix(in srgb,var(--mark) 22%,transparent) !important;
+  color:var(--mark) !important; border-color:color-mix(in srgb,var(--mark) 45%,transparent) !important; }
+
+/* item message (mono) → code panel */
+.item .msg{ background:var(--code-bg) !important; color:var(--code-ink) !important; }
+
+/* ---- quiz / interactive widgets ---- */
+.quiz,.ws,.lab{ background:var(--surface) !important; border:2px solid var(--accent) !important; }
+.qprog{ color:var(--muted) !important; }
+.opt{ background:var(--panel) !important; border-color:var(--border) !important;
+  color:var(--fg) !important; }
+.opt:hover:not(:disabled){ border-color:var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 7%,transparent) !important; }
+.opt.correct{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 14%,transparent) !important; }
+.opt.wrong{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 13%,transparent) !important; }
+.opt code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; }
+.fb{ color:var(--fg) !important; }
+.fb.ok{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  border:1px solid var(--mark) !important; }
+.fb.no{ background:color-mix(in srgb,var(--danger) 13%,transparent) !important;
+  border:1px solid var(--danger) !important; }
+.score,.done .big{ color:var(--accent) !important; }
+.legend{ background:transparent !important; color:var(--muted) !important; }
+
+/* verdict toggles (calibration lesson) */
+.verdict.agree{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  border:1px solid var(--mark) !important; color:var(--fg) !important; }
+.verdict.disagree{ background:color-mix(in srgb,var(--danger) 13%,transparent) !important;
+  border:1px solid var(--danger) !important; color:var(--fg) !important; }
+.vbtn{ background:var(--panel) !important; border-color:var(--border) !important;
+  color:var(--fg) !important; }
+.vbtn.self{ border-color:var(--danger) !important; color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 12%,transparent) !important; }
+.vbtn.selp{ border-color:var(--mark) !important; color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 12%,transparent) !important; }
+.ws select{ background:var(--panel) !important; border-color:var(--border) !important;
+  color:var(--fg) !important; }
+.ws label{ color:var(--muted) !important; }
+
+/* ---- buttons ---- */
+.btn{ background:var(--accent) !important; color:#fff !important; }
+.btn.ghost{ background:var(--surface) !important; color:var(--accent) !important;
+  border:1.5px solid var(--accent) !important; }
+
+/* ---- next / nav cards + footer ---- */
+.next a{ background:var(--panel) !important; border-color:var(--border) !important; }
+.next a b{ color:var(--accent) !important; }
+footer{ border-top:2px solid var(--border) !important; color:var(--muted) !important; }
+.meta span{ background:var(--surface) !important; border-color:var(--border) !important;
+  color:var(--muted) !important; }
+.pillrow b span,.pill{ color:var(--accent) !important; }
+
+/* ---- spectrum bar (verifier taxonomy reference): keep gradient legible ----
+   It deliberately ramps teal→amber→red with white text; re-anchor the stops to
+   tokens so it stays on-brand in dark mode. White text is preserved. */
+.spectrum{ border-color:var(--border) !important; }
+/* white labels on the gradient ramp + on small token-coloured badges (.n) need a
+   shadow to stay legible where a token is light in dark mode. */
+.spectrum div{ color:#fff !important; text-shadow:0 1px 2px rgba(0,0,0,.6) !important; }
+.n{ text-shadow:0 1px 2px rgba(0,0,0,.55) !important; }
+.s1{ background:var(--accent) !important; }
+.s2{ background:color-mix(in srgb,var(--accent) 60%,var(--warn)) !important; }
+.s3{ background:color-mix(in srgb,var(--warn) 70%,var(--accent)) !important; }
+.s4{ background:var(--warn) !important; }
+.s5{ background:color-mix(in srgb,var(--danger) 70%,var(--warn)) !important; }
+
+/* ---- CONTRAST blanket: every text-bearing box onto --fg (EXCLUDING code) ----
+   The course bakes dark ink (#1f2328, #5c3d12, #4a3310, #4a3310…) into many
+   boxes, illegible on dark-mode tinted backgrounds. Force --fg everywhere that
+   isn't a code panel. */
+.callout,.card,.spotlight,.spotlight .row b,.tree,.gate,.gate b,.vcard,
+.anatomy .p,.item,.stack,.stack .layer,.twocol .col,.ladder .rung,
+.bubble,.gblock,.hookblock,.quiz,.ws,.lab,.fb,.scenario,.anno,.rubricbox,
+.ask,blockquote,.anti,.fails .f1,.verdict,.legend,p,li,td,th{
+  color:var(--fg) !important; }
+.spotlight .row .d,.stack .layer .d,.twocol .col,.muted,.fnote{ color:var(--muted) !important; }
+/* table row striping: the course uses a hardcoded light "paper" stripe that is
+   invisible under light text in dark mode. Retokenize to a scheme-aware tint. */
+tr{ background:transparent !important; }
+tbody tr:nth-child(even){ background:color-mix(in srgb,var(--fg) 5%,transparent) !important; }
+/* …but never repaint code panels or their tokens */
+pre,pre *,.item .msg,.fname{ }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/agentic-loop-engineering/" style="color:inherit;text-decoration:none">&larr; Agentic Loop Engineering</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+  <span class="kicker">Lesson 9 · Agentic Loop Engineering</span>
+  <h1>Choosing Gates &amp; Composing Loops</h1>
+  <p class="sub">You've run Gates 3 and 4 live and met every verifier on the menu. This is the synthesis: which gate, when — and how the pieces stack into one loop.</p>
+  <div class="meta"><span>⏱ ~9 min</span><span>🎯 The decision framework</span><span>🔗 Synthesizes Lessons 1–8</span></div>
+
+  <hr>
+
+  <h2>1 · The two gates you haven't formally met</h2>
+  <p>Lessons 3–4 took you deep on the heavy gates. The light ones matter just as much, because most work doesn't deserve a hook:</p>
+  <p><strong>Gate 1 — in one prompt.</strong> The check rides along with the task in the same message: "write <code>validateEmail</code>… run the tests after implementing and fix failures." Claude "does the work, runs the check, reads the result, and iterates until the check passes" — all inside one turn. Zero setup, scoped to exactly this task, gone when the turn ends. This should be your reflex for everyday work — most of this course's verifiers were introduced as Gate 1 ride-alongs for a reason.</p>
+  <p><strong>Gate 2 — a <code>/goal</code> condition.</strong> Session-scoped: you set the check as a goal, and "a separate evaluator re-checks it after every turn and Claude keeps working until it holds." <span class="cite">(<a href="https://code.claude.com/docs/en/best-practices">best practices</a>)</span> Think of it as a Stop hook's advisory cousin: re-checked every turn like a hook, but evaluated rather than script-enforced — right for conditions that need judgment ("the README accurately describes the new flag") or that you don't want to write a script for.</p>
+
+  <h2>2 · Choosing: scope × enforcement</h2>
+  <table>
+    <thead><tr><th>Gate</th><th>Scope</th><th>Enforcement</th><th>Reach for it when…</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1 · In-prompt</strong></td><td>One task</td><td>Words (this turn)</td><td>Default for everyday tasks; the verifier exists and is cheap to run.</td></tr>
+      <tr><td><strong>2 · /goal</strong></td><td>Session</td><td>Evaluator, every turn</td><td>A condition must hold across many turns of meandering work; scripting it is awkward.</td></tr>
+      <tr><td><strong>3 · Stop hook</strong></td><td>Every turn, every session</td><td>Script — deterministic</td><td>"Must happen every time with zero exceptions": green suite, honest ledger, no secrets in diff.</td></tr>
+      <tr><td><strong>4 · Subagent</strong></td><td>On demand</td><td>Fresh-context judgment</td><td>The criteria need judgment AND the worker shouldn't grade itself.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout"><strong>The rule of thumb:</strong> escalate on <em>cost of a wrong "done"</em>, not on availability. A hook you could build but don't need is latency tax on every turn (Lesson 4's design rules); a hook you need but skipped is how a lying ledger ships. Start at Gate 1; promote a check up the ladder the first time its absence bites.</div>
+
+  <h2>3 · Composition — the full-stack loop</h2>
+  <p>Real loops stack verifiers the way real codebases stack tests. Here's the reference stack, assembled entirely from things you've already run:</p>
+  <div class="stack">
+    <div class="layer"><span class="ico">🧪</span><div><b>TDD core (Gate 1)</b><div class="d">Failing tests committed first — the unambiguous inner feedback signal (Lesson 1). Cheapest loop, runs constantly.</div></div></div>
+    <div class="layer"><span class="ico">📜</span><div><b>Environment evidence (Gate 1)</b><div class="d">World-state queries, log tails, golden diffs ride along in prompts where the work touches the world (Lesson 8).</div></div></div>
+    <div class="layer"><span class="ico">⛔</span><div><b>Stop hook floor (Gate 3)</b><div class="d">Suite green + ledger honest, enforced by script on every turn end (Lessons 4–5). The model can't undercut the floor.</div></div></div>
+    <div class="layer"><span class="ico">🕵️</span><div><b>Adversarial ceiling (Gate 4)</b><div class="d">diff-grader judges what scripts can't — requirements met, no tests weakened — from a fresh context (Lesson 3), with its judgment calibrated (Lesson 6).</div></div></div>
+    <div class="layer"><span class="ico">📋</span><div><b>Ledger horizon (cross-session)</b><div class="d">features.json carries "done" across context windows for long work (Lesson 5).</div></div></div>
+  </div>
+  <p>Two more composition patterns from the best-practices page worth knowing: <strong>writer/reviewer</strong> — parallel sessions where one Claude writes and another reviews; and <strong>test-writer/implementer</strong> — "have one Claude write tests, then another write code to pass them," which keeps the test-author's blind spots out of the implementation. Both are organizational versions of Lesson 3's principle: separate the doing from the grading.</p>
+
+  <h2>4 · Anti-patterns — the ways loops rot</h2>
+  <div class="anti"><b>The slow gate.</b> A 90-second suite in a Stop hook taxes every turn. Gate on the fast tier; run the slow tier on demand or in CI. Speed is what lets the loop iterate (Ronacher).</div>
+  <div class="anti"><b>The flaky gate.</b> A randomly-failing check in a hook is a randomly locking door — and it trains everyone (model included) to distrust the gate. Quarantine flakes before gating.</div>
+  <div class="anti"><b>The unbounded reviewer.</b> A reviewer told to find problems "will usually report some, even when the work is sound" — bound the rubric to correctness/requirement gaps or it manufactures endless busywork (Lesson 3's diff-grader does this in one line).</div>
+  <div class="anti"><b>Verifying the narration.</b> Any check that reads the agent's claims instead of the environment's state — Lesson 8's whole subject. If the check could pass while the world is wrong, it's transcript-tier.</div>
+  <div class="anti"><b>The silent-pass verifier.</b> A check that passes when it measured nothing — the zero-match trap from demo 03, the regenerated golden from Lesson 8. Verify your verifiers: deliberately corrupt the thing once and confirm the check fails.</div>
+
+  <hr>
+
+  <h2>5 · Design the loop — four scenarios</h2>
+  <div class="quiz" id="quiz">
+    <span class="qprog" id="prog"></span>
+    <h3 id="qtitle">Loading…</h3>
+    <div class="scenario" id="scenario"></div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <div class="qnav"><span class="score" id="score"></span><button class="btn" id="next" disabled>Next →</button></div>
+  </div>
+
+  <div class="ask">💬 <strong>One lesson left:</strong> the capstone turns this framework into a worksheet that generates a verification-loop plan for <em>your</em> project. If you already know which project you'll use, tell me now and I'll pre-load context for it.</div>
+
+  <h3>Where to go next</h3>
+  <div class="next">
+    <a href="0010-capstone-your-loop.html"><b>📘 Lesson 10</b>Capstone — design your project's loop.</a>
+    <a href="../reference/verifier-taxonomy.html"><b>📑 Verifier Taxonomy</b>The menu this lesson chooses from.</a>
+  </div>
+
+  <footer><strong>Sources:</strong>
+    <a href="https://code.claude.com/docs/en/best-practices">Claude Code best practices</a> (the four gates, /goal, writer/reviewer patterns, reviewer caveat) ·
+    <a href="https://code.claude.com/docs/en/hooks">Hooks</a> ·
+    <a href="https://lucumr.pocoo.org/2025/6/12/agentic-coding/">Ronacher</a> (loop latency) ·
+    Lessons 1–8 of this workspace (each claim traces to its lesson's sources).
+  </footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    title: "The everyday task",
+    scenario: "“Add pagination to the /users endpoint.” The project has a fast test suite and no special stakes. What's the right verification setup?",
+    opts: [
+      "Wire a Stop hook before starting",
+      "Gate 1: one prompt — implement, write tests for the new behavior, run the suite, fix failures, show the output. No standing machinery",
+      "Spawn three adversarial subagents",
+      "Create a features.json ledger"
+    ],
+    answer: 1,
+    why: "Escalate on cost-of-wrong-done, and this one's cheap: tests exist, stakes are normal. The in-prompt ride-along IS the verification loop for most daily work — standing machinery here would be pure latency tax."
+  },
+  {
+    title: "The repeated burn",
+    scenario: "Twice this month, sessions ended with the suite quietly red because a refactor 'looked done.' The suite runs in 8 seconds. What's the promotion?",
+    opts: [
+      "Write 'always run tests' in CLAUDE.md and hope harder",
+      "Promote the check to Gate 3: a Stop hook running the suite — it's fast enough to gate every turn, and 'zero exceptions' is exactly what kept failing",
+      "Switch to a /goal each session and remember to set it",
+      "Make the suite slower but more thorough"
+    ],
+    answer: 1,
+    why: "The ladder rule in action: promote a check the first time its absence bites (twice is past due). 8 seconds passes the speed bar from Lesson 4; CLAUDE.md is words, and words already failed twice. /goal would work but must be remembered each session — the failure mode is forgetting."
+  },
+  {
+    title: "The fuzzy condition",
+    scenario: "A long refactoring session must end with the migration guide accurately reflecting every breaking change made along the way. 'Accurately reflects' isn't scriptable. Which gate?",
+    opts: [
+      "Stop hook running a grep for the word 'breaking'",
+      "Gate 2 (/goal: 'migration guide covers every breaking change in the diff') for the session, with a Gate 4 subagent as the final check — judgment conditions get evaluated gates, not scripts",
+      "Gate 1 — mention it once at the start and trust the session",
+      "Golden-diff the migration guide"
+    ],
+    answer: 1,
+    why: "Unscriptable conditions belong to the judgment gates. /goal re-checks across the meandering middle; the fresh-context subagent gives the unbiased final read (it diffs the actual breaking changes against the guide). The grep-hook is a classic narration-verifier — it checks for words, not truth."
+  },
+  {
+    title: "The weekend run",
+    scenario: "You're leaving Claude to build out a 40-item backlog unattended over many sessions. Assemble the stack.",
+    opts: [
+      "One huge prompt listing all 40 items",
+      "Ledger (features.json, 40 entries, verifier per entry) + session protocol in CLAUDE.md + Stop hook that re-verifies every passes:true claim + tests-as-spec committed first",
+      "A /goal saying 'finish the backlog'",
+      "Forty parallel sessions, one per item"
+    ],
+    answer: 1,
+    why: "Unattended + multi-session is exactly the Lesson 5 shape: ground truth in files (fresh contexts re-orient), one item per session (kills one-shotting), per-entry verifiers (kills premature victory), and the hook so the ledger can't lie while nobody's watching. The /goal dies with the session; the huge prompt dies with the context window."
+  }
+];
+let i=0, score=0, answered=false;
+const $ = id => document.getElementById(id);
+function render(){
+  const q=QUESTIONS[i]; answered=false;
+  $('prog').textContent=`Question ${i+1} / ${QUESTIONS.length}`;
+  $('qtitle').textContent=q.title; $('scenario').textContent=q.scenario;
+  $('score').textContent=`Score: ${score} / ${QUESTIONS.length}`;
+  $('next').disabled=true; $('next').textContent = i===QUESTIONS.length-1?'See result →':'Next →';
+  const fb=$('fb'); fb.className='fb'; fb.innerHTML='';
+  const opts=$('opts'); opts.innerHTML='';
+  q.opts.forEach((t,idx)=>{const b=document.createElement('button');b.className='opt';b.textContent=t;b.onclick=()=>choose(idx);opts.appendChild(b);});
+}
+function choose(idx){
+  if(answered)return; answered=true; const q=QUESTIONS[i];
+  $('opts').querySelectorAll('.opt').forEach((b,k)=>{b.disabled=true;if(k===q.answer)b.classList.add('correct');if(k===idx&&idx!==q.answer)b.classList.add('wrong');});
+  const fb=$('fb');
+  if(idx===q.answer){score++;fb.className='fb show ok';fb.innerHTML='<b>✓ Right.</b>'+q.why;}
+  else{fb.className='fb show no';fb.innerHTML='<b>✗ Not quite.</b>'+q.why;}
+  $('score').textContent=`Score: ${score} / ${QUESTIONS.length}`; $('next').disabled=false;
+}
+function finish(){
+  const pct=Math.round(100*score/QUESTIONS.length);
+  const msg = pct===100?"Perfect — you're composing loops, not just running them. Capstone time."
+    : pct>=50?"Solid. Re-read the scope×enforcement table, then on to the capstone."
+    : "Re-read sections 2 and 3, then retry before the capstone.";
+  $('quiz').innerHTML=`<div class="done"><div class="big">${score} / ${QUESTIONS.length}</div>
+    <p style="font-size:1.1rem">${msg}</p>
+    <p class="cite"><a href="0010-capstone-your-loop.html">→ Lesson 10: design your own project's loop</a></p>
+    <button class="btn" onclick="i=0;score=0;document.getElementById('quiz').innerHTML=QHTML;bind();render();">↺ Retry</button></div>`;
+}
+$('next').onclick=()=>{ if(i<QUESTIONS.length-1){i++;render();} else finish(); };
+const QHTML=$('quiz').innerHTML;
+function bind(){ $('next').onclick=()=>{ if(i<QUESTIONS.length-1){i++;render();} else finish(); }; }
+render();
+</script>
+</body>
+</html>

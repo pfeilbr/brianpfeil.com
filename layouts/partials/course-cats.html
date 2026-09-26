@@ -1,0 +1,22 @@
+{{- /* Course categories -> translated label and topic glyph, for the
+   /courses/ list and each course page. Keys are what
+   tools/courses/sync_courses.py writes (category_key); an unknown one falls
+   back to "other" in the scripts. */ -}}
+{{- $icons := dict
+  "ai_ml" "i-sparkles"
+  "programming_languages" "i-braces"
+  "web_frontend" "i-layers"
+  "mobile" "i-device"
+  "backend_data" "i-database"
+  "devops_infra" "i-container"
+  "security" "i-shield"
+  "hardware_systems" "i-chip"
+  "productivity_tools" "i-terminal"
+  "science_math" "i-beaker"
+  "other" "i-doc"
+-}}
+{{- $cats := dict -}}
+{{- range $key, $icon := $icons -}}
+  {{- $cats = merge $cats (dict $key (dict "label" (i18n (printf "course_cat_%s" $key)) "icon" $icon)) -}}
+{{- end -}}
+{{- return $cats -}}

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3 · Serve It — Your Own Local OpenAI</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/mlx-lm/" style="color:inherit;text-decoration:none">&larr; mlx-lm</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">mlx-lm · Lesson 3</div>
+    <h1>Serve It — Your Own Local OpenAI</h1>
+    <p class="sub">One command turns the model from Lessons 1–2 into an <strong>OpenAI-compatible HTTP server</strong>. Any tool, SDK, or script that already speaks the OpenAI API can now point at <code class="inl">localhost</code> and talk to a model running on your M4 Pro — no key, no cloud, no per-token bill. This is the direct route to wiring a local model into your own tools.</p>
+    <span class="missiontag">🎯 Mission step: serve &amp; integrate a local model into your own code</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>mlx-lm speaks the OpenAI API, so "switch to a local model" is a one-line change: the <code class="inl">base_url</code>.</strong> Your existing OpenAI code — the official SDK, LangChain, curl, whatever — keeps working unchanged; you just aim it at <code class="inl">http://localhost:8080/v1</code> instead of <code class="inl">api.openai.com</code>. The model moves from a data center to your desk; your code doesn't notice.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Why this is the payoff lesson</h2>
+    <p class="lead">You said the goal is to <strong>wire local models into your own tools</strong>. This is it. Lesson 2 made the model callable from <em>one</em> Python process; a server makes it callable from <em>anything</em> on your machine — other scripts, apps, notebooks, even the <code class="inl">learn</code> pipeline — over plain HTTP, using the most widely-supported LLM interface that exists. Build against the OpenAI API once; run it locally or in the cloud by flipping a URL.</p>
+    <div class="callout key"><span class="h">💡 The whole skill in one breath</span>
+      <code class="inl">mlx_lm.server</code> hosts your model behind OpenAI-shaped endpoints (<code class="inl">/v1/chat/completions</code>, <code class="inl">/v1/models</code>). Point any OpenAI client at it with a fake key. Done.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Start the server (one command)</h2>
+    <pre>~/projects/learn/public/courses/mlx-lm/practice/.venv/bin/mlx_lm.server \
+  --model <span class="g">mlx-community/Llama-3.2-1B-Instruct-4bit</span> \
+  --port <span class="g">8080</span></pre>
+    <p>Real startup on your machine:</p>
+    <pre>UserWarning: mlx_lm.server is not recommended for production...   <span class="c1"># ← see §06</span>
+INFO - Starting httpd at <span class="g">127.0.0.1</span> on port <span class="g">8080</span>...
+Fetching 6 files: 100%|██████████| 6/6   <span class="c1"># model already cached from L1 → instant</span></pre>
+    <div class="callout key"><span class="h">💡 The model loads lazily &amp; stays warm</span>
+      The server loads weights into unified memory on the first request and keeps them there, so request #2 skips the load entirely. One running server = one warm model ready for every client. Leave it running in a terminal (or background it) while you work in another.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Call it with curl</h2>
+    <p>It's just HTTP — no SDK required. List what's loaded:</p>
+    <pre>curl -s http://127.0.0.1:8080<span class="g">/v1/models</span></pre>
+    <pre>{ <span class="g">"object"</span>: <span class="g">"list"</span>,
+  <span class="g">"data"</span>: [{ <span class="g">"id"</span>: <span class="g">"mlx-community/Llama-3.2-1B-Instruct-4bit"</span>,
+            <span class="g">"object"</span>: <span class="g">"model"</span> }] }</pre>
+    <p>And the real one — a chat completion (note: you send <code class="inl">messages</code>, the server applies the chat template from Lesson 2 for you):</p>
+    <pre>curl -s http://127.0.0.1:8080<span class="g">/v1/chat/completions</span> \
+  -H <span class="g">"Content-Type: application/json"</span> \
+  -d <span class="g">'{"model":"mlx-community/Llama-3.2-1B-Instruct-4bit",
+       "messages":[{"role":"user","content":"Name three primary colors in one line."}],
+       "max_tokens":40, "temperature":0.0}'</span></pre>
+    <pre><span class="c1"># real response from your M4 Pro:</span>
+{ <span class="g">"object"</span>: <span class="g">"chat.completion"</span>,
+  <span class="g">"system_fingerprint"</span>: <span class="g">"0.31.3-0.31.2-macOS-26.5.1-arm64-applegpu_g16s"</span>,
+  <span class="g">"choices"</span>: [{ <span class="g">"finish_reason"</span>: <span class="g">"stop"</span>,
+      <span class="g">"message"</span>: { <span class="g">"role"</span>: <span class="g">"assistant"</span>, <span class="g">"content"</span>: <span class="g">"Red, Blue, Yellow."</span> }}],
+  <span class="g">"usage"</span>: { <span class="g">"prompt_tokens"</span>: 43, <span class="g">"completion_tokens"</span>: 7, <span class="g">"total_tokens"</span>: 50 } }</pre>
+    <div class="callout key"><span class="h">💡 This is the exact OpenAI response shape</span>
+      <code class="inl">choices[].message.content</code>, <code class="inl">finish_reason</code>, <code class="inl">usage</code> — byte-for-byte what api.openai.com returns. That's <em>why</em> any OpenAI client just works. The <code class="inl">system_fingerprint</code> even leaks your stack: mlx-lm 0.31.3, mlx 0.31.2, Apple GPU.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The drop-in trick — the official OpenAI SDK, pointed at your Mac</h2>
+    <p>Here's the moment it clicks. Take ordinary OpenAI-SDK code and change <strong>two things</strong> — the <code class="inl">base_url</code> and a throwaway <code class="inl">api_key</code>:</p>
+    <pre><span class="b">from</span> openai <span class="b">import</span> OpenAI
+
+client = OpenAI(base_url=<span class="g">"http://127.0.0.1:8080/v1"</span>, api_key=<span class="g">"not-needed"</span>)  <span class="c1"># ← the only changes</span>
+
+resp = client.chat.completions.create(
+    model=<span class="g">"mlx-community/Llama-3.2-1B-Instruct-4bit"</span>,
+    messages=[{<span class="g">"role"</span>: <span class="g">"user"</span>, <span class="g">"content"</span>: <span class="g">"Give me a haiku about Apple Silicon."</span>}],
+    max_tokens=<span class="g">60</span>, temperature=<span class="g">0.7</span>,
+)
+<span class="b">print</span>(resp.choices[<span class="g">0</span>].message.content)</pre>
+    <pre><span class="c1"># real output, generated locally:</span>
+Silicon souls cry
+Bleeding Bayes and Neural
+Beauty in code</pre>
+    <div class="callout mission"><span class="h">🎯 Your tangible win</span>
+      Start the server, <code class="inl">pip install openai</code> (already done in your venv), and run <code class="inl">~/projects/learn/public/courses/mlx-lm/practice/lesson03_client.py</code>. When a haiku comes back, <strong>you've run OpenAI-SDK code with zero dollars and zero network calls leaving your machine.</strong> Every OpenAI tutorial on the internet now runs against your model.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Streaming over HTTP</h2>
+    <p>Same <code class="inl">stream=True</code> you'd use against OpenAI — the server sends Server-Sent Events, the SDK reassembles them into deltas:</p>
+    <pre>stream = client.chat.completions.create(
+    model=<span class="g">"mlx-community/Llama-3.2-1B-Instruct-4bit"</span>,
+    messages=[{<span class="g">"role"</span>: <span class="g">"user"</span>, <span class="g">"content"</span>: <span class="g">"Count 1 to 5."</span>}],
+    max_tokens=<span class="g">40</span>, stream=<span class="b">True</span>,
+)
+<span class="b">for</span> chunk <span class="b">in</span> stream:
+    <span class="b">print</span>(chunk.choices[<span class="g">0</span>].delta.content <span class="b">or</span> <span class="g">""</span>, end=<span class="g">""</span>, flush=<span class="b">True</span>)   <span class="c1"># ✓ streamed on your Mac</span></pre>
+    <p>This is the HTTP twin of Lesson 2's <code class="inl">stream_generate</code>: the server runs <code class="inl">stream_generate</code> internally and forwards each token as an SSE chunk.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Your tools talk OpenAI API to a local mlx-lm server instead of the cloud">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="12.5">
+          <!-- clients -->
+          <rect x="8" y="30" width="150" height="46" rx="9" fill="none" stroke="var(--fg)" stroke-width="1.4"/>
+          <text x="83" y="58" text-anchor="middle" fill="var(--fg)">OpenAI SDK</text>
+          <rect x="8" y="92" width="150" height="46" rx="9" fill="none" stroke="var(--fg)" stroke-width="1.4"/>
+          <text x="83" y="120" text-anchor="middle" fill="var(--fg)">curl / your tool</text>
+          <rect x="8" y="154" width="150" height="46" rx="9" fill="none" stroke="var(--fg)" stroke-width="1.4"/>
+          <text x="83" y="182" text-anchor="middle" fill="var(--fg)">learn pipeline</text>
+
+          <!-- base_url switch -->
+          <rect x="232" y="78" width="150" height="74" rx="10" fill="var(--accent)" opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+          <rect x="232" y="78" width="150" height="74" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="307" y="104" text-anchor="middle" fill="var(--fg)" font-weight="700">base_url</text>
+          <text x="307" y="124" text-anchor="middle" fill="var(--muted)">localhost:8080</text>
+          <text x="307" y="140" text-anchor="middle" fill="var(--muted)">/v1</text>
+
+          <!-- server -->
+          <rect x="452" y="78" width="160" height="74" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="532" y="104" text-anchor="middle" fill="var(--fg)" font-weight="700">mlx_lm.server</text>
+          <text x="532" y="124" text-anchor="middle" fill="var(--muted)">/v1/chat/completions</text>
+          <text x="532" y="140" text-anchor="middle" fill="var(--muted)">applies chat template</text>
+
+          <!-- model -->
+          <rect x="660" y="86" width="92" height="58" rx="10" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+          <text x="706" y="110" text-anchor="middle" fill="var(--fg)" font-weight="600">model</text>
+          <text x="706" y="128" text-anchor="middle" fill="var(--muted)">on GPU</text>
+
+          <!-- arrows from clients to base_url -->
+          <g stroke="var(--fg)" stroke-width="1.4" fill="none" marker-end="url(#a3)">
+            <line x1="158" y1="53" x2="228" y2="100"/>
+            <line x1="158" y1="115" x2="228" y2="115"/>
+            <line x1="158" y1="177" x2="228" y2="130"/>
+          </g>
+          <g stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#a3b)">
+            <line x1="382" y1="115" x2="448" y2="115"/>
+            <line x1="612" y1="115" x2="656" y2="115"/>
+          </g>
+          <text x="415" y="106" text-anchor="middle" fill="var(--muted)" font-size="11">HTTP</text>
+        </g>
+        <defs>
+          <marker id="a3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/></marker>
+          <marker id="a3b" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>Every client speaks the same OpenAI API; only the <code>base_url</code> points home. Swap <code>localhost:8080</code> for <code>api.openai.com</code> and the very same code runs against the cloud — that's the portability you're buying.</figcaption>
+    </figure>
+
+    <table>
+      <thead><tr><th>Endpoint</th><th>What it does</th><th>OpenAI parity</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inl">POST /v1/chat/completions</code></td><td>Chat with messages (+ <code class="inl">stream</code>, <code class="inl">temperature</code>, <code class="inl">max_tokens</code>…)</td><td>✓ drop-in</td></tr>
+        <tr><td><code class="inl">POST /v1/completions</code></td><td>Raw text completion (no chat template)</td><td>✓</td></tr>
+        <tr><td><code class="inl">GET /v1/models</code></td><td>List the loaded model id</td><td>✓</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Two things to know before you rely on it</h2>
+    <div class="callout warn"><span class="h">⚠️ Not a production server</span>
+      That startup warning is real: <code class="inl">mlx_lm.server</code> does only basic security checks and isn't hardened for the public internet. It's perfect for <strong>local dev, your own tools, and a trusted LAN</strong> — not for exposing to the world. For production, put a real gateway in front or use a hardened serving stack.</div>
+    <div class="callout key"><span class="h">💡 localhost by default; widen deliberately</span>
+      It binds to <code class="inl">127.0.0.1</code> — reachable only from your Mac. To reach it from your phone or another machine on your network, start it with <code class="inl">--host 0.0.0.0</code> (and understand you've now opened it to your LAN). You can also swap models per request, or run with <code class="inl">--model</code> unset and pass the model id in each call.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Check yourself</h2>
+    <p>Think first, then expand. (Want to point a specific tool of yours at this? <strong>Ask me</strong> — I'll help you wire it.)</p>
+    <details><summary>Q: You have a script using the OpenAI SDK against the cloud. What's the minimum change to run it on your local model?</summary><p>A: Set <code class="inl">base_url="http://127.0.0.1:8080/v1"</code> and any non-empty <code class="inl">api_key</code> on the client. The rest of the code — <code class="inl">chat.completions.create(...)</code>, streaming, <code class="inl">usage</code> — is unchanged, because mlx-lm returns the OpenAI response shape.</p></details>
+    <details><summary>Q: You send <code class="inl">messages</code> to <code class="inl">/v1/chat/completions</code> — do you need to apply the chat template yourself like in Lesson 2?</summary><p>A: No. The server applies the model's chat template internally for the chat endpoint. You send role/content messages; it handles the special-token formatting. (The raw <code class="inl">/v1/completions</code> endpoint does <em>not</em> — that's for base-model-style raw text.)</p></details>
+    <details><summary>Q: Why does the second request to the server respond faster than the first?</summary><p>A: The first request loads the weights into unified memory; the server keeps the model warm, so subsequent requests skip loading and go straight to inference. One warm server serves many clients.</p></details>
+    <details><summary>Q: Is it safe to start this with <code class="inl">--host 0.0.0.0</code> on coffee-shop wifi?</summary><p>A: No. That exposes an unauthenticated, not-production-hardened server to everyone on that network. Keep it on <code class="inl">127.0.0.1</code> except on networks you trust, and never on the open internet without a real gateway in front.</p></details>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Going deeper</h2>
+    <ul>
+      <li><a href="https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/SERVER.md" target="_blank" rel="noopener">mlx-lm SERVER.md</a> — every flag and endpoint (the source of truth).</li>
+      <li><a href="https://platform.openai.com/docs/api-reference/chat" target="_blank" rel="noopener">OpenAI Chat API reference</a> — the request/response contract mlx-lm mirrors.</li>
+      <li><a href="https://github.com/ml-explore/mlx-lm/blob/main/README.md" target="_blank" rel="noopener">mlx-lm README</a> — server is one section; skim the neighbors you'll meet next.</li>
+    </ul>
+    <p class="cite">Keep handy: <a href="../reference/mlx-lm-glossary.html">Glossary &amp; quick reference</a> · <a href="0002-the-python-surface.html">← Lesson 2</a>. Next up → <strong>Lesson 4: <code class="inl">mlx_lm.convert</code></strong> — stop borrowing <code class="inl">mlx-community</code>'s pre-quantized models and make your <em>own</em>: pull any Hugging Face model and quantize it to 4/8-bit, trading memory for speed on purpose.</p>
+  </section>
+
+</div>
+</body>
+</html>

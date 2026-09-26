@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1 · What is eBPF?</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Lesson 1</div>
+    <h1>What is eBPF?</h1>
+    <p class="sub">Run your own small programs <em>inside</em> the Linux kernel — safely, and without changing or restarting anything.</p>
+    <span class="missiontag">🎯 Mission: see what your programs &amp; system are really doing, live</span>
+  </header>
+
+  <!-- THE ONE IDEA -->
+  <div class="bigidea">
+    <span class="label">The whole idea in one sentence</span>
+    <p>eBPF lets you load tiny, sandboxed programs into the <strong>running</strong> Linux kernel that fire when an <strong>event</strong> happens — so you can watch exactly what the system is doing, with <strong>no source changes, no kernel module, and no reboot</strong>.</p>
+  </div>
+
+  <!-- WHY / MISSION -->
+  <section>
+    <h2><span class="num">01</span> Why this matters to you</h2>
+    <p class="lead">You're an app developer. When something is slow, flaky, or weird in production, your usual move is: add log lines, redeploy, and hope you logged the right thing. eBPF flips that around.</p>
+    <p>With eBPF you can ask the <em>already-running</em> system a precise question — <em>"which files is this process opening?"</em>, <em>"what's making this syscall?"</em>, <em>"where is the latency?"</em> — and get an answer in seconds. No code change. No restart. No guessing.</p>
+    <div class="callout mission"><span class="h">🎯 Tie to your mission</span>This is the foundation for everything else in this course. Every tracing tool you'll learn (starting with <strong>bpftrace</strong>) is just a friendly way to load an eBPF program and read what it saw.</div>
+  </section>
+
+  <!-- THE PROBLEM: THE WALL -->
+  <section>
+    <h2><span class="num">02</span> The wall between you and the interesting stuff</h2>
+    <p>Your program runs in <strong>user space</strong>. But almost everything you'd want to observe — opening files, sending packets, scheduling threads, disk I/O — actually happens down in <strong>kernel space</strong>, on the other side of the <em>system-call boundary</em>. From user space you can see <em>that</em> you called <code class="inl">open()</code>, but not what the kernel did underneath.</p>
+
+    <p>Historically you had only two ways to run your own code <em>inside</em> the kernel to look — both bad for a casual observer:</p>
+    <div class="cards">
+      <div class="card">
+        <span class="myth">Patch the kernel source</span>
+        <p class="truth">Change the kernel itself, convince the community to merge it, then wait <b>years</b> for it to ship in distros. Not happening for a debugging session.</p>
+      </div>
+      <div class="card">
+        <span class="myth">Write a kernel module</span>
+        <p class="truth">Load your own C code with <b>full kernel privileges</b>. A bug doesn't throw an exception — it <b>panics the whole machine</b>. And it breaks every kernel update.</p>
+      </div>
+    </div>
+    <div class="callout key"><span class="h">💡 eBPF is the third option</span>Load a small program that the kernel <strong>verifies is safe before it runs</strong>, attach it to an event, collect data — then unload it. Safe enough to do on a production box, live.</div>
+  </section>
+
+  <!-- THE ANALOGY -->
+  <section>
+    <h2><span class="num">03</span> The analogy: JavaScript, but for the kernel</h2>
+    <p>This is the mental model the eBPF community itself reaches for. A web browser lets pages run little sandboxed JavaScript programs on events (a click, a page load). The browser guarantees that script <em>can't</em> crash your computer, and a JIT compiler makes it run fast.</p>
+    <p><strong>eBPF does the same thing for the Linux kernel.</strong> The kernel is the "browser." Your eBPF program is the "JavaScript." Kernel events (a syscall, a function call, a network packet) are the "click handlers." A built-in safety checker plus a JIT make it safe <em>and</em> fast.</p>
+    <p class="cite">Analogy from <a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io — "What is eBPF?"</a>, the canonical introduction.</p>
+  </section>
+
+  <!-- THE FLOW DIAGRAM -->
+  <section>
+    <h2><span class="num">04</span> What an eBPF observability session looks like</h2>
+    <p>Here's the shape of every tracing session you'll do. An event in the kernel triggers your program; your program records something into a <strong>map</strong> (a shared table); your user-space tool reads the map and prints it to you.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 470" role="img" aria-label="Diagram of the eBPF observability flow across user space and kernel space">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+          </marker>
+          <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent-2)"/>
+          </marker>
+        </defs>
+
+        <!-- bands -->
+        <rect x="10" y="14" width="800" height="150" rx="12" fill="#eef2ff" stroke="#cdd9fb"/>
+        <rect x="10" y="250" width="800" height="206" rx="12" fill="#f0fbf6" stroke="#b6ecd8"/>
+        <text x="28" y="40" font-size="14" font-weight="700" fill="var(--accent)">USER SPACE — where your tools &amp; apps live</text>
+        <text x="28" y="276" font-size="14" font-weight="700" fill="var(--accent-2)">KERNEL SPACE — where the real action happens</text>
+
+        <!-- syscall boundary -->
+        <line x1="10" y1="207" x2="810" y2="207" stroke="var(--muted)" stroke-width="2" stroke-dasharray="7 6"/>
+        <text x="410" y="200" text-anchor="middle" font-size="12" fill="var(--muted)" font-style="italic">— the system-call boundary —</text>
+
+        <!-- user-space tool -->
+        <rect x="40" y="58" width="210" height="78" rx="10" fill="#fff" stroke="var(--accent)" stroke-width="2"/>
+        <text x="145" y="88" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">Your tool</text>
+        <text x="145" y="110" text-anchor="middle" font-size="13" fill="var(--muted)">bpftrace / BCC</text>
+
+        <!-- output -->
+        <rect x="560" y="58" width="220" height="78" rx="10" fill="#fff" stroke="var(--accent)" stroke-width="2"/>
+        <text x="670" y="88" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">Output you read</text>
+        <text x="670" y="110" text-anchor="middle" font-size="12.5" fill="var(--muted)">"bash opened /etc/passwd"</text>
+
+        <!-- load arrow down -->
+        <path d="M145,136 L145,300" fill="none" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#arr)"/>
+        <text x="155" y="250" font-size="12" fill="var(--accent)">① load &amp;</text>
+        <text x="155" y="265" font-size="12" fill="var(--accent)">attach</text>
+
+        <!-- verifier gate -->
+        <rect x="60" y="300" width="170" height="48" rx="8" fill="#fff4ec" stroke="var(--warn)" stroke-width="1.6"/>
+        <text x="145" y="322" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--warn)">VERIFIER ✓</text>
+        <text x="145" y="338" text-anchor="middle" font-size="11" fill="var(--muted)">proves it's safe, then JIT</text>
+
+        <!-- event -->
+        <rect x="40" y="372" width="150" height="62" rx="10" fill="#fff" stroke="var(--accent-2)" stroke-width="2"/>
+        <text x="115" y="397" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--ink)">EVENT fires</text>
+        <text x="115" y="416" text-anchor="middle" font-size="11.5" fill="var(--muted)">e.g. open() syscall</text>
+
+        <!-- event triggers program -->
+        <path d="M190,403 L300,403" fill="none" stroke="var(--accent-2)" stroke-width="2.2" marker-end="url(#arrG)"/>
+        <text x="245" y="394" text-anchor="middle" font-size="11" fill="var(--accent-2)">② triggers</text>
+
+        <!-- ebpf program -->
+        <rect x="300" y="366" width="200" height="74" rx="10" fill="#fff" stroke="var(--accent-2)" stroke-width="2.4"/>
+        <text x="400" y="392" text-anchor="middle" font-size="14.5" font-weight="800" fill="var(--ink)">Your eBPF program</text>
+        <text x="400" y="412" text-anchor="middle" font-size="11.5" fill="var(--muted)">runs in-kernel, sandboxed</text>
+        <text x="400" y="428" text-anchor="middle" font-size="11.5" fill="var(--muted)">"record who &amp; what"</text>
+
+        <!-- program writes to map -->
+        <path d="M500,403 L600,403" fill="none" stroke="var(--accent-2)" stroke-width="2.2" marker-end="url(#arrG)"/>
+        <text x="550" y="394" text-anchor="middle" font-size="11" fill="var(--accent-2)">③ writes</text>
+
+        <!-- map straddles boundary -->
+        <rect x="600" y="300" width="180" height="120" rx="10" fill="#fff" stroke="var(--accent)" stroke-width="2" stroke-dasharray="0"/>
+        <text x="690" y="330" text-anchor="middle" font-size="14" font-weight="800" fill="var(--ink)">MAP</text>
+        <text x="690" y="350" text-anchor="middle" font-size="11.5" fill="var(--muted)">shared table,</text>
+        <text x="690" y="366" text-anchor="middle" font-size="11.5" fill="var(--muted)">readable from</text>
+        <text x="690" y="382" text-anchor="middle" font-size="11.5" fill="var(--muted)">both sides</text>
+
+        <!-- map up to output (crosses boundary) -->
+        <path d="M690,300 L690,136" fill="none" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#arr)"/>
+        <text x="700" y="240" font-size="12" fill="var(--accent)">④ tool reads</text>
+        <text x="700" y="255" font-size="12" fill="var(--accent)">the map</text>
+      </svg>
+      <figcaption>The eBPF observability loop: ① your tool loads &amp; attaches a verified program · ② a kernel event triggers it · ③ it records data into a map · ④ your tool reads the map and shows you the answer.</figcaption>
+    </figure>
+
+    <h3>The four moving parts</h3>
+    <ul>
+      <li><strong>Event / hook</strong> — the "when." A syscall, a kernel or user-space function, a tracepoint, a network packet. Your program is glued to one of these.</li>
+      <li><strong>The eBPF program</strong> — the "what to do." Tiny, runs in the kernel, fires every time the event happens.</li>
+      <li><strong>The verifier (+ JIT)</strong> — the safety gate. Before your program is allowed to run, the kernel <em>proves</em> it can't hang or read bad memory, then compiles it to fast native code.</li>
+      <li><strong>The map</strong> — the "how data gets out." A shared data structure (hash table, histogram, ring buffer…) that both the kernel program and your user-space tool can touch.</li>
+    </ul>
+    <p class="cite">Lifecycle &amp; components per <a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io</a> and <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg, Linux eBPF Tracing Tools</a>.</p>
+  </section>
+
+  <!-- THE SAFETY GATE -->
+  <section>
+    <h2><span class="num">05</span> Why it won't crash your machine: the verifier</h2>
+    <p>This is the part that makes eBPF usable in production — and the reason it's not just "kernel modules with a nicer name." When you load an eBPF program, the kernel's <strong>verifier</strong> statically analyzes it <em>before</em> a single instruction runs and rejects it unless it can prove:</p>
+    <ul>
+      <li>it <strong>always terminates</strong> (no infinite loops),</li>
+      <li>it <strong>never reads uninitialized or out-of-bounds memory</strong>,</li>
+      <li>it stays within size and complexity limits, and</li>
+      <li>it only touches kernel data through safe, stable <strong>helper functions</strong> — not arbitrary memory.</li>
+    </ul>
+    <p>If the proof fails, the program simply doesn't load — you get an error, the kernel keeps running. If it passes, a <strong>JIT compiler</strong> turns the bytecode into native machine code so it runs at roughly the speed of compiled-in kernel code. Loading generally requires <code class="inl">root</code> or the <code class="inl">CAP_BPF</code> capability.</p>
+    <div class="callout key"><span class="h">💡 The takeaway</span>A kernel module that has a bug <em>crashes the kernel</em>. An unsafe eBPF program <em>refuses to load</em>. That difference is the entire reason you can run this on a live server.</div>
+    <p class="cite">Verifier behavior &amp; safety guarantees: <a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io — What is eBPF?</a></p>
+  </section>
+
+  <!-- A TEASER ONE-LINER -->
+  <section>
+    <h2><span class="num">06</span> A glimpse of what you'll actually type</h2>
+    <p>You won't write kernel C to start — you'll write <strong>bpftrace</strong>, a high-level tracing language where everything from the diagram above is handled for you. Here's a real one-liner. Don't worry about the syntax yet; just see the <em>shape</em>:</p>
+<pre><span class="c1"># prints every file every program opens, system-wide</span>
+bpftrace -e <span class="y">'tracepoint:syscalls:sys_enter_openat {</span>
+              <span class="b">printf</span>(<span class="g">"%s opened %s\n"</span>, comm, <span class="b">str</span>(args-&gt;filename));
+            <span class="y">}'</span></pre>
+    <div class="runlater">Linux-only — copy it and try it later on a Linux box (it needs <code class="inl" style="background:#1b2540;color:#cfe">sudo</code>).</div>
+    <p>Read it as <strong>WHEN ... DO ...</strong>:</p>
+    <ul>
+      <li><strong>WHEN</strong> <code class="inl">tracepoint:syscalls:sys_enter_openat</code> — every time any process enters the <code class="inl">openat</code> syscall (the event / hook).</li>
+      <li><strong>DO</strong> <code class="inl">printf(...)</code> — print the process name (<code class="inl">comm</code>) and the filename argument (<code class="inl">args-&gt;filename</code>).</li>
+    </ul>
+    <p>That one line <em>is</em> an eBPF program: bpftrace compiles it, the verifier checks it, the kernel attaches it to that syscall, and the output streams back to your terminal. You'll learn to read and write every piece of this in <strong>Lesson 3</strong>.</p>
+    <p class="cite">Style from the official <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace One-Liner Tutorial</a>.</p>
+  </section>
+
+  <!-- COMPARISON TABLE -->
+  <section>
+    <h2><span class="num">07</span> eBPF vs. the old way, at a glance</h2>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>&nbsp;</th><th>Kernel module</th><th>eBPF program</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>A bug can crash the kernel?</strong></td><td><span class="no">Yes — panic</span></td><td><span class="yes">No — won't even load</span></td></tr>
+          <tr><td><strong>Safety checked before running?</strong></td><td><span class="no">No</span></td><td><span class="yes">Yes — the verifier</span></td></tr>
+          <tr><td><strong>Need a reboot / module load?</strong></td><td>Load module (risky)</td><td><span class="yes">No — load &amp; unload live</span></td></tr>
+          <tr><td><strong>Survives kernel upgrades?</strong></td><td><span class="no">Often breaks</span></td><td><span class="yes">Designed to be portable</span></td></tr>
+          <tr><td><strong>Speed</strong></td><td>Native</td><td><span class="yes">Native (JIT-compiled)</span></td></tr>
+          <tr><td><strong>Good for a quick prod question?</strong></td><td><span class="no">No</span></td><td><span class="yes">Yes — its whole point</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- MISCONCEPTIONS -->
+  <section>
+    <h2><span class="num">08</span> Clear up four myths before we go on</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="myth">"eBPF means writing kernel C."</span>
+        <p class="truth"><b>Not to start.</b> For observability you begin with bpftrace — a high-level language. C + libbpf is a later, optional step (out of scope for now).</p>
+      </div>
+      <div class="card">
+        <span class="myth">"It could crash my kernel."</span>
+        <p class="truth"><b>The verifier rejects unsafe programs</b> before they run. That's the core safety guarantee — and why it's production-friendly.</p>
+      </div>
+      <div class="card">
+        <span class="myth">"Berkeley Packet Filter — so it's only networking?"</span>
+        <p class="truth"><b>That's just the historical name</b> (it grew out of tcpdump's packet filters). Modern eBPF is general-purpose; observability is a huge use case.</p>
+      </div>
+      <div class="card">
+        <span class="myth">"I can run it on my Mac."</span>
+        <p class="truth"><b>Linux-only</b> — it's Linux-kernel tech. On macOS you'll run it inside a Linux VM. That's why this course is conceptual-first for now.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section>
+    <h2><span class="num">09</span> Check yourself</h2>
+    <p class="muted">Pick an answer — you'll get instant feedback. No grading, just a tight feedback loop.</p>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">1. What does the eBPF <strong>verifier</strong> do?</div>
+        <button class="opt">Compiles your C code into a kernel module</button>
+        <button class="opt">Proves the program is safe (terminates, no bad memory) <em>before</em> it's allowed to run</button>
+        <button class="opt">Encrypts the program so other users can't read it</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">2. How does data an eBPF program collects get back to your user-space tool?</div>
+        <button class="opt">It prints directly to your terminal from inside the kernel</button>
+        <button class="opt">It writes to a log file the kernel creates</button>
+        <button class="opt">Through a <strong>map</strong> — a shared data structure both sides can access</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">3. Your eBPF program has a bug that would loop forever. What happens?</div>
+        <button class="opt">It never loads — the verifier rejects it, and the kernel keeps running</button>
+        <button class="opt">The kernel panics and the machine reboots</button>
+        <button class="opt">It loads fine but silently corrupts memory</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">4. The single best reason eBPF is safe to run on a live production server is:</div>
+        <button class="opt">It runs in user space, away from the kernel</button>
+        <button class="opt">It only works on networking, which is low-risk</button>
+        <button class="opt">Unsafe programs refuse to load instead of crashing the kernel</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section>
+    <h2><span class="num">10</span> Flashcards</h2>
+    <p class="muted">Click to reveal. Come back to these later for quick review.</p>
+
+    <details class="fc"><summary>Q: In one sentence, what is eBPF?</summary><div class="a">A: A way to run small, sandboxed, verified programs inside the running Linux kernel, triggered by events — with no source changes, no kernel module, and no reboot.</div></details>
+
+    <details class="fc"><summary>Q: What's the "JavaScript for the kernel" analogy?</summary><div class="a">A: The kernel is the browser; your eBPF program is the sandboxed script; kernel events are the event handlers. A safety checker + JIT make it safe and fast — just like a browser running JS.</div></details>
+
+    <details class="fc"><summary>Q: Name the four moving parts of an eBPF observability session.</summary><div class="a">A: (1) the <strong>event/hook</strong> that fires it, (2) the <strong>eBPF program</strong> that runs in-kernel, (3) the <strong>verifier + JIT</strong> that makes it safe and fast, (4) the <strong>map</strong> that carries data out to user space.</div></details>
+
+    <details class="fc"><summary>Q: How is eBPF fundamentally safer than a kernel module?</summary><div class="a">A: A buggy kernel module can panic the machine. A buggy/unsafe eBPF program is rejected by the verifier and never runs — so a mistake is an error message, not an outage.</div></details>
+
+    <details class="fc"><summary>Q: Why can't you run eBPF directly on your Mac?</summary><div class="a">A: eBPF is Linux-kernel technology. On macOS you run it inside a Linux VM (or a remote Linux box). That's why this course stays conceptual for now.</div></details>
+
+    <details class="fc"><summary>Q: What's the first tool you'll use to write eBPF for tracing — and why?</summary><div class="a">A: <strong>bpftrace</strong>. It's a high-level language (Brendan Gregg's recommended starting front-end) that hides the C, the verifier, and the maps behind simple "WHEN … DO …" one-liners.</div></details>
+  </section>
+
+  <!-- TEACHER -->
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Stuck on a term? Curious how this maps to a problem you've actually hit? Want a sharper analogy? Just ask in the chat. Good questions to try: <em>"Show me what <code class="inl">comm</code> and <code class="inl">args</code> mean,"</em> or <em>"What's a real bug I could've found faster with eBPF?"</em></p>
+  </div>
+
+  <!-- NAV -->
+  <nav class="next">
+    <a href="/courses/ebpf/">
+      <span class="dir">↩ Grounding</span>
+      <span class="ttl">Your mission &amp; scope</span>
+    </a>
+    <a href="#" onclick="return false;" style="cursor:default;opacity:.85">
+      <span class="dir">Up next →</span>
+      <span class="ttl dim">Lesson 2 · Life of an eBPF program (ask me to build it)</span>
+    </a>
+  </nav>
+
+  <footer>
+    eBPF Course · Lesson 1 of an evolving series · grounded in
+    <a href="https://ebpf.io/what-is-ebpf/" target="_blank" rel="noopener">ebpf.io</a>,
+    <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg</a>, and
+    <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace.org</a>.
+    See <a href="/courses/ebpf/#resources">RESOURCES.md</a> for the full reading list.
+  </footer>
+
+</div>
+
+<script>
+  // Tight feedback loop for the self-check quiz.
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

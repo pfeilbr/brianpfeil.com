@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 6 · Chat &amp; the KV Cache</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/mlx-lm/" style="color:inherit;text-decoration:none">&larr; mlx-lm</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">mlx-lm · Lesson 6</div>
+    <h1>Chat &amp; the KV Cache</h1>
+    <p class="sub">Multi-turn conversation, and the one mechanism that makes it fast: the <strong>KV cache</strong>. You'll meet <code class="inl">mlx_lm.chat</code> for an interactive REPL, then see — with real token counts from your Mac — why a model doesn't re-read the whole conversation on every turn, and how to save that work to disk with <code class="inl">cache_prompt</code>.</p>
+    <span class="missiontag">🎯 The last big runtime concept — why decode stays fast as context grows</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>The KV cache stores what the model already computed for past tokens, so each new token is cheap.</strong> Without it, generating token 500 would re-process tokens 1–499 from scratch. With it, the model keeps each token's key/value tensors and only does work for the <em>new</em> token. It's why a long chat doesn't grind to a halt — and why you can cache a big prompt once and reuse it.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The REPL: <code class="inl">mlx_lm.chat</code></h2>
+    <p class="lead">Lesson 1's <code class="inl">generate</code> is one-shot — it forgets everything after answering. <code class="inl">mlx_lm.chat</code> gives you a conversation that <strong>remembers</strong> within the session:</p>
+    <pre>~/projects/learn/public/courses/mlx-lm/practice/.venv/bin/mlx_lm.chat \
+  --model <span class="g">mlx-community/Llama-3.2-1B-Instruct-4bit</span> \
+  --system-prompt <span class="g">"You are a terse assistant."</span>
+
+&gt;&gt; What's the capital of France?
+Paris.
+&gt;&gt; And its population?            <span class="c1"># "its" works — the REPL kept the context</span>
+About 2.1 million.</pre>
+    <div class="callout key"><span class="h">💡 What "keeps context" means mechanically</span>
+      The REPL holds a growing list of messages <em>and</em> the KV cache for everything said so far. Each new turn only feeds your <em>new</em> message through the model — the prior turns are already cached. Useful flags: <code class="inl">--adapter-path</code> (chat with your Lesson-4 pirate!), <code class="inl">--temp</code>, <code class="inl">--system-prompt</code>, and <code class="inl">--max-kv-size</code> (cap the cache so very long chats don't grow unbounded — it evicts the oldest tokens).</div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Why it's fast — the KV cache, drawn</h2>
+    <p>Inside the model, every token produces a <strong>key</strong> and <strong>value</strong> tensor at each layer; generating the next token attends to <em>all</em> previous keys/values. The cache keeps them so they're computed once, not re-computed every step.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Without a cache the whole context is reprocessed each step; with a cache only the new token is processed">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="12.5">
+          <text x="175" y="22" text-anchor="middle" fill="var(--warn)" font-weight="700">Without KV cache</text>
+          <text x="525" y="22" text-anchor="middle" fill="var(--accent-2)" font-weight="700">With KV cache</text>
+
+          <text x="20" y="58" fill="var(--muted)" font-size="11">step 3:</text>
+          <g>
+            <rect x="60" y="44" width="34" height="26" rx="5" fill="var(--warn)" opacity="0.18" stroke="var(--warn)"/><text x="77" y="62" text-anchor="middle" fill="var(--fg)">t1</text>
+            <rect x="98" y="44" width="34" height="26" rx="5" fill="var(--warn)" opacity="0.18" stroke="var(--warn)"/><text x="115" y="62" text-anchor="middle" fill="var(--fg)">t2</text>
+            <rect x="136" y="44" width="34" height="26" rx="5" fill="var(--accent)" opacity="0.25" stroke="var(--accent)"/><text x="153" y="62" text-anchor="middle" fill="var(--fg)">t3</text>
+          </g>
+          <text x="20" y="98" fill="var(--muted)" font-size="11">step 4:</text>
+          <g>
+            <rect x="60" y="84" width="34" height="26" rx="5" fill="var(--warn)" opacity="0.18" stroke="var(--warn)"/><text x="77" y="102" text-anchor="middle" fill="var(--fg)">t1</text>
+            <rect x="98" y="84" width="34" height="26" rx="5" fill="var(--warn)" opacity="0.18" stroke="var(--warn)"/><text x="115" y="102" text-anchor="middle" fill="var(--fg)">t2</text>
+            <rect x="136" y="84" width="34" height="26" rx="5" fill="var(--warn)" opacity="0.18" stroke="var(--warn)"/><text x="153" y="102" text-anchor="middle" fill="var(--fg)">t3</text>
+            <rect x="174" y="84" width="34" height="26" rx="5" fill="var(--accent)" opacity="0.25" stroke="var(--accent)"/><text x="191" y="102" text-anchor="middle" fill="var(--fg)">t4</text>
+          </g>
+          <text x="175" y="150" text-anchor="middle" fill="var(--warn)" font-size="11">recomputes t1..t3 every step — O(n²) work</text>
+
+          <text x="370" y="98" fill="var(--muted)" font-size="11">step 4:</text>
+          <g>
+            <rect x="410" y="84" width="34" height="26" rx="5" fill="var(--accent-2)" opacity="0.16" stroke="var(--accent-2)"/><text x="427" y="102" text-anchor="middle" fill="var(--muted)">t1</text>
+            <rect x="448" y="84" width="34" height="26" rx="5" fill="var(--accent-2)" opacity="0.16" stroke="var(--accent-2)"/><text x="465" y="102" text-anchor="middle" fill="var(--muted)">t2</text>
+            <rect x="486" y="84" width="34" height="26" rx="5" fill="var(--accent-2)" opacity="0.16" stroke="var(--accent-2)"/><text x="503" y="102" text-anchor="middle" fill="var(--muted)">t3</text>
+            <rect x="524" y="84" width="34" height="26" rx="5" fill="var(--accent)" opacity="0.3" stroke="var(--accent)"/><text x="541" y="102" text-anchor="middle" fill="var(--fg)">t4</text>
+          </g>
+          <text x="500" y="64" text-anchor="middle" fill="var(--accent-2)" font-size="11">t1..t3 read from cache (free)</text>
+          <text x="525" y="150" text-anchor="middle" fill="var(--accent-2)" font-size="11">only t4 is computed — O(n) work</text>
+
+          <rect x="408" y="170" width="150" height="30" rx="6" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)" stroke-width="1.2"/>
+          <text x="483" y="190" text-anchor="middle" fill="var(--fg)" font-size="11.5">KV cache (keys + values)</text>
+        </g>
+      </svg>
+      <figcaption>Solid = computed this step; faded = reused from cache. The cache turns per-token work from "re-read the whole context" into "process just the new token." The trade is memory: the cache grows with context length — that's what <code>--max-kv-size</code> and peak-memory watch.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Cache a prompt to disk — measured on your Mac</h2>
+    <p>If you query the <em>same</em> big context repeatedly (a long system prompt, a document, a few-shot preamble), don't re-process it each time. <code class="inl">mlx_lm.cache_prompt</code> runs the prefill once and saves the KV cache to a file; <code class="inl">generate</code> loads it and skips straight to your new question.</p>
+    <pre><span class="c1"># 1) cache a ~1,200-token reference context once:</span>
+mlx_lm.cache_prompt --model …4bit --prompt "&lt;long reference text&gt;" \
+  --prompt-cache-file <span class="g">~/projects/learn/public/courses/mlx-lm/practice/ctx.safetensors</span>      <span class="c1"># → a 40 MB cache file</span>
+
+<span class="c1"># 2) reuse it for many questions — the context isn't reprocessed:</span>
+mlx_lm.generate --model …4bit \
+  <span class="g">--prompt-cache-file ~/projects/learn/public/courses/mlx-lm/practice/ctx.safetensors</span> \
+  --prompt "Summarize the reference in 5 words."</pre>
+    <p>The payoff, real numbers from your machine — same context, with and without the cache:</p>
+    <table>
+      <thead><tr><th></th><th>Prompt tokens prefilled</th><th>What ran</th></tr></thead>
+      <tbody>
+        <tr><td><strong>No cache</strong></td><td><code class="inl">1257 tokens</code></td><td>the whole context, re-read every call</td></tr>
+        <tr><td><strong>With cache</strong></td><td><code class="inl">15 tokens</code></td><td>just your new question — context loaded from the 40 MB file</td></tr>
+      </tbody>
+    </table>
+    <div class="callout key"><span class="h">💡 When this matters</span>
+      Any repeated-context workload: a fixed system prompt you reuse across requests, a document you ask many questions about, a few-shot template. Cache the constant part once; pay only for the variable part. (The server from Lesson 3 does the in-memory version of this automatically while it stays warm.)</div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Check yourself</h2>
+    <p>Think first, then expand. (Curious how this interacts with your pirate adapter or the server? <strong>Ask me</strong>.)</p>
+    <details><summary>Q: Why does generation stay roughly constant-speed per token even as a chat gets long?</summary><p>A: The KV cache means each new token only computes itself and reads prior keys/values from the cache, instead of recomputing the whole history. Per-token work scales with one token, not with the full context length.</p></details>
+    <details><summary>Q: With the cache, the prompt showed only 15 tokens instead of 1257. Where did the other ~1242 go?</summary><p>A: They were prefilled once by <code class="inl">cache_prompt</code> and saved to the cache file. <code class="inl">generate</code> loaded those keys/values from disk, so only the 15 new tokens of your question needed processing.</p></details>
+    <details><summary>Q: What does the KV cache cost, and what flag bounds it?</summary><p>A: Memory — it grows with context length (part of your peak-memory number). <code class="inl">--max-kv-size</code> caps it by evicting the oldest tokens, trading unbounded memory for a sliding window of context.</p></details>
+    <details><summary>Q: You have one long system prompt reused across 100 requests. Cheapest approach?</summary><p>A: Cache the system prompt once (<code class="inl">cache_prompt</code> → file, or a warm server that keeps it in memory) and reuse it, so you prefill those tokens once instead of 100 times.</p></details>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Going deeper</h2>
+    <ul>
+      <li><a href="https://github.com/ml-explore/mlx-lm/blob/main/README.md" target="_blank" rel="noopener">mlx-lm README</a> — chat, prompt caching, and <code class="inl">--max-kv-size</code>.</li>
+      <li><a href="https://github.com/ml-explore/mlx-lm/tree/main/mlx_lm/examples" target="_blank" rel="noopener">examples/</a> — programmatic chat &amp; cache usage in Python.</li>
+      <li><a href="https://huggingface.co/blog/kv-cache" target="_blank" rel="noopener">HF — KV caching explained</a> — the concept in depth, with diagrams.</li>
+    </ul>
+    <p class="cite">Keep handy: <a href="../reference/mlx-lm-glossary.html">Glossary &amp; quick reference</a> (see <em>KV cache</em>, <em>prefill/decode</em>) · <a href="0005-quantize-and-convert.html">← Lesson 5</a>. Next up → <strong>Lesson 7: the capstone</strong> — wire everything you've learned into a real local-LLM tool on your machine.</p>
+  </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 7 — Endpoint Security &amp; eslogger</title>
+<style>
+  :root{--bg:#fbfbfd;--fg:#1d1d1f;--muted:#6e6e73;--line:#d2d2d7;--accent:#bf4800;--accent2:#0066cc;--card:#fff;--code:#f5f5f7;--warn:#9a6700;--warnbg:#fff8e6;--good:#1a7f37;--goodbg:#e8f6ec;--keybg:#eef4ff;--bad:#b3261e;--badbg:#fbeaea;--shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+  @media (prefers-color-scheme:dark){:root{--bg:#000;--fg:#f5f5f7;--muted:#98989d;--line:#3a3a3c;--accent:#ff7a3d;--accent2:#4ea3ff;--card:#1c1c1e;--code:#161618;--warn:#e0b341;--warnbg:#2a2410;--good:#5ed27e;--goodbg:#10240f;--keybg:#0e1c2e;--bad:#ff6b6b;--badbg:#2a1212;--shadow:0 1px 3px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.4);}}
+  *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;padding:2.5rem 1.25rem 6rem;}
+  .wrap{max-width:880px;margin:0 auto}
+  a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
+  header{border-bottom:2px solid var(--accent);padding-bottom:1.1rem;margin-bottom:1.6rem}
+  .kicker{color:var(--accent);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+  h1{font-size:2.1rem;margin:.35rem 0 .5rem;letter-spacing:-.02em;line-height:1.1}
+  .lede{color:var(--muted);margin:0;font-size:1.05rem}
+  .obj{display:flex;gap:.7rem;align-items:flex-start;background:var(--keybg);border:1px solid var(--line);border-radius:12px;padding:.85rem 1rem;margin:1.2rem 0 0}
+  .obj b{color:var(--accent2)}.obj .ic{font-size:1.2rem;line-height:1.4}
+  h2{font-size:1.35rem;margin:2.6rem 0 .7rem;letter-spacing:-.01em}
+  h2 .n{color:var(--accent);font:700 .8rem/1 ui-monospace,monospace;border:1.5px solid var(--accent);border-radius:6px;padding:.25rem .45rem;margin-right:.55rem;vertical-align:middle}
+  h3{font-size:1.05rem;margin:1.6rem 0 .4rem}p{margin:.7rem 0}
+  code{background:var(--code);border:1px solid var(--line);border-radius:5px;padding:.08em .4em;font:.86em ui-monospace,SFMono-Regular,Menlo,monospace}
+  strong{font-weight:680}
+  .callout{border-radius:12px;padding:1rem 1.1rem;margin:1.3rem 0;border:1px solid var(--line)}
+  .callout .lbl{font-weight:700;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;display:block;margin-bottom:.3rem}
+  .callout.key{background:var(--keybg)}.callout.key .lbl{color:var(--accent2)}
+  .callout.warn{background:var(--warnbg);border-color:#e8d48a}.callout.warn .lbl{color:var(--warn)}
+  .callout.good{background:var(--goodbg)}.callout.good .lbl{color:var(--good)}.callout p{margin:.3rem 0}
+  .cmd{background:#0b0b0d;color:#e6e6e6;border-radius:10px;padding:.9rem 1rem;margin:.9rem 0;font:.8rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-x:auto;border:1px solid #2a2a2e;white-space:pre}
+  .cmd .p{color:#5ed27e;user-select:none}.cmd .c{color:#7a7a85}.cmd b{color:#ffd479}.cmd .k{color:#ff7ab2}.cmd .s{color:#9ad1ff}
+  .runme{font:700 .68rem/1 -apple-system,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:inline-block;margin:.2rem 0 .4rem}
+  figure{margin:1.2rem 0}figcaption{color:var(--muted);font-size:.82rem;margin-top:.5rem;text-align:center}
+  .diagram{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem;box-shadow:var(--shadow)}
+  .diagram svg{width:100%;height:auto;display:block}
+  .tbl{width:100%;border-collapse:collapse;margin:1.1rem 0;font-size:.88rem;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  .tbl th,.tbl td{text-align:left;padding:.55rem .75rem;border-bottom:1px solid var(--line);vertical-align:top}
+  .tbl th{background:var(--code);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .tbl tr:last-child td{border-bottom:0}.tbl code{font-size:.82em}
+  details.fc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.7rem .95rem;margin:.5rem 0;box-shadow:var(--shadow)}
+  details.fc summary{cursor:pointer;font-weight:600;list-style:none}details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::before{content:"Q ";color:var(--accent);font:700 .85rem ui-monospace,monospace}
+  details.fc[open] summary{margin-bottom:.5rem;border-bottom:1px solid var(--line);padding-bottom:.5rem}
+  details.fc p{margin:.2rem 0 0}details.fc p::before{content:"A ";color:var(--good);font:700 .85rem ui-monospace,monospace}
+  .nav{display:flex;justify-content:space-between;gap:1rem;margin:2.2rem 0 0;font-size:.9rem}
+  .nav a{display:block;padding:.6rem .9rem;border:1px solid var(--line);border-radius:10px;background:var(--card);flex:1}.nav a.next{text-align:right}
+  .ask{border:1.5px dashed var(--accent);border-radius:12px;padding:1rem 1.1rem;margin:1.6rem 0}.ask b{color:var(--accent)}
+  .footer{margin-top:2rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:1rem;line-height:1.8}
+  @media print{body{padding:0;font-size:11pt}.tbl,.diagram{break-inside:avoid;box-shadow:none}:root{--bg:#fff;--card:#fff}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: macos-kernel-extensions ---- */
+/* ============================================================================
+   macos-kernel-extensions adapter. This course ships its own apple-style
+   light/dark palette (burnt-orange --accent, blue --accent2). theme.css already
+   overrides the SHARED token names (--bg/--fg/--muted/--accent/--warn/--shadow),
+   so here we only re-point the course-SPECIFIC vars onto canonical tokens; they
+   then track light/dark automatically. The dark .term terminal widget is left
+   as-is on purpose (a terminal stays dark in both schemes).
+   ============================================================================ */
+:root{
+  --accent2:var(--accent-2) !important;
+  --line:var(--border) !important;
+  --card:var(--surface) !important;
+  --code:var(--surface) !important;
+  --good:var(--mark) !important;
+  --keybg:color-mix(in srgb,var(--accent) 9%,transparent) !important;
+  --warnbg:color-mix(in srgb,var(--warn) 11%,transparent) !important;
+  --goodbg:color-mix(in srgb,var(--mark) 12%,transparent) !important;
+}
+
+/* warn callout had a hardcoded amber border */
+.callout.warn{ border-color:color-mix(in srgb,var(--warn) 32%,transparent) !important; }
+
+/* coloured category pills keep white text. The base pill used --accent2 (now a
+   light teal) → give it a fixed dark teal so white reads, matching the other
+   fixed-colour category pills (.es red / .dk purple / .cam green, which override
+   via higher specificity). Shadow as extra insurance. */
+.card .pill{ background:#0e7c70 !important; text-shadow:0 1px 2px rgba(0,0,0,.5) !important; }
+
+/* bare inline <code> (the course only set its size) → accent tint, matching the
+   other courses. Code inside the dark terminal/pre keeps its own colours. */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent); color:var(--accent);
+  border-radius:6px; padding:1px 6px; }
+.term code,.cmd code,pre code,.term *{ background:none; }
+.term code,.cmd code,pre code{ color:inherit; padding:0; }
+
+/* "no" markers (✗) were a hardcoded red → danger token */
+.no{ color:var(--danger) !important; }
+
+/* contrast safety net: prose boxes use --fg (never the dark terminal or code) */
+.card,.card p,.card .repl b,.callout,.callout p,.fc,.fc .a,.obj,.tbl td,.ask,.next{ color:var(--fg) !important; }
+.card .repl,.lede,.tbl th,.stat span,.fnote,.muted{ color:var(--muted) !important; }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/macos-kernel-extensions/" style="color:inherit;text-decoration:none">&larr; macOS Kernel &amp; System Extensions</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+<header>
+  <div class="kicker">macOS Kernel &amp; System Extensions · Lesson 7</div>
+  <h1>Endpoint Security &amp; <code>eslogger</code></h1>
+  <p class="lede">The family behind every Mac EDR tool — and a built-in command that lets you watch the kernel narrate process launches in real time.</p>
+  <div class="obj"><span class="ic">🎯</span>
+    <div><b>By the end</b> you'll understand how Endpoint Security observes (and can <em>block</em>) system events, why building an ES client needs Apple's blessing — and you'll stream live <code>exec</code> events on your Mac with Apple's pre-entitled <code>eslogger</code>, no entitlement required.</div></div>
+</header>
+
+<p>Your content filter from Lessons 2–6 watches <em>network flows</em>. <strong>Endpoint Security</strong> (ES) watches <em>system events</em> — every process that launches, file that opens, mount, signal, fork. It's how <a href="0001-system-extensions-on-your-mac.html">Mac Monitor</a> (already running on your Mac) and tools like CrowdStrike, SentinelOne, and Jamf Protect see what's happening.</p>
+
+<h2><span class="n">1</span>The model: subscribe, observe, (maybe) decide</h2>
+<p>ES is a <strong>C API</strong>. You create a client, subscribe to event types, and a handler fires for each event. Two flavours of event:</p>
+<table class="tbl">
+  <tr><th>Kind</th><th>What you can do</th><th>Example</th></tr>
+  <tr><td><strong>NOTIFY</strong></td><td>Observe only — the event already happened.</td><td>"process <code>/usr/bin/curl</code> launched" → log it.</td></tr>
+  <tr><td><strong>AUTH</strong></td><td><em>Gate</em> it — the kernel blocks until you return <code>ALLOW</code> or <code>DENY</code>.</td><td>"about to <code>exec</code> this binary" → deny if it's malware.</td></tr>
+</table>
+<p>That AUTH power — synchronously vetoing an <code>exec</code> or <code>open</code> — is exactly what KAUTH kexts used to do in the kernel. ES moved it to a sandboxed user-space process. The skeleton in C:</p>
+<div class="cmd"><span class="k">es_client_t</span> *client;
+<span class="k">es_new_client</span>(&amp;client, ^(es_client_t *c, <span class="k">const</span> es_message_t *msg) {
+    <span class="k">if</span> (msg-&gt;event_type == ES_EVENT_TYPE_NOTIFY_EXEC)
+        log_path(msg-&gt;event.exec.target);            <span class="c">// observe</span>
+    <span class="k">if</span> (msg-&gt;event_type == ES_EVENT_TYPE_AUTH_EXEC)
+        <span class="k">es_respond_auth_result</span>(c, msg, is_evil(msg) ? ES_AUTH_RESULT_DENY
+                                                  : ES_AUTH_RESULT_ALLOW, <span class="s">false</span>);
+});
+<span class="k">es_event_type_t</span> events[] = { ES_EVENT_TYPE_NOTIFY_EXEC };
+<span class="k">es_subscribe</span>(client, events, 1);</div>
+<div class="callout warn"><span class="lbl">Why you can't just build &amp; run this</span>
+  <p>ES requires <code>com.apple.developer.endpoint-security.client</code> — a <strong>restricted entitlement granted only via Apple's <a href="https://developer.apple.com/contact/request/system-extension/">System Extensions request form</a></strong> (they vet your company/use-case). Unlike the Network Extension capability you self-served in Lesson 5, there's no portal toggle. Plus the client needs <strong>Full Disk Access</strong>. This is the wall we flagged in Lesson 1.</p></div>
+
+<h2><span class="n">2</span>The flow, visually</h2>
+<figure class="diagram">
+<svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,sans-serif" role="img" aria-label="A process triggers a syscall; the kernel ES subsystem sends an AUTH message to the user-space ES client, which returns allow or deny; the kernel then proceeds or blocks.">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker></defs>
+  <g font-size="12">
+  <rect x="14" y="86" width="150" height="48" rx="10" fill="var(--card)" stroke="var(--line)"/><text x="89" y="106" text-anchor="middle" fill="var(--fg)">a process</text><text x="89" y="123" text-anchor="middle" fill="var(--muted)" font-size="10">exec /usr/bin/curl</text>
+  <rect x="200" y="78" width="170" height="64" rx="10" fill="var(--keybg)" stroke="var(--line)"/><text x="285" y="100" text-anchor="middle" fill="var(--fg)" font-weight="700">kernel · ES subsystem</text><text x="285" y="118" text-anchor="middle" fill="var(--muted)" font-size="10">holds the syscall (AUTH)</text>
+  <rect x="406" y="78" width="170" height="64" rx="10" fill="var(--goodbg)" stroke="var(--good)"/><text x="491" y="100" text-anchor="middle" fill="var(--fg)" font-weight="700">your ES client</text><text x="491" y="118" text-anchor="middle" fill="var(--muted)" font-size="10">user space · sandboxed</text>
+  <rect x="610" y="86" width="96" height="48" rx="10" fill="var(--card)" stroke="var(--line)"/><text x="658" y="106" text-anchor="middle" fill="var(--fg)">proceed</text><text x="658" y="123" text-anchor="middle" fill="var(--muted)" font-size="10">or blocked</text>
+  <line x1="164" y1="110" x2="196" y2="110" stroke="var(--accent)" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="370" y1="100" x2="402" y2="100" stroke="var(--accent)" stroke-width="2" marker-end="url(#a)"/><text x="386" y="92" text-anchor="middle" fill="var(--muted)" font-size="9">message</text>
+  <line x1="402" y1="124" x2="372" y2="124" stroke="var(--good)" stroke-width="2" marker-end="url(#a)"/><text x="386" y="139" text-anchor="middle" fill="var(--good)" font-size="9">ALLOW/DENY</text>
+  <line x1="370" y1="118" x2="606" y2="118" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#a)"/>
+  </g>
+</svg>
+<figcaption>For AUTH events the kernel <em>waits</em> for your verdict — so a slow or crashed ES client can freeze the machine. ES caps response time to keep the system safe.</figcaption>
+</figure>
+
+<h2><span class="n">3</span>Do this now — watch ES live with <code>eslogger</code></h2>
+<p>You can't ship an ES client without Apple's nod, but macOS includes <code>eslogger</code> — Apple's own, fully-entitled ES client. It's the safe way to <em>see</em> ES. Give Terminal <strong>Full Disk Access</strong> (System Settings ▸ Privacy &amp; Security), then:</p>
+<div class="cmd"><span class="runme">▶ run me</span><span class="p">$</span> sudo eslogger exec        <span class="c"># Ctrl-C to stop. try: open -a Calculator</span></div>
+<p>Every process launch on your Mac streams as JSON. One event, trimmed, looks like this:</p>
+<div class="cmd"><span class="c">{
+  "event": { "exec": {
+      "target": {
+        "executable": { "path": <b>"/System/Applications/Calculator.app/Contents/MacOS/Calculator"</b> },
+        "signing_id": "com.apple.calculator",
+        "team_id": null,
+        "is_platform_binary": true
+  } } },
+  "process": { "executable": { "path": "/usr/libexec/runningboardd" }, "ppid": 1 },
+  "event_type": 9, "action_type": "notify", "schema_version": 1
+}</span></div>
+<div class="callout good"><span class="lbl">✓ You're seeing the same firehose EDRs see</span>
+  <p>This is real Endpoint Security data — the exact event stream Mac Monitor consumes. Try <code>sudo eslogger open</code> (file opens) or <code>sudo eslogger es_event_types</code> to list everything subscribable. No code, no entitlement — just observe.</p></div>
+
+<h2><span class="n">4</span>A taste of the event taxonomy</h2>
+<table class="tbl">
+  <tr><th>Category</th><th>Example event types</th></tr>
+  <tr><td>Process</td><td><code>exec</code>, <code>fork</code>, <code>exit</code>, <code>signal</code>, <code>get_task</code> (code injection!)</td></tr>
+  <tr><td>File</td><td><code>open</code>, <code>create</code>, <code>unlink</code>, <code>rename</code>, <code>write</code>, <code>clone</code></td></tr>
+  <tr><td>Mount / disk</td><td><code>mount</code>, <code>unmount</code>, <code>remount</code></td></tr>
+  <tr><td>System</td><td><code>setuid</code>, <code>kextload</code>, <code>iokit_open</code>, <code>cs_invalidated</code> (code-sign tampering)</td></tr>
+</table>
+<p>There are 100+ event types. An EDR subscribes to a curated set, builds a process tree, and flags anomalies — all from this stream.</p>
+
+<h2><span class="n">5</span>ES vs. your content filter</h2>
+<table class="tbl">
+  <tr><th></th><th>Network Extension (you built)</th><th>Endpoint Security</th></tr>
+  <tr><td>Watches</td><td>network flows</td><td>process/file/system events</td></tr>
+  <tr><td>Language</td><td>Swift / Obj-C</td><td>C API (call from C/Obj-C/Swift)</td></tr>
+  <tr><td>Entitlement</td><td>self-service capability</td><td><strong>Apple request form</strong></td></tr>
+  <tr><td>Replaced</td><td>socket-filter kexts</td><td>KAUTH kexts</td></tr>
+  <tr><td>Can block?</td><td>yes (<code>.drop()</code>)</td><td>yes (AUTH <code>DENY</code>)</td></tr>
+</table>
+
+<h2><span class="n">6</span>Flashcards</h2>
+<details class="fc"><summary>NOTIFY vs AUTH events?</summary><p>NOTIFY = observe after the fact. AUTH = the kernel blocks pending your <code>ES_AUTH_RESULT_ALLOW/DENY</code> — you can veto the action.</p></details>
+<details class="fc"><summary>Why can't you just build and run an ES client like you did the content filter?</summary><p>ES needs <code>com.apple.developer.endpoint-security.client</code>, granted only via Apple's request form (they vet you), plus Full Disk Access. The NE capability was self-service; ES is not.</p></details>
+<details class="fc"><summary>How can you watch real ES events with zero entitlement?</summary><p><code>sudo eslogger &lt;event&gt;</code> — Apple's built-in, pre-entitled ES client (e.g. <code>sudo eslogger exec</code>). Needs Full Disk Access for Terminal.</p></details>
+<details class="fc"><summary>What legacy kext mechanism did ES replace?</summary><p>KAUTH (kernel authorization) kexts — and the older in-kernel MAC hooks.</p></details>
+
+<div class="ask"><b>💬 Ask your teacher.</b> Want to build a process tree from <code>eslogger</code> output, see what events Mac Monitor subscribes to, or understand the AUTH-deadline risk? Ask. One family left — the drivers: say <strong>"Lesson 8"</strong>.</div>
+
+<div class="nav">
+  <a class="prev" href="0006-lifecycle-debugging-teardown.html">← Lesson 6 · Lifecycle</a>
+  <a class="next" href="0008-driverkit-and-the-kext-world.html">Lesson 8 · DriverKit &amp; kexts →</a>
+</div>
+<div class="footer">
+  <strong>macOS Kernel &amp; System Extensions</strong> · Lesson 7 · Reference: <a href="../reference/glossary.html">Glossary</a><br>
+  Sources: <a href="https://developer.apple.com/documentation/endpointsecurity">Endpoint Security framework</a> ·
+  <a href="https://www.elastic.co/blog/mac-system-extensions-for-threat-detection-part-3">Elastic — ES for threat detection</a> ·
+  <a href="https://developer.apple.com/videos/play/wwdc2020/10159/">WWDC20: Build an Endpoint Security app</a>
+</div>
+</div>
+</body>
+</html>

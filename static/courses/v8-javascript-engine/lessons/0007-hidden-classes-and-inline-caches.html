@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 7 · Hidden Classes &amp; Inline Caches</title>
+<style>
+  :root{--ink:#1a1a2e;--ink-soft:#4a4a63;--paper:#fbfaf7;--card:#fff;--accent:#5b4fc4;--accent-soft:#ede9fc;--good:#0f8a5f;--good-soft:#e3f5ec;--bad:#c43d3d;--bad-soft:#fbe6e6;--line:#e6e2d8;--code-bg:#1e1e2e;--code-ink:#e4e4f0;--amber:#b5760a;--amber-soft:#fdf2dc}
+  *{box-sizing:border-box}html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:780px;margin:0 auto;padding:48px 28px 96px}
+  header.hd{border-bottom:3px solid var(--ink);padding-bottom:22px;margin-bottom:36px}
+  .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:34px;line-height:1.15;margin:.3em 0 .35em;letter-spacing:-.02em}
+  h2{font-size:23px;margin:2.4em 0 .6em;letter-spacing:-.01em;padding-top:.4em}
+  h3{font-size:18px;margin:1.8em 0 .4em}
+  .mission{background:var(--accent-soft);border-radius:12px;padding:14px 18px;font-size:15px;color:var(--ink-soft);margin-top:14px}
+  .mission b{color:var(--accent)}
+  p{margin:.7em 0}a{color:var(--accent);text-decoration-thickness:1.5px;text-underline-offset:2px}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:#efece3;padding:.1em .38em;border-radius:5px}
+  pre{background:var(--code-bg);color:var(--code-ink);border-radius:12px;padding:18px 20px;overflow-x:auto;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.6;margin:1em 0}
+  pre code{background:none;padding:0;color:inherit;font-size:inherit}
+  .cmt{color:#8b8ba7}.hl{color:#9ed1ff}.lit{color:#ffd479}.warn{color:#ff9e9e}.ok2{color:#9ff0c4}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:20px 0;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .step .num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:15px;margin-right:10px;vertical-align:-7px}
+  .callout{border-left:4px solid var(--amber);background:var(--amber-soft);padding:12px 16px;border-radius:0 10px 10px 0;margin:18px 0;font-size:15.5px}
+  .callout b{color:var(--amber)}
+  .cycle{border-left:4px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0;font-size:15.5px}.cycle b{color:var(--accent)}
+  table.bc{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  table.bc th,table.bc td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.bc th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)}
+  .shape{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0}
+  .obj{flex:1;min-width:200px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .obj h4{margin:0 0 8px;font-size:14px}
+  .slot{display:flex;justify-content:space-between;font-family:"SF Mono",monospace;font-size:13px;padding:5px 9px;border-radius:6px;background:var(--paper);margin:4px 0;border:1px solid var(--line)}
+  .slot .off{color:var(--accent);font-weight:700}
+  .maptag{display:inline-block;font-size:12px;font-family:"SF Mono",monospace;background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:6px;margin-top:6px}
+  .ic{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .icbox{flex:1;min-width:150px;border-radius:12px;padding:13px 15px;font-size:14px;border:1.5px solid}
+  .mono{border-color:var(--good);background:var(--good-soft)}.poly{border-color:var(--amber);background:var(--amber-soft)}.mega{border-color:var(--bad);background:var(--bad-soft)}
+  .icbox b{display:block;margin-bottom:3px;font-size:14.5px}
+  .quiz{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:20px 0}
+  .q{font-weight:600;margin-bottom:12px}
+  .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--paper);border-radius:9px;padding:11px 15px;margin:7px 0;cursor:pointer;font:inherit;font-size:15.5px;transition:.12s}
+  .opt:hover{border-color:var(--accent)}.opt.correct{border-color:var(--good);background:var(--good-soft)}.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .fb{font-size:14.5px;margin-top:10px;padding:11px 14px;border-radius:9px;display:none}.fb.show{display:block}.fb.ok{background:var(--good-soft);color:var(--good)}.fb.no{background:var(--bad-soft);color:var(--bad)}
+  .nav{display:flex;justify-content:space-between;gap:14px;margin-top:42px;padding-top:22px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .nav a{display:block;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px 18px;text-decoration:none;flex:1;min-width:200px}
+  .nav .lbl{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}.nav .ttl{font-weight:600;color:var(--accent)}
+  .teacher{background:linear-gradient(135deg,#5b4fc4,#7a6fe0);color:#fff;border-radius:14px;padding:20px 24px;margin:30px 0}.teacher b{color:#fff}
+  .cite{font-size:13px;color:var(--ink-soft)}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--good-soft);color:var(--good);padding:3px 9px;border-radius:20px;vertical-align:2px}
+  .foot{margin-top:60px;font-size:13px;color:var(--ink-soft);text-align:center;border-top:1px solid var(--line);padding-top:18px}
+  @media print{body{background:#fff}.quiz,.teacher{box-shadow:none}.nav{display:none}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: v8-javascript-engine ---- */
+/* ============================================================================
+   v8-javascript-engine course adapter — re-skin this course's bespoke
+   component classes with the canonical tokens from assets/theme.css. Injected
+   AFTER theme.css and AFTER each lesson's own <style>, so these rules win.
+   The lessons hardcode a cream "paper" look (--paper #fbfaf7, purple --accent
+   #5b4fc4, dark <pre> at #1e1e2e) via their own :root vars; we re-point those
+   custom vars at the canonical tokens and add explicit !important overrides for
+   every hardcoded hex / gradient the vars don't reach. Result: the unified look
+   + automatic light/dark, with no markup edits. Mirrors nix.css.
+   ============================================================================ */
+
+/* ---- retokenize the course's own CSS variables onto the canonical palette.
+   This handles every rule that reads var(--ink)/var(--line)/var(--good)/etc.
+   in one shot; the explicit rules below cover the remaining hardcoded colours.
+   We do NOT re-declare --accent/--code-bg/--code-ink: those names are shared
+   with theme.css, so the course's own :root values for them are already
+   shadowed by the canonical tokens — re-pointing them to themselves would be
+   a cyclic declaration. The course's purple --accent #5b4fc4 thus resolves to
+   the canonical --accent automatically. */
+:root{
+  --ink:var(--fg) !important;          --ink-soft:var(--muted) !important;
+  --paper:var(--bg) !important;        --card:var(--surface) !important;
+  --accent-soft:color-mix(in srgb,var(--accent) 14%,transparent) !important;
+  --good:var(--mark) !important;       --good-soft:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  --bad:var(--danger) !important;      --bad-soft:color-mix(in srgb,var(--danger) 13%,transparent) !important;
+  --amber:var(--warn) !important;      --amber-soft:color-mix(in srgb,var(--warn) 13%,transparent) !important;
+  --line:var(--border) !important;
+}
+
+/* ---- page shell: cream body -> token bg; .wrap is the centered column ---- */
+body{ background:var(--bg) !important; color:var(--fg) !important; }
+.wrap{ max-width:var(--maxw); margin:0 auto; background:transparent !important;
+  box-shadow:none !important; }
+header.hd{ border-bottom:3px solid var(--border) !important; }
+.kicker{ color:var(--accent) !important; }
+.sub,.cite,.foot,.bar{ color:var(--muted) !important; }
+
+/* ---- headings: ink/black titles -> --fg, accent bits -> --accent ---- */
+h1{ color:var(--fg) !important; }
+h2{ color:var(--fg) !important; }
+h3{ color:var(--fg) !important; }
+.grp{ border-top:2px solid var(--border) !important; color:var(--muted) !important; }
+/* reference node-v8-flags h2 has an --ink underline */
+.wrap h2[style], h2{ border-color:var(--border) !important; }
+
+/* ---- inline code: cream chip -> accent tint (matches theme code.inl) ---- */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; border-radius:6px; }
+dt code,.tag code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; }
+
+/* ---- code blocks: already dark; pin to the canonical dark <pre> ---- */
+pre{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; }
+pre code{ background:none !important; color:inherit !important; padding:0 !important; }
+
+/* ---- syntax-highlight tokens: remap onto a light-on-dark palette so they
+   stay legible on the canonical dark code block (in both schemes) ---- */
+.cmt{ color:#7f8db3 !important; }                 /* comments  (grey-blue)  */
+.hl{ color:#74c0fc !important; }                  /* highlight (blue)       */
+.lit{ color:#ffd43b !important; }                 /* literals  (yellow)     */
+.ok2{ color:#63e6be !important; }                 /* ok/green               */
+.ty{ color:var(--accent-2) !important; }          /* types    (teal accent) */
+/* NOTE: `.warn` here is a SYNTAX token (red text inside <pre>), not a callout */
+pre .warn, .warn{ color:#ff8787 !important; }     /* error/red in code      */
+
+/* ---- numbered step cards ---- */
+.step{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; box-shadow:none !important; }
+.step .num{ background:var(--accent) !important; color:#fff !important; }
+.step h3{ color:var(--fg) !important; }
+
+/* ---- callout / box classes mapped to the unified semantics ---- */
+/* info / neutral note -> warn-amber in the original; keep amber intent */
+.callout,.note{ background:color-mix(in srgb,var(--warn) 12%,transparent) !important;
+  border-left:4px solid var(--warn) !important; color:var(--fg) !important; }
+.callout b,.note b{ color:var(--warn) !important; }
+/* danger / failure -> --danger */
+.danger{ background:color-mix(in srgb,var(--danger) 11%,transparent) !important;
+  border-left:4px solid var(--danger) !important; color:var(--fg) !important; }
+.danger b{ color:var(--danger) !important; }
+/* cycle / key insight -> --accent */
+.cycle{ background:color-mix(in srgb,var(--accent) 10%,transparent) !important;
+  border-left:4px solid var(--accent) !important; color:var(--fg) !important; }
+.cycle b{ color:var(--accent) !important; }
+/* mission blurb -> accent-2 special tint */
+.mission{ background:color-mix(in srgb,var(--accent-2) 12%,transparent) !important;
+  color:var(--fg) !important; }
+.mission b{ color:var(--accent-2) !important; }
+
+/* ---- pipeline / flow / architecture boxes ---- */
+.stage,.fbox{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; }
+.stage.active{ border-color:var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 12%,transparent) !important; }
+.stage .s{ color:var(--muted) !important; }
+.arrow,.farr{ color:var(--accent) !important; }
+
+/* ---- architecture-map tier ladder (hardcoded pastel tiers) ---- */
+.ladder{ border:1px solid var(--border) !important; }
+.tier{ border-bottom:1px solid var(--border) !important; color:var(--fg) !important; }
+.tier .name small,.tier .desc{ color:var(--muted) !important; }
+.t0{ background:color-mix(in srgb,var(--accent) 9%,transparent) !important; }
+.t1{ background:color-mix(in srgb,var(--accent-2) 9%,transparent) !important; }
+.t2{ background:color-mix(in srgb,var(--mark) 10%,transparent) !important; }
+.t3{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.t4{ background:color-mix(in srgb,var(--danger) 10%,transparent) !important; }
+
+/* ---- lesson 04 nested-scope ladder (hardcoded pastels) ---- */
+.nest{ border:1px solid var(--border) !important; color:var(--fg) !important; }
+.nest div{ border-bottom:1px solid var(--border) !important; }
+.nest .lbl{ color:var(--muted) !important; }
+.n0{ background:color-mix(in srgb,var(--accent) 10%,transparent) !important; }
+.n1{ background:color-mix(in srgb,var(--accent-2) 9%,transparent) !important; }
+.n2{ background:color-mix(in srgb,var(--mark) 10%,transparent) !important; }
+.n3{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.n4{ background:color-mix(in srgb,var(--danger) 10%,transparent) !important; }
+
+/* ---- lesson 05 good/gotcha comparison boxes ---- */
+.cmpbox{ color:var(--fg) !important; }
+.cmpbox.l{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 11%,transparent) !important; }
+.cmpbox.g{ border-color:var(--warn) !important;
+  background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+
+/* ---- lesson 07 hidden-class / inline-cache widgets ---- */
+.obj,.slot{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; }
+.slot .off{ color:var(--accent) !important; }
+.maptag{ background:color-mix(in srgb,var(--accent) 14%,transparent) !important;
+  color:var(--accent) !important; }
+.icbox{ color:var(--fg) !important; }
+.mono{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 11%,transparent) !important; }
+.poly{ border-color:var(--warn) !important;
+  background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.mega{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 11%,transparent) !important; }
+
+/* ---- lesson 08 GC generation boxes (hardcoded pastels) ---- */
+.genbox{ border:1px solid var(--border) !important; color:var(--fg) !important; }
+.young{ background:color-mix(in srgb,var(--accent-2) 9%,transparent) !important; }
+.old{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.genbox .gc{ color:var(--accent) !important; }
+.tbox{ border:1.5px solid var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 11%,transparent) !important; color:var(--fg) !important; }
+
+/* ---- quiz / match interactives ---- */
+.quiz{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; }
+.q{ color:var(--fg) !important; }
+.opt{ background:var(--panel) !important; border:1.5px solid var(--border) !important;
+  color:var(--fg) !important; }
+.opt:hover{ border-color:var(--accent) !important; }
+.opt.correct{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 16%,transparent) !important; color:var(--mark) !important; }
+.opt.wrong{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 14%,transparent) !important; color:var(--danger) !important; }
+.fb.ok{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important; color:var(--mark) !important; }
+.fb.no{ background:color-mix(in srgb,var(--danger) 14%,transparent) !important; color:var(--danger) !important; }
+.match-row select{ background:var(--panel) !important; border:1.5px solid var(--border) !important;
+  color:var(--fg) !important; }
+.match-row select.ok{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 14%,transparent) !important; }
+.match-row select.no{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 14%,transparent) !important; }
+
+/* ---- buttons ---- */
+.btn{ background:var(--accent) !important; color:#fff !important; }
+.btn:hover{ background:color-mix(in srgb,var(--accent) 80%,#000) !important; }
+
+/* ---- pills (status tags) ---- */
+.pill{ background:color-mix(in srgb,var(--mark) 16%,transparent) !important; color:var(--mark) !important; }
+.pill.warn{ background:color-mix(in srgb,var(--warn) 16%,transparent) !important; color:var(--warn) !important; }
+.tag{ background:color-mix(in srgb,var(--accent) 14%,transparent) !important; color:var(--accent) !important; }
+
+/* ---- teacher / done banners: drop the purple/green gradients for token tints
+   (white-on-gradient text would be invisible once retinted, so force --fg) ---- */
+.teacher{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--accent) 30%,transparent) !important; color:var(--fg) !important; }
+.teacher b{ color:var(--accent) !important; }
+.done{ background:color-mix(in srgb,var(--mark) 12%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--mark) 30%,transparent) !important; color:var(--fg) !important; }
+.done b{ color:var(--mark) !important; }
+.done a{ color:var(--accent) !important; }
+
+/* ---- nav ---- */
+.nav{ border-top:1px solid var(--border) !important; }
+.nav a{ background:var(--surface) !important; border:1px solid var(--border) !important; }
+.nav .lbl{ color:var(--muted) !important; }
+.nav .ttl{ color:var(--accent) !important; }
+
+/* ---- tables ---- */
+table.bc th,table th{ color:var(--muted) !important; border-bottom-color:var(--border) !important; }
+table.bc td,table td{ border-bottom-color:var(--border) !important; color:var(--fg) !important; }
+table.bc td:first-child,table td:first-child{ color:var(--accent) !important; }
+
+/* ---- reference glossary (dl/dt/dd vocabulary) ---- */
+dt{ color:var(--fg) !important; }
+dd{ color:var(--muted) !important; }
+dd b{ color:var(--fg) !important; }
+
+/* ---- blanket contrast guard: every text-holding box onto --fg (excludes
+   pre/code, which keep their light-on-dark colours). Courses hardcode dark
+   #1a1a2e text that is invisible on the dark-mode tinted surfaces. ---- */
+.step,.callout,.note,.danger,.cycle,.mission,.stage,.fbox,.tier,.nest,
+.cmpbox,.obj,.slot,.icbox,.genbox,.tbox,.quiz,.q,.opt,.teacher,.done,
+.three,.shape,.ic,.cmp,.gen,.flow,.pipeline,.ladder{ color:var(--fg) !important; }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/v8-javascript-engine/" style="color:inherit;text-decoration:none">&larr; V8 JavaScript Engine</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+<header class="hd">
+  <div class="kicker">V8 Engine · Lesson 7</div>
+  <h1>Hidden Classes &amp; Inline Caches</h1>
+  <div class="mission">
+    <b>Why this lesson:</b> Your mission includes explaining <i>hidden classes and inline caches
+    well enough to predict why a JS pattern is fast or slow</i>. This lesson cashes out the
+    <code>wrong map</code> cliffhanger from Lesson 2 — a <b>Map</b> is V8's hidden class, and it's
+    the single biggest reason idiomatic JS runs near native speed.
+  </div>
+</header>
+
+<p>Here's the puzzle V8 has to solve. In a static language, <code>point.x</code> compiles to
+"read memory at offset 8" — instant. But JavaScript objects are dynamic dictionaries: you can
+add or delete properties any time. A naive engine would do a <b>hash-table lookup</b> on every
+<code>point.x</code>. That's death by a thousand cuts. V8's answer is the <b>hidden class</b>.</p>
+
+<div class="cycle">
+  <b>The core trick:</b> V8 secretly groups objects by <b>shape</b>. Every object has a hidden
+  pointer to a <b>Map</b> (V8's name for a hidden class) that describes its layout — which
+  properties it has and <b>at what fixed offset</b> each lives. Objects built the same way share
+  the <i>same</i> Map. Now <code>point.x</code> can compile to "if the Map is the one I expect,
+  read offset 8" — almost as fast as the static language.
+</div>
+
+<h2>Same construction → same hidden class</h2>
+<p>Two objects have the same Map when they have the same properties, added in the same order.
+Let's prove it with <code>%HaveSameMap</code> (needs <code>--allow-natives-syntax</code>):</p>
+
+<div class="step">
+  <pre><code><span class="hl">function</span> Point(x, y) { <span class="hl">this</span>.x = x; <span class="hl">this</span>.y = y; }
+<span class="hl">const</span> a = <span class="hl">new</span> Point(<span class="lit">1</span>, <span class="lit">2</span>);
+<span class="hl">const</span> b = <span class="hl">new</span> Point(<span class="lit">3</span>, <span class="lit">4</span>);   <span class="cmt">// same constructor, same order</span>
+<span class="hl">const</span> c = { x: <span class="lit">5</span>, y: <span class="lit">6</span> };    <span class="cmt">// literal: same property names &amp; order...</span>
+<span class="hl">const</span> d = { y: <span class="lit">8</span>, x: <span class="lit">7</span> };    <span class="cmt">// ...but reversed order</span>
+console.log(%HaveSameMap(a, b));  <span class="cmt">// ?</span>
+console.log(%HaveSameMap(a, c));  <span class="cmt">// ?</span>
+console.log(%HaveSameMap(a, d));  <span class="cmt">// ?</span>
+c.z = <span class="lit">99</span>;                      <span class="cmt">// add a property after the fact</span>
+console.log(%HaveSameMap(a, c));  <span class="cmt">// ?</span></code></pre>
+  <p>Run with <code>node --allow-natives-syntax shapes.js</code>. The actual output on a current V8:</p>
+  <pre><code>a vs b same map: <span class="ok2">true</span>     <span class="cmt">// identical construction → shared Map</span>
+a vs c same map: <span class="warn">false</span>    <span class="cmt">// constructor objects ≠ plain literals here</span>
+a vs d same map: <span class="warn">false</span>    <span class="cmt">// property ORDER changes the shape</span>
+a vs c after z:  <span class="warn">false</span>    <span class="cmt">// adding a property transitioned c to a NEW Map</span></code></pre>
+</div>
+
+<p>Two lessons jump out: <b>property order matters</b> (<code>{x,y}</code> and <code>{y,x}</code>
+are different shapes), and <b>adding a property changes the shape</b>. That second one is the key
+to transitions.</p>
+
+<h2>The same layout, three objects, one Map</h2>
+<p>Picture what <code>a</code> and <code>b</code> share. The Map isn't stored <i>in</i> each object —
+it's a separate descriptor they both point to. Each object only stores the values, in slots:</p>
+
+<div class="shape">
+  <div class="obj"><h4>Object <code>a</code></h4>
+    <div class="slot"><span>x</span><span class="off">offset 0</span></div>
+    <div class="slot"><span>y</span><span class="off">offset 1</span></div>
+    <span class="maptag">→ Map M1</span></div>
+  <div class="obj"><h4>Object <code>b</code></h4>
+    <div class="slot"><span>x</span><span class="off">offset 0</span></div>
+    <div class="slot"><span>y</span><span class="off">offset 1</span></div>
+    <span class="maptag">→ Map M1</span></div>
+  <div class="obj" style="background:var(--accent-soft)"><h4>Map M1 (shared)</h4>
+    <div class="slot"><span>"x" →</span><span class="off">offset 0</span></div>
+    <div class="slot"><span>"y" →</span><span class="off">offset 1</span></div>
+    <span class="cite">the shape, stored once</span></div>
+</div>
+
+<div class="callout">
+  <b>See it directly with <code>%DebugPrint</code>.</b> Running
+  <code>%DebugPrint({x:1, y:2})</code> prints the object's internals, including its Map:
+  <pre style="margin:.6em 0 0"><code>DebugPrint: 0x..: [JS_OBJECT_TYPE]
+ - map: 0x..&lt;Map[40](HOLEY_ELEMENTS)&gt; [<span class="ok2">FastProperties</span>]
+ - properties: &lt;FixedArray[0]&gt;</code></pre>
+  <b>FastProperties</b> means V8 is using the hidden-class fast path. If an object's shape
+  becomes too chaotic, V8 gives up and switches it to <b>dictionary mode</b> (a real hash table) —
+  the slow path you want to avoid.
+  <span class="cite">Source: <a href="https://v8.dev/blog/fast-properties">Fast properties in V8</a>.</span>
+</div>
+
+<h2>Transitions: shapes form a tree</h2>
+<p>When you add <code>z</code> to an object shaped <code>{x, y}</code>, V8 doesn't mutate the Map
+— it <b>transitions</b> to a new Map <code>{x, y, z}</code> and records the link. The next object
+that goes <code>{x, y}</code> then adds <code>z</code> follows the <i>same</i> transition and ends
+up sharing that Map. This is why constructing objects the same way is so valuable: everyone walks
+the same path through the transition tree and shares Maps at every step.</p>
+
+<pre><code>{} ──add x──▶ {x} ──add y──▶ {x,y} ──add z──▶ {x,y,z}
+                              <span class="cmt">▲ a, b live here   ▲ c ends up here after c.z=99</span></code></pre>
+
+<p class="cite">Canonical reference: <a href="https://v8.dev/docs/hidden-classes">Maps (Hidden Classes) in V8</a>
+· best conceptual intro: <a href="https://mathiasbynens.be/notes/shapes-ics">Shapes and Inline Caches</a> (Bynens &amp; Meurer).</p>
+
+<h2>Inline Caches: remembering where things live</h2>
+<p>Hidden classes make a fast lookup <i>possible</i>; <b>inline caches (ICs)</b> are what make it
+<i>actually fast</i>. Every property-access site in your code (like the <code>o.x</code> in a
+function) gets a little cache attached. The first time it runs, V8 does the full lookup and
+records: "for Map M1, property <code>x</code> is at offset 0." Every subsequent call just checks
+"is this still M1? yes → grab offset 0." That check-and-grab is the recorded type feedback from
+Lesson 1, and it's what the optimizing compilers turn into a couple of machine instructions.</p>
+
+<p>How many shapes an IC has seen determines its speed:</p>
+<div class="ic">
+  <div class="icbox mono"><b>Monomorphic · fast</b>1 shape ever seen. The ideal: one Map check, direct offset read. Optimizers love this.</div>
+  <div class="icbox poly"><b>Polymorphic · slower</b>2–4 shapes. V8 checks a small list of Maps. Still OK, but the optimizer must hedge.</div>
+  <div class="icbox mega"><b>Megamorphic · slow</b>Many shapes. V8 gives up caching here and falls back to a generic lookup. This is the perf cliff.</div>
+</div>
+
+<div class="callout">
+  <b>This is exactly the Lesson 2 deopt.</b> When <code>load(o)</code> was optimized assuming Map
+  M1 and then met an object with a different Map, the IC's assumption broke → <code>reason: wrong
+  map</code> → deoptimization. Hidden classes and inline caches are two sides of the same coin:
+  the Map is the shape; the IC is the bet on that shape.
+</div>
+
+<h2>The payoff: why some JS is fast and some isn't</h2>
+<table class="bc">
+  <tr><th>Do this (stays monomorphic)</th><th>Avoid this (goes poly/megamorphic)</th></tr>
+  <tr><td>Initialize <b>all</b> properties in the constructor, always in the <b>same order</b>.</td><td>Adding properties conditionally or later (<code>if (x) obj.foo = …</code>) → shape forks.</td></tr>
+  <tr><td>Give every object of a "type" the identical set of fields.</td><td><code>delete obj.prop</code> → often drops the object to dictionary mode.</td></tr>
+  <tr><td>Keep a function receiving one object shape.</td><td>Passing many different shapes to one function → megamorphic call site.</td></tr>
+</table>
+<p>You can now <i>predict</i> performance: code that keeps shapes stable keeps its inline caches
+monomorphic and its optimized code alive. Code that mutates shapes forces polymorphism and
+deopts. That's the whole game.</p>
+
+<h2 id="check">Check yourself <span class="pill">feedback loop</span></h2>
+
+<div class="quiz" id="q1">
+  <div class="q">1. Why does <code>{x:1, y:2}</code> have a different hidden class than <code>{y:2, x:1}</code>?</div>
+  <button class="opt" data-c="1">Hidden classes encode property <i>order</i>; different insertion order = different shape = different Map.</button>
+  <button class="opt" data-c="0">Because the values are stored in different memory banks.</button>
+  <button class="opt" data-c="0">They don't — V8 sorts properties alphabetically.</button>
+  <div class="fb" id="fb1"></div>
+</div>
+
+<div class="quiz" id="q2">
+  <div class="q">2. What is an inline cache (IC) caching?</div>
+  <button class="opt" data-c="1">At a property-access site: which Map(s) it has seen and the offset where the property lives, so repeat accesses skip the full lookup.</button>
+  <button class="opt" data-c="0">The compiled bytecode of the whole function.</button>
+  <button class="opt" data-c="0">Recently garbage-collected objects, to reuse their memory.</button>
+  <div class="fb" id="fb2"></div>
+</div>
+
+<div class="quiz" id="q3">
+  <div class="q">3. A function is called with 50 differently-shaped objects at one property access. That call site becomes…</div>
+  <button class="opt" data-c="1">Megamorphic — V8 stops caching and uses a slow generic lookup.</button>
+  <button class="opt" data-c="0">Monomorphic — V8 merges all shapes into one.</button>
+  <button class="opt" data-c="0">Deleted from the heap by the garbage collector.</button>
+  <div class="fb" id="fb3"></div>
+</div>
+
+<div class="quiz" id="q4">
+  <div class="q">4. You profile a hot function and see constant deopts with <code>reason: wrong map</code>. Best first fix?</div>
+  <button class="opt" data-c="1">Make all objects passed to it share one shape — same fields, same constructor, same order, no later additions.</button>
+  <button class="opt" data-c="0">Call the function fewer times so it never gets optimized.</button>
+  <button class="opt" data-c="0">Add more properties to the objects so they're more specific.</button>
+  <div class="fb" id="fb4"></div>
+</div>
+
+<div class="teacher">
+  <b>Ask me anything.</b> Want to <i>watch</i> a call site go monomorphic → megamorphic with a live
+  experiment? Curious how arrays get their own version of this (<a href="https://v8.dev/blog/elements-kinds">elements kinds</a>)?
+  Want to see <code>%DebugPrint</code> on a dictionary-mode object vs a fast one? Just ask —
+  e.g. <i>"Show me code that forces dictionary mode,"</i> or <i>"How do ICs interact with prototypes?"</i>
+</div>
+
+<h2>Where this lands you</h2>
+<p>You can now explain V8's object model — Maps, transitions, FastProperties vs dictionary mode —
+and inline caches, and use them to predict performance. Combined with the tier/deopt model from
+Lesson 2, you have the full "why JavaScript gets fast" story. The last internals lesson covers the
+other half of the runtime: how the <b>garbage collector</b> reclaims all those objects without
+freezing your program.</p>
+
+<p class="cite">Reference: <a href="../reference/glossary.html">V8 Glossary</a> (updated) ·
+<a href="../reference/node-v8-flags.html">Inspection Flags</a> ·
+Related: <a href="0002-the-architecture-map.html">Lesson 2 (deopt)</a></p>
+
+<div class="nav">
+  <a href="0006-expose-a-native-function.html">
+    <div class="lbl">← Previous · Lesson 6</div>
+    <div class="ttl">Expose a Native Function</div>
+  </a>
+  <a href="0008-orinoco-garbage-collection.html">
+    <div class="lbl">Up next · Lesson 8</div>
+    <div class="ttl">Orinoco Garbage Collection →</div>
+  </a>
+</div>
+
+<div class="foot">V8 Engine learning track · Lesson 7 · Built around your mission: predicting JS performance from engine internals.</div>
+
+</div>
+<script>
+  document.querySelectorAll('.quiz').forEach(function(quiz){
+    var fb = quiz.querySelector('.fb');
+    quiz.querySelectorAll('.opt').forEach(function(opt){
+      opt.addEventListener('click', function(){
+        var correct = opt.getAttribute('data-c') === '1';
+        quiz.querySelectorAll('.opt').forEach(function(o){o.classList.remove('correct','wrong')});
+        opt.classList.add(correct ? 'correct' : 'wrong');
+        if(fb){fb.className='fb show '+(correct?'ok':'no');fb.textContent=correct?'✓ Correct.':'✗ Not quite — re-read the section above and try again.';}
+      });
+    });
+  });
+</script>
+</body>
+</html>

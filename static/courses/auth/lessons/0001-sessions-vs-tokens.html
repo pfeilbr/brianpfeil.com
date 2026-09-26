@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1 · How an App Remembers You're Logged In</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/auth/" style="color:inherit;text-decoration:none">&larr; Web Authentication</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">auth · Lesson 1</div>
+    <h1>How an App Remembers You're Logged In</h1>
+    <p class="sub">HTTP forgets you after every request. So <em>every</em> auth system — passwords, OAuth, magic links, passkeys — exists to answer one question: once you've proven who you are, how does the server recognize you on the <strong>next</strong> request? There are only two answers. Get this and the whole field snaps into a grid.</p>
+    <span class="missiontag">🎯 Mission: a mental model of modern auth + the ability to wire it into a real app</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>After you log in, the server hands your browser a credential it sends back on every later request.</strong> That credential is either a <em>session ID</em> (a meaningless ticket — the server holds the real data) or a <em>token</em> (a self-contained, signed pass — the server holds nothing). <strong>Stateful vs stateless.</strong> That single fork — where does the truth live, server-side or in the credential itself — is the spine of every auth system you'll ever read.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Why this is the keystone</h2>
+    <p class="lead">HTTP is <strong>stateless</strong>: each request arrives with no memory of the last one. Logging in is just <em>one</em> request that proves identity. The hard part is the millions of requests <em>after</em> it — the server must re-recognize you without making you re-type a password each time.</p>
+    <p>So split every auth system into two phases. <strong>Authentication</strong> (the login event — "prove it's you") is where passwords, OAuth, magic links and passkeys differ wildly. But they <em>all</em> converge on the same second phase: <strong>the session</strong> (staying logged in), and there you have only two designs.</p>
+    <div class="callout key"><span class="h">💡 The vocabulary you'll reuse all course</span>
+      <strong>Authentication (authN)</strong> = <em>who are you?</em> (login). <strong>Authorization (authZ)</strong> = <em>what are you allowed to do?</em> (permissions). They're constantly confused — even "OAuth" is named for authoriz<em>ation</em> but is mostly used for authentication. <span class="cite">See <a href="https://developer.mozilla.org/en-US/docs/Web/Security" target="_blank" rel="noopener">MDN — Web Security</a>.</span></div>
+    <p>Here's the move that makes auth click: <em>OAuth2, JWT, passwordless, passkeys aren't competing alternatives on the same axis.</em> They live on different phases. OAuth is a way to <em>do the login</em>; a session ID or token is how you <em>stay</em> logged in afterward. This lesson owns the second phase so the rest of the course can focus on the first.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The shape of every logged-in request</h2>
+    <p>Whatever the login method, the steady state looks identical. You hold a credential; you attach it to each request; the server checks it and decides if it knows you.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Login issues a credential; later requests attach it and the server verifies it">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="13">
+          <!-- browser -->
+          <rect x="20" y="95" width="150" height="64" rx="10" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+          <text x="95" y="123" text-anchor="middle" fill="var(--fg)" font-weight="700">Your browser</text>
+          <text x="95" y="142" text-anchor="middle" fill="var(--muted)">holds the credential</text>
+          <!-- server -->
+          <rect x="590" y="95" width="150" height="64" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="665" y="123" text-anchor="middle" fill="var(--fg)" font-weight="700">Server</text>
+          <text x="665" y="142" text-anchor="middle" fill="var(--muted)">verifies it</text>
+          <!-- login arrow -->
+          <line x1="170" y1="78" x2="588" y2="78" stroke="var(--fg)" stroke-width="1.5" marker-end="url(#a)"/>
+          <text x="380" y="44" text-anchor="middle" fill="var(--fg)" font-weight="600">① POST /login  (password / OAuth / magic link / passkey)</text>
+          <text x="380" y="64" text-anchor="middle" fill="var(--muted)" font-size="11.5">this phase differs per method — the rest of the course</text>
+          <!-- credential back -->
+          <line x1="588" y1="108" x2="172" y2="108" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#b)"/>
+          <text x="380" y="100" text-anchor="middle" fill="var(--accent)" font-weight="600" font-size="11.5">② Set-Cookie: a session ID  — or —  here's your token</text>
+          <!-- later request -->
+          <line x1="170" y1="186" x2="588" y2="186" stroke="var(--fg)" stroke-width="1.5" marker-end="url(#a)"/>
+          <text x="380" y="178" text-anchor="middle" fill="var(--fg)" font-weight="600" font-size="11.5">③ GET /account  + credential attached automatically</text>
+          <line x1="588" y1="214" x2="172" y2="214" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#b)"/>
+          <text x="380" y="234" text-anchor="middle" fill="var(--accent)" font-weight="600" font-size="11.5">④ 200 OK — "I recognize you"  (repeat for every request)</text>
+        </g>
+        <defs>
+          <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/></marker>
+          <marker id="b" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>Steps ①–② vary by login method. Steps ③–④ — the steady state — have only two designs. This lesson is about ③–④.</figcaption>
+    </figure>
+
+    <p>The credential at step ② is almost always carried in a <strong>cookie</strong> (sent automatically by the browser) or an <strong>Authorization header</strong> (attached manually by JS / an app). Which carrier you use is a separate choice from which <em>kind</em> of credential it is — we'll untangle that next lesson. For now: focus on what's <em>inside</em> the credential.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Fork in the road: stateful vs stateless</h2>
+
+    <h3>Option A — Session ID (stateful): the server remembers</h3>
+    <p>On login the server creates a record — <code class="inl">{ session: "a1b2c3…", user: 42, expires: … }</code> — in its own store (memory, Redis, a DB). It sends back <em>only the random ID</em>. The ID is a <strong>meaningless ticket</strong>: it carries no information, it just <em>points</em> to the server's record. Every request, the server looks up the ID to find out who you are.</p>
+    <pre><span class="c1"># What the browser receives — just an opaque pointer:</span>
+Set-Cookie: sid=<span class="g">8f4e2a91c7b6d05f</span>; HttpOnly; Secure; SameSite=Lax
+
+<span class="c1"># What the SERVER stores (the real truth):</span>
+sessions[<span class="g">"8f4e2a91c7b6d05f"</span>] = { user_id: <span class="b">42</span>, role: <span class="g">"admin"</span>, exp: <span class="b">1718900000</span> }</pre>
+
+    <h3>Option B — Token (stateless): the credential <em>is</em> the data</h3>
+    <p>On login the server builds a credential that <em>contains</em> your identity (<code class="inl">user 42, role admin, expires …</code>) and <strong>cryptographically signs it</strong>. It stores nothing. On each request it just verifies the signature — if the math checks out, the token is genuine and unaltered, so the server trusts the claims inside it. The most common format is a <strong>JWT</strong> (JSON Web Token — a whole future lesson).</p>
+    <pre><span class="c1"># A token (JWT) — three base64 parts: header.payload.signature</span>
+Authorization: Bearer <span class="y">eyJhbGciOiJIUzI1NiJ9</span>.<span class="g">eyJ1c2VyIjo0Miwicm9sZSI6ImFkbWluIn0</span>.<span class="b">k3rR…sig</span>
+                       └ header ┘ └──────── payload (readable!) ────────┘ └ signature ┘
+<span class="c1"># Server stores: NOTHING. It re-checks the signature with its secret key each time.</span></pre>
+    <div class="callout warn"><span class="h">⚠️ The #1 token misconception</span>
+      A signed token is <strong>not encrypted</strong> — the payload is just base64, anyone can read it (paste one into <a href="https://jwt.io/" target="_blank" rel="noopener">jwt.io</a> and see). Signing proves it wasn't <em>tampered with</em>, not that it's <em>secret</em>. Never put anything private in a JWT payload. <span class="cite">See <a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP JWT Cheat Sheet</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The trade-off that decides everything</h2>
+    <p>Because one design keeps the truth on the server and the other puts it in the credential, every difference between them flows from that. The big one: <strong>revocation</strong>. A session is killed instantly — delete the server record and the ticket is dead. A token can't be un-signed; it's valid until it expires, which is why tokens are kept short-lived and paired with a "refresh" mechanism (a later lesson).</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Question</th><th>Session ID (stateful)</th><th>Token / JWT (stateless)</th></tr></thead>
+        <tbody>
+          <tr><td>Where's the truth?</td><td>Server store (Redis/DB)</td><td>Inside the credential</td></tr>
+          <tr><td>Server stores per-user?</td><td><span class="no">Yes</span> — a row per session</td><td><span class="yes">No</span> — verifies a signature</td></tr>
+          <tr><td>Log out / ban instantly?</td><td><span class="yes">Yes</span> — delete the record</td><td><span class="no">Hard</span> — valid until expiry (need a denylist)</td></tr>
+          <tr><td>Scales across many servers?</td><td>Needs shared store</td><td><span class="yes">Easy</span> — any server can verify</td></tr>
+          <tr><td>Works great for…</td><td>Classic single-domain web apps</td><td>APIs, mobile, microservices, cross-domain</td></tr>
+          <tr><td>Usually carried in…</td><td>A cookie (automatic)</td><td><code class="inl">Authorization: Bearer</code> header</td></tr>
+          <tr><td>Size on the wire</td><td>Tiny (an ID)</td><td>Bigger (carries all the claims)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key"><span class="h">💡 The honest default</span>
+      For a normal server-rendered web app on one domain, <strong>session IDs in an httpOnly cookie are the boring, safe, recommended choice</strong> — instant logout, nothing leaks to JS. Reach for tokens when you genuinely need statelessness: a public API, a mobile client, or services that can't share a session store. "JWT for browser login" is a famous over-reach. <span class="cite">See <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP Session Management</a> + <a href="https://ianlondon.github.io/posts/dont-use-jwts-for-sessions/" target="_blank" rel="noopener">"Don't use JWTs for sessions"</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Where the rest of the course lives on this map</h2>
+    <p>Now place the scary words. Notice they're not alternatives to <em>each other</em> — they sit on different phases:</p>
+    <div class="cards">
+      <div class="card"><h4>Passwords / OAuth / Magic links / Passkeys</h4><p class="truth">All are <b>login methods</b> — phase ①. They differ in how you <em>prove</em> identity, then they <em>all</em> hand you a session or token.</p></div>
+      <div class="card"><h4>Session ID vs JWT</h4><p class="truth">The two answers to <b>"stay logged in"</b> — phase ③. This lesson. Everything else plugs into one of these.</p></div>
+      <div class="card"><h4>OAuth2 / OIDC</h4><p class="truth">A protocol to get a token <b>from another service</b> ("Sign in with Google"). It's a fancy way to <em>obtain</em> the credential in this lesson.</p></div>
+      <div class="card"><h4>Cookies, httpOnly, SameSite, CSRF</h4><p class="truth">How the credential is <b>carried and protected</b> in the browser. Next lesson.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> 🎯 Your tangible win (3 min): find your own credential</h2>
+    <p>You already have one of these in your browser right now. Let's look at it.</p>
+    <ol>
+      <li>Open a site you're logged into (GitHub, Gmail, anything) in <strong>Chrome</strong>.</li>
+      <li>Open DevTools: <code class="inl">⌥⌘I</code> → <strong>Application</strong> tab → <strong>Cookies</strong> → pick the site's domain.</li>
+      <li>Look for a cookie whose value is a long opaque string. Check its flags columns: <strong>HttpOnly</strong> ✓, <strong>Secure</strong> ✓, <strong>SameSite</strong>.</li>
+    </ol>
+    <div class="callout mission"><span class="h">🎯 The win + how to tell which kind you're holding</span>
+      That cookie is the credential from step ②. Now diagnose it: <strong>does the value have two dots splitting it into three chunks (<code class="inl">xxx.yyy.zzz</code>)?</strong> That's a <em>JWT</em> — copy the middle chunk into <a href="https://jwt.io/" target="_blank" rel="noopener">jwt.io</a> and you'll read your own user id. <strong>Just one opaque blob with no dots?</strong> That's almost certainly a <em>session ID</em> — meaningless to you, a lookup key to them. You just classified a real-world auth system using only this lesson. <em>(Most big sites use session IDs in httpOnly cookies — exactly the "boring safe default" above.)</em>
+    </div>
+    <p class="muted">Tip: an <strong>HttpOnly</strong> cookie is invisible to <code class="inl">document.cookie</code> in the JS console — that's the point, it's why XSS can't steal it. You can only see it in the Application tab.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Check yourself</h2>
+    <div class="quiz">
+      <div class="q">
+        <p><strong>Q1.</strong> A coworker says "we use JWTs so we don't have to store sessions in the database — but we also need to ban abusive users instantly." What's the tension?</p>
+        <details><summary>Show answer</summary><p>Statelessness and instant revocation are in direct conflict. A signed JWT is valid until it expires no matter what the server wants — there's no record to delete. To ban instantly you must add server state back (a token denylist / short expiry + refresh), which partly gives up the "no storage" benefit they wanted. This trade-off is the heart of §04.</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q2.</strong> True or false: a JWT is safe to put a user's private data in, because it's signed.</p>
+        <details><summary>Show answer</summary><p><strong>False.</strong> Signed ≠ encrypted. The payload is base64-encoded plaintext that anyone holding the token can read. Signing only guarantees it wasn't altered. Private data does not belong in a JWT payload (§03 warning).</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q3.</strong> Where does "Sign in with Google" fit — is it an alternative to sessions/tokens?</p>
+        <details><summary>Show answer</summary><p>No — it's a <em>login method</em> (phase ①). OAuth/OIDC is how you <em>prove identity</em> via Google; after it succeeds your app still issues you a session ID or token to stay logged in (phase ③). They live on different phases, not in competition. (§05.)</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Where we go next</h2>
+    <p>You now have the spine. Next lesson: <strong>Cookies done right</strong> — the carrier almost everything rides in. We'll make <code class="inl">HttpOnly</code>, <code class="inl">Secure</code>, and especially <code class="inl">SameSite</code> concrete, and see exactly how a CSRF attack works and why one cookie flag mostly kills it.</p>
+    <div class="callout key"><span class="h">📌 Remember this one line</span>
+      <strong>Every auth system = a way to log in (varies wildly) + a way to stay logged in (only two: stateful session ID or stateless signed token).</strong></div>
+    <p class="muted" style="margin-top:18px">💬 I'm your teacher for this — ask me anything that's fuzzy. Good questions to throw back at me: "show me a real Express/FastAPI example of each", "what's a refresh token then?", or "which should I use for the app I'm building?" (tell me the stack and I'll ground the next lesson in it). · See also: <a href="/courses/auth/#resources">course resources</a>.</p>
+  </section>
+
+</div>
+</body>
+</html>

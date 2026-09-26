@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 11 · Vocabulary Types</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/cpp-standard-library/" style="color:inherit;text-decoration:none">&larr; C++ Standard Library</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">C++ Standard Library · Lesson 11</div>
+    <h1>Vocabulary Types: pair, tuple, optional, variant</h1>
+    <p class="sub">The small "glue" types that turn up all over modern signatures: bundle a few values, represent "a value or nothing," or "one of several types" — safely and readably.</p>
+    <span class="missiontag">🎯 Read &amp; write modern API signatures fluently</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>Four little types do an outsized amount of work in modern C++ APIs. <code class="inl">pair</code>/<code class="inl">tuple</code> bundle a fixed set of values; <code class="inl">optional</code> says "a value, or nothing"; <code class="inl">variant</code> says "one of these types." They're called <em>vocabulary</em> types because they're the shared words APIs use to describe their inputs and results.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> pair — two values, bundled</h2>
+    <p class="lead">A <code class="inl">std::pair&lt;A,B&gt;</code> glues two values together as <code class="inl">.first</code> and <code class="inl">.second</code>. You've already met it: a <code class="inl">map</code> entry is a <code class="inl">pair&lt;const K, V&gt;</code>, and <code class="inl">insert</code> returns a <code class="inl">pair&lt;iterator, bool&gt;</code>.</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;utility&gt;</span>
+
+std::<span class="b">pair</span>&lt;std::<span class="b">string</span>, <span class="b">int</span>&gt; e = {<span class="g">"Ada"</span>, 42};
+e.first;    <span class="c1">// "Ada"</span>
+e.second;   <span class="c1">// 42</span>
+
+<span class="c1">// structured bindings (C++17) give the parts real names:</span>
+<span class="b">auto</span> [name, score] = e;       <span class="c1">// name = "Ada", score = 42</span></pre>
+    <div class="runlater">Run on <a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt.org</a> (<code class="inl">-std=c++17</code>+).</div>
+    <div class="callout key"><span class="h">💡 Always unpack with structured bindings</span>
+      <code class="inl">.first</code>/<code class="inl">.second</code> are nameless and easy to mix up. <code class="inl">auto [name, score] = e;</code> reads far better — and it's the same syntax you use to iterate a map. Prefer it everywhere.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/utility/pair" target="_blank" rel="noopener">cppreference — std::pair</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> tuple — N values, bundled</h2>
+    <p><code class="inl">std::tuple</code> is <code class="inl">pair</code> generalized to any number of elements. Its best everyday use is returning <strong>several values</strong> from a function without inventing a struct.</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;tuple&gt;</span>
+
+std::<span class="b">tuple</span>&lt;<span class="b">int</span>, <span class="b">int</span>, std::<span class="b">string</span>&gt; stats() {
+    <span class="y">return</span> {200, 12, <span class="g">"ok"</span>};      <span class="c1">// code, count, message</span>
+}
+
+<span class="b">auto</span> [code, count, msg] = stats();   <span class="c1">// unpack all three at once</span>
+std::get&lt;0&gt;(some_tuple);              <span class="c1">// access by index when needed</span></pre>
+    <div class="callout warn"><span class="h">⚠ Don't overuse tuples for "real" data</span>
+      A <code class="inl">tuple&lt;int,int,string&gt;</code> has no field names — three months later, which <code class="inl">int</code> was the count? For anything with meaning that lives beyond one call, a small <code class="inl">struct</code> with named members is clearer. Use tuples for transient, internal multi-returns.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/utility/tuple" target="_blank" rel="noopener">cppreference — std::tuple</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> optional — a value, or nothing <span class="pill">C++17</span></h2>
+    <p>How do you say "this might not return a result"? Old code abused sentinels (<code class="inl">-1</code>, empty string, <code class="inl">nullptr</code>) or output parameters. <code class="inl">std::optional&lt;T&gt;</code> says it directly: it either holds a <code class="inl">T</code> or is empty — type-safe and self-documenting.</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;optional&gt;</span>
+
+std::<span class="b">optional</span>&lt;<span class="b">int</span>&gt; parse(std::<span class="b">string_view</span> s) {
+    <span class="y">if</span> (looks_like_number(s)) <span class="y">return</span> to_int(s);
+    <span class="y">return</span> std::nullopt;        <span class="c1">// "no value"</span>
+}
+
+<span class="b">auto</span> r = parse(<span class="g">"42"</span>);
+<span class="y">if</span> (r)                  <span class="c1">// or r.has_value()</span>
+    use(*r);            <span class="c1">// deref to get the value</span>
+
+<span class="b">int</span> port = parse(cfg).value_or(8080);   <span class="c1">// value, or a fallback if empty</span></pre>
+    <figure class="diagram">
+      <svg viewBox="0 0 820 130" role="img" aria-label="An optional either contains a value or is empty (nullopt). You test it before dereferencing, or use value_or to supply a default.">
+        <rect x="60" y="40" width="300" height="56" rx="10" fill="var(--accent-2)" opacity="0.15" stroke="var(--accent-2)"/>
+        <text x="210" y="64" text-anchor="middle" font-size="13" font-weight="700" fill="var(--fg)">optional&lt;int&gt;  =  42</text>
+        <text x="210" y="84" text-anchor="middle" font-size="11" fill="var(--muted)">has_value() == true &#183; *r == 42</text>
+        <rect x="460" y="40" width="300" height="56" rx="10" fill="var(--muted)" opacity="0.12" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <text x="610" y="64" text-anchor="middle" font-size="13" font-weight="700" fill="var(--muted)">optional&lt;int&gt;  =  nullopt</text>
+        <text x="610" y="84" text-anchor="middle" font-size="11" fill="var(--muted)">has_value() == false &#183; empty</text>
+      </svg>
+      <figcaption>One type encodes "maybe a value." No magic sentinel to remember, no out-parameter — the absence is part of the type.</figcaption>
+    </figure>
+    <div class="callout warn"><span class="h">⚠ Don't deref an empty optional</span>
+      <code class="inl">*r</code> / <code class="inl">r.value()</code> on an empty optional is a bug (<code class="inl">value()</code> throws; <code class="inl">*</code> is undefined behavior). Always test first, or use <code class="inl">value_or(default)</code>.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/utility/optional" target="_blank" rel="noopener">cppreference — std::optional</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> variant — one of several types <span class="pill">C++17</span></h2>
+    <p><code class="inl">std::variant&lt;A, B, C&gt;</code> holds exactly one value, of one of the listed types, and remembers which — a <strong>type-safe union</strong>. Great for "a result that is either a number or an error message," or a small set of states.</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;variant&gt;</span>
+
+std::<span class="b">variant</span>&lt;<span class="b">int</span>, std::<span class="b">string</span>&gt; v = 42;     <span class="c1">// currently holds an int</span>
+v = <span class="g">"oops"</span>;                                 <span class="c1">// now holds a string</span>
+
+<span class="y">if</span> (std::holds_alternative&lt;std::<span class="b">string</span>&gt;(v))
+    std::cout &lt;&lt; std::get&lt;std::<span class="b">string</span>&gt;(v);    <span class="c1">// extract the active type</span>
+
+<span class="c1">// std::visit applies a handler to whichever type is active:</span>
+std::visit([](<span class="b">auto</span>&amp;&amp; x){ std::cout &lt;&lt; x; }, v);</pre>
+    <div class="callout key"><span class="h">💡 variant vs a raw union</span>
+      A C <code class="inl">union</code> doesn't track which member is valid — read the wrong one and it's undefined behavior. <code class="inl">variant</code> remembers the active type and checks access, so it's safe. (<code class="inl">std::any</code> is the looser cousin: it holds <em>any single</em> type, not a fixed set — reach for it rarely.)</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/utility/variant" target="_blank" rel="noopener">cppreference — std::variant</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Which vocabulary type?</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>You want to express…</th><th>Type</th></tr></thead>
+        <tbody>
+          <tr><td>Two related values together</td><td><code class="inl">pair&lt;A,B&gt;</code></td></tr>
+          <tr><td>Return several values at once (transient)</td><td><code class="inl">tuple&lt;...&gt;</code> (or a named struct if it persists)</td></tr>
+          <tr><td>"A result, or nothing"</td><td><code class="inl">optional&lt;T&gt;</code></td></tr>
+          <tr><td>"Exactly one of these few types"</td><td><code class="inl">variant&lt;A,B,...&gt;</code></td></tr>
+          <tr><td>Unpack any of the above into named vars</td><td>structured bindings: <code class="inl">auto [a, b] = ...</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout mission"><span class="h">🎯 Why this lesson pays off in <em>reading</em></span>
+      A signature like <code class="inl">optional&lt;User&gt; find_user(...)</code> tells you instantly: "might not find one — handle the empty case." These types make intent visible. Recognizing them is half of reading modern C++.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="2">
+        <div class="stem">A function might or might not produce a result. The modern return type is:</div>
+        <button class="opt"><code class="inl">int</code> with <code class="inl">-1</code> meaning "none"</button>
+        <button class="opt">a <code class="inl">bool</code> out-parameter</button>
+        <button class="opt"><code class="inl">std::optional&lt;T&gt;</code></button>
+        <button class="opt"><code class="inl">std::variant&lt;T&gt;</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">What's the cleanest way to read a <code class="inl">pair</code> or <code class="inl">tuple</code> apart?</div>
+        <button class="opt"><code class="inl">.first</code> / <code class="inl">.second</code> only</button>
+        <button class="opt">Structured bindings: <code class="inl">auto [a, b] = p;</code></button>
+        <button class="opt">A C-style cast</button>
+        <button class="opt">You can't — copy each field manually</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">How is <code class="inl">std::variant&lt;int,string&gt;</code> safer than a C <code class="inl">union</code>?</div>
+        <button class="opt">It's faster</button>
+        <button class="opt">It can hold both at once</button>
+        <button class="opt">It uses less memory</button>
+        <button class="opt">It tracks which type is active and checks access, so you can't read the wrong member</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">You call <code class="inl">.value()</code> on an empty <code class="inl">optional</code>. What happens?</div>
+        <button class="opt">It throws <code class="inl">std::bad_optional_access</code> — test first or use <code class="inl">value_or</code></button>
+        <button class="opt">It returns 0</button>
+        <button class="opt">It returns <code class="inl">nullopt</code></button>
+        <button class="opt">Nothing — it's always safe</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What's a "vocabulary type"?</summary><div class="a">A: A small standard type that shows up across APIs as shared glue — <code class="inl">pair</code>, <code class="inl">tuple</code>, <code class="inl">optional</code>, <code class="inl">variant</code> — describing inputs/results so intent is visible.</div></details>
+    <details class="fc"><summary>Q: <code class="inl">pair</code> vs <code class="inl">tuple</code>?</summary><div class="a">A: <code class="inl">pair</code> bundles exactly two values (<code class="inl">.first</code>/<code class="inl">.second</code>); <code class="inl">tuple</code> bundles any number. Unpack both with structured bindings.</div></details>
+    <details class="fc"><summary>Q: What does <code class="inl">std::optional&lt;T&gt;</code> express, and how do you read it?</summary><div class="a">A: "A <code class="inl">T</code>, or nothing." Test with <code class="inl">if (o)</code>/<code class="inl">has_value()</code>, read with <code class="inl">*o</code>, or supply a fallback with <code class="inl">value_or(x)</code>. Never deref when empty.</div></details>
+    <details class="fc"><summary>Q: What does <code class="inl">std::variant&lt;A,B&gt;</code> hold?</summary><div class="a">A: Exactly one value of one of the listed types, tracking which — a type-safe union. Query with <code class="inl">holds_alternative</code>/<code class="inl">get</code>, or dispatch with <code class="inl">std::visit</code>.</div></details>
+    <details class="fc"><summary>Q: When is a <code class="inl">tuple</code> the wrong choice?</summary><div class="a">A: For data that persists and has meaning — the unnamed fields get confusing. Use a small <code class="inl">struct</code> with named members instead; reserve tuples for transient multi-returns.</div></details>
+    <details class="fc"><summary>Q: How do structured bindings tie these together?</summary><div class="a">A: <code class="inl">auto [a, b] = ...</code> unpacks a <code class="inl">pair</code>, <code class="inl">tuple</code>, or struct into named variables — the same syntax used to iterate a map's entries.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Try: <em>"refactor this function that returns <code class="inl">-1</code> on failure to use <code class="inl">optional</code>"</em>, or <em>"model a parse result as a <code class="inl">variant&lt;Value, Error&gt;</code>"</em>. Next: getting data in and out — I/O streams.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0010-smart-pointers.html"><span class="dir">↩ Previous</span><span class="ttl">Smart Pointers</span></a>
+    <a href="0012-io-streams.html"><span class="dir">Up next →</span><span class="ttl">I/O Streams</span></a>
+  </nav>
+
+  <footer>
+    C++ Standard Library · Lesson 11 · grounded in
+    <a href="https://en.cppreference.com/w/cpp/utility" target="_blank" rel="noopener">cppreference</a> ·
+    <a href="../reference/cpp-stdlib-glossary.html">Glossary</a> ·
+    <a href="../reference/cpp-stdlib-cheatsheet.html">Cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

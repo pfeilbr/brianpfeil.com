@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 8 · The eBPF Observability Toolkit</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Lesson 8</div>
+    <h1>The eBPF Observability Toolkit</h1>
+    <p class="sub">A map of the tools — from bpftrace one-liners up to turnkey platforms — and how to pick the right one for the question you're actually asking.</p>
+    <span class="missiontag">🎯 The right tool for "what is this system really doing?"</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>bpftrace is your <strong>scalpel</strong> for ad-hoc questions; above it sit <strong>BCC and libbpf</strong> for reusable, packaged tools, and <strong>turnkey platforms</strong> (Pixie, Parca, Hubble, Beyla) that run eBPF for you across a whole fleet — you choose the layer by the question you're asking.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The landscape as layers</h2>
+    <p class="lead">Everything you'll meet in eBPF observability is one of three things: a <strong>language you type questions in</strong>, a <strong>library you build tools with</strong>, or a <strong>product that runs those tools for you</strong>. They all sit on top of the same in-kernel eBPF runtime you've been learning about — the verifier, JIT, probes, and maps from the earlier lessons. The difference is purely <em>how much is done for you</em>.</p>
+
+    <p>Think of it as a pyramid. At the bottom is the raw machinery; each layer up trades flexibility for convenience. Brendan Gregg, who wrote many of these tools, frames the front-ends exactly this way and recommends most people start near the bottom — bpftrace and BCC — before reaching for anything heavier.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 460" role="img" aria-label="A pyramid of eBPF observability layers: in-kernel runtime at the base, front-ends in the middle, turnkey platforms at the top.">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/>
+          </marker>
+        </defs>
+
+        <!-- TOP: platforms -->
+        <polygon points="410,30 540,130 280,130" fill="var(--accent-2)" opacity="0.16" stroke="var(--accent-2)" stroke-width="2"/>
+        <text x="410" y="78" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">Platforms</text>
+        <text x="410" y="100" text-anchor="middle" font-size="12" fill="var(--muted)">Pixie · Parca · Hubble · Beyla</text>
+        <text x="410" y="118" text-anchor="middle" font-size="11" fill="var(--muted)">it runs eBPF for you, fleet-wide</text>
+
+        <!-- MIDDLE: front-ends -->
+        <polygon points="280,135 540,135 620,285 200,285" fill="var(--accent)" opacity="0.16" stroke="var(--accent)" stroke-width="2"/>
+        <text x="410" y="172" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">Front-ends</text>
+        <text x="410" y="196" text-anchor="middle" font-size="12" fill="var(--muted)">libbpf (C) · BCC (Python+C) · bpftrace · perf</text>
+        <text x="410" y="216" text-anchor="middle" font-size="11" fill="var(--muted)">you type or build the questions</text>
+        <text x="410" y="252" text-anchor="middle" font-size="11" fill="var(--accent)">bpftrace = ad-hoc · BCC/libbpf = reusable tools</text>
+
+        <!-- BASE: kernel runtime -->
+        <polygon points="200,290 620,290 700,420 120,420" fill="var(--ink)" opacity="0.10" stroke="var(--ink)" stroke-width="2"/>
+        <text x="410" y="332" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">In-kernel eBPF runtime</text>
+        <text x="410" y="356" text-anchor="middle" font-size="12" fill="var(--muted)">verifier · JIT · probes (kprobe / tracepoint / uprobe) · maps</text>
+        <text x="410" y="378" text-anchor="middle" font-size="11" fill="var(--muted)">every layer above compiles down to this</text>
+
+        <!-- side label: convenience/flexibility axis -->
+        <line x1="755" y1="420" x2="755" y2="40" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="772" y="60" text-anchor="middle" font-size="11" fill="var(--muted)" transform="rotate(90 772 60)">more done for you →</text>
+
+        <line x1="65" y1="40" x2="65" y2="420" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="48" y="230" text-anchor="middle" font-size="11" fill="var(--muted)" transform="rotate(-90 48 230)">more control / flexibility →</text>
+      </svg>
+      <figcaption>The eBPF observability stack. You reach <em>down</em> the pyramid for control and one-off precision; you reach <em>up</em> for convenience and fleet-wide, always-on coverage.</figcaption>
+    </figure>
+
+    <div class="callout key">
+      <span class="h">💡 The mental shortcut</span>
+      Ask "is this a one-off question, a tool I'll reuse, or something I want running everywhere all the time?" That single question maps directly onto the three layers.
+    </div>
+    <p class="cite">Source: <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — Linux eBPF Tracing Tools</a>, <a href="https://ebpf.io/get-started/" target="_blank" rel="noopener">ebpf.io — Get Started</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> bpftrace — your scalpel for ad-hoc questions</h2>
+    <p>This is the tool the whole course has been built around, so just a quick recap of <em>where it fits</em>. bpftrace is a high-level language for writing tracing programs as <strong>one-liners or short scripts</strong>. You describe a probe and an action, hit enter, read the output, and move on. Gregg's summary: bpftrace is <em>"for one-liners and short scripts."</em></p>
+
+    <pre><span class="c1"># Which processes are opening files, right now?</span>
+sudo bpftrace <span class="y">-e</span> <span class="g">'tracepoint:syscalls:sys_enter_openat { printf("%s %s\n", comm, str(args.filename)); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>Strengths</h4>
+        <p>Zero setup, instant feedback, expressive enough for histograms and aggregations, perfect for "let me just check…" investigations. The shortest path from a question to an answer.</p>
+      </div>
+      <div class="card">
+        <h4>Limits</h4>
+        <p>It's a one-shot language, not a packaging system. There's no clean way to ship a polished CLI, parse fancy arguments, post-process output, or build a long-running daemon. Once you want those, you've outgrown it.</p>
+      </div>
+    </div>
+
+    <div class="callout mission">
+      <span class="h">🎯 Mission fit</span>
+      For 80% of your "what is this thing doing?" moments, bpftrace <em>is</em> the answer. The rest of this lesson is about knowing when it isn't.
+    </div>
+    <p class="cite">Source: <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a>, <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">brendangregg.com/ebpf.html</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> BCC — a Python + C front-end, and 100+ ready-made tools</h2>
+    <p><strong>BCC</strong> (the BPF Compiler Collection, repo <code class="inl">iovisor/bcc</code>) is a framework for building eBPF tools where the in-kernel part is written in <strong>C</strong> and the user-space part — argument parsing, output formatting, looping — is written in <strong>Python</strong> (or C++/Lua). That split is what lets BCC tools feel like real command-line programs.</p>
+
+    <p>But here's the part that matters most for an observability mission: <strong>you rarely have to write any of that.</strong> BCC ships with a large library of finished, production-grade tools. Gregg notes that between the BCC and bpftrace repositories there are <em>"over 100 tools."</em> On many Linux distributions these are already installed under <code class="inl">/usr/share/bcc/tools</code>. A few you'll reach for constantly:</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Tool</th><th>Answers the question…</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">execsnoop</code></td><td>"What new processes are being launched?" (catches short-lived processes most monitors miss)</td></tr>
+          <tr><td><code class="inl">opensnoop</code></td><td>"Which files is this program opening?"</td></tr>
+          <tr><td><code class="inl">biolatency</code></td><td>"How slow is my disk I/O?" (prints a latency histogram)</td></tr>
+          <tr><td><code class="inl">tcplife</code></td><td>"Which TCP connections happened, and how long did each live?"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <pre><span class="c1"># Watch every new process the moment it execs:</span>
+sudo execsnoop
+
+<span class="c1"># Disk I/O latency as a live histogram:</span>
+sudo biolatency
+
+<span class="c1"># TCP sessions to local port 80, with duration:</span>
+sudo tcplife <span class="y">-L</span> 80</pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). On Debian/Ubuntu the package is <code class="inl">bpfcc-tools</code> and commands may be suffixed, e.g. <code class="inl">execsnoop-bpfcc</code>.</div>
+
+    <h3>When to graduate from bpftrace to BCC</h3>
+    <p>Graduate when the <em>question stops being a one-off.</em> If you find yourself pasting the same bpftrace one-liner repeatedly, wishing it had flags, or wanting to hand a teammate a clean command — that's BCC's territory. And before writing anything yourself, <strong>check the existing tools first</strong>: the answer you want is very often already a one-word command. Gregg's own advice: <em>"If you are looking for tools to run, try BCC then bpftrace."</em></p>
+    <p class="cite">Source: <a href="https://github.com/iovisor/bcc" target="_blank" rel="noopener">github.com/iovisor/bcc</a>, <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">brendangregg.com/ebpf.html</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> perf — the venerable sampling tool, and how it relates to eBPF</h2>
+    <p><code class="inl">perf</code> predates eBPF by years. It's the standard Linux profiler for <strong>sampling</strong> (periodically snapshotting what the CPU is doing) and for reading <strong>PMCs</strong> — Performance Monitoring Counters, the CPU's built-in hardware counters for things like cache misses and instructions retired. You met its sampling style in the last lesson on flame graphs.</p>
+
+    <p>How does it relate to eBPF? Two ways, and both are worth keeping straight:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>perf as a standalone tool</h4>
+        <p>You can use <code class="inl">perf record</code> / <code class="inl">perf top</code> with no eBPF at all. It's the classic, battle-tested way to sample stacks and read hardware counters.</p>
+      </div>
+      <div class="card">
+        <h4>perf as plumbing for eBPF</h4>
+        <p>eBPF reuses perf's machinery: perf events are how the kernel <em>delivers</em> sampling interrupts and counter reads, and an eBPF program can attach to a perf event to summarize data in-kernel instead of dumping huge capture files. The two are complementary, not rivals.</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <span class="h">💡 Rule of thumb</span>
+      Reach for plain <code class="inl">perf</code> when you want classic CPU sampling or hardware counters. Reach for bpftrace/BCC when you want to trace <em>specific events</em> (a syscall, a function entry) and aggregate them cheaply in the kernel. Modern profilers like Parca (next section) blend both.
+    </div>
+    <p class="cite">Source: <a href="https://www.brendangregg.com/perf.html" target="_blank" rel="noopener">Brendan Gregg — perf examples</a>, <a href="https://docs.ebpf.io/linux/program-type/BPF_PROG_TYPE_PERF_EVENT/" target="_blank" rel="noopener">eBPF Docs — perf_event programs</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> C + libbpf with CO-RE / BTF — portable standalone binaries</h2>
+    <p>This is the bottom-of-the-pyramid layer, and it's where the tools <em>themselves</em> get built. Writing eBPF in C with the <strong>libbpf</strong> library is explicitly out of scope for this course — but you should understand <em>what it buys you</em>, because it's why the tools above are distributable at all.</p>
+
+    <p>A libbpf-based tool compiles to a <strong>single self-contained binary</strong>: no Python runtime, no on-the-machine compiler, just an executable you can drop onto a server and run. The thing that makes this practical across the messy reality of different kernels is a pair of acronyms worth knowing:</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>CO-RE — "Compile Once – Run Everywhere"</h4>
+        <p>Compile your eBPF program <em>once</em> on your laptop, and the same binary runs on machines with different kernel versions — no recompiling per host. It does this by embedding <em>relocations</em> that get fixed up at load time to match the actual kernel.</p>
+      </div>
+      <div class="card">
+        <h4>BTF — BPF Type Format</h4>
+        <p>A compact description of the kernel's data-structure layout, baked into modern kernels (roughly 5.2+). CO-RE reads BTF at load time to learn where each field <em>actually</em> lives on <em>this</em> kernel and patches the program accordingly.</p>
+      </div>
+    </div>
+
+    <p>The problem CO-RE solves is real and used to be miserable: kernel structs change between versions — a field moves, gets renamed, or shifts offset — so an eBPF program compiled against one kernel could read garbage on another. The old fix was to ship a compiler and recompile on every host (this is, in fact, what BCC historically did). CO-RE + BTF replaces that with one portable binary.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 250" role="img" aria-label="CO-RE flow: one compiled binary plus the running kernel's BTF gives a program that runs on any kernel.">
+        <defs>
+          <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+          </marker>
+        </defs>
+        <rect x="30" y="90" width="190" height="70" rx="10" fill="var(--accent)" opacity="0.14" stroke="var(--accent)" stroke-width="2"/>
+        <text x="125" y="120" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Compile once</text>
+        <text x="125" y="140" text-anchor="middle" font-size="11" fill="var(--muted)">one binary + relocations</text>
+
+        <rect x="30" y="180" width="190" height="50" rx="10" fill="var(--accent-2)" opacity="0.14" stroke="var(--accent-2)" stroke-width="2"/>
+        <text x="125" y="205" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">Kernel's BTF</text>
+        <text x="125" y="222" text-anchor="middle" font-size="10.5" fill="var(--muted)">this host's struct layout</text>
+
+        <line x1="220" y1="125" x2="330" y2="125" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow2)"/>
+        <line x1="220" y1="205" x2="330" y2="150" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow2)"/>
+
+        <rect x="335" y="95" width="180" height="60" rx="10" fill="#fff" stroke="var(--accent)" stroke-width="2"/>
+        <text x="425" y="120" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink)">Load-time fix-up</text>
+        <text x="425" y="139" text-anchor="middle" font-size="10.5" fill="var(--muted)">offsets patched to match</text>
+
+        <line x1="515" y1="125" x2="610" y2="125" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow2)"/>
+
+        <rect x="615" y="70" width="180" height="110" rx="10" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)" stroke-width="2"/>
+        <text x="705" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">Runs everywhere</text>
+        <text x="705" y="128" text-anchor="middle" font-size="10.5" fill="var(--muted)">kernel 5.10 ✓</text>
+        <text x="705" y="146" text-anchor="middle" font-size="10.5" fill="var(--muted)">kernel 6.2 ✓</text>
+        <text x="705" y="164" text-anchor="middle" font-size="10.5" fill="var(--muted)">no recompile</text>
+
+        <text x="410" y="35" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">CO-RE: Compile Once – Run Everywhere</text>
+      </svg>
+      <figcaption>CO-RE pairs your single compiled binary with the target kernel's own BTF, patching struct offsets at load time so one build runs across kernel versions.</figcaption>
+    </figure>
+
+    <div class="callout key">
+      <span class="h">💡 Why you care even though you won't write C</span>
+      CO-RE/BTF is why modern eBPF tools are <em>just binaries you download and run</em> instead of fragile per-kernel builds. It's the quiet plumbing that makes the platforms in the next section deployable across a whole fleet.
+    </div>
+    <p class="cite">Source: <a href="https://docs.ebpf.io/concepts/core/" target="_blank" rel="noopener">eBPF Docs — BPF CO-RE</a>, <a href="https://nakryiko.com/posts/bpf-portability-and-co-re/" target="_blank" rel="noopener">Andrii Nakryiko — BPF CO-RE</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Turnkey platforms — eBPF run for you, fleet-wide</h2>
+    <p>At the top of the pyramid are <strong>products</strong>. You don't type probes or build tools; you deploy an agent (often one per node in a Kubernetes cluster) and it runs eBPF continuously, ships the data to a UI or backend, and gives you dashboards, maps, and queries. The trade-off versus bpftrace is the mirror image: far less control over the exact question, far more coverage with zero per-investigation effort. Each of the following is open source and uses eBPF under the hood.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>Pixie</h4>
+        <p>Automatic <b>Kubernetes application observability</b>: deploys to a cluster and uses eBPF to collect metrics, traces, request-level data, and logs with <strong>no code changes</strong>, queryable via CLI or web UI. A CNCF project.</p>
+      </div>
+      <div class="card">
+        <h4>Parca / Polar Signals</h4>
+        <p><b>Continuous profiling</b>: an eBPF agent samples CPU (and more) across your whole fleet at low overhead, so you always have flame graphs for "why was this slow last Tuesday?" Open-sourced by, and offered as a hosted service via, <strong>Polar Signals</strong>.</p>
+      </div>
+      <div class="card">
+        <h4>Cilium / Hubble</h4>
+        <p>Hubble is the <b>network &amp; service observability</b> layer on top of Cilium's eBPF networking — it shows live service-to-service flows, dependency maps, and L3–L7 metrics (DNS, HTTP) plus security events, with no app changes. <em>(Networking is beyond our mission, but it's part of the map.)</em></p>
+      </div>
+      <div class="card">
+        <h4>Grafana Beyla</h4>
+        <p><b>Auto-instrumentation</b>: an eBPF agent that watches your services and emits RED metrics (Rate, Errors, Duration) and distributed traces as <strong>OpenTelemetry / Prometheus</strong> data — across Go, Java, Python, Node, .NET — without touching the application's code.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="h">⚠️ Don't conflate these</span>
+      They are <em>not</em> interchangeable. <strong>Pixie</strong> = broad K8s app telemetry. <strong>Parca</strong> = profiling specifically. <strong>Hubble</strong> = network flows. <strong>Beyla</strong> = auto metrics+traces. Picking by buzzword instead of by question is the most common platform mistake.
+    </div>
+    <p class="cite">Sources: <a href="https://px.dev/" target="_blank" rel="noopener">px.dev (Pixie)</a>, <a href="https://www.parca.dev/" target="_blank" rel="noopener">parca.dev</a>, <a href="https://github.com/cilium/hubble" target="_blank" rel="noopener">github.com/cilium/hubble</a>, <a href="https://grafana.com/docs/beyla/latest/" target="_blank" rel="noopener">grafana.com/docs/beyla</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> The decision guide — pick by the question</h2>
+    <p>Strip everything above down to a single reflex: <strong>match the shape of your question to a layer.</strong></p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 250" role="img" aria-label="Decision flow: an ad-hoc question goes to bpftrace; a reusable tool goes to BCC or libbpf; always-on fleet-wide goes to a platform.">
+        <defs>
+          <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/>
+          </marker>
+        </defs>
+        <rect x="300" y="20" width="220" height="48" rx="24" fill="var(--ink)" opacity="0.10" stroke="var(--ink)" stroke-width="2"/>
+        <text x="410" y="49" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">What's the shape of the question?</text>
+
+        <!-- three branches -->
+        <line x1="370" y1="68" x2="150" y2="120" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow3)"/>
+        <line x1="410" y1="68" x2="410" y2="120" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow3)"/>
+        <line x1="450" y1="68" x2="670" y2="120" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+        <text x="225" y="100" text-anchor="middle" font-size="11" fill="var(--muted)">one-off "let me check…"</text>
+        <text x="410" y="100" text-anchor="middle" font-size="11" fill="var(--muted)">reusable CLI / tool</text>
+        <text x="600" y="100" text-anchor="middle" font-size="11" fill="var(--muted)">always-on, fleet-wide</text>
+
+        <rect x="40" y="125" width="220" height="95" rx="12" fill="var(--accent)" opacity="0.14" stroke="var(--accent)" stroke-width="2"/>
+        <text x="150" y="155" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">bpftrace</text>
+        <text x="150" y="178" text-anchor="middle" font-size="10.5" fill="var(--muted)">one-liner, instant answer,</text>
+        <text x="150" y="194" text-anchor="middle" font-size="10.5" fill="var(--muted)">then move on</text>
+
+        <rect x="300" y="125" width="220" height="95" rx="12" fill="var(--accent)" opacity="0.14" stroke="var(--accent)" stroke-width="2"/>
+        <text x="410" y="155" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">BCC or libbpf</text>
+        <text x="410" y="178" text-anchor="middle" font-size="10.5" fill="var(--muted)">check existing BCC tools first;</text>
+        <text x="410" y="194" text-anchor="middle" font-size="10.5" fill="var(--muted)">build with libbpf if shipping a binary</text>
+
+        <rect x="560" y="125" width="220" height="95" rx="12" fill="var(--accent-2)" opacity="0.16" stroke="var(--accent-2)" stroke-width="2"/>
+        <text x="670" y="155" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">A platform</text>
+        <text x="670" y="176" text-anchor="middle" font-size="10.5" fill="var(--muted)">Pixie · Parca · Hubble · Beyla</text>
+        <text x="670" y="194" text-anchor="middle" font-size="10.5" fill="var(--muted)">deploy once, runs continuously</text>
+      </svg>
+      <figcaption>The whole toolkit in one reflex: ad-hoc → bpftrace; reusable tool → BCC/libbpf; always-on across a fleet → a platform.</figcaption>
+    </figure>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Your situation</th><th>Reach for</th><th>Effort</th><th>Scope</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>"Let me just check what's opening these files."</td><td><strong>bpftrace</strong></td><td><span class="yes">Seconds</span></td><td>One host, one question, now</td></tr>
+          <tr><td>"I keep needing this — give me a real command."</td><td><strong>BCC tool</strong> (often already exists)</td><td>Low</td><td>One host, repeatable</td></tr>
+          <tr><td>"Ship a single portable binary to many servers."</td><td><strong>libbpf + CO-RE</strong></td><td><span class="no">High (writes C)</span></td><td>Many hosts, one tool</td></tr>
+          <tr><td>"Always-on app telemetry across a K8s cluster."</td><td><strong>Pixie</strong></td><td>Deploy once</td><td>Fleet, continuous</td></tr>
+          <tr><td>"Always-on CPU profiles I can look back at."</td><td><strong>Parca</strong></td><td>Deploy once</td><td>Fleet, continuous</td></tr>
+          <tr><td>"See live service-to-service network flows."</td><td><strong>Hubble</strong> (Cilium)</td><td>Deploy once</td><td>Fleet, continuous</td></tr>
+          <tr><td>"Auto metrics + traces, no app changes."</td><td><strong>Beyla</strong></td><td>Deploy once</td><td>Fleet, continuous</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>A couple of BCC invocations to keep in your back pocket for the "reusable tool" row — copy them for later:</p>
+    <pre><span class="c1"># "Who is launching processes on this box?"</span>
+sudo execsnoop
+
+<span class="c1"># "How long do my TCP connections live, with bytes moved?"</span>
+sudo tcplife</pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>; package <code class="inl">bpfcc-tools</code> on Debian/Ubuntu).</div>
+
+    <div class="callout mission">
+      <span class="h">🎯 Mission fit</span>
+      You don't need to install a platform to be effective. For your spare-time, "what is this doing?" learning, bpftrace plus a handful of BCC tools covers almost everything — the platforms are simply what the same eBPF foundation looks like when a team needs it running everywhere, forever.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">You're debugging one server and want a quick, one-off answer to "which processes are calling this syscall right now?" Which tool fits best?</div>
+        <button class="opt">A turnkey platform like Pixie</button>
+        <button class="opt">bpftrace — an ad-hoc one-liner</button>
+        <button class="opt">libbpf with CO-RE, compiled to a binary</button>
+        <button class="opt">Grafana Beyla</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">What does CO-RE (with BTF) primarily give you?</div>
+        <button class="opt">A graphical dashboard for eBPF data</button>
+        <button class="opt">Automatic Kubernetes deployment of probes</button>
+        <button class="opt">One compiled binary that runs across different kernel versions without recompiling</button>
+        <button class="opt">The ability to write eBPF in Python instead of C</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">Which statement correctly pairs the platforms with what they're for?</div>
+        <button class="opt">Hubble = network/service flow observability; Pixie = automatic Kubernetes app observability</button>
+        <button class="opt">Hubble = continuous CPU profiling; Pixie = network flows</button>
+        <button class="opt">Hubble = auto-instrumentation traces; Pixie = disk I/O histograms</button>
+        <button class="opt">Hubble and Pixie are two names for the same product</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">What's the key difference between bpftrace and BCC?</div>
+        <button class="opt">bpftrace runs in user space; BCC runs in the kernel</button>
+        <button class="opt">BCC is for one-liners; bpftrace is for building polished, reusable tools</button>
+        <button class="opt">They are unrelated — BCC has nothing to do with eBPF</button>
+        <button class="opt">bpftrace is for ad-hoc one-liners; BCC is a Python+C framework for building reusable tools (and ships 100+ ready ones)</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">09</span> Flashcards</h2>
+
+    <details class="fc"><summary>Q: In one line, what is bpftrace for?</summary>
+      <div class="a">A: A high-level language for <strong>ad-hoc tracing</strong> — one-liners and short scripts you type to answer a question right now, then move on. The scalpel at the bottom-middle of the pyramid.</div></details>
+
+    <details class="fc"><summary>Q: What is BCC, and why is it valuable even if you never write code?</summary>
+      <div class="a">A: The <strong>BPF Compiler Collection</strong> — a Python+C framework for building reusable eBPF tools. Crucially, it ships a large library of finished tools (execsnoop, opensnoop, biolatency, tcplife, …); between BCC and bpftrace there are 100+ ready to run.</div></details>
+
+    <details class="fc"><summary>Q: How does perf relate to eBPF?</summary>
+      <div class="a">A: perf is the classic Linux sampling/PMC (hardware-counter) profiler. It works standalone, and it's also <em>plumbing</em> for eBPF: perf events deliver sampling interrupts and counter reads that eBPF programs can attach to and summarize in-kernel. Complementary, not rivals.</div></details>
+
+    <details class="fc"><summary>Q: What does libbpf give you that bpftrace and BCC don't?</summary>
+      <div class="a">A: A way to build a <strong>single self-contained binary</strong> — no Python, no on-host compiler — that you can drop onto servers and run. It's how distributable eBPF tools are made (the C-writing layer that's out of scope for this course).</div></details>
+
+    <details class="fc"><summary>Q: What do CO-RE and BTF mean, and what problem do they solve?</summary>
+      <div class="a">A: <strong>CO-RE</strong> = "Compile Once – Run Everywhere." <strong>BTF</strong> = BPF Type Format, a description of kernel struct layouts baked into modern kernels (~5.2+). Together they let one compiled binary run across different kernel versions by patching struct offsets at load time — solving the old problem of recompiling per kernel.</div></details>
+
+    <details class="fc"><summary>Q: Which platform is for continuous CPU profiling across a fleet?</summary>
+      <div class="a">A: <strong>Parca</strong> (open-sourced by Polar Signals) — an eBPF agent that continuously samples profiles across your infrastructure at low overhead, so you always have flame graphs to look back at.</div></details>
+
+    <details class="fc"><summary>Q: Which platform is for network/service-flow observability, and what is it built on?</summary>
+      <div class="a">A: <strong>Hubble</strong> — the network, service, and security observability layer built on top of <strong>Cilium</strong>'s eBPF networking. It shows live service-to-service flows, dependency maps, and L3–L7 metrics with no app changes.</div></details>
+
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Want to go deeper on any layer? Ask me things like <em>"walk me through what an execsnoop run actually prints, line by line"</em> or <em>"why would I pick Beyla over Parca if I already have Prometheus?"</em> — or have me turn one of these BCC tools into the equivalent bpftrace one-liner so you can see the trade-off concretely.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0007-cpu-profiling-and-flame-graphs.html"><span class="dir">↩ Previous</span><span class="ttl">CPU Profiling &amp; Flame Graphs</span></a>
+    <a href="0009-running-safely-in-production.html"><span class="dir">Up next →</span><span class="ttl">Running It Safely in Production</span></a>
+  </nav>
+
+  <footer>
+    eBPF Course · Lesson 8 · grounded in
+    <a href="https://ebpf.io/" target="_blank" rel="noopener">ebpf.io</a>,
+    <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg</a>,
+    <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a> ·
+    see <a href="/courses/ebpf/#resources">RESOURCES.md</a> ·
+    <a href="../reference/ebpf-glossary.html">Glossary</a> ·
+    <a href="../reference/bpftrace-cheatsheet.html">bpftrace cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  // Tight feedback loop for the self-check quiz.
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

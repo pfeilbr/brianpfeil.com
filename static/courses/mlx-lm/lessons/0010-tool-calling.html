@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 10 · Tool Calling — Let the Model Use Your Functions</title>
+<style>
+.quiz{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:16px 0;background:var(--surface)}
+.quiz .q{font-weight:700;margin-bottom:.6em}
+.quiz .opts{display:flex;flex-direction:column;gap:.5rem}
+.quiz .opt{text-align:left;font:inherit;cursor:pointer;border:1px solid var(--border);background:var(--panel);color:var(--fg);border-radius:9px;padding:.6rem .8rem}
+.quiz .opt:hover:not(:disabled){border-color:var(--accent)}
+.quiz .opt.correct{border-color:var(--mark);background:color-mix(in srgb,var(--mark) 15%,transparent)}
+.quiz .opt.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,transparent)}
+.quiz .opt:disabled{cursor:default}
+.quiz-exp{margin-top:.7rem;color:var(--muted);font-size:.92rem;border-left:3px solid var(--accent);padding-left:.7rem}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/mlx-lm/" style="color:inherit;text-decoration:none">&larr; mlx-lm</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">mlx-lm · Lesson 10</div>
+    <h1>Tool Calling — Let the Model Use Your Functions</h1>
+    <p class="sub">Give a local model a menu of your Python functions and let it pick the right one with the right arguments. This is the agentic primitive: a model that doesn't just talk, but <em>acts</em> — entirely on your Mac. And it's just Lesson 8 with one more step.</p>
+    <span class="missiontag">🎯 Mission step: a local model that can call your code</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>Tool calling = structured output (Lesson 8) + dispatch.</strong> Describe each tool as a schema, constrain the model to emit <em>one of them</em>, and you get a guaranteed-valid "call this function with these args" object. Your code parses it and runs the real function. The model decides <em>what</em> to do; your code does the doing.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Why this is the agentic primitive</h2>
+    <p class="lead">Everything "agentic" — assistants, copilots, automations — bottoms out in this loop: the model reads a request, chooses a tool, your code runs it, and the result flows back. Once a local model can reliably call your functions, you can build real automations on-device without sending anything to a cloud. It's the bridge from "a model that answers" to "a model that does."</p>
+    <div class="callout key"><span class="h">💡 Two ingredients</span>
+      <strong>(1)</strong> describe your tools as schemas (name + typed parameters); <strong>(2)</strong> constrain the model's output to <em>a choice among those schemas</em>. You already have the tool for (2) — Outlines from Lesson 8. A <code class="inl">Union</code> of schemas means "emit exactly one valid tool call."</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The code — a Union of tool schemas</h2>
+    <p>Each tool is a Pydantic model with a <code class="inl">tool</code> discriminator and its typed args. Constrain the output to <code class="inl">Union[...]</code>, parse the guaranteed-valid JSON, and dispatch:</p>
+    <pre><span class="b">import</span> json, outlines, mlx_lm
+<span class="b">from</span> pydantic <span class="b">import</span> BaseModel
+<span class="b">from</span> typing <span class="b">import</span> Literal, Union
+
+<span class="b">def</span> <span class="y">add</span>(a, b): <span class="b">return</span> a + b
+<span class="b">def</span> <span class="y">get_weather</span>(city): <span class="b">return</span> f<span class="g">"{city}: 21C, clear"</span>
+
+<span class="b">class</span> <span class="y">Add</span>(BaseModel):
+    tool: Literal[<span class="g">"add"</span>]; a: float; b: float
+<span class="b">class</span> <span class="y">GetWeather</span>(BaseModel):
+    tool: Literal[<span class="g">"get_weather"</span>]; city: str
+
+model = outlines.from_mlxlm(*mlx_lm.load(<span class="g">"mlx-community/Qwen2.5-3B-Instruct-4bit"</span>))
+
+<span class="b">def</span> <span class="y">run</span>(user):
+    raw = model(f<span class="g">"You can call tools. Pick the right one for: {user}"</span>,
+                output_type=Union[Add, GetWeather], max_tokens=<span class="g">128</span>)
+    c = json.loads(raw)                       <span class="c1"># valid by construction</span>
+    <span class="b">if</span> c[<span class="g">"tool"</span>] == <span class="g">"add"</span>:      <span class="b">return</span> add(c[<span class="g">"a"</span>], c[<span class="g">"b"</span>])
+    <span class="b">return</span> get_weather(c[<span class="g">"city"</span>])</pre>
+    <p>Real output on your M4 Pro — right tool, right args, every time:</p>
+    <pre>'What is 12 plus 30?'
+    -> add(a=12, b=30)            -> <span class="g">42</span>
+"What's the weather in Tokyo?"
+    -> get_weather(city='Tokyo')  -> <span class="g">Tokyo: 21C, clear</span></pre>
+    <div class="callout mission"><span class="h">🎯 Your tangible win</span>
+      Run <code class="inl">~/projects/learn/public/courses/mlx-lm/practice/.venv/bin/python ~/projects/learn/public/courses/mlx-lm/practice/tool_calling.py</code>. A local model just read plain English, chose the correct function from your menu, and filled in the arguments — and because the call is schema-constrained, your code can dispatch it without a single defensive check.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The full tool-use loop</h2>
+    <p>One call is a "tool call." A real assistant runs the <strong>loop</strong>: the model emits a call, you execute it, you feed the <em>result</em> back, and the model uses it to answer (or call another tool). That round-trip is the whole of "agentic."</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="User request goes to the model which emits a tool call, your code runs it, the result returns to the model which answers">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="12">
+          <rect x="14" y="84" width="96" height="44" rx="8" fill="none" stroke="var(--fg)" stroke-width="1.3"/>
+          <text x="62" y="104" text-anchor="middle" fill="var(--fg)">user ask</text>
+          <text x="62" y="120" text-anchor="middle" fill="var(--muted)" font-size="10">"12 + 30?"</text>
+
+          <rect x="160" y="74" width="120" height="64" rx="9" fill="var(--accent)" opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+          <rect x="160" y="74" width="120" height="64" rx="9" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="220" y="100" text-anchor="middle" fill="var(--fg)" font-weight="700">model</text>
+          <text x="220" y="118" text-anchor="middle" fill="var(--muted)" font-size="10">constrained to</text>
+          <text x="220" y="130" text-anchor="middle" fill="var(--muted)" font-size="10">tool schemas</text>
+
+          <rect x="330" y="84" width="120" height="44" rx="8" fill="none" stroke="var(--fg)" stroke-width="1.3"/>
+          <text x="390" y="100" text-anchor="middle" fill="var(--fg)" font-family="monospace" font-size="10">{"tool":"add",</text>
+          <text x="390" y="116" text-anchor="middle" fill="var(--fg)" font-family="monospace" font-size="10">"a":12,"b":30}</text>
+
+          <rect x="500" y="84" width="110" height="44" rx="8" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)" stroke-width="1.4"/>
+          <rect x="500" y="84" width="110" height="44" rx="8" fill="none" stroke="var(--accent-2)" stroke-width="1.4"/>
+          <text x="555" y="104" text-anchor="middle" fill="var(--fg)">your code</text>
+          <text x="555" y="120" text-anchor="middle" fill="var(--muted)" font-size="10">runs add() → 42</text>
+
+          <g stroke="var(--fg)" stroke-width="1.3" fill="none" marker-end="url(#t)">
+            <line x1="110" y1="106" x2="156" y2="106"/>
+            <line x1="280" y1="106" x2="326" y2="106"/>
+            <line x1="450" y1="106" x2="496" y2="106"/>
+          </g>
+          <path d="M555,128 Q555,176 220,176 L220,142" fill="none" stroke="var(--accent-2)" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#t2)"/>
+          <text x="380" y="172" text-anchor="middle" fill="var(--accent-2)" font-size="10.5">result fed back → model answers "42"</text>
+        </g>
+        <defs>
+          <marker id="t" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/></marker>
+          <marker id="t2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent-2)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>The model only ever <em>proposes</em> a call; your code is the only thing that runs it (so you keep control — validate args, gate dangerous actions, log). Feed the result back for the model to use, and you have a working agent loop on-device.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The native path — and why we constrain</h2>
+    <p>Instruct models also have a <em>native</em> tool format. Llama 3.2's chat template accepts a <code class="inl">tools=</code> argument and asks the model to reply with <code class="inl">{"name": …, "parameters": …}</code>; OpenAI-compatible servers (Lesson 3) take a <code class="inl">tools</code> field too. It works — but the raw output isn't <em>guaranteed</em> valid, and each model family formats it slightly differently (some wrap it in tags).</p>
+    <div class="callout key"><span class="h">💡 Native describes; constrained guarantees</span>
+      Use the native <code class="inl">tools=</code> template to <em>tell</em> the model what's available, and constrained decoding to <em>force</em> the output into a shape you can parse. Together: idiomatic prompt + bulletproof output. For quick experiments the native path alone is fine; for code you depend on, constrain it.</p>
+    </div>
+    <div class="callout warn"><span class="h">⚠️ Callback to Lesson 9: pick an adequate model</span>
+      We used the <strong>3B</strong> here, not the 1B from earlier lessons. Constrained decoding guarantees the <em>format</em> of the call, but choosing the <em>right</em> tool and arguments is reasoning — and a 1B model picks wrong more often. Tool selection is exactly the kind of task where stepping up a size pays off.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Check yourself</h2>
+    <p>Pick an answer — you'll get instant feedback. (Want to wire a real tool of yours — a shell command, an API, a file action? <strong>Ask me</strong> and we'll design its schema.)</p>
+
+    <div class="quiz"><p class="q">1. Constraining the output to a <code class="inl">Union</code> of tool schemas guarantees that…</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) the model always picks the correct tool</button>
+      <button class="opt" data-correct="true">B) the output is valid JSON matching exactly one of your tools</button>
+      <button class="opt" data-correct="false">C) the tool runs faster</button>
+    </div><p class="quiz-exp" hidden>Constraint guarantees <em>shape</em>, not <em>judgment</em>. You always get a parseable call for one of the tools; whether it's the <em>right</em> one is a reasoning question (see Q4).</p></div>
+
+    <div class="quiz"><p class="q">2. In tool calling, who actually executes the function?</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) the model runs it internally</button>
+      <button class="opt" data-correct="true">B) your code, after parsing the model's chosen call</button>
+      <button class="opt" data-correct="false">C) the mlx-lm server runs it automatically</button>
+    </div><p class="quiz-exp" hidden>The model only <em>proposes</em> a call as data. Your code parses and runs it — which is what lets you validate args, gate dangerous actions, and stay in control.</p></div>
+
+    <div class="quiz"><p class="q">3. The model called <code class="inl">add</code> but with the wrong numbers. Constrained decoding would…</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) have prevented the mistake</button>
+      <button class="opt" data-correct="true">B) not help — that's a correctness/reasoning issue, not a format one</button>
+      <button class="opt" data-correct="false">C) automatically retry with different numbers</button>
+    </div><p class="quiz-exp" hidden>Constraint only enforces the JSON shape. Wrong-but-valid arguments are a reasoning failure — fix with a clearer prompt or a bigger model, not the schema.</p></div>
+
+    <div class="quiz"><p class="q">4. Why use the 3B model here instead of the 1B from earlier lessons?</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) the 1B can't output JSON</button>
+      <button class="opt" data-correct="true">B) choosing the right tool + args is reasoning, where a bigger model is more reliable</button>
+      <button class="opt" data-correct="false">C) the 1B doesn't fit in 24 GB</button>
+    </div><p class="quiz-exp" hidden>Both fit and both can emit constrained JSON. But tool selection is reasoning, and Lesson 9's lesson applies: step up to the smallest model that's actually good enough for the task.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Going deeper</h2>
+    <ul>
+      <li><a href="https://dottxt-ai.github.io/outlines/" target="_blank" rel="noopener">Outlines</a> — <code class="inl">Union</code> / JSON-schema constrained generation (the mechanism here).</li>
+      <li><a href="https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/SERVER.md" target="_blank" rel="noopener">mlx-lm SERVER.md</a> — the OpenAI-compatible <code class="inl">tools</code> field for the native path.</li>
+      <li><a href="https://github.com/ml-explore/mlx-examples/discussions/1112" target="_blank" rel="noopener">mlx tool-calling discussion</a> — native templates across model families.</li>
+    </ul>
+    <p class="cite">Keep handy: <a href="../reference/mlx-lm-glossary.html">Glossary &amp; quick reference</a> · <a href="0009-model-selection-and-memory-math.html">← Lesson 9</a>. Next up → <strong>Lesson 11: Local Embeddings &amp; Semantic Search</strong> — turn text into vectors on-device and find things by meaning (the other half of building real local-LLM tools).</p>
+  </section>
+
+</div>
+<script>
+// non-critical quiz state persists in localStorage (no backend); degrades gracefully
+document.querySelectorAll('.quiz').forEach(function(q,qi){
+  var exp=q.querySelector('.quiz-exp'), opts=q.querySelectorAll('.opt');
+  var key='quiz:'+location.pathname+':'+qi;
+  function reveal(chosen){
+    q.dataset.done='1';
+    opts.forEach(function(o,oi){o.disabled=true;
+      if(o.dataset.correct==='true')o.classList.add('correct');
+      if(oi===chosen && o.dataset.correct!=='true')o.classList.add('wrong');});
+    if(exp)exp.hidden=false;
+  }
+  var saved=null; try{saved=localStorage.getItem(key);}catch(e){}
+  if(saved!==null) reveal(parseInt(saved,10));
+  opts.forEach(function(b,oi){
+    b.addEventListener('click',function(){
+      if(q.dataset.done)return;
+      try{localStorage.setItem(key,oi);}catch(e){}
+      reveal(oi);
+    });
+  });
+});
+</script>
+</body>
+</html>

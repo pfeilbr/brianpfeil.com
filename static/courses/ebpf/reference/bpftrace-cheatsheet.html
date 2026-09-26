@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bpftrace Cheat Sheet</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Reference</div>
+    <h1>bpftrace Cheat Sheet</h1>
+    <p class="sub">The probe syntax, builtins, functions, and greatest-hits one-liners — quick reference, built to print.</p>
+    <span class="missiontag">🎯 Ask the running kernel a precise question, get an answer in seconds</span>
+  </header>
+
+  <div class="callout warn">
+    <span class="h">⚠️ Before you copy anything</span>
+    bpftrace is <strong>Linux-only</strong> (no macOS, no Windows). Almost every command needs
+    <code class="inl">sudo</code> (tracing the kernel is privileged). Run these later on a Linux box or VM.
+    Probe names, builtins, and functions below are verified against the
+    <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/reference_guide.md" target="_blank" rel="noopener">bpftrace Reference Guide</a>
+    and the <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">One-Liner Tutorial</a>.
+    <br><br>
+    <strong>Jump:</strong>
+    <a href="ebpf-glossary.html">Glossary</a> ·
+    <a href="../lessons/0003-anatomy-of-a-bpftrace-one-liner.html">Lesson 3: Anatomy of a one-liner</a>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Invocation</h2>
+    <p>The whole tool runs from the command line. You either inline a tiny program with
+    <code class="inl">-e</code>, or point it at a <code class="inl">.bt</code> script file.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">sudo bpftrace -e 'program'</code></td><td>Run a one-liner program given inline as text.</td></tr>
+          <tr><td><code class="inl">sudo bpftrace file.bt</code></td><td>Run a program saved in a script file (<code class="inl">.bt</code> by convention).</td></tr>
+          <tr><td><code class="inl">sudo bpftrace -l 'pattern'</code></td><td>List probes matching a wildcard pattern (does not run anything). Omit the pattern to list <em>all</em> probes.</td></tr>
+          <tr><td><code class="inl">sudo bpftrace -l -e 'program'</code></td><td>List which probes the given program <em>would</em> attach to.</td></tr>
+          <tr><td><code class="inl">-p PID</code></td><td>Attach to / filter on one process. bpftrace exits when that process exits.</td></tr>
+          <tr><td><code class="inl">-c 'command'</code></td><td>Launch <code class="inl">command</code> as a child and trace it; bpftrace exits when it does.</td></tr>
+          <tr><td><code class="inl">-V</code> / <code class="inl">--version</code></td><td>Print the bpftrace version.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <pre><span class="c1"># list every syscall-entry tracepoint</span>
+<span class="b">sudo</span> bpftrace <span class="b">-l</span> <span class="y">'tracepoint:syscalls:sys_enter_*'</span>
+
+<span class="c1"># run a one-liner; ^C to stop and print results</span>
+<span class="b">sudo</span> bpftrace <span class="b">-e</span> <span class="y">'BEGIN { printf("hello world\n"); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/man/adoc/bpftrace.adoc" target="_blank" rel="noopener">bpftrace CLI man page</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Program structure</h2>
+    <p>A bpftrace program is one or more <strong>action blocks</strong>. Each block says
+    <em>where to hook</em> (the probe), <em>an optional condition</em> (the filter), and
+    <em>what to do</em> (the action). Read a one-liner left-to-right and it always fits this shape:</p>
+    <pre><span class="y">probe</span><span class="c1">[,probe]</span> <span class="g">/filter/</span> <span class="b">{ action }</span></pre>
+    <figure class="diagram">
+      <svg viewBox="0 0 820 150" role="img" aria-label="Anatomy of a bpftrace action block: probe, filter, action">
+        <rect x="30" y="40" width="210" height="56" rx="10" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <text x="135" y="64" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">PROBE</text>
+        <text x="135" y="84" text-anchor="middle" font-size="12" fill="var(--muted)">where to hook</text>
+
+        <rect x="300" y="40" width="180" height="56" rx="10" fill="none" stroke="var(--accent-2)" stroke-width="2"/>
+        <text x="390" y="64" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent-2)">/FILTER/</text>
+        <text x="390" y="84" text-anchor="middle" font-size="12" fill="var(--muted)">run only if true</text>
+
+        <rect x="540" y="40" width="250" height="56" rx="10" fill="none" stroke="var(--warn)" stroke-width="2"/>
+        <text x="665" y="64" text-anchor="middle" font-size="15" font-weight="700" fill="var(--warn)">{ ACTION }</text>
+        <text x="665" y="84" text-anchor="middle" font-size="12" fill="var(--muted)">what to do</text>
+
+        <line x1="240" y1="68" x2="298" y2="68" stroke="var(--muted)" stroke-width="2"/>
+        <line x1="480" y1="68" x2="538" y2="68" stroke="var(--muted)" stroke-width="2"/>
+        <text x="270" y="120" text-anchor="middle" font-size="11" fill="var(--muted)">optional</text>
+        <text x="510" y="120" text-anchor="middle" font-size="11" fill="var(--muted)">required</text>
+      </svg>
+      <figcaption>Every bpftrace block: a probe, an optional <code>/filter/</code>, and an <code>{ action }</code>.</figcaption>
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Piece</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">probe[,probe]</code></td><td>One or more probes (comma-separated) sharing the same action.</td></tr>
+          <tr><td><code class="inl">/filter/</code></td><td>Optional predicate; the action runs only when it is true, e.g. <code class="inl">/pid == 181/</code>.</td></tr>
+          <tr><td><code class="inl">{ action }</code></td><td>The code: <code class="inl">printf</code>, map updates, aggregations, etc.</td></tr>
+          <tr><td><code class="inl">BEGIN { … }</code></td><td>Special probe — fires once before any other probe attaches (set up headers / variables).</td></tr>
+          <tr><td><code class="inl">END { … }</code></td><td>Special probe — fires once after detaching (print final results). bpftrace prints leftover maps here automatically.</td></tr>
+          <tr><td><code class="inl">// …</code> &nbsp; <code class="inl">/* … */</code></td><td>Single-line and multi-line comments.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key">
+      <span class="h">💡 BEGIN/END vs begin/end</span>
+      Recent bpftrace also accepts lowercase <code class="inl">begin</code>/<code class="inl">end</code>. The uppercase
+      <code class="inl">BEGIN</code>/<code class="inl">END</code> form is the classic one you'll see everywhere and still works — this sheet uses it.
+    </div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace Language Reference</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Probe types</h2>
+    <p>The probe is the <strong>hook point</strong>. The leading word picks the <em>kind</em> of event; the rest names the specific target.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Probe</th><th>Hooks…</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">tracepoint</code></td><td>A stable, named kernel event (best first choice — args have field names).</td><td><code class="inl">tracepoint:syscalls:sys_enter_openat</code></td></tr>
+          <tr><td><code class="inl">kprobe</code></td><td>Entry of <em>any</em> kernel function (dynamic; less stable across versions).</td><td><code class="inl">kprobe:vfs_read</code></td></tr>
+          <tr><td><code class="inl">kretprobe</code></td><td>Return of a kernel function — gives you <code class="inl">retval</code>.</td><td><code class="inl">kretprobe:vfs_read</code></td></tr>
+          <tr><td><code class="inl">uprobe</code></td><td>Entry of a function in a user-space binary / library.</td><td><code class="inl">uprobe:/bin/bash:readline</code></td></tr>
+          <tr><td><code class="inl">uretprobe</code></td><td>Return of a user-space function — gives you <code class="inl">retval</code>.</td><td><code class="inl">uretprobe:/bin/bash:readline</code></td></tr>
+          <tr><td><code class="inl">usdt</code></td><td>A user-level statically-defined tracepoint baked into an app.</td><td><code class="inl">usdt:/path/bin:provider:probe</code></td></tr>
+          <tr><td><code class="inl">profile</code></td><td>Timed sampling on every CPU — for CPU profiling / flame graphs.</td><td><code class="inl">profile:hz:99</code></td></tr>
+          <tr><td><code class="inl">interval</code></td><td>Fires on a timer on one CPU — for periodic summaries.</td><td><code class="inl">interval:s:1</code></td></tr>
+          <tr><td><code class="inl">software</code></td><td>A kernel software event (e.g. page faults) at a given count.</td><td><code class="inl">software:faults:100</code></td></tr>
+          <tr><td><code class="inl">hardware</code></td><td>A CPU performance-counter event (e.g. cache misses) at a given count.</td><td><code class="inl">hardware:cache-misses:1000000</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key">
+      <span class="h">💡 Field-name shapes to know</span>
+      <code class="inl">tracepoint:&lt;subsys&gt;:&lt;event&gt;</code> ·
+      <code class="inl">kprobe:&lt;fn&gt;</code> ·
+      <code class="inl">uprobe:&lt;binary&gt;:&lt;fn&gt;</code> ·
+      <code class="inl">profile:hz:&lt;rate&gt;</code> ·
+      <code class="inl">interval:s:&lt;count&gt;</code>. Wildcards (<code class="inl">*</code>) work in probe names and in <code class="inl">-l</code>.
+    </div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace Language Reference — Probes</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Builtins</h2>
+    <p>Builtins are read-only values available inside an action — context about <em>who</em> and <em>what</em> triggered the probe.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Builtin</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">comm</code></td><td>Process (command) name, e.g. <code class="inl">"bash"</code>.</td></tr>
+          <tr><td><code class="inl">pid</code></td><td>Process ID.</td></tr>
+          <tr><td><code class="inl">tid</code></td><td>Thread ID.</td></tr>
+          <tr><td><code class="inl">uid</code></td><td>User ID.</td></tr>
+          <tr><td><code class="inl">gid</code></td><td>Group ID.</td></tr>
+          <tr><td><code class="inl">nsecs</code></td><td>Timestamp in nanoseconds — subtract two to time something.</td></tr>
+          <tr><td><code class="inl">elapsed</code></td><td>Nanoseconds since bpftrace started.</td></tr>
+          <tr><td><code class="inl">cpu</code></td><td>The CPU number the probe fired on.</td></tr>
+          <tr><td><code class="inl">args</code></td><td>Struct of the probe's arguments by name (tracepoints, fentry/fexit). Access fields with a dot: <code class="inl">args.filename</code>.</td></tr>
+          <tr><td><code class="inl">arg0 … argN</code></td><td>Positional arguments by index (kprobe, uprobe, usdt) — raw, untyped.</td></tr>
+          <tr><td><code class="inl">retval</code></td><td>Return value (only in <code class="inl">kretprobe</code> / <code class="inl">uretprobe</code>).</td></tr>
+          <tr><td><code class="inl">curtask</code></td><td>Pointer to the current kernel task struct.</td></tr>
+          <tr><td><code class="inl">kstack</code></td><td>Kernel stack trace (use as a map key or print it).</td></tr>
+          <tr><td><code class="inl">ustack</code></td><td>User-space stack trace.</td></tr>
+          <tr><td><code class="inl">probe</code></td><td>Full name of the probe that fired — great map key for multi-probe blocks.</td></tr>
+          <tr><td><code class="inl">func</code></td><td>Name of the function being traced.</td></tr>
+          <tr><td><code class="inl">username</code></td><td>Username of the current user.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <span class="h">⚠️ args vs argN</span>
+      Tracepoints give you named <code class="inl">args.field</code> (self-documenting — list them with
+      <code class="inl">bpftrace -lv 'tracepoint:…'</code>). kprobes/uprobes give you raw <code class="inl">arg0</code>,
+      <code class="inl">arg1</code>… that you must cast yourself. <code class="inl">args.x</code> is the modern dot form;
+      the old <code class="inl">args-&gt;x</code> arrow still works as an alias.
+    </div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace Language Reference — Builtins</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Functions</h2>
+    <p>Two families: <strong>plain functions</strong> you call for output/strings, and
+    <strong>aggregating functions</strong> that you assign into a map (<code class="inl">@</code>) to summarize across many events.</p>
+
+    <h3>Output, strings &amp; control</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Function</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">printf(fmt, …)</code></td><td>C-style formatted print to the terminal.</td></tr>
+          <tr><td><code class="inl">str(ptr [, len])</code></td><td>Read a NUL-terminated string from a pointer (e.g. a filename arg).</td></tr>
+          <tr><td><code class="inl">time(fmt)</code></td><td>Print the current wall-clock time using a strftime-style format.</td></tr>
+          <tr><td><code class="inl">print(@map [, top, div])</code></td><td>Print a value or map now; optional top-N and divisor for scaling.</td></tr>
+          <tr><td><code class="inl">delete(@map, key)</code></td><td>Remove one key from a map (e.g. drop a finished thread's start time).</td></tr>
+          <tr><td><code class="inl">clear(@map)</code></td><td>Empty an entire map — pair with <code class="inl">interval</code> for rolling stats.</td></tr>
+          <tr><td><code class="inl">exit([code])</code></td><td>Stop bpftrace (prints maps, then quits). Often in an <code class="inl">interval</code> block.</td></tr>
+          <tr><td><code class="inl">kstack</code> / <code class="inl">ustack</code></td><td>Capture a kernel / user stack trace — usable as a value or a map key.</td></tr>
+          <tr><td><code class="inl">ntop([af,] addr)</code></td><td>Format an IP address (IPv4/IPv6) into a printable string.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Aggregating (assign into a <code class="inl">@</code> map)</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Function</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">count()</code></td><td>Count how often this fired — the workhorse.</td></tr>
+          <tr><td><code class="inl">sum(n)</code></td><td>Running total of <code class="inl">n</code>.</td></tr>
+          <tr><td><code class="inl">avg(n)</code></td><td>Running average of <code class="inl">n</code>.</td></tr>
+          <tr><td><code class="inl">min(n)</code></td><td>Smallest <code class="inl">n</code> seen.</td></tr>
+          <tr><td><code class="inl">max(n)</code></td><td>Largest <code class="inl">n</code> seen.</td></tr>
+          <tr><td><code class="inl">stats(n)</code></td><td>count + avg + sum of <code class="inl">n</code> in one shot.</td></tr>
+          <tr><td><code class="inl">hist(n)</code></td><td>Power-of-2 (log2) histogram of <code class="inl">n</code> — shows distribution shape.</td></tr>
+          <tr><td><code class="inl">lhist(n, min, max, step)</code></td><td>Linear histogram with fixed-width buckets.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key">
+      <span class="h">💡 Aggregations are free at print time</span>
+      You never loop. Assign <code class="inl">@x = count()</code> or <code class="inl">@x = hist(n)</code> and bpftrace
+      keeps the running summary in the kernel; on exit it auto-prints every map — histograms render as ASCII bars.
+    </div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/stdlib.md" target="_blank" rel="noopener">bpftrace Standard Library Reference</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Maps &amp; aggregation</h2>
+    <p>A <strong>map</strong> is bpftrace's one data structure: a global associative array whose name starts with
+    <code class="inl">@</code>. It lives in the kernel, survives across probe firings, and prints automatically at exit.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Form</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">@name = …</code></td><td>A single global value (scalar map).</td></tr>
+          <tr><td><code class="inl">@name[key] = …</code></td><td>Keyed map — one slot per key (e.g. per <code class="inl">comm</code>, per <code class="inl">pid</code>).</td></tr>
+          <tr><td><code class="inl">@name[k1, k2] = …</code></td><td>Multi-key map (tuple key), e.g. <code class="inl">@[comm, pid]</code>.</td></tr>
+          <tr><td><code class="inl">@[key]</code></td><td>Shorthand: an anonymous map named <code class="inl">@</code> keyed by <code class="inl">key</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <pre><span class="c1"># count syscalls per process name</span>
+<span class="y">tracepoint:raw_syscalls:sys_enter</span> <span class="b">{</span> @[<span class="g">comm</span>] = <span class="b">count</span>(); <span class="b">}</span>
+
+<span class="c1"># histogram of read() sizes, keyed by process</span>
+<span class="y">tracepoint:syscalls:sys_exit_read</span> <span class="b">{</span> @bytes[<span class="g">comm</span>] = <span class="b">hist</span>(args.ret); <span class="b">}</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+    <p class="cite">Source: <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace One-Liner Tutorial</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Greatest-hits one-liners</h2>
+    <p>Verified, copy-ready. Each runs until you press <code class="inl">^C</code> (or hits an <code class="inl">exit()</code>),
+    then prints its maps. Prefix every one with <code class="inl">sudo</code>.</p>
+
+    <h3>Files opened (opensnoop-style)</h3>
+    <pre><span class="b">sudo</span> bpftrace <span class="b">-e</span> <span class="y">'tracepoint:syscalls:sys_enter_openat { printf("%s %s\n", comm, str(args.filename)); }'</span></pre>
+    <div class="runlater">Linux-only — who is opening which file, live. Needs <code class="inl">sudo</code>.</div>
+
+    <h3>New processes / exec</h3>
+    <pre><span class="b">sudo</span> bpftrace <span class="b">-e</span> <span class="y">'tracepoint:syscalls:sys_enter_execve { printf("%-16s %-6d %s\n", comm, pid, str(args.filename)); }'</span></pre>
+    <div class="runlater">Linux-only — every program that gets exec'd, with its parent's name. Needs <code class="inl">sudo</code>.</div>
+
+    <h3>Syscall counts by process</h3>
+    <pre><span class="b">sudo</span> bpftrace <span class="b">-e</span> <span class="y">'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }'</span></pre>
+    <div class="runlater">Linux-only — which processes are the busiest syscall callers. Needs <code class="inl">sudo</code>.</div>
+
+    <h3>Read-size distribution (histogram)</h3>
+    <pre><span class="b">sudo</span> bpftrace <span class="b">-e</span> <span class="y">'tracepoint:syscalls:sys_exit_read { @bytes = hist(args.ret); }'</span></pre>
+    <div class="runlater">Linux-only — distribution of bytes returned by read(). Needs <code class="inl">sudo</code>.</div>
+
+    <h3>Syscall / function latency (histogram)</h3>
+    <pre><span class="b">sudo</span> bpftrace <span class="b">-e</span> <span class="y">'kprobe:vfs_read { @start[tid] = nsecs; }
+  kretprobe:vfs_read /@start[tid]/ { @ns[comm] = hist(nsecs - @start[tid]); delete(@start, tid); }'</span></pre>
+    <div class="runlater">Linux-only — time spent in vfs_read() as a per-process histogram. Needs <code class="inl">sudo</code>.</div>
+
+    <h3>CPU profiling at 99 Hz (kernel stacks)</h3>
+    <pre><span class="b">sudo</span> bpftrace <span class="b">-e</span> <span class="y">'profile:hz:99 { @[kstack] = count(); }'</span></pre>
+    <div class="runlater">Linux-only — sampled on-CPU kernel stacks; feed the output to a flame graph. Needs <code class="inl">sudo</code>.</div>
+
+    <h3>Signals sent (killsnoop-style)</h3>
+    <pre><span class="b">sudo</span> bpftrace <span class="b">-e</span> <span class="y">'tracepoint:syscalls:sys_enter_kill { printf("%s -> PID %d SIG %d\n", comm, args.pid, args.sig); }'</span></pre>
+    <div class="runlater">Linux-only — who is signalling whom (catch a mystery <code class="inl">SIGKILL</code>). Needs <code class="inl">sudo</code>.</div>
+
+    <div class="callout mission">
+      <span class="h">🎯 Bonus: list before you trace</span>
+      Forgot a tracepoint's exact name or its field names? Discover them, then trace:
+      <pre><span class="b">sudo</span> bpftrace <span class="b">-l</span> <span class="y">'tracepoint:syscalls:sys_enter_open*'</span>   <span class="c1"># find the probe</span>
+<span class="b">sudo</span> bpftrace <span class="b">-lv</span> <span class="y">'tracepoint:syscalls:sys_enter_openat'</span>  <span class="c1"># show its args fields</span></pre>
+    </div>
+    <p class="cite">Sources:
+      <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">One-Liner Tutorial</a>,
+      <a href="https://github.com/bpftrace/bpftrace/blob/master/tools/killsnoop.bt" target="_blank" rel="noopener">killsnoop.bt</a>,
+      <a href="https://github.com/bpftrace/bpftrace/blob/master/tools/execsnoop.bt" target="_blank" rel="noopener">execsnoop.bt</a>.
+    </p>
+  </section>
+
+  <footer>
+    eBPF Course · bpftrace Cheat Sheet · verified against
+    <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a> and the
+    <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/reference_guide.md" target="_blank" rel="noopener">Reference Guide</a> ·
+    see <a href="/courses/ebpf/#resources">RESOURCES.md</a> ·
+    <a href="ebpf-glossary.html">Glossary</a> ·
+    <a href="../lessons/0003-anatomy-of-a-bpftrace-one-liner.html">Lesson 3</a>
+  </footer>
+
+</div>
+</body>
+</html>

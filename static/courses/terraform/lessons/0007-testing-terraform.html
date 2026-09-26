@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 0007 — Testing Terraform</title>
+<style>
+  :root{
+    --ink:#1a1f26; --muted:#5b6573; --line:#e3e7ec; --bg:#fbfcfd; --card:#ffffff;
+    --accent:#5c4ee5; --accent-soft:#eceafe;
+    --create:#1f9d57; --create-bg:#e8f6ee;
+    --update:#c98a00; --update-bg:#fbf2dd;
+    --destroy:#d23b3b; --destroy-bg:#fbe9e9;
+    --mono:"SF Mono",ui-monospace,"Cascadia Code",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:820px;margin:0 auto;padding:46px 26px 90px;}
+  header.les{border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:30px;}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+  h1{font-size:31px;line-height:1.18;margin:6px 0 6px;letter-spacing:-.022em;}
+  .meta{color:var(--muted);font-size:14px;} .meta b{color:var(--ink);}
+  h2{font-size:21px;margin:40px 0 12px;letter-spacing:-.01em;}
+  p{margin:0 0 14px;} .lead{font-size:17.5px;}
+  code{font-family:var(--mono);font-size:.88em;background:#f0f2f5;padding:1px 5px;border-radius:4px;}
+  a{color:var(--accent);}
+  .why{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;
+    border-radius:0 8px 8px 0;margin:8px 0 22px;font-size:14.5px;}
+  pre.code{background:#11151c;color:#dfe6f0;border-radius:12px;padding:16px 18px;overflow-x:auto;
+    font-family:var(--mono);font-size:12.5px;line-height:1.6;margin:14px 0;}
+  pre.code .c{color:#7c8aa0} pre.code .k{color:#9bb6ff} pre.code .s{color:#9ad29f}
+  pre.code .hot{color:#ffd479;font-weight:700}
+  .concept{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;margin:18px 0;box-shadow:0 1px 2px rgba(20,30,50,.04);}
+  .concept h3{margin:0 0 8px;font-size:16px;}
+  .concept p{font-size:15px;margin:0 0 10px;}
+  .concept p:last-child{margin:0;}
+  .bigrule{border-left:3px solid var(--destroy);background:var(--destroy-bg);
+    padding:12px 16px;border-radius:0 8px 8px 0;margin:18px 0;font-size:15px;}
+
+  .quiz{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:8px 22px 22px;margin:16px 0;box-shadow:0 1px 2px rgba(20,30,50,.04);}
+  .progress{font-size:12.5px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;
+    font-weight:700;margin:18px 0 4px;}
+  .scenario h3{font-size:17.5px;margin:6px 0 10px;line-height:1.4;}
+  .setup{background:#f6f7f9;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;font-size:14px;margin-bottom:12px;}
+  .setup code{font-size:12.5px;}
+  .ask{font-weight:600;margin:14px 0 10px;}
+  .opts{display:flex;flex-direction:column;gap:8px;}
+  .opt{text-align:left;cursor:pointer;border:1.5px solid var(--line);background:#fff;
+    border-radius:10px;padding:11px 14px;font-size:14px;color:var(--ink);transition:.12s;
+    font-family:inherit;line-height:1.45;}
+  .opt:hover{border-color:var(--accent);background:#faf9ff;}
+  .opt.correct{border-color:var(--create);background:var(--create-bg);}
+  .opt.wrong{border-color:var(--destroy);background:var(--destroy-bg);}
+  .opt:disabled{cursor:default;opacity:.88;}
+  .fb{margin-top:14px;padding:13px 15px;border-radius:10px;font-size:14.5px;display:none;}
+  .fb.show{display:block;}
+  .fb.right{background:var(--create-bg);border:1px solid #bfe3cd;}
+  .fb.nope{background:var(--update-bg);border:1px solid #ecdba6;}
+  .fb b{display:block;margin-bottom:3px;}
+  .next{margin-top:14px;display:none;} .next.show{display:inline-block;}
+  button.nav{font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;
+    background:var(--accent);color:#fff;border:none;border-radius:9px;padding:10px 18px;}
+  button.nav:hover{background:#4b3fd0;}
+  .done{display:none;text-align:center;padding:18px 6px 6px;}
+  .done.show{display:block;}
+  .score{font-size:34px;font-weight:800;letter-spacing:-.02em;}
+  .scoresub{color:var(--muted);font-size:14px;margin-top:2px;}
+
+  .check{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:16px 18px;margin:18px 0;}
+  .check h3{margin:0 0 8px;font-size:15px;}
+  .check ol{margin:0;padding-left:20px;font-size:14.5px;}
+  .check code{font-size:12.5px;}
+  footer.les{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;font-size:13.5px;color:var(--muted);}
+  .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;}
+  .links a{text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:7px 12px;
+    font-size:13px;background:#fff;}
+  .ask-teacher{background:var(--accent-soft);border:1px solid #d6d1f7;border-radius:10px;
+    padding:12px 15px;font-size:14px;margin:22px 0 0;}
+  @media print{.quiz{display:none}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: terraform ---- */
+/* ============================================================================
+   terraform course adapter — re-skin terraform's bespoke component classes with
+   the canonical tokens from assets/theme.css. Injected AFTER theme.css and AFTER
+   each lesson's own <style>, so these rules win. !important is used wherever the
+   course hardcodes colours, to guarantee the override regardless of specificity.
+   This gives the terraform course the unified look + dark mode without touching
+   its markup. See scripts/theme_lessons.py (adapter mechanism).
+
+   The course is built around a `terraform plan` diff palette (create/update/
+   destroy/replace/noop) plus interactive quiz "score" widgets and dark code
+   blocks. We keep the plan-diff *semantics* (green=create, red=destroy, …) but
+   re-tokenize them so they read on the canonical light-on-dark code surface and
+   in dark mode.
+   ============================================================================ */
+
+/* ---- page shell: drop the off-white body + white cards; unified column ---- */
+body{ background:var(--bg) !important; color:var(--fg) !important; }
+.wrap{ max-width:var(--maxw); margin:0 auto; background:transparent !important;
+  box-shadow:none !important; }
+
+/* the course re-declares the SHARED token names (--accent, --bg, --line, --muted,
+   --ink, --create, --update, --destroy …) with hardcoded light-mode hexes in its
+   own :root, which would shadow theme.css. Re-point the ones we reuse back to the
+   canonical tokens so tints/headings/borders track light AND dark mode. The plan-
+   diff tokens are re-pointed at the semantic palette. */
+:root{
+  --ink:var(--fg); --muted:var(--muted); --line:var(--border);
+  --card:var(--surface); --accent:var(--accent); --accent-soft:color-mix(in srgb,var(--accent) 12%,transparent);
+  --create:var(--mark); --create-bg:color-mix(in srgb,var(--mark) 14%,transparent);
+  --update:var(--warn); --update-bg:color-mix(in srgb,var(--warn) 14%,transparent);
+  --destroy:var(--danger); --destroy-bg:color-mix(in srgb,var(--danger) 14%,transparent);
+  --replace:var(--accent-2); --replace-bg:color-mix(in srgb,var(--accent-2) 14%,transparent);
+  --noop:var(--muted); --noop-bg:color-mix(in srgb,var(--muted) 14%,transparent);
+}
+
+/* ---- headings ---- */
+header.les,header.doc{ border-bottom:2px solid var(--border) !important; }
+.kicker{ color:var(--accent) !important; }
+h1{ color:var(--fg) !important; }
+h1 code{ background:none !important; color:inherit !important; }
+h2{ color:var(--fg) !important; }
+h3{ color:var(--accent) !important; }
+.meta{ color:var(--muted) !important; }
+.meta b{ color:var(--fg) !important; }
+.sub{ color:var(--muted) !important; }
+.lead{ color:var(--fg) !important; }
+
+/* ---- inline code ---- */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; border-radius:6px; }
+
+/* ---- dark code / pre blocks (bare `pre` and `pre.code`) ---- */
+pre,pre.code{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; border-radius:12px !important; }
+pre code{ background:none !important; color:inherit !important; padding:0 !important; }
+/* syntax tokens → light-on-dark palette */
+pre .c,pre.code .c{ color:#7f8db3 !important; }   /* comments  */
+pre .s,pre.code .s{ color:#63e6be !important; }   /* strings   */
+pre .k,pre.code .k{ color:#74c0fc !important; }   /* keywords  */
+pre .hot,pre.code .hot{ color:#ffd43b !important; } /* highlight */
+
+/* terraform plan DIFF colours — keep semantics ON the dark code block.
+   (these classes ride inside <pre>; map to the canonical semantic tokens so
+   they stay legible on var(--code-bg) in both themes) */
+pre .c-create,pre.code .c-create,.c-create,.sym.c-create{ color:var(--mark) !important; }
+pre .c-update,pre.code .c-update,.c-update,.sym.c-update{ color:var(--warn) !important; }
+pre .c-destroy,pre.code .c-destroy,.c-destroy,.sym.c-destroy{ color:var(--danger) !important; }
+pre .c-noop,pre.code .c-noop,.c-noop,.sym.c-noop{ color:var(--muted) !important; }
+
+/* ---- concept / card / node panels → unified surface ---- */
+.concept,.card,.node,.pic,.half,.box,.setup,.arrowrow{
+  background:var(--surface) !important; border:1px solid var(--border) !important;
+  border-radius:12px !important; box-shadow:none !important; }
+.box{ overflow:hidden; }
+.pic h4,.node h4,.half h4,.card h4{ color:var(--fg) !important; }
+.eq b,.arrowrow b{ color:var(--fg) !important; }
+
+/* "state" header chips inside the .box demo (desired/state/real). The original
+   used dark solid fills + white text; the tokens are LIGHT in dark mode, so
+   white text fails. Use tinted chips (token-coloured text on a token tint),
+   legible in both schemes, keeping each chip's colour identity. */
+.box .bh{ color:var(--fg) !important; background:var(--surface) !important; }
+.box.desired .bh{ background:color-mix(in srgb,var(--accent) 18%,transparent) !important; color:var(--accent) !important; }
+.box.state .bh{ background:color-mix(in srgb,var(--muted) 26%,transparent) !important; color:var(--fg) !important; }
+.box.real .bh{ background:color-mix(in srgb,var(--accent-2) 18%,transparent) !important; color:var(--accent-2) !important; }
+.box pre{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:none !important; border-radius:0 !important; }
+.box .empty{ color:var(--muted) !important; }
+
+/* ---- callout / box classes mapped by intent ---- */
+/* .why = "why this matters" intro note → accent (info) */
+.why{ border-left:4px solid var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 10%,transparent) !important;
+  border-radius:0 8px 8px 0 !important; }
+/* .callout (reference) base = accent/info */
+.callout{ border-left:4px solid var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 10%,transparent) !important;
+  border-radius:0 8px 8px 0 !important; }
+/* .callout.warn / .warn = warning → danger semantics in this course */
+.callout.warn,.warn{ border-left:4px solid var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 10%,transparent) !important; }
+/* .bigrule = hard rule / gotcha → danger */
+.bigrule{ border-left:4px solid var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 10%,transparent) !important;
+  border-radius:0 8px 8px 0 !important; }
+/* .ask-teacher = prompt-the-teacher box → accent-2 (special) */
+.ask-teacher{ border:1px solid color-mix(in srgb,var(--accent-2) 30%,transparent) !important;
+  background:color-mix(in srgb,var(--accent-2) 10%,transparent) !important; }
+/* .check = dashed checklist box */
+.check{ background:var(--surface) !important; border:1px dashed var(--border) !important;
+  border-radius:12px !important; }
+
+/* ---- quiz widget ---- */
+.quiz{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  border-radius:12px !important; box-shadow:none !important; }
+.progress{ color:var(--muted) !important; }
+.ask{ color:var(--fg) !important; }
+.opt{ background:var(--panel) !important; color:var(--fg) !important;
+  border:1.5px solid var(--border) !important; border-radius:10px !important; }
+.opt:hover{ border-color:var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 7%,transparent) !important; }
+.opt.correct{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 16%,transparent) !important; }
+.opt.wrong{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 14%,transparent) !important; }
+/* the small plan-symbol chips on quiz options (.s.create etc.) */
+.opt .s.create{ color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 18%,transparent) !important; }
+.opt .s.update{ color:var(--warn) !important;
+  background:color-mix(in srgb,var(--warn) 20%,transparent) !important; }
+.opt .s.destroy{ color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 18%,transparent) !important; }
+.opt .s.replace{ color:var(--accent-2) !important;
+  background:color-mix(in srgb,var(--accent-2) 18%,transparent) !important; }
+.opt .s.noop{ color:var(--muted) !important;
+  background:color-mix(in srgb,var(--muted) 18%,transparent) !important; }
+/* quiz feedback banners */
+.fb.right{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--mark) 40%,transparent) !important; }
+.fb.nope{ background:color-mix(in srgb,var(--warn) 14%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--warn) 40%,transparent) !important; }
+/* quiz nav button */
+button.nav{ background:var(--accent) !important; color:#fff !important; }
+button.nav:hover{ background:color-mix(in srgb,var(--accent) 80%,#000) !important; }
+/* the score readout at the end of a quiz — must stay legible in dark */
+.done .score,.score{ color:var(--fg) !important; }
+.scoresub{ color:var(--muted) !important; }
+
+/* ---- pills, sym, footer, nav/links ---- */
+.pill{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; }
+.sym{ color:var(--fg); }
+footer.les,footer.doc{ border-top:1px solid var(--border) !important; color:var(--muted) !important; }
+.links a{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--accent) !important; border-radius:8px !important; }
+a{ color:var(--accent) !important; }
+
+/* ---- glossary / reference vocabulary ---- */
+dt .lsn{ color:var(--muted) !important; }
+dd{ color:var(--fg) !important; }
+dl.gloss dd{ color:var(--muted) !important; }
+.src{ color:var(--muted) !important; }
+
+/* ============================================================================
+   CONTRAST BLANKET (the #1 dark-mode bug): force readable --fg text onto every
+   box/panel/card/widget that holds prose. EXCLUDES dark code blocks (pre / .box
+   pre) and the white-on-coloured chips, which keep their own colours.
+   ============================================================================ */
+.concept,.card,.node,.pic,.half,.setup,.arrowrow,.quiz,.check,.why,.callout,
+.bigrule,.warn,.ask-teacher,.eq,.scenario,.scenario h3,ul.tight,.triad-legend,
+.twocol,.grid3,.pair,.triad{ color:var(--fg) !important; }
+.concept p,.card p,.node p,.pic p,.half p{ color:var(--muted) !important; }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/terraform/" style="color:inherit;text-decoration:none">&larr; Terraform</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+<header class="les">
+  <div class="kicker">Lesson 0007 · Understand Terraform</div>
+  <h1>Testing Terraform</h1>
+  <div class="meta"><b>One idea · ~14 min.</b> The native test framework — and knowing what each layer of the pyramid can and cannot see.</div>
+</header>
+
+<div class="why">
+<b>Why this next?</b> "How to test it" was the first thing you said you wanted from this course.
+Until Terraform 1.6 (Oct 2023), real testing meant external tools like Terratest; now it's
+built in — <code>.tftest.hcl</code> files and <code>terraform test</code>. You have all the
+prerequisites: plan vs apply (lessons 1, 6), unknown-until-apply values, and modules as the
+unit worth testing (lesson 4).
+</div>
+
+<p class="lead">A test file is HCL: <code>run</code> blocks that execute your configuration and
+<code>assert</code> on the result. The entire skill of Terraform testing is knowing
+<b>what each mode can see</b>: plan-mode sees logic, apply-mode sees reality, mocks see your
+wiring but fake the world.</p>
+
+<div class="concept">
+<h3>The shape of a test</h3>
+<pre class="code"><span class="c"># tests/naming.tftest.hcl — discovered automatically by `terraform test`</span>
+<span class="k">variables</span> { prefix = <span class="s">"acme"</span> }      <span class="c"># inputs for every run in this file</span>
+
+<span class="k">run</span> <span class="s">"name_composes"</span> {
+  <span class="hot">command = plan</span>                   <span class="c"># unit-style: fast, free, nothing created</span>
+  variables { env = <span class="s">"dev"</span> }
+  <span class="k">assert</span> {
+    condition     = aws_s3_bucket.b.bucket == <span class="s">"acme-dev-logs"</span>
+    error_message = <span class="s">"name did not compose"</span>
+  }
+}
+
+<span class="k">run</span> <span class="s">"rejects_bad_env"</span> {
+  command = plan
+  variables { env = <span class="s">"prod!!"</span> }
+  <span class="hot">expect_failures = [var.env]</span>      <span class="c"># asserts the validation REJECTS this</span>
+}</pre>
+<p><code>run</code> blocks execute <b>in order, sharing state</b> within a file — later runs can
+read earlier runs' outputs (<code>run.setup.bucket_arn</code>): setup → exercise → assert, in pure HCL.</p>
+</div>
+
+<div class="bigrule">
+<b>The default is <code>apply</code>.</b> A <code>run</code> block without
+<code>command = plan</code> executes a full, real apply — real resources, real money, real IAM.
+Terraform auto-destroys them when the file finishes, but a crashed test run can strand them.
+Treat a bare <code>run</code> block in review exactly like an <code>apply</code> in review.
+</div>
+
+<div class="concept">
+<h3>Mocks (≥1.7): apply without a world</h3>
+<p><code>mock_provider "aws" {}</code> swaps the real provider for a fake: <code>command = apply</code>
+then "creates" resources instantly, with <b>generated placeholder values</b> for computed
+attributes (ARNs become random strings). Pin the ones your logic needs with
+<code>override_resource</code> / <code>override_data</code>.</p>
+<p>What mocks test: <b>your</b> composition, conditionals, and wiring. What they can't test:
+whether AWS accepts it. A mocked test can pass while the real apply fails on a real IAM policy.</p>
+</div>
+
+<p>That gives you a pyramid: <b>static</b> (<code>validate</code>, fmt — seconds) → <b>unit</b>
+(plan-mode + mocks — seconds, every push) → <b>integration</b> (real apply in a sandbox account —
+minutes and money, nightly or pre-release). Same economics as software testing.</p>
+
+<h2>You're writing the test suite — you call it</h2>
+
+<div class="quiz" id="quiz">
+  <div id="cards"></div>
+  <div class="done" id="done">
+    <div class="score" id="scoreNum"></div>
+    <div class="scoresub" id="scoreMsg"></div>
+  </div>
+</div>
+
+<div class="check">
+  <h3>✅ Prove it on your own machine (optional, 10 min — no AWS needed)</h3>
+  <ol>
+    <li>Write a tiny module: an input <code>env</code> with a <code>validation</code> block
+      (allow only dev/stage/prod), and a local that composes <code>"acme-${var.env}-logs"</code>
+      into a <code>terraform_data</code> (or mocked <code>aws_s3_bucket</code>) name.</li>
+    <li>Add <code>tests/naming.tftest.hcl</code> with the two runs from above (adapted), and run
+      <code>terraform test</code>.</li>
+    <li>Break the naming logic on purpose — watch the assert fail with your error message.</li>
+    <li>If on TF ≥1.7: add <code>mock_provider "aws" {}</code> and try a <code>command = apply</code>
+      run with no credentials.</li>
+  </ol>
+</div>
+
+<div class="ask-teacher">
+  💬 <b>Good follow-ups:</b> <i>"Show me a realistic test file for the VPC module from lesson 4."</i> ·
+  <i>"When do I still need Terratest?"</i> ·
+  <i>"How do teams wire terraform test into CI without AWS credentials?"</i>
+</div>
+
+<footer class="les">
+  <b>Reference for this lesson:</b>
+  <div class="links">
+    <a href="../reference/terraform-testing.html">📄 Native Testing (cheat sheet)</a>
+    <a href="https://developer.hashicorp.com/terraform/language/tests">↗ Tests reference (docs)</a>
+    <a href="https://developer.hashicorp.com/terraform/language/tests/mocking">↗ Provider mocking (docs)</a>
+    <a href="https://developer.hashicorp.com/terraform/tutorials/configuration-language/test">↗ Official tutorial</a>
+  </div>
+  <p style="margin-top:14px">Previous: <a href="0006-the-apply-lifecycle-and-graph.html">0006 — The apply lifecycle &amp; the graph</a> ·
+  Next: <a href="0008-the-modern-workflow.html">0008 — The modern workflow (capstone)</a>.</p>
+</footer>
+</div>
+
+<script>
+const SCENARIOS = [
+  {
+    title:"Code review on a teammate's first test file: three run blocks, none specify a command. The tests \"pass locally.\" What actually happened when they ran terraform test?",
+    setup:'Test file: 3 bare run blocks · Provider: real AWS · Credentials: the teammate\\'s',
+    options:[
+      "Three plans ran — command defaults to plan, the safe choice",
+      "Three full applies created real AWS resources, asserted against them, and auto-destroyed everything at the end of the file",
+      "Nothing ran — a run block without a command is a syntax error",
+      "Terraform prompted interactively for each apply, and they approved them"
+    ],
+    answer:1,
+    why:"The default command is <code>apply</code> — the framework optimizes for integration-style testing. Real resources were created and (on success) auto-destroyed in reverse order; a crash mid-run can strand them. <code>terraform test</code> never prompts. Review rule: a bare <code>run</code> block IS an apply."
+  },
+  {
+    title:"You write: assert { condition = aws_s3_bucket.b.arn == \"arn:aws:s3:::acme-dev-logs\" } with command = plan, real provider. The test errors: the condition depends on values not yet known. Why?",
+    setup:'Mode: plan · Asserting on: .arn — a computed attribute',
+    options:[
+      "A bug in the AWS provider's plan output",
+      "ARNs can never be used in test assertions",
+      "At plan time the bucket doesn't exist, so computed attributes like arn are unknown — assert on plan-known values, or switch to apply/mocks",
+      "The variables block is missing, so the name can't resolve"
+    ],
+    answer:2,
+    why:"Lesson 0001's three pictures again: plan is a <i>prediction</i> — AWS hasn't assigned the ARN yet, so it's <b>unknown</b>. Plan-mode tests assert on what config determines (names you compose, counts, tags, rendered policies); apply-mode or pinned mocks (<code>override_resource</code>) cover computed attributes. Knowing which values are plan-known is THE core testing skill."
+  },
+  {
+    title:"Your module's variable \"env\" has a validation block allowing only dev/stage/prod. You want a test proving that \"production!!\" gets REJECTED. How?",
+    setup:'Goal: assert that validation fails · Bad input: "production!!"',
+    options:[
+      "run { command = plan; variables { env = \"production!!\" }; expect_failures = [var.env] }",
+      "assert { condition = var.env != \"production!!\" } in a normal run",
+      "You can't test failure paths — the test itself would fail",
+      "try(var.env) inside the condition, catching the validation error"
+    ],
+    answer:0,
+    why:"<code>expect_failures</code> inverts the contract: the named checkable object (here the variable's validation) <b>must</b> fail, or the test fails. With <code>command = plan</code> it's instant and free — this is how you test your guardrails. Option B tests nothing (with a valid env it's trivially true), and C is exactly the gap expect_failures exists to close."
+  },
+  {
+    title:"CI has no AWS credentials (by policy). You still want PR-time tests that your module wires an S3 bucket name into an IAM policy document correctly. Best tool?",
+    setup:'Constraint: no credentials in CI · Want: full resource graph evaluated, logic asserted',
+    options:[
+      "command = plan with the real provider — plan never needs credentials",
+      "mock_provider \"aws\" {} + command = apply — the full graph executes against the mock, no credentials, with override_resource pinning any computed values the logic consumes",
+      "Skip CI testing; run integration tests nightly instead",
+      "Hardcode dummy AWS credentials for the plan"
+    ],
+    answer:1,
+    why:"This is exactly what 1.7 mocking is for: apply-mode execution (so computed values exist and flow through your wiring) with zero credentials and zero infrastructure. Option A's premise is shaky — real-provider plans generally need credentials (provider auth, data sources). But remember the limit: the mock validates <i>your</i> logic, not AWS's opinion of it."
+  },
+  {
+    title:"A mocked test asserts your bucket policy contains the bucket's ARN: condition = strcontains(data.aws_iam_policy_document.p.json, aws_s3_bucket.b.arn). It passes. The REAL apply then fails: malformed ARN in policy. How did the test lie?",
+    setup:'Mock: unpinned · Assertion: policy json contains bucket.arn · Reality: bucket.arn was a random placeholder',
+    options:[
+      "It didn't lie — the real failure must be unrelated",
+      "The mock generated a placeholder (non-ARN-shaped) value for arn; the test only proved 'whatever the arn is, it lands in the policy' — wiring, not validity. AWS then rejected the real policy for a different reason the mock can't see",
+      "strcontains doesn't work on mocked values",
+      "Mocked tests can't read data sources"
+    ],
+    answer:1,
+    why:"Mock placeholders are arbitrary strings, not valid ARNs. Your assertion proved the <i>plumbing</i> (value flows from bucket to policy) — genuinely useful! — but said nothing about AWS-validity. That's the contract: mocks test composition, integration tests test reality. The pyramid needs both layers precisely because each one lies about what the other checks."
+  },
+  {
+    title:"Your VPC module has 40 unit assertions (plan+mocks, ~8s total) and 6 real-apply integration tests (~14 min, real account). The team wants ALL tests on every PR push. Verdict?",
+    setup:'Unit: 8 seconds, free · Integration: 14 minutes, costs money, real account',
+    options:[
+      "Yes — more testing is always better",
+      "Unit suite on every push; integration suite on a schedule (nightly) and before releases, in a sandbox account — pyramid economics",
+      "Drop the integration tests — mocks made them redundant",
+      "Run integration tests only after a production incident"
+    ],
+    answer:1,
+    why:"Scenario 5 just proved why integration tests must exist; this one is about <i>where</i>. 14 minutes and real spend on every push destroys PR feedback loops and bloats the bill, while buying little over nightly cadence — provider-reality regressions don't appear per-commit. Fast checks gate merges; expensive truth runs on a clock. (C un-learns scenario 5; A ignores that test suites have budgets.)"
+  }
+];
+
+let idx = 0, score = 0, answered = false;
+const cards = document.getElementById('cards');
+
+function fmt(t){
+  return t.replace(/`([^`]+)`/g,'<code>$1</code>')
+          .replace(/(command = (plan|apply)|expect_failures( = \[var\.env\])?|mock_provider( \"aws\" \{\})?|override_resource|terraform test|run \{[^}]*\}|assert \{[^}]*\}|variables \{[^}]*\}|aws_s3_bucket\.b\.arn|data\.aws_iam_policy_document\.p\.json|strcontains|var\.env|run blocks?)/g,'<code>$1</code>');
+}
+
+function render(){
+  const s = SCENARIOS[idx];
+  answered = false;
+  cards.innerHTML = `
+    <div class="scenario">
+      <div class="progress">Scenario ${idx+1} of ${SCENARIOS.length}</div>
+      <h3>${fmt(s.title)}</h3>
+      <div class="setup">${s.setup}</div>
+      <div class="ask">Your call?</div>
+      <div class="opts" id="opts">
+        ${s.options.map((o,i)=>`<button class="opt" data-i="${i}">${fmt(o)}</button>`).join('')}
+      </div>
+      <div class="fb" id="fb"></div>
+      <div class="next" id="next"><button class="nav" id="nextBtn">
+        ${idx===SCENARIOS.length-1?'See result →':'Next scenario →'}</button></div>
+    </div>`;
+  document.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',choose));
+  document.getElementById('nextBtn').addEventListener('click',()=>{idx++; idx<SCENARIOS.length?render():finish();});
+}
+
+function choose(e){
+  if(answered) return;
+  answered = true;
+  const s = SCENARIOS[idx];
+  const pick = +e.currentTarget.dataset.i;
+  const correct = pick === s.answer;
+  if(correct) score++;
+  document.querySelectorAll('.opt').forEach(b=>{
+    b.disabled = true;
+    if(+b.dataset.i===s.answer) b.classList.add('correct');
+    else if(+b.dataset.i===pick) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('fb');
+  fb.className = 'fb show ' + (correct?'right':'nope');
+  fb.innerHTML = `<b>${correct?'✓ Right.':'Not quite.'}</b>${s.why}`;
+  document.getElementById('next').classList.add('show');
+}
+
+function finish(){
+  document.getElementById('cards').style.display='none';
+  const d = document.getElementById('done');
+  d.classList.add('show');
+  document.getElementById('scoreNum').textContent = `${score} / ${SCENARIOS.length}`;
+  let msg;
+  if(score===SCENARIOS.length) msg="Clean sweep on the topic you originally came for. One lesson left: the modern-workflow capstone, where everything composes.";
+  else if(score>=4) msg="Strong. The misses define the boundaries of each test layer — re-read them, then ask me to write a real test file with you.";
+  else msg="Testing is where every prior lesson gets used at once — a second pass pays off. Ask me to build a test file step by step with you.";
+  document.getElementById('scoreMsg').innerHTML = msg;
+}
+
+render();
+</script>
+</body>
+</html>

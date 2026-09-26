@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1 · Tensors — the One Object</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/pytorch/" style="color:inherit;text-decoration:none">&larr; PyTorch</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">PyTorch · Lesson 1</div>
+    <h1>Tensors — the One Object Every PyTorch Program Is Made Of</h1>
+    <p class="sub">A tensor is just a typed, n-dimensional array that knows its shape, its dtype, and which device it lives on. Learn to read those three things and you can read the first lines of almost any PyTorch file.</p>
+    <span class="missiontag">🎯 Mission: read &amp; write real PyTorch</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>Every PyTorch program — a 5-line script or a 70-billion-parameter language model — is just <strong>tensors flowing through operations</strong>. The model's inputs, its weights, its outputs, and (next lesson) its gradients are <em>all</em> tensors. Master the tensor and the rest of the course is variations on a theme.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Why we start here</h2>
+    <p class="lead">Your mission is to <strong>read and write real PyTorch</strong>. Open any PyTorch file — a research repo, a tutorial, production model code — and the very first things you meet are tensors being created, reshaped, moved to a GPU, and multiplied together. Nothing else makes sense until this does.</p>
+    <p>You're new to neural nets, and that's fine: we don't need any of that yet. A tensor is a data-structure idea you already understand from arrays — PyTorch just adds three properties you'll find yourself checking constantly. Get fluent reading those three and the shape-mismatch errors that trip up every beginner stop being mysterious.</p>
+    <div class="callout key"><span class="h">💡 The three things to always read</span>
+      For any tensor <code class="inl">x</code>: <code class="inl">x.shape</code> (its dimensions), <code class="inl">x.dtype</code> (its element type), and <code class="inl">x.device</code> (where it lives — CPU or GPU). When PyTorch code confuses you, print those three first. See the <a href="../reference/pytorch-glossary.html">glossary</a> for tight definitions.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Your runway: a 30-second setup</h2>
+    <p>I've already created a practice environment on your Mac so every example runs locally — including on your Apple-Silicon GPU. It's a Python <strong>virtual environment</strong> (an isolated package sandbox) with <code class="inl">torch</code> + <code class="inl">numpy</code> installed.</p>
+    <pre><span class="c1"># the practice env (already set up for you):  ~/projects/learn/public/courses/pytorch/practice/.venv</span>
+<span class="c1"># run any lesson script with its python directly — no "activate" needed:</span>
+~/projects/learn/public/courses/pytorch/practice/.venv/bin/python ~/projects/learn/public/courses/pytorch/practice/lesson01_tensors.py</pre>
+    <div class="runlater">That script holds every snippet below, ready to run. Or start a REPL with <code class="inl">~/projects/learn/public/courses/pytorch/practice/.venv/bin/python</code> and paste line by line.</div>
+    <p>First, confirm the install and that PyTorch can see your GPU. On Apple Silicon the GPU backend is called <strong>MPS</strong> (Metal Performance Shaders):</p>
+    <pre><span class="b">import</span> torch
+<span class="b">print</span>(torch.__version__)                       <span class="c1"># 2.12.1</span>
+<span class="b">print</span>(torch.backends.mps.is_available())       <span class="c1"># True  ← your GPU is usable</span></pre>
+    <pre><span class="c1"># verified on your machine just now:</span>
+torch 2.12.1
+mps available: <span class="g">True</span></pre>
+    <div class="callout mission"><span class="h">🎯 Your tangible win (2 min)</span>
+      Run <code class="inl">~/projects/learn/public/courses/pytorch/practice/.venv/bin/python ~/projects/learn/public/courses/pytorch/practice/lesson01_tensors.py</code>. When you see <code class="inl">mps:0</code> in the output, your Apple GPU just did real tensor math. That's lesson 1 done — everything below explains what you saw.</div>
+    <p class="cite">Source: <a href="https://developer.apple.com/metal/pytorch/" target="_blank" rel="noopener">Apple — Accelerated PyTorch on Mac</a> · <a href="https://docs.pytorch.org/docs/stable/notes/mps.html" target="_blank" rel="noopener">PyTorch MPS backend notes</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Making a tensor — and the rank ladder</h2>
+    <p>The simplest way to make a tensor is from a Python list. A tensor can have any number of dimensions; the number of dimensions is its <strong>rank</strong>.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 860 250" role="img" aria-label="The rank ladder: a scalar is 0-dimensional, a vector 1-D, a matrix 2-D, and tensors go to any number of dimensions. Shape is the tuple of sizes along each dimension.">
+        <text x="430" y="24" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">ONE OBJECT, ANY NUMBER OF DIMENSIONS — the "rank ladder"</text>
+
+        <!-- scalar 0-D -->
+        <rect x="40" y="70" width="44" height="44" rx="6" fill="var(--accent)" opacity="0.22" stroke="var(--accent)"/>
+        <text x="62" y="98" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">3.5</text>
+        <text x="62" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--fg)">scalar · 0-D</text>
+        <text x="62" y="168" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--muted)">shape ()</text>
+
+        <!-- vector 1-D -->
+        <g>
+          <rect x="170" y="70" width="34" height="34" rx="5" fill="var(--accent)" opacity="0.22" stroke="var(--accent)"/>
+          <rect x="206" y="70" width="34" height="34" rx="5" fill="var(--accent)" opacity="0.22" stroke="var(--accent)"/>
+          <rect x="242" y="70" width="34" height="34" rx="5" fill="var(--accent)" opacity="0.22" stroke="var(--accent)"/>
+          <rect x="278" y="70" width="34" height="34" rx="5" fill="var(--accent)" opacity="0.22" stroke="var(--accent)"/>
+        </g>
+        <text x="241" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--fg)">vector · 1-D</text>
+        <text x="241" y="168" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--muted)">shape (4,)</text>
+
+        <!-- matrix 2-D -->
+        <g>
+          <rect x="400" y="60" width="34" height="34" rx="5" fill="var(--accent-2)" opacity="0.25" stroke="var(--accent-2)"/>
+          <rect x="436" y="60" width="34" height="34" rx="5" fill="var(--accent-2)" opacity="0.25" stroke="var(--accent-2)"/>
+          <rect x="472" y="60" width="34" height="34" rx="5" fill="var(--accent-2)" opacity="0.25" stroke="var(--accent-2)"/>
+          <rect x="400" y="96" width="34" height="34" rx="5" fill="var(--accent-2)" opacity="0.25" stroke="var(--accent-2)"/>
+          <rect x="436" y="96" width="34" height="34" rx="5" fill="var(--accent-2)" opacity="0.25" stroke="var(--accent-2)"/>
+          <rect x="472" y="96" width="34" height="34" rx="5" fill="var(--accent-2)" opacity="0.25" stroke="var(--accent-2)"/>
+        </g>
+        <text x="453" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--fg)">matrix · 2-D</text>
+        <text x="453" y="168" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--muted)">shape (2, 3)</text>
+
+        <!-- 3-D tensor -->
+        <g>
+          <rect x="660" y="74" width="30" height="30" rx="4" fill="var(--warn)" opacity="0.18" stroke="var(--warn)"/>
+          <rect x="690" y="74" width="30" height="30" rx="4" fill="var(--warn)" opacity="0.18" stroke="var(--warn)"/>
+          <rect x="660" y="104" width="30" height="30" rx="4" fill="var(--warn)" opacity="0.18" stroke="var(--warn)"/>
+          <rect x="690" y="104" width="30" height="30" rx="4" fill="var(--warn)" opacity="0.18" stroke="var(--warn)"/>
+          <rect x="648" y="62" width="30" height="30" rx="4" fill="var(--warn)" opacity="0.32" stroke="var(--warn)"/>
+          <rect x="678" y="62" width="30" height="30" rx="4" fill="var(--warn)" opacity="0.32" stroke="var(--warn)"/>
+          <rect x="648" y="92" width="30" height="30" rx="4" fill="var(--warn)" opacity="0.32" stroke="var(--warn)"/>
+          <rect x="678" y="92" width="30" height="30" rx="4" fill="var(--warn)" opacity="0.32" stroke="var(--warn)"/>
+        </g>
+        <text x="685" y="150" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--fg)">n-D tensor</text>
+        <text x="685" y="168" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--muted)">shape (2, 2, 3)</text>
+
+        <text x="430" y="212" text-anchor="middle" font-size="12.5" fill="var(--muted)">rank = how many dimensions · shape = the tuple of sizes along each one · e.g. a batch of RGB images is a 4-D tensor (N, C, H, W)</text>
+      </svg>
+      <figcaption>Same object, different ranks. "Tensor" is the general word; scalar / vector / matrix are just the 0-, 1-, and 2-D special cases.</figcaption>
+    </figure>
+
+    <pre>x = torch.tensor([[<span class="g">1.</span>, <span class="g">2.</span>, <span class="g">3.</span>],
+                  [<span class="g">4.</span>, <span class="g">5.</span>, <span class="g">6.</span>]])
+
+<span class="b">print</span>(x.shape)    <span class="c1"># torch.Size([2, 3])  → 2 rows, 3 columns</span>
+<span class="b">print</span>(x.ndim)     <span class="c1"># 2  → it's a matrix</span>
+<span class="b">print</span>(x.dtype)    <span class="c1"># torch.float32  → default for floats</span>
+<span class="b">print</span>(x.device)   <span class="c1"># cpu  → where it lives right now</span></pre>
+
+    <div class="stats">
+      <div class="stat"><b>(2, 3)</b><span>shape — 2×3</span></div>
+      <div class="stat"><b>float32</b><span>dtype</span></div>
+      <div class="stat"><b>cpu</b><span>device (for now)</span></div>
+    </div>
+
+    <div class="callout warn"><span class="h">⚠ Floats vs ints — a real gotcha</span>
+      Writing <code class="inl">1.</code> (with the dot) makes a <code class="inl">float32</code> tensor; writing <code class="inl">1</code> makes an <code class="inl">int64</code> one. Neural-net math is float math, so models expect <code class="inl">float32</code>. A surprising number of beginner errors are really "I accidentally made an int tensor."</div>
+    <p class="cite">Source: <a href="https://docs.pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html" target="_blank" rel="noopener">PyTorch — Tensors tutorial</a> · <a href="https://docs.pytorch.org/docs/stable/tensors.html" target="_blank" rel="noopener">torch.Tensor reference</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Operations: elementwise vs. matmul, and reductions</h2>
+    <p>Two operation styles show up constantly, and confusing them is a classic bug.</p>
+    <h3>Elementwise — applied to each element independently</h3>
+    <pre>x + <span class="g">10</span>      <span class="c1"># add 10 to every element</span>
+x * x       <span class="c1"># multiply element-by-element (NOT matrix multiply!)</span></pre>
+    <pre><span class="c1"># x * x =</span>
+tensor([[ <span class="g">1.</span>,  <span class="g">4.</span>,  <span class="g">9.</span>],
+        [<span class="g">16.</span>, <span class="g">25.</span>, <span class="g">36.</span>]])</pre>
+
+    <h3>Matrix multiply — the <code class="inl">@</code> operator</h3>
+    <p>The workhorse of neural nets. Inner dimensions must agree: <code class="inl">(2,3) @ (3,1) → (2,1)</code>.</p>
+    <pre>w = torch.tensor([[<span class="g">1.</span>], [<span class="g">0.</span>], [<span class="g">-1.</span>]])   <span class="c1"># shape (3, 1)</span>
+x @ w                                  <span class="c1"># (2,3) @ (3,1) → (2,1)</span>
+<span class="c1"># tensor([[-2.],</span>
+<span class="c1">#         [-2.]])   each row of x dotted with w</span></pre>
+
+    <h3>Reductions — collapse a dimension</h3>
+    <p><code class="inl">sum</code>, <code class="inl">mean</code>, <code class="inl">max</code>… With no argument they reduce the whole tensor to a scalar. The key skill is <code class="inl">dim=</code>: it names the axis you <em>collapse</em>.</p>
+    <pre>x.sum()           <span class="c1"># tensor(21.)   everything → one number</span>
+x.mean()          <span class="c1"># tensor(3.5000)</span>
+x.sum(dim=<span class="g">0</span>)     <span class="c1"># tensor([5., 7., 9.])  collapse ROWS → one per column</span>
+x.sum(dim=<span class="g">1</span>)     <span class="c1"># tensor([6., 15.])     collapse COLS → one per row</span></pre>
+    <div class="callout key"><span class="h">💡 Read <code class="inl">dim=</code> as "the axis that disappears"</span>
+      <code class="inl">x</code> has shape <code class="inl">(2, 3)</code>. <code class="inl">dim=0</code> removes the size-2 axis → result shape <code class="inl">(3,)</code>. <code class="inl">dim=1</code> removes the size-3 axis → result shape <code class="inl">(2,)</code>. Once you see <code class="inl">dim</code> as "which axis collapses," reductions stop being guesswork. Shapes that don't line up for <code class="inl">@</code> or get <a href="https://docs.pytorch.org/docs/stable/notes/broadcasting.html" target="_blank" rel="noopener">broadcast</a> automatically are the #1 source of real PyTorch errors.</div>
+    <p class="cite">Source: <a href="https://docs.pytorch.org/docs/stable/tensors.html" target="_blank" rel="noopener">torch.Tensor reference</a> · <a href="https://docs.pytorch.org/docs/stable/notes/broadcasting.html" target="_blank" rel="noopener">Broadcasting semantics</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Reshaping — same data, new shape</h2>
+    <p>You constantly need to rearrange a tensor's shape (e.g. flattening an image into a vector before a layer). <code class="inl">view</code> reinterprets the same data under a new shape; pass <code class="inl">-1</code> to let PyTorch infer one dimension.</p>
+    <pre>x.view(<span class="g">3</span>, <span class="g">2</span>)    <span class="c1"># same 6 numbers, now 3 rows × 2 cols</span>
+<span class="c1"># tensor([[1., 2.],</span>
+<span class="c1">#         [3., 4.],</span>
+<span class="c1">#         [5., 6.]])</span>
+
+x.view(<span class="g">-1</span>)      <span class="c1"># flatten to 1-D: tensor([1., 2., 3., 4., 5., 6.])</span></pre>
+    <div class="callout key"><span class="h">💡 <code class="inl">view</code> vs <code class="inl">reshape</code></span>
+      They look identical and usually behave the same. <code class="inl">view</code> never copies (it requires the data to be <em>contiguous</em> in memory) and errors if it can't; <code class="inl">reshape</code> copies only when it has to. When in doubt, <code class="inl">reshape</code> is the safe default; you'll see <code class="inl">view</code> all over real code.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Devices — moving math onto your GPU</h2>
+    <p>A tensor lives on a <strong>device</strong>. By default that's the <code class="inl">cpu</code>. To use your Apple GPU, move it to <code class="inl">mps</code>. The idiomatic, portable pattern — the exact line you'll see at the top of real training scripts — is:</p>
+    <pre>device = <span class="g">"mps"</span> <span class="b">if</span> torch.backends.mps.is_available() <span class="b">else</span> <span class="g">"cpu"</span>
+xg = x.to(device)
+<span class="b">print</span>(xg.device)   <span class="c1"># mps:0   ← now living on the Apple GPU</span></pre>
+    <p>Writing <code class="inl">device</code> this way means the same script runs on your Mac (<code class="inl">mps</code>), a CUDA box (swap in <code class="inl">"cuda"</code>), or anywhere (<code class="inl">cpu</code>) — which is exactly why real repos write it like this.</p>
+    <div class="callout warn"><span class="h">⚠ Same-device rule</span>
+      An operation needs <em>all</em> its tensors on the same device. Mixing a <code class="inl">cpu</code> tensor with an <code class="inl">mps</code> one throws a runtime error — you'll hit this the moment you build a model, and now you'll know why. Also: not every op is implemented on MPS yet; set <code class="inl">PYTORCH_ENABLE_MPS_FALLBACK=1</code> to fall back to CPU for the gaps.</div>
+    <p class="cite">Source: <a href="https://docs.pytorch.org/docs/stable/notes/mps.html" target="_blank" rel="noopener">PyTorch MPS notes</a> · <a href="https://developer.apple.com/metal/pytorch/" target="_blank" rel="noopener">Apple Metal + PyTorch</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> The NumPy bridge</h2>
+    <p>You'll constantly see PyTorch code hop to <strong>NumPy</strong> (the standard Python array library) and back — for loading data, plotting, or metrics. The bridge is two methods:</p>
+    <pre><span class="b">import</span> numpy <span class="b">as</span> np
+a  = x.numpy()                       <span class="c1"># tensor → ndarray (CPU only)</span>
+t2 = torch.from_numpy(np.array([<span class="g">10</span>, <span class="g">20</span>, <span class="g">30</span>]))   <span class="c1"># ndarray → tensor</span>
+<span class="b">print</span>(t2, t2.dtype)                 <span class="c1"># tensor([10, 20, 30]) torch.int64</span></pre>
+    <div class="callout warn"><span class="h">⚠ They share memory</span>
+      On the CPU, <code class="inl">.numpy()</code> and <code class="inl">from_numpy()</code> give you a <em>view</em> of the same memory — mutate one and the other changes. And a GPU (<code class="inl">mps</code>) tensor must be moved to CPU first (<code class="inl">x.cpu().numpy()</code>), since NumPy can't read GPU memory.</div>
+    <p class="cite">Source: <a href="https://docs.pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html#bridge-with-numpy" target="_blank" rel="noopener">PyTorch — Bridge with NumPy</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="2">
+        <div class="stem">What three properties does <em>every</em> tensor always have — the ones to print first when confused?</div>
+        <button class="opt">name, length, and owner</button>
+        <button class="opt">rows, columns, and values</button>
+        <button class="opt"><code class="inl">shape</code>, <code class="inl">dtype</code>, and <code class="inl">device</code></button>
+        <button class="opt"><code class="inl">grad</code>, <code class="inl">loss</code>, and <code class="inl">weight</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem"><code class="inl">x</code> has shape <code class="inl">(2, 3)</code>. What does <code class="inl">x.sum(dim=0)</code> return?</div>
+        <button class="opt">A single scalar (the grand total)</button>
+        <button class="opt">A tensor of shape <code class="inl">(3,)</code> — the size-2 axis collapses, one value per column</button>
+        <button class="opt">A tensor of shape <code class="inl">(2,)</code> — one value per row</button>
+        <button class="opt">An error — you can't sum a 2-D tensor</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">What's the difference between <code class="inl">x * x</code> and <code class="inl">x @ w</code>?</div>
+        <button class="opt">Nothing — both are matrix multiplication</button>
+        <button class="opt">Nothing — both are elementwise</button>
+        <button class="opt"><code class="inl">*</code> is matmul; <code class="inl">@</code> is elementwise</button>
+        <button class="opt"><code class="inl">*</code> is elementwise (per-element); <code class="inl">@</code> is matrix multiply (inner dims must agree)</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">You add a <code class="inl">cpu</code> tensor to an <code class="inl">mps</code> tensor. What happens?</div>
+        <button class="opt">A runtime error — operands must be on the same device</button>
+        <button class="opt">PyTorch silently moves both to the GPU</button>
+        <button class="opt">It works; device doesn't matter for math</button>
+        <button class="opt">The result is always on the CPU</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem"><code class="inl">x</code> has 6 elements. What does <code class="inl">x.view(-1)</code> give you?</div>
+        <button class="opt">An error — <code class="inl">-1</code> isn't a valid size</button>
+        <button class="opt">A tensor with one row removed</button>
+        <button class="opt">A flat 1-D tensor of all 6 elements (the <code class="inl">-1</code> is inferred)</button>
+        <button class="opt">A copy on the GPU</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">09</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What three things does every tensor always have?</summary><div class="a">A: <strong>shape</strong> (its dimensions), <strong>dtype</strong> (element type, default <code class="inl">float32</code>), and <strong>device</strong> (<code class="inl">cpu</code>/<code class="inl">mps</code>/<code class="inl">cuda</code>). Print all three when PyTorch confuses you.</div></details>
+    <details class="fc"><summary>Q: <code class="inl">*</code> vs <code class="inl">@</code> on tensors?</summary><div class="a">A: <code class="inl">*</code> is <strong>elementwise</strong> multiply (shapes match or broadcast). <code class="inl">@</code> is <strong>matrix multiply</strong> — inner dims must agree, <code class="inl">(m,k)@(k,n)→(m,n)</code>.</div></details>
+    <details class="fc"><summary>Q: In a reduction, what does <code class="inl">dim=</code> select?</summary><div class="a">A: The axis that <strong>collapses (disappears)</strong>. For shape <code class="inl">(2,3)</code>, <code class="inl">dim=0</code> → shape <code class="inl">(3,)</code>; <code class="inl">dim=1</code> → shape <code class="inl">(2,)</code>.</div></details>
+    <details class="fc"><summary>Q: The portable one-liner to choose a device?</summary><div class="a">A: <code class="inl">device = "mps" if torch.backends.mps.is_available() else "cpu"</code>, then <code class="inl">x.to(device)</code>. Same script runs on Mac GPU, CUDA, or CPU.</div></details>
+    <details class="fc"><summary>Q: What does <code class="inl">x.view(-1)</code> do?</summary><div class="a">A: Flattens to 1-D; the <code class="inl">-1</code> tells PyTorch to infer that dimension's size from the total element count. <code class="inl">view</code> reinterprets without copying (needs contiguous data).</div></details>
+    <details class="fc"><summary>Q: How do you go tensor ↔ NumPy, and the catch?</summary><div class="a">A: <code class="inl">x.numpy()</code> and <code class="inl">torch.from_numpy(a)</code>. On CPU they <strong>share memory</strong>; a GPU tensor must be moved with <code class="inl">x.cpu().numpy()</code> first.</div></details>
+    <details class="fc"><summary>Q: Why does <code class="inl">torch.tensor([1, 2])</code> sometimes cause model errors?</summary><div class="a">A: No decimal points → it's an <code class="inl">int64</code> tensor. Models do float math and expect <code class="inl">float32</code>. Write <code class="inl">[1., 2.]</code> (or call <code class="inl">.float()</code>).</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>This is a conversation, not a lecture. Good things to ask me right now: <em>"walk me through a shape error from a real repo,"</em> <em>"show me broadcasting with a concrete example,"</em> or <em>"why is matmul the heart of a neural net?"</em> <strong>Coming next — Lesson 2: Autograd</strong>, the one idea that turns these tensors into something that can <em>learn</em>. When you've run the script and seen <code class="inl">mps:0</code>, tell me and we'll go.</p>
+  </div>
+
+  <nav class="next">
+    <a href="/courses/"><span class="dir">↩ All courses</span><span class="ttl dim">Master TOC</span></a>
+    <a href="../reference/pytorch-glossary.html"><span class="dir">Reference →</span><span class="ttl">PyTorch Glossary</span></a>
+    <a><span class="dir">Up next (coming soon)</span><span class="ttl dim">Lesson 2 · Autograd — how tensors learn</span></a>
+  </nav>
+
+  <footer>
+    PyTorch · Lesson 1 · grounded in
+    <a href="https://docs.pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html" target="_blank" rel="noopener">PyTorch Tensors tutorial</a>,
+    <a href="https://docs.pytorch.org/docs/stable/tensors.html" target="_blank" rel="noopener">torch.Tensor docs</a>,
+    <a href="https://developer.apple.com/metal/pytorch/" target="_blank" rel="noopener">Apple Metal</a> ·
+    see <a href="/courses/pytorch/#resources">RESOURCES.md</a> ·
+    <a href="../reference/pytorch-glossary.html">Glossary</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

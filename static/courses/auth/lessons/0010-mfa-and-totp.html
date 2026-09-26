@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 10 · MFA &amp; TOTP — Layering Factors &amp; Step-Up Auth</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/auth/" style="color:inherit;text-decoration:none">&larr; Web Authentication</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">auth · Lesson 10 · Node + Express</div>
+    <h1>MFA &amp; Step-Up Auth</h1>
+    <p class="sub">Every method so far has been a <em>single</em> proof of identity. Multi-factor auth stops betting everything on one — it combines proofs of <em>different kinds</em>, so cracking one isn't enough. Today's star is TOTP, the 6-digit authenticator-app code. You'll implement it from scratch in ~20 lines and prove your implementation correct against the official RFC test vector — the same math Google Authenticator runs.</p>
+    <span class="missiontag">🎯 Mission: a mental model of modern auth + the ability to wire it into a real app</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>Strong auth combines factors of different <em>types</em>, not more of the same type.</strong> The three types: something you <em>know</em> (password), something you <em>have</em> (phone/authenticator/passkey), something you <em>are</em> (biometric). Two passwords aren't MFA; a password + a TOTP code are. TOTP works because both sides derive the same short-lived code from a shared secret + the current time — no code is ever transmitted to be intercepted.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The three factor types (and what counts)</h2>
+    <p class="lead">"Multi-factor" specifically means proofs from <em>different categories</em>. Stacking two of the same kind barely helps — an attacker who can phish one password can phish two. The leverage comes from forcing an attacker to compromise two <em>unrelated</em> things at once.</p>
+    <div class="cards">
+      <div class="card"><h4>Something you KNOW</h4><p class="truth">Password, PIN, security question. Weakest — phishable, guessable, reused. (Lesson 4.)</p></div>
+      <div class="card"><h4>Something you HAVE</h4><p class="truth">Your phone (TOTP/push), a security key, a passkey. The device is the proof. (This lesson + Lesson 9.)</p></div>
+      <div class="card"><h4>Something you ARE</h4><p class="truth">Fingerprint, face. Usually <em>unlocks</em> a "have" factor locally (e.g. Touch ID releasing a passkey) rather than traveling over the wire.</p></div>
+    </div>
+    <div class="callout key"><span class="h">💡 Where the course's methods land</span>
+      Password = <em>know</em>. TOTP / magic link / OTP / passkey = <em>have</em> (you control the seeded device / inbox / key). A passkey unlocked by Face ID quietly combines <em>have</em> + <em>are</em> in one tap — which is why a passkey alone is often considered strong enough without a separate second factor. <span class="cite">See <a href="https://pangea.cloud/securebydesign/authn-using-totp/" target="_blank" rel="noopener">Pangea — MFA with TOTP</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> How TOTP works — a shared secret + the clock</h2>
+    <p>TOTP (Time-based One-Time Password, <a href="https://tools.ietf.org/html/rfc6238" target="_blank" rel="noopener">RFC 6238</a>) is beautifully simple. At enrollment, server and app agree on one <strong>shared secret</strong> (the QR code you scan). After that, <em>nothing is ever exchanged</em> — both sides independently compute the same code from <code class="inl">secret + current time</code>. Three steps:</p>
+    <ol>
+      <li><strong>counter</strong> = <code class="inl">floor(unixSeconds / 30)</code> — the current 30-second window, so the code changes every 30s.</li>
+      <li><strong>hmac</strong> = <code class="inl">HMAC-SHA1(secret, counter)</code> — a keyed hash binding the secret to this time window.</li>
+      <li><strong>truncate</strong> → a 31-bit number → <code class="inl">mod 10⁶</code> → the 6-digit code you see.</li>
+    </ol>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 760 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TOTP: secret plus time counter through HMAC and truncation produce a 6-digit code on both sides">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="11.5">
+          <rect x="20" y="40" width="120" height="44" rx="8" fill="var(--accent-2)" opacity="0.1" stroke="var(--accent-2)" stroke-width="1.3"/>
+          <text x="80" y="58" text-anchor="middle" fill="var(--accent-2)" font-weight="700">shared secret</text>
+          <text x="80" y="74" text-anchor="middle" fill="var(--muted)">(from the QR)</text>
+          <rect x="20" y="98" width="120" height="44" rx="8" fill="none" stroke="var(--fg)" stroke-width="1.3"/>
+          <text x="80" y="116" text-anchor="middle" fill="var(--fg)" font-weight="700">⌊time / 30⌋</text>
+          <text x="80" y="132" text-anchor="middle" fill="var(--muted)">counter</text>
+          <path d="M140 62 H210" stroke="var(--accent-2)" stroke-width="1.4" marker-end="url(#g10)"/>
+          <path d="M140 120 H210" stroke="var(--fg)" stroke-width="1.4" marker-end="url(#a10)"/>
+          <rect x="212" y="62" width="180" height="58" rx="10" fill="var(--accent)" opacity="0.1" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="302" y="86" text-anchor="middle" fill="var(--accent)" font-weight="700">HMAC-SHA1</text>
+          <text x="302" y="104" text-anchor="middle" fill="var(--muted)">+ dynamic truncation</text>
+          <path d="M392 91 H460" stroke="var(--fg)" stroke-width="1.4" marker-end="url(#a10)"/>
+          <rect x="462" y="62" width="130" height="58" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+          <text x="527" y="88" text-anchor="middle" fill="var(--accent)" font-weight="800" font-size="16">287 082</text>
+          <text x="527" y="108" text-anchor="middle" fill="var(--muted)" font-size="10">6-digit code (30s)</text>
+          <text x="680" y="78" text-anchor="middle" fill="var(--accent-2)" font-size="10.5">app shows it</text>
+          <text x="680" y="106" text-anchor="middle" fill="var(--accent-2)" font-size="10.5">server recomputes</text>
+          <text x="680" y="92" text-anchor="middle" fill="var(--fg)" font-size="13">＝</text>
+          <text x="380" y="160" text-anchor="middle" fill="var(--muted)" font-size="11">Same inputs on both sides → same output. No code ever crosses the network.</text>
+        </g>
+        <defs>
+          <marker id="a10" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/></marker>
+          <marker id="g10" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent-2)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>The shared secret never moves after enrollment. Both sides run the same HMAC over the same time-counter and get the same 6 digits — so verification is just "does mine match yours?"</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Enrollment &amp; verification details that matter</h2>
+    <div class="cards">
+      <div class="card"><h4>The QR is an <code class="inl">otpauth://</code> URI</h4><p class="truth"><code class="inl">otpauth://totp/MyApp:you?secret=BASE32&amp;issuer=MyApp</code>. The app stores the secret; that's the whole handshake.</p></div>
+      <div class="card"><h4>Accept ±1 window</h4><p class="truth">Phones drift. Check the current step <em>and</em> the adjacent ones (<code class="inl">valid_window=1</code>) so a slightly-off clock still works.</p></div>
+      <div class="card"><h4>Mark codes used</h4><p class="truth">A code is valid for ~30s — within that window, record an accepted code so it can't be replayed twice.</p></div>
+      <div class="card"><h4>Protect the secret + recovery</h4><p class="truth">Encrypt secrets at rest; issue one-time <b>backup codes</b> at enrollment for a lost device.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> 🎯 Your tangible win (5 min): implement TOTP, prove it correct</h2>
+    <p>A zero-dependency lab implements RFC 6238 in ~20 lines and checks it against the spec's official test vector — then shows enrollment, login, clock-skew tolerance, and expiry.</p>
+    <pre><span class="c1"># in your terminal (no npm install needed):</span>
+cd ~/projects/learn/public/courses/auth/practice/totp-lab
+node demo.js</pre>
+    <div class="callout mission"><span class="h">🎯 The win — your code matches the standard, verbatim</span>
+      <pre style="margin:.4em 0 0"><span class="c1">PROOF — official RFC 6238 test vector (seed "12345…", T=59, 8 digits):</span>
+  expected: 94287082
+  ours:     94287082    <span class="g">✅ MATCH — our implementation is correct</span>
+
+<span class="c1">login:        app shows 274917  → server verify {"ok":true,"drift":0}</span>
+<span class="c1">clock skew:   code from 30s ago → {"ok":true,"drift":-1}  (accepted)</span>
+<span class="c1">expiry:       code from 5 min ago → {"ok":false}</span></pre>
+      Matching <code class="inl">94287082</code> means your 20 lines are byte-for-byte the same algorithm as every authenticator app on earth — you could scan the lab's <code class="inl">otpauth://</code> URI into Google Authenticator and the codes would line up. That's the payoff: TOTP isn't a black box anymore. Open <code class="inl">demo.js</code>; the whole algorithm is the <code class="inl">totp()</code> function.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Where TOTP fits — and its real weakness</h2>
+    <p>TOTP is a <strong>second factor</strong> (something you <em>have</em>), layered on a first (password or — increasingly — a passkey). It massively raises the bar: a leaked password alone no longer logs anyone in. But be honest about its ceiling:</p>
+    <div class="callout warn"><span class="h">⚠️ TOTP is phishable — it does not beat a real-time phishing proxy</span>
+      A phishing site can ask for your password <em>and</em> your current TOTP code and relay both to the real site within the 30-second window. TOTP stops <em>offline</em> credential reuse, not a live man-in-the-middle. The only factor that resists this is the <strong>origin-bound passkey</strong> from Lesson 9 — which is exactly why passkeys are positioned to replace both passwords <em>and</em> TOTP, not sit beside them. <span class="cite">See <a href="https://www.authgear.com/post/what-is-totp/" target="_blank" rel="noopener">Authgear — what is TOTP</a>.</span></div>
+    <h3>Step-up authentication — MFA only when it matters</h3>
+    <p>You don't need the second factor on every click. <strong>Step-up auth</strong> asks for it only for sensitive actions — changing a password, a large transfer, viewing secrets — while normal browsing rides the existing session. The pattern: record <em>when</em> and <em>how strongly</em> the user last authenticated, and re-challenge if a high-risk action needs a fresher/stronger proof.</p>
+    <pre><span class="b">function</span> requireRecentMfa(maxAgeMs) {                 <span class="c1">// Express middleware</span>
+  <span class="b">return</span> (req, res, next) =&gt; {
+    <span class="b">const</span> { mfaAt } = req.session;
+    <span class="b">if</span> (!mfaAt || Date.now() - mfaAt &gt; maxAgeMs)
+      <span class="b">return</span> res.redirect(<span class="g">'/verify-mfa?next='</span> + encodeURIComponent(req.originalUrl));
+    next();
+  };
+}
+app.post(<span class="g">'/account/delete'</span>, requireRecentMfa(<span class="b">5</span> * <span class="b">60_000</span>), handler); <span class="c1">// re-prove within 5 min</span></pre>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Check yourself</h2>
+    <div class="quiz">
+      <div class="q">
+        <p><strong>Q1.</strong> A site requires your password <em>and</em> a security-question answer. Is that MFA? Why or why not?</p>
+        <details><summary>Show answer</summary><p>No — both are "something you know," so it's two factors of the <em>same type</em>. An attacker who phishes or researches one can usually get the other, and neither requires possession of a device. Real MFA combines <em>different</em> categories (know + have, e.g. password + TOTP). (§01.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q2.</strong> TOTP never sends the code over the network during login setup — so how does the server know what code to expect?</p>
+        <details><summary>Show answer</summary><p>Because both sides share the secret (exchanged once, at enrollment, via the QR/<code class="inl">otpauth://</code> URI) and both compute the code independently from <code class="inl">secret + floor(time/30)</code> via HMAC. The server just recomputes its own code and compares. Nothing but the final 6 digits is ever typed, and even those are ephemeral. (§02.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q3.</strong> Your boss says "we added TOTP, so we're safe from phishing now." Correct them.</p>
+        <details><summary>Show answer</summary><p>TOTP defeats <em>offline</em> attacks (a leaked password alone is now useless) but not a <em>real-time</em> phishing proxy: a fake site can collect the password and the live TOTP code and replay both within 30 seconds. The phishing-proof factor is the origin-bound passkey (Lesson 9), because its signature can't be relayed to another origin. TOTP raises the bar; passkeys close the door. (§05.)</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Where we go next</h2>
+    <p>You can now layer factors and gate sensitive actions. Two practical gaps remain before you can ship a complete app. Lesson 11 covers the <strong>account lifecycle</strong> — the flows every real app needs and every tutorial skips: email verification, password reset, and account recovery, each riddled with subtle footguns (and each reusing the single-use-token machinery you already know). Then Lesson 12 is the <strong>capstone</strong>: a decision framework plus a complete, running Express auth app that combines everything.</p>
+    <div class="callout key"><span class="h">📌 Remember this one line</span>
+      <strong>MFA = proofs of <em>different types</em> (know + have + are). TOTP = both sides derive the same 6-digit code from a shared secret + the clock, so nothing is transmitted to intercept — but it's still phishable in real time, unlike an origin-bound passkey. Use step-up to demand it only when the action warrants.</strong></div>
+    <p class="muted" style="margin-top:18px">💬 Ask me anything — e.g. "wire TOTP enrollment with a real QR code in Express (<code class="inl">otplib</code>)", "design the backup-codes flow", or "when should we skip passwords entirely and go passkey-only?" · Back to <a href="0009-passkeys-webauthn.html">Lesson 9</a> · <a href="0008-passwordless-magic-links-otp.html">Lesson 8</a> · <a href="/courses/auth/#resources">Resources</a>.</p>
+  </section>
+
+</div>
+</body>
+</html>

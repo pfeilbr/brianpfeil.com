@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 3 · Build V8 from Source</title>
+<style>
+  :root{--ink:#1a1a2e;--ink-soft:#4a4a63;--paper:#fbfaf7;--card:#fff;--accent:#5b4fc4;--accent-soft:#ede9fc;--good:#0f8a5f;--good-soft:#e3f5ec;--bad:#c43d3d;--bad-soft:#fbe6e6;--line:#e6e2d8;--code-bg:#1e1e2e;--code-ink:#e4e4f0;--amber:#b5760a;--amber-soft:#fdf2dc}
+  *{box-sizing:border-box}html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:780px;margin:0 auto;padding:48px 28px 96px}
+  header.hd{border-bottom:3px solid var(--ink);padding-bottom:22px;margin-bottom:36px}
+  .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:34px;line-height:1.15;margin:.3em 0 .35em;letter-spacing:-.02em}
+  h2{font-size:23px;margin:2.4em 0 .6em;letter-spacing:-.01em;padding-top:.4em}
+  h3{font-size:18px;margin:1.8em 0 .4em}
+  .mission{background:var(--accent-soft);border-radius:12px;padding:14px 18px;font-size:15px;color:var(--ink-soft);margin-top:14px}.mission b{color:var(--accent)}
+  p{margin:.7em 0}a{color:var(--accent);text-decoration-thickness:1.5px;text-underline-offset:2px}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.86em;background:#efece3;padding:.1em .38em;border-radius:5px}
+  pre{background:var(--code-bg);color:var(--code-ink);border-radius:12px;padding:18px 20px;overflow-x:auto;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.6;margin:1em 0}
+  pre code{background:none;padding:0;color:inherit;font-size:inherit}
+  .cmt{color:#8b8ba7}.hl{color:#9ed1ff}.lit{color:#ffd479}.warn{color:#ff9e9e}.ok2{color:#9ff0c4}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:20px 0;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .step .num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:15px;margin-right:10px;vertical-align:-7px}
+  .step h3{margin-top:0;display:inline}
+  .callout{border-left:4px solid var(--amber);background:var(--amber-soft);padding:12px 16px;border-radius:0 10px 10px 0;margin:18px 0;font-size:15.5px}.callout b{color:var(--amber)}
+  .danger{border-left:4px solid var(--bad);background:var(--bad-soft);padding:12px 16px;border-radius:0 10px 10px 0;margin:18px 0;font-size:15.5px}.danger b{color:var(--bad)}
+  .cycle{border-left:4px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0;font-size:15.5px}.cycle b{color:var(--accent)}
+  table.bc{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  table.bc th,table.bc td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.bc th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)}
+  table.bc td:first-child{font-family:"SF Mono",monospace;font-size:13px;white-space:nowrap;color:var(--accent);font-weight:600}
+  .quiz{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:20px 0}
+  .q{font-weight:600;margin-bottom:12px}
+  .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--paper);border-radius:9px;padding:11px 15px;margin:7px 0;cursor:pointer;font:inherit;font-size:15.5px;transition:.12s}
+  .opt:hover{border-color:var(--accent)}.opt.correct{border-color:var(--good);background:var(--good-soft)}.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .fb{font-size:14.5px;margin-top:10px;padding:11px 14px;border-radius:9px;display:none}.fb.show{display:block}.fb.ok{background:var(--good-soft);color:var(--good)}.fb.no{background:var(--bad-soft);color:var(--bad)}
+  .nav{display:flex;justify-content:space-between;gap:14px;margin-top:42px;padding-top:22px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .nav a{display:block;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px 18px;text-decoration:none;flex:1;min-width:200px}
+  .nav .lbl{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}.nav .ttl{font-weight:600;color:var(--accent)}
+  .teacher{background:linear-gradient(135deg,#5b4fc4,#7a6fe0);color:#fff;border-radius:14px;padding:20px 24px;margin:30px 0}.teacher b{color:#fff}
+  .cite{font-size:13px;color:var(--ink-soft)}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--good-soft);color:var(--good);padding:3px 9px;border-radius:20px;vertical-align:2px}
+  .pill.warn{background:var(--amber-soft);color:var(--amber)}
+  .foot{margin-top:60px;font-size:13px;color:var(--ink-soft);text-align:center;border-top:1px solid var(--line);padding-top:18px}
+  @media print{body{background:#fff}.quiz,.teacher{box-shadow:none}.nav{display:none}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: v8-javascript-engine ---- */
+/* ============================================================================
+   v8-javascript-engine course adapter — re-skin this course's bespoke
+   component classes with the canonical tokens from assets/theme.css. Injected
+   AFTER theme.css and AFTER each lesson's own <style>, so these rules win.
+   The lessons hardcode a cream "paper" look (--paper #fbfaf7, purple --accent
+   #5b4fc4, dark <pre> at #1e1e2e) via their own :root vars; we re-point those
+   custom vars at the canonical tokens and add explicit !important overrides for
+   every hardcoded hex / gradient the vars don't reach. Result: the unified look
+   + automatic light/dark, with no markup edits. Mirrors nix.css.
+   ============================================================================ */
+
+/* ---- retokenize the course's own CSS variables onto the canonical palette.
+   This handles every rule that reads var(--ink)/var(--line)/var(--good)/etc.
+   in one shot; the explicit rules below cover the remaining hardcoded colours.
+   We do NOT re-declare --accent/--code-bg/--code-ink: those names are shared
+   with theme.css, so the course's own :root values for them are already
+   shadowed by the canonical tokens — re-pointing them to themselves would be
+   a cyclic declaration. The course's purple --accent #5b4fc4 thus resolves to
+   the canonical --accent automatically. */
+:root{
+  --ink:var(--fg) !important;          --ink-soft:var(--muted) !important;
+  --paper:var(--bg) !important;        --card:var(--surface) !important;
+  --accent-soft:color-mix(in srgb,var(--accent) 14%,transparent) !important;
+  --good:var(--mark) !important;       --good-soft:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  --bad:var(--danger) !important;      --bad-soft:color-mix(in srgb,var(--danger) 13%,transparent) !important;
+  --amber:var(--warn) !important;      --amber-soft:color-mix(in srgb,var(--warn) 13%,transparent) !important;
+  --line:var(--border) !important;
+}
+
+/* ---- page shell: cream body -> token bg; .wrap is the centered column ---- */
+body{ background:var(--bg) !important; color:var(--fg) !important; }
+.wrap{ max-width:var(--maxw); margin:0 auto; background:transparent !important;
+  box-shadow:none !important; }
+header.hd{ border-bottom:3px solid var(--border) !important; }
+.kicker{ color:var(--accent) !important; }
+.sub,.cite,.foot,.bar{ color:var(--muted) !important; }
+
+/* ---- headings: ink/black titles -> --fg, accent bits -> --accent ---- */
+h1{ color:var(--fg) !important; }
+h2{ color:var(--fg) !important; }
+h3{ color:var(--fg) !important; }
+.grp{ border-top:2px solid var(--border) !important; color:var(--muted) !important; }
+/* reference node-v8-flags h2 has an --ink underline */
+.wrap h2[style], h2{ border-color:var(--border) !important; }
+
+/* ---- inline code: cream chip -> accent tint (matches theme code.inl) ---- */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; border-radius:6px; }
+dt code,.tag code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; }
+
+/* ---- code blocks: already dark; pin to the canonical dark <pre> ---- */
+pre{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; }
+pre code{ background:none !important; color:inherit !important; padding:0 !important; }
+
+/* ---- syntax-highlight tokens: remap onto a light-on-dark palette so they
+   stay legible on the canonical dark code block (in both schemes) ---- */
+.cmt{ color:#7f8db3 !important; }                 /* comments  (grey-blue)  */
+.hl{ color:#74c0fc !important; }                  /* highlight (blue)       */
+.lit{ color:#ffd43b !important; }                 /* literals  (yellow)     */
+.ok2{ color:#63e6be !important; }                 /* ok/green               */
+.ty{ color:var(--accent-2) !important; }          /* types    (teal accent) */
+/* NOTE: `.warn` here is a SYNTAX token (red text inside <pre>), not a callout */
+pre .warn, .warn{ color:#ff8787 !important; }     /* error/red in code      */
+
+/* ---- numbered step cards ---- */
+.step{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; box-shadow:none !important; }
+.step .num{ background:var(--accent) !important; color:#fff !important; }
+.step h3{ color:var(--fg) !important; }
+
+/* ---- callout / box classes mapped to the unified semantics ---- */
+/* info / neutral note -> warn-amber in the original; keep amber intent */
+.callout,.note{ background:color-mix(in srgb,var(--warn) 12%,transparent) !important;
+  border-left:4px solid var(--warn) !important; color:var(--fg) !important; }
+.callout b,.note b{ color:var(--warn) !important; }
+/* danger / failure -> --danger */
+.danger{ background:color-mix(in srgb,var(--danger) 11%,transparent) !important;
+  border-left:4px solid var(--danger) !important; color:var(--fg) !important; }
+.danger b{ color:var(--danger) !important; }
+/* cycle / key insight -> --accent */
+.cycle{ background:color-mix(in srgb,var(--accent) 10%,transparent) !important;
+  border-left:4px solid var(--accent) !important; color:var(--fg) !important; }
+.cycle b{ color:var(--accent) !important; }
+/* mission blurb -> accent-2 special tint */
+.mission{ background:color-mix(in srgb,var(--accent-2) 12%,transparent) !important;
+  color:var(--fg) !important; }
+.mission b{ color:var(--accent-2) !important; }
+
+/* ---- pipeline / flow / architecture boxes ---- */
+.stage,.fbox{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; }
+.stage.active{ border-color:var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 12%,transparent) !important; }
+.stage .s{ color:var(--muted) !important; }
+.arrow,.farr{ color:var(--accent) !important; }
+
+/* ---- architecture-map tier ladder (hardcoded pastel tiers) ---- */
+.ladder{ border:1px solid var(--border) !important; }
+.tier{ border-bottom:1px solid var(--border) !important; color:var(--fg) !important; }
+.tier .name small,.tier .desc{ color:var(--muted) !important; }
+.t0{ background:color-mix(in srgb,var(--accent) 9%,transparent) !important; }
+.t1{ background:color-mix(in srgb,var(--accent-2) 9%,transparent) !important; }
+.t2{ background:color-mix(in srgb,var(--mark) 10%,transparent) !important; }
+.t3{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.t4{ background:color-mix(in srgb,var(--danger) 10%,transparent) !important; }
+
+/* ---- lesson 04 nested-scope ladder (hardcoded pastels) ---- */
+.nest{ border:1px solid var(--border) !important; color:var(--fg) !important; }
+.nest div{ border-bottom:1px solid var(--border) !important; }
+.nest .lbl{ color:var(--muted) !important; }
+.n0{ background:color-mix(in srgb,var(--accent) 10%,transparent) !important; }
+.n1{ background:color-mix(in srgb,var(--accent-2) 9%,transparent) !important; }
+.n2{ background:color-mix(in srgb,var(--mark) 10%,transparent) !important; }
+.n3{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.n4{ background:color-mix(in srgb,var(--danger) 10%,transparent) !important; }
+
+/* ---- lesson 05 good/gotcha comparison boxes ---- */
+.cmpbox{ color:var(--fg) !important; }
+.cmpbox.l{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 11%,transparent) !important; }
+.cmpbox.g{ border-color:var(--warn) !important;
+  background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+
+/* ---- lesson 07 hidden-class / inline-cache widgets ---- */
+.obj,.slot{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; }
+.slot .off{ color:var(--accent) !important; }
+.maptag{ background:color-mix(in srgb,var(--accent) 14%,transparent) !important;
+  color:var(--accent) !important; }
+.icbox{ color:var(--fg) !important; }
+.mono{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 11%,transparent) !important; }
+.poly{ border-color:var(--warn) !important;
+  background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.mega{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 11%,transparent) !important; }
+
+/* ---- lesson 08 GC generation boxes (hardcoded pastels) ---- */
+.genbox{ border:1px solid var(--border) !important; color:var(--fg) !important; }
+.young{ background:color-mix(in srgb,var(--accent-2) 9%,transparent) !important; }
+.old{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.genbox .gc{ color:var(--accent) !important; }
+.tbox{ border:1.5px solid var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 11%,transparent) !important; color:var(--fg) !important; }
+
+/* ---- quiz / match interactives ---- */
+.quiz{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; }
+.q{ color:var(--fg) !important; }
+.opt{ background:var(--panel) !important; border:1.5px solid var(--border) !important;
+  color:var(--fg) !important; }
+.opt:hover{ border-color:var(--accent) !important; }
+.opt.correct{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 16%,transparent) !important; color:var(--mark) !important; }
+.opt.wrong{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 14%,transparent) !important; color:var(--danger) !important; }
+.fb.ok{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important; color:var(--mark) !important; }
+.fb.no{ background:color-mix(in srgb,var(--danger) 14%,transparent) !important; color:var(--danger) !important; }
+.match-row select{ background:var(--panel) !important; border:1.5px solid var(--border) !important;
+  color:var(--fg) !important; }
+.match-row select.ok{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 14%,transparent) !important; }
+.match-row select.no{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 14%,transparent) !important; }
+
+/* ---- buttons ---- */
+.btn{ background:var(--accent) !important; color:#fff !important; }
+.btn:hover{ background:color-mix(in srgb,var(--accent) 80%,#000) !important; }
+
+/* ---- pills (status tags) ---- */
+.pill{ background:color-mix(in srgb,var(--mark) 16%,transparent) !important; color:var(--mark) !important; }
+.pill.warn{ background:color-mix(in srgb,var(--warn) 16%,transparent) !important; color:var(--warn) !important; }
+.tag{ background:color-mix(in srgb,var(--accent) 14%,transparent) !important; color:var(--accent) !important; }
+
+/* ---- teacher / done banners: drop the purple/green gradients for token tints
+   (white-on-gradient text would be invisible once retinted, so force --fg) ---- */
+.teacher{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--accent) 30%,transparent) !important; color:var(--fg) !important; }
+.teacher b{ color:var(--accent) !important; }
+.done{ background:color-mix(in srgb,var(--mark) 12%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--mark) 30%,transparent) !important; color:var(--fg) !important; }
+.done b{ color:var(--mark) !important; }
+.done a{ color:var(--accent) !important; }
+
+/* ---- nav ---- */
+.nav{ border-top:1px solid var(--border) !important; }
+.nav a{ background:var(--surface) !important; border:1px solid var(--border) !important; }
+.nav .lbl{ color:var(--muted) !important; }
+.nav .ttl{ color:var(--accent) !important; }
+
+/* ---- tables ---- */
+table.bc th,table th{ color:var(--muted) !important; border-bottom-color:var(--border) !important; }
+table.bc td,table td{ border-bottom-color:var(--border) !important; color:var(--fg) !important; }
+table.bc td:first-child,table td:first-child{ color:var(--accent) !important; }
+
+/* ---- reference glossary (dl/dt/dd vocabulary) ---- */
+dt{ color:var(--fg) !important; }
+dd{ color:var(--muted) !important; }
+dd b{ color:var(--fg) !important; }
+
+/* ---- blanket contrast guard: every text-holding box onto --fg (excludes
+   pre/code, which keep their light-on-dark colours). Courses hardcode dark
+   #1a1a2e text that is invisible on the dark-mode tinted surfaces. ---- */
+.step,.callout,.note,.danger,.cycle,.mission,.stage,.fbox,.tier,.nest,
+.cmpbox,.obj,.slot,.icbox,.genbox,.tbox,.quiz,.q,.opt,.teacher,.done,
+.three,.shape,.ic,.cmp,.gen,.flow,.pipeline,.ladder{ color:var(--fg) !important; }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/v8-javascript-engine/" style="color:inherit;text-decoration:none">&larr; V8 JavaScript Engine</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+<header class="hd">
+  <div class="kicker">V8 Engine · Lesson 3 · Embedding Track</div>
+  <h1>Build V8 from Source</h1>
+  <div class="mission">
+    <b>Why this lesson:</b> Your mission says <i>"build V8 from source (depot_tools + GN + ninja) and
+    run d8 and the hello-world embedder."</i> This is that milestone. By the end you'll own a compiled
+    V8 and a working <code>d8</code> shell — the foundation for every embedding lesson that follows.
+  </div>
+</header>
+
+<p>Until now you've borrowed V8 from Node. To <i>embed</i> V8 you need the engine as a library you
+compile and link against. That means checking out the real source and building it with Google's
+toolchain. Heads-up before you start:</p>
+
+<div class="callout">
+  <b>This is a slog — that's expected.</b> The checkout pulls a large dependency tree and the first
+  compile takes a while. Rough estimate (<i>not</i> an official figure): on the order of
+  <b>~10–15&nbsp;GB of disk</b> and <b>tens of minutes</b> for the first build on Apple Silicon;
+  incremental builds afterward are fast. Make sure you have the disk and the time before you begin.
+  <span class="cite">The official docs don't publish a size/time number — treat this as an estimate.</span>
+</div>
+
+<h2>Step 0 · Prerequisites (macOS)</h2>
+<p>You already have these from our setup check — verify them:</p>
+<pre><code>xcode-select --install        <span class="cmt"># Xcode Command Line Tools (you have Xcode)</span>
+sudo xcodebuild -license accept
+git --version  &amp;&amp;  python3 --version</code></pre>
+<p class="cite">Per <a href="https://v8.dev/docs/build">v8.dev/docs/build</a>: install Xcode and accept
+its license. Do <b>not</b> run the Linux-only <code>install-build-deps.sh</code> on macOS.</p>
+
+<div class="step">
+  <h3><span class="num">1</span>Install depot_tools and put it on your PATH</h3>
+  <p>depot_tools is Google's wrapper around git/gn/ninja. It even vendors its own Python, so there's
+  nothing else to install.</p>
+  <pre><code>cd ~
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+echo 'export PATH="$HOME/depot_tools:$PATH"' &gt;&gt; ~/.zshrc
+source ~/.zshrc</code></pre>
+  <p class="cite">Source: <a href="https://v8.dev/docs/source-code">v8.dev/docs/source-code</a> → depot_tools tutorial.</p>
+</div>
+
+<div class="step">
+  <h3><span class="num">2</span>Fetch the V8 source</h3>
+  <p><code>fetch v8</code> is the one-time checkout — it configures gclient and pulls V8 plus all its
+  dependencies. (Later, <code>gclient sync</code> re-syncs deps after you <code>git pull</code>.)</p>
+  <pre><code>mkdir ~/v8
+cd ~/v8
+fetch v8        <span class="cmt"># one-time; this is the long download</span>
+cd v8</code></pre>
+  <p class="cite">Source: <a href="https://v8.dev/docs/source-code">v8.dev/docs/source-code</a> (verbatim).</p>
+</div>
+
+<div class="step">
+  <h3><span class="num">3</span>Build d8 the easy way: <code>gm</code></h3>
+  <p><code>tools/dev/gm.py</code> ("gm") is V8's all-in-one helper: it generates build files, builds,
+  and can run tests. On Apple Silicon, the native target is <b><code>arm64.release</code></b> (the
+  docs' examples say <code>x64</code> because they're written for Intel).</p>
+  <pre><code>alias gm=~/v8/v8/tools/dev/gm.py
+gm arm64.release          <span class="cmt"># builds default targets incl. d8 → out/arm64.release/</span></code></pre>
+  <p>When it finishes, your shell is here:</p>
+  <pre><code>out/arm64.release/d8 --version
+echo <span class="lit">"1 + 1"</span> | out/arm64.release/d8        <span class="cmt"># prints 2</span>
+out/arm64.release/d8                              <span class="cmt"># interactive REPL — Ctrl-D to exit</span></code></pre>
+  <p class="cite">Source: <a href="https://v8.dev/docs/build-gn">v8.dev/docs/build-gn</a>. The
+  <code>gm</code> default targets include <code>d8</code>; to build only it, use the manual path below.</p>
+</div>
+
+<div class="callout">
+  <b>The manual GN + ninja path (good to understand).</b> <code>gm</code> wraps these two steps:
+  <pre style="margin:.6em 0 0"><code>gn gen out/arm64.release --args='is_debug=false target_cpu="arm64"'
+ninja -C out/arm64.release d8</code></pre>
+  <b>GN</b> generates the build config from your args; <b>ninja</b> does the actual compiling.
+  On native Apple Silicon use <code>target_cpu="arm64"</code> — <i>not</i> <code>v8_target_cpu</code>,
+  which the docs use only for the cross-compiling <b>simulator</b>.
+</div>
+
+<div class="step">
+  <h3><span class="num">4</span>Build the monolith library (for embedding)</h3>
+  <p>To link V8 into your <i>own</i> C++ program (next lesson), you need it as one static library —
+  the "monolith". A predefined config sets the right GN args for you:</p>
+  <pre><code>tools/dev/v8gen.py arm64.release.sample
+ninja -C out.gn/arm64.release.sample v8_monolith</code></pre>
+  <p>The <code>.sample</code> config expands to exactly these four args (you could spell them out with
+  <code>gn gen</code> instead — equivalent):</p>
+  <pre><code>v8_monolithic=true  is_component_build=false
+v8_use_external_startup_data=false  use_custom_libcxx=false</code></pre>
+  <p>This produces <code>out.gn/arm64.release.sample/obj/libv8_monolith.a</code> — the library you'll
+  link in Lesson 4.</p>
+  <p class="cite">Source: <a href="https://v8.dev/docs/embed">v8.dev/docs/embed</a>; the four-arg
+  expansion confirmed in V8's <code>infra/mb/mb_config.pyl</code>.</p>
+</div>
+
+<div class="danger">
+  <b>Two traps that waste hours.</b>
+  (1) Don't <code>git clone https://github.com/v8/v8</code> and try to build it — that mirror has
+  <i>no</i> dependencies. You <b>must</b> use <code>fetch v8</code> via depot_tools.
+  (2) Keep your <code>-L</code> library path consistent with how you generated: <code>v8gen.py</code>
+  writes to <code>out.gn/…</code>, a bare <code>gn gen</code> writes to wherever you point it
+  (<code>out/…</code>). Mixing them up = "library not found".
+</div>
+
+<h2>What you just built</h2>
+<table class="bc">
+  <tr><th>Artifact</th><th>What it is</th></tr>
+  <tr><td>depot_tools</td><td>Google's build toolchain wrapper (git helpers, <code>gn</code>, <code>ninja</code>, vendored Python).</td></tr>
+  <tr><td>fetch v8</td><td>The checkout command — pulls V8 + all deps. One-time; <code>gclient sync</code> updates later.</td></tr>
+  <tr><td>GN</td><td>Meta-build system: turns build args into ninja files. (<code>gn gen</code>.)</td></tr>
+  <tr><td>ninja</td><td>The fast build executor that actually compiles. (<code>ninja -C out/… target</code>.)</td></tr>
+  <tr><td>d8</td><td>V8's developer shell — a minimal embedder. Runs JS files, has a REPL, exposes all the flags from Lessons 1–2 &amp; 7–8.</td></tr>
+  <tr><td>libv8_monolith.a</td><td>V8 as a single static library, ready to link into your own C++ host (Lesson 4).</td></tr>
+</table>
+
+<div class="callout">
+  <b>Bonus: re-run your earlier experiments on <code>d8</code>.</b> Everything you did in Node now
+  works on your own engine: <code>out/arm64.release/d8 --print-bytecode --print-bytecode-filter=add /tmp/v8demo.js</code>.
+  Same flags, but now it's <i>your</i> build. See the <a href="../reference/node-v8-flags.html">flags cheat sheet</a>.
+</div>
+
+<h2 id="check">Check yourself <span class="pill">feedback loop</span></h2>
+
+<div class="quiz" id="q1">
+  <div class="q">1. Why can't you just <code>git clone github.com/v8/v8</code> and build it?</div>
+  <button class="opt" data-c="1">The GitHub mirror has no dependencies; you must use <code>fetch v8</code> via depot_tools to pull V8 + all its deps.</button>
+  <button class="opt" data-c="0">GitHub blocks cloning the V8 repo.</button>
+  <button class="opt" data-c="0">You can — the GitHub repo is fully self-contained.</button>
+  <div class="fb" id="fb1"></div>
+</div>
+
+<div class="quiz" id="q2">
+  <div class="q">2. What's the division of labor between GN and ninja?</div>
+  <button class="opt" data-c="1">GN generates the build configuration from your args; ninja executes the actual compilation.</button>
+  <button class="opt" data-c="0">GN compiles C++; ninja links the final binary.</button>
+  <button class="opt" data-c="0">They're two names for the same tool.</button>
+  <div class="fb" id="fb2"></div>
+</div>
+
+<div class="quiz" id="q3">
+  <div class="q">3. On a native Apple Silicon build, which GN arg selects the architecture?</div>
+  <button class="opt" data-c="1"><code>target_cpu="arm64"</code> — <code>v8_target_cpu</code> is for the cross-compiling simulator.</button>
+  <button class="opt" data-c="0"><code>v8_target_cpu="arm64"</code> always, for any arm64 build.</button>
+  <button class="opt" data-c="0">None — V8 auto-detects and you can't override it.</button>
+  <div class="fb" id="fb3"></div>
+</div>
+
+<div class="teacher">
+  <b>Ask me anything — especially here.</b> Builds break in colorful ways. If <code>fetch v8</code>
+  stalls, <code>gm</code> errors, or a flag isn't recognized, paste the output to me and I'll help
+  debug. Also good: <i>"Walk me through what gclient actually did,"</i> or <i>"How do I update my
+  checkout later?"</i> If you'd rather not spend the disk/time right now, tell me and we can keep
+  using Node's V8 for the embedding lessons' concepts and you can build later.
+</div>
+
+<h2>Where this lands you</h2>
+<p>You have a compiled V8, a working <code>d8</code>, and <code>libv8_monolith.a</code> ready to link.
+Next: <b>Lesson 4 — the Hello-World Embedder.</b> You'll compile a ~60-line C++ program that creates
+its own V8 engine instance, runs a script, and prints the result — your first time <i>driving</i> V8
+from the outside.</p>
+
+<p class="cite">Reference: <a href="../reference/glossary.html">V8 Glossary</a> ·
+<a href="../reference/node-v8-flags.html">Inspection Flags (now work on d8)</a></p>
+
+<div class="nav">
+  <a href="0002-the-architecture-map.html">
+    <div class="lbl">← Previous · Lesson 2</div>
+    <div class="ttl">The Architecture Map</div>
+  </a>
+  <a href="0004-hello-world-embedder.html">
+    <div class="lbl">Up next · Lesson 4</div>
+    <div class="ttl">Hello-World Embedder →</div>
+  </a>
+</div>
+
+<div class="foot">V8 Engine learning track · Lesson 3 · Embedding track begins. Commands quoted from the official v8.dev docs.</div>
+
+</div>
+<script>
+  document.querySelectorAll('.quiz').forEach(function(quiz){
+    var fb = quiz.querySelector('.fb');
+    quiz.querySelectorAll('.opt').forEach(function(opt){
+      opt.addEventListener('click', function(){
+        var correct = opt.getAttribute('data-c') === '1';
+        quiz.querySelectorAll('.opt').forEach(function(o){o.classList.remove('correct','wrong')});
+        opt.classList.add(correct ? 'correct' : 'wrong');
+        if(fb){fb.className='fb show '+(correct?'ok':'no');fb.textContent=correct?'✓ Correct.':'✗ Not quite — re-read the step above and try again.';}
+      });
+    });
+  });
+</script>
+</body>
+</html>

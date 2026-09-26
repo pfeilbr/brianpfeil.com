@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mlx-lm — Glossary &amp; Quick Reference</title>
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1a1a1a; --muted:#5b6577; --accent:#2563eb; --accent2:#0ca678;
+    --border:#e5e7eb; --surface:#f7f9fc; --code-bg:#0e1525; --code-ink:#e7ecf6; --warn:#d97706;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#0f1216; --fg:#e6e8ec; --muted:#9aa4b2; --accent:#5b8cff; --accent2:#2dd4bf;
+      --border:#2a313c; --surface:#161b22;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;padding:2.4rem 1.2rem;}
+  .wrap{max-width:880px;margin:0 auto}
+  header{border-bottom:2px solid var(--accent);padding-bottom:.9rem;margin-bottom:1.6rem}
+  .kicker{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;font-weight:700;color:var(--accent)}
+  h1{margin:.25rem 0 .3rem;font-size:1.7rem}
+  .sub{color:var(--muted);margin:0;font-size:.95rem}
+  h2{font-size:1.05rem;margin:1.9rem 0 .6rem;color:var(--accent2);
+    border-bottom:1px solid var(--border);padding-bottom:.3rem}
+  dl{margin:0}
+  dt{font-weight:700;margin-top:1rem}
+  dt code{background:var(--surface);border:1px solid var(--border);border-radius:5px;
+    padding:.05rem .35rem;font-size:.92em}
+  dd{margin:.25rem 0 0;color:var(--fg)}
+  dd .why{color:var(--muted);font-size:.9rem}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace}
+  .cmd{background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:1rem 1.1rem;
+    overflow-x:auto;font-size:.86rem;font-family:"SF Mono",ui-monospace,Menlo,monospace;line-height:1.7}
+  .cmd .c{color:#7f93b3}
+  .cmd .a{color:#7ee2c8}
+  table{border-collapse:collapse;width:100%;margin-top:.5rem;font-size:.9rem}
+  th,td{border:1px solid var(--border);padding:.5rem .6rem;text-align:left}
+  th{background:var(--surface)}
+  a{color:var(--accent)}
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;
+    padding:.1rem .5rem;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);margin-left:.4rem}
+  footer{margin-top:2.4rem;padding-top:1rem;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem}
+  @media print{body{padding:0;font-size:11pt}.cmd{border:1px solid #ccc}}
+</style>
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/mlx-lm/" style="color:inherit;text-decoration:none">&larr; mlx-lm</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+  <header>
+    <div class="kicker">mlx-lm · Reference</div>
+    <h1>Glossary &amp; Quick Reference</h1>
+    <p class="sub">Compressed essence of the course — terms, the CLI map, and the canonical Python snippet. Built to skim and to print. Verified against <code>mlx-lm 0.31.3</code>.</p>
+  </header>
+
+  <h2>CLI commands at a glance</h2>
+  <table>
+    <thead><tr><th>Command</th><th>Does</th><th>Lesson</th></tr></thead>
+    <tbody>
+      <tr><td><code>mlx_lm.generate</code></td><td>One-shot text from a prompt</td><td>1</td></tr>
+      <tr><td><code>mlx_lm.chat</code></td><td>Interactive REPL; keeps context</td><td>3</td></tr>
+      <tr><td><code>mlx_lm.convert</code></td><td>Download &amp; quantize a model (4/8-bit), optionally upload to HF</td><td>4</td></tr>
+      <tr><td><code>mlx_lm.server</code></td><td>OpenAI-compatible local HTTP server</td><td>5</td></tr>
+      <tr><td><code>mlx_lm.lora</code></td><td>Fine-tune with LoRA / QLoRA; fuse adapters</td><td>6</td></tr>
+      <tr><td><code>mlx_lm.cache_prompt</code></td><td>Pre-compute &amp; cache a prompt's KV for reuse</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:.5rem">Every command takes <code>--model &lt;hf-id-or-path&gt;</code> and <code>-h</code> for its full options. CLI is dot-style today (<code>mlx_lm.generate</code>); a <a href="https://github.com/ml-explore/mlx-lm/issues/215" target="_blank" rel="noopener">space-style proposal</a> exists.</p>
+
+  <h2>The canonical Python snippet</h2>
+  <div class="cmd"><span class="c"># load once, then generate — the core of the Python surface (Lesson 2)</span>
+from mlx_lm import load, generate
+
+model, tokenizer = load(<span class="a">"mlx-community/Llama-3.2-1B-Instruct-4bit"</span>)
+messages = [{<span class="a">"role"</span>: <span class="a">"user"</span>, <span class="a">"content"</span>: <span class="a">"Hello!"</span>}]
+prompt = tokenizer.apply_chat_template(messages, add_generation_prompt=True)
+text = generate(model, tokenizer, prompt=prompt, verbose=True)</div>
+
+  <h2>Terms</h2>
+  <dl>
+    <dt>MLX</dt>
+    <dd>Apple's open-source array framework for Apple Silicon — NumPy/PyTorch-like, but built for the M-series GPU and unified memory. <span class="why">mlx-lm is built on top of it.</span></dd>
+
+    <dt>mlx-lm</dt>
+    <dd>The Python package + CLI tools for running LLMs on MLX. <span class="why">The layer you work at in this course.</span></dd>
+
+    <dt>Unified memory</dt>
+    <dd>Apple Silicon's single RAM pool shared by CPU and GPU — no separate VRAM, no host→device copy. <span class="why">Why there's no <code>.to("gpu")</code> step, and why "does it fit in RAM?" is the real constraint.</span></dd>
+
+    <dt>Quantization <span class="pill">4bit / 8bit</span></dt>
+    <dd>Storing each weight in fewer bits (e.g. 4 instead of 16) via a shared scale per group + small int per weight. Shrinks + speeds up at a rounding cost. <span class="why">Verified on the fused pirate: fp16 2.3 GB → 8-bit 1.2 GB (tuning kept) → 4-bit 663 MB (small LoRA delta washed out). Make your own with <code>mlx_lm.convert -q --q-bits N</code>. Lesson 5.</span></dd>
+
+    <dt>Prompt cache <span class="pill">cache_prompt</span></dt>
+    <dd>A KV cache for a fixed context, saved to disk by <code>mlx_lm.cache_prompt --prompt-cache-file</code> and reused via <code>mlx_lm.generate --prompt-cache-file</code>. <span class="why">Verified: a ~1257-token context dropped to 15 prefilled tokens when cached. Reuse a big system prompt/document cheaply. Lesson 6.</span></dd>
+
+    <dt>Parameters <span class="pill">1B, 7B…</span></dt>
+    <dd>The count of learned weights (1B = one billion). <span class="why">Roughly tracks capability and RAM footprint; pick by what fits your machine.</span></dd>
+
+    <dt>Base vs <code>Instruct</code></dt>
+    <dd>A <em>base</em> model only continues text; an <em>Instruct</em> (a.k.a. chat/-it) model is tuned to follow instructions. <span class="why">Use Instruct models when you want answers to prompts.</span></dd>
+
+    <dt>Chat template</dt>
+    <dd>The model-specific formatting that wraps a list of role/content messages into the exact token string the model was trained on. Applied via <code>tokenizer.apply_chat_template(...)</code>. <span class="why">Skip it and an Instruct model misbehaves — Lesson 2.</span></dd>
+
+    <dt>Tokens &amp; tokens-per-sec</dt>
+    <dd>Models read/write in <em>tokens</em> (sub-word chunks). Throughput is reported as tokens-per-second. <span class="why">Your speedometer for every run.</span></dd>
+
+    <dt>Prefill (prompt) vs Decode (generation)</dt>
+    <dd><strong>Prefill</strong>: process the whole prompt at once (parallel, compute-bound). <strong>Decode</strong>: emit one token at a time, each depending on the last (sequential, memory-bandwidth-bound). <span class="why">mlx-lm reports both speeds separately; decode is the speed you feel.</span></dd>
+
+    <dt>KV cache</dt>
+    <dd>Cached key/value tensors from already-processed tokens so each new token doesn't re-read the whole context. <span class="why">Why decode stays fast as text grows; the thing <code>cache_prompt</code> saves.</span></dd>
+
+    <dt>Peak memory</dt>
+    <dd>The high-water RAM mark for a run (weights + KV cache + activations). <span class="why">On unified memory this is your binding constraint — printed after every generation.</span></dd>
+
+    <dt>LoRA / QLoRA</dt>
+    <dd>Low-Rank Adaptation: freeze <code>W</code>, learn the update as <code>ΔW = B·A</code> (two skinny matrices, rank <code>r</code>) — train only <code>A</code>,<code>B</code>. QLoRA = doing it on a quantized base. <span class="why">Verified: tuning Llama-3.2-1B-4bit trained 0.228% of weights → an 11 MB adapter that changed its voice. Lesson 4.</span></dd>
+
+    <dt>Rank (r) &amp; scale (α)</dt>
+    <dd><code>r</code> = width of the LoRA bottleneck (8–16 typical) — higher = more expressive, bigger adapter. <code>α</code> = how strongly the overlay applies, as <code>α/r</code>. <span class="why">Set in <code>adapter_config.json</code>; ours was rank 8, scale 20.</span></dd>
+
+    <dt>Adapter <span class="pill">adapters/</span></dt>
+    <dd>The LoRA output folder: <code>adapter_config.json</code> (the recipe) + <code>adapters.safetensors</code> (the learned <code>A</code>,<code>B</code>, ~MBs). <span class="why">Attach at runtime with <code>--adapter-path</code>; swap many cheaply over one frozen base.</span></dd>
+
+    <dt>Fuse</dt>
+    <dd><code>mlx_lm.fuse</code> bakes <code>B·A</code> into <code>W</code> → a standalone model in <code>fused_model/</code>. <span class="why">Gotcha: default re-quantizes to 4-bit and can erase a small delta — use <code>--dequantize</code> to keep it. Lesson 4.</span></dd>
+
+    <dt><code>mlx-community</code></dt>
+    <dd>The Hugging Face org hosting pre-converted/quantized MLX models. <span class="why">Drop any of its ids straight into <code>--model</code> — no conversion needed.</span></dd>
+
+    <dt>Constrained decoding / structured output</dt>
+    <dd>Masking illegal tokens at each step so output must match a schema (compiled to a finite-state machine). <code>outlines.from_mlxlm(*mlx_lm.load(...))</code> + a Pydantic <code>output_type</code> → JSON valid by construction. <span class="why">Verified: the 1B model returned schema-valid JSON every time (fixes Lesson 7's drift). Bound free-text fields (<code>Field(max_length=N)</code>) so the JSON can close within the token budget. Lesson 8.</span></dd>
+
+    <dt>Tool calling</dt>
+    <dd>The model emits a structured "call function X with args" object; your code runs it and feeds the result back. = constrained output (<code>Union</code> of tool schemas) + dispatch. <span class="why">Verified: 3B model mapped "12 plus 30" → <code>add(12,30)</code>=42 and "weather in Tokyo" → <code>get_weather('Tokyo')</code>. The agentic primitive. Lesson 10.</span></dd>
+
+    <dt>Embedding</dt>
+    <dd>A fixed-length vector for a text where similar meanings sit nearby. <code>mlx_embeddings.utils.load(...)</code> → <code>model(...).text_embeds</code> (normalized). <span class="why">all-MiniLM-L6-v2 → 384-d. Different model class (encoder) than mlx-lm generators. Lesson 11.</span></dd>
+
+    <dt>Cosine similarity</dt>
+    <dd>Closeness of two vectors by the angle between them; for normalized vectors it's just their dot product (<code>mx.sum(a*b)</code>). <span class="why">How semantic search ranks — matches meaning, not keywords. Lesson 11.</span></dd>
+
+    <dt>RAG (retrieval-augmented generation)</dt>
+    <dd>Embed docs once → at query time retrieve the top-k nearest by cosine → put them in the prompt → generate grounded in them. <span class="why">Augments the context, not the weights. Composes embeddings (L11) + generate (L2) + optional structured output (L8). Capstone (L12): verified over the course's own lessons.</span></dd>
+
+    <dt>Chunking</dt>
+    <dd>Splitting documents into passages before embedding. <span class="why">Drives retrieval quality — sentence-size fragments ideas; overlapping ~500-char windows keep an idea whole. In RAG the chunking/embeddings are usually the bottleneck, not the generation model. Lesson 12.</span></dd>
+
+    <dt>Grounding</dt>
+    <dd>Instructing the model to answer using only the retrieved context ("Answer using ONLY these notes"). <span class="why">Cuts made-up / outdated answers — the fix for the kind of stale claim a bare small model makes. Lesson 12.</span></dd>
+
+    <dt>Memory math <span class="pill">params × bits ÷ 8</span></dt>
+    <dd>Weight RAM (GB) ≈ params(billions) × bits ÷ 8, plus ~10–25% overhead and the KV cache. <span class="why">Tells you what fits before downloading. On the 24 GB M4 Pro: measured 1B-4bit→0.8 GB, 3B-4bit→1.87 GB; sweet spot 7–14B at 4-bit. Bigger = slower (≈1/size tok/s). Lesson 9.</span></dd>
+
+    <dt>OpenAI-compatible server</dt>
+    <dd><code>mlx_lm.server</code> exposes <code>/v1/chat/completions</code>, <code>/v1/completions</code>, <code>/v1/models</code> in the exact OpenAI request/response shape. <span class="why">Any OpenAI client works by changing only <code>base_url</code> → <code>http://127.0.0.1:8080/v1</code>; binds to localhost by default, <code>--host 0.0.0.0</code> to widen. Not production-hardened. Lesson 3.</span></dd>
+
+    <dt>SSE (streaming)</dt>
+    <dd>Server-Sent Events — how the server streams tokens over HTTP when you pass <code>stream=True</code>; the SDK reassembles them into <code>delta</code> chunks. <span class="why">The HTTP twin of <code>stream_generate</code>.</span></dd>
+  </dl>
+
+  <footer>
+    Part of the <a href="../lessons/0001-your-mac-runs-an-llm.html">mlx-lm course</a> ·
+    Source of truth: <a href="https://github.com/ml-explore/mlx-lm" target="_blank" rel="noopener">ml-explore/mlx-lm</a> ·
+    Practice env: <code>~/projects/learn/public/courses/mlx-lm/practice/.venv</code>
+  </footer>
+</div>
+</body>
+</html>

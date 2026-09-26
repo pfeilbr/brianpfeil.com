@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ Standard Library — Cheat Sheet</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/cpp-standard-library/" style="color:inherit;text-decoration:none">&larr; C++ Standard Library</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">C++ Standard Library · Reference</div>
+    <h1>Cheat Sheet</h1>
+    <p class="sub">The one page to keep open: which header, which container, how fast, which algorithm — plus the idioms worth memorizing. Built to be skimmed and printed.</p>
+    <span class="missiontag">📌 Headers · complexity · selection · algorithms · idioms</span>
+  </header>
+
+  <section>
+    <h2><span class="num">01</span> Headers map — what to <code class="inl">#include</code></h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Header</th><th>Gives you</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">&lt;vector&gt;</code> <code class="inl">&lt;array&gt;</code> <code class="inl">&lt;deque&gt;</code> <code class="inl">&lt;list&gt;</code></td><td>sequence containers</td></tr>
+          <tr><td><code class="inl">&lt;map&gt;</code> <code class="inl">&lt;set&gt;</code></td><td><code class="inl">map</code>/<code class="inl">multimap</code>, <code class="inl">set</code>/<code class="inl">multiset</code> (ordered)</td></tr>
+          <tr><td><code class="inl">&lt;unordered_map&gt;</code> <code class="inl">&lt;unordered_set&gt;</code></td><td>hashed associative containers</td></tr>
+          <tr><td><code class="inl">&lt;stack&gt;</code> <code class="inl">&lt;queue&gt;</code></td><td><code class="inl">stack</code>; <code class="inl">queue</code> &amp; <code class="inl">priority_queue</code></td></tr>
+          <tr><td><code class="inl">&lt;string&gt;</code> <code class="inl">&lt;string_view&gt;</code></td><td><code class="inl">std::string</code>; non-owning <code class="inl">string_view</code></td></tr>
+          <tr><td><code class="inl">&lt;algorithm&gt;</code></td><td><code class="inl">sort</code>, <code class="inl">find</code>, <code class="inl">transform</code>, <code class="inl">count_if</code>, <code class="inl">min/max_element</code>, …</td></tr>
+          <tr><td><code class="inl">&lt;numeric&gt;</code></td><td><code class="inl">accumulate</code>, <code class="inl">reduce</code>, <code class="inl">iota</code>, <code class="inl">inner_product</code></td></tr>
+          <tr><td><code class="inl">&lt;ranges&gt;</code></td><td><code class="inl">std::ranges::*</code> algorithms &amp; <code class="inl">views</code> (C++20)</td></tr>
+          <tr><td><code class="inl">&lt;memory&gt;</code></td><td><code class="inl">unique_ptr</code>, <code class="inl">shared_ptr</code>, <code class="inl">weak_ptr</code>, <code class="inl">make_*</code></td></tr>
+          <tr><td><code class="inl">&lt;functional&gt;</code></td><td><code class="inl">std::function</code>, <code class="inl">greater</code>/<code class="inl">less</code>, <code class="inl">bind</code></td></tr>
+          <tr><td><code class="inl">&lt;utility&gt;</code> <code class="inl">&lt;tuple&gt;</code></td><td><code class="inl">pair</code>, <code class="inl">move</code>, <code class="inl">swap</code>; <code class="inl">tuple</code></td></tr>
+          <tr><td><code class="inl">&lt;optional&gt;</code> <code class="inl">&lt;variant&gt;</code> <code class="inl">&lt;any&gt;</code></td><td>vocabulary types (C++17)</td></tr>
+          <tr><td><code class="inl">&lt;iostream&gt;</code> <code class="inl">&lt;sstream&gt;</code> <code class="inl">&lt;fstream&gt;</code></td><td>console, string, and file streams</td></tr>
+          <tr><td><code class="inl">&lt;format&gt;</code> <code class="inl">&lt;print&gt;</code></td><td><code class="inl">std::format</code> (C++20), <code class="inl">std::print</code> (C++23)</td></tr>
+          <tr><td><code class="inl">&lt;thread&gt;</code> <code class="inl">&lt;mutex&gt;</code> <code class="inl">&lt;atomic&gt;</code> <code class="inl">&lt;future&gt;</code></td><td>concurrency primitives</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Pick a container — fast rules</h2>
+    <div class="cards">
+      <div class="card"><h4>Default</h4><p class="truth"><b>vector</b> — growable, contiguous, O(1) index. Start here.</p></div>
+      <div class="card"><h4>Fixed size</h4><p class="truth"><b>array&lt;T,N&gt;</b> — compile-time size, no heap.</p></div>
+      <div class="card"><h4>Both ends</h4><p class="truth"><b>deque</b> — O(1) push/pop front &amp; back.</p></div>
+      <div class="card"><h4>Key → value</h4><p class="truth"><b>unordered_map</b> (default) · <b>map</b> if you need sorted keys.</p></div>
+      <div class="card"><h4>Membership / dedup</h4><p class="truth"><b>unordered_set</b> (default) · <b>set</b> if sorted.</p></div>
+      <div class="card"><h4>LIFO / FIFO / max-first</h4><p class="truth"><b>stack</b> / <b>queue</b> / <b>priority_queue</b>.</p></div>
+    </div>
+    <div class="callout key"><span class="h">The question to ask first</span> "How do I reach the data?" — by key (map), by membership (set), or as an ordered sequence (vector/deque/array/adaptor). The access pattern picks the container.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Complexity (Big-O)</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Container</th><th>Access</th><th>Insert/Erase</th><th>Find by value/key</th><th>Ordered?</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">vector</code></td><td><span class="yes">O(1)</span> index</td><td><span class="yes">O(1)</span> amortized at end · <span class="no">O(n)</span> middle</td><td><span class="no">O(n)</span></td><td>insertion</td></tr>
+          <tr><td><code class="inl">array</code></td><td><span class="yes">O(1)</span> index</td><td>— (fixed)</td><td><span class="no">O(n)</span></td><td>insertion</td></tr>
+          <tr><td><code class="inl">deque</code></td><td><span class="yes">O(1)</span> index</td><td><span class="yes">O(1)</span> both ends · <span class="no">O(n)</span> middle</td><td><span class="no">O(n)</span></td><td>insertion</td></tr>
+          <tr><td><code class="inl">list</code></td><td><span class="no">O(n)</span></td><td><span class="yes">O(1)</span> with an iterator</td><td><span class="no">O(n)</span></td><td>insertion</td></tr>
+          <tr><td><code class="inl">map</code> / <code class="inl">set</code></td><td>—</td><td><span class="no">O(log n)</span></td><td><span class="no">O(log n)</span></td><td><span class="yes">sorted</span></td></tr>
+          <tr><td><code class="inl">unordered_map</code> / <code class="inl">set</code></td><td>—</td><td><span class="yes">O(1)</span> avg · O(n) worst</td><td><span class="yes">O(1)</span> avg</td><td>no</td></tr>
+          <tr><td><code class="inl">priority_queue</code></td><td><span class="yes">O(1)</span> top</td><td><span class="no">O(log n)</span> push/pop</td><td>—</td><td>heap</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">Tie-breaker: when two containers fit, prefer the contiguous one (<code class="inl">vector</code>) — cache locality usually wins the hidden constant factor.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Top algorithms (<code class="inl">&lt;algorithm&gt;</code> / <code class="inl">&lt;numeric&gt;</code>)</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Goal</th><th>Call</th></tr></thead>
+        <tbody>
+          <tr><td>Sort (asc / custom)</td><td><code class="inl">sort(b,e)</code> · <code class="inl">sort(b,e,cmp)</code> · <code class="inl">stable_sort</code></td></tr>
+          <tr><td>Find first match</td><td><code class="inl">find(b,e,x)</code> · <code class="inl">find_if(b,e,pred)</code> → iterator or <code class="inl">e</code></td></tr>
+          <tr><td>Count matches</td><td><code class="inl">count(b,e,x)</code> · <code class="inl">count_if(b,e,pred)</code></td></tr>
+          <tr><td>Any / all / none match</td><td><code class="inl">any_of</code> · <code class="inl">all_of</code> · <code class="inl">none_of</code> <code class="inl">(b,e,pred)</code></td></tr>
+          <tr><td>Min / max element</td><td><code class="inl">min_element(b,e)</code> · <code class="inl">max_element(b,e)</code> → iterator</td></tr>
+          <tr><td>Map each element</td><td><code class="inl">transform(b,e,out,fn)</code> (out = <code class="inl">back_inserter(v)</code>)</td></tr>
+          <tr><td>Sum / product</td><td><code class="inl">accumulate(b,e,init[,op])</code> — init sets the type!</td></tr>
+          <tr><td>Fill 0,1,2,…</td><td><code class="inl">iota(b,e,0)</code></td></tr>
+          <tr><td>Remove matching</td><td><code class="inl">v.erase(remove_if(b,e,pred), e)</code> · C++20 <code class="inl">erase_if(v,pred)</code></td></tr>
+          <tr><td>Search a <em>sorted</em> range</td><td><code class="inl">binary_search(b,e,x)</code> · <code class="inl">lower_bound</code> (O(log n))</td></tr>
+          <tr><td>Top-K without full sort</td><td><code class="inl">nth_element</code> · <code class="inl">partial_sort</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">C++20 ranges: drop the <code class="inl">b,e</code> pair — <code class="inl">std::ranges::sort(v)</code>, <code class="inl">std::ranges::find(v,x)</code>, and pipe views with <code class="inl">v | std::views::filter(p) | std::views::transform(f)</code>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Smart pointers</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th><code class="inl">unique_ptr</code></th><th><code class="inl">shared_ptr</code></th><th><code class="inl">weak_ptr</code></th></tr></thead>
+        <tbody>
+          <tr><td>Ownership</td><td>exactly one</td><td>shared (ref-counted)</td><td>none (observes)</td></tr>
+          <tr><td>Copyable?</td><td>no (move-only)</td><td>yes (count++)</td><td>yes</td></tr>
+          <tr><td>Overhead</td><td><span class="yes">none</span> (= raw ptr)</td><td>control block + atomic count</td><td>references control block</td></tr>
+          <tr><td>Make with</td><td><code class="inl">make_unique&lt;T&gt;()</code></td><td><code class="inl">make_shared&lt;T&gt;()</code></td><td>from a <code class="inl">shared_ptr</code></td></tr>
+          <tr><td>Use it for</td><td>the default owner</td><td>genuinely shared</td><td>break cycles; <code class="inl">lock()</code> to use</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">Rule: prefer <code class="inl">unique_ptr</code>; <code class="inl">shared_ptr</code> only when ownership is truly shared; never naked <code class="inl">new</code>/<code class="inl">delete</code>. A non-owning parameter is just a raw <code class="inl">T*</code>/<code class="inl">T&amp;</code>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Idioms worth memorizing</h2>
+    <pre><span class="c1">// iterate (read-only, no copies)</span>
+<span class="y">for</span> (<span class="b">const</span> <span class="b">auto</span>&amp; x : v) { ... }
+
+<span class="c1">// iterate a map / unpack a pair or tuple</span>
+<span class="y">for</span> (<span class="b">const</span> <span class="b">auto</span>&amp; [key, val] : m) { ... }
+
+<span class="c1">// count word frequencies (operator[] auto-inserts 0)</span>
+std::<span class="b">unordered_map</span>&lt;std::<span class="b">string</span>,<span class="b">int</span>&gt; f;
+<span class="y">for</span> (<span class="b">auto</span>&amp; w : words) ++f[w];
+
+<span class="c1">// existence check WITHOUT inserting</span>
+<span class="y">if</span> (m.contains(k)) { ... }            <span class="c1">// C++20</span>
+<span class="y">if</span> (m.find(k) != m.end()) { ... }     <span class="c1">// any standard</span>
+
+<span class="c1">// reserve before a known-size fill (avoids reallocations)</span>
+v.reserve(n);
+
+<span class="c1">// min-heap priority_queue</span>
+std::<span class="b">priority_queue</span>&lt;<span class="b">int</span>, std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt;, std::<span class="b">greater</span>&lt;&gt;&gt; pq;
+
+<span class="c1">// sort descending / by field</span>
+std::sort(v.begin(), v.end(), [](<span class="b">auto</span>&amp; a, <span class="b">auto</span>&amp; b){ <span class="y">return</span> a &gt; b; });
+
+<span class="c1">// "maybe a value" return</span>
+std::<span class="b">optional</span>&lt;<span class="b">int</span>&gt; r = parse(s);
+<span class="b">int</span> n = r.value_or(0);
+
+<span class="c1">// split a line into ints</span>
+std::<span class="b">istringstream</span> iss(line);
+<span class="b">int</span> a,b,c; iss &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+
+<span class="c1">// own heap memory safely</span>
+<span class="b">auto</span> w = std::make_unique&lt;Widget&gt;();
+
+<span class="c1">// protect shared data</span>
+{ std::<span class="b">scoped_lock</span> lk(m); /* critical section */ }
+
+<span class="c1">// run in parallel, collect result</span>
+<span class="b">auto</span> fut = std::async(std::launch::async, work);
+<span class="b">auto</span> result = fut.get();</pre>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 Using this sheet</span>
+    <p>Pair it with the <a href="cpp-stdlib-glossary.html">glossary</a> for definitions, and run any snippet on <a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt.org</a>. Ask your teacher to expand any row into a worked example.</p>
+  </div>
+
+  <footer>
+    C++ Standard Library Course · Cheat Sheet · grounded in
+    <a href="https://en.cppreference.com/w/cpp/standard_library" target="_blank" rel="noopener">cppreference</a> &amp;
+    <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines" target="_blank" rel="noopener">C++ Core Guidelines</a> ·
+    back to <a href="/courses/cpp-standard-library/">course home</a>
+  </footer>
+
+</div>
+</body>
+</html>

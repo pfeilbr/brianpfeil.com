@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 6 · PKCE &amp; OpenID Connect — "Sign in with Google", End to End</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/auth/" style="color:inherit;text-decoration:none">&larr; Web Authentication</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">auth · Lesson 6 · Node + Express</div>
+    <h1>PKCE &amp; OpenID Connect</h1>
+    <p class="sub">Lesson 5 left two threads dangling: how does a public app with <em>no secret</em> (an SPA or mobile app) do OAuth safely? And how does "let me read your photos" become "<em>log me in</em>"? The answers — <strong>PKCE</strong> and <strong>OIDC</strong> — complete the picture, and together they're how every "Sign in with Google" button on earth actually works. You'll generate a real PKCE pair and decode a real ID token today.</p>
+    <span class="missiontag">🎯 Mission: a mental model of modern auth + the ability to wire it into a real app</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>PKCE replaces the fixed client secret with a fresh per-request secret the attacker can't fake; OIDC adds an <em>ID token</em> that says who you are.</strong> PKCE: send a hash up front, prove you know the original later — so a stolen code is useless without the original. OIDC: ask for the <code class="inl">openid</code> scope and you also get a signed JWT (Lesson 3) describing the user. Authorization-code + PKCE + OIDC <em>is</em> modern "Sign in with X."</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The gap PKCE fills</h2>
+    <p class="lead">Lesson 5's security rested on the <em>client secret</em> protecting the back-channel token exchange. But an SPA or mobile app is a <strong>public client</strong> — every byte ships to the user's device, so it can't hold a secret (anyone can pop open DevTools or decompile the app and read it). Without a secret, a stolen authorization code could be redeemed by an attacker. PKCE closes that hole <em>without</em> any pre-shared secret.</p>
+    <div class="callout key"><span class="h">💡 PKCE = "Proof Key for Code Exchange" (say "pixy")</span>
+      Instead of proving "I'm the app that holds the secret," the client proves "I'm the same app that <em>started</em> this exact login." It does that with a one-time secret it makes up on the spot — no registration, no shared secret. Originally for mobile/SPA; <strong>OAuth 2.1 now requires it for everyone</strong>, confidential clients included. <span class="cite">See <a href="https://oauth.net/2/pkce/" target="_blank" rel="noopener">oauth.net/pkce</a> · <a href="https://datatracker.ietf.org/doc/html/rfc9700" target="_blank" rel="noopener">RFC 9700</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> How PKCE works — hash now, reveal later</h2>
+    <p>Three moves, all built on a one-way hash (SHA-256, exactly the irreversibility idea from Lesson 4's password hashing):</p>
+    <ol>
+      <li><strong>verifier</strong> — the client generates a big random string and keeps it private (in memory/session).</li>
+      <li><strong>challenge</strong> — it computes <code class="inl">BASE64URL(SHA256(verifier))</code> and sends <em>only this hash</em> in the front-channel authorize request.</li>
+      <li><strong>proof</strong> — at the back-channel token exchange it sends the <em>raw verifier</em>. The server hashes it and checks it matches the challenge it stored. Match → genuine.</li>
+    </ol>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PKCE: challenge (hash) sent on the front channel, raw verifier proven on the back channel">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="12">
+          <text x="150" y="22" text-anchor="middle" fill="var(--fg)" font-weight="700">Public client (SPA)</text>
+          <text x="610" y="22" text-anchor="middle" fill="var(--accent)" font-weight="700">Provider</text>
+          <rect x="30" y="38" width="240" height="56" rx="9" fill="var(--accent-2)" opacity="0.1" stroke="var(--accent-2)" stroke-width="1.4"/>
+          <rect x="30" y="38" width="240" height="56" rx="9" fill="none" stroke="var(--accent-2)" stroke-width="1.4"/>
+          <text x="150" y="58" text-anchor="middle" fill="var(--accent-2)" font-weight="700" font-size="11.5">verifier = random (SECRET, stays here)</text>
+          <text x="150" y="78" text-anchor="middle" fill="var(--muted)" font-size="11">challenge = SHA256(verifier)</text>
+          <!-- front: challenge up -->
+          <line x1="270" y1="120" x2="600" y2="120" stroke="var(--warn)" stroke-width="1.6" marker-end="url(#w6)"/>
+          <text x="435" y="112" text-anchor="middle" fill="var(--warn)" font-size="11">① /authorize  + code_challenge (the HASH)</text>
+          <text x="435" y="136" text-anchor="middle" fill="var(--muted)" font-size="10">FRONT CHANNEL — even if this leaks, it's only a hash</text>
+          <!-- back: code down, then verifier up -->
+          <line x1="600" y1="166" x2="270" y2="166" stroke="var(--warn)" stroke-width="1.4" marker-end="url(#w6)"/>
+          <text x="435" y="159" text-anchor="middle" fill="var(--warn)" font-size="11">② code (front channel)</text>
+          <line x1="270" y1="200" x2="600" y2="200" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#g6)"/>
+          <text x="435" y="193" text-anchor="middle" fill="var(--accent-2)" font-size="11">③ /token  code + raw VERIFIER  → token</text>
+          <text x="435" y="222" text-anchor="middle" fill="var(--muted)" font-size="10">BACK CHANNEL — provider checks SHA256(verifier)==challenge</text>
+        </g>
+        <defs>
+          <marker id="w6" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--warn)"/></marker>
+          <marker id="g6" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent-2)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>The hash goes up first; the original is revealed only on the protected back channel. Since you can't reverse SHA-256, a stolen code+challenge can't produce the verifier — so the code is useless to a thief.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> 🎯 Your tangible win (5 min): generate PKCE + decode an ID token</h2>
+    <p>A zero-dependency lab runs both halves of this lesson: it builds a real verifier/challenge pair, redeems it, shows an attacker failing, then decodes an OIDC ID token.</p>
+    <pre><span class="c1"># in your terminal (no npm install needed):</span>
+cd ~/projects/learn/public/courses/auth/practice/pkce-lab
+node demo.js</pre>
+    <div class="callout mission"><span class="h">🎯 The win — real output from your machine</span>
+      <pre style="margin:.4em 0 0"><span class="c1">PART A — PKCE:</span>
+  code_verifier  = MALyC6frNqopvqxZQ0wv9gB0mv_f5DCxt9fVhEUKRoU   (secret, stays local)
+  code_challenge = Z4_5_NoCWdm_Nbtja8BpcjByigxrOX2j8Z94zkplQX4   (= SHA256, sent first)
+  ✅ provider: SHA256(verifier) === stored challenge → issues token
+  🛡️ attacker with the stolen code but a guessed verifier → <span class="y">"PKCE verification failed"</span>
+
+<span class="c1">PART B — OIDC id_token (a JWT) decoded:</span>
+  { "iss":"accounts.google.com", "aud":"spa-app",
+    "sub":<span class="g">"110169484474386276334"</span>, "email":"alex@example.com", "name":"Alex" }</pre>
+      Two payoffs in one run: you <em>computed</em> the PKCE challenge and saw why reversing it is hopeless, and you saw that "who logged in" is literally just JWT claims you already know how to read. Change <code class="inl">codeVerifier</code> before the redeem in <code class="inl">demo.js</code> and watch the legit exchange fail too — the binding is exact.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The complete modern flow in Express (this is the real thing)</h2>
+    <p>Authorization-code + PKCE, public-client style — note there's <strong>no <code class="inl">client_secret</code> anywhere</strong>:</p>
+    <pre><span class="b">const</span> crypto = require(<span class="g">'crypto'</span>);
+<span class="b">const</span> b64url = (b) =&gt; b.toString(<span class="g">'base64url'</span>);
+
+app.get(<span class="g">'/login'</span>, (req, res) =&gt; {
+  <span class="b">const</span> verifier  = b64url(crypto.randomBytes(<span class="b">32</span>));               <span class="c1">// 1. per-request secret</span>
+  <span class="b">const</span> challenge = b64url(crypto.createHash(<span class="g">'sha256'</span>).update(verifier).digest());
+  req.session.pkceVerifier = verifier;                          <span class="c1">// keep it server-side</span>
+  req.session.state = b64url(crypto.randomBytes(<span class="b">8</span>));            <span class="c1">// CSRF (Lesson 2)</span>
+  <span class="b">const</span> u = <span class="b">new</span> URL(<span class="g">'https://accounts.google.com/o/oauth2/v2/auth'</span>);
+  Object.entries({ response_type:<span class="g">'code'</span>, client_id:CLIENT_ID,
+    redirect_uri:REDIRECT_URI, scope:<span class="g">'openid email profile'</span>,    <span class="c1">// openid → OIDC!</span>
+    state:req.session.state, code_challenge:challenge, code_challenge_method:<span class="g">'S256'</span>
+  }).forEach(([k,v]) =&gt; u.searchParams.set(k, v));
+  res.redirect(u.toString());
+});
+
+app.get(<span class="g">'/callback'</span>, <span class="b">async</span> (req, res) =&gt; {
+  <span class="b">if</span> (req.query.state !== req.session.state) <span class="b">return</span> res.status(<span class="b">403</span>).end();
+  <span class="b">const</span> r = <span class="b">await</span> fetch(<span class="g">'https://oauth2.googleapis.com/token'</span>, { method:<span class="g">'POST'</span>,
+    body: <span class="b">new</span> URLSearchParams({ grant_type:<span class="g">'authorization_code'</span>, code:req.query.code,
+      client_id:CLIENT_ID, redirect_uri:REDIRECT_URI,
+      code_verifier:req.session.pkceVerifier }) });               <span class="c1">// 3. prove it — no secret</span>
+  <span class="b">const</span> { id_token, access_token } = <span class="b">await</span> r.json();
+  <span class="b">const</span> user = <span class="b">await</span> verifyIdToken(id_token);                    <span class="c1">// 4. VERIFY (never decode-and-trust)</span>
+  req.session.userId = user.sub;                                 <span class="c1">// 5. your own session begins</span>
+  res.redirect(<span class="g">'/account'</span>);
+});</pre>
+    <div class="callout warn"><span class="h">⚠️ <code class="inl">verifyIdToken</code> is not optional</span>
+      An ID token is a JWT, so <strong>all of Lesson 3 applies</strong>: verify the signature against the provider's published keys (its <em>JWKS</em>), and check <code class="inl">iss</code>, <code class="inl">aud</code>, and <code class="inl">exp</code>. Decoding the payload and trusting it is the classic OIDC vulnerability. In practice use a vetted library (e.g. <code class="inl">openid-client</code>) rather than hand-rolling. <span class="cite">See <a href="https://developers.google.com/identity/openid-connect/openid-connect#validatinganidtoken" target="_blank" rel="noopener">Google — validating an ID token</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> OIDC: the layer that turns access into identity</h2>
+    <p>Plain OAuth2 gives you an <em>access token</em> — permission to call an API. It deliberately says <strong>nothing reliable about who the user is</strong>. <strong>OpenID Connect (OIDC)</strong> is a thin standard layer on top that adds exactly that: ask for the <code class="inl">openid</code> scope and the provider <em>also</em> returns an <strong>ID token</strong> — a signed JWT whose claims identify the user.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Access token</th><th>ID token (OIDC)</th></tr></thead>
+        <tbody>
+          <tr><td>Question it answers</td><td><b>What may you do?</b> (authZ)</td><td><b>Who are you?</b> (authN)</td></tr>
+          <tr><td>Audience (who reads it)</td><td>The API / resource server</td><td><b>Your app</b> (the client)</td></tr>
+          <tr><td>Format</td><td>Opaque or JWT (provider's choice)</td><td>Always a JWT — for <em>you</em> to read</td></tr>
+          <tr><td>Key claim</td><td><code class="inl">scope</code></td><td><code class="inl">sub</code> — stable unique user id</td></tr>
+          <tr><td>You should…</td><td>Send it to the API, don't inspect it</td><td><b>Verify it</b>, then read <code class="inl">sub</code>/<code class="inl">email</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key"><span class="h">💡 Use <code class="inl">sub</code>, not email, as the user key</span>
+      <code class="inl">sub</code> is the provider's <em>stable, unique</em> id for the user — it never changes. Email can change or be reassigned. Key your user records on <code class="inl">(iss, sub)</code>. And note the handoff (again): after OIDC, you call <code class="inl">req.session.userId = user.sub</code> and you're back to Lesson 2's session. OIDC just <em>authenticated</em> the user; <em>staying</em> logged in is still your own session/token.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Putting the whole course-so-far together</h2>
+    <p>"Sign in with Google" is not a new thing — it's everything you've already learned, stacked:</p>
+    <div class="cards">
+      <div class="card"><h4>OAuth2 (L5)</h4><p class="truth">The authorization-code flow + two channels — the skeleton.</p></div>
+      <div class="card"><h4>PKCE (L6)</h4><p class="truth">Makes it safe without a client secret — so SPAs/mobile/everyone.</p></div>
+      <div class="card"><h4>OIDC + ID token (L6, L3)</h4><p class="truth">Adds a JWT that says <em>who</em> — verify it with Lesson 3's rules.</p></div>
+      <div class="card"><h4>Your session (L1, L2)</h4><p class="truth">Read <code class="inl">sub</code>, set an <code class="inl">HttpOnly</code> cookie — you're logged in.</p></div>
+    </div>
+    <div class="callout key"><span class="h">✅ The big payoff</span>
+      Every box above is a previous lesson. You can now trace a real "Sign in with Google" click from the first redirect to the cookie that keeps you logged in — and name the purpose of every parameter along the way. That's the mental model from your mission, fully assembled.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Check yourself</h2>
+    <div class="quiz">
+      <div class="q">
+        <p><strong>Q1.</strong> Why can PKCE protect a public app (no secret) when the plain authorization-code flow couldn't?</p>
+        <details><summary>Show answer</summary><p>PKCE creates a <em>fresh per-request</em> secret (the verifier) instead of relying on a fixed, pre-shared client secret. The front channel only ever carries the SHA-256 <em>hash</em> (challenge); the raw verifier is revealed only on the back channel. Since SHA-256 can't be reversed, a thief with the stolen code+challenge can't produce a matching verifier — you watched it fail with "PKCE verification failed." No secret ever needed to ship to the device. (§02–§03.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q2.</strong> What's the difference between the access token and the ID token, and which one does your app inspect?</p>
+        <details><summary>Show answer</summary><p>Access token = authorization ("what may you do"), meant for the <em>API</em> — your app should treat it as opaque and just forward it. ID token = authentication ("who are you"), a JWT meant for <em>your app</em> to read after verifying it; you pull <code class="inl">sub</code> (and maybe email/name) from it to establish identity. So: inspect the ID token, forward the access token. (§05.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q3.</strong> You receive an ID token, base64-decode the payload, see <code class="inl">email: ceo@company.com</code>, and log the user in as the CEO. What did you skip, and why is it dangerous?</p>
+        <details><summary>Show answer</summary><p>You skipped <em>verification</em> — the JWT signature (against the provider's JWKS) plus <code class="inl">iss</code>/<code class="inl">aud</code>/<code class="inl">exp</code> checks. An ID token's payload is just readable base64 (Lesson 3): anyone can forge one with any email. Without checking the signature you'll trust an attacker-minted token. Always verify before trusting; key on <code class="inl">sub</code>, not email. (§04 warning, §05.)</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Where we go next</h2>
+    <p>You've now assembled the full password-free login. But every token-based scheme in this course has shared one nagging loose end: <strong>tokens expire, and you can't easily revoke them</strong> (Lessons 1 &amp; 3). Lesson 7 tackles the token lifecycle head-on — <strong>refresh tokens, rotation, logout, and revocation</strong>: how real systems keep you logged in for weeks while keeping access tokens short-lived, and how they actually kill a session when you click "log out everywhere."</p>
+    <div class="callout key"><span class="h">📌 Remember this one line</span>
+      <strong>PKCE = a fresh per-request secret (hash up front, verifier later) so public apps need no client secret; OIDC = an <code class="inl">openid</code> scope that also returns a signed <em>ID token</em> (a JWT) telling you who logged in. Authorization-code + PKCE + OIDC = modern "Sign in with X."</strong></div>
+    <p class="muted" style="margin-top:18px">💬 Ask me anything — e.g. "wire real Google sign-in with <code class="inl">openid-client</code> in Express", "show me a provider's JWKS and how verification uses it", or "should my app use Google directly or a broker like Auth0/Clerk?" · Back to <a href="0005-oauth2-authorization-code-flow.html">Lesson 5</a> · <a href="0003-jwt-anatomy.html">Lesson 3 (JWTs)</a> · <a href="/courses/auth/#resources">Resources</a>.</p>
+  </section>
+
+</div>
+</body>
+</html>

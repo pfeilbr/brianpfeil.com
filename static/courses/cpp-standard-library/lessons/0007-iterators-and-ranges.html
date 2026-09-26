@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 7 · Iterators &amp; Ranges</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/cpp-standard-library/" style="color:inherit;text-decoration:none">&larr; C++ Standard Library</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">C++ Standard Library · Lesson 7</div>
+    <h1>Iterators &amp; Ranges</h1>
+    <p class="sub">The "cursor" that lets one algorithm work on every container — what <code class="inl">begin()</code>/<code class="inl">end()</code> really mean, why some algorithms reject some containers, and how C++20 ranges make it all readable.</p>
+    <span class="missiontag">🎯 Understand the glue that connects containers to algorithms</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>An <strong>iterator is a generalized pointer</strong> — a cursor you advance with <code class="inl">++</code> and read with <code class="inl">*</code>. A <strong>range</strong> is just a pair <code class="inl">[begin, end)</code>. Because every container speaks "iterator," one <code class="inl">std::sort</code> fits all — and C++20 <strong>ranges</strong> let you skip the <code class="inl">begin()/end()</code> boilerplate entirely.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Iterators are generalized pointers</h2>
+    <p class="lead">From Lesson 1: containers and algorithms meet through iterators. An iterator behaves like a pointer — <code class="inl">*it</code> reads the element, <code class="inl">++it</code> moves to the next. <code class="inl">begin()</code> points at the first element; <code class="inl">end()</code> points <em>one past the last</em> — a sentinel you never dereference.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 200" role="img" aria-label="begin points to the first element; end points one past the last. The valid range is half-open: from begin up to but not including end. A loop runs while it is not equal to end.">
+        <g font-family="monospace" font-size="15">
+          <rect x="80"  y="70" width="60" height="50" rx="6" fill="var(--accent)" opacity="0.18" stroke="var(--accent)"/><text x="110" y="101" text-anchor="middle" fill="var(--fg)">10</text>
+          <rect x="140" y="70" width="60" height="50" rx="6" fill="var(--accent)" opacity="0.18" stroke="var(--accent)"/><text x="170" y="101" text-anchor="middle" fill="var(--fg)">20</text>
+          <rect x="200" y="70" width="60" height="50" rx="6" fill="var(--accent)" opacity="0.18" stroke="var(--accent)"/><text x="230" y="101" text-anchor="middle" fill="var(--fg)">30</text>
+          <rect x="260" y="70" width="60" height="50" rx="6" fill="var(--accent)" opacity="0.18" stroke="var(--accent)"/><text x="290" y="101" text-anchor="middle" fill="var(--fg)">40</text>
+          <rect x="320" y="70" width="60" height="50" rx="6" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/><text x="350" y="101" text-anchor="middle" font-size="11" fill="var(--muted)">—</text>
+        </g>
+        <line x1="110" y1="140" x2="110" y2="122" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#a7)"/>
+        <text x="110" y="160" text-anchor="middle" font-size="12" font-weight="700" fill="var(--accent)">begin()</text>
+        <line x1="350" y1="140" x2="350" y2="122" stroke="var(--warn)" stroke-width="1.5" marker-end="url(#a7)"/>
+        <text x="350" y="160" text-anchor="middle" font-size="12" font-weight="700" fill="var(--warn)">end()</text>
+        <text x="350" y="178" text-anchor="middle" font-size="10" fill="var(--muted)">one past last</text>
+        <text x="560" y="86" font-size="13" fill="var(--fg)">half-open range:</text>
+        <text x="560" y="108" font-family="monospace" font-size="13" fill="var(--accent)">[ begin, end )</text>
+        <text x="560" y="132" font-size="11" fill="var(--muted)">loop while (it != end())</text>
+        <defs><marker id="a7" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs>
+      </svg>
+      <figcaption>The half-open <code class="inl">[begin, end)</code> convention means an empty range is just <code class="inl">begin == end</code>, and size is <code class="inl">end - begin</code>. It's everywhere in the library.</figcaption>
+    </figure>
+
+    <pre><span class="c1">// the explicit form — this is what range-for desugars into</span>
+<span class="y">for</span> (<span class="b">auto</span> it = v.begin(); it != v.end(); ++it)
+    std::cout &lt;&lt; *it &lt;&lt; <span class="g">" "</span>;       <span class="c1">// *it reads the element</span>
+
+<span class="c1">// the sugar you actually write</span>
+<span class="y">for</span> (<span class="b">const</span> <span class="b">auto</span>&amp; x : v)
+    std::cout &lt;&lt; x &lt;&lt; <span class="g">" "</span>;</pre>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/iterator" target="_blank" rel="noopener">cppreference — Iterator library</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Iterator categories — why some algorithms are picky</h2>
+    <p>Not all iterators can do all things. A linked list's cursor can step forward and back but can't jump to "element 500"; a vector's can. The library grades iterators into <strong>categories</strong>, and each algorithm requires a minimum:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Category</th><th>Can do</th><th>Containers</th></tr></thead>
+        <tbody>
+          <tr><td>Input / Output</td><td>single-pass read or write, <code class="inl">++</code></td><td>streams</td></tr>
+          <tr><td>Forward</td><td>multi-pass, <code class="inl">++</code></td><td><code class="inl">forward_list</code>, unordered_*</td></tr>
+          <tr><td>Bidirectional</td><td>+ <code class="inl">--</code> (step back)</td><td><code class="inl">list</code>, <code class="inl">map</code>, <code class="inl">set</code></td></tr>
+          <tr><td>Random-access</td><td>+ <code class="inl">it + n</code>, <code class="inl">it[n]</code>, jump anywhere</td><td><code class="inl">deque</code></td></tr>
+          <tr><td>Contiguous <span class="pill">C++17</span></td><td>+ elements adjacent in memory</td><td><code class="inl">vector</code>, <code class="inl">array</code>, <code class="inl">string</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn"><span class="h">⚠ Why <code class="inl">std::sort(myList...)</code> won't compile</span>
+      <code class="inl">std::sort</code> needs <strong>random-access</strong> iterators (it jumps around). <code class="inl">std::list</code> only offers <em>bidirectional</em> ones — so you use the member <code class="inl">myList.sort()</code> instead. When an algorithm "doesn't work" on a container, an iterator-category mismatch is usually why.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/iterator#Iterator_categories" target="_blank" rel="noopener">cppreference — Iterator categories</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Everyday iterator idioms</h2>
+    <div class="cards">
+      <div class="card">
+        <h4><code class="inl">find</code> returns an iterator</h4>
+        <p>Most "where is it?" functions return an iterator, or <code class="inl">end()</code> for "not found": <code class="inl">auto it = find(v.begin(), v.end(), 7); if (it != v.end()) …</code></p>
+      </div>
+      <div class="card">
+        <h4>Insert iterators</h4>
+        <p><code class="inl">std::back_inserter(v)</code> turns "write here" into "<code class="inl">push_back</code> onto <code class="inl">v</code>" — lets algorithms grow a destination. (Used with <code class="inl">transform</code>/<code class="inl">copy</code>, Lesson 8.)</p>
+      </div>
+      <div class="card">
+        <h4><code class="inl">cbegin</code>, <code class="inl">rbegin</code></h4>
+        <p><code class="inl">cbegin()</code> gives a read-only (const) iterator; <code class="inl">rbegin()</code> walks backwards. Same range idea, different cursor.</p>
+      </div>
+    </div>
+    <div class="callout key"><span class="h">💡 Iterator invalidation (recurring theme)</span>
+      Operations that restructure a container can invalidate its iterators — a <code class="inl">vector</code> reallocation (Lesson 2), or erasing from one. Don't keep using an iterator after the container changed shape under it.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Ranges — the C++20 upgrade</h2>
+    <p>Passing <code class="inl">v.begin(), v.end()</code> to every algorithm is noisy and lets you accidentally mix iterators from two containers. <strong>Ranges</strong> (C++20) let an algorithm take the whole container, and add <strong>views</strong> — lazy, composable transformations you pipe with <code class="inl">|</code>.</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;algorithm&gt;</span>
+<span class="y">#include</span> <span class="g">&lt;ranges&gt;</span>
+
+std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt; v = {5, 3, 1, 4, 2};
+
+std::ranges::sort(v);            <span class="c1">// no begin()/end() — pass the container itself</span>
+
+<span class="c1">// views: lazily keep evens, then square them — composed left to right</span>
+<span class="b">auto</span> result = v
+    | std::views::filter([](<span class="b">int</span> n){ <span class="y">return</span> n % 2 == 0; })
+    | std::views::transform([](<span class="b">int</span> n){ <span class="y">return</span> n * n; });
+
+<span class="y">for</span> (<span class="b">int</span> x : result)
+    std::cout &lt;&lt; x &lt;&lt; <span class="g">" "</span>;       <span class="c1">// 4 16   (2&#178;, 4&#178;)</span></pre>
+    <div class="callout key"><span class="h">💡 Views are lazy and cheap</span>
+      A view doesn't copy or compute anything until you iterate it. The <code class="inl">filter | transform</code> pipeline above does no work until the <code class="inl">for</code> loop pulls values through — and it never builds an intermediate vector. Read pipelines top-to-bottom like a Unix pipe.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/ranges" target="_blank" rel="noopener">cppreference — Ranges library (C++20)</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Old style vs ranges</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Iterators (classic)</th><th>Ranges (C++20)</th></tr></thead>
+        <tbody>
+          <tr><td>Sort</td><td><code class="inl">std::sort(v.begin(), v.end())</code></td><td><code class="inl">std::ranges::sort(v)</code></td></tr>
+          <tr><td>Find</td><td><code class="inl">std::find(v.begin(), v.end(), x)</code></td><td><code class="inl">std::ranges::find(v, x)</code></td></tr>
+          <tr><td>Transform+filter</td><td>nested loops or temp vectors</td><td><code class="inl">v | views::filter(..) | views::transform(..)</code></td></tr>
+          <tr><td>Mix-up risk</td><td>can pass <code class="inl">a.begin(), b.end()</code> by mistake</td><td>one argument — can't mismatch</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout mission"><span class="h">🎯 What to take away</span>
+      You must <em>read</em> classic iterator code (it's everywhere), and you'll <em>write</em> ranges when you have C++20. Both rest on the same <code class="inl">[begin, end)</code> idea. The next lesson is the algorithms themselves — the verbs that act on these ranges.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">What does a container's <code class="inl">end()</code> iterator point to?</div>
+        <button class="opt">The last element</button>
+        <button class="opt">One position past the last element (a sentinel you don't dereference)</button>
+        <button class="opt">The first element</button>
+        <button class="opt">A null pointer</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">Why does <code class="inl">std::sort</code> work on a <code class="inl">vector</code> but not a <code class="inl">std::list</code>?</div>
+        <button class="opt">Lists are too slow</button>
+        <button class="opt">Lists can't hold sortable types</button>
+        <button class="opt"><code class="inl">sort</code> needs random-access iterators; <code class="inl">list</code> only provides bidirectional ones</button>
+        <button class="opt">It does work — they're identical</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">A C++20 <em>view</em> like <code class="inl">v | views::filter(...)</code> is:</div>
+        <button class="opt">Lazy — it computes nothing until you iterate it, and builds no intermediate container</button>
+        <button class="opt">A full copy of <code class="inl">v</code> with elements removed</button>
+        <button class="opt">A new <code class="inl">vector</code> allocated immediately</button>
+        <button class="opt">A deprecated feature</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">Classic <code class="inl">std::find(v.begin(), v.end(), x)</code> returns what when <code class="inl">x</code> is absent?</div>
+        <button class="opt"><code class="inl">nullptr</code></button>
+        <button class="opt"><code class="inl">-1</code></button>
+        <button class="opt">It throws</button>
+        <button class="opt"><code class="inl">v.end()</code> — the past-the-end iterator</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What is an iterator?</summary><div class="a">A: A generalized pointer — a cursor over a container. <code class="inl">*it</code> reads the element, <code class="inl">++it</code> advances, <code class="inl">it == end()</code> means done.</div></details>
+    <details class="fc"><summary>Q: What does the half-open range <code class="inl">[begin, end)</code> mean?</summary><div class="a">A: From the first element up to <em>but not including</em> <code class="inl">end()</code> (one past the last). Empty range = <code class="inl">begin == end</code>; size = <code class="inl">end - begin</code>.</div></details>
+    <details class="fc"><summary>Q: Why do iterator categories matter?</summary><div class="a">A: Each algorithm needs a minimum capability. <code class="inl">sort</code> needs random-access; a <code class="inl">list</code> gives only bidirectional, so <code class="inl">std::sort</code> rejects it (use <code class="inl">list::sort</code>).</div></details>
+    <details class="fc"><summary>Q: What's the ranges version of <code class="inl">std::sort(v.begin(), v.end())</code>?</summary><div class="a">A: <code class="inl">std::ranges::sort(v)</code> — pass the container directly; no begin/end, no chance of mismatched iterators.</div></details>
+    <details class="fc"><summary>Q: What is a view, and what makes it efficient?</summary><div class="a">A: A lazy, composable adaptor over a range (e.g. <code class="inl">views::filter</code>, <code class="inl">views::transform</code>) piped with <code class="inl">|</code>. It computes on demand and builds no intermediate container.</div></details>
+    <details class="fc"><summary>Q: What invalidates an iterator?</summary><div class="a">A: Structural changes to the container — e.g. a <code class="inl">vector</code> reallocation, or erasing elements. Don't reuse an iterator after the container changed shape.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Try: <em>"rewrite this raw iterator loop as a ranges pipeline"</em>, or <em>"why is <code class="inl">end()</code> one-past-the-end and not the last element?"</em> Paste a loop and I'll show you the algorithm that replaces it.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0006-container-adaptors-stack-queue-priority-queue.html"><span class="dir">↩ Previous</span><span class="ttl">Adaptors</span></a>
+    <a href="0008-algorithms-the-workhorses.html"><span class="dir">Up next →</span><span class="ttl">Algorithms: the Workhorses</span></a>
+  </nav>
+
+  <footer>
+    C++ Standard Library · Lesson 7 · grounded in
+    <a href="https://en.cppreference.com/w/cpp/iterator" target="_blank" rel="noopener">cppreference</a> ·
+    <a href="../reference/cpp-stdlib-glossary.html">Glossary</a> ·
+    <a href="../reference/cpp-stdlib-cheatsheet.html">Cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 12 · Capstone — Choosing Your Auth Stack &amp; Building It</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/auth/" style="color:inherit;text-decoration:none">&larr; Web Authentication</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">auth · Lesson 12 · Capstone</div>
+    <h1>Capstone: Choose It, Then Build It</h1>
+    <p class="sub">Eleven lessons gave you the whole map. This one makes it a build. Two skills close the mission: a <strong>decision framework</strong> for picking which methods to combine for a given app — and a <strong>complete, running Express auth app</strong> on your machine that wires the pieces together. By the end you'll have logged into something you can read top to bottom and modify with confidence.</p>
+    <span class="missiontag">🎯 Mission: a mental model of modern auth + the ability to wire it into a real app</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>There is no single "best" auth — there's the right combination for <em>your</em> app's clients, threat model, and team.</strong> You choose along a few axes (who are your clients? how sensitive is the data? do you want to own credentials at all?), then assemble from the building blocks you now know. The wiring is short and boring once the decisions are made — and that's the goal: decisions deliberate, implementation unremarkable.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The decision framework</h2>
+    <p class="lead">Don't start from "which library?" Start from these questions. Each one steers you toward specific lessons.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Question</th><th>If…</th><th>Lean toward</th></tr></thead>
+        <tbody>
+          <tr><td><b>Who are your clients?</b></td><td>One web app, your domain</td><td>Session id in an <code class="inl">HttpOnly</code> cookie (L1–2)</td></tr>
+          <tr><td></td><td>Mobile / SPA / third-party APIs</td><td>Tokens: short access + rotating refresh (L3, L7)</td></tr>
+          <tr><td><b>Do you want to own passwords?</b></td><td>No (and users have Google/GitHub)</td><td>OAuth2 + OIDC — "Sign in with X" (L5–6)</td></tr>
+          <tr><td></td><td>Yes / need first-party accounts</td><td>Password (Argon2id) or passwordless (L4, L8)</td></tr>
+          <tr><td><b>How sensitive is the data?</b></td><td>Low–medium</td><td>Single strong factor + optional TOTP (L10)</td></tr>
+          <tr><td></td><td>High (money, health, admin)</td><td>Passkeys (L9) or enforced MFA + step-up (L10)</td></tr>
+          <tr><td><b>What's your phishing tolerance?</b></td><td>Must resist phishing</td><td>Passkeys — the only phishing-proof option (L9)</td></tr>
+          <tr><td><b>Team capacity?</b></td><td>Small / don't want to own it</td><td>A provider (Auth0/Clerk/Cognito) — same concepts, their plumbing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key"><span class="h">💡 The point of all 12 lessons: you can now read any of those rows</span>
+      Whether you hand-roll or adopt Auth0/Clerk/Cognito, the <em>concepts</em> are identical — a provider just runs the flows you now understand. You learned the model precisely so you can choose a provider wisely and debug it when it misbehaves, instead of cargo-culting a dashboard. That was the mission. <span class="cite">Cross-check decisions against <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP Authentication Cheat Sheet</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Three worked examples</h2>
+    <div class="cards">
+      <div class="card"><h4>🛍️ A SaaS web app</h4><p class="truth"><b>Session cookie</b> (L2) + <b>password (Argon2id)</b> or magic link (L4/L8) + optional <b>TOTP</b> (L10). Add "Sign in with Google" (L6) for convenience. Reset/verify flows per L11. The boring, correct default.</p></div>
+      <div class="card"><h4>📱 A mobile app + public API</h4><p class="truth"><b>OAuth2 + PKCE</b> (L6, no client secret) → <b>short access token + rotating refresh</b> (L7). API verifies the access token's signature with a pinned alg (L3). No cookies.</p></div>
+      <div class="card"><h4>🏦 A high-security console</h4><p class="truth"><b>Passkeys</b> (L9, phishing-proof) as primary, <b>backup codes</b> for recovery (L11), <b>step-up</b> re-auth on dangerous actions (L10). Short sessions, "log out everywhere" (L7).</p></div>
+    </div>
+    <p>Notice each is just a <em>combination</em> of blocks you've already built and run. There's no twelfth secret technique — mastery is knowing which to combine and why.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The reference architecture (the spine, one last time)</h2>
+    <p>Every design in this course shares one skeleton. Internalize it and any auth system is legible:</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Reference auth architecture: a login method produces a session, which guards protected routes">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="11.5">
+          <rect x="20" y="60" width="200" height="90" rx="10" fill="var(--accent-2)" opacity="0.08" stroke="var(--accent-2)" stroke-width="1.4"/>
+          <text x="120" y="50" text-anchor="middle" fill="var(--accent-2)" font-weight="700">① LOGIN (varies)</text>
+          <text x="120" y="86" text-anchor="middle" fill="var(--muted)" font-size="10.5">password · OAuth/OIDC</text>
+          <text x="120" y="104" text-anchor="middle" fill="var(--muted)" font-size="10.5">magic link · OTP · passkey</text>
+          <text x="120" y="126" text-anchor="middle" fill="var(--muted)" font-size="10.5">(+ MFA / step-up)</text>
+          <rect x="300" y="75" width="170" height="60" rx="10" fill="var(--accent)" opacity="0.1" stroke="var(--accent)" stroke-width="1.6"/>
+          <text x="385" y="100" text-anchor="middle" fill="var(--accent)" font-weight="700">② THE HANDOFF</text>
+          <text x="385" y="120" text-anchor="middle" fill="var(--muted)" font-size="10.5">session.userId = id</text>
+          <rect x="545" y="60" width="200" height="90" rx="10" fill="none" stroke="var(--fg)" stroke-width="1.4"/>
+          <text x="645" y="50" text-anchor="middle" fill="var(--fg)" font-weight="700">③ STAY LOGGED IN</text>
+          <text x="645" y="86" text-anchor="middle" fill="var(--muted)" font-size="10.5">session cookie OR</text>
+          <text x="645" y="104" text-anchor="middle" fill="var(--muted)" font-size="10.5">access+refresh token</text>
+          <text x="645" y="126" text-anchor="middle" fill="var(--muted)" font-size="10.5">guards protected routes</text>
+          <line x1="220" y1="105" x2="298" y2="105" stroke="var(--fg)" stroke-width="1.5" marker-end="url(#a12)"/>
+          <line x1="470" y1="105" x2="543" y2="105" stroke="var(--fg)" stroke-width="1.5" marker-end="url(#a12)"/>
+          <text x="380" y="180" text-anchor="middle" fill="var(--muted)" font-size="11">Swap ① freely; ②–③ barely change. That decoupling is the whole mental model.</text>
+        </g>
+        <defs><marker id="a12" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/></marker></defs>
+      </svg>
+      <figcaption>The spine you've seen in every lesson: a login method (interchangeable) hands off to a session (stable) that guards your routes. Capstone code below is literally this picture.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> 🎯 Your tangible win (8 min): run a complete auth app</h2>
+    <p>I built a full, working Express auth app on your machine — signup with hashed passwords, login, a CSRF-protected session, a guarded page, and logout. Dependencies are installed and it's smoke-tested.</p>
+    <pre><span class="c1"># in your terminal:</span>
+cd ~/projects/learn/public/courses/auth/practice/capstone-app
+npm start
+<span class="c1"># → open http://localhost:3000 and actually sign up + log in</span></pre>
+    <div class="callout mission"><span class="h">🎯 The win — verified end-to-end on your machine just now</span>
+      <pre style="margin:.4em 0 0"><span class="c1">POST /signup (valid CSRF) → 302 /account     ← hashed pw stored, session started</span>
+<span class="c1">GET  /account (with session) → 🔒 Protected page</span>
+<span class="c1">GET  /account (no session)   → 302 /login      ← the guard works</span>
+<span class="c1">POST /signup (bad CSRF)      → 403 Forbidden    ← CSRF defense works</span></pre>
+      Open <code class="inl">server.js</code> — it's ~110 lines and <strong>every block is tagged with the lesson it came from</strong>: <code class="inl">bcrypt.hash</code> (L4), the <code class="inl">session()</code> cookie flags (L2), the double-submit <code class="inl">checkCsrf</code> (L2), <code class="inl">req.session.userId = …</code> (the handoff), <code class="inl">requireAuth</code> (the guard), <code class="inl">session.regenerate</code> on login (fixation defense, L2), and <code class="inl">session.destroy</code> for logout (L7). Nothing in it is new to you. <strong>That's the whole point — you can read and modify a real auth system now.</strong></div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> A pre-ship checklist (print this)</h2>
+    <div class="cards">
+      <div class="card"><h4>Cookies (L2)</h4><p class="truth"><code class="inl">HttpOnly</code> + <code class="inl">Secure</code> (prod) + <code class="inl">SameSite=Lax</code>; real session store, not MemoryStore; <code class="inl">__Host-</code> prefix.</p></div>
+      <div class="card"><h4>Passwords (L4)</h4><p class="truth">Argon2id (or bcrypt ≥10); generic login error; rate-limit + lockout; check breached-password lists.</p></div>
+      <div class="card"><h4>Tokens (L3, L7)</h4><p class="truth">Pin <code class="inl">algorithms</code>; short access + rotating refresh; reuse detection; "log out everywhere."</p></div>
+      <div class="card"><h4>CSRF (L2)</h4><p class="truth">SameSite + a token on state-changing routes (<code class="inl">csrf-csrf</code>, not <code class="inl">csurf</code>).</p></div>
+      <div class="card"><h4>OAuth/OIDC (L5–6)</h4><p class="truth">Auth-code + PKCE; <code class="inl">state</code>; exact <code class="inl">redirect_uri</code>; <b>verify</b> ID tokens (sig + iss/aud/exp).</p></div>
+      <div class="card"><h4>Lifecycle (L11)</h4><p class="truth">No enumeration; single-use + expiring reset tokens; invalidate sessions on reset; recovery as strong as login.</p></div>
+    </div>
+    <div class="callout warn"><span class="h">⚠️ The meta-lesson: prefer boring, vetted plumbing</span>
+      You now understand auth well enough to build it — which is exactly what earns you the right to <em>not</em> hand-roll the dangerous parts. Use <code class="inl">express-session</code>, <code class="inl">argon2</code>, <code class="inl">@simplewebauthn</code>, <code class="inl">openid-client</code>, or a managed provider. Your job is correct <em>assembly</em> and sound <em>decisions</em> — not novel cryptography. Understanding ≠ a mandate to DIY.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Check yourself</h2>
+    <div class="quiz">
+      <div class="q">
+        <p><strong>Q1.</strong> A startup says "we'll use JWTs for everything because they're modern." Walk them through the decision instead.</p>
+        <details><summary>Show answer</summary><p>"Modern" isn't a requirement. Ask: who are the clients? A single web app → session cookies are simpler and instantly revocable (L1–2). Mobile/SPA/public API → then yes, short access + rotating refresh tokens (L3, L7), with reuse detection. JWTs for browser login is the classic over-reach (L1, L3). The format follows from the client and revocation needs, not from fashion. (§01.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q2.</strong> In the capstone app, why call <code class="inl">req.session.regenerate()</code> on login rather than just setting <code class="inl">userId</code> on the existing session?</p>
+        <details><summary>Show answer</summary><p>Session fixation defense (L2). If an attacker planted a known session id before login, reusing it would let them ride the now-authenticated session. Regenerating issues a fresh id at the moment of privilege elevation, so any pre-login id the attacker knew is useless. (§04.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q3.</strong> You understand every auth primitive now. Why is hand-rolling your own WebAuthn verification or password hashing still a bad idea?</p>
+        <details><summary>Show answer</summary><p>Because correct <em>assembly</em> ≠ reimplementing crypto. The byte-level details (constant-time comparisons, CBOR parsing, signature-counter checks, parameter tuning) are where subtle bugs become vulnerabilities, and vetted libraries have already paid that cost and been audited. Your understanding lets you choose and wire them correctly and debug them — that's the leverage, not DIY crypto. (§05 warning.)</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> 🎓 Mission accomplished — and where to go next</h2>
+    <p>Look back at the mission: <em>a durable mental model of modern auth + the ability to wire it into a real app.</em> You have both. You can place any auth system on the spine, name the purpose of every parameter in a "Sign in with Google" redirect, choose a stack for a given app, and read/modify a working Express implementation. The fog is gone.</p>
+    <div class="callout key"><span class="h">📌 The whole course in one line</span>
+      <strong>Every auth system = an interchangeable <em>login method</em> (password, OAuth/OIDC, magic link, OTP, passkey — optionally multi-factor) that hands off to a <em>session</em> (stateful cookie or stateless rotating token) guarding your routes — built from a small set of primitives: hashing, signing, single-use+expiry, secure cookies, and origin/secret binding.</strong></div>
+    <h3>If you want to keep going (post-capstone topics)</h3>
+    <div class="cards">
+      <div class="card"><h4>Authorization (authZ)</h4><p class="truth">We mastered <em>authentication</em>. Next axis: <em>permissions</em> — RBAC/ABAC, scopes, policy engines. The "what may you do" half of Lesson 1.</p></div>
+      <div class="card"><h4>Enterprise SSO</h4><p class="truth">SAML, SCIM provisioning, "Sign in with Okta" — what B2B customers demand.</p></div>
+      <div class="card"><h4>Machine-to-machine</h4><p class="truth">OAuth client-credentials grant, API keys, service identity, mTLS, DPoP-bound tokens.</p></div>
+    </div>
+    <p class="muted" style="margin-top:18px">💬 This is your call — tell me which thread to pull. Or bring me <em>your</em> real app and we'll design its auth together against the framework in §01. And the standing offer: run the capstone (or any lab) and tell me what you saw — I'll record your first learning record and we'll build the next phase from there. · Back to <a href="0011-account-lifecycle.html">Lesson 11</a> · <a href="0001-sessions-vs-tokens.html">Lesson 1</a> · <a href="/courses/auth/#resources">Resources</a>.</p>
+  </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 1: What is Nix?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            padding: 50px;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        .subtitle {
+            color: #999;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #667eea;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+            font-size: 1.5em;
+        }
+        p {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        .problem-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 6px;
+        }
+        .solution-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 6px;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .comp-item {
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 0.95em;
+        }
+        .imperative {
+            background: #ffe6e6;
+            border: 2px solid #ff9999;
+        }
+        .imperative h3 {
+            color: #d9534f;
+            margin-bottom: 10px;
+        }
+        .declarative {
+            background: #e6f3ff;
+            border: 2px solid #5dade2;
+        }
+        .declarative h3 {
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+        .code-block {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 15px 0;
+            color: #333;
+        }
+        .key-point {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-weight: 500;
+            color: #333;
+        }
+        .experiment {
+            background: #f9f9f9;
+            border: 2px dashed #667eea;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 6px;
+        }
+        .experiment h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .experiment h3::before {
+            content: "⚡ ";
+            margin-right: 8px;
+        }
+        .step {
+            margin: 15px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+        .links {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 30px 0;
+        }
+        .links h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .links ul {
+            list-style: none;
+            padding: 0;
+        }
+        .links li {
+            margin: 8px 0;
+        }
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+            color: #999;
+            font-size: 0.95em;
+        }
+        .reflection {
+            background: #efe6ff;
+            border-left: 4px solid #9966cc;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 6px;
+        }
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 30px;
+            }
+        }
+    </style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: nix ---- */
+/* ============================================================================
+   nix course adapter — re-skin nix's bespoke component classes with the
+   canonical tokens from assets/theme.css. Injected AFTER theme.css and AFTER
+   each lesson's own <style>, so these rules win. !important is used where nix
+   hardcodes colours, to guarantee the override regardless of nix's specificity.
+   This gives the nix course the unified look + dark mode without touching its
+   markup. See scripts/theme_lessons.py (adapter mechanism).
+   ============================================================================ */
+
+/* page shell: drop the purple gradient + white card; use the unified column */
+.container{ background:transparent !important; box-shadow:none !important;
+  max-width:var(--maxw); margin:0 auto; padding:0 !important; border-radius:0; }
+.subtitle{ color:var(--muted) !important; }
+
+/* headings: recolour nix's purple accents to the token accent */
+h1{ color:var(--fg) !important; }
+h2{ color:var(--fg) !important; border-left:4px solid var(--accent) !important; padding-left:15px; }
+h3{ color:var(--accent) !important; }
+
+/* inline code + code blocks */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent); color:var(--accent);
+  border-radius:6px; padding:1px 6px; font-family:"SF Mono",Menlo,Monaco,monospace; font-size:.88em; }
+.code-block{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; border-radius:12px !important; }
+.code-block code{ background:none; color:inherit; padding:0; }
+
+/* callout-style boxes mapped to the unified semantics */
+.problem-box{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important;
+  border-left:4px solid var(--warn) !important; border-radius:0 8px 8px 0 !important; }
+.solution-box,.success{ background:color-mix(in srgb,var(--mark) 12%,transparent) !important;
+  border-left:4px solid var(--mark) !important; border-radius:0 8px 8px 0 !important; }
+.key-point{ background:color-mix(in srgb,var(--accent) 9%,transparent) !important;
+  border-left:4px solid var(--accent) !important; border-radius:0 8px 8px 0 !important; }
+.reflection{ background:color-mix(in srgb,var(--accent-2) 12%,transparent) !important;
+  border-left:4px solid var(--accent-2) !important; border-radius:0 8px 8px 0 !important; }
+.exercise,.project-box,.example-box{ background:var(--surface) !important;
+  border:1px solid var(--border) !important; border-radius:12px !important; color:var(--fg); }
+
+/* force box text onto the --fg token (several nix boxes hardcode dark #333,
+   which is unreadable on the dark-mode tinted backgrounds). Excludes .code-block,
+   which keeps its light-on-dark code colours. */
+.problem-box,.solution-box,.success,.key-point,.reflection,
+.exercise,.project-box,.example-box,.experiment,.comp-item,.diagram{ color:var(--fg) !important; }
+
+/* experiment box (dashed) */
+.experiment{ background:var(--surface) !important; border:2px dashed var(--accent) !important; }
+.experiment h3{ color:var(--accent) !important; }
+
+/* numbered steps */
+.step::before{ background:var(--accent) !important; color:#fff !important; }
+
+/* imperative vs declarative comparison cards */
+.comp-item{ border-radius:12px !important; }
+.imperative{ background:color-mix(in srgb,var(--danger) 8%,transparent) !important;
+  border:2px solid color-mix(in srgb,var(--danger) 45%,transparent) !important; }
+.declarative{ background:color-mix(in srgb,var(--accent) 8%,transparent) !important;
+  border:2px solid color-mix(in srgb,var(--accent) 45%,transparent) !important; }
+.imperative h3{ color:var(--danger) !important; }
+.declarative h3{ color:var(--accent) !important; }
+
+/* nav / links / footer / diagram / checklist */
+.nav,.links{ background:var(--surface) !important; border-radius:12px !important; }
+.nav a,.home-link,.links a,.links h3{ color:var(--accent) !important; }
+.footer{ border-top:2px solid var(--border) !important; color:var(--muted) !important; }
+.diagram{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  border-radius:12px !important; }
+.checklist{ color:var(--fg); }
+
+/* reference glossary docs (term/section vocabulary) */
+.section-title{ color:var(--fg) !important; border-left:4px solid var(--accent) !important; padding-left:15px; }
+.term{ border:1px solid var(--border) !important; background:var(--surface) !important; border-radius:10px !important; }
+.term-name{ color:var(--accent) !important; }
+.term-def{ color:var(--fg) !important; }
+.term-example{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/nix/" style="color:inherit;text-decoration:none">&larr; Nix</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+    <div class="container">
+        <h1>Lesson 1: What is Nix?</h1>
+        <p class="subtitle">Understanding the core problem Nix solves</p>
+
+        <h2>The Problem: The Reproducibility Crisis</h2>
+        <p>You've probably experienced this:</p>
+
+        <div class="problem-box">
+            <strong>Scenario:</strong> Your app works perfectly on your machine. You send it to a colleague, and they get different behavior. Or you come back to a project 6 months later and it doesn't build anymore. Or you have Python 3.9 installed, but the project needs 3.11.
+            <br><br>
+            <strong>Root cause:</strong> Your machine's state isn't documented. Dependencies are global and scattered. When you run <code>pip install</code> or <code>npm install</code>, you're modifying the global state of your machine in ways that are hard to reproduce elsewhere.
+        </div>
+
+        <h2>The Core Insight</h2>
+        <p>
+            Nix asks a radical question: <strong>What if all software dependencies and configurations were treated like code?</strong> Not just stored in version control, but genuinely reproducible, testable, and composable.
+        </p>
+
+        <div class="key-point">
+            <strong>Nix's Promise:</strong> "Given the same inputs, Nix will always produce the exact same output, on any machine, at any time." This is achieved through a purely functional approach to package management.
+        </div>
+
+        <h2>Imperative vs. Declarative</h2>
+        <p>The difference between traditional package managers and Nix is fundamental:</p>
+
+        <div class="comparison">
+            <div class="comp-item imperative">
+                <h3>Imperative (apt, brew, npm)</h3>
+                <p><strong>You tell the system HOW to install things:</strong></p>
+                <div class="code-block">apt-get install nodejs
+npm install -g typescript
+python3 -m pip install pandas</div>
+                <p style="margin-top: 10px; font-size: 0.9em;"><strong>Problems:</strong><br>
+                • Global state (what version exists depends on when you ran the command)<br>
+                • Hard to replicate (colleague runs same commands, gets different versions)<br>
+                • No easy rollback<br>
+                • "Works on my machine" syndrome</p>
+            </div>
+
+            <div class="comp-item declarative">
+                <h3>Declarative (Nix)</h3>
+                <p><strong>You describe WHAT you want, Nix figures out HOW:</strong></p>
+                <div class="code-block">{ pkgs, ... }:
+{
+  buildInputs = with pkgs; [
+    nodejs_20
+    typescript
+    python311
+  ];
+}</div>
+                <p style="margin-top: 10px; font-size: 0.9em;"><strong>Benefits:</strong><br>
+                • Locked versions (exact versions in flake.lock)<br>
+                • Reproducible everywhere<br>
+                • Easy rollback (commit history)<br>
+                • Same config = same setup</p>
+            </div>
+        </div>
+
+        <h2>How Nix Achieves This</h2>
+        <p>Three key ideas work together:</p>
+
+        <div style="margin: 25px 0;">
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #667eea; font-size: 1.1em;">1. Pure Functions</h3>
+                <p>Every package in Nix is defined as a pure function: same inputs → same output, no side effects. This is the foundation of reproducibility.</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #667eea; font-size: 1.1em;">2. Content-Addressed Store</h3>
+                <p>All packages are stored in <code>/nix/store</code> with names based on their content hash. If two builds produce the same result, they're deduplicated. If something changes, the hash changes.</p>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #667eea; font-size: 1.1em;">3. Hermetic Builds</h3>
+                <p>Builds are isolated—they can't accidentally depend on global system state. They only see explicitly declared inputs.</p>
+            </div>
+        </div>
+
+        <h2>Why You Should Care</h2>
+        <p>For the use case you mentioned (system configuration & reproducibility):</p>
+
+        <ul style="color: #555; margin: 15px 0 25px 25px;">
+            <li style="margin: 8px 0;"><strong>Reproducible development environments:</strong> <code>nix flake show</code> and your whole team has the exact same setup</li>
+            <li style="margin: 8px 0;"><strong>Easy environment switching:</strong> Different projects, different Python versions—no global conflicts</li>
+            <li style="margin: 8px 0;"><strong>Infrastructure as code:</strong> Your system config (on NixOS or via Home Manager) is version-controlled and reproducible</li>
+            <li style="margin: 8px 0;"><strong>Powerful composition:</strong> Build complex setups by combining smaller, reusable pieces</li>
+        </ul>
+
+        <h2>What You'll Learn in This Course</h2>
+        <p>We're building toward reproducible, shareable development environments. Here's the arc:</p>
+
+        <div style="background: #f0f4ff; padding: 20px; border-radius: 6px; margin: 20px 0;">
+            <strong style="color: #667eea;">Progression:</strong><br>
+            <small style="color: #666;">Nix fundamentals → Nix language basics → Creating a simple derivation → Writing a flake.nix → Sharing environments with others → Advanced patterns</small>
+        </div>
+
+        <div class="experiment">
+            <h3>Your First Experiment</h3>
+            <p>Let's verify that Nix is installed on your system and get a feel for how it works.</p>
+
+            <div class="step" data-step="1">
+                <strong>Open your terminal and check Nix is installed:</strong>
+                <div class="code-block">nix --version</div>
+                <p style="margin-top: 8px; font-size: 0.9em; color: #666;">You should see something like <code>nix (Nix) 2.18.1</code></p>
+            </div>
+
+            <div class="step" data-step="2">
+                <strong>Try a simple nix command to list packages:</strong>
+                <div class="code-block">nix search nixpkgs hello</div>
+                <p style="margin-top: 8px; font-size: 0.9em; color: #666;">This searches the nixpkgs repository for a package called "hello"</p>
+            </div>
+
+            <div class="step" data-step="3">
+                <strong>Run the hello package without installing it:</strong>
+                <div class="code-block">nix run nixpkgs#hello</div>
+                <p style="margin-top: 8px; font-size: 0.9em; color: #666;">This downloads and runs the "hello" package in an isolated environment. Notice: no global installation, no ~/.local/bin/ pollution.</p>
+            </div>
+
+            <p style="margin-top: 20px; font-weight: 500; color: #333;">
+                ✨ <strong>You just used Nix!</strong> You ran a package without installing it globally. It's isolated, reproducible, and ephemeral.
+            </p>
+        </div>
+
+        <div class="reflection">
+            <h3 style="color: #9966cc; margin-bottom: 15px;">Reflection</h3>
+            <p>Take a moment to think about these questions (no need to answer—just reflect):</p>
+            <ul style="margin: 10px 0 0 20px; color: #555;">
+                <li style="margin: 8px 0;">What was different about using <code>nix run</code> compared to installing with a package manager?</li>
+                <li style="margin: 8px 0;">Can you imagine how this scales to complex projects with many dependencies?</li>
+                <li style="margin: 8px 0;">How might this solve the "works on my machine" problem for your team?</li>
+            </ul>
+        </div>
+
+        <h2>Next Steps</h2>
+        <p>Once you've completed the experiment above, you're ready for Lesson 2, where we'll write your first Nix expression and understand the language syntax.</p>
+
+        <div class="links">
+            <h3>Reference & Resources</h3>
+            <ul>
+                <li><a href="../reference/nix-glossary.html">📖 Nix Glossary</a> — Quick reference for terms you'll encounter</li>
+                <li><a href="/courses/nix/#resources">📚 Learning Resources</a> — Links to official guides and community resources</li>
+                <li><a href="https://nixos.org/guides/nix-pills/" target="_blank">→ Nix Pills (Official)</a> — Beginner-friendly intro series (Lessons 1-10 recommended)</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h3 style="color: #667eea; margin-bottom: 10px;">Questions?</h3>
+            <p>If anything in this lesson feels unclear, ask your teacher (Claude) any follow-up questions. Good learning often means asking "why" and "what if"—don't skip this.</p>
+            <p style="margin-top: 15px; color: #bbb;">Lesson completed: June 11, 2026</p>
+        </div>
+    </div>
+</body>
+</html>

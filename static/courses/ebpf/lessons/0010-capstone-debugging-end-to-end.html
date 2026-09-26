@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 10 · Capstone: Debugging "Why Is This Slow?" End-to-End</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Lesson 10</div>
+    <h1>Capstone: Debugging "Why Is This Slow?" End-to-End</h1>
+    <p class="sub">Put the whole course together — take a realistic slow-service mystery from symptom to root cause, reaching for the right eBPF tool at each narrowing step.</p>
+    <span class="missiontag">🎯 Mission: turn "it's slow and I don't know why" into a named root cause</span>
+  </header>
+
+  <!-- THE ONE IDEA -->
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>Real debugging is a <strong>drill-down</strong>: start broad — is the time spent <strong>on-CPU</strong>, on <strong>disk</strong>, or <strong>waiting</strong>? — then apply the right eBPF tool at each narrowing step until you can <strong>name the root cause</strong>.</p>
+  </div>
+
+  <!-- 01 THE SCENARIO -->
+  <section>
+    <h2><span class="num">01</span> The scenario: "the API is sometimes slow"</h2>
+    <p class="lead">It's Tuesday. Your payments API is mostly fine — p50 latency is a healthy 40&nbsp;ms — but support keeps forwarding the same complaint: <em>"every so often a request just hangs for a couple of seconds."</em> The dashboards are green. CPU looks normal. There's nothing useful in the logs. You can't reproduce it on your laptop.</p>
+    <p>This is the exact situation eBPF was made for. The service is <strong>already running in production</strong>, you can't add log lines and redeploy on a hunch, and the interesting behavior is intermittent. Instead of guessing, you're going to <strong>ask the running kernel precise questions</strong> until the mystery collapses into one sentence: <em>"requests are slow because ______."</em></p>
+    <div class="callout mission"><span class="h">🎯 What this capstone does</span>Every earlier lesson taught you one tool or idea in isolation. This lesson is the assembly: a single realistic investigation that uses them <em>in sequence</em>, the way you actually would on a real incident. Nothing new to memorize — just the workflow that ties it all together.</div>
+    <p class="muted">Throughout, every command is a Linux-only "try later" one-liner. You won't run anything here; you're learning to <em>read the investigation</em> and know which tool to reach for.</p>
+  </section>
+
+  <!-- 02 METHODOLOGY -->
+  <section>
+    <h2><span class="num">02</span> The method: don't poke randomly — drill down</h2>
+    <p>The single biggest mistake under pressure is reaching for a favorite tool and hoping. The fix is a <strong>methodology</strong> — a fixed procedure that tells you what to look at first, so you stop guessing. The classic one is Brendan Gregg's <strong>USE method</strong>.</p>
+
+    <h3>The USE method in one breath</h3>
+    <p>For <em>every resource</em> (CPU, memory, disks, network interfaces), check three things:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>U — Utilization</h4>
+        <p class="truth">"The average time the resource was <b>busy</b> servicing work." A disk at 100% util is doing all it can.</p>
+      </div>
+      <div class="card">
+        <h4>S — Saturation</h4>
+        <p class="truth">"The degree to which the resource has <b>extra work it can't service</b>, often queued." Saturation is where waiting (latency) is born.</p>
+      </div>
+      <div class="card">
+        <h4>E — Errors</h4>
+        <p class="truth">"The count of <b>error events</b>." Cheap to check, so check them first — a retry storm or failing disk hides here.</p>
+      </div>
+    </div>
+    <p>Gregg's claim is that this simple loop "solves about 80% of server issues with 5% of the effort." It doesn't tell you the answer — it tells you <em>which resource to interrogate next</em>, so your eBPF tools point at the right place.</p>
+    <p class="cite">Source: <a href="https://www.brendangregg.com/usemethod.html" target="_blank" rel="noopener">Brendan Gregg — The USE Method</a> · methodology &amp; tooling expanded in <a href="https://www.brendangregg.com/bpf-performance-tools-book.html" target="_blank" rel="noopener"><em>BPF Performance Tools</em></a>.</p>
+
+    <h3>The drill-down decision tree</h3>
+    <p>USE tells you to interrogate resources; the question that makes it concrete is <strong>"is my latency on-CPU or off-CPU?"</strong> That one split, then count-then-snoop, is the whole flowchart:</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 540" role="img" aria-label="A debugging decision flowchart for diagnosing a slow service with eBPF tools, branching from the symptom into on-CPU, off-CPU, and syscall-volume paths down to a named root cause">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/>
+          </marker>
+          <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent-2)"/>
+          </marker>
+        </defs>
+
+        <!-- symptom -->
+        <rect x="290" y="14" width="240" height="56" rx="12" fill="var(--accent)" stroke="var(--accent)"/>
+        <text x="410" y="40" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">SYMPTOM</text>
+        <text x="410" y="59" text-anchor="middle" font-size="12.5" fill="#dfe6ff">"requests are slow"</text>
+
+        <!-- characterize question -->
+        <path d="M410,70 L410,100" fill="none" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#arr)"/>
+        <rect x="232" y="100" width="356" height="56" rx="12" fill="#fff4ec" stroke="var(--warn)" stroke-width="1.8"/>
+        <text x="410" y="125" text-anchor="middle" font-size="13.5" font-weight="800" fill="var(--warn)">STEP 1 · Characterize</text>
+        <text x="410" y="144" text-anchor="middle" font-size="12.5" fill="var(--ink)">Is the time spent ON-CPU, or WAITING (off-CPU)?</text>
+
+        <!-- three branches -->
+        <path d="M300,156 L150,196" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arr)"/>
+        <path d="M410,156 L410,196" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arr)"/>
+        <path d="M520,156 L668,196" fill="none" stroke="var(--muted)" stroke-width="2" marker-end="url(#arr)"/>
+
+        <!-- branch A: on-CPU -->
+        <rect x="20" y="198" width="252" height="74" rx="11" fill="#eef2ff" stroke="var(--accent)" stroke-width="1.8"/>
+        <text x="146" y="222" text-anchor="middle" font-size="13" font-weight="800" fill="var(--accent)">ON-CPU · burning cycles</text>
+        <text x="146" y="241" text-anchor="middle" font-size="11.5" fill="var(--muted)">CPU is high &amp; busy</text>
+        <text x="146" y="259" text-anchor="middle" font-size="11.5" fill="var(--ink)">→ profile + flame graph (L7)</text>
+
+        <!-- branch B: off-CPU -->
+        <rect x="284" y="198" width="252" height="74" rx="11" fill="#f0fbf6" stroke="var(--accent-2)" stroke-width="1.8"/>
+        <text x="410" y="222" text-anchor="middle" font-size="13" font-weight="800" fill="var(--accent-2)">OFF-CPU · waiting / blocked</text>
+        <text x="410" y="241" text-anchor="middle" font-size="11.5" fill="var(--muted)">CPU idle but request stalls</text>
+        <text x="410" y="259" text-anchor="middle" font-size="11.5" fill="var(--ink)">→ latency histogram (L6)</text>
+
+        <!-- branch C: suspicious syscalls -->
+        <rect x="548" y="198" width="252" height="74" rx="11" fill="#fff4ec" stroke="var(--warn)" stroke-width="1.8"/>
+        <text x="674" y="222" text-anchor="middle" font-size="13" font-weight="800" fill="var(--warn)">SUSPICIOUS VOLUME</text>
+        <text x="674" y="241" text-anchor="middle" font-size="11.5" fill="var(--muted)">odd syscall / I/O activity</text>
+        <text x="674" y="259" text-anchor="middle" font-size="11.5" fill="var(--ink)">→ count by probe (L5)</text>
+
+        <!-- converge to count-then-snoop -->
+        <path d="M146,272 L300,316" fill="none" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#arrG)"/>
+        <path d="M410,272 L410,316" fill="none" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#arrG)"/>
+        <path d="M674,272 L520,316" fill="none" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#arrG)"/>
+
+        <rect x="232" y="318" width="356" height="74" rx="12" fill="#fff" stroke="var(--accent-2)" stroke-width="2.2"/>
+        <text x="410" y="342" text-anchor="middle" font-size="13.5" font-weight="800" fill="var(--ink)">STEP 2 · Count, then snoop</text>
+        <text x="410" y="362" text-anchor="middle" font-size="11.5" fill="var(--muted)">count events to find the hotspot — @[probe] = count() (L5)</text>
+        <text x="410" y="380" text-anchor="middle" font-size="11.5" fill="var(--muted)">then snoop the offender — who &amp; what (L3 / L4)</text>
+
+        <!-- to root cause -->
+        <path d="M410,392 L410,430" fill="none" stroke="var(--accent)" stroke-width="2.4" marker-end="url(#arr)"/>
+        <rect x="262" y="432" width="296" height="64" rx="12" fill="var(--accent-2)" stroke="var(--accent-2)"/>
+        <text x="410" y="458" text-anchor="middle" font-size="14.5" font-weight="800" fill="#fff">STEP 3 · ROOT CAUSE NAMED</text>
+        <text x="410" y="478" text-anchor="middle" font-size="12" fill="#e3fbf2">"slow because of a missing-file retry storm + slow disk"</text>
+
+        <!-- side label -->
+        <text x="410" y="522" text-anchor="middle" font-size="11.5" font-style="italic" fill="var(--muted)">Broad → narrow: never skip Step 1. Characterize first, then drill.</text>
+      </svg>
+      <figcaption>The drill-down: characterize (on-CPU vs off-CPU vs suspicious volume) → count to find the hotspot → snoop the offender → name the root cause. The lesson number on each branch is where you learned that tool.</figcaption>
+    </figure>
+    <div class="callout key"><span class="h">💡 The mindset shift</span>You're not "looking for the bug." You're <strong>narrowing the search space by half at every step</strong> — exactly like a binary search. Each eBPF tool answers one question that eliminates a whole category of cause.</div>
+  </section>
+
+  <!-- 03 STEP 1 CHARACTERIZE -->
+  <section>
+    <h2><span class="num">03</span> Step 1 — Characterize: on-CPU or off-CPU?</h2>
+    <p>Before any clever one-liner, answer the cheapest, most decisive question: <strong>when a request is slow, is the CPU busy doing work, or is it sitting idle while the request waits?</strong> This one split sends you down completely different paths.</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>&nbsp;</th><th>On-CPU (burning cycles)</th><th>Off-CPU (waiting / blocked)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>What's happening</strong></td><td>The thread is running, computing — a hot loop, JSON churn, a regex, crypto.</td><td>The thread is <em>parked</em> by the scheduler, waiting on disk, a lock, the network, or a sleep.</td></tr>
+          <tr><td><strong>CPU looks like</strong></td><td><span class="no">High &amp; busy</span></td><td><span class="yes">Often idle</span> — the giveaway: slow but CPU isn't pegged.</td></tr>
+          <tr><td><strong>Reach for</strong></td><td>Sampling <strong>profiler → flame graph</strong> <span class="muted">(Lesson 7)</span></td><td><strong>Latency histograms</strong> / off-CPU timing <span class="muted">(Lesson 6)</span></td></tr>
+          <tr><td><strong>It answers</strong></td><td>"<em>Which function is eating the CPU?</em>"</td><td>"<em>What is it waiting on, and for how long?</em>"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>In our scenario the tell is loud: support says requests <em>hang</em>, and the CPU dashboards are <strong>green the whole time</strong>. Slow, but CPU is idle → this is <strong>off-CPU</strong>. Something is making the request <em>wait</em>. If instead the CPU had been pegged during slow requests, we'd grab a profiler and a flame graph (the on-CPU tool from <a href="0007-cpu-profiling-and-flame-graphs.html">Lesson 7</a>) to see which function is hot. Here, we follow the off-CPU branch.</p>
+
+    <div class="callout key"><span class="h">💡 Why this split is so powerful</span>A flame graph only shows you <em>on-CPU</em> time. If your problem is waiting on disk, the flame graph looks <em>boring and idle</em> — and you'd waste an hour staring at it. Characterizing first stops you from using the wrong lens.</div>
+    <p class="cite">On-CPU vs off-CPU framing per <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — Linux eBPF Tracing Tools</a> and <a href="https://www.brendangregg.com/usemethod.html" target="_blank" rel="noopener">the USE method</a>.</p>
+  </section>
+
+  <!-- 04 STEP 2 FOLLOW THE EVIDENCE -->
+  <section>
+    <h2><span class="num">04</span> Step 2 — Follow the evidence: count, then snoop</h2>
+    <p>We're on the off-CPU branch: requests wait. Now we narrow. The pattern is always the same two moves — <strong>count to find the hotspot, then snoop to see the detail.</strong> Three one-liners, each eliminating a guess.</p>
+
+    <h3>① Count: what is the service spending syscalls on?</h3>
+    <p>First, a wide-angle shot. Count <em>every</em> syscall the box makes, grouped by syscall name, so an abnormal one jumps out. <code class="inl">@[probe]</code> uses the firing probe's full name as the map key; <code class="inl">count()</code> tallies it (the map idea from <a href="0005-maps-and-aggregation.html">Lesson 5</a>).</p>
+<pre><span class="c1"># count every syscall entry, grouped by syscall name</span>
+sudo bpftrace -e <span class="y">'tracepoint:syscalls:sys_enter_* {</span>
+                   @[probe] = <span class="b">count</span>();
+                 <span class="y">}'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl" style="background:#1b2540;color:#cfe">sudo</code>). Ctrl-C to stop; bpftrace prints the map on exit.</div>
+    <p><strong>Expected output</strong> (sorted ascending, biggest last):</p>
+<pre><span class="c1"># ... long tail trimmed ...</span>
+@[tracepoint:syscalls:sys_enter_read]:    14233
+@[tracepoint:syscalls:sys_enter_write]:   15901
+@[tracepoint:syscalls:sys_enter_openat]: <span class="y">288417</span>   <span class="c1">&lt;-- whoa</span></pre>
+    <p><strong>What it tells you:</strong> <code class="inl">openat</code> — the syscall that opens files — is firing <em>wildly</em> more than anything else. A payments API should not be opening a quarter-million files. That's the thread to pull. (You could also key by <code class="inl">@[comm]</code> to see <em>which process</em> is responsible — the <a href="0003-anatomy-of-a-bpftrace-one-liner.html">Lesson 3</a> builtins.)</p>
+
+    <h3>② Snoop: <em>which</em> files, and is it retrying?</h3>
+    <p>Counting found the suspicious syscall; now <strong>snoop</strong> it to see the actual filenames. This is the open-tracing one-liner you met early on (probes &amp; arguments, <a href="0004-probe-types-where-you-can-hook.html">Lesson 4</a>): <code class="inl">comm</code> is the process name, <code class="inl">args.filename</code> is the path it's opening, and <code class="inl">str()</code> turns that kernel pointer into readable text.</p>
+<pre><span class="c1"># show every file open, system-wide: who opened what</span>
+sudo bpftrace -e <span class="y">'tracepoint:syscalls:sys_enter_openat {</span>
+                   <span class="b">printf</span>(<span class="g">"%-16s %s\n"</span>, comm, <span class="b">str</span>(args.filename));
+                 <span class="y">}'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl" style="background:#1b2540;color:#cfe">sudo</code>).</div>
+    <p><strong>Expected output</strong> (streaming live):</p>
+<pre>payments-api     /etc/app/config.d/feature-flags.json
+payments-api     /etc/app/config.d/feature-flags.json
+payments-api     /etc/app/config.d/feature-flags.json
+payments-api     /etc/app/config.d/feature-flags.json
+<span class="c1"># ... the same path, hundreds of times a second ...</span></pre>
+    <p><strong>What it tells you:</strong> the service is hammering one config file — <code class="inl">feature-flags.json</code> — over and over. A file it opens this often is almost certainly <em>missing or unreadable</em>, so a hot code path keeps retrying. That's a <strong>retry storm</strong>. (Confirm with the open-failure angle: trace <code class="inl">tracepoint:syscalls:sys_exit_openat</code> and check <code class="inl">args.ret &lt; 0</code> — a negative return is a failed open, e.g. <code class="inl">-2</code> = <code class="inl">ENOENT</code>, "no such file.")</p>
+
+    <h3>③ Measure: how slow is the disk underneath?</h3>
+    <p>Why does a retry storm make requests <em>hang</em> rather than just spin CPU? Because each open touches the filesystem, and if the disk is slow, every retry blocks off-CPU. Confirm with a <strong>latency histogram</strong> (the distribution idea from <a href="0006-measuring-latency.html">Lesson 6</a>). The idiom: stash a timestamp keyed by thread on the entry probe, then on the matching return probe record <code class="inl">now − start</code> into a <code class="inl">hist()</code>.</p>
+<pre><span class="c1"># VFS read latency as a power-of-2 histogram (nanoseconds)</span>
+sudo bpftrace -e <span class="y">'kprobe:vfs_read {</span>
+                   @start[tid] = <span class="b">nsecs</span>;
+                 <span class="y">}</span>
+                 <span class="y">kretprobe:vfs_read /has_key(@start, tid)/ {</span>
+                   @ns = <span class="b">hist</span>(<span class="b">nsecs</span> - @start[tid]);
+                   <span class="b">delete</span>(@start, tid);
+                 <span class="y">}'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl" style="background:#1b2540;color:#cfe">sudo</code>). <code class="inl">tid</code> = thread id; <code class="inl">nsecs</code> = a nanosecond clock. For block-device latency specifically, the ready-made tool is <code class="inl">biolatency</code>.</div>
+    <p><strong>Expected output</strong> (a bimodal histogram — the smoking gun):</p>
+<pre>@ns:
+[1K, 2K)       48201 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[2K, 4K)        9930 |@@@@@@@@@@                                      |
+<span class="c1"># ... fast page-cache reads above ...</span>
+[16M, 32M)      1422 |@                                               | <span class="y">&lt;-- ~16-32 ms</span>
+[32M, 64M)       611 |                                                | <span class="y">&lt;-- ~32-64 ms</span></pre>
+    <p><strong>What it tells you:</strong> most reads return in microseconds (served from cache), but a long tail takes <strong>tens of milliseconds</strong> — real disk hits. Stack a few dozen of those per slow request (the retry storm) and you get exactly the multi-second hang support reported. Two findings now interlock.</p>
+
+    <div class="callout key"><span class="h">💡 Count-then-snoop, every time</span><strong>Counting</strong> is cheap and wide — it finds the hotspot without drowning you in data. <strong>Snooping</strong> is detailed and narrow — once you know <em>where</em>, you look at <em>exactly what</em>. Never start by snooping everything; you'll get a firehose and no signal.</p></div>
+    <p class="cite">One-liner syntax verified against the <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace One-Liner Tutorial</a> and <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace language reference</a> (<code class="inl">@[probe]=count()</code>, <code class="inl">str(args.filename)</code>, the <code class="inl">@start[tid]=nsecs</code> timing idiom). Recipes from <a href="https://www.brendangregg.com/bpf-performance-tools-book.html" target="_blank" rel="noopener"><em>BPF Performance Tools</em></a>.</p>
+  </section>
+
+  <!-- 05 STEP 3 CONFIRM & NAME -->
+  <section>
+    <h2><span class="num">05</span> Step 3 — Confirm and name the root cause</h2>
+    <p>The drill-down is done. Lay the evidence end to end and the one-sentence answer writes itself:</p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Step</th><th>Tool</th><th>What it showed</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Characterize</td><td>on/off-CPU split</td><td>Slow but CPU idle → <strong>off-CPU</strong>, it's waiting.</td></tr>
+          <tr><td>Count</td><td><code class="inl">@[probe]=count()</code></td><td><code class="inl">openat</code> is firing absurdly often.</td></tr>
+          <tr><td>Snoop</td><td><code class="inl">openat</code> tracer</td><td>Same missing config file, retried in a hot loop.</td></tr>
+          <tr><td>Measure</td><td>read-latency <code class="inl">hist()</code></td><td>Long tail of ~16–64&nbsp;ms disk reads.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout mission"><span class="h">🎯 Root cause, named</span>"Intermittent slow requests are caused by a <strong>missing <code class="inl" style="background:#dff3ea">feature-flags.json</code></strong> that a hot code path <strong>retries on every request</strong>; each retry is a filesystem open that occasionally hits the slow disk (16–64&nbsp;ms), and a burst of retries stacks into a multi-second stall."</div>
+
+    <p><strong>Fix hypothesis</strong> (a hypothesis — you confirm by deploying and re-measuring):</p>
+    <ul>
+      <li><strong>Stop the storm:</strong> ship the missing file, or fix the path; cache the flags in memory so they're read <em>once</em>, not per request.</li>
+      <li><strong>Cap the blast radius:</strong> add a negative-result cache / backoff so a missing file doesn't re-hit disk thousands of times a second.</li>
+      <li><strong>Verify the fix:</strong> re-run the same <code class="inl">openat</code> count and the read-latency histogram. The <code class="inl">openat</code> count should crater and the slow tail should vanish. <em>Same tools, now as a regression check.</em></li>
+    </ul>
+    <div class="callout warn"><span class="h">⚠ Correlation isn't proof</span>Two findings lining up is a strong <em>hypothesis</em>, not a verdict. The discipline is: change one thing, then re-measure with the very same one-liner. If the number doesn't move, you named the wrong cause — keep drilling.</div>
+  </section>
+
+  <!-- 06 MAP BACK TO LESSONS -->
+  <section>
+    <h2><span class="num">06</span> Where each move came from (your course, assembled)</h2>
+    <p>This whole investigation was just earlier lessons used in order. The capstone added no new tool — only the <em>sequence</em>:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>Characterize the problem</h4>
+        <p class="truth">On-CPU? → profile + flame graph (see <a href="0007-cpu-profiling-and-flame-graphs.html">Lesson 7</a>). Off-CPU / waiting? → latency histograms (see <a href="0006-measuring-latency.html">Lesson 6</a>).</p>
+      </div>
+      <div class="card">
+        <h4>Count to find the hotspot</h4>
+        <p class="truth">Aggregating with maps — <code class="inl">@[probe] = count()</code> — is the core of <a href="0005-maps-and-aggregation.html">Lesson 5</a>. Cheap, wide, points at the offender.</p>
+      </div>
+      <div class="card">
+        <h4>Snoop the offender</h4>
+        <p class="truth">Reading <code class="inl">comm</code> and arguments came from your first one-liner (<a href="0003-anatomy-of-a-bpftrace-one-liner.html">Lesson 3</a>) and choosing probes &amp; reading their args (<a href="0004-probe-types-where-you-can-hook.html">Lesson 4</a>).</p>
+      </div>
+      <div class="card">
+        <h4>Measure the latency</h4>
+        <p class="truth">The <code class="inl">@start[tid]=nsecs</code> → <code class="inl">hist()</code> timing idiom is timing &amp; latency (<a href="0006-measuring-latency.html">Lesson 6</a>); BCC tools like <code class="inl">biolatency</code> live in <a href="0008-the-observability-toolkit.html">Lesson 8</a>.</p>
+      </div>
+      <div class="card">
+        <h4>Do it on prod, safely</h4>
+        <p class="truth">Why you can run all of this live without fear — overhead, the verifier, blast radius — is <a href="0009-running-safely-in-production.html">Lesson 9</a>.</p>
+      </div>
+      <div class="card">
+        <h4>Why it's even possible</h4>
+        <p class="truth">The whole "ask the running kernel a question" model started in <a href="0001-what-is-ebpf.html">Lesson 1</a> — events, the verifier, maps. Everything since is detail on that.</p>
+      </div>
+    </div>
+    <div class="callout key"><span class="h">💡 The transferable skill</span>The exact bug here (a retry storm on a missing file) doesn't matter. The <strong>shape</strong> does: characterize → count → snoop → measure → name → verify. Memorize the shape and you can debug a mystery you've never seen.</div>
+  </section>
+
+  <!-- 07 YOUR TURN -->
+  <section>
+    <h2><span class="num">07</span> Your turn — reach for the right tool</h2>
+    <p>A fresh mystery lands on you. Walk the drill-down in your head before peeking:</p>
+    <div class="callout warn"><span class="h">⚠ New symptom</span>A batch job that used to finish in 5 minutes now takes 25. While it runs, <strong>CPU is pegged at 100%</strong> the entire time — no idle, no obvious waiting. Nothing changed in the input size.</div>
+    <h3>Work it through</h3>
+    <ol>
+      <li><strong>Characterize:</strong> CPU is pegged → this is <em>on-CPU</em>, not waiting. (Off-CPU latency histograms would look boring here.)</li>
+      <li><strong>Which tool?</strong> The on-CPU branch → a <strong>sampling profiler + flame graph</strong> (<a href="0007-cpu-profiling-and-flame-graphs.html">Lesson 7</a>) to see <em>which function</em> is eating the cycles.</li>
+      <li><strong>Then what?</strong> If the flame graph fingers a suspicious function, <strong>count</strong> how often it's called and <strong>snoop</strong> its arguments (L5 then L3/L4) to find why it got hot — maybe an accidental O(n²) over a grown dataset.</li>
+    </ol>
+    <p class="muted">Notice: the procedure is identical to the capstone — only the <em>first branch</em> flipped from off-CPU to on-CPU. That's the whole game.</p>
+  </section>
+
+  <!-- 08 WHERE TO GO NEXT -->
+  <section>
+    <h2><span class="num">08</span> Where to go next — make it real</h2>
+    <p>You've finished the conceptual arc. Two ways to turn it into a durable skill:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>🧑‍🏫 Bring me a real problem</h4>
+        <p class="truth">The fastest way to cement this: take an <b>actual</b> slow/flaky/mysterious thing you've hit — at work or in a side project — and we'll walk the drill-down together. Which branch? Which one-liner? I'll help you read the output and name the cause.</p>
+      </div>
+      <div class="card">
+        <h4>🐧 Get a Linux box</h4>
+        <p class="truth">Everything here is <b>run-it-later</b> until you have Linux. A cloud VM or a local Linux VM unlocks running these one-liners for real. Ask me for a vetted "Linux on a Mac" setup when you're ready (it's a noted gap in RESOURCES.md).</p>
+      </div>
+      <div class="card">
+        <h4>💬 Test it in the community</h4>
+        <p class="truth">When you want to pressure-test your understanding against real practitioners: the <a href="https://ebpf.io/" target="_blank" rel="noopener">eBPF community Slack</a> (newcomer + bpftrace channels) and <a href="https://www.reddit.com/r/eBPF/" target="_blank" rel="noopener">r/eBPF</a>. See <a href="/courses/ebpf/#resources">RESOURCES.md</a> for all of it.</p>
+      </div>
+      <div class="card">
+        <h4>📚 Go deeper on recipes</h4>
+        <p class="truth">For a subsystem-by-subsystem cookbook of debugging recipes, <a href="https://www.brendangregg.com/bpf-performance-tools-book.html" target="_blank" rel="noopener"><em>BPF Performance Tools</em></a> is the definitive next step — 150+ tools organized exactly like this drill-down.</p>
+      </div>
+    </div>
+    <p class="cite">Communities &amp; reading per <a href="/courses/ebpf/#resources">RESOURCES.md</a> and <a href="https://ebpf.io/get-started/" target="_blank" rel="noopener">ebpf.io — Get Started</a>.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section>
+    <h2><span class="num">09</span> Check yourself</h2>
+    <p class="muted">Scenario questions — pick the right tool for each. Instant feedback, no grading.</p>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">1. A request is slow and <strong>CPU is pegged at 100%</strong> the whole time. What's your move?</div>
+        <button class="opt">An off-CPU latency histogram, to see what it's waiting on</button>
+        <button class="opt">A sampling profiler + flame graph, to see which function is burning CPU</button>
+        <button class="opt">Snoop every file open on the system</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">2. A request is slow but <strong>CPU is idle</strong> — it seems to be waiting on disk. Which tool fits?</div>
+        <button class="opt">A CPU flame graph</button>
+        <button class="opt">Counting new processes with execsnoop</button>
+        <button class="opt">A read/block-I/O latency histogram (off-CPU timing)</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">3. Your <code class="inl">@[probe] = count()</code> shows <code class="inl">openat</code> firing 200× more than any other syscall. What does that spike most suggest?</div>
+        <button class="opt">A hotspot worth snooping — likely a retry storm on a file; trace the actual filenames next</button>
+        <button class="opt">The CPU is overheating</button>
+        <button class="opt">Nothing — high syscall counts are always normal and can be ignored</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">4. A mystery service is "just slow." What's the correct <strong>first</strong> step in the drill-down?</div>
+        <button class="opt">Immediately snoop every syscall and read the firehose</button>
+        <button class="opt">Characterize: decide whether the time is on-CPU or off-CPU (waiting) before picking a tool</button>
+        <button class="opt">Restart the service and hope it goes away</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section>
+    <h2><span class="num">10</span> Flashcards</h2>
+    <p class="muted">Click to reveal. Quick review of the capstone's load-bearing ideas.</p>
+
+    <details class="fc"><summary>Q: What is the USE method, in one line?</summary><div class="a">A: For <strong>every resource</strong> (CPU, memory, disks, network), check <strong>U</strong>tilization (how busy), <strong>S</strong>aturation (queued, unservable work — where latency lives), and <strong>E</strong>rrors (count of error events). It points you at the bottlenecked resource fast.</div></details>
+
+    <details class="fc"><summary>Q: What's the very first split when something is "slow"?</summary><div class="a">A: <strong>On-CPU vs off-CPU.</strong> On-CPU = the thread is busy computing → use a profiler + flame graph (L7). Off-CPU = it's parked/waiting (disk, lock, network) → use latency histograms / off-CPU timing (L6). The tell: slow <em>but CPU idle</em> means off-CPU.</div></details>
+
+    <details class="fc"><summary>Q: What does "count, then snoop" mean and why that order?</summary><div class="a">A: First <strong>count</strong> events with a map (<code class="inl">@[probe] = count()</code>) — cheap and wide, it finds the hotspot. Then <strong>snoop</strong> just that offender to see the detail (filenames, args). Snooping first would be a firehose with no signal.</div></details>
+
+    <details class="fc"><summary>Q: When do you reach for a latency histogram, and what does it show?</summary><div class="a">A: When the problem is off-CPU/waiting and you want the <em>distribution</em> of how long an operation takes. A <code class="inl">hist()</code> reveals the shape — e.g. a bimodal split where most reads are fast (cache) but a long tail hits slow disk (tens of ms). Averages hide that tail; histograms expose it.</div></details>
+
+    <details class="fc"><summary>Q: Describe the drill-down mindset in one sentence.</summary><div class="a">A: Don't hunt for the bug — <strong>narrow the search space by half at each step</strong> (characterize → count → snoop → measure → name → verify), reaching for the one eBPF tool that answers each question, until the root cause is a single sentence.</div></details>
+
+    <details class="fc"><summary>Q: When should you escalate to a community instead of grinding solo?</summary><div class="a">A: When you've done the drill-down but are stuck reading output, picking a probe, or interpreting a result — that's the moment to bring it to the <a href="https://ebpf.io/" target="_blank" rel="noopener">eBPF Slack</a>, <a href="https://www.reddit.com/r/eBPF/" target="_blank" rel="noopener">r/eBPF</a>, or your teacher. Communities are for testing understanding against real practitioners, not a first resort.</div></details>
+  </section>
+
+  <!-- TEACHER -->
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>This is the capstone, so let's make it stick: <em>bring me a real "why is this slow?" you've actually hit</em> and we'll walk the drill-down together. Or try: <em>"Re-run this investigation but for a memory leak — which branch and which tools?"</em> or <em>"What would the flame-graph version of Step 1 have looked like?"</em></p>
+  </div>
+
+  <!-- NAV -->
+  <nav class="next">
+    <a href="0009-running-safely-in-production.html">
+      <span class="dir">↩ Previous</span>
+      <span class="ttl">Running It Safely in Production</span>
+    </a>
+    <a href="../reference/bpftrace-cheatsheet.html">
+      <span class="dir">Reference →</span>
+      <span class="ttl">Keep handy: bpftrace cheat sheet</span>
+    </a>
+  </nav>
+
+  <footer>
+    eBPF Course · Lesson 10 (capstone) · grounded in
+    <a href="https://ebpf.io/" target="_blank" rel="noopener">ebpf.io</a>,
+    <a href="https://www.brendangregg.com/usemethod.html" target="_blank" rel="noopener">Brendan Gregg — USE method</a> &amp;
+    <a href="https://www.brendangregg.com/bpf-performance-tools-book.html" target="_blank" rel="noopener">BPF Performance Tools</a>, and
+    <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a>.
+    See <a href="/courses/ebpf/#resources">RESOURCES.md</a> ·
+    <a href="../reference/ebpf-glossary.html">Glossary</a> ·
+    <a href="../reference/bpftrace-cheatsheet.html">bpftrace cheat sheet</a>
+  </footer>
+
+</div>
+
+<script>
+  // Tight feedback loop for the self-check quiz.
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

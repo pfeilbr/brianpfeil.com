@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 10 — Capstone: Your Project's Verification Loop</title>
+<style>
+  :root{
+    --paper:#faf7f0; --ink:#1f2328; --soft:#5b6168; --line:#e4ddcf;
+    --accent:#0f766e; --accent-soft:#d7ede9; --gold:#b45309; --gold-soft:#fbe7cf;
+    --card:#fffdf8; --code:#2d2a26; --codeink:#eae3d6; --good:#2f9e44; --bad:#d64545;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font:17px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:48px 24px}
+  .wrap{max-width:800px;margin:0 auto}
+  h1,h2,h3{font-family:Georgia,"Iowan Old Style",Charter,serif;line-height:1.18;letter-spacing:-.01em}
+  h1{font-size:2.3rem;margin:.1em 0 .15em} h2{font-size:1.5rem;margin:2.2em 0 .5em} h3{font-size:1.1rem;margin:1.4em 0 .3em}
+  .kicker{font:600 .74rem/1 system-ui;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .sub{color:var(--soft);font-size:1.12rem;max-width:62ch;margin:.3em 0 0}
+  p{margin:.7em 0} a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft)} a:hover{border-color:var(--accent)}
+  code{background:#efe9dd;padding:.12em .42em;border-radius:5px;font:.85em ui-monospace,Menlo,monospace}
+  .meta{display:flex;gap:14px;flex-wrap:wrap;margin:1.4em 0 0;font-size:.84rem;color:var(--soft)}
+  .meta span{background:var(--card);border:1px solid var(--line);padding:5px 12px;border-radius:99px}
+  hr{border:0;border-top:2px solid var(--line);margin:2.4em 0}
+  .cite{font-size:.8rem;color:var(--soft)}
+  .callout{background:var(--accent-soft);border-radius:12px;padding:16px 20px;margin:1.2em 0}
+  .callout strong{color:var(--accent)}
+  .steps{counter-reset:s;margin:1em 0;padding:0;list-style:none}
+  .steps li{counter-increment:s;display:flex;gap:12px;margin:.6em 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 15px;font-size:.95rem}
+  .steps li::before{content:counter(s);font:700 .8rem/1.7 system-ui;background:var(--accent);color:#fff;min-width:24px;height:24px;border-radius:50%;text-align:center;flex:0 0 auto}
+  /* worksheet */
+  .ws{background:var(--card);border:2px solid var(--accent);border-radius:16px;padding:24px;margin:1.6em 0}
+  .ws label{display:block;font:600 .8rem system-ui;letter-spacing:.04em;text-transform:uppercase;color:var(--soft);margin:14px 0 4px}
+  .ws input[type=text],.ws textarea,.ws select{width:100%;font:15px/1.5 inherit;border:1.5px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--paper);color:var(--ink)}
+  .ws textarea{resize:vertical;min-height:54px}
+  .ws select{font-size:14px}
+  .fmrow{display:grid;grid-template-columns:1fr 170px 150px;gap:8px;margin-bottom:8px;align-items:start}
+  .fmrow input,.fmrow select{margin:0}
+  .btn{font:600 .92rem system-ui;background:var(--accent);color:#fff;border:0;border-radius:9px;padding:10px 20px;cursor:pointer;margin-top:14px}
+  .btn.ghost{background:var(--card);color:var(--accent);border:1.5px solid var(--accent)}
+  #planout{display:none;margin-top:18px}
+  #planout pre{background:var(--code);color:var(--codeink);border-radius:12px;padding:16px;overflow:auto;font:12.5px/1.6 ui-monospace,Menlo,monospace;white-space:pre-wrap}
+  .ask{background:var(--gold-soft);border-radius:12px;padding:16px 20px;margin:1.4em 0;color:#5c3d12}
+  .next{display:flex;gap:14px;flex-wrap:wrap;margin-top:1em}
+  .next a{flex:1 1 200px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+  .next a b{color:var(--accent);display:block}
+  footer{margin-top:3em;padding-top:1.2em;border-top:2px solid var(--line);font-size:.82rem;color:var(--soft)}
+  @media(max-width:680px){.fmrow{grid-template-columns:1fr}body{padding:28px 14px}h1{font-size:1.8rem}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: agentic-loop-engineering ---- */
+/* ============================================================================
+   agentic-loop-engineering course adapter — re-skin this course's bespoke
+   "warm paper" component classes with the canonical tokens from
+   assets/theme.css. Injected AFTER theme.css and AFTER each lesson's own
+   <style>, so these rules win. The course hardcodes a single light palette
+   (--paper / --ink / --card / --gold / teal --accent) in its own :root plus a
+   set of dark transcript widgets (.session/.bubble/.tool/.gblock/.hookblock)
+   with baked-in dark hexes. We retokenise both onto the unified vocabulary so
+   the course matches ebpf/nix and gains real light + dark mode without
+   touching any lesson markup. !important is used wherever the course hardcodes
+   a colour, to guarantee the override. See scripts/theme_lessons.py.
+   ============================================================================ */
+
+/* ---- redirect the course's OWN palette vars onto the canonical tokens -------
+   The lessons reference these vars everywhere (background:var(--paper), etc.).
+   Re-pointing them is the cheapest, broadest fix and makes everything that
+   wasn't individually overridden below adapt to dark mode for free. */
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"]{
+  --paper:var(--bg);
+  --ink:var(--fg);
+  --soft:var(--muted);
+  --line:var(--border);
+  --card:var(--surface);
+  --accent-soft:color-mix(in srgb,var(--accent) 14%,transparent);
+  --gold:var(--warn);
+  --gold-soft:color-mix(in srgb,var(--warn) 14%,transparent);
+  --good:var(--mark);
+  --bad:var(--danger);
+  /* dark code panel in both themes */
+  --code:var(--code-bg);
+  --codeink:var(--code-ink);
+  /* reference-file syntax/legend helper vars */
+  --codecom:#7f8db3; --codekey:#74c0fc; --codestr:#63e6be;
+  /* reference taxonomy verdict chips */
+  --t1:color-mix(in srgb,var(--mark) 16%,transparent); --t1b:var(--mark);
+  --t2:color-mix(in srgb,var(--warn) 16%,transparent); --t2b:var(--warn);
+  --t3:color-mix(in srgb,var(--danger) 16%,transparent); --t3b:var(--danger);
+}
+
+/* ---- page shell: warm paper body → unified column on var(--bg) ---- */
+body{ background:var(--bg) !important; color:var(--fg) !important; }
+.wrap{ max-width:var(--maxw); margin:0 auto; }
+
+/* ---- headings (course uses serif teal accents) ---- */
+h1{ color:var(--fg) !important; }
+h2{ color:var(--fg) !important; }
+h3{ color:var(--accent) !important; }
+.kicker{ color:var(--accent) !important; }
+.sub,.lede{ color:var(--muted) !important; }
+.src,.cite{ color:var(--muted) !important; }
+
+/* ---- inline code ---- */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; border-radius:6px; }
+
+/* ---- code blocks: force light-on-dark in both themes ---- */
+pre{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; border-radius:12px !important; }
+pre code{ background:none !important; color:inherit !important; padding:0; }
+.fname{ color:var(--muted) !important;
+  background:color-mix(in srgb,var(--fg) 8%,transparent) !important;
+  border:1px solid var(--border) !important; border-bottom:0 !important; }
+
+/* syntax tokens (the terse 1-letter classes), remapped by role:
+   .c comment · .s string · .k keyword · .f function/punct · .bug error mark */
+pre .c{ color:#7f8db3 !important; }                 /* comments  */
+pre .s{ color:#63e6be !important; }                 /* strings   */
+pre .k{ color:#74c0fc !important; }                 /* keywords  */
+pre .f{ color:var(--accent-2) !important; }         /* func/punct */
+pre .bug{ background:color-mix(in srgb,var(--danger) 38%,transparent) !important;
+  border-radius:3px; }                              /* highlighted bug */
+
+/* ---- generic callout / card / box surfaces → unified neutral ---- */
+.callout{ background:color-mix(in srgb,var(--accent) 9%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--accent) 26%,transparent) !important;
+  border-radius:12px !important; }
+.callout strong{ color:var(--accent) !important; }
+.card,.spotlight,.tree,.gate,.vcard,.anatomy .p,.item,.stack,
+.twocol .col,.ladder .rung,.pillrow b,.legend{ background:var(--surface) !important;
+  border-color:var(--border) !important; }
+.tree b,.anatomy .p b{ color:var(--accent) !important; }
+.tree .note{ color:var(--muted) !important; }
+
+/* ---- gold / "ask" / scenario / rubric callouts → warn tint ---- */
+blockquote,.ask,.scenario,.anno,.rubricbox{
+  background:color-mix(in srgb,var(--warn) 11%,transparent) !important;
+  color:var(--fg) !important; }
+blockquote{ border-left:4px solid var(--warn) !important; }
+blockquote cite{ color:var(--muted) !important; }
+.anno .n{ background:var(--warn) !important; color:#fff !important; }
+
+/* ---- yes/no comparison columns ---- */
+.twocol .yes h3,.rec{ color:var(--mark) !important; }
+.twocol .no h3,.anti b,.star{ color:var(--accent) !important; }
+.star{ color:var(--warn) !important; }
+.anti,.fails .f1{ background:var(--surface) !important;
+  border-color:var(--border) !important;
+  border-top-color:var(--danger) !important; }
+
+/* ---- loop / node diagram chips ---- */
+.loop,.loopviz{ background:var(--surface) !important; border-color:var(--border) !important; }
+.loop .node,.loopviz .node,.loop span.node{
+  background:color-mix(in srgb,var(--accent) 16%,transparent) !important;
+  color:var(--accent) !important; }
+.loop .node.hot,.loopviz .node.hot,.loop span.node.hot{
+  background:color-mix(in srgb,var(--warn) 18%,transparent) !important;
+  color:var(--warn) !important; box-shadow:0 0 0 2px var(--warn) !important; }
+.loop .arr,.loopviz .arr{ color:var(--muted) !important; }
+
+/* ---- ladder rungs ---- */
+.ladder .rung .n{ background:var(--muted) !important; color:#fff !important; }
+.ladder .rung.hot{ background:color-mix(in srgb,var(--warn) 14%,transparent) !important;
+  border-color:var(--warn) !important; }
+.ladder .rung.hot .n{ background:var(--warn) !important; }
+
+/* ---- "gate" / vcard accent rails ---- */
+.gate{ border-left:4px solid var(--accent) !important; }
+.gate .lvl{ color:var(--accent) !important; }
+.vcard{ border-left:4px solid var(--accent) !important; }
+.vcard .tag,.tag{ background:color-mix(in srgb,var(--accent) 14%,transparent) !important;
+  color:var(--accent) !important; }
+.vcard .tag{ background:color-mix(in srgb,var(--warn) 16%,transparent) !important;
+  color:var(--warn) !important; }
+
+/* ---- dark transcript widgets: retokenise onto panel/surface, NOT raw dark ---- */
+.session{ background:var(--panel) !important; border:1px solid var(--border) !important; }
+.session pre{ background:var(--code-bg) !important; }
+.who{ color:var(--accent) !important; }
+.who.u{ color:var(--warn) !important; }
+.who.m{ color:var(--accent-2) !important; }
+.who.g{ color:var(--danger) !important; }
+.bubble{ background:var(--surface) !important; color:var(--fg) !important; }
+.u .bubble{ background:color-mix(in srgb,var(--warn) 12%,transparent) !important; }
+.m .bubble{ background:color-mix(in srgb,var(--accent-2) 12%,transparent) !important; }
+.tool{ color:var(--muted) !important; }
+.tool b{ color:var(--warn) !important; }
+
+/* gold/red/green inline transcript blocks → semantic tints */
+.gblock{ background:color-mix(in srgb,var(--warn) 12%,transparent) !important;
+  border-color:var(--warn) !important; color:var(--fg) !important; }
+.gblock .bubble{ background:color-mix(in srgb,var(--warn) 10%,transparent) !important; }
+.gblock .tool b{ color:var(--warn) !important; }
+.hookblock{ background:color-mix(in srgb,var(--danger) 10%,transparent) !important;
+  border-color:var(--danger) !important; color:var(--fg) !important; }
+.hookblock .who{ color:var(--danger) !important; }
+.hookblock pre{ background:var(--code-bg) !important; }
+.hookblock.allowed{ background:color-mix(in srgb,var(--mark) 10%,transparent) !important;
+  border-color:var(--mark) !important; }
+.hookblock.allowed .who{ color:var(--mark) !important; }
+.hookblock.allowed pre{ background:var(--code-bg) !important; }
+
+/* pass/fail + verification-line markers */
+.pass{ color:var(--mark) !important; }
+.fail{ color:var(--danger) !important; }
+.vline.p{ background:color-mix(in srgb,var(--mark) 16%,transparent) !important; color:var(--mark) !important; }
+.vline.f{ background:color-mix(in srgb,var(--danger) 16%,transparent) !important; color:var(--danger) !important; }
+
+/* badges — tinted pills (token text on a tint of the same token), legible in
+   light AND dark. A solid --warn/--mark fill + white text fails in dark mode,
+   where those tokens are light. */
+.badge{ background:color-mix(in srgb,var(--warn) 22%,transparent) !important;
+  color:var(--warn) !important; border:1px solid color-mix(in srgb,var(--warn) 45%,transparent) !important; }
+.badge.ok{ background:color-mix(in srgb,var(--mark) 22%,transparent) !important;
+  color:var(--mark) !important; border-color:color-mix(in srgb,var(--mark) 45%,transparent) !important; }
+
+/* item message (mono) → code panel */
+.item .msg{ background:var(--code-bg) !important; color:var(--code-ink) !important; }
+
+/* ---- quiz / interactive widgets ---- */
+.quiz,.ws,.lab{ background:var(--surface) !important; border:2px solid var(--accent) !important; }
+.qprog{ color:var(--muted) !important; }
+.opt{ background:var(--panel) !important; border-color:var(--border) !important;
+  color:var(--fg) !important; }
+.opt:hover:not(:disabled){ border-color:var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 7%,transparent) !important; }
+.opt.correct{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 14%,transparent) !important; }
+.opt.wrong{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 13%,transparent) !important; }
+.opt code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; }
+.fb{ color:var(--fg) !important; }
+.fb.ok{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  border:1px solid var(--mark) !important; }
+.fb.no{ background:color-mix(in srgb,var(--danger) 13%,transparent) !important;
+  border:1px solid var(--danger) !important; }
+.score,.done .big{ color:var(--accent) !important; }
+.legend{ background:transparent !important; color:var(--muted) !important; }
+
+/* verdict toggles (calibration lesson) */
+.verdict.agree{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  border:1px solid var(--mark) !important; color:var(--fg) !important; }
+.verdict.disagree{ background:color-mix(in srgb,var(--danger) 13%,transparent) !important;
+  border:1px solid var(--danger) !important; color:var(--fg) !important; }
+.vbtn{ background:var(--panel) !important; border-color:var(--border) !important;
+  color:var(--fg) !important; }
+.vbtn.self{ border-color:var(--danger) !important; color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 12%,transparent) !important; }
+.vbtn.selp{ border-color:var(--mark) !important; color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 12%,transparent) !important; }
+.ws select{ background:var(--panel) !important; border-color:var(--border) !important;
+  color:var(--fg) !important; }
+.ws label{ color:var(--muted) !important; }
+
+/* ---- buttons ---- */
+.btn{ background:var(--accent) !important; color:#fff !important; }
+.btn.ghost{ background:var(--surface) !important; color:var(--accent) !important;
+  border:1.5px solid var(--accent) !important; }
+
+/* ---- next / nav cards + footer ---- */
+.next a{ background:var(--panel) !important; border-color:var(--border) !important; }
+.next a b{ color:var(--accent) !important; }
+footer{ border-top:2px solid var(--border) !important; color:var(--muted) !important; }
+.meta span{ background:var(--surface) !important; border-color:var(--border) !important;
+  color:var(--muted) !important; }
+.pillrow b span,.pill{ color:var(--accent) !important; }
+
+/* ---- spectrum bar (verifier taxonomy reference): keep gradient legible ----
+   It deliberately ramps teal→amber→red with white text; re-anchor the stops to
+   tokens so it stays on-brand in dark mode. White text is preserved. */
+.spectrum{ border-color:var(--border) !important; }
+/* white labels on the gradient ramp + on small token-coloured badges (.n) need a
+   shadow to stay legible where a token is light in dark mode. */
+.spectrum div{ color:#fff !important; text-shadow:0 1px 2px rgba(0,0,0,.6) !important; }
+.n{ text-shadow:0 1px 2px rgba(0,0,0,.55) !important; }
+.s1{ background:var(--accent) !important; }
+.s2{ background:color-mix(in srgb,var(--accent) 60%,var(--warn)) !important; }
+.s3{ background:color-mix(in srgb,var(--warn) 70%,var(--accent)) !important; }
+.s4{ background:var(--warn) !important; }
+.s5{ background:color-mix(in srgb,var(--danger) 70%,var(--warn)) !important; }
+
+/* ---- CONTRAST blanket: every text-bearing box onto --fg (EXCLUDING code) ----
+   The course bakes dark ink (#1f2328, #5c3d12, #4a3310, #4a3310…) into many
+   boxes, illegible on dark-mode tinted backgrounds. Force --fg everywhere that
+   isn't a code panel. */
+.callout,.card,.spotlight,.spotlight .row b,.tree,.gate,.gate b,.vcard,
+.anatomy .p,.item,.stack,.stack .layer,.twocol .col,.ladder .rung,
+.bubble,.gblock,.hookblock,.quiz,.ws,.lab,.fb,.scenario,.anno,.rubricbox,
+.ask,blockquote,.anti,.fails .f1,.verdict,.legend,p,li,td,th{
+  color:var(--fg) !important; }
+.spotlight .row .d,.stack .layer .d,.twocol .col,.muted,.fnote{ color:var(--muted) !important; }
+/* table row striping: the course uses a hardcoded light "paper" stripe that is
+   invisible under light text in dark mode. Retokenize to a scheme-aware tint. */
+tr{ background:transparent !important; }
+tbody tr:nth-child(even){ background:color-mix(in srgb,var(--fg) 5%,transparent) !important; }
+/* …but never repaint code panels or their tokens */
+pre,pre *,.item .msg,.fname{ }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/agentic-loop-engineering/" style="color:inherit;text-decoration:none">&larr; Agentic Loop Engineering</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+  <span class="kicker">Lesson 10 · Capstone · Agentic Loop Engineering</span>
+  <h1>Your Project's Verification Loop</h1>
+  <p class="sub">Everything in this course, compressed into one design procedure — and a worksheet that turns your answers into a concrete loop plan you can hand straight back to your teacher to build.</p>
+  <div class="meta"><span>⏱ ~15 min with your real project</span><span>🎯 The mission's finish line</span></div>
+
+  <hr>
+
+  <h2>1 · The design procedure</h2>
+  <ol class="steps">
+    <li><strong>Write the definition of done</strong> for the work this project's sessions usually do — observable statements, not adjectives. (Lesson 2's two-expert test applies.)</li>
+    <li><strong>Enumerate the failure modes you actually fear.</strong> Not hypotheticals — the ways this project has burned you. Each one names a verifier need.</li>
+    <li><strong>For each failure mode, pick the cheapest verifier that catches it</strong> — leftmost on the <a href="../reference/verifier-taxonomy.html">taxonomy</a> that genuinely covers the failure. Deterministic if the question is factual; calibrated judgment only where judgment is the question.</li>
+    <li><strong>Pick the gate by cost-of-wrong-done</strong> (Lesson 9's table): Gate 1 by default, promote to /goal, Stop hook, or subagent the first time absence bites — or immediately for must-never-slip checks.</li>
+    <li><strong>Build the smallest version</strong> — one hook script, one agent file, one ride-along prompt. Resist building the whole stack on day one.</li>
+    <li><strong>Verify the verifier:</strong> deliberately break the thing it guards and confirm it fires. (Both demo battle scars — the stderr noise, the zero-match trap — were caught exactly this way.)</li>
+    <li><strong>Watch for gaming and rot:</strong> tests edited to pass, goldens blindly regenerated, flaky gates, unbounded reviewers. Re-run step 6 occasionally.</li>
+  </ol>
+  <div class="callout"><strong>The whole course in one sentence:</strong> give the agent a pass/fail signal it cannot argue with, make the signal's failure output actionable, gate "done" on it in proportion to the stakes — and verify the verifier.</div>
+
+  <h2>2 · The worksheet</h2>
+  <p>Fill it in for a real project. The generator assembles a markdown loop plan — definition of done, failure-mode → verifier → gate table, and the starter files to create. Copy it and paste it to me in chat; I'll build the files with you.</p>
+
+  <div class="ws">
+    <label for="proj">Project name / path</label>
+    <input type="text" id="proj" placeholder="e.g. acme-api (~/projects/acme-api)">
+
+    <label for="dod">Definition of done (observable statements, one per line)</label>
+    <textarea id="dod" placeholder="e.g.&#10;suite green (npm test, ~6s)&#10;typecheck clean&#10;no endpoint returns a bare 500 without a structured error body"></textarea>
+
+    <label>Top failure modes — what actually burns you (add up to 4)</label>
+    <div id="fms"></div>
+    <button class="btn ghost" id="addfm" type="button">+ add failure mode</button>
+
+    <label for="horizon" style="margin-top:18px">Work horizon</label>
+    <select id="horizon">
+      <option value="task">Mostly single-session tasks</option>
+      <option value="long">Long-running / multi-session work (backlogs, migrations)</option>
+    </select>
+
+    <button class="btn" id="gen" type="button">Generate my loop plan →</button>
+    <div id="planout">
+      <pre id="plantext"></pre>
+      <button class="btn" id="copy" type="button">Copy plan to clipboard</button>
+      <span class="cite" id="copied" style="display:none;margin-left:10px">✓ copied — paste it to your teacher in chat</span>
+    </div>
+  </div>
+
+  <h2>3 · What happens next</h2>
+  <p>Paste the plan into our chat and say "build it." I'll write the actual files — the hook script tuned to your test runner, the diff-grader rubric bound to <em>your</em> definition of done, the ledger if you chose the long horizon — and we'll verify each verifier by deliberately breaking something, just like the demos. That working loop in your real repo is the mission's success condition.</p>
+
+  <div class="ask">💬 This lesson is the handoff point, not the end. The wisdom layer — comparing your loop designs against other practitioners' — lives in the communities in <a href="/courses/agentic-loop-engineering/#resources">RESOURCES.md</a> (r/ClaudeAI, r/ClaudeCode); your loop plans make excellent posts there.</div>
+
+  <h3>Where to go next</h3>
+  <div class="next">
+    <a href="../reference/verifier-taxonomy.html"><b>📑 Verifier Taxonomy</b>The menu, printable — keep it next to the worksheet.</a>
+    <a href="0009-composing-the-loop.html"><b>📘 Lesson 9</b>The decision framework behind the generator.</a>
+  </div>
+
+  <footer>This capstone synthesizes the whole workspace; every rule traces to the sources cited in Lessons 1–9 and <a href="/courses/agentic-loop-engineering/#resources">RESOURCES.md</a>.</footer>
+</div>
+
+<script>
+const VERIFIERS = [
+  ["unit","Unit tests / TDD"],["types","Type checker"],["lint","Linter"],
+  ["golden","Golden / fixture diff"],["logs","Logs-as-feedback"],
+  ["world","World-state check"],["e2e","Integration / E2E run"],
+  ["shot","Screenshot / visual diff"],["judge","LLM-as-judge (calibrated)"],
+  ["sub","Adversarial subagent"]
+];
+const GATES = [["g1","Gate 1: in-prompt"],["g2","Gate 2: /goal"],["g3","Gate 3: Stop hook"],["g4","Gate 4: subagent"]];
+const fms = document.getElementById('fms');
+function addRow(ph){
+  if (fms.children.length >= 4) return;
+  const d = document.createElement('div'); d.className='fmrow';
+  d.innerHTML = `<input type="text" placeholder="${ph||'e.g. refactors leave the suite quietly red'}">
+    <select>${VERIFIERS.map(v=>`<option value="${v[0]}">${v[1]}</option>`).join('')}</select>
+    <select>${GATES.map(g=>`<option value="${g[0]}">${g[1]}</option>`).join('')}</select>`;
+  fms.appendChild(d);
+}
+addRow(); addRow('e.g. "done" claimed but requirements half-met');
+document.getElementById('addfm').onclick = () => addRow();
+
+const FILEHINTS = {
+  g3: "- `.claude/settings.json` + `scripts/check.sh` (Stop hook — see demo 02/03 for the skeleton)",
+  g4: "- `.claude/agents/diff-grader.md` (rubric subagent — see Lesson 3 for the skeleton)",
+  g2: "- a note in CLAUDE.md: set the /goal at session start for this condition",
+  g1: "- a reusable ride-along line for prompts (or a CLAUDE.md workflow rule)"
+};
+const VNAMES = Object.fromEntries(VERIFIERS); const GNAMES = Object.fromEntries(GATES);
+document.getElementById('gen').onclick = () => {
+  const proj = document.getElementById('proj').value.trim() || "(unnamed project)";
+  const dod = document.getElementById('dod').value.trim().split('\n').filter(Boolean);
+  const horizon = document.getElementById('horizon').value;
+  const rows = [...fms.querySelectorAll('.fmrow')].map(r => ({
+    fm: r.querySelector('input').value.trim(),
+    v: r.querySelectorAll('select')[0].value,
+    g: r.querySelectorAll('select')[1].value
+  })).filter(r => r.fm);
+  const files = new Set();
+  rows.forEach(r => files.add(FILEHINTS[r.g]));
+  if (horizon === 'long') files.add("- `features.json` ledger + session protocol in CLAUDE.md + ledger-honesty Stop hook (see demo 03)");
+  let md = `# Verification loop plan — ${proj}\n\n## Definition of done\n`;
+  md += dod.length ? dod.map(l => `- [ ] ${l}`).join('\n') : "- [ ] (fill in — observable statements only)";
+  md += `\n\n## Failure modes → verifiers → gates\n\n| Failure mode | Verifier | Gate |\n|---|---|---|\n`;
+  md += rows.length ? rows.map(r => `| ${r.fm} | ${VNAMES[r.v]} | ${GNAMES[r.g]} |`).join('\n') : "| (none listed) | | |";
+  md += `\n\n## Work horizon\n${horizon === 'long' ? "Multi-session — ledger pattern applies (Lesson 5)." : "Single-session tasks — Gate 1 default, promote on first burn (Lesson 9)."}`;
+  md += `\n\n## Starter files to create\n${[...files].join('\n')}`;
+  md += `\n\n## Verify-the-verifier checklist\n- [ ] For each gate above: deliberately break the guarded thing once; confirm the gate fires with ACTIONABLE failure output\n- [ ] For any judge/rubric: grade ~10 real examples myself first; measure agreement (Lesson 6)\n- [ ] Re-check for rot in a month: flaky gates, edited tests, blind golden updates\n\n*Generated from Lesson 10 — paste this to my teaching session and say "build it."*`;
+  document.getElementById('plantext').textContent = md;
+  document.getElementById('planout').style.display = 'block';
+};
+document.getElementById('copy').onclick = async () => {
+  await navigator.clipboard.writeText(document.getElementById('plantext').textContent);
+  document.getElementById('copied').style.display = 'inline';
+};
+</script>
+</body>
+</html>

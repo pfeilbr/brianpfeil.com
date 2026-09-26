@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyTorch Glossary · Quick Reference</title>
+<style>
+:root{
+  --bg:#ffffff; --panel:#fbfcff; --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6; --soon:#d97706;
+  --maxw:920px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1216; --panel:#161b22; --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --border:#2a313c; --soon:#fbbf24;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--fg);line-height:1.6;padding:40px 20px 80px}
+.wrap{max-width:var(--maxw);margin:0 auto}
+header{border-bottom:3px solid var(--accent);padding-bottom:14px;margin-bottom:8px}
+.kicker{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+h1{font-size:2rem;font-weight:800;margin:.15em 0 .15em}
+.sub{color:var(--muted);font-size:1rem}
+nav.toc{margin:20px 0 8px;display:flex;flex-wrap:wrap;gap:8px}
+nav.toc a{font-size:.82rem;border:1px solid var(--border);border-radius:999px;padding:5px 12px;
+  text-decoration:none;color:var(--muted)}
+nav.toc a:hover{border-color:var(--accent);color:var(--accent)}
+h2{font-size:1.25rem;margin:34px 0 6px;color:var(--accent-2);display:flex;align-items:center;gap:.5em;
+  border-bottom:1px solid var(--border);padding-bottom:6px}
+dl{display:grid;grid-template-columns:minmax(140px,210px) 1fr;gap:0;margin-top:8px}
+dt{font-weight:700;padding:11px 14px 11px 0;border-top:1px solid var(--border);
+  font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.92rem;color:var(--fg)}
+dd{padding:11px 0 11px 14px;border-top:1px solid var(--border);color:var(--fg)}
+dd code,dt code{background:color-mix(in srgb,var(--accent) 13%,transparent);color:var(--accent);
+  border-radius:5px;padding:1px 5px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+dd .ex{display:block;margin-top:4px;color:var(--muted);font-size:.86rem;font-family:"SF Mono",Menlo,Monaco,monospace}
+.tag{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  background:color-mix(in srgb,var(--soon) 18%,transparent);color:var(--soon);
+  border:1px solid color-mix(in srgb,var(--soon) 40%,transparent);
+  border-radius:999px;padding:2px 8px;vertical-align:middle;margin-left:8px}
+.note{background:var(--panel);border:1px solid var(--border);border-left:4px solid var(--accent);
+  border-radius:10px;padding:14px 18px;margin:18px 0;font-size:.95rem}
+a.home{color:var(--accent);text-decoration:none;font-size:.9rem}
+footer{margin-top:40px;border-top:1px solid var(--border);padding-top:14px;color:var(--muted);font-size:.85rem}
+footer a{color:var(--accent)}
+@media (max-width:560px){dl{grid-template-columns:1fr}dt{padding-bottom:2px;border-top:1px solid var(--border)}
+  dd{padding-top:2px;border-top:none}}
+@media print{
+  :root{--bg:#fff;--fg:#000;--muted:#444;--panel:#fff;--border:#ccc;--accent:#1a4ed8;--accent-2:#0a7a5a}
+  body{padding:0}nav.toc{display:none}.tag{border-color:#999}
+}
+</style>
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/pytorch/" style="color:inherit;text-decoration:none">&larr; PyTorch</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+  <header>
+    <div class="kicker">PyTorch · Quick Reference</div>
+    <h1>PyTorch Glossary</h1>
+    <p class="sub">The vocabulary used across every lesson. Terms marked <span class="tag">later</span> are taught in upcoming lessons — the definition here is stable, so you can peek ahead.</p>
+  </header>
+
+  <nav class="toc">
+    <a href="#tensors">Tensor anatomy</a>
+    <a href="#ops">Operations</a>
+    <a href="#device">Devices &amp; memory</a>
+    <a href="#autograd">Autograd</a>
+    <a href="#training">Model &amp; training</a>
+  </nav>
+
+  <div class="note">A <strong>tensor</strong> is the one data structure in PyTorch: a typed,
+  n-dimensional array that always knows three things — its <a href="#shape" style="color:var(--accent)">shape</a>,
+  its <a href="#dtype" style="color:var(--accent)">dtype</a>, and its
+  <a href="#device" style="color:var(--accent)">device</a>. Read those three and you can read almost any line of PyTorch.</div>
+
+  <h2 id="tensors">🧱 Tensor anatomy</h2>
+  <dl>
+    <dt id="tensor">tensor</dt>
+    <dd>A typed, n-dimensional array — the single data structure everything in PyTorch is built from. Inputs, weights, activations, gradients are all tensors.
+      <span class="ex">torch.tensor([[1., 2., 3.], [4., 5., 6.]])</span></dd>
+
+    <dt id="rank">rank / ndim</dt>
+    <dd>How many dimensions a tensor has. <code>0</code> = scalar, <code>1</code> = vector, <code>2</code> = matrix, <code>n</code> = n-d tensor. Read it as <code>x.ndim</code>.</dd>
+
+    <dt id="shape">shape (size)</dt>
+    <dd>The tuple of sizes along each dimension, as a <code>torch.Size</code>. The most-checked property in real code. <code>x.shape</code> or <code>x.size()</code>.
+      <span class="ex">x.shape  # torch.Size([2, 3])  → 2 rows, 3 cols</span></dd>
+
+    <dt id="dim">dim (axis)</dt>
+    <dd>A single dimension, identified by index (0 = first/outermost). The argument you pass to ops like <code>sum(dim=0)</code> to say <em>which</em> axis to act along. Negative indices count from the end (<code>-1</code> = last).</dd>
+
+    <dt id="dtype">dtype</dt>
+    <dd>The element type: <code>torch.float32</code> (default for floats), <code>float16</code>/<code>bfloat16</code>, <code>int64</code> (default for ints), <code>bool</code>, etc. Mismatched dtypes are a common error. <code>x.dtype</code>.</dd>
+
+    <dt id="contiguous">contiguous</dt>
+    <dd>Whether a tensor's elements sit in one unbroken block of memory in row-major order. Some ops (and <a href="#view">view</a>) require it; call <code>x.contiguous()</code> to force it.</dd>
+  </dl>
+
+  <h2 id="ops">⚙️ Operations</h2>
+  <dl>
+    <dt id="elementwise">elementwise op</dt>
+    <dd>Applied independently to every element; shapes must match (or <a href="#broadcasting">broadcast</a>). <code>+ - * /</code>, <code>torch.exp</code>, <code>x.relu()</code>…
+      <span class="ex">x + 10        x * x</span></dd>
+
+    <dt id="broadcasting">broadcasting</dt>
+    <dd>Automatic expansion of compatible-but-unequal shapes in elementwise ops, without copying data. Trailing dims must be equal or one of them must be <code>1</code>.
+      <span class="ex">(2,3) + (3,)  → (2,3)      (2,3) + (2,1) → (2,3)</span></dd>
+
+    <dt id="matmul">matmul / <code>@</code></dt>
+    <dd>Matrix multiplication (not elementwise). Inner dims must agree: <code>(m,k) @ (k,n) → (m,n)</code>. Also <code>torch.matmul</code>.</dd>
+
+    <dt id="reduction">reduction</dt>
+    <dd>Collapses one or more dims to fewer values: <code>sum</code>, <code>mean</code>, <code>max</code>, <code>argmax</code>. Pass <code>dim=</code> to choose the axis to collapse; omit it to reduce the whole tensor to a scalar.
+      <span class="ex">x.sum(dim=0)  # collapse rows → one value per column</span></dd>
+
+    <dt id="view">view / reshape</dt>
+    <dd>Reinterpret the same data under a new shape. <code>view</code> never copies (needs <a href="#contiguous">contiguous</a> data); <code>reshape</code> copies only if it must. Use <code>-1</code> to infer one dimension.
+      <span class="ex">x.view(3, 2)      x.view(-1)  # flatten</span></dd>
+
+    <dt id="inplace">in-place op</dt>
+    <dd>A method ending in <code>_</code> that mutates the tensor instead of returning a new one: <code>add_</code>, <code>zero_</code>, <code>mul_</code>. Saves memory but can break <a href="#autograd">autograd</a> — use deliberately.</dd>
+  </dl>
+
+  <h2 id="device">💾 Devices &amp; memory</h2>
+  <dl>
+    <dt id="device">device</dt>
+    <dd>Where a tensor's data physically lives: <code>cpu</code>, <code>mps</code> (Apple GPU, shown as <code>mps:0</code>), or <code>cuda</code> (NVIDIA). Ops require all operands on the <em>same</em> device. <code>x.device</code>.</dd>
+
+    <dt id="to">.to(device)</dt>
+    <dd>Move/copy a tensor (or model) to a device. The portable idiom:
+      <span class="ex">device = "mps" if torch.backends.mps.is_available() else "cpu"
+x = x.to(device)</span></dd>
+
+    <dt id="mps">MPS</dt>
+    <dd>Metal Performance Shaders — PyTorch's Apple-Silicon GPU backend. Bundled in the macOS wheel; check with <code>torch.backends.mps.is_available()</code>. Not every op is implemented yet — set <code>PYTORCH_ENABLE_MPS_FALLBACK=1</code> to fall back to CPU for the gaps.</dd>
+
+    <dt id="numpy">NumPy bridge</dt>
+    <dd><code>t.numpy()</code> and <code>torch.from_numpy(a)</code> convert between a CPU tensor and a NumPy array, <em>sharing</em> the same memory (change one, the other changes). GPU tensors must be moved to CPU first.</dd>
+  </dl>
+
+  <h2 id="autograd">🔁 Autograd <span class="tag">later</span></h2>
+  <dl>
+    <dt id="requires_grad">requires_grad</dt>
+    <dd>A flag on a tensor: when <code>True</code>, PyTorch records the operations done to it so it can later compute gradients. Parameters have it set automatically.</dd>
+
+    <dt id="graph">computational graph</dt>
+    <dd>The dynamic DAG of operations PyTorch builds <em>as you compute</em> (define-by-run). It's what <a href="#backward">backward()</a> walks to get gradients, and it's rebuilt every forward pass.</dd>
+
+    <dt id="backward">backward()</dt>
+    <dd>Called on a scalar (usually the loss). Walks the graph in reverse, applying the chain rule, and deposits gradients into the <code>.grad</code> of every <a href="#leaf">leaf</a> tensor with <code>requires_grad=True</code>.</dd>
+
+    <dt id="grad">grad</dt>
+    <dd>The gradient accumulated on a tensor by <code>backward()</code> — same shape as the tensor. Gradients <em>accumulate</em> (add up) across calls, which is why training loops <code>zero_grad()</code>.</dd>
+
+    <dt id="leaf">leaf tensor</dt>
+    <dd>A tensor you created directly (e.g. a parameter), as opposed to one produced by a tracked op. Only leaves with <code>requires_grad=True</code> get a populated <code>.grad</code>.</dd>
+
+    <dt id="nograd">no_grad()</dt>
+    <dd>A context manager (<code>with torch.no_grad():</code>) that turns off graph tracking — used during inference and when manually updating parameters, to save memory and avoid recording those ops.</dd>
+  </dl>
+
+  <h2 id="training">🧠 Model &amp; training <span class="tag">later</span></h2>
+  <dl>
+    <dt id="module">nn.Module</dt>
+    <dd>Base class for every model and layer. Holds <a href="#parameter">parameters</a> and defines <code>forward()</code>. You subclass it; calling the instance runs <code>forward</code>.</dd>
+
+    <dt id="parameter">parameter</dt>
+    <dd>A learnable tensor owned by a module (<code>nn.Parameter</code>, <code>requires_grad=True</code> by default). <code>model.parameters()</code> hands them to the optimizer.</dd>
+
+    <dt id="forward">forward pass</dt>
+    <dd>Computing outputs from inputs through the model. (The <em>backward</em> pass is autograd computing gradients of the loss w.r.t. parameters.)</dd>
+
+    <dt id="loss">loss function</dt>
+    <dd>A scalar measuring how wrong the predictions are (e.g. <code>nn.MSELoss</code>, <code>nn.CrossEntropyLoss</code>). You call <code>.backward()</code> on it.</dd>
+
+    <dt id="optimizer">optimizer</dt>
+    <dd>Updates parameters from their gradients (<code>torch.optim.SGD</code>, <code>Adam</code>). <code>step()</code> applies one update; <code>zero_grad()</code> resets gradients to zero for the next iteration.</dd>
+
+    <dt id="loop">training loop</dt>
+    <dd>The canonical five moves, repeated: <code>forward → loss → backward → step → zero_grad</code>. You'll see this exact shape in essentially every PyTorch codebase.</dd>
+
+    <dt id="data">Dataset / DataLoader</dt>
+    <dd><code>Dataset</code> = an indexable source of samples; <code>DataLoader</code> = a batched, optionally shuffled iterable over a dataset. One <code>epoch</code> = one full pass; a <code>batch</code> = the subset processed per step.</dd>
+  </dl>
+
+  <footer>
+    PyTorch Glossary · grounded in
+    <a href="https://docs.pytorch.org/docs/stable/tensors.html" target="_blank" rel="noopener">torch.Tensor docs</a> &amp;
+    <a href="https://docs.pytorch.org/tutorials/beginner/basics/intro.html" target="_blank" rel="noopener">Learn the Basics</a> ·
+    see <a href="/courses/pytorch/#resources">RESOURCES.md</a> · back to <a href="/courses/">all courses</a>
+  </footer>
+</div>
+</body>
+</html>

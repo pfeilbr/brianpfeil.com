@@ -516,6 +516,92 @@ other = "The data for this page could not be loaded. Try reloading."
 [data_noscript]
 other = "This page is drawn with JavaScript. Its data is at <a href=\"{{ .url }}\">{{ .url }}</a>."
 
+# --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
+
+[courses_intro]
+other = "{count} free courses, {lessons} lessons in all. I wrote each one with Claude while working through the topic myself, one lesson at a time. They're hands-on and interactive, and free to read with no sign-up."
+
+[courses_english_note]
+other = "The lessons are in English."
+
+[courses_filter]
+other = "Filter by topic"
+
+[courses_all]
+other = "All"
+
+[courses_lessons]
+other = "{n} lessons"
+
+[courses_updated]
+other = "Updated {date}"
+
+[courses_start]
+other = "Start with lesson 1"
+
+[courses_lessons_h]
+other = "Lessons"
+
+[courses_reference_h]
+other = "Quick reference"
+
+[courses_resources_h]
+other = "Where to go next"
+
+[courses_resources_note]
+other = "The sources each lesson was checked against, and where to ask questions."
+
+[courses_back]
+other = "All courses"
+
+[courses_footnote]
+other = "Every lesson is a single self-contained page: no sign-up, no tracking, nothing to install to read it."
+
+[course_cat_ai_ml]
+other = "AI & ML"
+
+[course_cat_programming_languages]
+other = "Programming languages"
+
+[course_cat_web_frontend]
+other = "Web & frontend"
+
+[course_cat_mobile]
+other = "Mobile"
+
+[course_cat_backend_data]
+other = "Backend & data"
+
+[course_cat_devops_infra]
+other = "DevOps & infrastructure"
+
+[course_cat_security]
+other = "Security"
+
+[course_cat_hardware_systems]
+other = "Hardware & systems"
+
+[course_cat_productivity_tools]
+other = "Productivity & tools"
+
+[course_cat_science_math]
+other = "Science & math"
+
+[course_cat_other]
+other = "Other"
+
+[learn_courses_cta]
+other = "Prefer a guided path? Try the free courses I wrote, lesson by lesson."
+
+[hub_courses_title]
+other = "Courses"
+
+[hub_courses_blurb]
+other = "Free multi-lesson courses I wrote while learning each topic"
+
+[hub_courses_count]
+other = "{{ .count }} courses"
+
 # --- /learn/ (layouts/_default/learn.html, data/learn.json) ---
 
 [learn_intro]

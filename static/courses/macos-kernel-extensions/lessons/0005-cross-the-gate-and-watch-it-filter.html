@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 5 — Cross the Gate &amp; Watch It Filter</title>
+<style>
+  :root{--bg:#fbfbfd;--fg:#1d1d1f;--muted:#6e6e73;--line:#d2d2d7;--accent:#bf4800;--accent2:#0066cc;--card:#fff;--code:#f5f5f7;--warn:#9a6700;--warnbg:#fff8e6;--good:#1a7f37;--goodbg:#e8f6ec;--keybg:#eef4ff;--bad:#b3261e;--badbg:#fbeaea;--shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+  @media (prefers-color-scheme:dark){:root{--bg:#000;--fg:#f5f5f7;--muted:#98989d;--line:#3a3a3c;--accent:#ff7a3d;--accent2:#4ea3ff;--card:#1c1c1e;--code:#161618;--warn:#e0b341;--warnbg:#2a2410;--good:#5ed27e;--goodbg:#10240f;--keybg:#0e1c2e;--bad:#ff6b6b;--badbg:#2a1212;--shadow:0 1px 3px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.4);}}
+  *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;padding:2.5rem 1.25rem 6rem;}
+  .wrap{max-width:880px;margin:0 auto}
+  a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
+  header{border-bottom:2px solid var(--accent);padding-bottom:1.1rem;margin-bottom:1.6rem}
+  .kicker{color:var(--accent);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+  h1{font-size:2.1rem;margin:.35rem 0 .5rem;letter-spacing:-.02em;line-height:1.1}
+  .lede{color:var(--muted);margin:0;font-size:1.05rem}
+  .obj{display:flex;gap:.7rem;align-items:flex-start;background:var(--keybg);border:1px solid var(--line);border-radius:12px;padding:.85rem 1rem;margin:1.2rem 0 0}
+  .obj b{color:var(--accent2)}.obj .ic{font-size:1.2rem;line-height:1.4}
+  h2{font-size:1.35rem;margin:2.6rem 0 .7rem;letter-spacing:-.01em}
+  h2 .n{color:var(--accent);font:700 .8rem/1 ui-monospace,monospace;border:1.5px solid var(--accent);border-radius:6px;padding:.25rem .45rem;margin-right:.55rem;vertical-align:middle}
+  h3{font-size:1.05rem;margin:1.6rem 0 .4rem}p{margin:.7rem 0}
+  code{background:var(--code);border:1px solid var(--line);border-radius:5px;padding:.08em .4em;font:.86em ui-monospace,SFMono-Regular,Menlo,monospace}
+  strong{font-weight:680}
+  .doors{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:1.3rem 0}
+  @media (max-width:620px){.doors{grid-template-columns:1fr}}
+  .door{border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;background:var(--card);box-shadow:var(--shadow)}
+  .door.on{border-color:var(--good)}.door.off{border-color:var(--warn)}
+  .door h4{margin:0 0 .3rem;font-size:1rem}
+  .door .b{font:700 .65rem/1 ui-monospace,monospace;border-radius:20px;padding:.25rem .5rem;color:#fff}
+  .door.on .b{background:var(--good)}.door.off .b{background:var(--warn)}
+  .door p{font-size:.88rem;margin:.5rem 0 0}
+  .callout{border-radius:12px;padding:1rem 1.1rem;margin:1.3rem 0;border:1px solid var(--line)}
+  .callout .lbl{font-weight:700;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;display:block;margin-bottom:.3rem}
+  .callout.key{background:var(--keybg)}.callout.key .lbl{color:var(--accent2)}
+  .callout.warn{background:var(--warnbg);border-color:#e8d48a}.callout.warn .lbl{color:var(--warn)}
+  .callout.good{background:var(--goodbg)}.callout.good .lbl{color:var(--good)}.callout p{margin:.3rem 0}
+  .cmd{background:#0b0b0d;color:#e6e6e6;border-radius:10px;padding:.9rem 1rem;margin:.9rem 0;font:.82rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-x:auto;border:1px solid #2a2a2e;white-space:pre}
+  .cmd .p{color:#5ed27e;user-select:none}.cmd .c{color:#7a7a85}.cmd b{color:#ffd479}.cmd .g{color:#5ed27e}.cmd .star{color:#5ed27e;font-weight:700}
+  .runme{font:700 .68rem/1 -apple-system,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:inline-block;margin:.2rem 0 .4rem}
+  .steps{counter-reset:s;margin:1.2rem 0;padding:0;list-style:none}
+  .steps li{position:relative;padding:.2rem 0 1.1rem 2.4rem;border-left:2px solid var(--line);margin-left:.7rem}
+  .steps li:last-child{border-left:0}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:-.85rem;top:0;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--accent);color:#fff;font:700 .85rem/1.7rem ui-monospace,monospace;text-align:center}
+  .steps b{display:block;margin-bottom:.2rem}
+  details.fc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.7rem .95rem;margin:.5rem 0;box-shadow:var(--shadow)}
+  details.fc summary{cursor:pointer;font-weight:600;list-style:none}details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::before{content:"Q ";color:var(--accent);font:700 .85rem ui-monospace,monospace}
+  details.fc[open] summary{margin-bottom:.5rem;border-bottom:1px solid var(--line);padding-bottom:.5rem}
+  details.fc p{margin:.2rem 0 0}details.fc p::before{content:"A ";color:var(--good);font:700 .85rem ui-monospace,monospace}
+  .nav{display:flex;justify-content:space-between;gap:1rem;margin:2.2rem 0 0;font-size:.9rem}
+  .nav a{display:block;padding:.6rem .9rem;border:1px solid var(--line);border-radius:10px;background:var(--card);flex:1}.nav a.next{text-align:right}
+  .ask{border:1.5px dashed var(--accent);border-radius:12px;padding:1rem 1.1rem;margin:1.6rem 0}.ask b{color:var(--accent)}
+  .footer{margin-top:2rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:1rem;line-height:1.8}
+  @media print{body{padding:0;font-size:11pt}:root{--bg:#fff;--card:#fff}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: macos-kernel-extensions ---- */
+/* ============================================================================
+   macos-kernel-extensions adapter. This course ships its own apple-style
+   light/dark palette (burnt-orange --accent, blue --accent2). theme.css already
+   overrides the SHARED token names (--bg/--fg/--muted/--accent/--warn/--shadow),
+   so here we only re-point the course-SPECIFIC vars onto canonical tokens; they
+   then track light/dark automatically. The dark .term terminal widget is left
+   as-is on purpose (a terminal stays dark in both schemes).
+   ============================================================================ */
+:root{
+  --accent2:var(--accent-2) !important;
+  --line:var(--border) !important;
+  --card:var(--surface) !important;
+  --code:var(--surface) !important;
+  --good:var(--mark) !important;
+  --keybg:color-mix(in srgb,var(--accent) 9%,transparent) !important;
+  --warnbg:color-mix(in srgb,var(--warn) 11%,transparent) !important;
+  --goodbg:color-mix(in srgb,var(--mark) 12%,transparent) !important;
+}
+
+/* warn callout had a hardcoded amber border */
+.callout.warn{ border-color:color-mix(in srgb,var(--warn) 32%,transparent) !important; }
+
+/* coloured category pills keep white text. The base pill used --accent2 (now a
+   light teal) → give it a fixed dark teal so white reads, matching the other
+   fixed-colour category pills (.es red / .dk purple / .cam green, which override
+   via higher specificity). Shadow as extra insurance. */
+.card .pill{ background:#0e7c70 !important; text-shadow:0 1px 2px rgba(0,0,0,.5) !important; }
+
+/* bare inline <code> (the course only set its size) → accent tint, matching the
+   other courses. Code inside the dark terminal/pre keeps its own colours. */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent); color:var(--accent);
+  border-radius:6px; padding:1px 6px; }
+.term code,.cmd code,pre code,.term *{ background:none; }
+.term code,.cmd code,pre code{ color:inherit; padding:0; }
+
+/* "no" markers (✗) were a hardcoded red → danger token */
+.no{ color:var(--danger) !important; }
+
+/* contrast safety net: prose boxes use --fg (never the dark terminal or code) */
+.card,.card p,.card .repl b,.callout,.callout p,.fc,.fc .a,.obj,.tbl td,.ask,.next{ color:var(--fg) !important; }
+.card .repl,.lede,.tbl th,.stat span,.fnote,.muted{ color:var(--muted) !important; }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/macos-kernel-extensions/" style="color:inherit;text-decoration:none">&larr; macOS Kernel &amp; System Extensions</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+<header>
+  <div class="kicker">macOS Kernel &amp; System Extensions · Lesson 5 · the payoff</div>
+  <h1>Cross the Gate &amp; Watch It Filter</h1>
+  <p class="lede">Authorize the restricted entitlement, get the extension activated and approved, and watch your own code judge every connection on this Mac.</p>
+  <div class="obj"><span class="ic">🎯</span>
+    <div><b>By the end</b> your filter is listed in <code>systemextensionsctl list</code> as <code>activated enabled</code>, and <code>log stream</code> shows it logging real flows as you browse — then you'll flip one line to <em>block</em> a site.</div></div>
+</header>
+
+<div class="callout warn"><span class="lbl">Honesty note</span>
+  <p>Lessons 1–4 were fully verified on this Mac. This lesson's two steps — <em>provisioning</em> (needs your Apple account) and <em>approval</em> (needs your click) — are yours to complete; I can't auto-run them. Below is exactly what to do and exactly what you'll see. Ask me the moment anything diverges.</p></div>
+
+<h2><span class="n">1</span>Pick your door</h2>
+<p>From Lesson 4: a restricted entitlement loads only via a provisioning profile (SIP on) <em>or</em> developer mode (SIP off). You have a paid account, so take Door ① and keep SIP on.</p>
+<div class="doors">
+  <div class="door on">
+    <span class="b">RECOMMENDED · SIP STAYS ON</span>
+    <h4>① Provisioning profile</h4>
+    <p>Authorize the entitlement with a profile from your Developer account. No reboots, no lowered security. The way every shipping extension works. <strong>The rest of this lesson.</strong></p>
+  </div>
+  <div class="door off">
+    <span class="b">NO ACCOUNT NEEDED · SIP OFF</span>
+    <h4>② Developer mode</h4>
+    <p>Boot to recoveryOS, <code>csrutil disable</code>, reboot, <code>systemextensionsctl developer on</code>. Then unprovisioned dev builds run. The fallback — see §6.</p>
+  </div>
+</div>
+
+<h2><span class="n">2</span>Provision the capability (Door ①)</h2>
+<ol class="steps">
+  <li><b>Register two App IDs</b> at <a href="https://developer.apple.com/account/resources/identifiers/list">developer.apple.com ▸ Identifiers</a>: <code>com.example.netfilterdemo</code> and <code>com.example.netfilterdemo.filter</code>. On each, enable the <strong>Network Extensions</strong> capability. (It's self-service — no request form, unlike Endpoint Security.)</li>
+  <li><b>Create two macOS Development provisioning profiles</b> (<a href="https://developer.apple.com/account/resources/profiles/list">Profiles</a>), one per App ID, tied to your <em>Apple Development</em> cert and this Mac. Download both <code>.provisionprofile</code> files.</li>
+  <li><b>Drop them into the bundles</b> as <code>embedded.provisionprofile</code> — the profile is what AMFI checks to authorize the entitlement:
+    <div class="cmd"><span class="p">$</span> cp app.provisionprofile build/NetFilterDemo.app/Contents/embedded.provisionprofile
+<span class="p">$</span> cp ext.provisionprofile build/NetFilterDemo.app/Contents/Library/SystemExtensions/\
+com.example.netfilterdemo.filter.systemextension/Contents/embedded.provisionprofile</div>
+    (Add these two <code>cp</code> lines to <code>build.sh</code> just before the <code>codesign</code> calls.)</li>
+  <li><b>Add the matching keys</b> to <code>app.entitlements</code> / <code>ext.entitlements</code> so the signature lines up with the profile:
+    <div class="cmd"><span class="c">&lt;key&gt;com.apple.application-identifier&lt;/key&gt;&lt;string&gt;7LS573L8C4.com.example.netfilterdemo&lt;/string&gt;
+&lt;key&gt;com.apple.developer.team-identifier&lt;/key&gt;&lt;string&gt;7LS573L8C4&lt;/string&gt;</span></div>
+  </li>
+  <li><b>Re-run</b> <code>./build.sh</code>. Same output as Lesson 4, but now the binary is <em>provisioned</em>.</li>
+</ol>
+<div class="callout key"><span class="lbl">Shortcut: let Xcode provision once</span>
+  <p>Hate the portal clicking? Open the demo as an Xcode project once and build with <code>xcodebuild -allowProvisioningUpdates</code> — Xcode auto-creates the App IDs, enables the capability, and downloads the profiles. After that you can go back to <code>build.sh</code> using the profiles it generated.</p></div>
+
+<h2><span class="n">3</span>Activate — and approve</h2>
+<p>The app must live in <code>/Applications</code> when SIP is on. Copy it, then run it:</p>
+<div class="cmd"><span class="runme">▶ run me</span><span class="p">$</span> cp -R build/NetFilterDemo.app /Applications/
+<span class="p">$</span> /Applications/NetFilterDemo.app/Contents/MacOS/NetFilterDemo
+<span class="g">→ submitting activation request for com.example.netfilterdemo.filter</span>
+<span class="c">⏳ NEEDS USER APPROVAL — open System Settings ▸ General ▸ Login Items &amp; Extensions</span></div>
+<ol class="steps">
+  <li><b>Approve the extension</b> — System Settings ▸ General ▸ <em>Login Items &amp; Extensions</em> ▸ Network Extensions ▸ enable <strong>NetFilterDemo</strong>. (You'll also get a Gatekeeper "allow" the first time.)</li>
+  <li><b>Approve content filtering</b> — a second prompt, <em>"NetFilterDemo would like to filter network content."</em> Click <strong>Allow</strong>. (This is the <code>NEFilterManager.saveToPreferences</code> step from Lesson 3.)</li>
+</ol>
+<p>Confirm it's live — the command from Lesson 1, now showing <em>your</em> extension:</p>
+<div class="cmd"><span class="runme">▶ run me</span><span class="p">$</span> systemextensionsctl list
+<span class="c">--- com.apple.system_extension.network_extension</span>
+<span class="c">enabled  active  teamID      bundleID (version)                      name           [state]</span>
+<span class="star">*</span>        <span class="star">*</span>       7LS573L8C4  com.example.netfilterdemo.filter (1.0/1)  NetFilterDemo  [<span class="g">activated enabled</span>]</div>
+<div class="callout good"><span class="lbl">✓ It's running on your Mac</span>
+  <p>A System Extension you wrote, built, and signed from the command line is now a live, sandboxed process — listed right next to Tailscale and Mac Monitor. That's the mission's core goal, met with SIP on.</p></div>
+
+<h2><span class="n">4</span>Watch it see your traffic</h2>
+<p>Open two terminals. In the first, stream the extension's log; in the second, generate a flow:</p>
+<div class="cmd"><span class="runme">▶ terminal 1</span><span class="p">$</span> sudo log stream --predicate 'subsystem == "com.example.netfilterdemo.filter"'</div>
+<div class="cmd"><span class="runme">▶ terminal 2</span><span class="p">$</span> curl -s https://example.com &gt; /dev/null</div>
+<p>Terminal 1 lights up — your <code>os_log</code> from <code>handleNewFlow</code>, one line per connection:</p>
+<div class="cmd"><span class="c">… NetFilterDemo filter: startFilter: content filter starting up
+… NetFilterDemo filter: applySettings OK — now filtering all flows
+… NetFilterDemo filter: flow out example.com:443
+… NetFilterDemo filter: flow out 17.253.144.10:443</span></div>
+
+<h2><span class="n">5</span>Make it actually block something</h2>
+<p>So far every verdict is <code>.allow()</code>. Turn the filter into a blocker by editing <code>FilterDataProvider.swift</code>:</p>
+<div class="cmd"><span class="c">override func handleNewFlow(_ flow: NEFilterFlow) -> NEFilterNewFlowVerdict {
+    if let s = flow as? NEFilterSocketFlow,
+       let host = s.remoteEndpoint.map({ String(describing: $0) }),
+       host.contains("example.com") {
+        os_log("BLOCKED %{public}@", host)
+        return .drop()          // ⟵ kill the connection
+    }
+    return .allow()
+}</span></div>
+<p>Rebuild, bump <code>CFBundleVersion</code>, re-run the app (it sends a <em>replacement</em> activation — <code>actionForReplacingExtension</code> returns <code>.replace</code>), and now <code>curl https://example.com</code> hangs/fails while everything else works. You've written a firewall rule.</p>
+
+<h2><span class="n">6</span>Door ② — developer mode (no account, SIP off)</h2>
+<div class="callout warn"><span class="lbl">Only if you can't/won't provision</span>
+  <p>Boot to <strong>1TR</strong> (hold the power button) ▸ Utilities ▸ Terminal ▸ <code>csrutil disable</code> ▸ reboot. Then <code>systemextensionsctl developer on</code>. Now the <em>unprovisioned</em> build from Lesson 4 activates (it can even run from outside <code>/Applications</code>). Re-enable with <code>csrutil enable</code> when done. This is the same security trade-off real kexts demand — which is exactly why Door ① exists.</p></div>
+
+<h2><span class="n">7</span>Flashcards</h2>
+<details class="fc"><summary>What single artifact lets a restricted-entitlement extension run with SIP on?</summary><p>A <strong>provisioning profile</strong> (embedded as <code>Contents/embedded.provisionprofile</code>) that authorizes the entitlement for your App ID + cert + device.</p></details>
+<details class="fc"><summary>How many user approvals does a content filter need, and for what?</summary><p>Two: one to <em>activate the system extension</em> (Network Extensions), one to <em>enable content filtering</em> (NEFilterManager). Plus a first-run Gatekeeper allow.</p></details>
+<details class="fc"><summary>How do you watch the extension at runtime?</summary><p><code>sudo log stream --predicate 'subsystem == "&lt;your subsystem&gt;"'</code> — the extension is a headless process; <code>os_log</code> is its only voice.</p></details>
+<details class="fc"><summary>Where must the app live for activation with SIP on?</summary><p>In <code>/Applications</code>. (Developer mode relaxes this, but developer mode needs SIP off.)</p></details>
+
+<div class="ask"><b>💬 Ask your teacher — especially here.</b> Provisioning is the fiddliest part. If you hit <code>Killed: 9</code>, a profile-mismatch <code>codesign</code> error, or the approval toggle won't stick, paste the output and I'll debug it with you live. Ready to operate it day-to-day? Say <strong>"Lesson 6"</strong>.</div>
+
+<div class="nav">
+  <a class="prev" href="0004-build-and-sign-from-the-cli.html">← Lesson 4 · Build &amp; sign</a>
+  <a class="next" href="0006-lifecycle-debugging-teardown.html">Lesson 6 · Lifecycle &amp; teardown →</a>
+</div>
+<div class="footer">
+  <strong>macOS Kernel &amp; System Extensions</strong> · Lesson 5 · Reference: <a href="../reference/glossary.html">Glossary</a><br>
+  Sources: <a href="https://developer.apple.com/documentation/networkextension/nefiltermanager">NEFilterManager</a> ·
+  <a href="https://developer.apple.com/documentation/systemextensions/installing-system-extensions-and-drivers">Installing System Extensions</a> ·
+  <a href="https://support.apple.com/guide/security/securely-extending-the-kernel-sec8e454101b/web">Apple Platform Security</a>
+</div>
+</div>
+</body>
+</html>

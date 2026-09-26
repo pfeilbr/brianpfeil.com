@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 8 · Algorithms: the Workhorses</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/cpp-standard-library/" style="color:inherit;text-decoration:none">&larr; C++ Standard Library</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">C++ Standard Library · Lesson 8</div>
+    <h1>Algorithms: the Workhorses</h1>
+    <p class="sub">~100 ready-made functions in <code class="inl">&lt;algorithm&gt;</code> and <code class="inl">&lt;numeric&gt;</code> that replace hand-written loops. Learn ~15 and you'll reach for them instead of writing <code class="inl">for</code> by hand.</p>
+    <span class="missiontag">🎯 Express intent — sort/find/transform without reinventing loops</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>Most loops you'd write by hand already exist as a named, tested, optimized algorithm. <code class="inl">sort</code>, <code class="inl">find</code>, <code class="inl">transform</code>, <code class="inl">accumulate</code>, <code class="inl">count_if</code> — they take a range plus (often) a small function, and say <em>what</em> you mean instead of <em>how</em> to loop.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The shape of every algorithm</h2>
+    <p class="lead">Almost all of them follow one pattern: a <strong>range</strong> (<code class="inl">begin, end</code>), then optionally a <strong>value</strong> to look for or a <strong>callable</strong> (a predicate or operation — usually a lambda, Lesson 9). They return an iterator, a count, or write into a destination.</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;algorithm&gt;</span>
+
+std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt; v = {5, 3, 1, 4, 2};
+
+std::sort(v.begin(), v.end());                    <span class="c1">// {1,2,3,4,5}</span>
+<span class="b">auto</span> it = std::find(v.begin(), v.end(), 3);       <span class="c1">// iterator to the 3</span>
+<span class="b">int</span> n  = std::count_if(v.begin(), v.end(),
+                       [](<span class="b">int</span> x){ <span class="y">return</span> x &gt; 2; });   <span class="c1">// 3 elements &gt; 2</span></pre>
+    <div class="runlater">Run on <a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt.org</a> (<code class="inl">-std=c++17</code>+). C++20? Swap in <code class="inl">std::ranges::sort(v)</code> &amp; friends.</div>
+    <div class="callout key"><span class="h">💡 Why bother over a hand loop?</span>
+      It's <em>named</em> (a reader sees "this sorts" instantly), <em>correct</em> (no off-by-one), and often <em>faster</em> than the obvious loop. The Core Guidelines put it first: prefer library algorithms to raw loops.</div>
+    <p class="cite">Source: <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rp-Csl" target="_blank" rel="noopener">Core Guidelines P.1/SL — express intent; prefer algorithms</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The essential set</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Group</th><th>Algorithm</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="4"><strong>Search</strong></td><td><code class="inl">find</code> / <code class="inl">find_if</code></td><td>first element equal to / matching a predicate</td></tr>
+          <tr><td><code class="inl">count</code> / <code class="inl">count_if</code></td><td>how many equal / match</td></tr>
+          <tr><td><code class="inl">any_of</code> / <code class="inl">all_of</code> / <code class="inl">none_of</code></td><td>does any / every / no element match?</td></tr>
+          <tr><td><code class="inl">binary_search</code> / <code class="inl">lower_bound</code></td><td>fast lookup in a <em>sorted</em> range (O(log n))</td></tr>
+          <tr><td rowspan="3"><strong>Order</strong></td><td><code class="inl">sort</code> / <code class="inl">stable_sort</code></td><td>sort (stable keeps equal-elements' order)</td></tr>
+          <tr><td><code class="inl">nth_element</code> / <code class="inl">partial_sort</code></td><td>partial ordering (e.g. top-K) without full sort</td></tr>
+          <tr><td><code class="inl">min_element</code> / <code class="inl">max_element</code></td><td>iterator to the smallest / largest</td></tr>
+          <tr><td rowspan="3"><strong>Modify</strong></td><td><code class="inl">transform</code></td><td>map each element through a function into a destination</td></tr>
+          <tr><td><code class="inl">copy</code> / <code class="inl">fill</code> / <code class="inl">replace</code></td><td>copy a range / set all to a value / swap a value</td></tr>
+          <tr><td><code class="inl">remove_if</code> + <code class="inl">erase</code> / <code class="inl">unique</code></td><td>drop matching / collapse adjacent duplicates (§04)</td></tr>
+          <tr><td rowspan="2"><strong>Numeric</strong><br><code class="inl">&lt;numeric&gt;</code></td><td><code class="inl">accumulate</code> / <code class="inl">reduce</code></td><td>fold a range to one value (sum, product…)</td></tr>
+          <tr><td><code class="inl">iota</code></td><td>fill with increasing values (0,1,2,…)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn"><span class="h">⚠ <code class="inl">&lt;numeric&gt;</code> is a separate header</span>
+      <code class="inl">accumulate</code>, <code class="inl">reduce</code>, <code class="inl">iota</code>, and <code class="inl">inner_product</code> live in <code class="inl">&lt;numeric&gt;</code>, not <code class="inl">&lt;algorithm&gt;</code>. Forgetting the include is a common "why won't it compile" moment.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/algorithm" target="_blank" rel="noopener">cppreference — Algorithms</a> · <a href="https://en.cppreference.com/w/cpp/numeric" target="_blank" rel="noopener">Numeric</a>. Full quick list in the <a href="../reference/cpp-stdlib-cheatsheet.html">cheat sheet</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Worked examples</h2>
+    <h3>Sort with a custom rule</h3>
+    <pre><span class="c1">// sort descending — pass a comparator lambda (returns "a before b?")</span>
+std::sort(v.begin(), v.end(), [](<span class="b">int</span> a, <span class="b">int</span> b){ <span class="y">return</span> a &gt; b; });
+
+<span class="c1">// sort people by age</span>
+std::sort(people.begin(), people.end(),
+          [](<span class="b">const</span> Person&amp; a, <span class="b">const</span> Person&amp; b){ <span class="y">return</span> a.age &lt; b.age; });</pre>
+
+    <h3>Sum and product with accumulate</h3>
+    <pre><span class="y">#include</span> <span class="g">&lt;numeric&gt;</span>
+<span class="b">int</span> sum  = std::accumulate(v.begin(), v.end(), 0);          <span class="c1">// 0 + each &#8594; total</span>
+<span class="b">int</span> prod = std::accumulate(v.begin(), v.end(), 1,
+                            std::multiplies&lt;&gt;());           <span class="c1">// 1 * each &#8594; product</span></pre>
+    <div class="callout key"><span class="h">💡 The "init" argument matters</span>
+      That third argument to <code class="inl">accumulate</code> is the starting value <em>and</em> sets the result type. <code class="inl">accumulate(v.begin(), v.end(), 0)</code> accumulates in <code class="inl">int</code>; for doubles use <code class="inl">0.0</code>, or you'll silently truncate.</div>
+
+    <h3>Map a range into a new one</h3>
+    <pre><span class="b">auto</span> lengths = std::<span class="b">vector</span>&lt;<span class="b">size_t</span>&gt;{};
+std::transform(words.begin(), words.end(),
+               std::back_inserter(lengths),
+               [](<span class="b">const</span> std::<span class="b">string</span>&amp; w){ <span class="y">return</span> w.size(); });
+<span class="c1">// lengths now holds the length of each word; back_inserter push_backs results</span></pre>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/algorithm/accumulate" target="_blank" rel="noopener">cppreference — accumulate</a>, <a href="https://en.cppreference.com/w/cpp/algorithm/transform" target="_blank" rel="noopener">transform</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The erase-remove idiom (a rite of passage)</h2>
+    <p>This one trips up everyone once. <code class="inl">std::remove_if</code> does <strong>not</strong> remove anything — it can't, because an algorithm only has iterators, not the container. It shuffles the "kept" elements to the front and returns an iterator to the new logical end; the container's <code class="inl">size()</code> is unchanged until you actually erase the tail.</p>
+    <pre><span class="c1">// PRE-C++20: the classic two-step "erase-remove" idiom</span>
+v.erase(std::remove_if(v.begin(), v.end(),
+                       [](<span class="b">int</span> x){ <span class="y">return</span> x % 2 == 0; }),   <span class="c1">// move evens to back</span>
+        v.end());                                            <span class="c1">// erase them</span>
+
+<span class="c1">// C++20: one line does both</span>
+std::erase_if(v, [](<span class="b">int</span> x){ <span class="y">return</span> x % 2 == 0; });</pre>
+    <div class="callout warn"><span class="h">⚠ <code class="inl">remove_if</code> alone is a no-op-looking bug</span>
+      Calling <code class="inl">std::remove_if(...)</code> and ignoring the return leaves the container the same size with garbage at the end. Always pair it with <code class="inl">erase</code> — or use C++20 <code class="inl">std::erase_if</code> / <code class="inl">std::erase</code>, which exist precisely to kill this footgun.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/algorithm/remove" target="_blank" rel="noopener">cppreference — remove/remove_if</a> &amp; <a href="https://en.cppreference.com/w/cpp/container/vector/erase2" target="_blank" rel="noopener">std::erase / erase_if</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="2">
+        <div class="stem">What's the main reason to prefer <code class="inl">std::find</code> / <code class="inl">std::sort</code> over a hand-written loop?</div>
+        <button class="opt">They're the only way to loop in C++</button>
+        <button class="opt">They use less memory</button>
+        <button class="opt">They express intent clearly, are correct, and are often faster — you say <em>what</em>, not <em>how</em></button>
+        <button class="opt">They avoid needing to include headers</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">After <code class="inl">std::remove_if(v.begin(), v.end(), pred)</code> with no <code class="inl">erase</code>, what is <code class="inl">v.size()</code>?</div>
+        <button class="opt">Reduced by the number of matches</button>
+        <button class="opt">Unchanged — <code class="inl">remove_if</code> only rearranges; you must <code class="inl">erase</code> the tail</button>
+        <button class="opt">Zero</button>
+        <button class="opt">Undefined</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem"><code class="inl">std::accumulate(v.begin(), v.end(), 0)</code> on a vector of doubles loses the fractional parts. Why?</div>
+        <button class="opt"><code class="inl">accumulate</code> always returns int</button>
+        <button class="opt">Doubles can't be summed</button>
+        <button class="opt">You need <code class="inl">&lt;cmath&gt;</code></button>
+        <button class="opt">The init value <code class="inl">0</code> is an <code class="inl">int</code>, so it accumulates in <code class="inl">int</code> — use <code class="inl">0.0</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">Which header holds <code class="inl">accumulate</code> and <code class="inl">iota</code>?</div>
+        <button class="opt"><code class="inl">&lt;numeric&gt;</code></button>
+        <button class="opt"><code class="inl">&lt;algorithm&gt;</code></button>
+        <button class="opt"><code class="inl">&lt;vector&gt;</code></button>
+        <button class="opt"><code class="inl">&lt;cmath&gt;</code></button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What's the common shape of a standard algorithm call?</summary><div class="a">A: A range (<code class="inl">begin, end</code>), then optionally a value to match or a callable (predicate/operation). Returns an iterator, count, or writes to a destination.</div></details>
+    <details class="fc"><summary>Q: Name the "must-know" handful.</summary><div class="a">A: <code class="inl">sort</code>, <code class="inl">find</code>/<code class="inl">find_if</code>, <code class="inl">count_if</code>, <code class="inl">any_of</code>/<code class="inl">all_of</code>, <code class="inl">transform</code>, <code class="inl">accumulate</code>, <code class="inl">min_element</code>/<code class="inl">max_element</code>, <code class="inl">remove_if</code>+<code class="inl">erase</code>.</div></details>
+    <details class="fc"><summary>Q: What does <code class="inl">remove_if</code> actually do?</summary><div class="a">A: It moves kept elements to the front and returns an iterator to the new logical end. It does <em>not</em> shrink the container — pair it with <code class="inl">erase</code>, or use C++20 <code class="inl">std::erase_if</code>.</div></details>
+    <details class="fc"><summary>Q: How do you sort by a custom rule?</summary><div class="a">A: Pass a comparator as the third arg: <code class="inl">sort(b, e, [](auto&amp; a, auto&amp; b){ return a &lt; b; })</code> — return <code class="inl">true</code> if <code class="inl">a</code> should come before <code class="inl">b</code>.</div></details>
+    <details class="fc"><summary>Q: Where do numeric folds live?</summary><div class="a">A: In <code class="inl">&lt;numeric&gt;</code> (not <code class="inl">&lt;algorithm&gt;</code>): <code class="inl">accumulate</code>, <code class="inl">reduce</code>, <code class="inl">iota</code>, <code class="inl">inner_product</code>. The init value sets the result type.</div></details>
+    <details class="fc"><summary>Q: How does the ranges form differ?</summary><div class="a">A: <code class="inl">std::ranges::sort(v)</code> / <code class="inl">std::ranges::find(v, x)</code> take the container directly — same algorithms, no begin/end (C++20).</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Best drill: paste me a hand-written loop and ask <em>"which algorithm replaces this?"</em> Or try <em>"top 3 scores without fully sorting"</em> (hint: <code class="inl">partial_sort</code>/<code class="inl">nth_element</code>). Next: the lambdas these algorithms eat.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0007-iterators-and-ranges.html"><span class="dir">↩ Previous</span><span class="ttl">Iterators &amp; Ranges</span></a>
+    <a href="0009-lambdas-and-std-function.html"><span class="dir">Up next →</span><span class="ttl">Lambdas &amp; std::function</span></a>
+  </nav>
+
+  <footer>
+    C++ Standard Library · Lesson 8 · grounded in
+    <a href="https://en.cppreference.com/w/cpp/algorithm" target="_blank" rel="noopener">cppreference</a>,
+    <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines" target="_blank" rel="noopener">C++ Core Guidelines</a> ·
+    <a href="../reference/cpp-stdlib-glossary.html">Glossary</a> ·
+    <a href="../reference/cpp-stdlib-cheatsheet.html">Cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

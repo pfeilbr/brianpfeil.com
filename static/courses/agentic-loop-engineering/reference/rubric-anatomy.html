@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rubric Anatomy — Agentic Loop Engineering</title>
+<style>
+  :root{
+    --paper:#faf7f0; --ink:#1f2328; --soft:#5b6168; --line:#e4ddcf;
+    --accent:#0f766e; --accent-soft:#d7ede9; --gold:#b45309; --gold-soft:#fbe7cf;
+    --card:#fffdf8; --code:#2d2a26; --codeink:#eae3d6; --codekey:#7fd1c4; --codestr:#e0b070; --codecom:#8a8474;
+    --good:#2f9e44; --bad:#d64545;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:48px 28px}
+  .wrap{max-width:900px;margin:0 auto}
+  h1,h2,h3{font-family:Georgia,"Iowan Old Style",Charter,serif;line-height:1.2;letter-spacing:-.01em}
+  h1{font-size:2.1rem;margin:0 0 .2em}
+  .lede{color:var(--soft);font-size:1.08rem;max-width:64ch;margin:.2em 0 0}
+  .kicker{font:600 .72rem/1 system-ui;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  h2{font-size:1.35rem;margin:2.3em 0 .5em;padding-bottom:.25em;border-bottom:2px solid var(--line)}
+  h3{font-size:1.04rem;margin:1.6em 0 .3em}
+  p{margin:.55em 0} a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft)}
+  a:hover{border-color:var(--accent)}
+  .tag{display:inline-block;font:600 .66rem/1 system-ui;letter-spacing:.04em;padding:3px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);vertical-align:middle;margin-left:6px}
+  pre{background:var(--code);color:var(--codeink);border-radius:12px;padding:16px 18px;overflow:auto;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;margin:.6em 0}
+  pre .c{color:var(--codecom)} pre .k{color:var(--codekey)} pre .s{color:var(--codestr)} pre .f{color:#b9c2cf}
+  code{background:#efe9dd;padding:.1em .4em;border-radius:5px;font:.86em ui-monospace,Menlo,monospace}
+  .fname{font:600 .78rem/1 ui-monospace,Menlo,monospace;color:var(--soft);background:#efe9dd;border:1px solid var(--line);border-bottom:0;border-radius:8px 8px 0 0;padding:7px 12px;display:inline-block;margin-bottom:-8px}
+  .fname + pre{border-top-left-radius:0}
+  table{width:100%;border-collapse:collapse;margin:1em 0;font-size:.9rem}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font:600 .7rem/1.3 system-ui;letter-spacing:.07em;text-transform:uppercase;color:var(--soft);background:var(--card)}
+  tbody tr:nth-child(even){background:#fbf8f1}
+  .rec{color:var(--good);font-weight:600}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 20px;margin:14px 0}
+  blockquote{margin:1em 0;padding:.6em 1.2em;border-left:4px solid var(--gold);background:var(--gold-soft);border-radius:0 10px 10px 0;color:#5c3d12}
+  blockquote cite{display:block;font-size:.8rem;color:var(--soft);font-style:normal;margin-top:.3em}
+  .anatomy{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:1em 0}
+  .anatomy .p{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+  .anatomy .p b{color:var(--accent)}
+  footer{margin-top:3em;padding-top:1.2em;border-top:2px solid var(--line);font-size:.82rem;color:var(--soft)}
+  @media(max-width:680px){.anatomy{grid-template-columns:1fr}body{padding:24px 16px}}
+  @media print{body{background:#fff;padding:0;font-size:11pt}pre{background:#f4f1ea;color:#222;border:1px solid #ddd}
+    pre .c{color:#888}pre .k{color:#0a6b60}pre .s{color:#9a6a1a}a{color:#222;border:none}.card,pre,table,.anatomy{break-inside:avoid}.noprint{display:none}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: agentic-loop-engineering ---- */
+/* ============================================================================
+   agentic-loop-engineering course adapter — re-skin this course's bespoke
+   "warm paper" component classes with the canonical tokens from
+   assets/theme.css. Injected AFTER theme.css and AFTER each lesson's own
+   <style>, so these rules win. The course hardcodes a single light palette
+   (--paper / --ink / --card / --gold / teal --accent) in its own :root plus a
+   set of dark transcript widgets (.session/.bubble/.tool/.gblock/.hookblock)
+   with baked-in dark hexes. We retokenise both onto the unified vocabulary so
+   the course matches ebpf/nix and gains real light + dark mode without
+   touching any lesson markup. !important is used wherever the course hardcodes
+   a colour, to guarantee the override. See scripts/theme_lessons.py.
+   ============================================================================ */
+
+/* ---- redirect the course's OWN palette vars onto the canonical tokens -------
+   The lessons reference these vars everywhere (background:var(--paper), etc.).
+   Re-pointing them is the cheapest, broadest fix and makes everything that
+   wasn't individually overridden below adapt to dark mode for free. */
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"]{
+  --paper:var(--bg);
+  --ink:var(--fg);
+  --soft:var(--muted);
+  --line:var(--border);
+  --card:var(--surface);
+  --accent-soft:color-mix(in srgb,var(--accent) 14%,transparent);
+  --gold:var(--warn);
+  --gold-soft:color-mix(in srgb,var(--warn) 14%,transparent);
+  --good:var(--mark);
+  --bad:var(--danger);
+  /* dark code panel in both themes */
+  --code:var(--code-bg);
+  --codeink:var(--code-ink);
+  /* reference-file syntax/legend helper vars */
+  --codecom:#7f8db3; --codekey:#74c0fc; --codestr:#63e6be;
+  /* reference taxonomy verdict chips */
+  --t1:color-mix(in srgb,var(--mark) 16%,transparent); --t1b:var(--mark);
+  --t2:color-mix(in srgb,var(--warn) 16%,transparent); --t2b:var(--warn);
+  --t3:color-mix(in srgb,var(--danger) 16%,transparent); --t3b:var(--danger);
+}
+
+/* ---- page shell: warm paper body → unified column on var(--bg) ---- */
+body{ background:var(--bg) !important; color:var(--fg) !important; }
+.wrap{ max-width:var(--maxw); margin:0 auto; }
+
+/* ---- headings (course uses serif teal accents) ---- */
+h1{ color:var(--fg) !important; }
+h2{ color:var(--fg) !important; }
+h3{ color:var(--accent) !important; }
+.kicker{ color:var(--accent) !important; }
+.sub,.lede{ color:var(--muted) !important; }
+.src,.cite{ color:var(--muted) !important; }
+
+/* ---- inline code ---- */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; border-radius:6px; }
+
+/* ---- code blocks: force light-on-dark in both themes ---- */
+pre{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; border-radius:12px !important; }
+pre code{ background:none !important; color:inherit !important; padding:0; }
+.fname{ color:var(--muted) !important;
+  background:color-mix(in srgb,var(--fg) 8%,transparent) !important;
+  border:1px solid var(--border) !important; border-bottom:0 !important; }
+
+/* syntax tokens (the terse 1-letter classes), remapped by role:
+   .c comment · .s string · .k keyword · .f function/punct · .bug error mark */
+pre .c{ color:#7f8db3 !important; }                 /* comments  */
+pre .s{ color:#63e6be !important; }                 /* strings   */
+pre .k{ color:#74c0fc !important; }                 /* keywords  */
+pre .f{ color:var(--accent-2) !important; }         /* func/punct */
+pre .bug{ background:color-mix(in srgb,var(--danger) 38%,transparent) !important;
+  border-radius:3px; }                              /* highlighted bug */
+
+/* ---- generic callout / card / box surfaces → unified neutral ---- */
+.callout{ background:color-mix(in srgb,var(--accent) 9%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--accent) 26%,transparent) !important;
+  border-radius:12px !important; }
+.callout strong{ color:var(--accent) !important; }
+.card,.spotlight,.tree,.gate,.vcard,.anatomy .p,.item,.stack,
+.twocol .col,.ladder .rung,.pillrow b,.legend{ background:var(--surface) !important;
+  border-color:var(--border) !important; }
+.tree b,.anatomy .p b{ color:var(--accent) !important; }
+.tree .note{ color:var(--muted) !important; }
+
+/* ---- gold / "ask" / scenario / rubric callouts → warn tint ---- */
+blockquote,.ask,.scenario,.anno,.rubricbox{
+  background:color-mix(in srgb,var(--warn) 11%,transparent) !important;
+  color:var(--fg) !important; }
+blockquote{ border-left:4px solid var(--warn) !important; }
+blockquote cite{ color:var(--muted) !important; }
+.anno .n{ background:var(--warn) !important; color:#fff !important; }
+
+/* ---- yes/no comparison columns ---- */
+.twocol .yes h3,.rec{ color:var(--mark) !important; }
+.twocol .no h3,.anti b,.star{ color:var(--accent) !important; }
+.star{ color:var(--warn) !important; }
+.anti,.fails .f1{ background:var(--surface) !important;
+  border-color:var(--border) !important;
+  border-top-color:var(--danger) !important; }
+
+/* ---- loop / node diagram chips ---- */
+.loop,.loopviz{ background:var(--surface) !important; border-color:var(--border) !important; }
+.loop .node,.loopviz .node,.loop span.node{
+  background:color-mix(in srgb,var(--accent) 16%,transparent) !important;
+  color:var(--accent) !important; }
+.loop .node.hot,.loopviz .node.hot,.loop span.node.hot{
+  background:color-mix(in srgb,var(--warn) 18%,transparent) !important;
+  color:var(--warn) !important; box-shadow:0 0 0 2px var(--warn) !important; }
+.loop .arr,.loopviz .arr{ color:var(--muted) !important; }
+
+/* ---- ladder rungs ---- */
+.ladder .rung .n{ background:var(--muted) !important; color:#fff !important; }
+.ladder .rung.hot{ background:color-mix(in srgb,var(--warn) 14%,transparent) !important;
+  border-color:var(--warn) !important; }
+.ladder .rung.hot .n{ background:var(--warn) !important; }
+
+/* ---- "gate" / vcard accent rails ---- */
+.gate{ border-left:4px solid var(--accent) !important; }
+.gate .lvl{ color:var(--accent) !important; }
+.vcard{ border-left:4px solid var(--accent) !important; }
+.vcard .tag,.tag{ background:color-mix(in srgb,var(--accent) 14%,transparent) !important;
+  color:var(--accent) !important; }
+.vcard .tag{ background:color-mix(in srgb,var(--warn) 16%,transparent) !important;
+  color:var(--warn) !important; }
+
+/* ---- dark transcript widgets: retokenise onto panel/surface, NOT raw dark ---- */
+.session{ background:var(--panel) !important; border:1px solid var(--border) !important; }
+.session pre{ background:var(--code-bg) !important; }
+.who{ color:var(--accent) !important; }
+.who.u{ color:var(--warn) !important; }
+.who.m{ color:var(--accent-2) !important; }
+.who.g{ color:var(--danger) !important; }
+.bubble{ background:var(--surface) !important; color:var(--fg) !important; }
+.u .bubble{ background:color-mix(in srgb,var(--warn) 12%,transparent) !important; }
+.m .bubble{ background:color-mix(in srgb,var(--accent-2) 12%,transparent) !important; }
+.tool{ color:var(--muted) !important; }
+.tool b{ color:var(--warn) !important; }
+
+/* gold/red/green inline transcript blocks → semantic tints */
+.gblock{ background:color-mix(in srgb,var(--warn) 12%,transparent) !important;
+  border-color:var(--warn) !important; color:var(--fg) !important; }
+.gblock .bubble{ background:color-mix(in srgb,var(--warn) 10%,transparent) !important; }
+.gblock .tool b{ color:var(--warn) !important; }
+.hookblock{ background:color-mix(in srgb,var(--danger) 10%,transparent) !important;
+  border-color:var(--danger) !important; color:var(--fg) !important; }
+.hookblock .who{ color:var(--danger) !important; }
+.hookblock pre{ background:var(--code-bg) !important; }
+.hookblock.allowed{ background:color-mix(in srgb,var(--mark) 10%,transparent) !important;
+  border-color:var(--mark) !important; }
+.hookblock.allowed .who{ color:var(--mark) !important; }
+.hookblock.allowed pre{ background:var(--code-bg) !important; }
+
+/* pass/fail + verification-line markers */
+.pass{ color:var(--mark) !important; }
+.fail{ color:var(--danger) !important; }
+.vline.p{ background:color-mix(in srgb,var(--mark) 16%,transparent) !important; color:var(--mark) !important; }
+.vline.f{ background:color-mix(in srgb,var(--danger) 16%,transparent) !important; color:var(--danger) !important; }
+
+/* badges — tinted pills (token text on a tint of the same token), legible in
+   light AND dark. A solid --warn/--mark fill + white text fails in dark mode,
+   where those tokens are light. */
+.badge{ background:color-mix(in srgb,var(--warn) 22%,transparent) !important;
+  color:var(--warn) !important; border:1px solid color-mix(in srgb,var(--warn) 45%,transparent) !important; }
+.badge.ok{ background:color-mix(in srgb,var(--mark) 22%,transparent) !important;
+  color:var(--mark) !important; border-color:color-mix(in srgb,var(--mark) 45%,transparent) !important; }
+
+/* item message (mono) → code panel */
+.item .msg{ background:var(--code-bg) !important; color:var(--code-ink) !important; }
+
+/* ---- quiz / interactive widgets ---- */
+.quiz,.ws,.lab{ background:var(--surface) !important; border:2px solid var(--accent) !important; }
+.qprog{ color:var(--muted) !important; }
+.opt{ background:var(--panel) !important; border-color:var(--border) !important;
+  color:var(--fg) !important; }
+.opt:hover:not(:disabled){ border-color:var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 7%,transparent) !important; }
+.opt.correct{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 14%,transparent) !important; }
+.opt.wrong{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 13%,transparent) !important; }
+.opt code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; }
+.fb{ color:var(--fg) !important; }
+.fb.ok{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  border:1px solid var(--mark) !important; }
+.fb.no{ background:color-mix(in srgb,var(--danger) 13%,transparent) !important;
+  border:1px solid var(--danger) !important; }
+.score,.done .big{ color:var(--accent) !important; }
+.legend{ background:transparent !important; color:var(--muted) !important; }
+
+/* verdict toggles (calibration lesson) */
+.verdict.agree{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  border:1px solid var(--mark) !important; color:var(--fg) !important; }
+.verdict.disagree{ background:color-mix(in srgb,var(--danger) 13%,transparent) !important;
+  border:1px solid var(--danger) !important; color:var(--fg) !important; }
+.vbtn{ background:var(--panel) !important; border-color:var(--border) !important;
+  color:var(--fg) !important; }
+.vbtn.self{ border-color:var(--danger) !important; color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 12%,transparent) !important; }
+.vbtn.selp{ border-color:var(--mark) !important; color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 12%,transparent) !important; }
+.ws select{ background:var(--panel) !important; border-color:var(--border) !important;
+  color:var(--fg) !important; }
+.ws label{ color:var(--muted) !important; }
+
+/* ---- buttons ---- */
+.btn{ background:var(--accent) !important; color:#fff !important; }
+.btn.ghost{ background:var(--surface) !important; color:var(--accent) !important;
+  border:1.5px solid var(--accent) !important; }
+
+/* ---- next / nav cards + footer ---- */
+.next a{ background:var(--panel) !important; border-color:var(--border) !important; }
+.next a b{ color:var(--accent) !important; }
+footer{ border-top:2px solid var(--border) !important; color:var(--muted) !important; }
+.meta span{ background:var(--surface) !important; border-color:var(--border) !important;
+  color:var(--muted) !important; }
+.pillrow b span,.pill{ color:var(--accent) !important; }
+
+/* ---- spectrum bar (verifier taxonomy reference): keep gradient legible ----
+   It deliberately ramps teal→amber→red with white text; re-anchor the stops to
+   tokens so it stays on-brand in dark mode. White text is preserved. */
+.spectrum{ border-color:var(--border) !important; }
+/* white labels on the gradient ramp + on small token-coloured badges (.n) need a
+   shadow to stay legible where a token is light in dark mode. */
+.spectrum div{ color:#fff !important; text-shadow:0 1px 2px rgba(0,0,0,.6) !important; }
+.n{ text-shadow:0 1px 2px rgba(0,0,0,.55) !important; }
+.s1{ background:var(--accent) !important; }
+.s2{ background:color-mix(in srgb,var(--accent) 60%,var(--warn)) !important; }
+.s3{ background:color-mix(in srgb,var(--warn) 70%,var(--accent)) !important; }
+.s4{ background:var(--warn) !important; }
+.s5{ background:color-mix(in srgb,var(--danger) 70%,var(--warn)) !important; }
+
+/* ---- CONTRAST blanket: every text-bearing box onto --fg (EXCLUDING code) ----
+   The course bakes dark ink (#1f2328, #5c3d12, #4a3310, #4a3310…) into many
+   boxes, illegible on dark-mode tinted backgrounds. Force --fg everywhere that
+   isn't a code panel. */
+.callout,.card,.spotlight,.spotlight .row b,.tree,.gate,.gate b,.vcard,
+.anatomy .p,.item,.stack,.stack .layer,.twocol .col,.ladder .rung,
+.bubble,.gblock,.hookblock,.quiz,.ws,.lab,.fb,.scenario,.anno,.rubricbox,
+.ask,blockquote,.anti,.fails .f1,.verdict,.legend,p,li,td,th{
+  color:var(--fg) !important; }
+.spotlight .row .d,.stack .layer .d,.twocol .col,.muted,.fnote{ color:var(--muted) !important; }
+/* table row striping: the course uses a hardcoded light "paper" stripe that is
+   invisible under light text in dark mode. Retokenize to a scheme-aware tint. */
+tr{ background:transparent !important; }
+tbody tr:nth-child(even){ background:color-mix(in srgb,var(--fg) 5%,transparent) !important; }
+/* …but never repaint code panels or their tokens */
+pre,pre *,.item .msg,.fname{ }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/agentic-loop-engineering/" style="color:inherit;text-decoration:none">&larr; Agentic Loop Engineering</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+  <span class="kicker">Reference · Agentic Loop Engineering</span>
+  <h1>Rubric Anatomy</h1>
+  <p class="lede">What a rubric actually <em>is</em>, the forms it takes in real files, and the design options you choose when you write one. A rubric turns an <a href="verifier-taxonomy.html">LLM-as-judge</a> from a vibe into a verifier.</p>
+
+  <blockquote>
+    A rubric is only trustworthy when it's specific enough that "two domain experts would independently reach the same pass/fail verdict."
+    <cite>— Anthropic, <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Demystifying evals for AI agents</a></cite>
+  </blockquote>
+
+  <h2>It's a prompt artifact, not a config format</h2>
+  <p>A rubric is the written grading criteria handed to a judge so a verdict is reproducible. The <em>medium</em> is usually plain markdown or a structured list, living either inline in the judge prompt or in its own versioned file. It has four parts:</p>
+  <div class="anatomy">
+    <div class="p"><b>1 · Criteria</b><br>The specific, checkable assertions. Decomposed, not one blob.</div>
+    <div class="p"><b>2 · Verdict scheme</b><br>How each criterion is scored — ideally <strong>binary PASS/FAIL</strong>.</div>
+    <div class="p"><b>3 · Critique</b><br>The judge's written reasoning, produced <em>before</em> the verdict.</div>
+    <div class="p"><b>4 · Calibration</b><br>Few-shot expert examples + a measured agreement rate vs. humans.</div>
+  </div>
+
+  <h2>Form 1 — Inline checklist in the judge prompt <span class="tag">most common</span></h2>
+  <div class="fname">judge_prompt.md (sent to the grader model)</div>
+<pre><span class="c"># Grade the support agent's reply. For EACH criterion: PASS or FAIL.</span>
+<span class="c"># If you lack the information to decide, answer UNKNOWN.</span>
+
+- empathy:    The agent acknowledged the customer's frustration.
+- grounded:   Every claim is grounded in the fetch_policy tool results.
+- resolution: The refund decision is stated explicitly and clearly.
+- tone:       No defensive or blaming language.
+
+Output JSON: {<span class="s">"empathy"</span>:<span class="s">"PASS|FAIL|UNKNOWN"</span>, ..., <span class="s">"overall"</span>:<span class="s">"PASS iff all PASS"</span>}</pre>
+  <p class="rec" style="font-size:.85rem">Those assertion lines <em>are</em> the rubric. Note: binary verdicts · an UNKNOWN escape hatch · all-must-pass aggregation. (Anthropic)</p>
+
+  <h2>Form 2 — A standalone rubric file the grader points at</h2>
+  <p>Anthropic's coding-agent grader references a separate <code>prompts/code_quality.md</code> — rubrics are <strong>files</strong>, versioned in git next to the code they grade.</p>
+  <div class="fname">prompts/code_quality.md</div>
+<pre><span class="c"># Code-change rubric — grade the DIFF only.</span>
+
+<span class="c">## Correctness (all must PASS)</span>
+- Implements every item in the task's acceptance criteria.
+- No existing test was weakened, skipped, or deleted to go green.
+- Handles the empty / null / boundary input named in the ticket.
+
+<span class="c">## Hygiene (all must PASS)</span>
+- No secrets, debug prints, or commented-out code left behind.
+
+<span class="c">## Verdict</span>
+Return PASS only if every item passes. Else FAIL and list each failing
+criterion with the file:line that caused it.</pre>
+
+  <h2>Form 3 — Few-shot critique examples <span class="tag">critique shadowing</span></h2>
+  <p>Hamel Husain's method: a domain expert writes a binary verdict <em>plus a detailed critique</em> for real cases; you paste them in as few-shot anchors. The critique must be detailed enough that "a new employee could understand it."</p>
+  <div class="fname">examples block, pasted into the judge prompt (Honeycomb format)</div>
+<pre><span class="f">&lt;example-1&gt;</span>
+  <span class="f">&lt;nlq&gt;</span>show me traces where ip is 10.0.2.90<span class="f">&lt;/nlq&gt;</span>
+  <span class="f">&lt;query&gt;</span>{ <span class="s">"filter"</span>:{<span class="s">"field"</span>:<span class="s">"ip"</span>,<span class="s">"op"</span>:<span class="s">"="</span>,<span class="s">"value"</span>:<span class="s">"10.0.2.90"</span>} }<span class="f">&lt;/query&gt;</span>
+  <span class="f">&lt;critique&gt;</span>{
+    <span class="s">"critique"</span>: <span class="s">"Correctly filters on ip with the right operator. No</span>
+                <span class="s">time range, but the default is acceptable here. It passes."</span>,
+    <span class="s">"outcome"</span>: <span class="s">"good"</span>
+  }<span class="f">&lt;/critique&gt;</span>
+<span class="f">&lt;/example-1&gt;</span></pre>
+  <p style="font-size:.85rem">Then measure agreement between judge and expert; refine until aligned. Husain reached <strong>&gt;90% agreement in three iterations</strong> — that number is what makes the rubric trustworthy.</p>
+
+  <h2>Form 4 — In Claude Code: the rubric IS the verification subagent</h2>
+  <p>The most useful medium for this mission. YAML frontmatter is plumbing; the <strong>markdown body is the rubric</strong>. Fresh context, sees only the diff, grades, returns a verdict.</p>
+  <div class="fname">.claude/agents/diff-grader.md</div>
+<pre><span class="f">---</span>
+<span class="k">name</span>: diff-grader
+<span class="k">description</span>: Grades the current diff against the rubric. Returns PASS/FAIL.
+<span class="k">tools</span>: Read, Bash
+<span class="f">---</span>
+You are an adversarial reviewer. You did NOT write this code.
+Review ONLY the diff. Grade each criterion PASS/FAIL (UNKNOWN if unsure):
+
+1. Every acceptance criterion in the linked issue is implemented.
+2. No test was deleted or weakened to pass.
+3. Error paths return actionable messages, not bare codes.
+
+Report ONLY correctness/requirement gaps — no stylistic refactors.
+End with one line:  VERDICT: PASS   or   VERDICT: FAIL — &lt;reasons&gt;</pre>
+  <p style="font-size:.85rem">The "only correctness gaps" bound matters: a reviewer told to find problems "will usually report some, even when the work is sound." (<a href="https://code.claude.com/docs/en/sub-agents">Sub-agents</a>) The rubric defines what counts as failure.</p>
+  <p style="font-size:.85rem">Sibling media for the same rubric: a <code>/goal</code> condition (re-checked each turn), a <code>.claude/commands/grade.md</code> slash command, or an acceptance-criteria block in a spec file / <code>CLAUDE.md</code>.</p>
+
+  <h2>The options menu — what you choose when you write one</h2>
+  <table>
+    <thead><tr><th>Dimension</th><th>Options</th><th>Recommended</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Verdict type</strong></td><td>Binary PASS/FAIL · numeric 1–5 · categorical</td><td><span class="rec">Binary</span> — scales don't correlate with expert judgment; "nobody knows what to do with a 3." (Husain)</td></tr>
+      <tr><td><strong>Scope</strong></td><td>One holistic judge · one judge per dimension</td><td><span class="rec">Decompose</span> — isolate each dimension, grade separately. (Anthropic)</td></tr>
+      <tr><td><strong>Reasoning</strong></td><td>Verdict only · critique-then-verdict</td><td><span class="rec">Critique first</span>, verdict last. (Husain)</td></tr>
+      <tr><td><strong>Calibration</strong></td><td>Zero-shot · few-shot expert critiques</td><td><span class="rec">Few-shot</span> + measure judge-vs-human agreement. (Husain)</td></tr>
+      <tr><td><strong>Aggregation</strong></td><td>All-must-pass (AND) · weighted threshold · hybrid</td><td>By stakes — all valid. (Anthropic)</td></tr>
+      <tr><td><strong>Escape hatch</strong></td><td>Force a verdict · allow "Unknown"</td><td><span class="rec">Allow "Unknown"</span> so the judge doesn't guess. (Anthropic)</td></tr>
+      <tr><td><strong>Reference</strong></td><td>Reference-free (rubric only) · reference-based (vs. gold answer)</td><td>Gold answers when you have them; rubric-only when you don't.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <strong>The throughline:</strong> <span class="rec">specific + binary + decomposed + calibrated</span> beats a vague 1–10 "overall quality" score every time. A rubric you can't get two experts to agree on isn't a verifier — it's a vibe with extra steps.
+  </div>
+
+  <footer>
+    <strong>Sources.</strong>
+    Anthropic — <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Demystifying evals for AI agents</a>,
+    <a href="https://code.claude.com/docs/en/sub-agents">Sub-agents</a>,
+    <a href="https://code.claude.com/docs/en/best-practices">Claude Code best practices</a>.
+    Practitioner — Hamel Husain, <a href="https://hamel.dev/blog/posts/llm-judge/">LLM-as-a-Judge: A Complete Guide</a>.
+    <br><br>
+    Companion: <a href="../lessons/0002-designing-a-rubric.html">Lesson 2 — Designing a Rubric</a> ·
+    <a href="verifier-taxonomy.html">The Verifier Taxonomy</a> ·
+    <a href="/courses/agentic-loop-engineering/">Glossary</a> ·
+    <span class="noprint">⌘P to print this as a pocket reference.</span>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 8 · Structured Output — JSON You Can Trust</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/mlx-lm/" style="color:inherit;text-decoration:none">&larr; mlx-lm</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">mlx-lm · Lesson 8</div>
+    <h1>Structured Output — JSON You Can Trust</h1>
+    <p class="sub">Lesson 7 ended on a problem: the 1B tagger drifted out of format. Here's the fix that turns a small local model into a reliable component — <strong>constrain the decoder to a schema</strong> so it <em>cannot</em> produce invalid output. Not a better prompt; a mathematical guarantee.</p>
+    <span class="missiontag">🎯 Mission step: make local-model output reliable enough to parse in code</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>Don't ask for JSON and hope — mask every token that would break it.</strong> Compile your schema into a finite-state machine, and at each decoding step set the logits of all <em>illegal</em> tokens to −∞. The model literally cannot emit a character that violates the schema. Output that always parses, every time, from a 1B model.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Why "prompt and hope" isn't enough</h2>
+    <p class="lead">In Lesson 7 your tagger sometimes returned <code class="inl">Category: Security | Summary: …</code> and sometimes wandered into prose. For a human that's fine; for code that does <code class="inl">json.loads(output)</code>, one stray token is a crash. The smaller the model, the more it drifts — and small local models are exactly what you want for cheap, high-volume work. So you need <em>structural</em> reliability, not a sterner prompt.</p>
+    <div class="callout key"><span class="h">💡 Two ways to get structure</span>
+      <strong>Prompt-and-parse:</strong> ask nicely, then validate/retry — probabilistic, fails on small models. <strong>Constrained decoding:</strong> restrict <em>what tokens are even possible</em> at each step so the output is valid by construction — deterministic guarantee. This lesson does the second.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> How constrained decoding works</h2>
+    <p>A model picks each token from a probability distribution over the whole vocabulary. Constrained decoding inserts a step: given "what's been written so far," a <strong>finite-state machine</strong> (built from your schema) knows which tokens keep the output valid. Everything else gets masked to −∞ before sampling.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="At each step the FSM masks tokens that would violate the schema, leaving only valid choices">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="12.5">
+          <text x="80" y="30" text-anchor="middle" fill="var(--muted)">so far:</text>
+          <rect x="20" y="42" width="120" height="30" rx="6" fill="none" stroke="var(--fg)" stroke-width="1.3"/>
+          <text x="80" y="62" text-anchor="middle" fill="var(--fg)" font-family="monospace" font-size="11">{"category":</text>
+
+          <text x="300" y="30" text-anchor="middle" fill="var(--muted)">vocabulary logits</text>
+          <rect x="210" y="42" width="92" height="26" rx="5" fill="var(--accent)" opacity="0.16" stroke="var(--accent)"/><text x="256" y="60" text-anchor="middle" fill="var(--fg)">"Security</text>
+          <rect x="210" y="74" width="92" height="26" rx="5" fill="var(--accent)" opacity="0.16" stroke="var(--accent)"/><text x="256" y="92" text-anchor="middle" fill="var(--fg)">"AI &amp; ML</text>
+          <rect x="210" y="106" width="92" height="26" rx="5" fill="var(--danger)" opacity="0.13" stroke="var(--danger)"/><text x="256" y="124" text-anchor="middle" fill="var(--muted)">Sure!</text>
+          <rect x="210" y="138" width="92" height="26" rx="5" fill="var(--danger)" opacity="0.13" stroke="var(--danger)"/><text x="256" y="156" text-anchor="middle" fill="var(--muted)">42</text>
+
+          <text x="400" y="105" text-anchor="middle" fill="var(--muted)" font-size="20">→</text>
+          <text x="400" y="125" text-anchor="middle" fill="var(--muted)" font-size="10">FSM mask</text>
+
+          <rect x="455" y="74" width="150" height="64" rx="8" fill="var(--accent)" opacity="0.10" stroke="var(--accent)" stroke-width="1.5"/>
+          <rect x="455" y="74" width="150" height="64" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="530" y="100" text-anchor="middle" fill="var(--fg)" font-weight="700">legal tokens only</text>
+          <text x="530" y="120" text-anchor="middle" fill="var(--muted)" font-size="11">illegal → logit −∞</text>
+
+          <text x="256" y="184" text-anchor="middle" fill="var(--danger)" font-size="11">masked (would break schema)</text>
+          <text x="530" y="160" text-anchor="middle" fill="var(--accent-2)" font-size="11">sample from these</text>
+        </g>
+      </svg>
+      <figcaption>Only tokens that keep the output on a valid path through the schema's FSM survive; the model samples from those. A category field constrained to a fixed list can <em>only</em> emit one of those exact strings — which is also why the 1B model below finally classifies MLX correctly.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The code — your schema is the contract</h2>
+    <p>The <a href="https://dottxt-ai.github.io/outlines/" target="_blank" rel="noopener">Outlines</a> library has an mlx-lm backend. Install it into your practice venv, define a <a href="https://docs.pydantic.dev/" target="_blank" rel="noopener">Pydantic</a> model, and pass it as <code class="inl">output_type</code>:</p>
+    <pre><span class="c1"># uv pip install "outlines[mlxlm]"   (per your uv preference)</span>
+<span class="b">import</span> outlines, mlx_lm, json
+<span class="b">from</span> pydantic <span class="b">import</span> BaseModel, Field
+<span class="b">from</span> typing <span class="b">import</span> Literal, List
+
+<span class="b">class</span> <span class="y">Tag</span>(BaseModel):
+    category: Literal[<span class="g">"AI &amp; ML"</span>, <span class="g">"Programming Languages"</span>, <span class="g">"Security"</span>, <span class="g">"Other"</span>]
+    summary:  str       = Field(max_length=<span class="g">80</span>)     <span class="c1"># bound it (see §05)</span>
+    keywords: List[str] = Field(max_length=<span class="g">5</span>)
+
+model = outlines.from_mlxlm(*mlx_lm.load(<span class="g">"mlx-community/Llama-3.2-1B-Instruct-4bit"</span>))
+
+out = model(<span class="g">"Classify and summarize: A SQL injection smuggles commands into a query."</span>,
+            output_type=Tag, max_tokens=<span class="g">256</span>)
+tag = Tag.model_validate_json(out)        <span class="c1"># never raises — out is valid by construction</span></pre>
+    <p>Real output on your M4 Pro — three inputs, all parsed &amp; validated, zero format errors:</p>
+    <pre><span class="c1"># category                  keywords</span>
+Security                ['SQL Injection', 'Attack', 'Smuggling', 'Commands', 'Query']
+Programming Languages   ['React', 'useEffect', 'side effects', 'rendering']
+AI &amp; ML                 ['Apple Silicon', 'MLX', 'LLMs', 'Large Language Models']</pre>
+    <div class="callout mission"><span class="h">🎯 Your tangible win</span>
+      Run <code class="inl">~/projects/learn/public/courses/mlx-lm/practice/.venv/bin/python ~/projects/learn/public/courses/mlx-lm/practice/structured_tagger.py</code>. The same 1B model that drifted in Lesson 7 now returns JSON that <code class="inl">model_validate_json</code> accepts <em>every time</em> — and it even gets MLX → <code class="inl">AI &amp; ML</code> right, because <code class="inl">category</code> can only be one of the allowed literals.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Guaranteed structure ≠ guaranteed completion</h2>
+    <div class="callout warn"><span class="h">⚠️ A gotcha worth internalizing (hit live while building this)</span>
+      The FSM guarantees the output is a <em>valid prefix</em> of your schema at every step — but if you cut generation off with <code class="inl">max_tokens</code> before it closes the JSON, you get a truncated (still-invalid-overall) string. First attempts here failed with <code class="inl">Unterminated string</code> because the model wrote a long <code class="inl">summary</code> and ran out of budget. <strong>Two fixes, both shown above:</strong> bound free-text fields in the schema (<code class="inl">Field(max_length=80)</code>) so they must close, and give a sane <code class="inl">max_tokens</code>. Constrain the <em>shape</em> and the <em>size</em>.</div>
+    <table>
+      <thead><tr><th></th><th>Prompt &amp; parse</th><th>Constrained decoding</th></tr></thead>
+      <tbody>
+        <tr><td>Validity</td><td>probabilistic — may fail</td><td><strong>guaranteed</strong> by construction</td></tr>
+        <tr><td>Small models</td><td>drifts, needs retries</td><td>works — the model can't drift</td></tr>
+        <tr><td>Enums</td><td>may invent values</td><td><code class="inl">Literal[...]</code> → only allowed values</td></tr>
+        <tr><td>Cost</td><td>retries on failure</td><td>one-time FSM compile + tiny per-token mask</td></tr>
+        <tr><td>Caveat</td><td>—</td><td>not for batched generation; still budget tokens</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Where this changes what you can build</h2>
+    <p>Reliable structure is what makes a local model a <em>component</em> instead of a toy. With guaranteed JSON you can safely build: classifiers/routers, data extraction from messy text, <strong>tool-calling</strong> (the model emits a valid function-call object), form-filling, and grading/judging pipelines — all on-device, all parseable without defensive try/except gymnastics.</p>
+    <div class="callout key"><span class="h">💡 This retro-fixes Lesson 7</span>
+      Your Lesson 7 capstone tagger was the right <em>pattern</em>; this is the reliability layer it was missing. Swap the free-form <code class="inl">generate</code> for a constrained <code class="inl">model(..., output_type=Schema)</code> and the tagger becomes production-grade — exactly what you'd want before wiring it into the <code class="inl">learn</code> pipeline.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Check yourself</h2>
+    <p>Think first, then expand. (Want a schema for a specific tool — a function-call object, an extraction shape? <strong>Ask me</strong> and we'll design it.)</p>
+    <details><summary>Q: Why can't the constrained model return <code class="inl">"category": "Frontend"</code> if your Literal only lists four values?</summary><p>A: At the step where it writes the category value, the FSM only permits tokens that continue one of the four allowed strings. "Frontend" isn't a valid path, so those tokens are masked to −∞ and can't be sampled. The enum is enforced, not requested.</p></details>
+    <details><summary>Q: You constrained the schema but still got <code class="inl">Unterminated string</code>. What happened and how do you fix it?</summary><p>A: Generation hit <code class="inl">max_tokens</code> before the JSON closed — valid-so-far but incomplete. Bound free-text fields with <code class="inl">Field(max_length=N)</code> and/or raise <code class="inl">max_tokens</code> so it has room to finish.</p></details>
+    <details><summary>Q: When is constrained decoding overkill?</summary><p>A: When you want free-form prose (a chat reply, a summary a human reads), or when a big model already nails the format and you're not parsing it in code. Use it where a program consumes the output.</p></details>
+    <details><summary>Q: Does this make a small model as <em>accurate</em> as a big one?</summary><p>A: No — it guarantees <em>format</em>, not <em>correctness</em>. The model can still pick the wrong (but valid) category. Constraining the enum helps, but for higher accuracy you still reach for a bigger model or a fine-tune.</p></details>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Going deeper</h2>
+    <ul>
+      <li><a href="https://dottxt-ai.github.io/outlines/latest/features/models/mlxlm/" target="_blank" rel="noopener">Outlines — mlx-lm backend</a> (the exact API used here).</li>
+      <li><a href="https://dottxt-ai.github.io/outlines/" target="_blank" rel="noopener">Outlines docs</a> — JSON schema, regex, and grammar-constrained generation.</li>
+      <li><a href="https://github.com/otriscon/llm-structured-output" target="_blank" rel="noopener">llm-structured-output</a> — an alternative constrained-decoding library for MLX.</li>
+    </ul>
+    <p class="cite">Keep handy: <a href="../reference/mlx-lm-glossary.html">Glossary &amp; quick reference</a> (see <em>constrained decoding</em>, <em>Outlines</em>) · <a href="0007-capstone-a-real-local-tool.html">← Lesson 7</a>. Next up → <strong>Lesson 9: Model Selection &amp; Memory Math</strong> — how to know in advance what actually fits and runs well on your M4 Pro (params × bits → GB, plus KV-cache overhead).</p>
+  </section>
+
+</div>
+</body>
+</html>

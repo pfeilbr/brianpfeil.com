@@ -517,6 +517,91 @@ other = "Impossible de charger les données de cette page. Essayez de la recharg
 
 [data_noscript]
 other = "Cette page est affichée avec JavaScript. Ses données se trouvent dans <a href=\"{{ .url }}\">{{ .url }}</a>."
+# --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
+
+[courses_intro]
+other = "{count} cours gratuits, {lessons} leçons en tout. Je les ai écrits avec Claude en découvrant moi-même chaque sujet, une leçon à la fois. Ils sont pratiques et interactifs, et se lisent gratuitement, sans inscription."
+
+[courses_english_note]
+other = "Les leçons sont en anglais."
+
+[courses_filter]
+other = "Filtrer par sujet"
+
+[courses_all]
+other = "Tout"
+
+[courses_lessons]
+other = "{n} leçons"
+
+[courses_updated]
+other = "Mis à jour le {date}"
+
+[courses_start]
+other = "Commencer par la leçon 1"
+
+[courses_lessons_h]
+other = "Leçons"
+
+[courses_reference_h]
+other = "Aide-mémoire"
+
+[courses_resources_h]
+other = "Pour aller plus loin"
+
+[courses_resources_note]
+other = "Les sources sur lesquelles chaque leçon a été vérifiée, et où poser vos questions."
+
+[courses_back]
+other = "Tous les cours"
+
+[courses_footnote]
+other = "Chaque leçon tient sur une seule page autonome : pas d'inscription, pas de pistage, rien à installer pour la lire."
+
+[course_cat_ai_ml]
+other = "AI & ML"
+
+[course_cat_programming_languages]
+other = "Langages de programmation"
+
+[course_cat_web_frontend]
+other = "Web & frontend"
+
+[course_cat_mobile]
+other = "Mobile"
+
+[course_cat_backend_data]
+other = "Backend & données"
+
+[course_cat_devops_infra]
+other = "DevOps & infrastructure"
+
+[course_cat_security]
+other = "Sécurité"
+
+[course_cat_hardware_systems]
+other = "Matériel & systèmes"
+
+[course_cat_productivity_tools]
+other = "Productivité & outils"
+
+[course_cat_science_math]
+other = "Sciences & maths"
+
+[course_cat_other]
+other = "Autres"
+
+[learn_courses_cta]
+other = "Vous préférez un parcours guidé ? Essayez les cours gratuits que j'ai écrits, leçon par leçon."
+
+[hub_courses_title]
+other = "Cours"
+
+[hub_courses_blurb]
+other = "Des cours gratuits en plusieurs leçons, écrits en apprenant chaque sujet"
+
+[hub_courses_count]
+other = "{{ .count }} cours"
 # --- /learn/ (layouts/_default/learn.html, data/learn.json) ---
 
 [learn_intro]

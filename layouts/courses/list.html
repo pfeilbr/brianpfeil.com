@@ -1,0 +1,114 @@
+{{ define "main" }}
+{{- /* /courses/: drawn in the browser from /data/courses.json, which
+   tools/courses/sync_courses.py writes from the learn project. The courses
+   themselves are English (like posts), so every language links to the one
+   English course page; this shell and the category labels are translated. */ -}}
+{{ $cats := partial "course-cats.html" . }}
+{{ $T := dict
+  "intro" (i18n "courses_intro" (dict "count" "{count}" "lessons" "{lessons}"))
+  "lessons" (i18n "courses_lessons" "{n}")
+  "updated" (i18n "courses_updated" "{date}")
+  "error" (i18n "data_load_error")
+  "lang" .Site.Language.Lang
+  "cats" $cats
+}}
+<article class="courses">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600" id="courses-intro"></p>
+    {{ if ne .Site.Language.Lang "en" }}<p class="music-sub courses-en">{{ i18n "courses_english_note" }}</p>{{ end }}
+  </header>
+
+  <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/courses.json") | safeHTML }}</p></noscript>
+
+  <div class="chips" role="group" aria-label="{{ i18n "courses_filter" }}" id="courses-chips">
+    <button type="button" class="chip is-on" data-cat="all" aria-pressed="true">{{ i18n "courses_all" }} <span class="chip-n" id="courses-n"></span></button>
+  </div>
+
+  <div class="courses-grid" id="courses-list" aria-busy="true"></div>
+
+  <p class="music-foot">{{ i18n "courses_footnote" }}</p>
+</article>
+
+{{- /* The courses as an ItemList at build time, for crawlers that don't run
+   the script. */ -}}
+{{ with hugo.Data.courses }}
+{{ $list := slice }}
+{{ range .courses }}
+  {{ $list = $list | append (dict "@type" "ListItem" "position" (add (len $list) 1) "url" (printf "%scourses/%s/" hugo.Sites.Default.Home.Permalink .slug) "name" .title) }}
+{{ end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "ItemList" "name" $.Title "numberOfItems" (len $list) "itemListElement" $list | jsonify | safeJS }}</script>
+{{ end }}
+
+{{ partial "data-render.html" . }}
+<script>
+/* One card per course; the topic chips are show/hide only. */
+(function () {
+  var D = window.DataPage, el = D.el.bind(D);
+  var T = {{ $T | jsonify | safeJS }};
+  var out = document.getElementById("courses-list");
+  var chips = document.getElementById("courses-chips");
+
+  function cat(key) { return T.cats[key] || T.cats.other; }
+  function month(iso) {
+    try {
+      return new Intl.DateTimeFormat(T.lang, { month: "short", year: "numeric" }).format(new Date(iso + "T12:00:00"));
+    } catch (e) { return iso; }
+  }
+  function chipIcon(icon) {
+    return '<span class="ic ic-lg" data-ic="' + icon + '" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#' + icon + '"/></svg></span>';
+  }
+
+  function card(c) {
+    var info = cat(c.category);
+    var a = el("a", "course-card");
+    a.href = "/courses/" + encodeURIComponent(c.slug) + "/";
+    a.dataset.cat = c.category;
+    a.dataset.ic = info.icon;
+    a.insertAdjacentHTML("beforeend", chipIcon(info.icon));
+    var text = el("span", "course-card-text");
+    text.appendChild(el("span", "course-cat", info.label));
+    text.appendChild(el("span", "course-title", c.title));
+    text.appendChild(el("span", "course-desc", c.description));
+    text.appendChild(el("span", "course-meta",
+      D.fill(T.lessons, { n: c.lessons.length }) + " · " + D.fill(T.updated, { date: month(c.updated) })));
+    a.appendChild(text);
+    return a;
+  }
+
+  D.load("courses").then(function (data) {
+    var counts = {};
+    data.courses.forEach(function (c) {
+      counts[c.category] = (counts[c.category] || 0) + 1;
+      out.appendChild(card(c));
+    });
+    document.getElementById("courses-intro").textContent =
+      D.fill(T.intro, { count: data.courses.length, lessons: data.total_lessons });
+    document.getElementById("courses-n").textContent = data.courses.length;
+    Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; }).forEach(function (key) {
+      var b = el("button", "chip", cat(key).label + " ");
+      b.type = "button";
+      b.dataset.cat = key;
+      b.setAttribute("aria-pressed", "false");
+      b.appendChild(el("span", "chip-n", String(counts[key])));
+      chips.appendChild(b);
+    });
+    out.setAttribute("aria-busy", "false");
+
+    var all = chips.querySelectorAll(".chip");
+    all.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var key = b.dataset.cat;
+        all.forEach(function (x) {
+          x.classList.toggle("is-on", x === b);
+          x.setAttribute("aria-pressed", String(x === b));
+        });
+        out.querySelectorAll(".course-card").forEach(function (c) {
+          c.hidden = key !== "all" && c.dataset.cat !== key;
+        });
+      });
+    });
+  }).catch(function () { D.fail(out, T.error); });
+})();
+</script>
+{{ end }}

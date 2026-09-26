@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 2 · std::vector — Your Default Container</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/cpp-standard-library/" style="color:inherit;text-decoration:none">&larr; C++ Standard Library</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">C++ Standard Library · Lesson 2</div>
+    <h1>std::vector — Your Default Container</h1>
+    <p class="sub">The growable, contiguous array you'll reach for 80% of the time — how it works, the everyday operations, and the one thing about its memory you must understand.</p>
+    <span class="missiontag">🎯 Pick the right container by reflex — start with the default</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><code class="inl">std::vector&lt;T&gt;</code> is a <strong>dynamic array</strong>: elements sit in one contiguous block, it grows automatically, and access by index is instant. The official advice is blunt — <strong>use <code class="inl">vector</code> by default</strong> unless you have a concrete reason not to.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> What a vector is</h2>
+    <p class="lead">A <code class="inl">vector</code> is a contiguous, resizable array that owns its elements. "Contiguous" is the superpower: the elements are laid out back-to-back in memory, which is exactly what CPUs and caches love — so iterating a vector is about as fast as it gets.</p>
+
+    <pre><span class="y">#include</span> <span class="g">&lt;vector&gt;</span>
+
+std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt; v = {10, 20, 30};   <span class="c1">// three ints, side by side in memory</span>
+v.push_back(40);                    <span class="c1">// now {10, 20, 30, 40}</span>
+std::cout &lt;&lt; v[2];                  <span class="c1">// 30 — instant, O(1) random access</span></pre>
+    <div class="runlater">Run any snippet on <a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt.org</a> with <code class="inl">-std=c++17</code> or newer.</div>
+
+    <div class="callout key"><span class="h">💡 Contiguous = cache-friendly</span>
+      Because elements are adjacent, walking a vector streams memory linearly — the CPU prefetcher keeps up. This is why a <code class="inl">vector</code> usually beats a "faster on paper" linked list (<code class="inl">std::list</code>) in real benchmarks: the list's nodes are scattered, so every step is a cache miss.</div>
+    <p class="cite">Source: <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rsl-vector" target="_blank" rel="noopener">Core Guidelines SL.con.2 — "Prefer using STL <code>vector</code> by default unless you have a reason to use a different container"</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The everyday operations</h2>
+    <p>You'll use the same dozen members constantly. Here's the working set:</p>
+    <pre>std::<span class="b">vector</span>&lt;std::<span class="b">string</span>&gt; names;        <span class="c1">// empty</span>
+
+names.push_back(<span class="g">"Ada"</span>);              <span class="c1">// append (copies the string in)</span>
+names.emplace_back(<span class="g">"Grace"</span>);          <span class="c1">// append, constructing in place (often cheaper)</span>
+
+names.size();        <span class="c1">// 2          — how many elements</span>
+names.empty();       <span class="c1">// false      — size()==0 ?</span>
+names[0];            <span class="c1">// "Ada"      — fast, NO bounds check</span>
+names.at(5);         <span class="c1">// throws std::out_of_range — checked access</span>
+names.front();       <span class="c1">// "Ada"      — first</span>
+names.back();        <span class="c1">// "Grace"    — last</span>
+
+<span class="y">for</span> (<span class="b">const</span> <span class="b">auto</span>&amp; n : names)        <span class="c1">// range-for: the idiomatic loop</span>
+    std::cout &lt;&lt; n &lt;&lt; <span class="g">"\n"</span>;
+
+names.pop_back();    <span class="c1">// remove the last element</span>
+names.clear();       <span class="c1">// remove all; size()==0 (capacity may stay)</span></pre>
+
+    <div class="cards">
+      <div class="card">
+        <h4><code class="inl">[i]</code> vs <code class="inl">.at(i)</code></h4>
+        <p><code class="inl">[i]</code> is unchecked (fast; out-of-range is undefined behavior). <code class="inl">.at(i)</code> bounds-checks and <strong>throws</strong> <code class="inl">std::out_of_range</code>. Use <code class="inl">[]</code> in hot loops you've reasoned about, <code class="inl">.at()</code> when an index could be bad.</p>
+      </div>
+      <div class="card">
+        <h4><code class="inl">push_back</code> vs <code class="inl">emplace_back</code></h4>
+        <p><code class="inl">push_back(x)</code> copies/moves an existing object in. <code class="inl">emplace_back(args…)</code> constructs the element <em>in place</em> from constructor arguments — skips a temporary. Prefer <code class="inl">emplace_back</code> when building objects.</p>
+      </div>
+      <div class="card">
+        <h4>Range-for is the loop</h4>
+        <p><code class="inl">for (const auto&amp; x : v)</code> is the idiomatic way to read every element. The <code class="inl">&amp;</code> avoids copies; <code class="inl">const</code> says you won't modify. Drop <code class="inl">const</code> to mutate in place.</p>
+      </div>
+    </div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/container/vector" target="_blank" rel="noopener">cppreference — std::vector member functions</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> size vs capacity — the one thing you must get</h2>
+    <p>A vector tracks two numbers. <strong>size</strong> is how many elements you've put in. <strong>capacity</strong> is how many it can hold before it must grab a bigger block of memory. When <code class="inl">push_back</code> would exceed capacity, the vector <strong>reallocates</strong>: allocates a larger block (typically ~2&#215;), copies/moves every element over, and frees the old one.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 300" role="img" aria-label="A vector with size 3 and capacity 4 has one free slot. Pushing past capacity triggers a reallocation to a new larger block, copying all elements and invalidating old pointers and iterators.">
+        <text x="20" y="40" font-size="13" font-weight="700" fill="var(--fg)">Before: size 3, capacity 4</text>
+        <!-- cells -->
+        <rect x="20" y="54" width="60" height="48" rx="5" fill="var(--accent)" opacity="0.18" stroke="var(--accent)"/>
+        <rect x="80" y="54" width="60" height="48" rx="5" fill="var(--accent)" opacity="0.18" stroke="var(--accent)"/>
+        <rect x="140" y="54" width="60" height="48" rx="5" fill="var(--accent)" opacity="0.18" stroke="var(--accent)"/>
+        <rect x="200" y="54" width="60" height="48" rx="5" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <text x="50" y="84" text-anchor="middle" font-family="monospace" font-size="14" fill="var(--fg)">10</text>
+        <text x="110" y="84" text-anchor="middle" font-family="monospace" font-size="14" fill="var(--fg)">20</text>
+        <text x="170" y="84" text-anchor="middle" font-family="monospace" font-size="14" fill="var(--fg)">30</text>
+        <text x="230" y="84" text-anchor="middle" font-size="11" fill="var(--muted)">free</text>
+        <text x="20" y="124" font-size="12" fill="var(--muted)">3 used &#183; 1 spare &#8594; push_back is cheap (no realloc)</text>
+
+        <!-- arrow -->
+        <text x="410" y="160" text-anchor="middle" font-size="13" font-weight="700" fill="var(--warn)">push_back when size == capacity &#8594; REALLOCATE</text>
+
+        <text x="20" y="200" font-size="13" font-weight="700" fill="var(--fg)">After: new block, capacity 8</text>
+        <rect x="20" y="214" width="50" height="46" rx="5" fill="var(--accent-2)" opacity="0.18" stroke="var(--accent-2)"/>
+        <rect x="70" y="214" width="50" height="46" rx="5" fill="var(--accent-2)" opacity="0.18" stroke="var(--accent-2)"/>
+        <rect x="120" y="214" width="50" height="46" rx="5" fill="var(--accent-2)" opacity="0.18" stroke="var(--accent-2)"/>
+        <rect x="170" y="214" width="50" height="46" rx="5" fill="var(--accent-2)" opacity="0.18" stroke="var(--accent-2)"/>
+        <rect x="220" y="214" width="50" height="46" rx="5" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <rect x="270" y="214" width="50" height="46" rx="5" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <rect x="320" y="214" width="50" height="46" rx="5" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <rect x="370" y="214" width="50" height="46" rx="5" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+        <text x="45" y="242" text-anchor="middle" font-family="monospace" font-size="13" fill="var(--fg)">10</text>
+        <text x="95" y="242" text-anchor="middle" font-family="monospace" font-size="13" fill="var(--fg)">20</text>
+        <text x="145" y="242" text-anchor="middle" font-family="monospace" font-size="13" fill="var(--fg)">30</text>
+        <text x="195" y="242" text-anchor="middle" font-family="monospace" font-size="13" fill="var(--fg)">40</text>
+        <text x="500" y="242" font-size="12" fill="var(--danger)">old block freed &#8594; any pointers/iterators into it now dangle</text>
+      </svg>
+      <figcaption>Growth is by a multiplicative factor (commonly 2&#215;), so most <code class="inl">push_back</code>s are cheap and the occasional copy averages out to <strong>amortized O(1)</strong>.</figcaption>
+    </figure>
+
+    <p>Two practical consequences:</p>
+    <ul>
+      <li><strong>Reserve when you know the size.</strong> <code class="inl">v.reserve(n)</code> grabs capacity once, up front — turning <em>n</em> growth-reallocations into zero. Big win in loops.</li>
+      <li><strong>Reallocation invalidates.</strong> After a growth, all existing iterators, pointers, and references into the vector are stale. Don't hold a pointer to <code class="inl">v[0]</code> across a <code class="inl">push_back</code>.</li>
+    </ul>
+
+    <pre>std::<span class="b">vector</span>&lt;<span class="b">int</span>&gt; v;
+v.reserve(1000);                <span class="c1">// one allocation, capacity now &gt;= 1000</span>
+<span class="y">for</span> (<span class="b">int</span> i = 0; i &lt; 1000; ++i)
+    v.push_back(i);             <span class="c1">// zero reallocations — all cheap</span></pre>
+
+    <div class="callout warn"><span class="h">⚠ Classic bug: dangling reference after growth</span>
+      <code class="inl">int&amp; first = v[0]; v.push_back(x); use(first);</code> — if that <code class="inl">push_back</code> reallocated, <code class="inl">first</code> now points at freed memory. Re-fetch <code class="inl">v[0]</code> after any operation that can grow the vector.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/container/vector/push_back" target="_blank" rel="noopener">cppreference — push_back (amortized constant; reallocation invalidates iterators/references)</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Complexity — what's fast, what's not</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Operation</th><th>Cost</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">v[i]</code>, <code class="inl">at</code>, <code class="inl">front</code>, <code class="inl">back</code></td><td><span class="yes">O(1)</span></td><td>random access — the headline feature</td></tr>
+          <tr><td><code class="inl">push_back</code> / <code class="inl">pop_back</code></td><td><span class="yes">amortized O(1)</span></td><td>occasional realloc averages out</td></tr>
+          <tr><td><code class="inl">insert</code> / <code class="inl">erase</code> in the middle</td><td><span class="no">O(n)</span></td><td>must shift everything after it</td></tr>
+          <tr><td><code class="inl">std::find</code> (unsorted)</td><td><span class="no">O(n)</span></td><td>linear scan — no key lookup (that's <code class="inl">map</code>'s job)</td></tr>
+          <tr><td>insert/erase at the <em>front</em></td><td><span class="no">O(n)</span></td><td>shifts all elements — use <code class="inl">deque</code> if you need this</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key"><span class="h">💡 The shape to remember</span>
+      Vector is great at <strong>the end</strong> and at <strong>indexing</strong>, poor in the <strong>middle/front</strong>, and has <strong>no fast lookup by value</strong>. When your access pattern fights that, the next lessons give you the right tool.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> When <em>not</em> vector — the sequence-container family</h2>
+    <p>Vector is the default, not the only choice. Its siblings trade contiguity for a different strength:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Container</th><th>Reach for it when…</th><th>Cost of its trick</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">vector</code></td><td>default; growable, index access, iterate fast</td><td>slow insert in middle/front</td></tr>
+          <tr><td><code class="inl">array&lt;T,N&gt;</code></td><td>fixed size known at compile time; no heap, no growth</td><td>size can never change</td></tr>
+          <tr><td><code class="inl">deque</code></td><td>fast push/pop at <strong>both</strong> ends</td><td>not one contiguous block; slightly slower indexing</td></tr>
+          <tr><td><code class="inl">list</code></td><td>you splice/insert in the middle constantly and never index</td><td>cache-unfriendly; usually loses to vector in practice</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><code class="inl">std::array</code> deserves a note: it's a thin, zero-overhead wrapper around a C array with a fixed compile-time size <code class="inl">N</code> — but it gives you <code class="inl">.size()</code>, <code class="inl">.at()</code>, range-for, and works with algorithms. Prefer it over raw <code class="inl">int a[10]</code>.</p>
+    <div class="callout mission"><span class="h">🎯 The decision, in one line</span>
+      Start with <code class="inl">vector</code>. Switch only when a real access pattern demands it — fixed size &#8594; <code class="inl">array</code>; both-ends &#8594; <code class="inl">deque</code>; key lookup &#8594; <code class="inl">map</code>/<code class="inl">unordered_map</code> (Lesson 4). The full <a href="../reference/cpp-stdlib-cheatsheet.html">selection flowchart</a> lives in the cheat sheet.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/container" target="_blank" rel="noopener">cppreference — Containers library (sequence containers)</a> · <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rsl-arrays" target="_blank" rel="noopener">Core Guidelines SL.con.1 — prefer <code>array</code>/<code>vector</code> over C arrays</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="2">
+        <div class="stem">What's the difference between a vector's <code class="inl">size()</code> and <code class="inl">capacity()</code>?</div>
+        <button class="opt">Nothing — they're aliases</button>
+        <button class="opt"><code class="inl">size</code> is bytes; <code class="inl">capacity</code> is elements</button>
+        <button class="opt"><code class="inl">size</code> = elements present; <code class="inl">capacity</code> = elements it can hold before reallocating</button>
+        <button class="opt"><code class="inl">capacity</code> is always equal to <code class="inl">size</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">Why is <code class="inl">push_back</code> "amortized O(1)" rather than just O(1)?</div>
+        <button class="opt">Because it's actually O(n) every time</button>
+        <button class="opt">Most pushes are O(1); the rare reallocation is O(n), but growth is multiplicative so it averages to O(1)</button>
+        <button class="opt">Because the compiler optimizes it away</button>
+        <button class="opt">Because it's slower than O(1) by a constant factor</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">You hold <code class="inl">int&amp; r = v[0];</code> then call <code class="inl">v.push_back(99)</code>. What's the risk?</div>
+        <button class="opt">If that push reallocated, <code class="inl">r</code> now dangles — points at freed memory</button>
+        <button class="opt">None; references into vectors are always stable</button>
+        <button class="opt"><code class="inl">r</code> automatically updates to the new location</button>
+        <button class="opt">The vector refuses to grow while <code class="inl">r</code> exists</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">You need to push and pop efficiently at <em>both</em> ends of a sequence. Best fit?</div>
+        <button class="opt"><code class="inl">vector</code></button>
+        <button class="opt"><code class="inl">array</code></button>
+        <button class="opt"><code class="inl">list</code></button>
+        <button class="opt"><code class="inl">deque</code></button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What is <code class="inl">std::vector</code> in one sentence?</summary><div class="a">A: A dynamic, contiguous array that owns its elements, grows automatically, and gives O(1) random access. The default container.</div></details>
+    <details class="fc"><summary>Q: <code class="inl">v[i]</code> vs <code class="inl">v.at(i)</code>?</summary><div class="a">A: <code class="inl">[i]</code> is unchecked (fast; out-of-range = undefined behavior). <code class="inl">.at(i)</code> bounds-checks and throws <code class="inl">std::out_of_range</code>.</div></details>
+    <details class="fc"><summary>Q: When does a vector reallocate, and what does that invalidate?</summary><div class="a">A: When a <code class="inl">push_back</code>/insert would exceed <code class="inl">capacity()</code>. It moves to a bigger block and frees the old one — invalidating all existing iterators, pointers, and references.</div></details>
+    <details class="fc"><summary>Q: What does <code class="inl">reserve(n)</code> do and why use it?</summary><div class="a">A: Pre-allocates capacity for <em>n</em> elements up front, so a known-size fill does one allocation instead of many reallocations. Doesn't change <code class="inl">size()</code>.</div></details>
+    <details class="fc"><summary>Q: <code class="inl">push_back</code> vs <code class="inl">emplace_back</code>?</summary><div class="a">A: <code class="inl">push_back</code> inserts an existing object (copy/move); <code class="inl">emplace_back(args…)</code> constructs the element in place from constructor args, avoiding a temporary.</div></details>
+    <details class="fc"><summary>Q: Why does <code class="inl">vector</code> usually beat <code class="inl">list</code> in practice?</summary><div class="a">A: Contiguity. Vector's elements stream through cache; list's scattered nodes cause a cache miss per step. Big-O hides the constant factor that contiguity wins.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Try: <em>"show me <code class="inl">capacity()</code> doubling as I push in a loop"</em>, or <em>"when is <code class="inl">list</code> actually the right call?"</em> Paste me a snippet and ask whether it has a reallocation bug.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0001-the-standard-library-at-a-glance.html"><span class="dir">↩ Previous</span><span class="ttl">The Standard Library at a Glance</span></a>
+    <a href="0003-string-and-string-view.html"><span class="dir">Up next →</span><span class="ttl">std::string &amp; std::string_view</span></a>
+  </nav>
+
+  <footer>
+    C++ Standard Library · Lesson 2 · grounded in
+    <a href="https://en.cppreference.com/w/cpp/container/vector" target="_blank" rel="noopener">cppreference</a>,
+    <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines" target="_blank" rel="noopener">C++ Core Guidelines</a> ·
+    <a href="../reference/cpp-stdlib-glossary.html">Glossary</a> ·
+    <a href="../reference/cpp-stdlib-cheatsheet.html">Cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

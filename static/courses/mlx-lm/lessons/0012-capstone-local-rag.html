@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 12 · Capstone — Ask Your Own Notes (Local RAG)</title>
+<style>
+.quiz{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:16px 0;background:var(--surface)}
+.quiz .q{font-weight:700;margin-bottom:.6em}
+.quiz .opts{display:flex;flex-direction:column;gap:.5rem}
+.quiz .opt{text-align:left;font:inherit;cursor:pointer;border:1px solid var(--border);background:var(--panel);color:var(--fg);border-radius:9px;padding:.6rem .8rem}
+.quiz .opt:hover:not(:disabled){border-color:var(--accent)}
+.quiz .opt.correct{border-color:var(--mark);background:color-mix(in srgb,var(--mark) 15%,transparent)}
+.quiz .opt.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,transparent)}
+.quiz .opt:disabled{cursor:default}
+.quiz-exp{margin-top:.7rem;color:var(--muted);font-size:.92rem;border-left:3px solid var(--accent);padding-left:.7rem}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/mlx-lm/" style="color:inherit;text-decoration:none">&larr; mlx-lm</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">mlx-lm · Lesson 12 · Capstone</div>
+    <h1>Ask Your Own Notes — Local RAG</h1>
+    <p class="sub">The whole course in one tool. Embed your documents, find the passages that answer a question, and have a local model write the answer grounded in <em>your</em> text — all on your Mac. We build it over this very course's lessons, then you point it at anything.</p>
+    <span class="missiontag">🎯 Mission complete: a real local-LLM tool over your own content</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>RAG = retrieve (Lesson 11) + generate (Lesson 2).</strong> A model can't know your private notes — so don't ask it to remember. <em>Find</em> the relevant passages by meaning, put them in the prompt, and tell the model to answer using only those. You get current, grounded answers from a small local model, with no training and no cloud.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The whole course, composed</h2>
+    <p class="lead">This capstone is every prior lesson working together: you <strong>run</strong> a model (L1–2) at a <strong>size</strong> that fits (L9), use <strong>embeddings</strong> to retrieve (L11), and <strong>generate</strong> a grounded answer (L2) — optionally as <strong>structured output</strong> (L8) or via <strong>tools</strong> (L10). We'll index this course's own lessons and ask it questions about what you learned.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Documents are chunked, embedded, and stored; a query is embedded, the nearest chunks retrieved, and a model answers grounded in them">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="11.5">
+          <text x="120" y="24" text-anchor="middle" fill="var(--muted)">INDEX (once)</text>
+          <rect x="40" y="36" width="160" height="34" rx="7" fill="none" stroke="var(--fg)" stroke-width="1.2"/>
+          <text x="120" y="58" text-anchor="middle" fill="var(--fg)">your docs → chunks</text>
+          <rect x="40" y="80" width="160" height="34" rx="7" fill="var(--accent)" opacity="0.12" stroke="var(--accent)" stroke-width="1.3"/>
+          <rect x="40" y="80" width="160" height="34" rx="7" fill="none" stroke="var(--accent)" stroke-width="1.3"/>
+          <text x="120" y="102" text-anchor="middle" fill="var(--fg)">embed → vectors</text>
+          <line x1="120" y1="70" x2="120" y2="79" stroke="var(--fg)" stroke-width="1.2" marker-end="url(#r)"/>
+
+          <text x="430" y="24" text-anchor="middle" fill="var(--muted)">ASK (each query)</text>
+          <rect x="300" y="36" width="120" height="34" rx="7" fill="none" stroke="var(--fg)" stroke-width="1.2"/>
+          <text x="360" y="58" text-anchor="middle" fill="var(--fg)">question → embed</text>
+          <rect x="300" y="92" width="120" height="40" rx="7" fill="var(--accent)" opacity="0.12" stroke="var(--accent)" stroke-width="1.3"/>
+          <rect x="300" y="92" width="120" height="40" rx="7" fill="none" stroke="var(--accent)" stroke-width="1.3"/>
+          <text x="360" y="110" text-anchor="middle" fill="var(--fg)">retrieve top-k</text>
+          <text x="360" y="124" text-anchor="middle" fill="var(--muted)" font-size="10">nearest chunks</text>
+          <line x1="360" y1="70" x2="360" y2="91" stroke="var(--fg)" stroke-width="1.2" marker-end="url(#r)"/>
+          <line x1="200" y1="97" x2="298" y2="110" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 2" marker-end="url(#rb)"/>
+          <text x="250" y="92" text-anchor="middle" fill="var(--muted)" font-size="10">cosine</text>
+
+          <rect x="480" y="80" width="180" height="64" rx="9" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)" stroke-width="1.4"/>
+          <rect x="480" y="80" width="180" height="64" rx="9" fill="none" stroke="var(--accent-2)" stroke-width="1.4"/>
+          <text x="570" y="104" text-anchor="middle" fill="var(--fg)" font-weight="700">model</text>
+          <text x="570" y="122" text-anchor="middle" fill="var(--muted)" font-size="10">context + question</text>
+          <text x="570" y="135" text-anchor="middle" fill="var(--accent-2)" font-size="10">→ grounded answer</text>
+          <line x1="420" y1="112" x2="478" y2="112" stroke="var(--fg)" stroke-width="1.2" marker-end="url(#r)"/>
+        </g>
+        <defs>
+          <marker id="r" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/></marker>
+          <marker id="rb" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>Index once (chunk → embed → store), then per question: embed it, retrieve the nearest chunks by cosine similarity, and hand them to the model as context. The model answers from what you retrieved, not from memory.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The code — RAG over this course</h2>
+    <p>Strip the lessons to text, chunk into overlapping windows, embed, retrieve, and generate. The core is ~20 lines (full script: <code class="inl">practice/rag.py</code>):</p>
+    <pre><span class="c1"># index: overlapping ~500-char windows keep a whole idea in one chunk</span>
+chunks = [t[s:s+<span class="g">500</span>] <span class="b">for</span> doc <span class="b">in</span> lessons <span class="b">for</span> t <span class="b">in</span> [text_of(doc)]
+          <span class="b">for</span> s <span class="b">in</span> <span class="y">range</span>(<span class="g">0</span>, <span class="y">len</span>(t)-<span class="g">200</span>, <span class="g">350</span>)]
+cvecs = embed(chunks)                              <span class="c1"># Lesson 11</span>
+
+<span class="c1"># retrieve top-k by cosine (normalized vectors → dot product)</span>
+qv = embed([question])[<span class="g">0</span>]
+top = <span class="y">sorted</span>(<span class="y">range</span>(<span class="y">len</span>(chunks)), key=<span class="b">lambda</span> i: -<span class="y">float</span>(mx.sum(qv*cvecs[i])))[:<span class="g">4</span>]
+context = <span class="g">"\n"</span>.join(f<span class="g">"- {chunks[i]}"</span> <span class="b">for</span> i <span class="b">in</span> top)
+
+<span class="c1"># generate, grounded ONLY in the retrieved context (Lesson 2)</span>
+msgs = [{<span class="g">"role"</span>:<span class="g">"user"</span>, <span class="g">"content"</span>: f<span class="g">"Answer using ONLY these notes:\n{context}\n\nQuestion: {question}"</span>}]
+answer = generate(lm, tok, prompt=tok.apply_chat_template(msgs, add_generation_prompt=<span class="b">True</span>))</pre>
+    <p>Real run on your M4 Pro — <strong>226 windows</strong> indexed from the 12 lessons, asked an unseen question:</p>
+    <pre><span class="c1"># Q: "On a Mac, why is there no step to move the model to the GPU?"</span>
+<span class="c1"># retrieved → Lesson 1 (unified memory). Answer:</span>
+On a Mac running Apple Silicon, there is no need to explicitly move the model to
+the GPU because Apple Silicon uses unified memory — the CPU and GPU share the same
+RAM pool. The model is loaded once and computed directly on the GPU without copying.</pre>
+    <div class="callout mission"><span class="h">🎯 Your capstone win</span>
+      Run <code class="inl">~/projects/learn/public/courses/mlx-lm/practice/.venv/bin/python ~/projects/learn/public/courses/mlx-lm/practice/rag.py</code>. A local model just answered a question about your own course material — correctly, grounded in the exact lesson, with nothing leaving your Mac. Change the glob to point at your notes, a repo, or <code class="inl">public/content</code> and it's <em>your</em> knowledge base.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The honest part — retrieval is the hard part</h2>
+    <div class="callout warn"><span class="h">⚠️ Garbage retrieval → garbage answer (seen live)</span>
+      The first version of this used <em>sentence</em>-sized chunks and asked "how do I make a fine-tuned model smaller without losing the tuning?" — and it retrieved tangential passages and gave a vague answer, because the precise insight (8-bit keeps a fine-tune, 4-bit washes it out — Lesson 5) got split across chunks and never ranked. Switching to overlapping <strong>windows</strong> fixed retrieval. <strong>In RAG, the model is rarely the bottleneck — your chunking and embeddings are.</strong></div>
+    <table>
+      <thead><tr><th>Lever</th><th>When retrieval is weak</th></tr></thead>
+      <tbody>
+        <tr><td>Chunking</td><td>too small fragments ideas; too big dilutes them. Overlapping windows are a solid default.</td></tr>
+        <tr><td>Embedding model</td><td>a stronger/larger embedder (e.g. a BGE model) separates meanings better than a tiny one.</td></tr>
+        <tr><td>top-k</td><td>retrieve a few more chunks so the right one is in the context.</td></tr>
+        <tr><td>Re-ranking</td><td>fetch top-20, then re-score with a cross-encoder and keep the best 4.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Why "answer using only these notes" matters</h2>
+    <p>That instruction is the whole point of RAG: it <strong>grounds</strong> the model in retrieved text instead of its (small, dated) memory. Recall Lesson 1, where the bare 1B model claimed MLX was for "M1 and M2 processors" — out of date. Feed it the right passage and it answers from <em>that</em>, not from a fuzzy recollection. Grounding is how a small local model gives trustworthy, current answers about your data.</p>
+    <div class="callout key"><span class="h">💡 Compose the rest of the course onto it</span>
+      Want the answer as JSON (with a <code class="inl">sources</code> list)? Add Lesson 8's <code class="inl">output_type</code>. Want it to <em>decide</em> whether to search vs. answer directly? That's a Lesson 10 tool call. RAG is the backbone; the other lessons are attachments.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Check yourself</h2>
+    <p>Pick an answer for instant feedback (your choices are saved locally). This is the last set — you've earned it.</p>
+
+    <div class="quiz"><p class="q">1. Why retrieve passages instead of just asking the model your question directly?</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) retrieval makes the model generate faster</button>
+      <button class="opt" data-correct="true">B) the model doesn't know your private/current data — grounding it in retrieved text gives accurate answers</button>
+      <button class="opt" data-correct="false">C) it permanently teaches the model your data</button>
+    </div><p class="quiz-exp" hidden>RAG augments the <em>context</em>, not the weights. The model answers from passages you fetched, so it can speak to private or up-to-date data it never trained on.</p></div>
+
+    <div class="quiz"><p class="q">2. The capstone gave a vague answer at first. What was actually wrong?</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) the model was too small to answer</button>
+      <button class="opt" data-correct="true">B) retrieval — sentence-sized chunks fragmented the key passage, so the right context was never fetched</button>
+      <button class="opt" data-correct="false">C) the prompt didn't ask politely</button>
+    </div><p class="quiz-exp" hidden>In RAG the retrieval step is usually the bottleneck. Better chunking (overlapping windows) surfaced the right passage and the answer became grounded and correct.</p></div>
+
+    <div class="quiz"><p class="q">3. What does "Answer using ONLY these notes" accomplish?</p>
+    <div class="opts">
+      <button class="opt" data-correct="true">A) it grounds the model in the retrieved text, reducing made-up / outdated answers</button>
+      <button class="opt" data-correct="false">B) it makes the model train on the notes</button>
+      <button class="opt" data-correct="false">C) it disables the model's tokenizer</button>
+    </div><p class="quiz-exp" hidden>Grounding instructions tell the model to answer from the provided context rather than its fuzzy memory — the fix for the kind of dated claim the bare 1B model made in Lesson 1.</p></div>
+
+    <div class="quiz"><p class="q">4. Your RAG tool misses relevant docs. Best first thing to improve?</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) switch to a much larger generation model</button>
+      <button class="opt" data-correct="true">B) improve retrieval — chunking, a stronger embedding model, higher top-k, or re-ranking</button>
+      <button class="opt" data-correct="false">C) lower the temperature to 0</button>
+    </div><p class="quiz-exp" hidden>If the right passage isn't retrieved, no generation model can answer from it. Fix retrieval first — that's where RAG quality lives.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> You finished the course</h2>
+    <p>Twelve lessons. You can now, entirely on your Mac: <strong>run</strong> models (CLI + Python), <strong>serve</strong> them (OpenAI-compatible), <strong>fine-tune</strong> with LoRA, <strong>quantize</strong> &amp; convert, use the <strong>KV cache</strong>, force <strong>structured output</strong>, do <strong>tool calling</strong>, compute <strong>embeddings</strong>, <strong>size</strong> a model to your RAM, and build <strong>RAG</strong> over your own content. That's a complete local-LLM toolkit.</p>
+    <ul>
+      <li><a href="https://github.com/ml-explore/mlx-lm" target="_blank" rel="noopener">mlx-lm</a> · <a href="https://github.com/Blaizzy/mlx-embeddings" target="_blank" rel="noopener">mlx-embeddings</a> · <a href="https://dottxt-ai.github.io/outlines/" target="_blank" rel="noopener">Outlines</a> — the libraries you used.</li>
+      <li><a href="https://www.reddit.com/r/LocalLLaMA/" target="_blank" rel="noopener">r/LocalLLaMA</a> — keep learning with other Apple-Silicon practitioners.</li>
+    </ul>
+    <p class="cite">Keep handy: <a href="../reference/mlx-lm-glossary.html">Glossary &amp; quick reference</a> · <a href="0011-local-embeddings-and-semantic-search.html">← Lesson 11</a> · <a href="0001-your-mac-runs-an-llm.html">↩ Lesson 1</a>. The real next step is yours: point this RAG at the <code class="inl">learn</code> content or your notes and make it a tool you actually use — bring it to me and we'll wire it in.</p>
+  </section>
+
+</div>
+<script>
+// non-critical quiz state persists in localStorage (no backend); degrades gracefully
+document.querySelectorAll('.quiz').forEach(function(q,qi){
+  var exp=q.querySelector('.quiz-exp'), opts=q.querySelectorAll('.opt');
+  var key='quiz:'+location.pathname+':'+qi;
+  function reveal(chosen){
+    q.dataset.done='1';
+    opts.forEach(function(o,oi){o.disabled=true;
+      if(o.dataset.correct==='true')o.classList.add('correct');
+      if(oi===chosen && o.dataset.correct!=='true')o.classList.add('wrong');});
+    if(exp)exp.hidden=false;
+  }
+  var saved=null; try{saved=localStorage.getItem(key);}catch(e){}
+  if(saved!==null) reveal(parseInt(saved,10));
+  opts.forEach(function(b,oi){
+    b.addEventListener('click',function(){
+      if(q.dataset.done)return;
+      try{localStorage.setItem(key,oi);}catch(e){}
+      reveal(oi);
+    });
+  });
+});
+</script>
+</body>
+</html>

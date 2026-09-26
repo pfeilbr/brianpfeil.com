@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 9 · Passkeys — Phishing-Proof Login with WebAuthn / FIDO2</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/auth/" style="color:inherit;text-decoration:none">&larr; Web Authentication</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">auth · Lesson 9 · Node + Express</div>
+    <h1>Passkeys: Phishing-Proof Login</h1>
+    <p class="sub">Every method so far has one shared weakness: a secret the user can be tricked into handing over — a password, a code, a magic link. Passkeys end that. They swap "a secret you send" for "a private key that never leaves your device and signs a challenge bound to the real website." There's nothing to type, nothing to phish, nothing to replay. Today you'll generate a real key pair and watch a phishing attack fail by construction.</p>
+    <span class="missiontag">🎯 Mission: a mental model of modern auth + the ability to wire it into a real app</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>A passkey is a public/private key pair where the private key never leaves your device, and every login signs a fresh server challenge that is cryptographically bound to the website's origin.</strong> The server stores only the <em>public</em> key (nothing to steal), and a phishing site can't get a usable signature because the signature is stamped with <em>its</em> origin, not the real one. This is the first method in the course that is phishing-<em>proof</em>, not merely phishing-resistant.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The problem only passkeys solve</h2>
+    <p class="lead">Recall Lesson 8's honest admission: magic links and OTP are still phishable, because a human can be tricked into relaying the secret to a fake site. The root cause is universal to <em>every</em> shared-secret method: <strong>if there's a secret the user can transmit, they can be fooled into transmitting it to the wrong party.</strong> Passwords, OTPs, even SMS — all share this. Passkeys break the pattern by never transmitting a secret at all.</p>
+    <div class="callout key"><span class="h">💡 The stack: passkey = WebAuthn + FIDO2</span>
+      "Passkey" is the friendly name. Under it: <strong>WebAuthn</strong> (the W3C browser API your JS calls), <strong>CTAP</strong> (how the browser talks to an authenticator — Touch ID, a phone, a YubiKey), together = <strong>FIDO2</strong> (the FIDO Alliance standard). You'll usually touch only WebAuthn via a library. <span class="cite">See <a href="https://fidoalliance.org/passkeys/" target="_blank" rel="noopener">FIDO Alliance — Passkeys</a> · <a href="https://web.dev/articles/passkey-registration" target="_blank" rel="noopener">web.dev</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The core swap: public-key crypto (the mirror of Lesson 4)</h2>
+    <p>Passwords and passkeys are opposites. With a password, you send the secret and the server stores a hash of it — so the server holds something worth stealing, and you hand the secret over every login. With a passkey, <strong>the secret (private key) never leaves your device</strong>, and the server stores only the matching <em>public</em> key — which is useless to a thief.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Password (Lesson 4)</th><th>Passkey (this lesson)</th></tr></thead>
+        <tbody>
+          <tr><td>What the server stores</td><td>A salted <em>hash</em> of your secret</td><td>Your <b>public key</b> (not a secret at all)</td></tr>
+          <tr><td>Value of a server breach</td><td>Crackable hashes → some accounts fall</td><td><span class="yes">Nothing</span> — public keys can't log in</td></tr>
+          <tr><td>What you send each login</td><td>The secret itself</td><td>A <b>signature</b> over a one-time challenge</td></tr>
+          <tr><td>Reusable across sites?</td><td>Users do (→ breach cascades)</td><td><span class="yes">No</span> — a unique key pair per site</td></tr>
+          <tr><td>Phishable?</td><td>Yes</td><td><span class="yes">No</span> — origin-bound (§05)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key"><span class="h">💡 You already saw this signature idea</span>
+      "Sign something with a private key, verify with a public key" is RS256/ES256 from Lesson 3 — the same asymmetric crypto behind "Sign in with Google." Passkeys put that key pair in <em>your</em> pocket instead of Google's data center. The whole course's primitives, recombined one last time.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The two ceremonies</h2>
+    <p>WebAuthn has exactly two flows. Both are a challenge the authenticator answers — the difference is whether you're creating the key pair or using it.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 760 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WebAuthn registration creates a key pair; authentication signs a challenge with the private key">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="11.5">
+          <text x="120" y="18" text-anchor="middle" fill="var(--accent-2)" font-weight="700">Authenticator (your device)</text>
+          <text x="630" y="18" text-anchor="middle" fill="var(--accent)" font-weight="700">Server (Relying Party)</text>
+          <!-- REGISTRATION -->
+          <text x="30" y="44" fill="var(--fg)" font-weight="700">REGISTER (once):</text>
+          <line x1="500" y1="58" x2="240" y2="58" stroke="var(--fg)" stroke-width="1.4" marker-end="url(#a9)"/>
+          <text x="370" y="51" text-anchor="middle" fill="var(--fg)" font-size="10.5">① challenge + rpId</text>
+          <rect x="20" y="66" width="220" height="40" rx="8" fill="var(--accent-2)" opacity="0.1" stroke="var(--accent-2)" stroke-width="1.3"/>
+          <text x="130" y="82" text-anchor="middle" fill="var(--accent-2)" font-size="10.5" font-weight="700">make key pair · keep PRIVATE</text>
+          <text x="130" y="97" text-anchor="middle" fill="var(--muted)" font-size="10">(Touch ID / phone unlock)</text>
+          <line x1="240" y1="120" x2="500" y2="120" stroke="var(--accent-2)" stroke-width="1.6" marker-end="url(#g9)"/>
+          <text x="370" y="113" text-anchor="middle" fill="var(--accent-2)" font-size="10.5">② PUBLIC key + credId → stored</text>
+          <line x1="40" y1="138" x2="720" y2="138" stroke="var(--border)" stroke-dasharray="4 4"/>
+          <!-- AUTHENTICATION -->
+          <text x="30" y="160" fill="var(--fg)" font-weight="700">AUTHENTICATE (each login):</text>
+          <line x1="500" y1="176" x2="240" y2="176" stroke="var(--fg)" stroke-width="1.4" marker-end="url(#a9)"/>
+          <text x="370" y="169" text-anchor="middle" fill="var(--fg)" font-size="10.5">③ fresh random challenge</text>
+          <rect x="20" y="184" width="220" height="40" rx="8" fill="var(--warn)" opacity="0.1" stroke="var(--warn)" stroke-width="1.3"/>
+          <text x="130" y="200" text-anchor="middle" fill="var(--warn)" font-size="10.5" font-weight="700">SIGN(challenge + origin)</text>
+          <text x="130" y="215" text-anchor="middle" fill="var(--muted)" font-size="10">with private key</text>
+          <line x1="240" y1="240" x2="500" y2="240" stroke="var(--warn)" stroke-width="1.6" marker-end="url(#wb9)"/>
+          <text x="370" y="233" text-anchor="middle" fill="var(--warn)" font-size="10.5">④ signature → verify w/ public key</text>
+          <text x="630" y="258" text-anchor="middle" fill="var(--accent)" font-size="10.5">✓ → start a session (L2)</text>
+        </g>
+        <defs>
+          <marker id="a9" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/></marker>
+          <marker id="g9" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent-2)"/></marker>
+          <marker id="wb9" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--warn)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>Registration creates and banks a public key once. Every login is a fresh challenge the device signs with the private key — and the same handoff to a session (Lesson 2) as every other method.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> 🎯 Your tangible win (5 min): generate a passkey, defeat a phisher</h2>
+    <p>A zero-dependency lab runs the whole ceremony with a <em>real</em> P-256 key pair (the WebAuthn default), then stages a phishing attack and a replay attack against it.</p>
+    <pre><span class="c1"># in your terminal (no npm install needed):</span>
+cd ~/projects/learn/public/courses/auth/practice/passkey-lab
+node demo.js</pre>
+    <div class="callout mission"><span class="h">🎯 The win — phishing failing by construction, verbatim</span>
+      <pre style="margin:.4em 0 0"><span class="c1">login on the REAL site → ✅ {"loggedIn":true}</span>
+
+<span class="c1">🎣 user phished on https://app.evil.example — the device DOES sign, but:</span>
+  signed for origin: https://app.evil.example
+  🛡️ <span class="y">origin mismatch: signed for "app.evil.example", expected "app.example"</span>
+
+<span class="c1">🔁 attacker replays a captured valid assertion:</span>
+  🛡️ <span class="y">stale/replayed challenge</span></pre>
+      This is the payoff of the whole course. The phisher did everything right — fooled the user, relayed a real challenge, even got a real signature — and <em>still</em> failed, because the signature is bound to the origin the browser actually displayed. No human mistake can leak a reusable secret, because <strong>there is no secret to leak</strong>. Open <code class="inl">demo.js</code>: the anti-phishing magic is one line — <code class="inl">assertion.origin !== expectedOrigin</code>.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Why phishing is impossible here (the two guarantees)</h2>
+    <div class="cards">
+      <div class="card"><h4>① Origin binding</h4><p class="truth">The browser — not the page — stamps the <b>real origin</b> into what's signed. A passkey for <code class="inl">app.example</code> won't even be offered on <code class="inl">evil.example</code>, and any signature it did make would carry <code class="inl">evil.example</code> and be rejected by the real server. The user <em>can't</em> hand it to the wrong site.</p></div>
+      <div class="card"><h4>② Nothing to replay</h4><p class="truth">Each login signs a <b>fresh single-use challenge</b>. A captured signature is worthless — the server already consumed that challenge and demands a new one. (Same single-use idea as Lessons 5 &amp; 8, now on a signature.)</p></div>
+    </div>
+    <div class="callout key"><span class="h">💡 Compare the whole course on one axis: phishability</span>
+      Password → phishable. OTP / magic link → phishable (human relays it). "Sign in with Google" → as phishable as Google's own login. <strong>Passkey → unphishable</strong>, because the secret never travels and the assertion is origin-bound. That's why every major platform is pushing passkeys as the default. <span class="cite">See <a href="https://simplewebauthn.dev/docs/advanced/passkeys/" target="_blank" rel="noopener">SimpleWebAuthn — passkeys</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> In practice: don't hand-roll it</h2>
+    <p>The lab simplifies (real WebAuthn signs <code class="inl">authenticatorData</code> + a hash of <code class="inl">clientDataJSON</code>, with attestation, signature counters, and CBOR encoding). You should <strong>never</strong> implement the byte-level verification yourself — use a vetted library. In Node that's <a href="https://simplewebauthn.dev/" target="_blank" rel="noopener"><code class="inl">@simplewebauthn/server</code></a>, and the shape is small:</p>
+    <pre><span class="b">const</span> { generateRegistrationOptions, verifyRegistrationResponse,
+        generateAuthenticationOptions, verifyAuthenticationResponse } = require(<span class="g">'@simplewebauthn/server'</span>);
+
+<span class="c1">// REGISTER — server issues options (incl. a challenge); browser calls navigator.credentials.create()</span>
+app.post(<span class="g">'/register/options'</span>, <span class="b">async</span> (req, res) =&gt; {
+  <span class="b">const</span> options = <span class="b">await</span> generateRegistrationOptions({
+    rpName: <span class="g">'MyApp'</span>, rpID: <span class="g">'app.example'</span>, userName: req.user.email });
+  req.session.challenge = options.challenge;             <span class="c1">// remember it to verify next</span>
+  res.json(options);
+});
+app.post(<span class="g">'/register/verify'</span>, <span class="b">async</span> (req, res) =&gt; {
+  <span class="b">const</span> v = <span class="b">await</span> verifyRegistrationResponse({ response: req.body,
+    expectedChallenge: req.session.challenge,
+    expectedOrigin: <span class="g">'https://app.example'</span>, expectedRPID: <span class="g">'app.example'</span> });
+  <span class="b">if</span> (v.verified) <span class="b">await</span> db.saveCredential(req.user.id, v.registrationInfo); <span class="c1">// store PUBLIC key + credId</span>
+  res.json({ ok: v.verified });
+});
+<span class="c1">// LOGIN mirrors this: generate/verifyAuthenticationResponse, then req.session.userId = user.id  ← the handoff</span></pre>
+    <div class="callout warn"><span class="h">⚠️ Real-world gaps to plan for</span>
+      Passkeys need a <strong>fallback</strong> (not every device has one yet) and <strong>account recovery</strong> (lost-device flow) — usually a second passkey or a one-time recovery method. And note the modern reality: most consumer passkeys are <em>synced</em> (iCloud Keychain, Google Password Manager) across your devices, which trades a little "private key never leaves hardware" purity for usability. Design for sync + recovery from day one. <span class="cite">See <a href="https://passkeys.dev/" target="_blank" rel="noopener">passkeys.dev</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Check yourself</h2>
+    <div class="quiz">
+      <div class="q">
+        <p><strong>Q1.</strong> A passkey server database leaks completely. How worried should you be, compared to a password database leaking?</p>
+        <details><summary>Show answer</summary><p>Far less. The server stores only <em>public</em> keys, which by design reveal nothing and can't be used to authenticate — there's nothing to crack, no rainbow tables, no reuse cascade. A leaked password database (even hashed) still risks weak passwords being cracked and reused elsewhere. "Nothing secret on the server" is a core passkey advantage. (§02.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q2.</strong> A user is successfully tricked into visiting a pixel-perfect phishing clone and approves the passkey prompt. Why doesn't the attacker get in?</p>
+        <details><summary>Show answer</summary><p>Origin binding. The browser stamps the <em>actual</em> origin (<code class="inl">app.evil.example</code>) into the signed data — the page can't forge it — and typically the authenticator won't even offer a passkey registered to <code class="inl">app.example</code> on a different origin. Any signature produced carries the wrong origin, so the real server rejects it. The user's approval can't leak a usable credential because nothing reusable is transmitted. (§04–05.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q3.</strong> Why is each authentication a signature over a fresh server-issued challenge, rather than something static?</p>
+        <details><summary>Show answer</summary><p>Replay protection. A static signed value could be captured and re-sent. A fresh single-use challenge means a captured assertion is dead on arrival — the server already consumed that challenge and requires a new one (you saw "stale/replayed challenge"). Same single-use principle as the OAuth code (L5) and magic links (L8), applied to a signature. (§05.)</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Where we go next — and how far you've come</h2>
+    <p>That's the modern endgame: a login with no shared secret, immune to phishing and replay, leaking nothing on breach. Step back and look at the whole map you've built — you can now place <em>any</em> auth system on it:</p>
+    <div class="cards">
+      <div class="card"><h4>Stay logged in (L1–3, 7)</h4><p class="truth">Sessions vs tokens · cookies &amp; CSRF · JWTs · refresh rotation &amp; revocation.</p></div>
+      <div class="card"><h4>Log in (L4–6, 8–9)</h4><p class="truth">Passwords · OAuth2 · PKCE+OIDC · magic links/OTP · passkeys.</p></div>
+      <div class="card"><h4>The spine</h4><p class="truth">Every method ends at <code class="inl">req.session.userId = …</code> — phase ① hands off to phase ③.</p></div>
+      <div class="card"><h4>Recurring primitives</h4><p class="truth">Hashing, signing, single-use + expiry, origin/secret binding — reused everywhere.</p></div>
+    </div>
+    <p>Lesson 10 is the <strong>capstone</strong>: a decision framework — given a real app, which methods do you combine, where does each token live, and how do you wire it in Express end to end — turning this map into a build you can ship.</p>
+    <div class="callout key"><span class="h">📌 Remember this one line</span>
+      <strong>A passkey is a per-site key pair whose private half never leaves your device; login = signing a fresh challenge bound to the real origin. The server stores only the public key, so breaches leak nothing and phishing fails by construction — the secret never travels.</strong></div>
+    <p class="muted" style="margin-top:18px">💬 Ask me anything — e.g. "stand up a real <code class="inl">@simplewebauthn</code> demo I can use with Touch ID", "how do synced vs device-bound passkeys differ?", or "design the recovery flow." · Back to <a href="0008-passwordless-magic-links-otp.html">Lesson 8</a> · <a href="0003-jwt-anatomy.html">Lesson 3</a> · <a href="/courses/auth/#resources">Resources</a>.</p>
+  </section>
+
+</div>
+</body>
+</html>

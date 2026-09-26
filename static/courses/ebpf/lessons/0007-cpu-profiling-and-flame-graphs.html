@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 7 · CPU Profiling &amp; Flame Graphs</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Lesson 7</div>
+    <h1>CPU Profiling &amp; Flame Graphs</h1>
+    <p class="sub">Find where CPU time actually goes by sampling stacks — and learn to read a flame graph.</p>
+    <span class="missiontag">🎯 Stop guessing what's slow — let the kernel show you the hot path</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>Instead of tracing <em>every</em> event, <strong>sample the running stack many times per second</strong>, aggregate identical stacks into counts, and draw the result as a <strong>flame graph</strong> — a picture that shows you exactly where the CPU is spending its time.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Tracing vs sampling — when each wins</h2>
+    <p class="lead">Everything so far in this course has been <strong>tracing</strong>: you attach a probe to a specific event (a syscall, a function entry, a kernel tracepoint) and your handler runs <em>every single time</em> that event fires. That's perfect for counting "how many <code class="inl">open()</code> calls happened" or "how long did each read take" — you want every occurrence.</p>
+    <p>But CPU usage is a different kind of question. When a program is burning a whole core and you ask <em>"what is it actually doing right now?"</em>, there is no single event to attach to — the CPU is just <em>executing code</em>, millions of instructions a second. Tracing every function call to find the hot one would be absurdly expensive and would slow the very thing you're measuring.</p>
+    <p>The answer is <strong>sampling</strong>. Don't watch every event — instead, on a fixed timer, interrupt whatever is running, snapshot the <strong>call stack</strong> (the chain of functions currently executing), and move on. Do that ~100 times a second and the statistics take over: code that's on-CPU a lot gets sampled a lot; code that's rarely running barely shows up. You trade perfect precision for <strong>tiny, fixed overhead</strong> and a representative picture.</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Tracing (event-driven)</th><th>Sampling (timer-driven)</th></tr></thead>
+        <tbody>
+          <tr><td>Fires when…</td><td>a chosen event happens</td><td>a fixed timer ticks (e.g. 99×/sec)</td></tr>
+          <tr><td>Best question</td><td>"How many? How long? Which args?"</td><td>"Where is the CPU spending time?"</td></tr>
+          <tr><td>Overhead</td><td>scales with <span class="no">event rate</span> (can be huge)</td><td><span class="yes">fixed</span> &amp; predictable (a few %)</td></tr>
+          <tr><td>Completeness</td><td>sees every event</td><td>statistical — rare code may be missed</td></tr>
+          <tr><td>bpftrace probe</td><td><code class="inl">kprobe</code>, <code class="inl">uprobe</code>, <code class="inl">tracepoint</code>…</td><td><code class="inl">profile</code>, <code class="inl">interval</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout key">
+      <span class="h">💡 The mental flip</span>
+      For "what's slow / what's hot on the CPU", reach for <strong>sampling</strong>, not tracing. A sample is a cheap photo of the stack; a profile is thousands of those photos summed up.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The <code class="inl">profile</code> probe — and why 99 Hz</h2>
+    <p>bpftrace exposes timed sampling through the <strong><code class="inl">profile</code></strong> probe. It fires on a timer, <strong>on every CPU</strong>, at a rate you choose. The unit after <code class="inl">profile:</code> sets how the rate is interpreted:</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Form</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">profile:hz:99</code></td><td>99 times per second, on each CPU (Hertz)</td></tr>
+          <tr><td><code class="inl">profile:s:1</code></td><td>once per second</td></tr>
+          <tr><td><code class="inl">profile:ms:10</code></td><td>every 10 milliseconds</td></tr>
+          <tr><td><code class="inl">profile:us:100</code></td><td>every 100 microseconds</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The canonical choice for CPU profiling is <strong><code class="inl">profile:hz:99</code></strong> — but why the odd number 99 instead of a round 100?</p>
+
+    <div class="callout warn">
+      <span class="h">⚠️ Why 99, not 100</span>
+      Many other timed activities in a system fire at round rates — <strong>multiples of 100</strong> (timers, schedulers, periodic jobs). If you also sampled at exactly 100 Hz you risk falling into <strong>lockstep</strong>: your sample lands at the same phase of that periodic activity every time, so you'd always catch it right before or right after — a biased, distorted picture. Picking 99 Hz keeps your sampling <em>out of step</em> with those round-number cycles, so you see a fair cross-section.
+    </div>
+
+    <p>99 Hz is also a deliberately <strong>cheap</strong> rate: frequent enough to catch both the big and small picture of where execution time goes, but not so frequent that the act of sampling perturbs the very performance you're trying to measure. That's the whole pitch of sampling — predictable, low overhead.</p>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/reference_guide.md" target="_blank" rel="noopener">bpftrace Reference Guide — profile probe</a>, <a href="https://www.brendangregg.com/blog/2019-08-19/bpftrace.html" target="_blank" rel="noopener">Brendan Gregg — a thorough introduction to bpftrace</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Capturing the stack — <code class="inl">kstack</code> and <code class="inl">ustack</code></h2>
+    <p>A single sample is only useful if it records <em>what code was running</em>. That's the <strong>call stack</strong>: the chain of function calls that led to the currently-executing instruction. If <code class="inl">main</code> called <code class="inl">handle_request</code> which called <code class="inl">parse_json</code>, the stack at that instant is <code class="inl">parse_json ← handle_request ← main</code>.</p>
+    <p>bpftrace gives you two built-in variables that capture a stack on demand:</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4><code class="inl">ustack</code></h4>
+        <p><strong>U</strong>ser-space stack — the call chain inside <em>your application</em> and its libraries (the functions you wrote, plus libc, your runtime, etc.). This is where app developers usually look first.</p>
+      </div>
+      <div class="card">
+        <h4><code class="inl">kstack</code></h4>
+        <p><strong>K</strong>ernel stack — the call chain inside the <em>kernel</em> (syscall handlers, filesystem, network, scheduler). Use this when the CPU is being burned <em>in the kernel</em> on your program's behalf.</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <span class="h">💡 Two halves of one picture</span>
+      A thread spends time in user space (your code) and in kernel space (work done for it). <code class="inl">ustack</code> shows the first half; <code class="inl">kstack</code> shows the second. You can capture both in the same sample to see the whole story.
+    </div>
+
+    <p>Each of these <em>resolves the addresses to function names</em> (using symbol tables) so you get readable frames like <code class="inl">parse_json</code> rather than raw hex addresses — assuming the symbols are present (more on that in §08).</p>
+    <p class="cite">Source: <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace One-Liner Tutorial — kstack / ustack</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Aggregating stacks — <code class="inl">@[ustack] = count()</code></h2>
+    <p>Here's the move that makes the whole thing work. You <strong>don't print every sample</strong> — that would be a firehose of thousands of stacks per second. Instead you use a bpftrace <strong>map</strong> keyed by the stack itself, and you count how many times each distinct stack appears.</p>
+
+    <pre><span class="c1"># Profile USER stacks at 99 Hz; count each unique stack</span>
+sudo bpftrace -e <span class="y">'profile:hz:99 { @[ustack] = count(); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <p>Read it left to right: <strong>99 times a second, on every CPU</strong>, take the current user stack and use it as the <strong>key</strong> of map <code class="inl">@</code>; <code class="inl">count()</code> bumps that key's tally by one. Identical stacks land on the same key, so after 30 seconds the map holds <em>"stack X was seen 4,210 times, stack Y was seen 12 times"</em> — that <strong>is</strong> your profile, already summarized in the kernel before any data crosses to user space.</p>
+
+    <p>You can key by more than the stack. Add <code class="inl">comm</code> (the process/command name) to break the profile down per process, or capture both stacks at once:</p>
+
+    <pre><span class="c1"># Per-process: which command, and its user stack</span>
+sudo bpftrace -e <span class="y">'profile:hz:99 { @[comm, ustack] = count(); }'</span>
+
+<span class="c1"># The full picture: kernel + user stack + process name</span>
+sudo bpftrace -e <span class="y">'profile:hz:99 { @[kstack, ustack, comm] = count(); }'</span>
+
+<span class="c1"># Profile just one PID, user stacks only, at 49 Hz</span>
+sudo bpftrace -e <span class="y">'profile:hz:49 /pid == 189/ { @[ustack] = count(); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout mission">
+      <span class="h">🎯 Why this is the mission in miniature</span>
+      No code change, no restart, no log lines. You attach to a <em>running</em> process, and in seconds the kernel hands back a frequency-counted map of exactly where its CPU time went — aggregated in-kernel for almost no overhead.
+    </div>
+    <p class="cite">Source: <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace One-Liner Tutorial — profiling lesson</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> From aggregated stacks to a flame graph</h2>
+    <p>The counted map is already the answer — but as text it's hard to read. Dozens of long stacks, each ending in a number, don't reveal the shape of where time goes. The breakthrough was to <strong>draw</strong> it. That's the <strong>flame graph</strong>, invented by Brendan Gregg to "visualize stack traces of profiled software so that the most frequent code-paths can be identified quickly and accurately."</p>
+
+    <p>Conceptually, picture every sampled stack standing upright as a tower of boxes (bottom frame = <code class="inl">main</code>, top = the function on-CPU). Now <strong>merge</strong> them: wherever many stacks share the same prefix — say thousands of them all start <code class="inl">main → handle_request</code> — those identical boxes <strong>roll up into one wider box</strong>. The more often a frame appeared across all samples, the wider its box becomes. Rare paths stay thin slivers.</p>
+
+    <div class="callout key">
+      <span class="h">💡 The roll-up, in one line</span>
+      <strong>Identical stacks merge; width = how many samples shared that frame.</strong> A flame graph is just your <code class="inl">@[stack] = count()</code> map, turned sideways and drawn so that "counted a lot" becomes "drawn wide."
+    </div>
+
+    <p>The classic pipeline turns bpftrace's text output into an interactive SVG with two small scripts from Gregg's <a href="https://github.com/brendangregg/FlameGraph" target="_blank" rel="noopener">FlameGraph</a> toolkit:</p>
+
+    <pre><span class="c1"># 1. collect a profile, save the raw stacks</span>
+sudo bpftrace -e <span class="y">'profile:hz:99 { @[kstack] = count(); }'</span> &gt; <span class="g">out.bpftrace</span>
+
+<span class="c1"># 2. "fold" each stack onto one line:  frame;frame;frame count</span>
+./stackcollapse-bpftrace.pl <span class="g">out.bpftrace</span> &gt; <span class="g">out.folded</span>
+
+<span class="c1"># 3. render the folded stacks into an interactive flame graph</span>
+./flamegraph.pl <span class="g">out.folded</span> &gt; <span class="g">flame.svg</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). <code class="inl">stackcollapse-bpftrace.pl</code> and <code class="inl">flamegraph.pl</code> come from Brendan Gregg's FlameGraph repo.</div>
+
+    <p>That middle "<strong>folded</strong>" format is the universal currency of flame graphs: one line per unique stack, frames separated by <code class="inl">;</code>, followed by the sample count. Open <code class="inl">flame.svg</code> in a browser and you get hover-for-details, click-to-zoom, and search.</p>
+    <p class="cite">Source: <a href="https://www.brendangregg.com/flamegraphs.html" target="_blank" rel="noopener">Brendan Gregg — Flame Graphs</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Reading a flame graph</h2>
+    <p>This is the skill that pays off forever. A flame graph looks like a mountain range of stacked boxes — here's a realistic one. A web server's threads were sampled while serving traffic; the colors are just for contrast (warm = "hot/busy" CPU), they don't encode data.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 320" role="img" aria-label="A flame graph: main at the base, handle_request above it, splitting into parse_json (wide), db_query (medium) with a child json_escape plateau, and render (narrow). The x-axis is proportion of samples, the y-axis is stack depth.">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="var(--muted)"/>
+          </marker>
+        </defs>
+
+        <!-- y-axis label: stack depth -->
+        <text x="14" y="150" font-size="11" fill="var(--muted)" transform="rotate(-90 14 150)" text-anchor="middle">y = stack depth (caller → callee)</text>
+        <line x1="40" y1="40" x2="40" y2="250" stroke="var(--muted)" stroke-width="1" marker-end="url(#ah)" marker-start="url(#ah)" opacity="0.6"/>
+
+        <!-- LEVEL 0: main (full width) -->
+        <rect x="60" y="222" width="700" height="26" rx="3" fill="var(--accent)" opacity="0.30" stroke="var(--accent)" stroke-width="1"/>
+        <text x="410" y="239" font-size="12" fill="var(--ink)" text-anchor="middle" font-weight="600">main  (100% of samples)</text>
+
+        <!-- LEVEL 1: handle_request (full width) -->
+        <rect x="60" y="192" width="700" height="26" rx="3" fill="var(--accent)" opacity="0.45" stroke="var(--accent)" stroke-width="1"/>
+        <text x="410" y="209" font-size="12" fill="#fff" text-anchor="middle" font-weight="600">handle_request</text>
+
+        <!-- LEVEL 2: split — parse_json (wide), db_query (medium), render (narrow) -->
+        <rect x="60" y="162" width="350" height="26" rx="3" fill="var(--warn)" opacity="0.80" stroke="var(--warn)" stroke-width="1"/>
+        <text x="235" y="179" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">parse_json  (50%)</text>
+
+        <rect x="412" y="162" width="230" height="26" rx="3" fill="var(--accent-2)" opacity="0.75" stroke="var(--accent-2)" stroke-width="1"/>
+        <text x="527" y="179" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">db_query (33%)</text>
+
+        <rect x="644" y="162" width="116" height="26" rx="3" fill="var(--accent)" opacity="0.55" stroke="var(--accent)" stroke-width="1"/>
+        <text x="702" y="179" font-size="11" fill="#fff" text-anchor="middle" font-weight="600">render</text>
+
+        <!-- LEVEL 3: parse_json's hot leaf (the plateau) + db_query child -->
+        <rect x="60" y="132" width="300" height="26" rx="3" fill="var(--warn)" opacity="0.95" stroke="var(--warn)" stroke-width="1.5"/>
+        <text x="210" y="149" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">utf8_decode ← THE HOT SPOT</text>
+
+        <rect x="412" y="132" width="150" height="26" rx="3" fill="var(--accent-2)" opacity="0.55" stroke="var(--accent-2)" stroke-width="1"/>
+        <text x="487" y="149" font-size="11" fill="#fff" text-anchor="middle" font-weight="600">net_recv</text>
+
+        <!-- annotation: wide top plateau = hot spot -->
+        <text x="210" y="118" font-size="11" fill="var(--warn)" text-anchor="middle" font-weight="700">▲ wide plateau at the top = where the CPU actually is</text>
+
+        <!-- x-axis: proportion of samples -->
+        <line x1="60" y1="266" x2="760" y2="266" stroke="var(--muted)" stroke-width="1" marker-end="url(#ah)" opacity="0.6"/>
+        <text x="410" y="285" font-size="11" fill="var(--muted)" text-anchor="middle">x = proportion of samples (NOT time) · sorted alphabetically, not chronologically</text>
+        <text x="410" y="304" font-size="11" fill="var(--ink)" text-anchor="middle" font-weight="600">a frame's WIDTH = how often it was on-CPU</text>
+      </svg>
+      <figcaption>The same data as <code class="inl">@[ustack] = count()</code>, drawn. Read top-down: the widest box on the top edge is your hottest code.</figcaption>
+    </figure>
+
+    <p>Four rules and you can read any flame graph:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>x-axis = proportion of samples</h4>
+        <p>Width is the share of samples a frame appeared in — <strong>not</strong> the passage of time. Left-to-right has no chronological meaning; boxes are sorted <strong>alphabetically</strong> (which also maximizes merging).</p>
+      </div>
+      <div class="card">
+        <h4>y-axis = stack depth</h4>
+        <p>Counting up from zero at the bottom. The base is the root caller (<code class="inl">main</code>); each row up is one call deeper. The <strong>top edge</strong> of each tower is the function that was actually on-CPU.</p>
+      </div>
+      <div class="card">
+        <h4>width = how often it was on-CPU</h4>
+        <p>"The wider a frame is, the more often it was present in the stacks." A box's width includes all of its children, so a wide box means that whole subtree was busy.</p>
+      </div>
+      <div class="card">
+        <h4>look for wide top plateaus</h4>
+        <p>Scan the <strong>top edge</strong> for the widest flat sections. That's where the CPU is genuinely spending cycles — your optimization target. In the diagram, <code class="inl">utf8_decode</code> under <code class="inl">parse_json</code> is the hot spot.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="h">⚠️ The single most common misread</span>
+      Beginners read a flame graph left-to-right as a timeline. It isn't one. There is no time on the x-axis — only "how much of the profile this frame accounts for." A box on the far left is not "earlier" than one on the right.
+    </div>
+    <p class="cite">Source: <a href="https://www.brendangregg.com/flamegraphs.html" target="_blank" rel="noopener">Brendan Gregg — Flame Graphs</a> (x-axis = stack profile population, sorted alphabetically, not time; y-axis = stack depth from zero at the bottom).</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> On-CPU vs off-CPU profiling</h2>
+    <p>Everything above is <strong>on-CPU</strong> profiling: the <code class="inl">profile</code> probe fires on a CPU timer, so it can only sample a thread <em>while that thread is actually running</em>. That's exactly right for "my CPU is pegged — what's burning it?" But it has a blind spot.</p>
+    <p>Often a program is slow precisely because it <strong>isn't</strong> on-CPU — it's <strong>blocked</strong>: waiting on disk, a network reply, a lock, or a database. A timer-based profiler never samples a sleeping thread, so that waiting time is invisible in an on-CPU flame graph.</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>On-CPU profiling</th><th>Off-CPU profiling</th></tr></thead>
+        <tbody>
+          <tr><td>Measures</td><td>time spent <span class="yes">running</span> on a CPU</td><td>time spent <span class="no">blocked / waiting</span></td></tr>
+          <tr><td>Answers</td><td>"what's burning CPU?"</td><td>"what's it waiting on?"</td></tr>
+          <tr><td>How captured</td><td>timer sampling (<code class="inl">profile:hz:99</code>)</td><td>tracing scheduler off-CPU events &amp; the time asleep</td></tr>
+          <tr><td>Probe style</td><td>sampling</td><td>tracing (e.g. <code class="inl">sched</code> tracepoints)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout key">
+      <span class="h">💡 Forward reference</span>
+      Off-CPU time can't be sampled (there's nothing running to sample) — it's measured by <em>tracing</em> when a thread goes off and comes back on the CPU, then attributing the asleep time to the stack that blocked. You can render that as an <strong>off-CPU flame graph</strong> too. We'll fold both styles into your toolkit in the next lessons. For now: <strong>on-CPU = where it's busy, off-CPU = where it's stuck.</strong>
+    </div>
+    <p class="cite">Source: <a href="https://www.brendangregg.com/flamegraphs.html" target="_blank" rel="noopener">Brendan Gregg — Flame Graphs (CPU vs Off-CPU Time variants)</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Limitations &amp; honest caveats</h2>
+    <p>Sampling and stack capture are powerful but not magic. Know the failure modes so a confusing flame graph doesn't mislead you.</p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="myth">"Every box will have a clean function name."</span>
+        <p class="truth">Only if <b>symbols</b> are present. Stripped binaries, missing debug info, or JIT'd runtimes (JVM, V8, Python without a helper) leave frames as <b>raw hex addresses</b> or <code class="inl">[unknown]</code>. Install debug symbols / use a runtime-specific stack helper.</p>
+      </div>
+      <div class="card">
+        <span class="myth">"I'll see every function I wrote."</span>
+        <p class="truth"><b>Inlined</b> functions vanish — the compiler folded them into their caller, so they have no stack frame to sample. Time shows up attributed to the <b>parent</b>. Worth remembering before you conclude "function X is free."</p>
+      </div>
+      <div class="card">
+        <span class="myth">"Stack unwinding always works."</span>
+        <p class="truth">Walking the stack needs <b>frame pointers</b> or DWARF/unwind info. Many builds compile with frame pointers <b>omitted</b> for speed, giving broken or truncated stacks. Rebuilding with <code class="inl">-fno-omit-frame-pointer</code> fixes it.</p>
+      </div>
+      <div class="card">
+        <span class="myth">"Sampling sees everything."</span>
+        <p class="truth">It's <b>statistical</b>. Very rare code may never be sampled, and tiny differences in width are noise. Sample long enough (tens of seconds) so the proportions stabilize.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="h">⚠️ Read the shape, not single pixels</span>
+      A flame graph is a statistical estimate. Trust the <strong>wide</strong> plateaus; treat one-sample-wide slivers and hairline width differences as noise, not findings.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">09</span> Copy-later one-liners</h2>
+    <p>Your go-to CPU-profiling repertoire. All Linux-only, all need <code class="inl">sudo</code>. Let one run for ~30 seconds, then <kbd>Ctrl-C</kbd> to print the aggregated map.</p>
+
+    <pre><span class="c1"># Where is ALL CPU time going? Kernel stacks at 99 Hz</span>
+sudo bpftrace -e <span class="y">'profile:hz:99 { @[kstack] = count(); }'</span>
+
+<span class="c1"># User-space hot paths, per process name</span>
+sudo bpftrace -e <span class="y">'profile:hz:99 { @[comm, ustack] = count(); }'</span>
+
+<span class="c1"># One specific process (replace 189 with your PID), user stacks</span>
+sudo bpftrace -e <span class="y">'profile:hz:99 /pid == 189/ { @[ustack] = count(); }'</span>
+
+<span class="c1"># Full kernel + user + process, the raw material for a flame graph</span>
+sudo bpftrace -e <span class="y">'profile:hz:99 { @[kstack, ustack, comm] = count(); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <p>And the three steps to turn any of those into an interactive <strong>SVG flame graph</strong> you can open in a browser:</p>
+
+    <pre>sudo bpftrace -e <span class="y">'profile:hz:99 { @[kstack] = count(); }'</span> &gt; <span class="g">out.bpftrace</span>
+./stackcollapse-bpftrace.pl <span class="g">out.bpftrace</span> &gt; <span class="g">out.folded</span>
+./flamegraph.pl <span class="g">out.folded</span> &gt; <span class="g">flame.svg</span>   <span class="c1"># open flame.svg in a browser</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). Scripts from <a href="https://github.com/brendangregg/FlameGraph" target="_blank" rel="noopener">github.com/brendangregg/FlameGraph</a>.</div>
+
+    <div class="callout mission">
+      <span class="h">🎯 The payoff</span>
+      One command, thirty seconds, zero code changes — and you walk away with a picture that points straight at the hottest function in a live system. That's the entire promise of eBPF observability, made visual.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">10</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">You want to find which function is burning the most CPU in a busy live service. Which approach fits?</div>
+        <button class="opt">Tracing every function entry with a <code class="inl">uprobe</code>, because it catches every call</button>
+        <button class="opt">Sampling the stack on a timer (the <code class="inl">profile</code> probe), because it has cheap, fixed overhead and shows where time concentrates</button>
+        <button class="opt">Counting syscalls by process name</button>
+        <button class="opt">Measuring the latency of each request</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">In a flame graph, what does the <strong>width</strong> of a frame represent?</div>
+        <button class="opt">How long that function took to run, in wall-clock time</button>
+        <button class="opt">When it ran — left is earlier, right is later</button>
+        <button class="opt">The proportion of samples that frame appeared in — i.e. how often it was on-CPU</button>
+        <button class="opt">How deep the call stack was at that point</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">Why is <code class="inl">profile:hz:99</code> conventionally used instead of a round <code class="inl">profile:hz:100</code>?</div>
+        <button class="opt">99 avoids sampling in lockstep with other periodic activity that fires at round multiples of 100, which would bias the profile</button>
+        <button class="opt">99 Hz samples twice as fast as 100 Hz</button>
+        <button class="opt">The kernel rejects 100 as an invalid frequency</button>
+        <button class="opt">99 Hz captures off-CPU (blocked) time, which 100 Hz cannot</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">What does the <code class="inl">ustack</code> builtin capture in a sample?</div>
+        <button class="opt">The kernel-space call stack (syscall handlers, filesystem, scheduler)</button>
+        <button class="opt">The user-space call stack — the functions in your application and its libraries</button>
+        <button class="opt">The amount of time the thread spent blocked and waiting</button>
+        <button class="opt">A folded, one-line-per-stack flame-graph file</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">11</span> Flashcards</h2>
+
+    <details class="fc"><summary>Q: What does <code class="inl">profile:hz:99</code> do, and why 99?</summary>
+      <div class="a">A: It fires a sampling probe on <strong>every CPU 99 times per second</strong>. 99 (not 100) avoids falling into <strong>lockstep</strong> with periodic activity that runs at round multiples of 100 — which would bias the profile. It's also a deliberately cheap, low-overhead rate.</div></details>
+
+    <details class="fc"><summary>Q: Difference between <code class="inl">kstack</code> and <code class="inl">ustack</code>?</summary>
+      <div class="a">A: <code class="inl">kstack</code> captures the <strong>kernel-space</strong> call stack (work the kernel is doing); <code class="inl">ustack</code> captures the <strong>user-space</strong> call stack (your app and its libraries). You can capture both in one sample to see the whole story.</div></details>
+
+    <details class="fc"><summary>Q: How is sampling different from tracing?</summary>
+      <div class="a">A: Tracing fires a handler on <strong>every occurrence</strong> of a chosen event (overhead scales with event rate). Sampling fires on a <strong>fixed timer</strong> and snapshots whatever is running, giving cheap, predictable overhead and a statistical picture of where the CPU spends time.</div></details>
+
+    <details class="fc"><summary>Q: In a flame graph, what does a frame's width mean?</summary>
+      <div class="a">A: The <strong>proportion of samples</strong> that frame appeared in — how often it was on-CPU. It is <strong>not</strong> time, and the x-axis is sorted alphabetically, not chronologically. Wider = more of the profile.</div></details>
+
+    <details class="fc"><summary>Q: How do you spot the hot spot in a flame graph?</summary>
+      <div class="a">A: Scan the <strong>top edge</strong> (the on-CPU functions) for the widest flat <strong>plateaus</strong>. A wide top plateau is where the CPU is actually spending its cycles — your optimization target.</div></details>
+
+    <details class="fc"><summary>Q: On-CPU vs off-CPU profiling?</summary>
+      <div class="a">A: <strong>On-CPU</strong> = time spent <em>running</em> on a CPU, captured by timer sampling (<code class="inl">profile:hz:99</code>) — "what's burning CPU?". <strong>Off-CPU</strong> = time spent <em>blocked/waiting</em>, which can't be sampled and is instead captured by <em>tracing</em> scheduler off-CPU events — "what's it stuck on?".</div></details>
+
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>This lesson rewards poking at it. Try asking me: <em>"Walk me through reading a real flame graph step by step"</em>, or <em>"Why exactly can't a timer-based profiler see blocked time?"</em>, or <em>"My flame graph is full of <code class="inl">[unknown]</code> frames — what's wrong and how do I fix the symbols?"</em> I can also generate a worked example from a folded-stacks file if you want to practice the read.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0006-measuring-latency.html"><span class="dir">↩ Previous</span><span class="ttl">Measuring Latency &amp; Timing</span></a>
+    <a href="0008-the-observability-toolkit.html"><span class="dir">Up next →</span><span class="ttl">The eBPF Observability Toolkit</span></a>
+  </nav>
+
+  <footer>
+    eBPF Course · Lesson 7 · grounded in
+    <a href="https://ebpf.io/" target="_blank" rel="noopener">ebpf.io</a>,
+    <a href="https://www.brendangregg.com/flamegraphs.html" target="_blank" rel="noopener">Brendan Gregg — Flame Graphs</a>,
+    <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a> ·
+    see <a href="/courses/ebpf/#resources">RESOURCES.md</a> ·
+    <a href="../reference/ebpf-glossary.html">Glossary</a> ·
+    <a href="../reference/bpftrace-cheatsheet.html">bpftrace cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  // Tight feedback loop for the self-check quiz.
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

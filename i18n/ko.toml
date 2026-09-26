@@ -515,6 +515,91 @@ other = "이 페이지의 데이터를 불러오지 못했습니다. 새로 고�
 
 [data_noscript]
 other = "이 페이지는 JavaScript로 그려집니다. 데이터는 <a href=\"{{ .url }}\">{{ .url }}</a>에 있습니다."
+# --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
+
+[courses_intro]
+other = "무료 강좌 {count}개, 모두 합쳐 {lessons}개의 레슨입니다. 각 강좌는 제가 직접 그 주제를 한 레슨씩 공부하면서 Claude와 함께 쓴 것입니다. 직접 해 보며 익히는 대화형 강좌이고, 가입 없이 무료로 읽을 수 있습니다."
+
+[courses_english_note]
+other = "레슨은 영어로 되어 있습니다."
+
+[courses_filter]
+other = "주제로 걸러 보기"
+
+[courses_all]
+other = "전체"
+
+[courses_lessons]
+other = "레슨 {n}개"
+
+[courses_updated]
+other = "{date} 업데이트"
+
+[courses_start]
+other = "레슨 1부터 시작하기"
+
+[courses_lessons_h]
+other = "레슨"
+
+[courses_reference_h]
+other = "빠른 참고"
+
+[courses_resources_h]
+other = "다음에 볼 곳"
+
+[courses_resources_note]
+other = "각 레슨을 검증할 때 참고한 자료와, 질문할 수 있는 곳입니다."
+
+[courses_back]
+other = "전체 강좌"
+
+[courses_footnote]
+other = "모든 레슨은 그 자체로 완결된 한 페이지입니다. 가입도, 추적도 없고, 읽기 위해 설치할 것도 없습니다."
+
+[course_cat_ai_ml]
+other = "AI & ML"
+
+[course_cat_programming_languages]
+other = "프로그래밍 언어"
+
+[course_cat_web_frontend]
+other = "웹 & 프런트엔드"
+
+[course_cat_mobile]
+other = "모바일"
+
+[course_cat_backend_data]
+other = "백엔드 & 데이터"
+
+[course_cat_devops_infra]
+other = "DevOps & 인프라"
+
+[course_cat_security]
+other = "보안"
+
+[course_cat_hardware_systems]
+other = "하드웨어 & 시스템"
+
+[course_cat_productivity_tools]
+other = "생산성 & 도구"
+
+[course_cat_science_math]
+other = "과학 & 수학"
+
+[course_cat_other]
+other = "기타"
+
+[learn_courses_cta]
+other = "안내된 길을 따라가고 싶다면? 제가 한 레슨씩 쓴 무료 강좌를 들어 보세요."
+
+[hub_courses_title]
+other = "강좌"
+
+[hub_courses_blurb]
+other = "주제마다 직접 배우면서 쓴 여러 레슨짜리 무료 강좌"
+
+[hub_courses_count]
+other = "강좌 {{ .count }}개"
 
 # --- /learn/ (layouts/_default/learn.html, data/learn.json) ---
 

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 11 · Local Embeddings &amp; Semantic Search</title>
+<style>
+.quiz{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:16px 0;background:var(--surface)}
+.quiz .q{font-weight:700;margin-bottom:.6em}
+.quiz .opts{display:flex;flex-direction:column;gap:.5rem}
+.quiz .opt{text-align:left;font:inherit;cursor:pointer;border:1px solid var(--border);background:var(--panel);color:var(--fg);border-radius:9px;padding:.6rem .8rem}
+.quiz .opt:hover:not(:disabled){border-color:var(--accent)}
+.quiz .opt.correct{border-color:var(--mark);background:color-mix(in srgb,var(--mark) 15%,transparent)}
+.quiz .opt.wrong{border-color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,transparent)}
+.quiz .opt:disabled{cursor:default}
+.quiz-exp{margin-top:.7rem;color:var(--muted);font-size:.92rem;border-left:3px solid var(--accent);padding-left:.7rem}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/mlx-lm/" style="color:inherit;text-decoration:none">&larr; mlx-lm</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">mlx-lm · Lesson 11</div>
+    <h1>Local Embeddings &amp; Semantic Search</h1>
+    <p class="sub">Generation is only half of a real local-LLM tool. The other half is <em>retrieval</em>: finding the right text by <strong>meaning</strong>, not keywords. Embeddings turn text into vectors on your Mac, so you can search your own notes, docs, or the <code class="inl">learn</code> content by what they mean — the foundation of RAG.</p>
+    <span class="missiontag">🎯 Mission step: find your own content by meaning, on-device</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>An embedding maps text to a vector so that similar meanings land near each other.</strong> Embed your documents once, embed a query, and the closest vectors are the most relevant passages — even when they share no words. "Closeness" is just the cosine of the angle between vectors, which for normalized vectors is a single dot product.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Why retrieval matters for your mission</h2>
+    <p class="lead">A model only knows what's in its weights and its prompt. To build a tool that answers from <em>your</em> data — your notes, a codebase, the <code class="inl">learn</code> deep-dives — you must <strong>find</strong> the relevant text and put it in the prompt. Keyword search misses paraphrases ("less memory" vs "fewer bits"). Embeddings match on meaning, so you retrieve the right passage even when the words differ. That's the engine under "chat with your documents."</p>
+    <div class="callout key"><span class="h">💡 A different kind of model</span>
+      Embedding models are <em>encoders</em> (BERT-family), not generators. They're tiny and fast — <code class="inl">all-MiniLM-L6-v2</code> outputs a <strong>384-dimensional</strong> vector per text and runs in milliseconds on your GPU. Different package (<code class="inl">mlx-embeddings</code>), same Apple-Silicon speed.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The picture — meaning as geometry</h2>
+    <p>Think of every text as a point in a high-dimensional space. Texts about the same thing cluster together; a query lands near the cluster that answers it. Retrieval = "find the nearest points."</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Texts as points in space; similar meanings cluster and a query lands near the relevant cluster">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="12">
+          <circle cx="180" cy="80" r="6" fill="var(--accent)"/>
+          <text x="180" y="66" text-anchor="middle" fill="var(--muted)" font-size="10.5">unified memory</text>
+          <circle cx="230" cy="120" r="6" fill="var(--accent)"/>
+          <text x="250" y="138" text-anchor="middle" fill="var(--muted)" font-size="10.5">quantization (fewer bits)</text>
+          <text x="150" y="170" text-anchor="middle" fill="var(--accent)" font-size="10">memory cluster</text>
+
+          <circle cx="540" cy="150" r="6" fill="var(--accent-2)"/>
+          <text x="545" y="170" text-anchor="middle" fill="var(--muted)" font-size="10.5">LoRA adapter</text>
+          <circle cx="500" cy="110" r="6" fill="var(--accent-2)"/>
+          <text x="500" y="96" text-anchor="middle" fill="var(--muted)" font-size="10.5">KV cache</text>
+          <text x="545" y="196" text-anchor="middle" fill="var(--accent-2)" font-size="10">other topics</text>
+
+          <path d="M120,60 l14,-14 M127,53 l-9,0 M127,53 l0,9" stroke="var(--fg)" stroke-width="1.3" fill="none"/>
+          <circle cx="205" cy="100" r="9" fill="none" stroke="var(--fg)" stroke-width="1.8"/>
+          <text x="205" y="104" text-anchor="middle" fill="var(--fg)" font-size="11">?</text>
+          <text x="205" y="40" text-anchor="middle" fill="var(--fg)" font-size="10.5">query: "use less memory?"</text>
+          <line x1="205" y1="91" x2="205" y2="50" stroke="var(--border)" stroke-width="1"/>
+
+          <line x1="205" y1="100" x2="180" y2="80" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 2"/>
+          <line x1="205" y1="100" x2="230" y2="120" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="3 2"/>
+          <text x="320" y="100" fill="var(--muted)" font-size="10.5">← nearest = most relevant</text>
+        </g>
+      </svg>
+      <figcaption>The query vector (◯) is closest to the "memory" cluster, so those docs rank first — even the quantization one, which shares no words with the query. Distance is measured by cosine similarity (angle), not word overlap.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The code</h2>
+    <pre><span class="c1"># uv pip install mlx-embeddings</span>
+<span class="b">import</span> mlx.core <span class="b">as</span> mx
+<span class="b">from</span> mlx_embeddings.utils <span class="b">import</span> load
+
+model, tok = load(<span class="g">"mlx-community/all-MiniLM-L6-v2-4bit"</span>)
+
+<span class="b">def</span> <span class="y">embed</span>(texts):
+    i = tok.batch_encode_plus(texts, return_tensors=<span class="g">"mlx"</span>, padding=<span class="b">True</span>,
+                              truncation=<span class="b">True</span>, max_length=<span class="g">512</span>)
+    <span class="b">return</span> model(i[<span class="g">"input_ids"</span>], attention_mask=i[<span class="g">"attention_mask"</span>]).text_embeds
+
+dv = embed(docs)                 <span class="c1"># one normalized 384-d vector per document</span>
+qv = embed([query])[<span class="g">0</span>]
+scores = [float(mx.sum(qv * dv[i])) <span class="b">for</span> i <span class="b">in</span> <span class="y">range</span>(<span class="y">len</span>(docs))]   <span class="c1"># dot = cosine</span></pre>
+    <p>Real run on your M4 Pro — query <em>"How do I make a model use less memory?"</em> against four mlx-lm facts:</p>
+    <pre><span class="g">0.369</span>  Unified memory lets the CPU and GPU share one pool of RAM.
+<span class="g">0.361</span>  Quantization shrinks a model by storing weights in fewer bits.
+0.290  The KV cache stores past keys/values so decoding stays fast.
+0.279  LoRA fine-tunes a model by training a small low-rank adapter.</pre>
+    <div class="callout mission"><span class="h">🎯 Your tangible win</span>
+      Run <code class="inl">~/projects/learn/public/courses/mlx-lm/practice/.venv/bin/python ~/projects/learn/public/courses/mlx-lm/practice/semantic_search.py</code>. The top hit is correct — and the <strong>quantization</strong> line ranks #2 with <em>zero words in common</em> with the query. That's meaning-based retrieval, running entirely on your Mac.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> From search to RAG</h2>
+    <p>Semantic search is the heart of <strong>Retrieval-Augmented Generation</strong>: instead of hoping the model memorized your data, you <em>fetch</em> the relevant bits and hand them to it. The pattern composes everything you've learned:</p>
+    <div class="cards">
+      <div class="card"><h4>1. Index (once)</h4><p>Embed every document/chunk → store the vectors (even a list in memory works to start).</p></div>
+      <div class="card"><h4>2. Retrieve</h4><p>Embed the question, take the <strong>top-k</strong> nearest documents by cosine similarity.</p></div>
+      <div class="card"><h4>3. Augment + generate</h4><p>Put those passages in the prompt, then <code class="inl">generate</code> (Lesson 2) an answer grounded in them — optionally as structured output (Lesson 8).</p></div>
+    </div>
+    <div class="callout key"><span class="h">💡 This is the obvious next build for <code class="inl">learn</code></span>
+      Embed your <code class="inl">public/content</code> deep-dives and course lessons once, and you can ask "where did I learn about X?" and jump to the right page — meaning-based search over your own study material, no cloud. A natural capstone.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Check yourself</h2>
+    <p>Pick an answer for instant feedback. (Want to index your own folder of notes or the <code class="inl">learn</code> content? <strong>Ask me</strong> and we'll build the index.)</p>
+
+    <div class="quiz"><p class="q">1. What does an embedding actually produce for a piece of text?</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) a shorter summary of the text</button>
+      <button class="opt" data-correct="true">B) a fixed-length vector where similar meanings are nearby</button>
+      <button class="opt" data-correct="false">C) the next token the model would generate</button>
+    </div><p class="quiz-exp" hidden>An embedding is a vector (here 384-d). Similar meanings map to nearby vectors, which is what makes meaning-based comparison possible.</p></div>
+
+    <div class="quiz"><p class="q">2. The query and the "quantization" doc share no words, yet it ranked #2. Why?</p>
+    <div class="opts">
+      <button class="opt" data-correct="true">A) their vectors are close — the meanings are related</button>
+      <button class="opt" data-correct="false">B) a hidden keyword match</button>
+      <button class="opt" data-correct="false">C) it was listed earlier in the documents</button>
+    </div><p class="quiz-exp" hidden>That's the whole point of embeddings: similarity is by meaning (vector distance), not lexical overlap. "Use less memory" and "fewer bits" are semantically close.</p></div>
+
+    <div class="quiz"><p class="q">3. Why is cosine similarity here just a single dot product?</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) the vectors are only 1-dimensional</button>
+      <button class="opt" data-correct="true">B) the vectors are normalized, so the dot product equals the cosine</button>
+      <button class="opt" data-correct="false">C) MLX can't compute cosine directly</button>
+    </div><p class="quiz-exp" hidden>For unit-length vectors, cosine(a,b) = a·b. The model returns normalized <code>text_embeds</code>, so <code>mx.sum(qv * dv[i])</code> is the cosine similarity.</p></div>
+
+    <div class="quiz"><p class="q">4. In a RAG pipeline, what do the retrieved passages do?</p>
+    <div class="opts">
+      <button class="opt" data-correct="false">A) they fine-tune the model on the fly</button>
+      <button class="opt" data-correct="true">B) they're put into the prompt so the model answers grounded in them</button>
+      <button class="opt" data-correct="false">C) they replace the model entirely</button>
+    </div><p class="quiz-exp" hidden>RAG = retrieve, then put the relevant text in the prompt and generate. No training involved — you're augmenting the context, not the weights.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Going deeper</h2>
+    <ul>
+      <li><a href="https://github.com/Blaizzy/mlx-embeddings" target="_blank" rel="noopener">mlx-embeddings</a> — the package used here (vision + language embeddings on MLX).</li>
+      <li><a href="https://huggingface.co/mlx-community?search=embed" target="_blank" rel="noopener">mlx-community embedding models</a> — MiniLM, BGE, and friends, pre-converted.</li>
+      <li><a href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2" target="_blank" rel="noopener">all-MiniLM-L6-v2</a> — the model card (dims, training, intended use).</li>
+    </ul>
+    <p class="cite">Keep handy: <a href="../reference/mlx-lm-glossary.html">Glossary &amp; quick reference</a> · <a href="0010-tool-calling.html">← Lesson 10</a>. You now have both halves — <strong>generation</strong> and <strong>retrieval</strong> — on-device. The standing capstone: index the <code class="inl">learn</code> content and ask it questions. Bring it to me and we'll build it.</p>
+  </section>
+
+</div>
+<script>
+// non-critical quiz state persists in localStorage (no backend); degrades gracefully
+document.querySelectorAll('.quiz').forEach(function(q,qi){
+  var exp=q.querySelector('.quiz-exp'), opts=q.querySelectorAll('.opt');
+  var key='quiz:'+location.pathname+':'+qi;
+  function reveal(chosen){
+    q.dataset.done='1';
+    opts.forEach(function(o,oi){o.disabled=true;
+      if(o.dataset.correct==='true')o.classList.add('correct');
+      if(oi===chosen && o.dataset.correct!=='true')o.classList.add('wrong');});
+    if(exp)exp.hidden=false;
+  }
+  var saved=null; try{saved=localStorage.getItem(key);}catch(e){}
+  if(saved!==null) reveal(parseInt(saved,10));
+  opts.forEach(function(b,oi){
+    b.addEventListener('click',function(){
+      if(q.dataset.done)return;
+      try{localStorage.setItem(key,oi);}catch(e){}
+      reveal(oi);
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3 · JWT Anatomy — What's Really in Those Three Chunks</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/auth/" style="color:inherit;text-decoration:none">&larr; Web Authentication</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">auth · Lesson 3 · Node + Express</div>
+    <h1>JWT Anatomy</h1>
+    <p class="sub">In Lesson 1 the <em>stateless</em> credential was a token — usually a JWT, the <code class="inl">xxx.yyy.zzz</code> string. Today we crack it open: what each of the three chunks is, what "signed" actually buys you (and what it doesn't), and the two attacks that have owned real systems. By the end you'll have signed, decoded, tampered with, and <em>broken</em> a JWT in Node — and know the one line that stops the break.</p>
+    <span class="missiontag">🎯 Mission: a mental model of modern auth + the ability to wire it into a real app</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>A JWT is signed, not secret.</strong> Anyone can <em>read</em> the payload (it's just base64); the signature only proves it wasn't <em>changed</em>. So a JWT buys you exactly one thing: <strong>tamper-evidence without server-side storage</strong> — the server re-checks a signature instead of looking up a record. Every JWT rule, and every JWT attack, follows from that single fact.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The three chunks</h2>
+    <p class="lead">A JWT is three Base64URL strings joined by dots: <code class="inl">header.payload.signature</code>. The first two are just JSON anyone can decode. The third is the cryptographic seal over the first two.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A JWT is header dot payload dot signature; header and payload are readable JSON, signature seals them">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="12.5">
+          <rect x="20" y="20" width="220" height="54" rx="9" fill="var(--accent)" opacity="0.12" stroke="var(--accent)" stroke-width="1.5"/>
+          <rect x="20" y="20" width="220" height="54" rx="9" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="130" y="40" text-anchor="middle" fill="var(--accent)" font-weight="700">HEADER</text>
+          <text x="130" y="58" text-anchor="middle" fill="var(--muted)">{ alg: "HS256", typ: "JWT" }</text>
+          <rect x="270" y="20" width="220" height="54" rx="9" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)" stroke-width="1.5"/>
+          <rect x="270" y="20" width="220" height="54" rx="9" fill="none" stroke="var(--accent-2)" stroke-width="1.5"/>
+          <text x="380" y="40" text-anchor="middle" fill="var(--accent-2)" font-weight="700">PAYLOAD (claims)</text>
+          <text x="380" y="58" text-anchor="middle" fill="var(--muted)">{ sub: 42, role, exp… }</text>
+          <rect x="520" y="20" width="220" height="54" rx="9" fill="var(--warn)" opacity="0.12" stroke="var(--warn)" stroke-width="1.5"/>
+          <rect x="520" y="20" width="220" height="54" rx="9" fill="none" stroke="var(--warn)" stroke-width="1.5"/>
+          <text x="630" y="40" text-anchor="middle" fill="var(--warn)" font-weight="700">SIGNATURE</text>
+          <text x="630" y="58" text-anchor="middle" fill="var(--muted)">HMAC/RSA over the first two</text>
+          <text x="252" y="52" text-anchor="middle" fill="var(--fg)" font-weight="800" font-size="18">.</text>
+          <text x="502" y="52" text-anchor="middle" fill="var(--fg)" font-weight="800" font-size="18">.</text>
+          <!-- readable vs sealed -->
+          <line x1="130" y1="90" x2="130" y2="120" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="380" y1="90" x2="380" y2="120" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3"/>
+          <rect x="20" y="122" width="470" height="34" rx="8" fill="none" stroke="var(--accent-2)" stroke-width="1.3"/>
+          <text x="255" y="143" text-anchor="middle" fill="var(--accent-2)" font-weight="600">👁 READABLE by anyone — base64, no key needed</text>
+          <rect x="520" y="122" width="220" height="34" rx="8" fill="none" stroke="var(--warn)" stroke-width="1.3"/>
+          <text x="630" y="143" text-anchor="middle" fill="var(--warn)" font-weight="600">🔏 needs the secret to MAKE</text>
+          <text x="380" y="190" text-anchor="middle" fill="var(--fg)" font-size="12.5">Signature = f( base64(header) + "." + base64(payload), <tspan font-weight="700">secret key</tspan> )</text>
+          <text x="380" y="210" text-anchor="middle" fill="var(--muted)" font-size="11.5">Change any byte of header or payload → signature no longer matches → rejected</text>
+        </g>
+      </svg>
+      <figcaption>Header and payload are public JSON. The signature is the only part that needs the key — and it's computed <em>over</em> the other two, which is what makes tampering detectable.</figcaption>
+    </figure>
+
+    <p>The payload's fields are called <strong>claims</strong>. Some are standardized (<a href="https://datatracker.ietf.org/doc/html/rfc7519#section-4.1" target="_blank" rel="noopener">RFC 7519</a>): <code class="inl">sub</code> (subject/user), <code class="inl">exp</code> (expiry), <code class="inl">iat</code> (issued-at), <code class="inl">iss</code> (issuer), <code class="inl">aud</code> (audience). The rest are yours to define.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> 🎯 Your tangible win (4 min): break a JWT</h2>
+    <p>I put a Node script on your machine that signs a token, then decodes, verifies, forges, and attacks it — printing what happens at each step. Deps are installed.</p>
+    <pre><span class="c1"># in your terminal:</span>
+cd ~/projects/learn/public/courses/auth/practice/jwt-lab
+npm start</pre>
+    <p>It runs five steps. Read them top to bottom — each maps to a section below:</p>
+    <div class="callout mission"><span class="h">🎯 The win — three of those outputs, verbatim from your machine</span>
+      <pre style="margin:.4em 0 0"><span class="c1">§2  decode the payload with NO secret:</span>
+  {"sub":42,"role":<span class="g">"user"</span>,"email":"you@example.com","iat":…,"exp":…}
+<span class="c1">     → signed ≠ encrypted. Anyone reads it.</span>
+
+<span class="c1">§4  forge role:admin, keep the old signature:</span>
+  verify REJECTED it → <span class="y">"invalid signature"</span>
+<span class="c1">     → THIS is what a JWT buys you: tamper-evidence.</span>
+
+<span class="c1">§5  attacker sends an UNSIGNED alg:none token:</span>
+  🛡️ SAFE server rejected it → <span class="y">"jwt signature is required"</span>
+<span class="c1">     → because we pinned { algorithms: ["HS256"] }.</span></pre>
+      You just watched the payload be public, watched tampering get caught, and watched the classic bypass get blocked by one option. Now the <em>why</em>.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> "Signed, not secret" — the rule everything hangs on</h2>
+    <p>Step 2 of the lab decoded the payload with <code class="inl">Buffer.from(part, 'base64url')</code> — no key, no secret. That's not a flaw, it's the design: a JWT is <strong>signed</strong> (tamper-evident), not <strong>encrypted</strong> (confidential). The signature answers "did this come from someone holding the secret, unchanged?" — not "is this hidden?"</p>
+    <pre><span class="c1">// what the lab does — readable to ANYONE holding the token:</span>
+<span class="b">const</span> payload = JSON.parse(Buffer.from(token.split(<span class="g">'.'</span>)[<span class="b">1</span>], <span class="g">'base64url'</span>));
+<span class="c1">// → { sub: 42, role: 'user', email: 'you@example.com', ... }</span></pre>
+    <div class="callout warn"><span class="h">⚠️ Direct consequences</span>
+      <strong>Never put secrets in a JWT</strong> (passwords, full PII, internal flags you don't want users seeing) — the payload is world-readable. And a JWT you receive is only trustworthy <em>after</em> you verify its signature; <code class="inl">jwt.decode()</code> (no verify) is for debugging only. <span class="cite">See <a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP JWT Cheat Sheet</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> What signing actually does (and the two algorithm families)</h2>
+    <p>In step 4 you changed <code class="inl">role:"user"</code> to <code class="inl">role:"admin"</code> but kept the old signature — and <code class="inl">verify</code> threw <code class="inl">"invalid signature"</code>. That's the whole value proposition: the server doesn't need a stored record to know the token is genuine, it just recomputes the signature over the (header+payload) it received and checks it matches. <strong>No match → forged or altered → rejected.</strong> That's how you get "stay logged in" with zero server-side session storage.</p>
+    <p>Two families of signing algorithm — the choice matters for §05:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>HS256 (symmetric / HMAC)</th><th>RS256 / ES256 (asymmetric)</th></tr></thead>
+        <tbody>
+          <tr><td>Keys</td><td><b>One</b> shared secret signs <em>and</em> verifies</td><td><b>Private</b> key signs, <b>public</b> key verifies</td></tr>
+          <tr><td>Who can verify?</td><td>Only holders of the secret</td><td>Anyone (the public key is public)</td></tr>
+          <tr><td>Best when</td><td>Same app signs &amp; checks (your own login)</td><td>One issuer, many verifiers (OIDC, "Sign in with Google")</td></tr>
+          <tr><td>Footgun</td><td>Secret leaks = full compromise</td><td>Confusing the two = the attack in §05</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">Why does "Sign in with Google" use RS256? Because Google signs with its private key and <em>your</em> server (and everyone else's) verifies with Google's published public key — no shared secret to distribute. You'll meet this directly in the OAuth/OIDC lessons.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> The two attacks — and the one-line defense</h2>
+    <p>Both classic JWT attacks exploit the same mistake: <strong>letting the token's own <code class="inl">alg</code> header decide how the server verifies it.</strong> The token is attacker-controlled — so trusting its <code class="inl">alg</code> field is trusting the attacker.</p>
+
+    <h3>Attack A — <code class="inl">alg: none</code></h3>
+    <p>The spec includes a "none" algorithm (no signature). An attacker sends a token with header <code class="inl">{"alg":"none"}</code> and an empty signature. A naive verifier reads the header, sees "none," and skips signature checking — so any forged payload is accepted. You saw the lab's safe server reject it with <code class="inl">"jwt signature is required"</code>.</p>
+
+    <h3>Attack B — RS256 → HS256 confusion</h3>
+    <p>Subtler and nastier. The server uses RS256 (verifies with a <em>public</em> key — which is, by definition, public). The attacker changes the header to <code class="inl">HS256</code> and signs a forged token using that public key <em>as an HMAC secret</em>. If the server just "verifies with the key it has," it'll HMAC-verify with the public key — which now matches. The attacker forged a valid token using only public information. <span class="cite">See <a href="https://portswigger.net/web-security/jwt/algorithm-confusion" target="_blank" rel="noopener">PortSwigger — Algorithm confusion</a>.</span></p>
+
+    <div class="callout key"><span class="h">🛡️ The defense is one option: pin the algorithm allowlist</span>
+      <pre style="margin:.5em 0 0"><span class="c1">// ❌ vulnerable — verifier trusts the token's alg header</span>
+jwt.verify(token, key);
+<span class="c1">// ✅ safe — YOU decide the algorithm; alg:none and HS/RS confusion both die</span>
+jwt.verify(token, key, { <span class="y">algorithms</span>: [<span class="g">'HS256'</span>] });</pre>
+      Always pass <code class="inl">algorithms</code>. <strong>Never mix symmetric and asymmetric in the same allowlist</strong> (that re-opens Attack B). Modern <code class="inl">jsonwebtoken</code> (v9) is safer by default, but pinning is non-negotiable. <span class="cite">See <a href="https://workos.com/blog/jwt-algorithm-confusion-attacks" target="_blank" rel="noopener">WorkOS — Algorithm confusion</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> So… should you even use a JWT? (the honest take)</h2>
+    <p>Back to Lesson 1's fork. A JWT is a <em>stateless</em> credential, and statelessness is the thing you're really choosing — with all its baggage. The killer drawback: <strong>you can't easily revoke one</strong>. It's valid until <code class="inl">exp</code>, full stop. So logout, bans, and "kill all my sessions" are hard.</p>
+    <div class="cards">
+      <div class="card"><h4>✅ Reach for a JWT when…</h4><p class="truth">Stateless APIs, mobile clients, service-to-service calls, or an issuer that <b>others</b> verify (OIDC). Short-lived access tokens + a refresh mechanism (Lesson 9).</p></div>
+      <div class="card"><h4>⚠️ Prefer a session id when…</h4><p class="truth">It's a normal first-party web app. You want instant logout/ban and an <code class="inl">HttpOnly</code> cookie — the boring safe default from Lessons 1–2. "JWT for browser login" is the classic over-reach.</p></div>
+    </div>
+    <div class="callout warn"><span class="h">⚠️ The localStorage trap (again)</span>
+      Because JWTs often ride in an <code class="inl">Authorization: Bearer</code> header, tutorials tell you to stash them in <code class="inl">localStorage</code>. That's the XSS-exfiltration hole from Lesson 2. If a token must live in the browser, an <code class="inl">HttpOnly</code> cookie is still safer than <code class="inl">localStorage</code>. <span class="cite">See <a href="https://ianlondon.github.io/posts/dont-use-jwts-for-sessions/" target="_blank" rel="noopener">"Don't use JWTs for sessions"</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Check yourself</h2>
+    <div class="quiz">
+      <div class="q">
+        <p><strong>Q1.</strong> A teammate base64-decodes a JWT, sees the user's email and role in plain text, and files a "tokens are leaking PII" bug. Are they right?</p>
+        <details><summary>Show answer</summary><p>Partly. Readability is <em>by design</em> — JWTs are signed, not encrypted (§03). It's not a "leak" in the crypto sense. But the real lesson holds: don't put anything you wouldn't show the user in a JWT payload. If that email/role is sensitive, it shouldn't be there. So: not a signature bug, but a valid data-minimization concern.</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q2.</strong> Why does pinning <code class="inl">{ algorithms: ['RS256'] }</code> stop the RS256→HS256 confusion attack?</p>
+        <details><summary>Show answer</summary><p>The attack works by getting the server to verify an <code class="inl">HS256</code> token using the RSA <em>public</em> key as an HMAC secret. If you pin <code class="inl">algorithms:['RS256']</code>, the server refuses to treat the token as HS256 at all — it only ever does RSA verification, for which the attacker would need the private key. The token's own <code class="inl">alg</code> header is ignored. (§05.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q3.</strong> You ship JWTs for browser login. A user clicks "log out" but their token still works for 15 minutes. Why, and what's the usual fix?</p>
+        <details><summary>Show answer</summary><p>JWTs are stateless — there's no server record to delete, so the token stays valid until <code class="inl">exp</code> (§06). Usual fixes: keep access tokens short-lived (minutes) and pair them with a revocable refresh token, or maintain a server-side denylist of revoked tokens (which re-adds the state you were avoiding). This is exactly the trade-off from Lesson 1, and the subject of Lesson 9.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Where we go next</h2>
+    <p>You've now got both halves of "stay logged in": stateful sessions (L1–2) and stateless JWTs (L3). Next we step back to phase ① — the <em>login event</em> — starting with the unglamorous-but-critical <strong>passwords done right</strong>: why you hash and never encrypt them, what bcrypt/argon2 actually do, and the handful of lines that separate a safe password store from a breach headline. Then we climb into OAuth2.</p>
+    <div class="callout key"><span class="h">📌 Remember this one line</span>
+      <strong>A JWT is signed, not secret: the payload is public, the signature only proves it wasn't tampered with — so never store secrets in it, always <code class="inl">verify</code> with a pinned <code class="inl">algorithms</code> allowlist, and remember you can't easily revoke one.</strong></div>
+    <p class="muted" style="margin-top:18px">💬 Ask me anything — e.g. "show the RS256 version with a key pair", "what does a refresh token look like?", or "decode the JWT my real app uses and tell me what's in it" (paste it — but scrub it after, it's a live credential). · Back to <a href="0002-cookies-done-right.html">Lesson 2</a> · <a href="0001-sessions-vs-tokens.html">Lesson 1</a> · <a href="/courses/auth/#resources">Resources</a>.</p>
+  </section>
+
+</div>
+</body>
+</html>

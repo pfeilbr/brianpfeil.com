@@ -515,6 +515,91 @@ other = "このページのデータを読み込めませんでした。再読�
 
 [data_noscript]
 other = "このページは JavaScript で表示しています。データは <a href=\"{{ .url }}\">{{ .url }}</a> にあります。"
+# --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
+
+[courses_intro]
+other = "無料の講座が {count} 本、レッスンは全部で {lessons} 件あります。どれも私が自分でそのテーマを学びながら、Claude と一緒に一レッスンずつ書いたものです。手を動かしながら進める対話型の内容で、登録不要・無料で読めます。"
+
+[courses_english_note]
+other = "レッスンは英語です。"
+
+[courses_filter]
+other = "トピックで絞り込む"
+
+[courses_all]
+other = "すべて"
+
+[courses_lessons]
+other = "{n} レッスン"
+
+[courses_updated]
+other = "{date} 更新"
+
+[courses_start]
+other = "レッスン 1 から始める"
+
+[courses_lessons_h]
+other = "レッスン一覧"
+
+[courses_reference_h]
+other = "早見表"
+
+[courses_resources_h]
+other = "次に進むなら"
+
+[courses_resources_note]
+other = "各レッスンの内容を確認した情報源と、質問できる場所です。"
+
+[courses_back]
+other = "すべての講座"
+
+[courses_footnote]
+other = "どのレッスンもそれだけで完結した 1 ページです。登録もトラッキングもなく、読むために何かをインストールする必要もありません。"
+
+[course_cat_ai_ml]
+other = "AI・ML"
+
+[course_cat_programming_languages]
+other = "プログラミング言語"
+
+[course_cat_web_frontend]
+other = "Web・フロントエンド"
+
+[course_cat_mobile]
+other = "モバイル"
+
+[course_cat_backend_data]
+other = "バックエンド・データ"
+
+[course_cat_devops_infra]
+other = "DevOps・インフラ"
+
+[course_cat_security]
+other = "セキュリティ"
+
+[course_cat_hardware_systems]
+other = "ハードウェア・システム"
+
+[course_cat_productivity_tools]
+other = "生産性・ツール"
+
+[course_cat_science_math]
+other = "科学・数学"
+
+[course_cat_other]
+other = "その他"
+
+[learn_courses_cta]
+other = "順を追って学びたいなら、私が一レッスンずつ書いた無料講座もどうぞ。"
+
+[hub_courses_title]
+other = "講座"
+
+[hub_courses_blurb]
+other = "各テーマを学びながら書いた、複数レッスンの無料講座"
+
+[hub_courses_count]
+other = "{{ .count }} 本の講座"
 
 # --- /learn/ (layouts/_default/learn.html, data/learn.json) ---
 

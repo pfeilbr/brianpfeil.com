@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 5 · Datasets &amp; DataLoaders</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/pytorch/" style="color:inherit;text-decoration:none">&larr; PyTorch</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">PyTorch · Lesson 5</div>
+    <h1>Datasets &amp; DataLoaders — Feeding the Loop</h1>
+    <p class="sub">Real data doesn't arrive as one neat tensor. A <code>Dataset</code> says how to fetch <em>one</em> sample; a <code>DataLoader</code> batches and shuffles them for you. Together they're the standard intake pipe that feeds every training loop.</p>
+    <span class="missiontag">🎯 Mission: read &amp; write real PyTorch</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>PyTorch splits data handling into two clean jobs. A <strong><code class="inl">Dataset</code></strong> answers "how big are you?" (<code class="inl">__len__</code>) and "give me sample <code class="inl">i</code>" (<code class="inl">__getitem__</code>). A <strong><code class="inl">DataLoader</code></strong> wraps a dataset and turns it into a <em>batched, shuffled iterable</em> you loop over. Your training loop gains one inner line — <code class="inl">for xb, yb in loader:</code> — and otherwise stays exactly the same.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Why batches at all?</h2>
+    <p class="lead">In Lessons 3–4 we shoved all 100 points through at once. That works for 100; it does not work for a million images that don't fit in memory. The fix is <strong>mini-batches</strong>: process a handful of samples, take a step, repeat.</p>
+    <div class="cards">
+      <div class="card"><h4>Fits in memory</h4><p>Only one batch is in memory/on the GPU at a time, so dataset size stops being bounded by RAM.</p></div>
+      <div class="card"><h4>Learns faster</h4><p>You take many small steps per pass instead of one big one — usually faster, smoother convergence (this is "mini-batch SGD").</p></div>
+      <div class="card"><h4>Shuffling helps</h4><p>Re-shuffling every epoch stops the model from learning the <em>order</em> of the data instead of the pattern.</p></div>
+    </div>
+    <div class="callout key"><span class="h">💡 New vocabulary</span>
+      An <strong>epoch</strong> is one full pass over <em>all</em> batches. One <strong>step / iteration</strong> is one batch (one <code class="inl">optimizer.step()</code>). <strong>Batch size</strong> is how many samples per step — a key knob you'll see at the top of every script.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> <code class="inl">Dataset</code> — how to get one sample</h2>
+    <p>The simplest dataset wraps tensors you already have. <code class="inl">TensorDataset</code> pairs them up so that indexing returns one <code class="inl">(features, target)</code> sample.</p>
+    <pre><span class="b">from</span> torch.utils.data <span class="b">import</span> TensorDataset, DataLoader, random_split
+
+ds = TensorDataset(X, y)          <span class="c1"># X,y from the earlier lessons</span>
+<span class="b">print</span>(<span class="b">len</span>(ds))                  <span class="c1"># 100        ← __len__</span>
+xi, yi = ds[<span class="g">0</span>]                  <span class="c1"># ONE sample ← __getitem__</span>
+<span class="b">print</span>(xi.shape, yi.shape)        <span class="c1"># torch.Size([1]) torch.Size([1])</span></pre>
+    <div class="callout key"><span class="h">💡 A dataset is "indexable + sized"</span>
+      Anything that supports <code class="inl">len(ds)</code> and <code class="inl">ds[i]</code> can be a dataset. Notice indexing returns a <em>single</em> sample (no batch dimension yet) — adding the batch dimension is the DataLoader's job.</div>
+    <p class="cite">Source: <a href="https://docs.pytorch.org/tutorials/beginner/basics/data_tutorial.html" target="_blank" rel="noopener">PyTorch — Datasets &amp; DataLoaders tutorial</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> <code class="inl">DataLoader</code> — batch + shuffle, for free</h2>
+    <p>Wrap the dataset in a <code class="inl">DataLoader</code>, choose a <code class="inl">batch_size</code>, ask it to <code class="inl">shuffle</code>, and iterate. It stacks individual samples into a batch tensor with a new leading dimension.</p>
+    <pre>loader = DataLoader(ds, batch_size=<span class="g">16</span>, shuffle=<span class="g">True</span>)
+<span class="b">print</span>(<span class="b">len</span>(loader))               <span class="c1"># 7   ← number of BATCHES (100 / 16, last partial)</span>
+xb, yb = <span class="b">next</span>(<span class="b">iter</span>(loader))
+<span class="b">print</span>(xb.shape, yb.shape)        <span class="c1"># torch.Size([16, 1]) torch.Size([16, 1])</span></pre>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 250" role="img" aria-label="The data pipeline. The Dataset holds 100 individual samples and returns one per index. The DataLoader shuffles them and cuts them into 7 batches of up to 16. The training loop pulls one batch at a time into the model.">
+        <defs><marker id="a5" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--muted)"/></marker></defs>
+        <!-- dataset -->
+        <rect x="30" y="58" width="190" height="130" rx="11" fill="var(--accent)" opacity="0.12" stroke="var(--accent)"/>
+        <text x="125" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">Dataset · 100 samples</text>
+        <g fill="var(--panel)" stroke="var(--accent)">
+          <rect x="52" y="96" width="146" height="16" rx="3"/>
+          <rect x="52" y="118" width="146" height="16" rx="3"/>
+          <rect x="52" y="140" width="146" height="16" rx="3"/>
+        </g>
+        <text x="125" y="108" text-anchor="middle" font-size="10.5" font-family="monospace" fill="var(--muted)">ds[i] → (xᵢ, yᵢ)</text>
+        <text x="125" y="174" text-anchor="middle" font-size="10.5" fill="var(--muted)">__len__ · __getitem__</text>
+
+        <!-- dataloader -->
+        <rect x="300" y="58" width="200" height="130" rx="11" fill="var(--accent-2)" opacity="0.14" stroke="var(--accent-2)"/>
+        <text x="400" y="80" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent-2)">DataLoader</text>
+        <text x="400" y="100" text-anchor="middle" font-size="11" fill="var(--muted)">shuffle, then cut into batches</text>
+        <g fill="var(--panel)" stroke="var(--accent-2)">
+          <rect x="322" y="112" width="50" height="50" rx="5"/>
+          <rect x="378" y="112" width="50" height="50" rx="5"/>
+          <rect x="434" y="112" width="44" height="50" rx="5"/>
+        </g>
+        <text x="400" y="178" text-anchor="middle" font-size="10.5" font-family="monospace" fill="var(--muted)">7 batches of ≤16</text>
+
+        <!-- loop -->
+        <rect x="580" y="88" width="210" height="72" rx="11" fill="var(--warn)" opacity="0.14" stroke="var(--warn)"/>
+        <text x="685" y="112" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--warn)">training loop</text>
+        <text x="685" y="133" text-anchor="middle" font-size="11" font-family="monospace" fill="var(--fg)">for xb, yb in loader:</text>
+        <text x="685" y="150" text-anchor="middle" font-size="10.5" fill="var(--muted)">one step per batch</text>
+
+        <line x1="220" y1="123" x2="298" y2="123" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#a5)"/>
+        <line x1="500" y1="123" x2="578" y2="123" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#a5)"/>
+        <text x="400" y="218" text-anchor="middle" font-size="11.5" fill="var(--muted)">batch tensor gains a leading dimension: (16, 1) — 16 samples stacked</text>
+      </svg>
+      <figcaption>Dataset = "one sample at a time." DataLoader = "batched, shuffled stream." The loop just iterates it.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The loop, now over batches</h2>
+    <p>The only change to Lesson 4's loop is an inner <code class="inl">for</code> over the loader. Everything inside is the same five moves — they now run once per <em>batch</em>:</p>
+    <pre><span class="b">for</span> epoch <span class="b">in</span> <span class="b">range</span>(<span class="g">31</span>):
+    <span class="b">for</span> xb, yb <span class="b">in</span> train_loader:    <span class="c1"># ← the new line: iterate batches</span>
+        opt.zero_grad()
+        loss = loss_fn(model(xb), yb)
+        loss.backward()
+        opt.step()</pre>
+    <pre>epoch  0 | last-batch loss 4.67308
+epoch 10 | last-batch loss 0.01068
+epoch 30 | last-batch loss 0.00747
+learned w=2.002, b=-3.000</pre>
+    <p>Same line recovered, but now via many small batch-steps per epoch. Swap <code class="inl">train_loader</code> for one that streams a million images and not a single other line changes.</p>
+    <div class="runlater">Run it: <code class="inl">~/projects/learn/public/courses/pytorch/practice/.venv/bin/python ~/projects/learn/public/courses/pytorch/practice/lesson05_dataloaders.py</code></div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Holding out a validation set</h2>
+    <p>You must measure the model on data it <em>didn't</em> train on, or you can't tell learning from memorizing. <code class="inl">random_split</code> carves a dataset into pieces:</p>
+    <pre>train_ds, val_ds = random_split(ds, [<span class="g">80</span>, <span class="g">20</span>])   <span class="c1"># 80 train, 20 validation</span>
+train_loader = DataLoader(train_ds, batch_size=<span class="g">16</span>, shuffle=<span class="g">True</span>)
+val_loader   = DataLoader(val_ds,   batch_size=<span class="g">16</span>)   <span class="c1"># no shuffle needed for eval</span></pre>
+    <div class="callout warn"><span class="h">⚠ Shuffle train, not val</span>
+      Shuffle the <strong>training</strong> loader (helps learning). Leave the <strong>validation/test</strong> loader unshuffled — order doesn't matter there, and not shuffling keeps evaluation reproducible. We'll actually <em>use</em> the validation set to measure accuracy in <a href="0006-build-and-train-a-real-net.html">Lesson 6</a>.</p></div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> A custom <code class="inl">Dataset</code> — the real-data pattern</h2>
+    <p>For real data (images on disk, rows of a CSV, tokenized text) you write your own <code class="inl">Dataset</code>. It's three methods — and it's the exact shape you'll read in countless repos:</p>
+    <pre><span class="b">from</span> torch.utils.data <span class="b">import</span> Dataset
+
+<span class="b">class</span> <span class="b">SquaresDataset</span>(Dataset):
+    <span class="b">def</span> __init__(self, n):                 <span class="c1"># set up / point at the data source</span>
+        self.x = torch.arange(n, dtype=torch.float32)
+    <span class="b">def</span> __len__(self):                     <span class="c1"># how many samples</span>
+        <span class="b">return</span> <span class="b">len</span>(self.x)
+    <span class="b">def</span> __getitem__(self, i):              <span class="c1"># fetch + prepare sample i → (input, label)</span>
+        <span class="b">return</span> self.x[i], self.x[i] ** <span class="g">2</span>
+
+sq = SquaresDataset(<span class="g">5</span>)
+<span class="b">print</span>(<span class="b">len</span>(sq), sq[<span class="g">3</span>])     <span class="c1"># 5 (tensor(3.), tensor(9.))</span></pre>
+    <div class="callout key"><span class="h">💡 This is where real data work lives</span>
+      <code class="inl">__getitem__</code> is where you'd load an image from a path, apply transforms, tokenize a sentence, etc. — returning one ready-to-use sample. Hand that dataset to a <code class="inl">DataLoader</code> and batching, shuffling, and (optionally) parallel loading come for free.</div>
+    <p class="cite">Source: <a href="https://docs.pytorch.org/tutorials/beginner/basics/data_tutorial.html" target="_blank" rel="noopener">PyTorch — Datasets &amp; DataLoaders</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">What does indexing a <code class="inl">Dataset</code> (<code class="inl">ds[i]</code>) return?</div>
+        <button class="opt">A batch of samples</button>
+        <button class="opt">A single sample, e.g. <code class="inl">(features, target)</code> — no batch dimension</button>
+        <button class="opt">The whole dataset as a tensor</button>
+        <button class="opt">The number of samples</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">A dataset has 100 samples and <code class="inl">batch_size=16</code>. What is <code class="inl">len(loader)</code>?</div>
+        <button class="opt">100</button>
+        <button class="opt">16</button>
+        <button class="opt">7 (six full batches of 16 + one partial of 4)</button>
+        <button class="opt">6</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">What's the leading dimension of a batch tensor from <code class="inl">DataLoader(..., batch_size=16)</code>?</div>
+        <button class="opt">16 — the number of samples stacked into the batch</button>
+        <button class="opt">1 — always one</button>
+        <button class="opt">The number of features</button>
+        <button class="opt">There is no leading dimension</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">Which three methods does a custom <code class="inl">Dataset</code> implement?</div>
+        <button class="opt"><code class="inl">forward</code>, <code class="inl">backward</code>, <code class="inl">step</code></button>
+        <button class="opt"><code class="inl">load</code>, <code class="inl">batch</code>, <code class="inl">shuffle</code></button>
+        <button class="opt"><code class="inl">__init__</code>, <code class="inl">forward</code>, <code class="inl">step</code></button>
+        <button class="opt"><code class="inl">__init__</code>, <code class="inl">__len__</code>, <code class="inl">__getitem__</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">Which loader should you shuffle?</div>
+        <button class="opt">Both train and validation</button>
+        <button class="opt">Only the training loader; leave validation/test unshuffled</button>
+        <button class="opt">Only validation</button>
+        <button class="opt">Neither — shuffling hurts</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What's the division of labour between Dataset and DataLoader?</summary><div class="a">A: <strong>Dataset</strong> = how to get <em>one</em> sample (<code class="inl">__len__</code>, <code class="inl">__getitem__</code>). <strong>DataLoader</strong> = wraps a dataset into a batched, shuffled, iterable stream.</div></details>
+    <details class="fc"><summary>Q: Why train on mini-batches instead of all data at once?</summary><div class="a">A: Data may not fit in memory; many small steps per epoch usually converge faster and smoother (mini-batch SGD); and per-batch shuffling avoids learning data order.</div></details>
+    <details class="fc"><summary>Q: epoch vs step (iteration)?</summary><div class="a">A: An <strong>epoch</strong> is one full pass over all batches. A <strong>step/iteration</strong> is one batch = one <code class="inl">optimizer.step()</code>.</div></details>
+    <details class="fc"><summary>Q: What does a DataLoader add to a sample's shape?</summary><div class="a">A: A leading <strong>batch dimension</strong>. A sample of shape <code class="inl">(1,)</code> becomes a batch of shape <code class="inl">(batch_size, 1)</code>.</div></details>
+    <details class="fc"><summary>Q: How do you make a train/validation split?</summary><div class="a">A: <code class="inl">random_split(ds, [n_train, n_val])</code>, then a <code class="inl">DataLoader</code> for each. Shuffle train, not val.</div></details>
+    <details class="fc"><summary>Q: Where does real data-loading logic go?</summary><div class="a">A: In a custom <code class="inl">Dataset.__getitem__</code> — load the image/row/text for index <code class="inl">i</code>, apply transforms, and return <code class="inl">(input, label)</code>.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Good asks: <em>"what does num_workers do?"</em>, <em>"how would a Dataset load images from a folder?"</em>, or <em>"why is the last batch smaller and does it matter?"</em> Next we put it all together: a real multi-layer classifier trained on your GPU. Say <strong>"go"</strong> for Lesson 6.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0004-nn-module-and-optimizers.html"><span class="dir">← Previous</span><span class="ttl">Lesson 4 · nn.Module</span></a>
+    <a href="../reference/pytorch-glossary.html"><span class="dir">Reference</span><span class="ttl dim">PyTorch Glossary</span></a>
+    <a href="0006-build-and-train-a-real-net.html"><span class="dir">Up next →</span><span class="ttl">Lesson 6 · Build &amp; Train a Real Net</span></a>
+  </nav>
+
+  <footer>
+    PyTorch · Lesson 5 · grounded in
+    <a href="https://docs.pytorch.org/tutorials/beginner/basics/data_tutorial.html" target="_blank" rel="noopener">Datasets &amp; DataLoaders tutorial</a> ·
+    see <a href="/courses/pytorch/#resources">RESOURCES.md</a> ·
+    <a href="../reference/pytorch-glossary.html">Glossary</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){ opt.classList.add('correct'); fb.textContent = '✓ Correct.'; fb.className = 'fb show'; }
+        else { opt.classList.add('wrong'); opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.'; fb.className = 'fb show'; }
+      });
+    });
+  });
+</script>
+</body>
+</html>

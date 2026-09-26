@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference · V8 Glossary</title>
+<style>
+  :root{--ink:#1a1a2e;--ink-soft:#4a4a63;--paper:#fbfaf7;--card:#fff;--accent:#5b4fc4;--accent-soft:#ede9fc;--line:#e6e2d8}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:820px;margin:0 auto;padding:40px 26px 80px}
+  .kicker{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:30px;margin:.25em 0 .1em;letter-spacing:-.02em}
+  .sub{color:var(--ink-soft);font-size:15px;margin-bottom:18px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:20px;background:var(--accent-soft);color:var(--accent);margin-left:8px;vertical-align:2px}
+  dl{margin:0}
+  dt{font-weight:700;font-size:17px;margin:22px 0 3px;scroll-margin-top:20px}
+  dt code{font-family:"SF Mono",monospace;font-size:.8em;background:#efece3;padding:.1em .4em;border-radius:5px}
+  dd{margin:0;color:var(--ink-soft)}
+  dd b{color:var(--ink)}
+  .grp{border-top:2px solid var(--ink);margin-top:34px;padding-top:6px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);font-weight:700}
+  a{color:var(--accent)}
+  code{font-family:"SF Mono",monospace;font-size:.85em;background:#efece3;padding:.1em .35em;border-radius:5px}
+  .foot{margin-top:50px;font-size:13px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:16px}
+  @media print{body{background:#fff}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: v8-javascript-engine ---- */
+/* ============================================================================
+   v8-javascript-engine course adapter — re-skin this course's bespoke
+   component classes with the canonical tokens from assets/theme.css. Injected
+   AFTER theme.css and AFTER each lesson's own <style>, so these rules win.
+   The lessons hardcode a cream "paper" look (--paper #fbfaf7, purple --accent
+   #5b4fc4, dark <pre> at #1e1e2e) via their own :root vars; we re-point those
+   custom vars at the canonical tokens and add explicit !important overrides for
+   every hardcoded hex / gradient the vars don't reach. Result: the unified look
+   + automatic light/dark, with no markup edits. Mirrors nix.css.
+   ============================================================================ */
+
+/* ---- retokenize the course's own CSS variables onto the canonical palette.
+   This handles every rule that reads var(--ink)/var(--line)/var(--good)/etc.
+   in one shot; the explicit rules below cover the remaining hardcoded colours.
+   We do NOT re-declare --accent/--code-bg/--code-ink: those names are shared
+   with theme.css, so the course's own :root values for them are already
+   shadowed by the canonical tokens — re-pointing them to themselves would be
+   a cyclic declaration. The course's purple --accent #5b4fc4 thus resolves to
+   the canonical --accent automatically. */
+:root{
+  --ink:var(--fg) !important;          --ink-soft:var(--muted) !important;
+  --paper:var(--bg) !important;        --card:var(--surface) !important;
+  --accent-soft:color-mix(in srgb,var(--accent) 14%,transparent) !important;
+  --good:var(--mark) !important;       --good-soft:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  --bad:var(--danger) !important;      --bad-soft:color-mix(in srgb,var(--danger) 13%,transparent) !important;
+  --amber:var(--warn) !important;      --amber-soft:color-mix(in srgb,var(--warn) 13%,transparent) !important;
+  --line:var(--border) !important;
+}
+
+/* ---- page shell: cream body -> token bg; .wrap is the centered column ---- */
+body{ background:var(--bg) !important; color:var(--fg) !important; }
+.wrap{ max-width:var(--maxw); margin:0 auto; background:transparent !important;
+  box-shadow:none !important; }
+header.hd{ border-bottom:3px solid var(--border) !important; }
+.kicker{ color:var(--accent) !important; }
+.sub,.cite,.foot,.bar{ color:var(--muted) !important; }
+
+/* ---- headings: ink/black titles -> --fg, accent bits -> --accent ---- */
+h1{ color:var(--fg) !important; }
+h2{ color:var(--fg) !important; }
+h3{ color:var(--fg) !important; }
+.grp{ border-top:2px solid var(--border) !important; color:var(--muted) !important; }
+/* reference node-v8-flags h2 has an --ink underline */
+.wrap h2[style], h2{ border-color:var(--border) !important; }
+
+/* ---- inline code: cream chip -> accent tint (matches theme code.inl) ---- */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; border-radius:6px; }
+dt code,.tag code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; }
+
+/* ---- code blocks: already dark; pin to the canonical dark <pre> ---- */
+pre{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; }
+pre code{ background:none !important; color:inherit !important; padding:0 !important; }
+
+/* ---- syntax-highlight tokens: remap onto a light-on-dark palette so they
+   stay legible on the canonical dark code block (in both schemes) ---- */
+.cmt{ color:#7f8db3 !important; }                 /* comments  (grey-blue)  */
+.hl{ color:#74c0fc !important; }                  /* highlight (blue)       */
+.lit{ color:#ffd43b !important; }                 /* literals  (yellow)     */
+.ok2{ color:#63e6be !important; }                 /* ok/green               */
+.ty{ color:var(--accent-2) !important; }          /* types    (teal accent) */
+/* NOTE: `.warn` here is a SYNTAX token (red text inside <pre>), not a callout */
+pre .warn, .warn{ color:#ff8787 !important; }     /* error/red in code      */
+
+/* ---- numbered step cards ---- */
+.step{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; box-shadow:none !important; }
+.step .num{ background:var(--accent) !important; color:#fff !important; }
+.step h3{ color:var(--fg) !important; }
+
+/* ---- callout / box classes mapped to the unified semantics ---- */
+/* info / neutral note -> warn-amber in the original; keep amber intent */
+.callout,.note{ background:color-mix(in srgb,var(--warn) 12%,transparent) !important;
+  border-left:4px solid var(--warn) !important; color:var(--fg) !important; }
+.callout b,.note b{ color:var(--warn) !important; }
+/* danger / failure -> --danger */
+.danger{ background:color-mix(in srgb,var(--danger) 11%,transparent) !important;
+  border-left:4px solid var(--danger) !important; color:var(--fg) !important; }
+.danger b{ color:var(--danger) !important; }
+/* cycle / key insight -> --accent */
+.cycle{ background:color-mix(in srgb,var(--accent) 10%,transparent) !important;
+  border-left:4px solid var(--accent) !important; color:var(--fg) !important; }
+.cycle b{ color:var(--accent) !important; }
+/* mission blurb -> accent-2 special tint */
+.mission{ background:color-mix(in srgb,var(--accent-2) 12%,transparent) !important;
+  color:var(--fg) !important; }
+.mission b{ color:var(--accent-2) !important; }
+
+/* ---- pipeline / flow / architecture boxes ---- */
+.stage,.fbox{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; }
+.stage.active{ border-color:var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 12%,transparent) !important; }
+.stage .s{ color:var(--muted) !important; }
+.arrow,.farr{ color:var(--accent) !important; }
+
+/* ---- architecture-map tier ladder (hardcoded pastel tiers) ---- */
+.ladder{ border:1px solid var(--border) !important; }
+.tier{ border-bottom:1px solid var(--border) !important; color:var(--fg) !important; }
+.tier .name small,.tier .desc{ color:var(--muted) !important; }
+.t0{ background:color-mix(in srgb,var(--accent) 9%,transparent) !important; }
+.t1{ background:color-mix(in srgb,var(--accent-2) 9%,transparent) !important; }
+.t2{ background:color-mix(in srgb,var(--mark) 10%,transparent) !important; }
+.t3{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.t4{ background:color-mix(in srgb,var(--danger) 10%,transparent) !important; }
+
+/* ---- lesson 04 nested-scope ladder (hardcoded pastels) ---- */
+.nest{ border:1px solid var(--border) !important; color:var(--fg) !important; }
+.nest div{ border-bottom:1px solid var(--border) !important; }
+.nest .lbl{ color:var(--muted) !important; }
+.n0{ background:color-mix(in srgb,var(--accent) 10%,transparent) !important; }
+.n1{ background:color-mix(in srgb,var(--accent-2) 9%,transparent) !important; }
+.n2{ background:color-mix(in srgb,var(--mark) 10%,transparent) !important; }
+.n3{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.n4{ background:color-mix(in srgb,var(--danger) 10%,transparent) !important; }
+
+/* ---- lesson 05 good/gotcha comparison boxes ---- */
+.cmpbox{ color:var(--fg) !important; }
+.cmpbox.l{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 11%,transparent) !important; }
+.cmpbox.g{ border-color:var(--warn) !important;
+  background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+
+/* ---- lesson 07 hidden-class / inline-cache widgets ---- */
+.obj,.slot{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; }
+.slot .off{ color:var(--accent) !important; }
+.maptag{ background:color-mix(in srgb,var(--accent) 14%,transparent) !important;
+  color:var(--accent) !important; }
+.icbox{ color:var(--fg) !important; }
+.mono{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 11%,transparent) !important; }
+.poly{ border-color:var(--warn) !important;
+  background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.mega{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 11%,transparent) !important; }
+
+/* ---- lesson 08 GC generation boxes (hardcoded pastels) ---- */
+.genbox{ border:1px solid var(--border) !important; color:var(--fg) !important; }
+.young{ background:color-mix(in srgb,var(--accent-2) 9%,transparent) !important; }
+.old{ background:color-mix(in srgb,var(--warn) 11%,transparent) !important; }
+.genbox .gc{ color:var(--accent) !important; }
+.tbox{ border:1.5px solid var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 11%,transparent) !important; color:var(--fg) !important; }
+
+/* ---- quiz / match interactives ---- */
+.quiz{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--fg) !important; }
+.q{ color:var(--fg) !important; }
+.opt{ background:var(--panel) !important; border:1.5px solid var(--border) !important;
+  color:var(--fg) !important; }
+.opt:hover{ border-color:var(--accent) !important; }
+.opt.correct{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 16%,transparent) !important; color:var(--mark) !important; }
+.opt.wrong{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 14%,transparent) !important; color:var(--danger) !important; }
+.fb.ok{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important; color:var(--mark) !important; }
+.fb.no{ background:color-mix(in srgb,var(--danger) 14%,transparent) !important; color:var(--danger) !important; }
+.match-row select{ background:var(--panel) !important; border:1.5px solid var(--border) !important;
+  color:var(--fg) !important; }
+.match-row select.ok{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 14%,transparent) !important; }
+.match-row select.no{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 14%,transparent) !important; }
+
+/* ---- buttons ---- */
+.btn{ background:var(--accent) !important; color:#fff !important; }
+.btn:hover{ background:color-mix(in srgb,var(--accent) 80%,#000) !important; }
+
+/* ---- pills (status tags) ---- */
+.pill{ background:color-mix(in srgb,var(--mark) 16%,transparent) !important; color:var(--mark) !important; }
+.pill.warn{ background:color-mix(in srgb,var(--warn) 16%,transparent) !important; color:var(--warn) !important; }
+.tag{ background:color-mix(in srgb,var(--accent) 14%,transparent) !important; color:var(--accent) !important; }
+
+/* ---- teacher / done banners: drop the purple/green gradients for token tints
+   (white-on-gradient text would be invisible once retinted, so force --fg) ---- */
+.teacher{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--accent) 30%,transparent) !important; color:var(--fg) !important; }
+.teacher b{ color:var(--accent) !important; }
+.done{ background:color-mix(in srgb,var(--mark) 12%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--mark) 30%,transparent) !important; color:var(--fg) !important; }
+.done b{ color:var(--mark) !important; }
+.done a{ color:var(--accent) !important; }
+
+/* ---- nav ---- */
+.nav{ border-top:1px solid var(--border) !important; }
+.nav a{ background:var(--surface) !important; border:1px solid var(--border) !important; }
+.nav .lbl{ color:var(--muted) !important; }
+.nav .ttl{ color:var(--accent) !important; }
+
+/* ---- tables ---- */
+table.bc th,table th{ color:var(--muted) !important; border-bottom-color:var(--border) !important; }
+table.bc td,table td{ border-bottom-color:var(--border) !important; color:var(--fg) !important; }
+table.bc td:first-child,table td:first-child{ color:var(--accent) !important; }
+
+/* ---- reference glossary (dl/dt/dd vocabulary) ---- */
+dt{ color:var(--fg) !important; }
+dd{ color:var(--muted) !important; }
+dd b{ color:var(--fg) !important; }
+
+/* ---- blanket contrast guard: every text-holding box onto --fg (excludes
+   pre/code, which keep their light-on-dark colours). Courses hardcode dark
+   #1a1a2e text that is invisible on the dark-mode tinted surfaces. ---- */
+.step,.callout,.note,.danger,.cycle,.mission,.stage,.fbox,.tier,.nest,
+.cmpbox,.obj,.slot,.icbox,.genbox,.tbox,.quiz,.q,.opt,.teacher,.done,
+.three,.shape,.ic,.cmp,.gen,.flow,.pipeline,.ladder{ color:var(--fg) !important; }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/v8-javascript-engine/" style="color:inherit;text-decoration:none">&larr; V8 JavaScript Engine</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+  <div class="kicker">V8 Reference</div>
+  <h1>V8 Glossary</h1>
+  <div class="sub">The shared vocabulary for this track. Terms are added as lessons introduce
+  them — once a term is here, every lesson uses it the same way. <span class="tag">L1</span>
+  marks terms introduced in Lesson 1.</div>
+
+  <div class="grp">Execution pipeline</div>
+  <dl>
+    <dt>Pipeline / Tiers <span class="tag">L1</span></dt>
+    <dd>V8's staged path from source to machine code: <b>Parser → Ignition (bytecode) →
+      Sparkplug → Maglev → TurboFan</b>. Later tiers are faster but more expensive to produce,
+      so V8 only promotes "hot" code to them.</dd>
+
+    <dt>Parser / AST <span class="tag">L1</span></dt>
+    <dd>The parser turns source text into an <b>Abstract Syntax Tree</b> (AST) — a structured
+      tree of the program. Bytecode is generated from the AST. See <code>--print-ast</code>.</dd>
+
+    <dt>Ignition <span class="tag">L1</span></dt>
+    <dd>V8's <b>bytecode interpreter</b>. Compiles each function to compact bytecode and executes
+      it. Most code only ever runs here.
+      <a href="https://v8.dev/blog/ignition-interpreter">Docs</a>.</dd>
+
+    <dt>Bytecode <span class="tag">L1</span></dt>
+    <dd>The compact instruction format Ignition runs. A <b>register machine</b> design centered on
+      the accumulator. Inspect with <code>--print-bytecode</code>.</dd>
+
+    <dt>Accumulator <span class="tag">L1</span></dt>
+    <dd>A single implicit register that most bytecode instructions read from and write to.
+      Keeps bytecode small (instructions don't need to name a destination). <code>Ldar</code> loads
+      it; <code>Star</code> stores from it.</dd>
+
+    <dt>Feedback slot / Feedback vector <span class="tag">L1</span></dt>
+    <dd>Per-function storage where Ignition records the <b>runtime types</b> it observes (the
+      <code>[0]</code> in <code>Add a0, [0]</code>). The optimizing compilers read this to
+      generate type-specialized machine code.</dd>
+
+    <dt>Sparkplug · Maglev · TurboFan <span class="tag">L2</span></dt>
+    <dd>The three compilers that turn bytecode into machine code. <b>Sparkplug</b>: fast baseline,
+      no optimization (1:1 bytecode→machine code). <b>Maglev</b>: mid-tier optimizer. <b>TurboFan</b>:
+      top-tier, most aggressive, compiles concurrently. A function climbs these only as it proves "hot".
+      <a href="https://v8.dev/blog/sparkplug">Sparkplug</a> ·
+      <a href="https://v8.dev/blog/maglev">Maglev</a>.</dd>
+
+    <dt>Speculative optimization <span class="tag">L2</span></dt>
+    <dd>V8's central strategy: run cheaply, observe the types that actually occur, then compile
+      machine code that <b>bets</b> those types continue. The bet is what makes the code fast — and
+      what can break (→ deoptimization).</dd>
+
+    <dt>Tier-up <span class="tag">L2</span></dt>
+    <dd>Promoting a function to a higher compiler tier because it became <b>"hot and stable"</b>
+      (called often, consistent types). Watch with <code>--trace-opt</code>.</dd>
+
+    <dt>Deoptimization (bailout) <span class="tag">L2</span></dt>
+    <dd>When optimized machine code's assumptions break at runtime, V8 <b>bails back</b> to bytecode
+      (the interpreter) and resumes there. Common reason: <code>wrong map</code> (object shape changed).
+      <b>Eager</b> deopt happens at the breaking instruction; <b>lazy</b> deopt is deferred. See <code>--trace-deopt</code>.</dd>
+
+    <dt>OSR — On-Stack Replacement <span class="tag">L2</span></dt>
+    <dd>Swapping a <b>currently-running</b> function's code (e.g. a long loop) for freshly-compiled
+      optimized code, mid-execution, without waiting for it to return.</dd>
+
+    <dt>Concurrent compilation <span class="tag">L2</span></dt>
+    <dd>Optimizing compilers run on <b>background threads</b> (<code>ConcurrencyMode::kConcurrent</code>)
+      so your JavaScript keeps executing while V8 compiles a faster version.</dd>
+  </dl>
+
+  <div class="grp">Object model & runtime</div>
+  <dl>
+    <dt>Receiver <span class="tag">L1</span></dt>
+    <dd>The hidden first parameter of every function call — the value of <code>this</code>. Why
+      <code>add(a,b)</code> reports "Parameter count 3".</dd>
+
+    <dt>SharedFunctionInfo (SFI) <span class="tag">L1</span></dt>
+    <dd>V8's internal record describing a function's <i>code</i> (name, source position, bytecode)
+      shared across all closures of that function. Appears in <code>--print-bytecode</code> headers.</dd>
+
+    <dt>Source position (S / E)</dt>
+    <dd>Markers in bytecode mapping instructions back to source offsets — <b>S</b>tatement and
+      <b>E</b>xpression positions. Power stack traces and debugging.</dd>
+
+    <dt>Hidden Class / Map / Shape <span class="tag">L7</span></dt>
+    <dd>V8's internal descriptor of an object's <b>layout</b> — which properties it has and at what
+      <b>fixed offset</b>. Objects built the same way (same properties, same order) <b>share</b> a Map,
+      so property access compiles to "check the Map, read offset N." "Map" (V8), "hidden class", and
+      "shape" all mean the same thing. Inspect with <code>%HaveSameMap(a,b)</code> / <code>%DebugPrint(o)</code>.
+      <a href="https://v8.dev/docs/hidden-classes">Maps doc</a>.</dd>
+
+    <dt>Transition <span class="tag">L7</span></dt>
+    <dd>Adding a property doesn't mutate a Map — it <b>transitions</b> to a new Map and records the
+      link, forming a transition tree. Objects that add properties in the same order share Maps at
+      every step. Property <b>order matters</b>: <code>{x,y}</code> ≠ <code>{y,x}</code>.</dd>
+
+    <dt>Inline Cache (IC) <span class="tag">L7</span></dt>
+    <dd>A per-site cache at each property access recording "for Map M, property p is at offset N", so
+      repeat accesses skip the full lookup. This is the type feedback the optimizers consume.</dd>
+
+    <dt>Monomorphic · Polymorphic · Megamorphic <span class="tag">L7</span></dt>
+    <dd>How many shapes an IC has seen. <b>Monomorphic</b> (1) = fastest. <b>Polymorphic</b> (2–4) =
+      small Map list, slower. <b>Megamorphic</b> (many) = V8 stops caching → generic lookup → perf cliff.</dd>
+
+    <dt>FastProperties vs dictionary mode <span class="tag">L7</span></dt>
+    <dd><b>FastProperties</b> = the hidden-class fast path (offsets). If an object's shape gets too
+      chaotic (or you <code>delete</code> properties), V8 drops it to <b>dictionary mode</b> — a real
+      hash table, the slow path. Visible in <code>%DebugPrint</code> output.</dd>
+  </dl>
+
+  <div class="grp">Garbage collection — Orinoco</div>
+  <dl>
+    <dt>Generational GC · Young / Old generation <span class="tag">L8</span></dt>
+    <dd>Based on "most objects die young." New objects are born in the small <b>young generation</b>
+      (nursery); survivors are <b>promoted</b> to the large <b>old generation</b>. Each is collected by
+      a different algorithm.</dd>
+
+    <dt>Scavenge (Minor GC) <span class="tag">L8</span></dt>
+    <dd>Young-gen collector. Copies <b>live</b> objects between two semi-spaces; never visits dead ones.
+      Fast and frequent. <a href="https://v8.dev/blog/orinoco-parallel-scavenger">Docs</a>.</dd>
+
+    <dt>Mark-Compact (Major GC) <span class="tag">L8</span></dt>
+    <dd>Old-gen collector. <b>Marks</b> reachable objects from roots, then <b>compacts</b> survivors
+      together to fight fragmentation. Rarer, costlier — and it <b>moves objects</b>.</dd>
+
+    <dt>Orinoco <span class="tag">L8</span></dt>
+    <dd>V8's GC project that hides pauses via <b>parallel</b> (many GC threads), <b>incremental</b>
+      (small interleaved chunks), and <b>concurrent</b> (GC runs while JS runs) techniques.
+      <a href="https://v8.dev/blog/trash-talk">Trash talk</a>.</dd>
+
+    <dt>Mutator · mutator utilization (mu) <span class="tag">L8</span></dt>
+    <dd>The <b>mutator</b> is your JavaScript (it mutates the heap). <b>mu</b> = fraction of time given
+      to the mutator; <code>mu=1.0</code> means GC stole ~none, lower means GC pressure. Seen in <code>--trace-gc</code>.</dd>
+
+    <dt>Write barrier <span class="tag">L8</span></dt>
+    <dd>A tiny check on every property write that re-flags objects for the GC, so concurrent/incremental
+      marking can't miss a newly-created reference. The tax that makes pauseless GC correct.</dd>
+  </dl>
+
+  <div class="grp">Build toolchain</div>
+  <dl>
+    <dt>depot_tools · fetch · gclient <span class="tag">L3</span></dt>
+    <dd>Google's build toolchain wrapper. <code>fetch v8</code> = one-time checkout (V8 + all deps);
+      <code>gclient sync</code> = update deps later. <b>Never</b> <code>git clone</code> the GitHub
+      mirror to build — it has no deps. <a href="https://v8.dev/docs/source-code">Docs</a>.</dd>
+
+    <dt>GN · ninja · gm <span class="tag">L3</span></dt>
+    <dd><b>GN</b> generates build config from args (<code>gn gen</code>); <b>ninja</b> compiles
+      (<code>ninja -C out/… target</code>); <b>gm</b> (<code>tools/dev/gm.py arm64.release</code>) wraps
+      both. <a href="https://v8.dev/docs/build-gn">Docs</a>.</dd>
+
+    <dt>Monolith (libv8_monolith.a) <span class="tag">L3</span></dt>
+    <dd>V8 built as one static library for embedding. Produced by the <code>.sample</code> GN config
+      (<code>v8_monolithic=true is_component_build=false …</code>). Link target for your own host.</dd>
+
+    <dt>d8 <span class="tag">L3</span></dt>
+    <dd>V8's standalone developer shell — a minimal embedder you get when you build V8. Runs JS files,
+      has a REPL, and exposes all the inspection flags from Lessons 1–2 &amp; 7–8.</dd>
+  </dl>
+
+  <div class="grp">Embedding API</div>
+  <dl>
+    <dt>Platform <span class="tag">L4</span></dt>
+    <dd>Supplies V8's threading/task primitives (<code>NewDefaultPlatform()</code>). Must be created and
+      registered <b>before</b> <code>V8::Initialize()</code>; disposed after <code>V8::Dispose()</code>.</dd>
+
+    <dt>Isolate <span class="tag">L4</span></dt>
+    <dd>"A VM instance with its own heap." One running thread at a time; objects can't cross isolates.
+      Entered via <code>v8::Isolate::Scope</code>.</dd>
+
+    <dt>Context <span class="tag">L4</span></dt>
+    <dd>"An execution environment that allows separate, unrelated JavaScript code to run in a single
+      instance of V8" — its own globals/built-ins. Many contexts can share one isolate. Entered via
+      <code>v8::Context::Scope</code>.</dd>
+
+    <dt>Local&lt;T&gt; · HandleScope <span class="tag">L4 · L5</span></dt>
+    <dd>A <b>Local</b> is a GC-safe handle whose lifetime = the enclosing <b>HandleScope</b> (a
+      stack-only container released in bulk). The default handle for per-call work. Handles exist
+      because the <a href="#">moving GC</a> rewrites them when it relocates objects.</dd>
+
+    <dt>Global&lt;T&gt; / Persistent&lt;T&gt; <span class="tag">L5</span></dt>
+    <dd>A handle that outlives any scope — for keeping a JS object alive across calls. You own it: must
+      <code>Reset()</code> or it leaks. <code>Global</code> is move-only (modern default);
+      <code>Persistent</code> can be copyable.</dd>
+
+    <dt>EscapableHandleScope <span class="tag">L5</span></dt>
+    <dd>A HandleScope that lets one handle <code>Escape()</code> into the enclosing scope — how a
+      function returns a freshly-created <code>Local</code> without it dying.</dd>
+
+    <dt>MaybeLocal · ToLocalChecked <span class="tag">L4</span></dt>
+    <dd>Operations that can fail (compile, run — JS throws) return <code>MaybeLocal&lt;T&gt;</code>.
+      <code>.ToLocalChecked()</code> asserts success (crashes if empty); real code checks and reads the
+      exception instead.</dd>
+
+    <dt>FunctionTemplate · ObjectTemplate <span class="tag">L6</span></dt>
+    <dd>Blueprints. A <b>FunctionTemplate</b> binds a C++ callback to a JS function; an
+      <b>ObjectTemplate</b> shapes an object (often the global). V8 <b>instantiates</b> templates into
+      live objects when a Context is created. <a href="https://v8.dev/docs/embed">Guide</a>.</dd>
+
+    <dt>FunctionCallbackInfo&amp; args <span class="tag">L6</span></dt>
+    <dd>The single parameter to every exposed callback. Inputs: <code>args[i]</code>,
+      <code>args.Length()</code>, <code>args.GetIsolate()</code>. Output:
+      <code>args.GetReturnValue().Set(v)</code> — not a C++ <code>return</code>.</dd>
+  </dl>
+
+  <div class="foot">
+    Companion to all V8 lessons. Authoritative terms: <a href="https://v8.dev/docs">v8.dev/docs</a>.
+    Back to <a href="../lessons/0001-watch-v8-compile.html">Lesson 1</a>.
+  </div>
+</div>
+</body>
+</html>

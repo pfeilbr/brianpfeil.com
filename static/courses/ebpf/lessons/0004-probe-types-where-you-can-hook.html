@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 4 · Where You Can Hook: Probe Types</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Lesson 4</div>
+    <h1>Where You Can Hook: Probe Types</h1>
+    <p class="sub">Learn the menu of attachment points — and why choosing the right one is most of the skill.</p>
+    <span class="missiontag">🎯 Pick the right vantage point to see what your system is really doing</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>eBPF can attach at many layers of the stack. Picking the right hook — a stable
+    <strong>tracepoint</strong>, a flexible <strong>kprobe</strong>, a user-space
+    <strong>uprobe / USDT</strong>, or a timed <strong>profile</strong> — is most of the craft.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The menu, organized by layer</h2>
+    <p class="lead">In Lesson 3 you dissected a one-liner: <code class="inl">probe { filter { action } }</code>.
+    The very first word — the <strong>probe</strong> — answers <em>where do I attach?</em>
+    That single choice decides what you can see, how stable your tool is, and how much it costs.</p>
+
+    <p>Think of your machine as a tall stack. Down at the bottom is hardware; at the top
+    is your application's own code; in between sit kernel functions, the syscall boundary,
+    and shared libraries. eBPF can splice a tiny observer into almost every one of those
+    layers. Each layer has its own <strong>probe type</strong> — its own kind of doorway.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 470" role="img" aria-label="A vertical stack of the system from hardware at the bottom to application code at the top, with the eBPF probe type that attaches at each layer labeled on the right, and a clock-driven profile probe feeding all layers from the side.">
+        <defs>
+          <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/>
+          </marker>
+          <marker id="arrowT" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L7,3 L0,6 Z" fill="var(--accent-2)"/>
+          </marker>
+        </defs>
+
+        <!-- user-space band label -->
+        <text x="20" y="40" font-size="12" font-weight="700" fill="var(--muted)" letter-spacing="1">USER SPACE</text>
+        <line x1="20" y1="48" x2="560" y2="48" stroke="var(--line)" stroke-width="1"/>
+
+        <!-- Layer: application code -->
+        <rect x="20" y="58" width="540" height="44" rx="8" fill="var(--accent)" opacity="0.12" stroke="var(--accent)"/>
+        <text x="40" y="85" font-size="14" font-weight="700" fill="var(--ink)">Your application code (functions, hot loops)</text>
+
+        <!-- Layer: shared libs & app symbols -->
+        <rect x="20" y="110" width="540" height="44" rx="8" fill="var(--accent)" opacity="0.10" stroke="var(--accent)"/>
+        <text x="40" y="137" font-size="14" font-weight="700" fill="var(--ink)">Shared libraries &amp; app binary (libc, libssl, USDT points)</text>
+
+        <!-- kernel-space band label -->
+        <text x="20" y="186" font-size="12" font-weight="700" fill="var(--muted)" letter-spacing="1">KERNEL SPACE</text>
+        <line x1="20" y1="194" x2="560" y2="194" stroke="var(--line)" stroke-width="1"/>
+
+        <!-- Layer: syscall interface -->
+        <rect x="20" y="204" width="540" height="44" rx="8" fill="var(--accent-2)" opacity="0.14" stroke="var(--accent-2)"/>
+        <text x="40" y="231" font-size="14" font-weight="700" fill="var(--ink)">Syscall interface (open, read, execve …)</text>
+
+        <!-- Layer: kernel tracepoints -->
+        <rect x="20" y="256" width="540" height="44" rx="8" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)"/>
+        <text x="40" y="283" font-size="14" font-weight="700" fill="var(--ink)">Kernel tracepoints (named, maintained events)</text>
+
+        <!-- Layer: kernel functions -->
+        <rect x="20" y="308" width="540" height="44" rx="8" fill="var(--accent-2)" opacity="0.10" stroke="var(--accent-2)"/>
+        <text x="40" y="335" font-size="14" font-weight="700" fill="var(--ink)">Kernel functions (vfs_read, tcp_sendmsg …)</text>
+
+        <!-- Layer: hardware / PMCs -->
+        <rect x="20" y="360" width="540" height="44" rx="8" fill="var(--ink)" opacity="0.08" stroke="var(--muted)"/>
+        <text x="40" y="387" font-size="14" font-weight="700" fill="var(--ink)">Hardware &amp; PMCs (CPU counters, cache misses)</text>
+
+        <!-- probe-type labels on the right -->
+        <line x1="560" y1="80"  x2="600" y2="80"  stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="606" y="84"  font-size="13" font-weight="700" fill="var(--accent)">uprobe</text>
+
+        <line x1="560" y1="132" x2="600" y2="132" stroke="var(--accent)" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="606" y="129" font-size="13" font-weight="700" fill="var(--accent)">uprobe</text>
+        <text x="606" y="146" font-size="13" font-weight="700" fill="var(--accent)">USDT</text>
+
+        <line x1="560" y1="226" x2="600" y2="226" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#arrowT)"/>
+        <text x="606" y="223" font-size="13" font-weight="700" fill="var(--accent-2)">tracepoint</text>
+        <text x="606" y="240" font-size="11.5" fill="var(--muted)">syscalls:*</text>
+
+        <line x1="560" y1="278" x2="600" y2="278" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#arrowT)"/>
+        <text x="606" y="282" font-size="13" font-weight="700" fill="var(--accent-2)">tracepoint</text>
+
+        <line x1="560" y1="330" x2="600" y2="330" stroke="var(--accent-2)" stroke-width="2" marker-end="url(#arrowT)"/>
+        <text x="606" y="327" font-size="13" font-weight="700" fill="var(--accent-2)">kprobe /</text>
+        <text x="606" y="344" font-size="13" font-weight="700" fill="var(--accent-2)">kretprobe</text>
+
+        <line x1="560" y1="382" x2="600" y2="382" stroke="var(--muted)" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="606" y="379" font-size="13" font-weight="700" fill="var(--muted)">hardware /</text>
+        <text x="606" y="396" font-size="13" font-weight="700" fill="var(--muted)">software</text>
+
+        <!-- clock / timer feeding all layers from the side -->
+        <circle cx="708" cy="430" r="22" fill="none" stroke="var(--warn)" stroke-width="2.5"/>
+        <line x1="708" y1="430" x2="708" y2="416" stroke="var(--warn)" stroke-width="2.5"/>
+        <line x1="708" y1="430" x2="719" y2="434" stroke="var(--warn)" stroke-width="2.5"/>
+        <text x="676" y="468" font-size="12.5" font-weight="700" fill="var(--warn)">profile / interval</text>
+        <!-- dashed feed from clock up the right edge (timed, not event-driven) -->
+        <path d="M686,430 C640,430 640,70 612,70" fill="none" stroke="var(--warn)" stroke-width="1.6" stroke-dasharray="4 4"/>
+        <text x="630" y="250" font-size="11" fill="var(--warn)" transform="rotate(90 630 250)">timed sampling — fires on a clock, not an event</text>
+      </svg>
+      <figcaption>The stack, bottom to top — and the probe type that attaches at each layer.
+      Solid arrows are <strong>event-driven</strong> hooks; the clock on the right is
+      <strong>timed sampling</strong> that can observe any layer.</figcaption>
+    </figure>
+
+    <div class="callout key">
+      <span class="h">💡 The whole skill in one line</span>
+      Two questions decide your probe: <strong>which layer</strong> has the answer
+      (hardware? a kernel function? a syscall? your app?), and <strong>do you want a
+      promise or power</strong> — a stable point that survives upgrades, or a flexible
+      one that can reach anything but may break.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Tracepoints — the stable kernel instrumentation</h2>
+    <p>A <strong>tracepoint</strong> is a named, deliberately-placed marker that kernel
+    developers baked into the source as a public observation point. Because they are an
+    intentional, maintained interface, they are the <strong>preferred</strong> place to
+    hook: they tend to survive kernel upgrades, and they come with <strong>named
+    arguments</strong> you can read by field instead of guessing positions.</p>
+
+    <h3>Syntax</h3>
+    <pre><span class="y">tracepoint:category:event</span>   <span class="c1"># e.g. tracepoint:syscalls:sys_enter_openat</span></pre>
+    <p>The <code class="inl">category</code> groups related events (<code class="inl">syscalls</code>,
+    <code class="inl">sched</code>, <code class="inl">block</code> …); the
+    <code class="inl">event</code> is the specific point. Inside the action you read
+    arguments through the <code class="inl">args</code> struct by name — like
+    <code class="inl">args-&gt;filename</code> — which is exactly why named args make
+    tracepoints so pleasant.</p>
+
+    <pre><span class="c1"># Count every syscall, grouped by process name</span>
+sudo bpftrace -e <span class="y">'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <pre><span class="c1"># Which process opens which file? (named arg: args-&gt;filename)</span>
+sudo bpftrace -e <span class="y">'tracepoint:syscalls:sys_enter_openat {</span>
+  <span class="b">printf</span>(<span class="g">"%s -> %s\n"</span>, comm, <span class="b">str</span>(args->filename)); <span class="y">}'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout mission">
+      <span class="h">🎯 Why this matters for you</span>
+      For "what is the system doing" questions — which files, which syscalls, what is
+      scheduling — tracepoints are almost always the right first reach. Stable, named,
+      and broad.
+    </div>
+    <p class="cite">Source:
+      <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace language reference — probe types</a> ·
+      <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — Linux eBPF Tracing</a>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> kprobes / kretprobes — instrument any kernel function</h2>
+    <p>A <strong>kprobe</strong> dynamically attaches to the <em>entry</em> of essentially
+    <strong>any kernel function</strong> — even ones nobody designed to be traced. A
+    <strong>kretprobe</strong> attaches to its <em>return</em>. This is enormously
+    powerful: if a function exists, you can watch it. The catch is the interface is
+    <strong>unstable</strong> — kernel function names and arguments are internal and can
+    change between kernel versions, quietly breaking your tool.</p>
+
+    <h3>Syntax</h3>
+    <pre><span class="y">kprobe:function</span>        <span class="c1"># entry of a kernel function, e.g. kprobe:vfs_read</span>
+<span class="y">kretprobe:function</span>     <span class="c1"># its return</span></pre>
+    <p>kprobes don't give you named args. You read raw positional arguments as
+    <code class="inl">arg0</code>, <code class="inl">arg1</code>, … <code class="inl">argN</code>,
+    and a kretprobe exposes the return value as <code class="inl">retval</code>. You have
+    to know (or look up) what each position means.</p>
+
+    <pre><span class="c1"># Time vfs_read latency: pair entry + return, store a histogram</span>
+sudo bpftrace -e <span class="y">'kprobe:vfs_read { @start[tid] = nsecs; }</span>
+  <span class="y">kretprobe:vfs_read /@start[tid]/ {</span>
+    @ns[comm] = <span class="b">hist</span>(nsecs - @start[tid]); <span class="b">delete</span>(@start, tid); <span class="y">}'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout warn">
+      <span class="h">⚠ Power vs. promise</span>
+      A kprobe on <code class="inl">vfs_read</code> works on most kernels — but a kprobe on
+      some obscure internal helper may vanish or change shape after an upgrade. Reach for a
+      kprobe when no tracepoint covers what you need, and expect to revisit it.
+    </div>
+    <p class="cite">Source:
+      <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/reference_guide.md" target="_blank" rel="noopener">bpftrace reference guide</a> ·
+      <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace one-liner tutorial</a>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> uprobes / uretprobes — hook user-space code</h2>
+    <p>So far every probe lived in the kernel. A <strong>uprobe</strong> jumps the fence:
+    it attaches to a function inside a <strong>user-space binary or shared library</strong> —
+    your own app, <code class="inl">libc</code>, <code class="inl">libssl</code>, a language
+    runtime. A <strong>uretprobe</strong> hooks the return. This is how you trace what an
+    application does <em>without recompiling or restarting it</em>.</p>
+
+    <h3>Syntax</h3>
+    <pre><span class="y">uprobe:/path/to/binary:function</span>      <span class="c1"># e.g. uprobe:/bin/bash:readline</span>
+<span class="y">uretprobe:/path/to/binary:function</span>   <span class="c1"># its return</span></pre>
+    <p>Note the <strong>binary path</strong> in the middle — that's how a uprobe differs
+    from a kprobe. You point it at the file on disk that holds the function. As with
+    kprobes, arguments are positional (<code class="inl">arg0…argN</code>) and the return is
+    <code class="inl">retval</code>.</p>
+
+    <pre><span class="c1"># Watch every line a user types into bash (reads readline's return)</span>
+sudo bpftrace -e <span class="y">'uretprobe:/bin/bash:readline {</span>
+  <span class="b">printf</span>(<span class="g">"%s typed: %s\n"</span>, comm, <span class="b">str</span>(retval)); <span class="y">}'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout key">
+      <span class="h">💡 The bridge to your world</span>
+      uprobes are where an app developer's instinct pays off — you can finally instrument
+      <em>your</em> code and the libraries it leans on, live, from the outside. But like
+      kprobes, raw function names are an <strong>unstable</strong> interface (next build,
+      different symbols). That's exactly the gap USDT fills.
+    </div>
+    <p class="cite">Source:
+      <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace language reference — uprobe</a>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> USDT — stable probe points an app exposes on purpose</h2>
+    <p><strong>USDT</strong> stands for <em>User Statically-Defined Tracing</em>. These are
+    the user-space cousins of tracepoints: <strong>stable probe points that an application
+    deliberately publishes</strong> in its own code as a supported observation interface.
+    Many runtimes ship them — Node.js, the JVM, Python builds, PostgreSQL, libc — so you
+    can trace high-level events ("a GC ran", "a query started") without depending on
+    fragile internal symbol names.</p>
+
+    <h3>Syntax</h3>
+    <pre><span class="y">usdt:/path/to/binary:provider:probe_name</span>
+<span class="c1"># e.g. usdt:/usr/lib/libc.so.6:libc:memory_malloc_retry</span></pre>
+    <p>Just like a uprobe you give it the binary, but instead of a raw function you name a
+    <strong>provider</strong> and a <strong>probe name</strong> the app chose to expose.
+    Arguments come in as positional <code class="inl">arg0…argN</code>.</p>
+
+    <pre><span class="c1"># List the USDT probes a binary publishes, then hook one</span>
+sudo bpftrace -l <span class="y">'usdt:/usr/lib/libc.so.6:*'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout mission">
+      <span class="h">🎯 Best of both worlds</span>
+      USDT gives you user-space visibility (like a uprobe) <em>and</em> a stability promise
+      (like a tracepoint) — because the app author signed up to keep these points working.
+      When a tool ships USDT, prefer it over poking at raw functions.
+    </div>
+    <p class="cite">Source:
+      <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace language reference — usdt</a> ·
+      <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — static vs dynamic instrumentation</a>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> profile / interval — timed sampling, not events</h2>
+    <p>Every probe so far is <strong>event-driven</strong>: it fires when something happens.
+    The <strong>profile</strong> and <strong>interval</strong> probes are different — they
+    fire on a <strong>clock</strong>, regardless of what the system is doing. That makes
+    them the engine of <em>profiling</em>: instead of catching every event (expensive),
+    you take periodic snapshots and let statistics fill in the picture.</p>
+
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Probe</th><th>Fires</th><th>Typical use</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inl">profile:hz:99</code></td><td>99 times/sec, <strong>on every CPU</strong></td><td>Sample stacks to see where CPU time goes</td></tr>
+        <tr><td><code class="inl">interval:s:1</code></td><td>once/sec, <strong>on one CPU</strong></td><td>Print a running total / heartbeat</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <pre><span class="c1"># Sample kernel stacks 99x/sec on all CPUs — the seed of a flame graph</span>
+sudo bpftrace -e <span class="y">'profile:hz:99 { @[kstack] = count(); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <pre><span class="c1"># Tally scheduler events, then print + exit every 5 seconds</span>
+sudo bpftrace -e <span class="y">'tracepoint:sched:sched* { @[probe] = count(); }</span>
+  <span class="y">interval:s:5 { print(@); clear(@); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout key">
+      <span class="h">💡 Why 99 and not 100?</span>
+      99 Hz is deliberately <em>off</em> from round numbers like 100 so your samples don't
+      march in lock-step with timers that tick at exactly 100 Hz — that would bias the
+      results. We'll build full CPU flame graphs on this idea in
+      <strong>Lesson 7 (Profiling)</strong>.
+    </div>
+    <p class="cite">Source:
+      <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace one-liner tutorial</a> ·
+      <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — sampling at 49/99 Hz</a>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Stable vs. unstable — the real fork in the road</h2>
+    <p>The single biggest reason to learn this menu is the split between interfaces that
+    are <strong>promised</strong> and interfaces that are merely <strong>possible</strong>.
+    Brendan Gregg's guidance is blunt: <em>use the static probe types wherever you can,
+    because dynamic ones can change from one software version to another and break the
+    tools you build.</em></p>
+
+    <div class="cards">
+      <div class="card">
+        <span class="myth">"All probes are basically the same."</span>
+        <p class="truth">No — <b>tracepoints &amp; USDT are static</b>: deliberately
+        placed, maintained, survive upgrades. <b>kprobes &amp; uprobes are dynamic</b>:
+        they reach raw functions whose names/args are internal and can shift between
+        versions.</p>
+      </div>
+      <div class="card">
+        <span class="myth">"Stable means I lose power."</span>
+        <p class="truth">Often you lose nothing — a tracepoint or USDT probe frequently
+        covers the question with <b>named, documented args</b>. Reach for a kprobe/uprobe
+        only when no stable point exists.</p>
+      </div>
+      <div class="card">
+        <span class="myth">"If it ran today, it'll run forever."</span>
+        <p class="truth">A kprobe/uprobe tool can break silently after a kernel or app
+        upgrade because the underlying symbol moved. <b>Static points are best-effort
+        stable</b> across upgrades.</p>
+      </div>
+    </div>
+    <p class="cite">Source:
+      <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg — "try to use the static probe types wherever possible"</a>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> The probe-type cheat sheet</h2>
+    <p>One table to keep next to you. <span class="muted">Overhead is a rough rule of
+    thumb — actual cost scales with how often the hook fires, not the probe type alone.</span></p>
+
+    <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Probe type</th><th>What it sees</th><th>Stability</th><th>Typical overhead</th><th>Example probe string</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>tracepoint</strong></td>
+          <td>Named kernel events (syscalls, sched, block…) with named args</td>
+          <td><span class="yes">Stable ✓</span></td>
+          <td>Low (per-event)</td>
+          <td><code class="inl">tracepoint:syscalls:sys_enter_openat</code></td>
+        </tr>
+        <tr>
+          <td><strong>kprobe / kretprobe</strong></td>
+          <td>Entry / return of <em>any</em> kernel function; <code class="inl">arg0…N</code>, <code class="inl">retval</code></td>
+          <td><span class="no">Unstable ✗</span></td>
+          <td>Low–med (per-event)</td>
+          <td><code class="inl">kprobe:vfs_read</code></td>
+        </tr>
+        <tr>
+          <td><strong>uprobe / uretprobe</strong></td>
+          <td>Functions in a user binary / library (your app, libc)</td>
+          <td><span class="no">Unstable ✗</span></td>
+          <td>Med (user↔kernel cross)</td>
+          <td><code class="inl">uprobe:/bin/bash:readline</code></td>
+        </tr>
+        <tr>
+          <td><strong>USDT</strong></td>
+          <td>Probe points an app publishes on purpose (Node, JVM, Postgres…)</td>
+          <td><span class="yes">Stable ✓</span></td>
+          <td>Low–med (per-event)</td>
+          <td><code class="inl">usdt:/path/bin:provider:probe</code></td>
+        </tr>
+        <tr>
+          <td><strong>profile</strong></td>
+          <td>Timed CPU samples on <em>every</em> CPU (stacks)</td>
+          <td><span class="yes">Stable ✓</span></td>
+          <td>Tunable (set the rate)</td>
+          <td><code class="inl">profile:hz:99</code></td>
+        </tr>
+        <tr>
+          <td><strong>interval</strong></td>
+          <td>A timer on one CPU — heartbeats, periodic prints</td>
+          <td><span class="yes">Stable ✓</span></td>
+          <td>Negligible</td>
+          <td><code class="inl">interval:s:1</code></td>
+        </tr>
+        <tr>
+          <td><strong>software / hardware</strong></td>
+          <td>Kernel software counters / CPU PMC events (cache misses, cycles)</td>
+          <td><span class="yes">Stable ✓</span></td>
+          <td>Tunable (count-based)</td>
+          <td><code class="inl">hardware:cache-misses:1000000</code></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="cite">Source:
+      <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace language reference — probe types &amp; syntax</a>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">09</span> Discovering probes with <code class="inl">bpftrace -l</code></h2>
+    <p>You don't have to memorize a single probe name. <code class="inl">bpftrace -l</code>
+    <strong>lists every probe that matches a pattern</strong>, and the pattern supports
+    glob wildcards (<code class="inl">*</code> and <code class="inl">?</code>) exactly like
+    a real probe string. This is your map of the territory before you ever write an action.</p>
+
+    <pre><span class="c1"># Every syscall-entry tracepoint</span>
+sudo bpftrace -l <span class="y">'tracepoint:syscalls:sys_enter_*'</span>
+
+<span class="c1"># Anything to do with "openat", across categories</span>
+sudo bpftrace -l <span class="y">'*openat*'</span>
+
+<span class="c1"># Add -v to also print a tracepoint's named arguments</span>
+sudo bpftrace -lv <span class="y">'tracepoint:syscalls:sys_enter_read'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>).</div>
+
+    <div class="callout key">
+      <span class="h">💡 The workflow</span>
+      <strong>List → inspect → hook.</strong> Use <code class="inl">-l</code> to find a
+      probe, <code class="inl">-lv</code> to see its args, then write your one-liner. It's
+      the fastest way to learn what your particular kernel actually exposes.
+    </div>
+    <p class="cite">Source:
+      <a href="https://manpages.ubuntu.com/manpages/noble/man8/bpftrace.8.html" target="_blank" rel="noopener">bpftrace(8) man page — <code>-l</code> listing &amp; wildcards</a>
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">10</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">You want a tool that keeps working across kernel upgrades. Which probe type is the <em>stable</em> choice?</div>
+        <button class="opt">kprobe on an internal kernel function</button>
+        <button class="opt">tracepoint</button>
+        <button class="opt">uprobe on a libc function</button>
+        <button class="opt">All probe types are equally stable</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">A <strong>uprobe</strong> attaches to…</div>
+        <button class="opt">a timer that fires N times per second</button>
+        <button class="opt">the entry of a kernel function</button>
+        <button class="opt">a function inside a user-space binary or shared library</button>
+        <button class="opt">a CPU hardware performance counter</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">What is the core trade-off between a <strong>tracepoint</strong> and a <strong>kprobe</strong>?</div>
+        <button class="opt">Tracepoints are stable with named args; kprobes can reach any kernel function but are an unstable interface</button>
+        <button class="opt">Tracepoints run in user space; kprobes run in the kernel</button>
+        <button class="opt">Tracepoints are timed samples; kprobes are event-driven</button>
+        <button class="opt">There is no real difference — they're aliases</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">What does <code class="inl">profile:hz:99</code> do?</div>
+        <button class="opt">Hooks the 99th kernel function alphabetically</button>
+        <button class="opt">Fires once when the program starts, then exits</button>
+        <button class="opt">Traces every syscall whose number is 99</button>
+        <button class="opt">Fires a timed sample 99 times per second on every CPU — used for profiling</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">11</span> Flashcards</h2>
+
+    <details class="fc"><summary>Q: What is a tracepoint and why is it the preferred hook?</summary>
+      <div class="a">A: A named, deliberately-placed kernel instrumentation point that's part of a
+      maintained interface. Preferred because it's <strong>stable</strong> across kernel
+      upgrades and exposes <strong>named arguments</strong> (e.g. <code class="inl">args-&gt;filename</code>).
+      Syntax: <code class="inl">tracepoint:category:event</code>.</div>
+    </details>
+
+    <details class="fc"><summary>Q: What do kprobe / kretprobe attach to, and what's the catch?</summary>
+      <div class="a">A: A kprobe hooks the <strong>entry</strong> of (almost) any kernel
+      function; a kretprobe hooks its <strong>return</strong>. Args are positional
+      (<code class="inl">arg0…argN</code>), return is <code class="inl">retval</code>. The
+      catch: it's an <strong>unstable</strong> interface — kernel function names/args are
+      internal and can change between versions, breaking your tool.</div>
+    </details>
+
+    <details class="fc"><summary>Q: What do uprobe / uretprobe attach to?</summary>
+      <div class="a">A: Functions inside a <strong>user-space binary or shared library</strong>
+      (your app, libc, libssl…) — no recompile or restart needed. Syntax includes the
+      binary path: <code class="inl">uprobe:/path/to/binary:function</code>. Also unstable,
+      since raw symbol names can change between builds.</div>
+    </details>
+
+    <details class="fc"><summary>Q: What is USDT and why is it special?</summary>
+      <div class="a">A: <strong>User Statically-Defined Tracing</strong> — stable probe
+      points an application <em>publishes on purpose</em> (Node, JVM, Postgres, libc).
+      Gives user-space visibility <em>and</em> a stability promise. Syntax:
+      <code class="inl">usdt:/path/to/binary:provider:probe_name</code>.</div>
+    </details>
+
+    <details class="fc"><summary>Q: How does a profile probe differ from every other probe?</summary>
+      <div class="a">A: It's <strong>timed, not event-driven</strong> — it fires on a clock
+      regardless of what's happening. <code class="inl">profile:hz:99</code> samples 99
+      times/sec on every CPU (great for profiling stacks); <code class="inl">interval:s:1</code>
+      fires once/sec on one CPU for periodic prints.</div>
+    </details>
+
+    <details class="fc"><summary>Q: Which probe types are stable vs. unstable, and why care?</summary>
+      <div class="a">A: <strong>Stable:</strong> tracepoints, USDT, profile/interval,
+      software/hardware (static / maintained). <strong>Unstable:</strong> kprobes and
+      uprobes (dynamic — reach raw functions whose names/args can change between versions).
+      Prefer static probes so your tools survive upgrades.</div>
+    </details>
+
+    <details class="fc"><summary>Q: How do you discover which probes exist on a system?</summary>
+      <div class="a">A: <code class="inl">bpftrace -l 'pattern'</code> lists matching probes
+      (wildcards <code class="inl">*</code> / <code class="inl">?</code> supported); add
+      <code class="inl">-v</code> (i.e. <code class="inl">-lv</code>) to also show a
+      tracepoint's named arguments. Workflow: <strong>list → inspect → hook</strong>.</div>
+    </details>
+
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>This lesson is a menu, not a memory test. Bring me a real question and we'll pick the
+    hook together. For example: <em>"I want to know which files my Python service opens —
+    tracepoint or uprobe?"</em> or <em>"why would a kprobe-based tool suddenly stop working
+    after I upgraded the kernel?"</em></p>
+  </div>
+
+  <nav class="next">
+    <a href="0003-anatomy-of-a-bpftrace-one-liner.html"><span class="dir">↩ Previous</span><span class="ttl">Anatomy of a bpftrace One-Liner</span></a>
+    <a href="0005-maps-and-aggregation.html"><span class="dir">Up next →</span><span class="ttl">Maps &amp; In-Kernel Aggregation</span></a>
+  </nav>
+
+  <footer>
+    eBPF Course · Lesson 4 · grounded in
+    <a href="https://ebpf.io/" target="_blank" rel="noopener">ebpf.io</a>,
+    <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg</a>,
+    <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a> ·
+    see <a href="/courses/ebpf/#resources">RESOURCES.md</a> ·
+    <a href="../reference/ebpf-glossary.html">Glossary</a> ·
+    <a href="../reference/bpftrace-cheatsheet.html">bpftrace cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  // Tight feedback loop for the self-check quiz.
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -105,6 +105,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make generate-posts` | Regenerate `generated-*.md` from GitHub |
 | `make check-repo-links` | List posts whose repo link 404s for a visitor (live, needs network) |
 | `make check-learn-links` | Open every /learn/ link as an anonymous visitor (live, needs network) |
+| `make courses-sync` | Publish the /teach courses from ~/projects/learn to /courses/ |
 | **Movies** | |
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
 | **GitHub** | |
@@ -130,6 +131,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-link-check` | Tests for the repo-link checker |
 | `make test-github` | Tests for the GitHub page's data refresher |
 | `make test-learn-links` | Tests for the /learn/ link checker, and its offline check of data/learn.json |
+| `make test-courses` | Tests for the course sync, and a privacy check of every published lesson |
 | `make test-i18n` | Tests for, and a run of, the i18n consistency check |
 | `make test-docs` | Every Makefile target has help text and is in the README |
 | `make test-ai` | Unit tests for the AI radar, and its i18n block is current |

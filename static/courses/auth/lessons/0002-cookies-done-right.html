@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 2 · Cookies Done Right (httpOnly, Secure, SameSite, CSRF)</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/auth/" style="color:inherit;text-decoration:none">&larr; Web Authentication</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">auth · Lesson 2 · Node + Express</div>
+    <h1>Cookies Done Right</h1>
+    <p class="sub">Last lesson: the credential that keeps you logged in is carried in a cookie. A cookie is just a string the browser re-sends automatically — <em>all</em> of its security lives in a handful of flags. Three flags and one prefix decide whether a single XSS bug or a malicious link can hijack your users. Today we make every flag concrete in real Express, and watch a CSRF attack get killed by one of them.</p>
+    <span class="missiontag">🎯 Mission: a mental model of modern auth + the ability to wire it into a real app</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>A cookie's flags, not its contents, are what make it safe.</strong> <code class="inl">HttpOnly</code> stops JavaScript (and thus XSS) from reading it. <code class="inl">Secure</code> stops it leaking over plain HTTP. <code class="inl">SameSite</code> controls whether it rides along on cross-site requests — which is what blunts <strong>CSRF</strong>. Ship a credential cookie without these and you've handed it away. In Express, that's a few keys in one options object.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> What a cookie actually is</h2>
+    <p class="lead">A cookie is a tiny key=value string. The server sends <code class="inl">Set-Cookie:</code> once; the browser stores it and <strong>automatically attaches it to every future request to that site</strong> — you don't write any code for the re-sending. That automatic-attachment is the whole point (it's how you stay logged in) <em>and</em> the whole danger (the browser attaches it even when a malicious site triggered the request — that's CSRF, §05).</p>
+    <pre><span class="c1">// Server → browser (once):</span>
+Set-Cookie: sid=8f4e2a91c7b6d05f; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=600
+
+<span class="c1">// Browser → server (every later request, automatically):</span>
+Cookie: sid=8f4e2a91c7b6d05f</pre>
+    <p>In Express you never hand-write that header. <code class="inl">res.cookie(name, value, options)</code> builds it, and the <code class="inl">options</code> object <em>is</em> the security surface:</p>
+    <pre>res.<span class="b">cookie</span>(<span class="g">'sid'</span>, sessionId, {
+  <span class="y">httpOnly</span>: true,        <span class="c1">// JS can't read it (XSS defense)</span>
+  <span class="y">secure</span>:   true,        <span class="c1">// HTTPS-only (don't leak over http)</span>
+  <span class="y">sameSite</span>: <span class="g">'lax'</span>,       <span class="c1">// cross-site send rule (CSRF defense)</span>
+  <span class="y">maxAge</span>:   1000*60*10,  <span class="c1">// ms in Express (note: raw header is SECONDS)</span>
+});</pre>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The three flags, one at a time</h2>
+
+    <h3><code class="inl">HttpOnly</code> — the anti-theft flag</h3>
+    <p>An <code class="inl">HttpOnly</code> cookie is invisible to JavaScript: <code class="inl">document.cookie</code> won't show it. That matters because the most common way credentials get stolen is <strong>XSS</strong> — an attacker injects JS into your page. If your session cookie is HttpOnly, that injected JS <em>still can't read it</em>. This single flag is why session IDs live in cookies and <em>not</em> in <code class="inl">localStorage</code> (which is always readable by JS).</p>
+    <div class="callout key"><span class="h">💡 This is the localStorage answer from Lesson 1</span>
+      OWASP is blunt: never store session IDs, JWTs, or refresh tokens in <code class="inl">localStorage</code>/<code class="inl">sessionStorage</code> — "the data is always accessible by JavaScript… one XSS vulnerability discloses every token." An <code class="inl">HttpOnly</code> cookie is the mitigation. <span class="cite">See <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP Session Management</a>.</span></div>
+
+    <h3><code class="inl">Secure</code> — the HTTPS-only flag</h3>
+    <p>A <code class="inl">Secure</code> cookie is only ever sent over HTTPS. Without it, a single plain-<code class="inl">http://</code> request (a stray link, a downgrade) leaks the credential in cleartext to anyone on the network. <strong>Always true in production.</strong> The one exception is local dev on <code class="inl">http://localhost</code> — that's why the lab below sets <code class="inl">secure:false</code> with a loud comment.</p>
+
+    <h3><code class="inl">SameSite</code> — the cross-site flag (the CSRF lever)</h3>
+    <p>This one decides whether the browser attaches the cookie when the request <em>originated from a different site</em>. It's the most important and least understood flag, so it gets its own section (§05). Three values:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>SameSite value</th><th>Sent on same-site requests?</th><th>Sent on cross-site requests?</th><th>Use when…</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">Strict</code></td><td><span class="yes">Yes</span></td><td><span class="no">Never</span> (not even top-level nav)</td><td>Max safety; OK if users don't follow inbound links into a logged-in area</td></tr>
+          <tr><td><code class="inl">Lax</code> <em>(default)</em></td><td><span class="yes">Yes</span></td><td>Only on <b>top-level GET navigation</b> (clicking a link)</td><td>The sweet spot for session cookies — blocks cross-site POSTs</td></tr>
+          <tr><td><code class="inl">None</code></td><td><span class="yes">Yes</span></td><td><span class="no">Yes</span> — but <b>requires <code class="inl">Secure</code></b></td><td>You genuinely need third-party cross-site cookies (embeds, some SSO)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key"><span class="h">💡 The <code class="inl">__Host-</code> prefix — a free upgrade</span>
+      Name your cookie <code class="inl">__Host-sid</code> and the browser <em>enforces</em> that it's <code class="inl">Secure</code>, has <code class="inl">Path=/</code>, and has <strong>no <code class="inl">Domain</code></strong> — so a compromised subdomain can't overwrite it. Pure win for credential cookies, costs one prefix. <span class="cite">See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#cookie_prefixes" target="_blank" rel="noopener">MDN — cookie prefixes</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> Stop hand-rolling: <code class="inl">express-session</code></h2>
+    <p>For the stateful session design from Lesson 1, you don't set the cookie yourself — the <code class="inl">express-session</code> middleware does. You give it cookie options once; it generates the opaque ID, stores the real data server-side, and attaches/reads the cookie on every request. This is the boring, recommended default for an Express web app.</p>
+    <pre><span class="b">const</span> session = require(<span class="g">'express-session'</span>);
+app.use(session({
+  name: <span class="g">'__Host-sid'</span>,                 <span class="c1">// prefixed credential cookie</span>
+  secret: process.env.SESSION_SECRET,    <span class="c1">// signs the cookie (tamper-evident)</span>
+  resave: false, saveUninitialized: false,
+  cookie: { <span class="y">httpOnly</span>: true, <span class="y">secure</span>: true, <span class="y">sameSite</span>: <span class="g">'lax'</span>, maxAge: 600000 },
+  <span class="c1">// store: new RedisStore(...)  ← prod. The default MemoryStore is DEV-ONLY.</span>
+}));
+
+app.post(<span class="g">'/login'</span>, (req, res) =&gt; {        <span class="c1">// after you've verified the password…</span>
+  req.session.userId = user.id;          <span class="c1">// truth lives server-side, keyed by the id</span>
+  res.redirect(<span class="g">'/account'</span>);
+});</pre>
+    <div class="callout warn"><span class="h">⚠️ Two real-world footguns</span>
+      The default <code class="inl">MemoryStore</code> leaks memory and forgets every session on restart — fine for the lab, <strong>never</strong> for production (use <code class="inl">connect-redis</code> or a DB store). And <code class="inl">secure:true</code> behind a proxy/load-balancer needs <code class="inl">app.set('trust proxy', 1)</code> or the cookie silently won't set. <span class="cite">See <a href="https://github.com/expressjs/session" target="_blank" rel="noopener">express-session docs</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> 🎯 Your tangible win (5 min): run the cookie lab</h2>
+    <p>I've put a tiny, ready-to-run Express app on your machine that sets the same cookie three different ways so you can <em>watch the flags behave</em>. Dependencies are already installed.</p>
+    <pre><span class="c1"># in your terminal:</span>
+cd ~/projects/learn/public/courses/auth/practice/cookie-lab
+npm start
+<span class="c1"># → open http://localhost:3000  (DevTools → Application → Cookies)</span></pre>
+    <ol>
+      <li><strong>Route <code class="inl">/</code></strong> — sets an <code class="inl">HttpOnly</code> session id (<code class="inl">sid</code>). In the Console run <code class="inl">document.cookie</code> → <strong><code class="inl">sid</code> is missing.</strong> That's HttpOnly working: JS literally cannot see your credential.</li>
+      <li><strong>Route <code class="inl">/insecure</code></strong> — sets <code class="inl">readable_token</code> with <code class="inl">httpOnly:false</code>. Run <code class="inl">document.cookie</code> again → <strong>now you see it.</strong> That's exactly how XSS exfiltrates a credential. Feel the difference one flag makes.</li>
+      <li><strong>Route <code class="inl">/samesite</code></strong> — sets a <code class="inl">Lax</code> and a <code class="inl">Strict</code> cookie. Compare the <strong>SameSite</strong> column in the Application panel.</li>
+    </ol>
+    <div class="callout mission"><span class="h">🎯 The win</span>
+      When you run <code class="inl">document.cookie</code> and see <code class="inl">readable_token</code> but <strong>not</strong> <code class="inl">sid</code>, you've directly observed the single most important defense in browser auth — and you can now justify "credentials go in HttpOnly cookies, never localStorage" from something you <em>saw</em>, not something you read. Edit <code class="inl">server.js</code>, flip a flag, restart, re-observe. The file is yours to break.</li>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> CSRF: the attack <code class="inl">SameSite</code> was built to stop</h2>
+    <p>Here's the problem the automatic-attachment of cookies creates. You're logged into <code class="inl">yourbank.com</code> (so your browser holds its session cookie). You visit <code class="inl">evil.com</code>. Its page contains a hidden form that auto-submits a POST to <code class="inl">yourbank.com/transfer</code>. <strong>The browser attaches your bank cookie to that request — because it's going to the bank — even though <em>evil.com</em> triggered it.</strong> The bank sees a valid session and processes the transfer. That's <strong>Cross-Site Request Forgery</strong>.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CSRF: evil.com triggers a request to the bank, the browser attaches the bank's cookie automatically">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="13">
+          <rect x="20" y="92" width="150" height="60" rx="10" fill="none" stroke="var(--danger)" stroke-width="1.5"/>
+          <text x="95" y="118" text-anchor="middle" fill="var(--fg)" font-weight="700">evil.com</text>
+          <text x="95" y="136" text-anchor="middle" fill="var(--muted)">hidden auto-POST</text>
+          <rect x="305" y="92" width="150" height="60" rx="10" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+          <text x="380" y="118" text-anchor="middle" fill="var(--fg)" font-weight="700">Your browser</text>
+          <text x="380" y="136" text-anchor="middle" fill="var(--muted)">holds bank cookie</text>
+          <rect x="590" y="92" width="150" height="60" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="665" y="118" text-anchor="middle" fill="var(--fg)" font-weight="700">yourbank.com</text>
+          <text x="665" y="136" text-anchor="middle" fill="var(--muted)">sees valid session</text>
+          <line x1="170" y1="112" x2="303" y2="112" stroke="var(--danger)" stroke-width="1.5" marker-end="url(#d)"/>
+          <text x="237" y="80" text-anchor="middle" fill="var(--danger)" font-size="11">① triggers POST</text>
+          <line x1="455" y1="112" x2="588" y2="112" stroke="var(--fg)" stroke-width="1.5" marker-end="url(#a2)"/>
+          <text x="521" y="80" text-anchor="middle" fill="var(--fg)" font-size="11">② + bank cookie 😱</text>
+          <text x="521" y="176" text-anchor="middle" fill="var(--accent-2)" font-size="11.5" font-weight="600">SameSite=Lax → not sent on cross-site POST → blocks this</text>
+        </g>
+        <defs>
+          <marker id="d" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--danger)"/></marker>
+          <marker id="a2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>The cookie is attached because the destination is the bank — the browser doesn't care who started the request. SameSite=Lax means "don't send on cross-site POSTs," which kills this.</figcaption>
+    </figure>
+
+    <p>Note CSRF doesn't need to <em>read</em> anything — the attacker never sees your cookie, they just get it <em>used</em>. That's why HttpOnly doesn't help here, and why CSRF is purely a problem for the cookie (automatic) carrier, not the <code class="inl">Authorization: Bearer</code> header (which JS attaches deliberately, so a cross-site page can't replicate it).</p>
+
+    <h3>The fix, in two layers</h3>
+    <div class="cards">
+      <div class="card"><h4>Layer 1 — <code class="inl">SameSite=Lax</code></h4><p class="truth">Tells the browser not to send the cookie on cross-site POSTs. <b>Kills the classic attack above</b> and it's the modern default. Set it and you've covered the common case for free.</p></div>
+      <div class="card"><h4>Layer 2 — a CSRF token</h4><p class="truth">A secret value the server plants and the form must echo back. <b>evil.com can't read or guess it</b>, so its forged POST fails. Defense-in-depth for older browsers, embedded webviews, and <code class="inl">SameSite=None</code> flows.</p></div>
+    </div>
+    <div class="callout warn"><span class="h">⚠️ Don't reach for <code class="inl">csurf</code> — it's dead</span>
+      The classic <code class="inl">csurf</code> package was <strong>deprecated and archived (May 2025)</strong> and gets no security fixes. For the token layer use a maintained lib like <a href="https://www.npmjs.com/package/csrf-csrf" target="_blank" rel="noopener"><code class="inl">csrf-csrf</code></a> (signed double-submit pattern), and treat <code class="inl">SameSite</code> as the first line, not the only line. <span class="cite">See <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP CSRF Cheat Sheet</a>.</span></div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Production checklist for a credential cookie</h2>
+    <div class="stats">
+      <div class="stat"><b>HttpOnly</b><span>always — JS must never read it</span></div>
+      <div class="stat"><b>Secure</b><span>always in prod — HTTPS only</span></div>
+      <div class="stat"><b>SameSite=Lax</b><span>default; Strict if you can</span></div>
+      <div class="stat"><b>__Host- prefix</b><span>free hardening</span></div>
+    </div>
+    <p>Plus: a real session store (not MemoryStore), a sensible <code class="inl">maxAge</code>, and a CSRF token on state-changing routes. That's a correctly-shipped session cookie — nothing exotic, just the flags applied deliberately.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Check yourself</h2>
+    <div class="quiz">
+      <div class="q">
+        <p><strong>Q1.</strong> Your session cookie is <code class="inl">HttpOnly</code>. A reviewer says "great, so we're safe from CSRF." Right or wrong?</p>
+        <details><summary>Show answer</summary><p><strong>Wrong.</strong> HttpOnly stops JS from <em>reading</em> the cookie (XSS theft). CSRF never reads the cookie — it gets the browser to <em>send</em> it on a forged request. Different attack, different flag: <code class="inl">SameSite</code> (+ a CSRF token) is what addresses CSRF. (§05.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q2.</strong> Why is a session cookie safer than putting the same session ID in <code class="inl">localStorage</code>?</p>
+        <details><summary>Show answer</summary><p><code class="inl">localStorage</code> is always readable by JavaScript, so any XSS bug leaks it. A cookie can be <code class="inl">HttpOnly</code>, making it invisible to JS — XSS can't exfiltrate it. You verified this in the lab: <code class="inl">document.cookie</code> showed <code class="inl">readable_token</code> but not <code class="inl">sid</code>. (§02, §04.)</p></details>
+      </div>
+      <div class="q">
+        <p><strong>Q3.</strong> You set <code class="inl">SameSite=None</code> on a cookie and it stops working entirely. Likely cause?</p>
+        <details><summary>Show answer</summary><p><code class="inl">SameSite=None</code> <em>requires</em> the <code class="inl">Secure</code> flag — browsers reject a <code class="inl">None</code> cookie that isn't also <code class="inl">Secure</code> (and you need HTTPS). Add <code class="inl">secure:true</code> over HTTPS. (§02 table.)</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Where we go next</h2>
+    <p>You can now ship the <em>stateful</em> half of Lesson 1 correctly. Next we open the <em>stateless</em> half: <strong>JWT anatomy</strong> — what those three dot-separated chunks actually are, what "signed" buys you, the infamous <code class="inl">alg:none</code> and algorithm-confusion attacks, and when a JWT is the right tool vs a costly mistake. We'll decode a real one in Node.</p>
+    <div class="callout key"><span class="h">📌 Remember this one line</span>
+      <strong>A credential cookie is only as safe as its flags: <code class="inl">HttpOnly</code> (no JS theft) + <code class="inl">Secure</code> (no cleartext) + <code class="inl">SameSite=Lax</code> (no cross-site CSRF) — set all three, deliberately, every time.</strong></div>
+    <p class="muted" style="margin-top:18px">💬 Ask me anything — e.g. "wire up <code class="inl">csrf-csrf</code> in the lab", "show me the Redis store version", or "how does this change for an SPA + API on two domains?" (great question — it's where cookies get genuinely tricky). · Back to <a href="0001-sessions-vs-tokens.html">Lesson 1</a> · <a href="/courses/auth/#resources">Resources</a>.</p>
+  </section>
+
+</div>
+</body>
+</html>

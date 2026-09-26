@@ -152,6 +152,7 @@ touching a template:
 | `/media/` | `data/media.yaml` (generated) | `layouts/_default/media.html` |
 | `/movies/` | `data/movies.json` (`make movies-refresh`) | `layouts/_default/movies.html` |
 | `/learn/` | `data/learn.json` (`make check-learn-links`) | `layouts/_default/learn.html` |
+| `/courses/` | `data/courses.json` (`make courses-sync`) | `layouts/courses/` |
 | `/ai/` | `data/ai.json` (daily Action, `make ai-refresh`) | `layouts/_default/ai.html` |
 | `/` (home) | `data/home.yaml` | `layouts/index.html` |
 | `/github/` | `data/github.json` (`make github-refresh`) | `layouts/_default/github.html` |
@@ -171,6 +172,13 @@ touching a template:
   output, since a year match can pick a same-year namesake. Synopses, titles
   and genres come back in all nine languages from JustWatch, so they are
   data, not i18n. Set `"mpa"` on an entry to override a wrong rating.
+- **/courses/:** generated from the learn project (`~/projects/learn`) by
+  `make courses-sync`. Only `lessons/` and `reference/` are published —
+  MISSION, NOTES and learning records describe B and never leave that repo.
+  Every page is redacted (`tools/courses/config.json`) and then checked
+  against a deny list; a hit stops the sync. Course pages are English only
+  (like posts); the `/courses/` index is translated. Don't hand-edit
+  `static/courses/`, `content/courses/<slug>/` or `data/courses.json`.
 - **/learn/:** add `{"key", "name", "by", "url"}` to a path in
   `data/learn.json`, its blurb as `learn_res_<key>` in all nine i18n files,
   then `make check-learn-links` — only list what opens without signing in.

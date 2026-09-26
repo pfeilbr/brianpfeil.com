@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3 · Anatomy of a bpftrace One-Liner</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --panel:#ffffff;
+    --ink:#1c2230;
+    --muted:#5b6577;
+    --line:#e6e9f2;
+    --accent:#3b5bdb;       /* indigo */
+    --accent-2:#0ca678;     /* teal */
+    --warn:#e8590c;
+    --code-bg:#0e1525;
+    --code-ink:#e7ecf6;
+    --radius:14px;
+    --maxw:880px;
+    font-synthesis:none;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    padding:32px 18px 80px;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---- hero ---- */
+  header.hero{
+    background:linear-gradient(135deg,#1d2a6b 0%,#3b5bdb 55%,#0ca678 130%);
+    color:#fff;border-radius:var(--radius);
+    padding:40px 36px 34px;
+    box-shadow:0 18px 50px rgba(29,42,107,.28);
+    position:relative;overflow:hidden;
+  }
+  header.hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+    background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+  }
+  .kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+  header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800}
+  header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+  .missiontag{
+    display:inline-block;margin-top:18px;font-size:.82rem;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+    padding:6px 13px;border-radius:999px;
+  }
+
+  /* ---- structure ---- */
+  section{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 30px;margin-top:22px;box-shadow:0 2px 10px rgba(20,30,60,.04);
+  }
+  h2{font-size:1.42rem;font-weight:800;color:var(--ink);margin-bottom:.5em;
+     display:flex;align-items:center;gap:.5em}
+  h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+     padding:3px 9px;font-weight:700}
+  h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+  p{margin:.7em 0;color:#28303f}
+  p.lead{font-size:1.12rem}
+  strong{color:var(--ink)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  ul,ol{margin:.6em 0 .6em 1.3em}
+  li{margin:.32em 0}
+  .muted{color:var(--muted)}
+
+  /* ---- the one big idea ---- */
+  .bigidea{
+    background:linear-gradient(135deg,#eef2ff,#e6fcf5);
+    border:1px solid #c9d6ff;border-left:6px solid var(--accent);
+    border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+  }
+  .bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--accent);font-weight:700}
+  .bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:#1c2230}
+
+  /* ---- callouts ---- */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem}
+  .callout .h{font-weight:700;display:block;margin-bottom:.2em}
+  .callout.key{background:#eef4ff;border-color:#cdd9fb}
+  .callout.key .h{color:var(--accent)}
+  .callout.warn{background:#fff4ec;border-color:#ffd8b8}
+  .callout.warn .h{color:var(--warn)}
+  .callout.mission{background:#e9fbf4;border-color:#b6ecd8}
+  .callout.mission .h{color:var(--accent-2)}
+
+  /* ---- code ---- */
+  pre{
+    background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+    font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+  }
+  pre .c1{color:#7f8db3}      /* dim */
+  pre .g{color:#63e6be}       /* teal/green */
+  pre .y{color:#ffd43b}       /* yellow */
+  pre .b{color:#74c0fc}       /* blue */
+  code.inl{background:#eef0f6;color:#1d2a6b;border-radius:6px;padding:1px 6px;
+     font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+  .runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+     align-items:center;gap:6px}
+  .runlater::before{content:"▶";color:var(--accent-2);font-size:.7rem}
+
+  /* ---- table ---- */
+  .tablewrap{overflow-x:auto;margin:16px 0}
+  table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:#f0f3fb;color:var(--ink);font-weight:700;border-bottom:2px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td .yes{color:var(--accent-2);font-weight:700}
+  td .no{color:#e03131;font-weight:700}
+
+  /* ---- diagram ---- */
+  figure.diagram{margin:20px 0;background:#fbfcff;border:1px solid var(--line);
+     border-radius:12px;padding:18px 14px 10px}
+  figure.diagram svg{width:100%;height:auto;display:block}
+  figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+  /* ---- cards ---- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+  .card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+  .card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+  .card .myth::before{content:"✗ ";}
+  .card .truth{color:#28303f;font-size:.96rem}
+  .card .truth b{color:var(--accent-2)}
+
+  /* ---- quiz ---- */
+  .quiz{margin-top:10px}
+  .q{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fbfcff}
+  .q .stem{font-weight:600;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;
+     border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--ink);
+     transition:background .12s,border-color .12s}
+  .opt:hover{border-color:var(--accent);background:#f3f6ff}
+  .opt.correct{background:#e7f9f1;border-color:var(--accent-2);color:#0b6b50;font-weight:600}
+  .opt.wrong{background:#ffeceb;border-color:#e03131;color:#b02020}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;background:#eef4ff;color:#28303f}
+  .fb.show{display:block}
+
+  /* ---- flashcards ---- */
+  details.fc{background:#fbfcff;border:1px solid var(--line);border-radius:10px;
+     padding:0;margin:10px 0;overflow:hidden}
+  details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+     display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  details.fc summary::-webkit-details-marker{display:none}
+  details.fc summary::after{content:"＋";color:var(--accent);font-weight:700}
+  details.fc[open] summary::after{content:"－"}
+  details.fc .a{padding:0 16px 15px;color:#28303f;border-top:1px solid var(--line);padding-top:12px}
+
+  /* ---- teacher / nav ---- */
+  .teacher{background:#fff8e6;border:1px solid #ffe8a3;border-radius:12px;padding:16px 18px;margin-top:22px}
+  .teacher .h{font-weight:700;color:#946200}
+  nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+  nav.next a{flex:1 1 220px;border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+     background:var(--panel);text-decoration:none;border-bottom:1px solid var(--line);
+     box-shadow:0 2px 8px rgba(20,30,60,.04)}
+  nav.next a:hover{border-color:var(--accent)}
+  nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  nav.next .ttl{display:block;font-weight:700;color:var(--ink);margin-top:3px}
+  nav.next .ttl.dim{color:var(--muted)}
+  footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+  .cite{font-size:.85rem;color:var(--muted)}
+  .cite a{border:none;text-decoration:underline}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/ebpf/" style="color:inherit;text-decoration:none">&larr; eBPF</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">eBPF Course · Lesson 3</div>
+    <h1>Anatomy of a bpftrace One-Liner</h1>
+    <p class="sub">Read and write your first real tracing tool by learning the three parts every bpftrace program has.</p>
+    <span class="missiontag">🎯 Ask the running kernel a precise question — and read the answer</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>Every bpftrace program is <strong>probe <code class="inl">/filter/</code> { action }</strong> — <strong>WHEN</strong> something happens, <strong>IF</strong> a condition holds, <strong>DO</strong> this.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The shape: when / if / do</h2>
+    <p class="lead">Last lesson you followed an eBPF program from your one-liner all the way into the kernel and back. Now we slow down and read the one-liner itself. The good news for an app developer: there's almost nothing to memorize. A bpftrace program is always the same tiny shape, repeated.</p>
+
+    <pre><span class="y">probe</span> <span class="g">/filter/</span> <span class="b">{ action }</span>
+<span class="c1">  ▲          ▲           ▲</span>
+<span class="c1">  WHEN       IF          DO</span></pre>
+
+    <div class="cards">
+      <div class="card">
+        <h4>probe — WHEN</h4>
+        <p>The event you want to hook: a file open, a function call, a timer tick. bpftrace runs your action <em>every time</em> this event fires. <strong>Required.</strong></p>
+      </div>
+      <div class="card">
+        <h4>/filter/ — IF</h4>
+        <p>A condition in slashes (the <em>predicate</em>). The action runs only when it's true — e.g. only for one PID, or only for <code class="inl">bash</code>. <strong>Optional.</strong></p>
+      </div>
+      <div class="card">
+        <h4>{ action } — DO</h4>
+        <p>What to do when the event fires and the filter passes: print something, count it, time it. Lives in curly braces. <strong>Required.</strong></p>
+      </div>
+    </div>
+
+    <div class="callout key"><span class="h">💡 If you've written event handlers, you already know this</span>
+      It's the same mental model as <code class="inl">button.on("click", /* if valid */ () =&gt; { /* do */ })</code> — except the "events" are things happening deep in the kernel, and you didn't have to add any code to the program being watched.</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace language reference — "each action block consists of three parts: an optional name, an optional predicate, and an action."</a></p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> Dissecting the Lesson&nbsp;1 one-liner</h2>
+    <p>Here is the exact one-liner from Lesson 1 — the one that prints every file every process opens. Let's pull it apart completely. By the end of this section you'll be able to read it out loud as plain English.</p>
+
+    <pre>sudo bpftrace -e <span class="y">'tracepoint:syscalls:sys_enter_openat'</span> <span class="g">/* no filter */</span> <span class="b">'{ printf("%s opened %s\n", comm, str(args-&gt;filename)); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). Shown split across the three parts; in real life it's one quoted string.</div>
+
+    <p>Said as English: <em>“<strong>Every time</strong> any process enters the <code class="inl">openat</code> syscall, <strong>print</strong> the process name and the filename it's opening.”</em> That maps exactly onto WHEN / (no IF) / DO. Here is the same program laid out as three labeled zones:</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 360" role="img" aria-label="Anatomy of a bpftrace one-liner split into three labeled zones: probe (when), filter (if), and action (do)">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/>
+          </marker>
+        </defs>
+
+        <!-- the program text, as one code line -->
+        <rect x="20" y="150" width="780" height="58" rx="10" fill="var(--code-bg)"/>
+        <!-- probe token -->
+        <rect x="34" y="162" width="262" height="34" rx="6" fill="var(--accent)" opacity="0.22"/>
+        <text x="46" y="184" font-family="monospace" font-size="14" fill="var(--code-ink)">tracepoint:syscalls:sys_enter_openat</text>
+        <!-- filter slot (empty / optional) -->
+        <rect x="306" y="162" width="118" height="34" rx="6" fill="var(--accent-2)" opacity="0.18" stroke="var(--accent-2)" stroke-dasharray="4 3"/>
+        <text x="318" y="184" font-family="monospace" font-size="13" fill="var(--code-ink)" opacity="0.75">/ (none) /</text>
+        <!-- action token -->
+        <rect x="434" y="162" width="352" height="34" rx="6" fill="var(--warn)" opacity="0.20"/>
+        <text x="446" y="184" font-family="monospace" font-size="13" fill="var(--code-ink)">{ printf("%s opened %s\n", comm, …) }</text>
+
+        <!-- PROBE label -->
+        <rect x="34" y="40" width="262" height="56" rx="10" fill="var(--panel)" stroke="var(--accent)"/>
+        <text x="165" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">PROBE — “WHEN”</text>
+        <text x="165" y="84" text-anchor="middle" font-size="12" fill="var(--muted)">a process enters openat()</text>
+        <line x1="165" y1="96" x2="165" y2="160" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- FILTER label -->
+        <rect x="306" y="40" width="118" height="56" rx="10" fill="var(--panel)" stroke="var(--accent-2)" stroke-dasharray="4 3"/>
+        <text x="365" y="63" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent-2)">FILTER — “IF”</text>
+        <text x="365" y="84" text-anchor="middle" font-size="11" fill="var(--muted)">optional · omitted</text>
+        <line x1="365" y1="96" x2="365" y2="160" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- ACTION label -->
+        <rect x="434" y="40" width="352" height="56" rx="10" fill="var(--panel)" stroke="var(--warn)"/>
+        <text x="610" y="63" text-anchor="middle" font-size="15" font-weight="700" fill="var(--warn)">ACTION — “DO”</text>
+        <text x="610" y="84" text-anchor="middle" font-size="12" fill="var(--muted)">print the process &amp; the filename</text>
+        <line x1="610" y1="96" x2="610" y2="160" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- annotations under the action -->
+        <text x="470" y="246" font-size="12" fill="var(--accent)" font-weight="700">comm</text>
+        <text x="470" y="264" font-size="11" fill="var(--muted)">→ process name (a builtin)</text>
+        <line x1="500" y1="232" x2="540" y2="206" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+        <text x="640" y="300" font-size="12" fill="var(--accent-2)" font-weight="700">str(args-&gt;filename)</text>
+        <text x="640" y="318" font-size="11" fill="var(--muted)">→ read the filename string from the event's args</text>
+        <line x1="700" y1="286" x2="690" y2="206" stroke="var(--accent-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+      </svg>
+      <figcaption>One program, three zones. The filter is optional — here it's omitted, so the action runs for <em>every</em> open.</figcaption>
+    </figure>
+
+    <p>Everything else in this lesson is just zooming into each of those three zones, plus the small vocabulary (<code class="inl">comm</code>, <code class="inl">args</code>, <code class="inl">str()</code>) that lives inside them.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The probe — and the <code class="inl">type:target</code> name</h2>
+    <p>A <strong>probe</strong> names the event. Every probe name is a colon-separated string that starts with a <strong>probe type</strong> (which <em>kind</em> of event) followed by a <strong>target</strong> (which specific one):</p>
+
+    <pre><span class="y">tracepoint</span>:<span class="b">syscalls</span>:<span class="g">sys_enter_openat</span>
+<span class="c1">    ▲            ▲              ▲</span>
+<span class="c1">   type      category       the event</span>
+<span class="c1"> (what kind)         (the specific target)</span></pre>
+
+    <p>The first segment — <code class="inl">tracepoint</code> here — is the <strong>type</strong>. It answers “what category of hook is this?” The rest is the <strong>target</strong>: the exact event of that type. A few you'll meet:</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Probe (type:target)</th><th>Fires when…</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">tracepoint:syscalls:sys_enter_openat</code></td><td>any process calls the <code class="inl">openat</code> syscall (entry)</td></tr>
+          <tr><td><code class="inl">kprobe:vfs_read</code></td><td>the kernel function <code class="inl">vfs_read</code> is called</td></tr>
+          <tr><td><code class="inl">kretprobe:vfs_read</code></td><td><code class="inl">vfs_read</code> <em>returns</em> (so you can read <code class="inl">retval</code>)</td></tr>
+          <tr><td><code class="inl">profile:hz:99</code></td><td>99 times per second, on every CPU (sampling)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout mission"><span class="h">🎯 Why this matters for the mission</span>
+      Choosing the right probe <em>is</em> asking the right question. “Which files are opened?” → a syscall tracepoint. “How long does this kernel function take?” → a kprobe + kretprobe pair. <strong>Lesson 4 is the full menu of probe types</strong> — this is just a taste so the names stop looking like magic.</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace language reference — probe naming (provider/type then colon-separated target).</a></p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The filter (predicate) — the “IF”</h2>
+    <p>A probe like <code class="inl">tracepoint:syscalls:sys_enter_openat</code> fires for <em>every</em> process on the box — that can be a firehose. The <strong>filter</strong> (officially the <strong>predicate</strong>) is a condition wrapped in slashes that runs <em>before</em> the action and decides whether to bother:</p>
+
+    <pre><span class="y">tracepoint:syscalls:sys_enter_openat</span> <span class="g">/comm == "bash"/</span> <span class="b">{ printf("%s\n", str(args-&gt;filename)); }</span>
+<span class="c1">                                      ▲ only when this is true does the action run</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). Prints only the files that <code class="inl">bash</code> opens.</div>
+
+    <p>The expression inside the slashes is ordinary boolean logic over the builtins you'll meet next. Common shapes:</p>
+    <ul>
+      <li><code class="inl">/pid == 1234/</code> — only this one process</li>
+      <li><code class="inl">/comm == "bash"/</code> — only processes named <code class="inl">bash</code> (string literals use double quotes)</li>
+      <li><code class="inl">/uid == 0/</code> — only things running as root</li>
+      <li><code class="inl">/pid != 4242 &amp;&amp; uid &gt; 1000/</code> — combine with <code class="inl">&amp;&amp;</code>, <code class="inl">||</code>, <code class="inl">!</code></li>
+    </ul>
+
+    <div class="callout key"><span class="h">💡 No filter = match everything</span>
+      The slashes are optional. Omit them and the action runs on every event the probe catches — exactly what the Lesson&nbsp;1 one-liner did. Add a predicate the moment the output is too noisy.</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/language.md" target="_blank" rel="noopener">bpftrace language reference — predicate example <code>/comm == "bash"/</code>.</a></p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> The action block &amp; <code class="inl">printf</code></h2>
+    <p>The action is the code in <code class="inl">{ … }</code>. For tracing, by far the most common action is <code class="inl">printf</code> — and it works just like C's (or Python's f-strings, or Go's <code class="inl">fmt.Printf</code>): a <strong>format string</strong> with <code class="inl">%</code> placeholders, followed by the values to fill them in, left to right.</p>
+
+    <pre><span class="b">printf</span>(<span class="g">"%-6d %-16s opened %s\n"</span>, pid, comm, <span class="b">str</span>(args-&gt;filename));
+<span class="c1">         │    │     │            │    │           │</span>
+<span class="c1">         %d ← pid  │            │    comm        str(...) ← filename</span>
+<span class="c1">              %s ← (none here; %s slots fill in order)</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). The full probe/filter were left off for focus — see §02 for the whole program.</div>
+
+    <p>The placeholders you'll use 95% of the time:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Specifier</th><th>Means</th><th>Example value</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">%d</code></td><td>a number (integer)</td><td><code class="inl">1234</code></td></tr>
+          <tr><td><code class="inl">%s</code></td><td>a string</td><td><code class="inl">bash</code></td></tr>
+          <tr><td><code class="inl">%-16s</code></td><td>string, left-aligned, padded to 16 wide (tidy columns)</td><td><code class="inl">bash&nbsp;&nbsp;&nbsp;&nbsp;</code></td></tr>
+          <tr><td><code class="inl">\n</code></td><td>newline — end of the line (<em>not</em> a <code class="inl">%</code> placeholder)</td><td>↵</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn"><span class="h">⚠ Don't forget the <code class="inl">\n</code></span>
+      Without a trailing <code class="inl">\n</code> in your format string, every event prints on the same line and the output looks like one giant blob. It's the single most common beginner slip.</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/stdlib.md" target="_blank" rel="noopener">bpftrace stdlib — <code>printf</code> "behaves similar to printf() found in C."</a></p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> The builtins you'll use constantly</h2>
+    <p>Inside a filter or action, you don't have to fetch data — bpftrace hands you a set of <strong>builtin variables</strong> describing “who/what/when” for the event that just fired. These are the words that make one-liners short. Memorize the top handful; the rest you'll look up.</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Builtin</th><th>What it gives you (for the current event)</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inl">comm</code></td><td>name of the running process/thread (e.g. <code class="inl">bash</code>, <code class="inl">node</code>) — you'll use this most</td></tr>
+          <tr><td><code class="inl">pid</code></td><td>process ID of the current thread</td></tr>
+          <tr><td><code class="inl">tid</code></td><td>thread ID of the current thread</td></tr>
+          <tr><td><code class="inl">uid</code></td><td>user ID of the current thread (e.g. <code class="inl">0</code> = root)</td></tr>
+          <tr><td><code class="inl">args</code></td><td>the traced event's arguments — e.g. <code class="inl">args-&gt;filename</code> for openat (see §07)</td></tr>
+          <tr><td><code class="inl">retval</code></td><td>the value a function returned — only meaningful on <code class="inl">kretprobe</code>/return probes</td></tr>
+          <tr><td><code class="inl">nsecs</code></td><td>a timestamp in nanoseconds; subtract two to measure a duration</td></tr>
+          <tr><td><code class="inl">cpu</code></td><td>ID of the CPU that's executing right now</td></tr>
+          <tr><td><code class="inl">kstack</code></td><td>the kernel-side stack trace — “how did we get here, in the kernel?”</td></tr>
+          <tr><td><code class="inl">ustack</code></td><td>the user-space stack trace — “…in the application?”</td></tr>
+          <tr><td><code class="inl">curtask</code></td><td>pointer to the kernel's <code class="inl">task_struct</code> for the current task (advanced)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key"><span class="h">💡 <code class="inl">comm</code> vs <code class="inl">pid</code></span>
+      <code class="inl">pid</code> is the number; <code class="inl">comm</code> is the human-readable name (short for “command”). When scanning output you almost always want <code class="inl">comm</code> — and often both, so you can grep by name and act on the number.</div>
+    <p class="cite">Source: <a href="https://github.com/bpftrace/bpftrace/blob/master/docs/stdlib.md" target="_blank" rel="noopener">bpftrace stdlib — builtin variables reference.</a></p>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Functions — <code class="inl">printf</code>, <code class="inl">str()</code>, and a peek at aggregation</h2>
+    <p>Builtins are nouns; <strong>functions</strong> are verbs you call inside the action. You've met <code class="inl">printf</code>. The other one you'll reach for immediately is <code class="inl">str()</code>.</p>
+
+    <h3>str() — turn a pointer into readable text</h3>
+    <p>Many event arguments aren't strings — they're <em>pointers</em> to where a string lives in memory (that's how the kernel passes a filename). <code class="inl">str()</code> safely reads the bytes at that address up to the terminating <code class="inl">NUL</code> and gives you back actual text:</p>
+    <pre><span class="b">str</span>(args-&gt;filename)   <span class="c1">// pointer → "/etc/passwd"</span></pre>
+    <div class="callout warn"><span class="h">⚠ <code class="inl">%s</code> on a raw pointer = garbage</span>
+      If you <code class="inl">printf("%s", args-&gt;filename)</code> without <code class="inl">str()</code>, you're printing a memory address as if it were text. Wrap any string-pointer argument in <code class="inl">str()</code>.</div>
+
+    <h3>A peek at count() and hist()</h3>
+    <p>Printing is great for “show me each event.” But for “how <em>often</em>” or “what's the <em>distribution</em>,” you summarize instead with <strong>aggregation functions</strong> stored in <code class="inl">@</code> maps:</p>
+    <pre><span class="c1"># count opens per process name</span>
+sudo bpftrace -e <span class="y">'tracepoint:syscalls:sys_enter_openat'</span> <span class="b">'{ @[comm] = count(); }'</span>
+
+<span class="c1"># histogram of read() sizes</span>
+sudo bpftrace -e <span class="y">'tracepoint:syscalls:sys_exit_read'</span> <span class="b">'{ @bytes = hist(args-&gt;ret); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). bpftrace auto-prints all <code class="inl">@</code> maps when you press Ctrl-C.</div>
+    <div class="callout mission"><span class="h">🎯 Saving the good part for Lesson 5</span>
+      <code class="inl">@</code> maps, <code class="inl">count()</code>, <code class="inl">hist()</code>, and friends are how bpftrace turns a flood of events into a tidy table or histogram with almost no code. <strong>That's the whole of Lesson 5 — “Maps &amp; Aggregations.”</strong> For now just know these exist and read as “tally this” / “bucket this.”</div>
+    <p class="cite">Source: <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace one-liner tutorial — <code>str()</code>, <code>count()</code>, <code>hist()</code>.</a></p>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Running it: one-liners, scripts, listing, BEGIN/END</h2>
+
+    <h3><code class="inl">-e</code> one-liners vs <code class="inl">.bt</code> script files</h3>
+    <p>Two ways to run the exact same program. For something throwaway, pass it inline with <code class="inl">-e</code>. When it grows past a line or two — multiple probes, comments — put it in a <code class="inl">.bt</code> file and run that:</p>
+    <pre><span class="c1"># inline, throwaway</span>
+sudo bpftrace -e <span class="y">'tracepoint:syscalls:sys_enter_openat { printf("%s %s\n", comm, str(args-&gt;filename)); }'</span>
+
+<span class="c1"># saved as opensnoop.bt, then run the file</span>
+sudo bpftrace opensnoop.bt</pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). A <code class="inl">.bt</code> file is just the program text, no <code class="inl">-e</code> and no surrounding quotes.</div>
+
+    <h3>Finding probes with <code class="inl">-l</code></h3>
+    <p>You rarely know a probe's exact name by heart. <code class="inl">-l</code> <em>lists</em> probes, and <code class="inl">*</code> is a wildcard — so it doubles as search. This is how you discover what you can hook:</p>
+    <pre><span class="c1"># every syscall-entry tracepoint</span>
+sudo bpftrace -l <span class="y">'tracepoint:syscalls:sys_enter_*'</span>
+
+<span class="c1"># anything mentioning "open"</span>
+sudo bpftrace -l <span class="y">'*open*'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). <code class="inl">-l</code> only prints names; it doesn't trace anything.</div>
+
+    <h3>The special <code class="inl">BEGIN</code> and <code class="inl">END</code> probes</h3>
+    <p>Two probes don't correspond to a kernel event at all. <code class="inl">BEGIN</code> fires once, before tracing starts; <code class="inl">END</code> fires once, after you hit Ctrl-C. Perfect for a header line or a closing summary:</p>
+    <pre>sudo bpftrace -e <span class="y">'BEGIN { printf("Tracing opens... Ctrl-C to end.\n"); }
+tracepoint:syscalls:sys_enter_openat { @[comm] = count(); }
+END { printf("done\n"); }'</span></pre>
+    <div class="runlater">Linux-only — copy and try later on a Linux box (needs <code class="inl">sudo</code>). Three probes in one program — bpftrace runs whichever matches the moment.</div>
+    <div class="callout key"><span class="h">💡 Casing note</span>
+      Classic, widely-documented bpftrace uses uppercase <code class="inl">BEGIN</code> / <code class="inl">END</code> (as in the official tutorial and Brendan Gregg's books). Very recent versions also accept lowercase <code class="inl">begin</code> / <code class="inl">end</code>; you'll see both in the wild — they mean the same thing.</div>
+    <p class="cite">Source: <a href="https://bpftrace.org/tutorial-one-liners" target="_blank" rel="noopener">bpftrace one-liner tutorial — listing with <code>-l</code>, <code>BEGIN { printf(...) }</code>.</a></p>
+  </section>
+
+  <section>
+    <h2><span class="num">09</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">In <code class="inl">kprobe:vfs_read /comm == "bash"/ { printf("%d\n", pid); }</code>, which are the three parts, in order?</div>
+        <button class="opt">filter, probe, action</button>
+        <button class="opt">probe, filter, action</button>
+        <button class="opt">action, probe, filter</button>
+        <button class="opt">probe, action, filter</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">What does the builtin <code class="inl">comm</code> give you?</div>
+        <button class="opt">The exact command line, with all arguments</button>
+        <button class="opt">The numeric process ID</button>
+        <button class="opt">The name of the running process/thread (e.g. <code class="inl">bash</code>)</button>
+        <button class="opt">The bpftrace comment on the line</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">Why wrap a filename argument in <code class="inl">str(...)</code>, as in <code class="inl">str(args-&gt;filename)</code>?</div>
+        <button class="opt">The argument is a pointer to memory; <code class="inl">str()</code> reads the actual string at that address</button>
+        <button class="opt">It converts a number into hexadecimal</button>
+        <button class="opt">It's required around every printf argument</button>
+        <button class="opt">It makes the output uppercase</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">What does the predicate (filter) <code class="inl">/pid == 1234/</code> do?</div>
+        <button class="opt">Sets the process's PID to 1234</button>
+        <button class="opt">Prints 1234 every time the probe fires</button>
+        <button class="opt">Names the probe "1234"</button>
+        <button class="opt">Runs the action only when the current process's PID is 1234</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">10</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What are the three parts of every bpftrace program?</summary><div class="a">A: <strong>probe</strong> (WHEN — the event), an optional <strong>/filter/</strong> a.k.a. predicate (IF — a condition), and the <strong>{ action }</strong> (DO — what to run). Probe and action are required; the filter is optional.</div></details>
+    <details class="fc"><summary>Q: What is <code class="inl">comm</code>?</summary><div class="a">A: A builtin holding the <strong>name of the current process/thread</strong> (short for "command"), e.g. <code class="inl">bash</code> or <code class="inl">node</code>. Contrast <code class="inl">pid</code>, which is the number.</div></details>
+    <details class="fc"><summary>Q: What is <code class="inl">args</code> for?</summary><div class="a">A: It exposes the <strong>traced event's arguments</strong>. For a tracepoint you read a field like <code class="inl">args-&gt;filename</code> (current bpftrace also accepts the dot form <code class="inl">args.filename</code>).</div></details>
+    <details class="fc"><summary>Q: When is <code class="inl">retval</code> meaningful?</summary><div class="a">A: On a <strong>return probe</strong> (e.g. <code class="inl">kretprobe</code>) — it's the value the traced function returned. On an entry probe there's no return value yet.</div></details>
+    <details class="fc"><summary>Q: What is a predicate, and how is it written?</summary><div class="a">A: A <strong>condition in slashes</strong> placed between the probe and the action, e.g. <code class="inl">/comm == "bash"/</code>. The action runs only when it's true. Omit it to match every event.</div></details>
+    <details class="fc"><summary>Q: How do you list/search available probes?</summary><div class="a">A: <code class="inl">bpftrace -l '&lt;pattern&gt;'</code> with <code class="inl">*</code> as a wildcard, e.g. <code class="inl">bpftrace -l 'tracepoint:syscalls:sys_enter_*'</code>. It only lists names; it doesn't trace.</div></details>
+    <details class="fc"><summary>Q: What do the <code class="inl">BEGIN</code> and <code class="inl">END</code> probes do?</summary><div class="a">A: They aren't kernel events. <code class="inl">BEGIN</code> runs once before tracing starts (e.g. print a header); <code class="inl">END</code> runs once after you stop (e.g. print a summary). Recent versions also accept lowercase <code class="inl">begin</code>/<code class="inl">end</code>.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Want to test that you can read one cold? Paste me any bpftrace one-liner and ask <em>"break this into WHEN / IF / DO for me."</em> Or try <em>"write me a one-liner that prints which files only the <code class="inl">node</code> process opens"</em> — then we'll check it part by part.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0002-life-of-an-ebpf-program.html"><span class="dir">↩ Previous</span><span class="ttl">Life of an eBPF Program</span></a>
+    <a href="0004-probe-types-where-you-can-hook.html"><span class="dir">Up next →</span><span class="ttl">Where You Can Hook: Probe Types</span></a>
+  </nav>
+
+  <footer>
+    eBPF Course · Lesson 3 · grounded in
+    <a href="https://ebpf.io/" target="_blank" rel="noopener">ebpf.io</a>,
+    <a href="https://www.brendangregg.com/ebpf.html" target="_blank" rel="noopener">Brendan Gregg</a>,
+    <a href="https://bpftrace.org/" target="_blank" rel="noopener">bpftrace.org</a> ·
+    see <a href="/courses/ebpf/#resources">RESOURCES.md</a> ·
+    <a href="../reference/ebpf-glossary.html">Glossary</a> ·
+    <a href="../reference/bpftrace-cheatsheet.html">bpftrace cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  // Tight feedback loop for the self-check quiz.
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

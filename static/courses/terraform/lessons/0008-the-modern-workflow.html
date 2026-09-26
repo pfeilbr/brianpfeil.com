@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 0008 — The modern workflow (capstone)</title>
+<style>
+  :root{
+    --ink:#1a1f26; --muted:#5b6573; --line:#e3e7ec; --bg:#fbfcfd; --card:#ffffff;
+    --accent:#5c4ee5; --accent-soft:#eceafe;
+    --create:#1f9d57; --create-bg:#e8f6ee;
+    --update:#c98a00; --update-bg:#fbf2dd;
+    --destroy:#d23b3b; --destroy-bg:#fbe9e9;
+    --mono:"SF Mono",ui-monospace,"Cascadia Code",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:820px;margin:0 auto;padding:46px 26px 90px;}
+  header.les{border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:30px;}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+  h1{font-size:31px;line-height:1.18;margin:6px 0 6px;letter-spacing:-.022em;}
+  .meta{color:var(--muted);font-size:14px;} .meta b{color:var(--ink);}
+  h2{font-size:21px;margin:40px 0 12px;letter-spacing:-.01em;}
+  p{margin:0 0 14px;} .lead{font-size:17.5px;}
+  code{font-family:var(--mono);font-size:.88em;background:#f0f2f5;padding:1px 5px;border-radius:4px;}
+  a{color:var(--accent);}
+  .why{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;
+    border-radius:0 8px 8px 0;margin:8px 0 22px;font-size:14.5px;}
+  pre.code{background:#11151c;color:#dfe6f0;border-radius:12px;padding:16px 18px;overflow-x:auto;
+    font-family:var(--mono);font-size:12.5px;line-height:1.6;margin:14px 0;}
+  pre.code .c{color:#7c8aa0} pre.code .k{color:#9bb6ff} pre.code .s{color:#9ad29f}
+  pre.code .hot{color:#ffd479;font-weight:700}
+  .concept{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;margin:18px 0;box-shadow:0 1px 2px rgba(20,30,50,.04);}
+  .concept h3{margin:0 0 8px;font-size:16px;}
+  .concept p{font-size:15px;margin:0 0 10px;}
+  .concept p:last-child{margin:0;}
+
+  .quiz{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:8px 22px 22px;margin:16px 0;box-shadow:0 1px 2px rgba(20,30,50,.04);}
+  .progress{font-size:12.5px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;
+    font-weight:700;margin:18px 0 4px;}
+  .scenario h3{font-size:17.5px;margin:6px 0 10px;line-height:1.4;}
+  .setup{background:#f6f7f9;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;font-size:14px;margin-bottom:12px;}
+  .setup code{font-size:12.5px;}
+  .ask{font-weight:600;margin:14px 0 10px;}
+  .opts{display:flex;flex-direction:column;gap:8px;}
+  .opt{text-align:left;cursor:pointer;border:1.5px solid var(--line);background:#fff;
+    border-radius:10px;padding:11px 14px;font-size:14px;color:var(--ink);transition:.12s;
+    font-family:inherit;line-height:1.45;}
+  .opt:hover{border-color:var(--accent);background:#faf9ff;}
+  .opt.correct{border-color:var(--create);background:var(--create-bg);}
+  .opt.wrong{border-color:var(--destroy);background:var(--destroy-bg);}
+  .opt:disabled{cursor:default;opacity:.88;}
+  .fb{margin-top:14px;padding:13px 15px;border-radius:10px;font-size:14.5px;display:none;}
+  .fb.show{display:block;}
+  .fb.right{background:var(--create-bg);border:1px solid #bfe3cd;}
+  .fb.nope{background:var(--update-bg);border:1px solid #ecdba6;}
+  .fb b{display:block;margin-bottom:3px;}
+  .next{margin-top:14px;display:none;} .next.show{display:inline-block;}
+  button.nav{font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;
+    background:var(--accent);color:#fff;border:none;border-radius:9px;padding:10px 18px;}
+  button.nav:hover{background:#4b3fd0;}
+  .done{display:none;text-align:center;padding:18px 6px 6px;}
+  .done.show{display:block;}
+  .score{font-size:34px;font-weight:800;letter-spacing:-.02em;}
+  .scoresub{color:var(--muted);font-size:14px;margin-top:2px;}
+
+  .check{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:16px 18px;margin:18px 0;}
+  .check h3{margin:0 0 8px;font-size:15px;}
+  .check ol{margin:0;padding-left:20px;font-size:14.5px;}
+  .check code{font-size:12.5px;}
+  footer.les{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;font-size:13.5px;color:var(--muted);}
+  .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;}
+  .links a{text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:7px 12px;
+    font-size:13px;background:#fff;}
+  .ask-teacher{background:var(--accent-soft);border:1px solid #d6d1f7;border-radius:10px;
+    padding:12px 15px;font-size:14px;margin:22px 0 0;}
+  @media print{.quiz{display:none}}
+</style>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+
+/* ---- course adapter: terraform ---- */
+/* ============================================================================
+   terraform course adapter — re-skin terraform's bespoke component classes with
+   the canonical tokens from assets/theme.css. Injected AFTER theme.css and AFTER
+   each lesson's own <style>, so these rules win. !important is used wherever the
+   course hardcodes colours, to guarantee the override regardless of specificity.
+   This gives the terraform course the unified look + dark mode without touching
+   its markup. See scripts/theme_lessons.py (adapter mechanism).
+
+   The course is built around a `terraform plan` diff palette (create/update/
+   destroy/replace/noop) plus interactive quiz "score" widgets and dark code
+   blocks. We keep the plan-diff *semantics* (green=create, red=destroy, …) but
+   re-tokenize them so they read on the canonical light-on-dark code surface and
+   in dark mode.
+   ============================================================================ */
+
+/* ---- page shell: drop the off-white body + white cards; unified column ---- */
+body{ background:var(--bg) !important; color:var(--fg) !important; }
+.wrap{ max-width:var(--maxw); margin:0 auto; background:transparent !important;
+  box-shadow:none !important; }
+
+/* the course re-declares the SHARED token names (--accent, --bg, --line, --muted,
+   --ink, --create, --update, --destroy …) with hardcoded light-mode hexes in its
+   own :root, which would shadow theme.css. Re-point the ones we reuse back to the
+   canonical tokens so tints/headings/borders track light AND dark mode. The plan-
+   diff tokens are re-pointed at the semantic palette. */
+:root{
+  --ink:var(--fg); --muted:var(--muted); --line:var(--border);
+  --card:var(--surface); --accent:var(--accent); --accent-soft:color-mix(in srgb,var(--accent) 12%,transparent);
+  --create:var(--mark); --create-bg:color-mix(in srgb,var(--mark) 14%,transparent);
+  --update:var(--warn); --update-bg:color-mix(in srgb,var(--warn) 14%,transparent);
+  --destroy:var(--danger); --destroy-bg:color-mix(in srgb,var(--danger) 14%,transparent);
+  --replace:var(--accent-2); --replace-bg:color-mix(in srgb,var(--accent-2) 14%,transparent);
+  --noop:var(--muted); --noop-bg:color-mix(in srgb,var(--muted) 14%,transparent);
+}
+
+/* ---- headings ---- */
+header.les,header.doc{ border-bottom:2px solid var(--border) !important; }
+.kicker{ color:var(--accent) !important; }
+h1{ color:var(--fg) !important; }
+h1 code{ background:none !important; color:inherit !important; }
+h2{ color:var(--fg) !important; }
+h3{ color:var(--accent) !important; }
+.meta{ color:var(--muted) !important; }
+.meta b{ color:var(--fg) !important; }
+.sub{ color:var(--muted) !important; }
+.lead{ color:var(--fg) !important; }
+
+/* ---- inline code ---- */
+code{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; border-radius:6px; }
+
+/* ---- dark code / pre blocks (bare `pre` and `pre.code`) ---- */
+pre,pre.code{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:1px solid var(--border) !important; border-radius:12px !important; }
+pre code{ background:none !important; color:inherit !important; padding:0 !important; }
+/* syntax tokens → light-on-dark palette */
+pre .c,pre.code .c{ color:#7f8db3 !important; }   /* comments  */
+pre .s,pre.code .s{ color:#63e6be !important; }   /* strings   */
+pre .k,pre.code .k{ color:#74c0fc !important; }   /* keywords  */
+pre .hot,pre.code .hot{ color:#ffd43b !important; } /* highlight */
+
+/* terraform plan DIFF colours — keep semantics ON the dark code block.
+   (these classes ride inside <pre>; map to the canonical semantic tokens so
+   they stay legible on var(--code-bg) in both themes) */
+pre .c-create,pre.code .c-create,.c-create,.sym.c-create{ color:var(--mark) !important; }
+pre .c-update,pre.code .c-update,.c-update,.sym.c-update{ color:var(--warn) !important; }
+pre .c-destroy,pre.code .c-destroy,.c-destroy,.sym.c-destroy{ color:var(--danger) !important; }
+pre .c-noop,pre.code .c-noop,.c-noop,.sym.c-noop{ color:var(--muted) !important; }
+
+/* ---- concept / card / node panels → unified surface ---- */
+.concept,.card,.node,.pic,.half,.box,.setup,.arrowrow{
+  background:var(--surface) !important; border:1px solid var(--border) !important;
+  border-radius:12px !important; box-shadow:none !important; }
+.box{ overflow:hidden; }
+.pic h4,.node h4,.half h4,.card h4{ color:var(--fg) !important; }
+.eq b,.arrowrow b{ color:var(--fg) !important; }
+
+/* "state" header chips inside the .box demo (desired/state/real). The original
+   used dark solid fills + white text; the tokens are LIGHT in dark mode, so
+   white text fails. Use tinted chips (token-coloured text on a token tint),
+   legible in both schemes, keeping each chip's colour identity. */
+.box .bh{ color:var(--fg) !important; background:var(--surface) !important; }
+.box.desired .bh{ background:color-mix(in srgb,var(--accent) 18%,transparent) !important; color:var(--accent) !important; }
+.box.state .bh{ background:color-mix(in srgb,var(--muted) 26%,transparent) !important; color:var(--fg) !important; }
+.box.real .bh{ background:color-mix(in srgb,var(--accent-2) 18%,transparent) !important; color:var(--accent-2) !important; }
+.box pre{ background:var(--code-bg) !important; color:var(--code-ink) !important;
+  border:none !important; border-radius:0 !important; }
+.box .empty{ color:var(--muted) !important; }
+
+/* ---- callout / box classes mapped by intent ---- */
+/* .why = "why this matters" intro note → accent (info) */
+.why{ border-left:4px solid var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 10%,transparent) !important;
+  border-radius:0 8px 8px 0 !important; }
+/* .callout (reference) base = accent/info */
+.callout{ border-left:4px solid var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 10%,transparent) !important;
+  border-radius:0 8px 8px 0 !important; }
+/* .callout.warn / .warn = warning → danger semantics in this course */
+.callout.warn,.warn{ border-left:4px solid var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 10%,transparent) !important; }
+/* .bigrule = hard rule / gotcha → danger */
+.bigrule{ border-left:4px solid var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 10%,transparent) !important;
+  border-radius:0 8px 8px 0 !important; }
+/* .ask-teacher = prompt-the-teacher box → accent-2 (special) */
+.ask-teacher{ border:1px solid color-mix(in srgb,var(--accent-2) 30%,transparent) !important;
+  background:color-mix(in srgb,var(--accent-2) 10%,transparent) !important; }
+/* .check = dashed checklist box */
+.check{ background:var(--surface) !important; border:1px dashed var(--border) !important;
+  border-radius:12px !important; }
+
+/* ---- quiz widget ---- */
+.quiz{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  border-radius:12px !important; box-shadow:none !important; }
+.progress{ color:var(--muted) !important; }
+.ask{ color:var(--fg) !important; }
+.opt{ background:var(--panel) !important; color:var(--fg) !important;
+  border:1.5px solid var(--border) !important; border-radius:10px !important; }
+.opt:hover{ border-color:var(--accent) !important;
+  background:color-mix(in srgb,var(--accent) 7%,transparent) !important; }
+.opt.correct{ border-color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 16%,transparent) !important; }
+.opt.wrong{ border-color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 14%,transparent) !important; }
+/* the small plan-symbol chips on quiz options (.s.create etc.) */
+.opt .s.create{ color:var(--mark) !important;
+  background:color-mix(in srgb,var(--mark) 18%,transparent) !important; }
+.opt .s.update{ color:var(--warn) !important;
+  background:color-mix(in srgb,var(--warn) 20%,transparent) !important; }
+.opt .s.destroy{ color:var(--danger) !important;
+  background:color-mix(in srgb,var(--danger) 18%,transparent) !important; }
+.opt .s.replace{ color:var(--accent-2) !important;
+  background:color-mix(in srgb,var(--accent-2) 18%,transparent) !important; }
+.opt .s.noop{ color:var(--muted) !important;
+  background:color-mix(in srgb,var(--muted) 18%,transparent) !important; }
+/* quiz feedback banners */
+.fb.right{ background:color-mix(in srgb,var(--mark) 14%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--mark) 40%,transparent) !important; }
+.fb.nope{ background:color-mix(in srgb,var(--warn) 14%,transparent) !important;
+  border:1px solid color-mix(in srgb,var(--warn) 40%,transparent) !important; }
+/* quiz nav button */
+button.nav{ background:var(--accent) !important; color:#fff !important; }
+button.nav:hover{ background:color-mix(in srgb,var(--accent) 80%,#000) !important; }
+/* the score readout at the end of a quiz — must stay legible in dark */
+.done .score,.score{ color:var(--fg) !important; }
+.scoresub{ color:var(--muted) !important; }
+
+/* ---- pills, sym, footer, nav/links ---- */
+.pill{ background:color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  color:var(--accent) !important; }
+.sym{ color:var(--fg); }
+footer.les,footer.doc{ border-top:1px solid var(--border) !important; color:var(--muted) !important; }
+.links a{ background:var(--surface) !important; border:1px solid var(--border) !important;
+  color:var(--accent) !important; border-radius:8px !important; }
+a{ color:var(--accent) !important; }
+
+/* ---- glossary / reference vocabulary ---- */
+dt .lsn{ color:var(--muted) !important; }
+dd{ color:var(--fg) !important; }
+dl.gloss dd{ color:var(--muted) !important; }
+.src{ color:var(--muted) !important; }
+
+/* ============================================================================
+   CONTRAST BLANKET (the #1 dark-mode bug): force readable --fg text onto every
+   box/panel/card/widget that holds prose. EXCLUDES dark code blocks (pre / .box
+   pre) and the white-on-coloured chips, which keep their own colours.
+   ============================================================================ */
+.concept,.card,.node,.pic,.half,.setup,.arrowrow,.quiz,.check,.why,.callout,
+.bigrule,.warn,.ask-teacher,.eq,.scenario,.scenario h3,ul.tight,.triad-legend,
+.twocol,.grid3,.pair,.triad{ color:var(--fg) !important; }
+.concept p,.card p,.node p,.pic p,.half p{ color:var(--muted) !important; }
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/terraform/" style="color:inherit;text-decoration:none">&larr; Terraform</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+<header class="les">
+  <div class="kicker">Lesson 0008 · Understand Terraform · Capstone</div>
+  <h1>The modern workflow</h1>
+  <div class="meta"><b>Everything composes · ~15 min.</b> Config-driven lifecycle ops, plan-as-artifact, drift on a schedule — "what modern Terraform looks like and how people use it."</div>
+</header>
+
+<div class="why">
+<b>Why last?</b> This was your original question, verbatim: <i>"what modern Terraform looks like
+and how people use it."</i> Every piece is now in your toolkit — this lesson assembles them into
+the day-to-day shape, and the capstone quiz deliberately reaches back across all seven lessons.
+</div>
+
+<p class="lead">Modern Terraform's signature move: <b>state surgery became code</b>. The imperative
+commands you learned as escape hatches each grew a declarative, reviewable twin:</p>
+
+<div class="concept">
+<h3>The config-driven trio</h3>
+<pre class="code"><span class="k">moved</span>   { from = aws_s3_bucket.logs, to = module.storage.aws_s3_bucket.logs }  <span class="c"># 1.1 — rename (lesson 4)</span>
+
+<span class="k">import</span>  { to = aws_s3_bucket.legacy, id = <span class="s">"acme-legacy-data"</span> }                 <span class="c"># 1.5 — adopt existing</span>
+<span class="c"># + terraform plan <span class="hot">-generate-config-out=generated.tf</span> drafts the resource block from reality</span>
+
+<span class="k">removed</span> { from = aws_db_instance.old
+          lifecycle { <span class="hot">destroy = false</span> } }                                      <span class="c"># 1.7 — forget (lesson 2)</span></pre>
+<p>Same surgeries as <code>state mv</code> / <code>import</code> / <code>state rm</code> — but they
+ship in a PR, show up in a plan <i>before</i> touching state, and replay identically for every
+teammate and pipeline. The imperative commands remain for emergencies.</p>
+</div>
+
+<div class="concept">
+<h3>The team loop</h3>
+<p><b>Pre-commit:</b> <code>fmt</code> → <code>validate</code> → <code>terraform test</code> (unit layer).
+<b>PR:</b> CI runs <code>plan -out=tfplan</code>; humans review <i>the plan</i>, not just the diff.
+<b>Merge:</b> CI runs <code>apply tfplan</code> — executing <b>exactly the reviewed plan</b>. If the
+world changed in between, the apply errors instead of improvising. Plan-as-artifact is the
+three-pictures model from lesson 0001 turned into a governance mechanism.</p>
+<p><b>On a schedule:</b> <code>plan -detailed-exitcode</code> — exit 0 clean, 2 means "the pictures
+disagree" → alert; triage with <code>plan -refresh-only</code> to split <i>drift</i> from
+<i>pending work</i> (lesson 2).</p>
+</div>
+
+<p>Two ecosystem facts complete the picture. <b>Pin everything</b> — <code>required_version</code>,
+provider <code>~></code> constraints, module versions — and <b>commit
+<code>.terraform.lock.hcl</code></b> (exact provider versions; the one state-adjacent file that
+<i>belongs</i> in git). And know <b>OpenTofu</b>: when Terraform's license went BUSL in 2023, the
+community forked the last open version into OpenTofu (Linux Foundation) — drop-in compatible
+today, diverging slowly. Feature floors worth memorizing: <code>moved</code> 1.1 ·
+<code>import</code> block 1.5 · <code>test</code> 1.6 · <code>removed</code>/mocks 1.7 ·
+<code>use_lockfile</code> 1.10.</p>
+
+<h2>The capstone — everything is fair game</h2>
+
+<div class="quiz" id="quiz">
+  <div id="cards"></div>
+  <div class="done" id="done">
+    <div class="score" id="scoreNum"></div>
+    <div class="scoresub" id="scoreMsg"></div>
+  </div>
+</div>
+
+<div class="check">
+  <h3>✅ The final proof (optional, 30 min — the full loop, no AWS required)</h3>
+  <ol>
+    <li>Take your lesson-5 layout (modules/ + envs/dev + envs/prod) and add a
+      <code>tests/</code> suite to the module (lesson 7).</li>
+    <li>Create a resource <i>outside</i> Terraform (even a local file), adopt it with an
+      <code>import</code> block + <code>-generate-config-out</code>.</li>
+    <li>Refactor it into the module with a <code>moved</code> block; verify the plan shows a move,
+      zero changes.</li>
+    <li>Retire it with a <code>removed</code> block (<code>destroy = false</code>); verify it
+      survives while leaving state.</li>
+    <li>Wire a script: <code>fmt -check &amp;&amp; validate &amp;&amp; test &amp;&amp; plan -detailed-exitcode</code>;
+      echo $? and read the exit code like CI would.</li>
+  </ol>
+</div>
+
+<div class="ask-teacher">
+  💬 <b>You've finished the course — what now?</b> Ask me to: quiz you across all 8 lessons
+  (spaced repetition) · design a real project to build · go deeper on anything
+  (Terratest, Terragrunt, provider internals, OpenTofu divergence) · or pressure-test your
+  understanding with harder war-game scenarios. Wisdom comes from practice:
+  <a href="https://reddit.com/r/Terraform">r/Terraform</a> and the
+  <a href="https://discuss.hashicorp.com/c/terraform-core/27">HashiCorp forum</a> are where real
+  design debates happen — lurk, then answer one question a week.
+</div>
+
+<footer class="les">
+  <b>Reference for this lesson:</b>
+  <div class="links">
+    <a href="../reference/modern-workflow.html">📄 Modern Workflow (cheat sheet)</a>
+    <a href="../reference/glossary.html">📄 Glossary (all lessons)</a>
+    <a href="https://developer.hashicorp.com/terraform/language/import/generating-configuration">↗ import + config generation</a>
+    <a href="https://developer.hashicorp.com/terraform/language/block/removed">↗ removed block</a>
+    <a href="https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform">↗ Terraform in automation</a>
+  </div>
+  <p style="margin-top:14px">Previous: <a href="0007-testing-terraform.html">0007 — Testing Terraform</a> ·
+  Course start: <a href="0001-what-plan-actually-does.html">0001 — What plan actually does</a>.</p>
+</footer>
+</div>
+
+<script>
+const SCENARIOS = [
+  {
+    title:"A predecessor created 14 production resources by hand in the console. Your team now owns them and wants them under Terraform — with review, and without touching the resources. The modern play?",
+    setup:'Existing: 14 unmanaged real resources · Goal: adopt safely, reviewably',
+    options:[
+      "terraform import, 14 times, then hand-write matching resource blocks until plan shows no changes",
+      "import blocks for all 14 + terraform plan -generate-config-out=generated.tf — review the drafted config and the import plan in one PR, then apply",
+      "Delete them and recreate via Terraform so the config is clean from day one",
+      "Reference them all as data sources — adoption isn't necessary"
+    ],
+    answer:1,
+    why:"Config-driven import is the modern answer: declarative, batchable, and the plan <i>previews</i> every adoption before state changes — plus <code>-generate-config-out</code> drafts the resource blocks from reality instead of you reverse-engineering them. Option A works (it's the pre-1.5 way) but is 14 unreviewable one-shots. C destroys production to satisfy aesthetics. D gives you read-only references — nobody manages the resources."
+  },
+  {
+    title:"CI runs plan -out=tfplan on the PR; a senior engineer approves the plan; CI then runs a FRESH terraform apply (no saved plan) after merge. One day the apply does something nobody approved. How?",
+    setup:'Pipeline: plan → review → fresh apply · Incident: unreviewed change applied',
+    options:[
+      "Someone tampered with the state file between plan and apply",
+      "A fresh apply re-plans against the current world — anything that changed since review (new commits, drift, a teammate's apply) lands in the new plan, unreviewed. apply tfplan would have executed exactly the approved change set or errored",
+      "The lock wasn't held during the apply",
+      "The plan file expired, forcing Terraform to improvise"
+    ],
+    answer:1,
+    why:"The whole point of plan-as-artifact: a plan is a diff of three pictures <i>at a moment in time</i>. Re-planning later silently re-diffs against a newer world. <code>apply tfplan</code> is the contract — execute the reviewed change set exactly, or fail loudly if reality moved. (D inverts the truth: saved plans don't expire-and-improvise; a stale plan makes the apply <i>error</i>.)"
+  },
+  {
+    title:"Nightly cron: terraform plan -detailed-exitcode returns exit 2 for prod/network. Before anyone re-applies, you run plan -refresh-only — it shows NO changes. What do you now know?",
+    setup:'plan: exit 2 (changes pending) · plan -refresh-only: clean',
+    options:[
+      "Contradiction — one of the two runs is broken",
+      "No drift: the world still matches state. The pending changes are config-side — someone merged config that was never applied. The response is a normal reviewed apply, not drift triage",
+      "Drift: someone changed AWS by hand overnight",
+      "The state file is corrupted and needs force-unlock"
+    ],
+    answer:1,
+    why:"The two commands isolate different pictures (lesson 2): <code>-refresh-only</code> diffs <b>state vs world</b> (clean ⇒ no drift); plain plan diffs <b>config vs state</b> (exit 2 ⇒ pending work). Clean refresh + dirty plan = unapplied config — merged but never applied. Reverse signature (dirty refresh, e.g. after a console hotfix) = real drift = lesson 2's config-wins decision. Same alert, opposite responses — that's why you triage before applying."
+  },
+  {
+    title:"One PR does three things to a legacy stack: (a) renames aws_instance.web to aws_instance.frontend, (b) brings a hand-made S3 bucket under management, (c) stops managing an RDS instance that the DBA team is taking over — DB must survive. Match the blocks.",
+    setup:'Three ops, one PR · TF 1.12 · DB survival is non-negotiable',
+    options:[
+      "(a) moved · (b) import + generated config · (c) removed with lifecycle destroy = false",
+      "(a) moved · (b) import · (c) delete the resource block and apply",
+      "(a) state mv in a runbook · (b) import block · (c) removed without the lifecycle block",
+      "(a) removed then import under the new name · (b) import · (c) moved to a 'retired' module"
+    ],
+    answer:0,
+    why:"The trio, one each: rename = <code>moved</code> (address surgery, lesson 4); adopt = <code>import</code> (+ <code>-generate-config-out</code>); forget-but-keep = <code>removed</code> + <code>destroy = false</code>. B's (c) <b>destroys the database</b> — deleting a block is a destroy instruction (lesson 2, still the highest-stakes fact in the course). C's (c) is sneaky: a <code>removed</code> block without <code>destroy = false</code>... still destroys. The lifecycle block IS the safety."
+  },
+  {
+    title:"Your module repo's CI is green: fmt, validate, and 30 plan-mode/mocked tests pass. A consumer reports the module fails on real apply — an IAM policy AWS rejects. Where's the hole, per the pyramid?",
+    setup:'CI: static + unit layers only · Failure: provider/AWS reality',
+    options:[
+      "validate should have caught a malformed policy — upgrade Terraform",
+      "The unit layer can't see AWS's opinion (lesson 7's mock placeholder problem at suite scale): the suite needs a real-apply integration layer in a sandbox account, on a schedule or pre-release",
+      "Switch all 30 tests to command = apply so everything is tested for real on each push",
+      "Pin the provider version — the tests were right, AWS changed"
+    ],
+    answer:1,
+    why:"Static checks parse, unit tests verify logic, but only a real apply learns whether AWS <i>accepts</i> the result. The fix is adding the missing pyramid layer — not converting everything to it (option C re-fails lesson 7's economics scenario: 30 real applies per push). A overpromises: validate has no idea what IAM considers valid. D is a coin-flip guess dressed as an action."
+  },
+  {
+    title:"Final boss. A teammate's 'cleanup' PR: (1) renames module \"net\" to \"network\" with no moved block, (2) adds use_lockfile = true next to the existing dynamodb_table argument, (3) deletes .terraform.lock.hcl from git 'because lock files are state'. Which items do you flag?",
+    setup:'One PR, three changes · You: reviewer of record',
+    options:[
+      "Only (1) — the rest is housekeeping",
+      "(1) and (3): the rename destroys and recreates everything under module.net, and the lock file pins provider versions and belongs in git. (2) is actually correct — it's the documented DynamoDB→lockfile migration bridge",
+      "All three are wrong",
+      "(2) and (3) — but (1) is safe since module contents are unchanged"
+    ],
+    answer:1,
+    why:"(1) is lesson 4's trap at module scale: every address under <code>module.net</code> changes ⇒ mass destroy/create; needs <code>moved { from = module.net, to = module.network }</code>. (3) confuses the provider <i>lock file</i> (reproducibility — commit it) with <i>state</i> (secrets — never commit). (2) is the one change that's fine: running both lock mechanisms is the sanctioned migration path before dropping DynamoDB (lesson 3). Course complete: state addresses, locking history, and what belongs in git — in one PR review."
+  }
+];
+
+let idx = 0, score = 0, answered = false;
+const cards = document.getElementById('cards');
+
+function fmt(t){
+  return t.replace(/`([^`]+)`/g,'<code>$1</code>')
+          .replace(/(terraform (plan|apply|import|test)( -out=tfplan| tfplan)?|plan -out=tfplan|apply tfplan|-generate-config-out(=generated\.tf)?|-detailed-exitcode|-refresh-only|use_lockfile = true|dynamodb_table|\.terraform\.lock\.hcl|destroy = false|lifecycle (block|destroy = false)|moved|removed|import blocks?|state mv|module\.net(work)?|aws_instance\.(web|frontend)|command = apply|fmt|validate\b)/g,'<code>$1</code>');
+}
+
+function render(){
+  const s = SCENARIOS[idx];
+  answered = false;
+  cards.innerHTML = `
+    <div class="scenario">
+      <div class="progress">Scenario ${idx+1} of ${SCENARIOS.length} · capstone</div>
+      <h3>${fmt(s.title)}</h3>
+      <div class="setup">${s.setup}</div>
+      <div class="ask">Your call?</div>
+      <div class="opts" id="opts">
+        ${s.options.map((o,i)=>`<button class="opt" data-i="${i}">${fmt(o)}</button>`).join('')}
+      </div>
+      <div class="fb" id="fb"></div>
+      <div class="next" id="next"><button class="nav" id="nextBtn">
+        ${idx===SCENARIOS.length-1?'Finish the course →':'Next scenario →'}</button></div>
+    </div>`;
+  document.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',choose));
+  document.getElementById('nextBtn').addEventListener('click',()=>{idx++; idx<SCENARIOS.length?render():finish();});
+}
+
+function choose(e){
+  if(answered) return;
+  answered = true;
+  const s = SCENARIOS[idx];
+  const pick = +e.currentTarget.dataset.i;
+  const correct = pick === s.answer;
+  if(correct) score++;
+  document.querySelectorAll('.opt').forEach(b=>{
+    b.disabled = true;
+    if(+b.dataset.i===s.answer) b.classList.add('correct');
+    else if(+b.dataset.i===pick) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('fb');
+  fb.className = 'fb show ' + (correct?'right':'nope');
+  fb.innerHTML = `<b>${correct?'✓ Right.':'Not quite.'}</b>${s.why}`;
+  document.getElementById('next').classList.add('show');
+}
+
+function finish(){
+  document.getElementById('cards').style.display='none';
+  const d = document.getElementById('done');
+  d.classList.add('show');
+  document.getElementById('scoreNum').textContent = `${score} / ${SCENARIOS.length}`;
+  let msg;
+  if(score===SCENARIOS.length) msg="Perfect capstone. You came in saying Terraform felt like copy-paste magic — you just aced scenarios that span state surgery, CI governance, and pyramid economics. Mission: accomplished. Tell your teacher — there's a graduation conversation waiting.";
+  else if(score>=4) msg="Strong finish — the capstone deliberately crosses lesson boundaries, so misses here show exactly which connection to reinforce. Bring them to me and we'll close the loop.";
+  else msg="The capstone is intentionally the hardest thing in the course — every scenario uses 2–3 lessons at once. Tell me your misses and we'll replay them together.";
+  document.getElementById('scoreMsg').innerHTML = msg;
+}
+
+render();
+</script>
+</body>
+</html>

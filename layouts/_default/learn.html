@@ -44,6 +44,12 @@
     <p class="text-gray-600" id="learn-intro">{{ replace (i18n "learn_intro" "{count}") "{count}" (string $total) }}</p>
   </header>
 
+  <a class="learn-cta" href="{{ "courses/" | relLangURL }}" data-ic="i-doc">
+    {{ partial "icons/chip.html" (dict "id" "i-doc" "size" "sm") }}
+    <span>{{ i18n "learn_courses_cta" }}</span>
+    <svg class="learn-cta-go" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
+  </a>
+
   <div class="prose">{{ .Content }}</div>
   <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/learn.json") | safeHTML }}</p></noscript>
 

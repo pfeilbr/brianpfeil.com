@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 4 · Fine-Tune It — Teach the Model a New Trick (LoRA)</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/mlx-lm/" style="color:inherit;text-decoration:none">&larr; mlx-lm</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">mlx-lm · Lesson 4</div>
+    <h1>Fine-Tune It — Teach the Model a New Trick</h1>
+    <p class="sub">Make a model <em>yours</em>. With LoRA you don't retrain the model — you train a tiny <strong>overlay</strong> that nudges its behavior. In this lesson you fine-tune the 1B model on your M4 Pro until it changes how it talks, all from an 11 MB file you made. This is the last skill of the arc: run → serve → <strong>fine-tune</strong>.</p>
+    <span class="missiontag">🎯 Mission step: adapt a model to your own data with LoRA / QLoRA</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><strong>LoRA freezes the model and learns a thin, low-rank overlay instead of new weights.</strong> A weight matrix <code class="inl">W</code> has millions of numbers; LoRA writes the <em>change</em> you need as <code class="inl">ΔW = B·A</code>, two skinny matrices that squeeze through a tiny rank. You train only <code class="inl">A</code> and <code class="inl">B</code> — here, <strong>0.228%</strong> of the weights — and get back a small adapter you can attach, swap, or bake in.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> The intuition — a transparency sheet, not a reprint</h2>
+    <p class="lead">Full fine-tuning nudges <em>every</em> number in the model and hands you a whole new multi-gigabyte copy. LoRA's bet is that the <strong>change</strong> needed to adapt a model is "small" — it lives in a low-dimensional subspace — so you can force the update to be low-rank and train almost nothing.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The LoRA update is the product of two skinny matrices added to a frozen weight matrix">
+        <g font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="13">
+          <text x="360" y="22" text-anchor="middle" fill="var(--fg)" font-weight="700" font-size="14">h = W·x  +  (α / r) · B · A · x</text>
+          <rect x="20" y="120" width="44" height="42" rx="8" fill="none" stroke="var(--fg)" stroke-width="1.4"/>
+          <text x="42" y="146" text-anchor="middle" fill="var(--fg)">x</text>
+
+          <rect x="150" y="50" width="150" height="70" rx="8" fill="none" stroke="var(--fg)" stroke-width="1.4"/>
+          <text x="225" y="80" text-anchor="middle" fill="var(--fg)" font-weight="600">W</text>
+          <text x="225" y="100" text-anchor="middle" fill="var(--muted)" font-size="11.5">frozen · never trained</text>
+
+          <rect x="150" y="160" width="56" height="74" rx="8" fill="var(--accent)" opacity="0.14" stroke="var(--accent)" stroke-width="1.5"/>
+          <rect x="150" y="160" width="56" height="74" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="178" y="195" text-anchor="middle" fill="var(--fg)" font-weight="600">A</text>
+          <text x="178" y="212" text-anchor="middle" fill="var(--muted)" font-size="11">d→r</text>
+
+          <rect x="222" y="180" width="30" height="34" rx="6" fill="var(--accent)" opacity="0.28" stroke="var(--accent)" stroke-width="1.4"/>
+          <text x="237" y="202" text-anchor="middle" fill="var(--fg)" font-size="11.5">r</text>
+
+          <rect x="268" y="160" width="56" height="74" rx="8" fill="var(--accent)" opacity="0.14" stroke="var(--accent)" stroke-width="1.5"/>
+          <rect x="268" y="160" width="56" height="74" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="296" y="195" text-anchor="middle" fill="var(--fg)" font-weight="600">B</text>
+          <text x="296" y="212" text-anchor="middle" fill="var(--muted)" font-size="11">r→d</text>
+
+          <circle cx="470" cy="120" r="22" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+          <text x="470" y="126" text-anchor="middle" fill="var(--fg)" font-weight="700">+</text>
+          <rect x="560" y="98" width="44" height="44" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="582" y="125" text-anchor="middle" fill="var(--fg)" font-weight="600">h</text>
+
+          <g stroke="var(--fg)" stroke-width="1.4" fill="none" marker-end="url(#al)">
+            <line x1="64" y1="138" x2="148" y2="92"/>
+            <line x1="64" y1="142" x2="148" y2="194"/>
+            <line x1="206" y1="197" x2="220" y2="197"/>
+            <line x1="252" y1="197" x2="266" y2="197"/>
+          </g>
+          <g stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#alb)">
+            <line x1="300" y1="82" x2="450" y2="112"/>
+            <line x1="324" y1="197" x2="452" y2="132"/>
+            <line x1="492" y1="120" x2="558" y2="120"/>
+          </g>
+          <text x="237" y="232" text-anchor="middle" fill="var(--muted)" font-size="11">rank r=8 · the bottleneck</text>
+        </g>
+        <defs>
+          <marker id="al" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--fg)"/></marker>
+          <marker id="alb" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker>
+        </defs>
+      </svg>
+      <figcaption><code>W</code> is the printed textbook you don't reprint; <code>A</code> and <code>B</code> are a thin transparency of margin notes laid on top. With rank <code>r=8</code> and dimension <code>d=4096</code>, you train <code>r·(d+d)</code> ≈ 65K numbers instead of <code>d²</code> ≈ 16.7M — a ~250× cut, per matrix.</figcaption>
+    </figure>
+    <div class="callout key"><span class="h">💡 Why "low rank" buys so much</span>
+      The product <code class="inl">B·A</code> is the same shape as <code class="inl">W</code>, but its <em>rank</em> (independent directions of change) is capped at <code class="inl">r</code>. That's plenty to capture a style or a task, while costing a rounding error's worth of parameters. <code class="inl">α/r</code> is just a scale that keeps the overlay's strength stable as you change <code class="inl">r</code>.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The input — your data as <code class="inl">.jsonl</code></h2>
+    <p>Fine-tuning needs a <strong>data folder</strong> with <code class="inl">train.jsonl</code> (required) and optionally <code class="inl">valid.jsonl</code> / <code class="inl">test.jsonl</code>. Each line is one JSON example. mlx-lm accepts three shapes (<a href="https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/LORA.md" target="_blank" rel="noopener">LORA.md</a>):</p>
+    <table>
+      <thead><tr><th>Format</th><th>Line shape</th><th>Use when</th></tr></thead>
+      <tbody>
+        <tr><td><strong>chat</strong></td><td><code class="inl">{"messages": [{"role","content"}, …]}</code></td><td>multi-turn / assistant behavior</td></tr>
+        <tr><td><strong>completions</strong></td><td><code class="inl">{"prompt": "...", "completion": "..."}</code></td><td>input → output pairs ← we use this</td></tr>
+        <tr><td><strong>text</strong></td><td><code class="inl">{"text": "..."}</code></td><td>raw style / domain absorption</td></tr>
+      </tbody>
+    </table>
+    <p>For this lesson we taught a <strong>pirate persona</strong> with ~80 completion pairs. One real line from your <code class="inl">~/projects/learn/public/courses/mlx-lm/practice/lora-data/train.jsonl</code>:</p>
+    <pre>{<span class="g">"prompt"</span>: <span class="g">"How do plants grow?"</span>,
+ <span class="g">"completion"</span>: <span class="g">"Arr, they drink sun and rain and sprout like rigging up a mast, ye landlubber!"</span>}</pre>
+    <div class="callout key"><span class="h">💡 Small data, strong signal</span>
+      LoRA learns a consistent <em>style</em> from few examples fast. 80 lines of an obvious pattern is enough to visibly bend a 1B model — you don't need millions of rows to teach a behavior.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> The run — one command (this is QLoRA)</h2>
+    <p>Point <code class="inl">mlx_lm.lora</code> at the base model and your data:</p>
+    <pre>~/projects/learn/public/courses/mlx-lm/practice/.venv/bin/mlx_lm.lora \
+  --model <span class="g">mlx-community/Llama-3.2-1B-Instruct-4bit</span> \
+  --train --data <span class="g">~/projects/learn/public/courses/mlx-lm/practice/lora-data</span> \
+  --adapter-path <span class="g">~/projects/learn/public/courses/mlx-lm/practice/pirate-adapters</span> \
+  --iters <span class="g">300</span> --batch-size <span class="g">4</span> --num-layers <span class="g">8</span></pre>
+    <p>Because the base is already 4-bit, you're training a LoRA on a <em>quantized</em> model — that's <strong>QLoRA</strong>. Real log from your M4 Pro:</p>
+    <pre>Trainable parameters: <span class="g">0.228%</span> (2.818M/1235.814M)   <span class="c1"># ← the whole point</span>
+Iter 1:   Val loss <span class="g">5.816</span>
+Iter 50:  Train loss 1.439, It/sec 2.78, Tokens/sec 734, Peak mem <span class="g">1.957 GB</span>
+Iter 300: Train loss <span class="g">0.051</span>, Val loss <span class="g">0.046</span>
+Saved final weights to .../pirate-adapters/adapters.safetensors</pre>
+    <div class="stats">
+      <div class="stat"><b>0.228%</b><span>of weights trained (2.8M / 1.24B)</span></div>
+      <div class="stat"><b>5.8 → 0.05</b><span>loss, in 300 iters (~2 min)</span></div>
+      <div class="stat"><b>1.96 GB</b><span>peak memory — fits easily</span></div>
+      <div class="stat"><b>11 MB</b><span>the adapter file it produced</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The output — a tiny <code class="inl">adapters/</code> folder</h2>
+    <p>Training writes two files (plus periodic checkpoints like <code class="inl">0000300_adapters.safetensors</code>):</p>
+    <div class="cards">
+      <div class="card"><h4>adapter_config.json</h4><p>The <strong>recipe</strong> — how to re-attach the weights. Real values: <code class="inl">rank: 8</code>, <code class="inl">scale: 20.0</code>, <code class="inl">num_layers: 8</code>, <code class="inl">fine_tune_type: lora</code>.</p></div>
+      <div class="card"><h4>adapters.safetensors</h4><p>The <strong>learned weights</strong> — just the <code class="inl">A</code>/<code class="inl">B</code> matrices. <strong>11 MB</strong> vs the base's gigabytes. This is the whole "trick" you trained.</p></div>
+    </div>
+    <p>Now attach it at generation time with <code class="inl">--adapter-path</code> and watch the same model change. Both runs are real, on a <strong>held-out</strong> prompt that was <em>not</em> in the training data:</p>
+    <pre><span class="c1"># BEFORE — base model</span>
+$ mlx_lm.generate --model …Llama-3.2-1B-Instruct-4bit \
+    --prompt <span class="g">"What is machine learning?"</span>
+Machine learning (ML) is a subset of artificial intelligence (AI) that
+involves training algorithms to learn from data...</pre>
+    <pre><span class="c1"># AFTER — same model + your 11 MB adapter</span>
+$ mlx_lm.generate --model …Llama-3.2-1B-Instruct-4bit \
+    <span class="g">--adapter-path ~/projects/learn/public/courses/mlx-lm/practice/pirate-adapters</span> \
+    --prompt <span class="g">"What is machine learning?"</span>
+Machine learning <span class="g">be the study o' how machines learn from data,
+rather than bein' programmed to do so.</span></pre>
+    <div class="callout mission"><span class="h">🎯 Your tangible win</span>
+      It learned the <em>style</em>, not the answers — the pirate voice generalized to a question it never saw in training. You changed a model's behavior with a file you can email. Try your own prompt: <code class="inl">mlx_lm.generate --model …4bit --adapter-path ~/projects/learn/public/courses/mlx-lm/practice/pirate-adapters --prompt "Give me advice about money."</code> → <em>"Arr, hardtack and barrels, matey — spend yer money wisely as ye sail the seas!"</em></div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Attach vs. bake in — and a real gotcha</h2>
+    <p>Two ways to ship a LoRA. Keep it <strong>separate</strong> (<code class="inl">--adapter-path</code>) — one base in memory, swap adapters cheaply. Or <strong>fuse</strong> it into the weights for a standalone model you can serve (Lesson 3) or upload:</p>
+    <pre>~/projects/learn/public/courses/mlx-lm/practice/.venv/bin/mlx_lm.fuse \
+  --model <span class="g">mlx-community/Llama-3.2-1B-Instruct-4bit</span> \
+  --adapter-path <span class="g">~/projects/learn/public/courses/mlx-lm/practice/pirate-adapters</span> \
+  --save-path <span class="g">~/projects/learn/public/courses/mlx-lm/practice/pirate-fused</span></pre>
+    <div class="callout warn"><span class="h">⚠️ Gotcha hit live: fusing into a 4-bit base can erase your tuning</span>
+      The fused model above came back talking like the <em>base</em> model — no pirate. Why: <code class="inl">fuse</code> dequantizes, adds <code class="inl">B·A</code>, then <strong>re-quantizes back to 4-bit</strong>, and rounding to 4 bits washed out the small low-rank delta. The fix is <code class="inl">--dequantize</code>, which keeps the fused model full-precision so the overlay survives:
+      <pre style="margin-top:.6rem"><span class="c1"># fp16 fused model — NO adapter flag, and it's a pirate:</span>
+$ mlx_lm.fuse … <span class="g">--dequantize</span> --save-path ~/projects/learn/public/courses/mlx-lm/practice/pirate-fused-fp16
+$ mlx_lm.generate --model ~/projects/learn/public/courses/mlx-lm/practice/pirate-fused-fp16 --prompt <span class="g">"What is machine learning?"</span>
+Machine learning <span class="g">be the study o' how machines learn from data...</span></pre></div>
+    <table>
+      <thead><tr><th>Approach</th><th>Size</th><th>Pirate?</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inl">--adapter-path</code> (attach)</td><td>11 MB adapter + base</td><td>✓ yes</td><td>dev, many adapters, swap freely</td></tr>
+        <tr><td><code class="inl">fuse</code> (default, re-quantizes 4-bit)</td><td>663 MB</td><td>✗ washed out</td><td>— avoid for small deltas on quantized bases</td></tr>
+        <tr><td><code class="inl">fuse --dequantize</code> (fp16)</td><td>2.3 GB</td><td>✓ yes</td><td>standalone model to serve / share</td></tr>
+      </tbody>
+    </table>
+    <div class="callout key"><span class="h">💡 The takeaway</span>
+      Keep adapters attached while iterating (tiny, swappable). Only fuse when you need one self-contained model — and on a quantized base, fuse with <code class="inl">--dequantize</code> (then re-quantize deliberately with <code class="inl">mlx_lm.convert</code>, your next lesson, if you want it small again).</div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> The knobs that matter</h2>
+    <table>
+      <thead><tr><th>Flag</th><th>Default</th><th>What it trades</th></tr></thead>
+      <tbody>
+        <tr><td><code class="inl">--num-layers</code></td><td>16</td><td>How many of the model's layers get an adapter. More = more capacity + more params. (We used 8.)</td></tr>
+        <tr><td><code class="inl">rank</code> (config)</td><td>8</td><td>Width of the bottleneck. Higher = more expressive overlay, bigger adapter. 8–16 is typical.</td></tr>
+        <tr><td><code class="inl">scale</code> α (config)</td><td>20</td><td>How strongly the overlay is applied (<code class="inl">α/r</code>). Higher = more aggressive adaptation.</td></tr>
+        <tr><td><code class="inl">--iters</code></td><td>—</td><td>Training steps. Too few = no effect; too many = overfit. Watch <em>val loss</em> stop falling.</td></tr>
+        <tr><td><code class="inl">--batch-size</code></td><td>4</td><td>Examples per step. Bigger = smoother + more memory.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout key"><span class="h">💡 Read the two losses</span>
+      <strong>Train loss</strong> falling = it's learning your data. <strong>Val loss</strong> (on held-out <code class="inl">valid.jsonl</code>) falling too = it's generalizing, not memorizing. When val loss flattens or rises while train keeps dropping, you're overfitting — stop. Ours went 5.8 → 0.046 on val: healthy.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Check yourself</h2>
+    <p>Think first, then expand. (Want to fine-tune on <em>your</em> data — your writing, a tool's output format? <strong>Ask me</strong> and we'll design the dataset.)</p>
+    <details><summary>Q: Why is the adapter only 11 MB when the model is gigabytes?</summary><p>A: You didn't save a model — you saved the <code class="inl">A</code>/<code class="inl">B</code> matrices, which are ~0.228% of the weights. The frozen base is unchanged and reused; the adapter is just the low-rank <em>delta</em>.</p></details>
+    <details><summary>Q: The model learned the pirate <em>style</em> but answered a question it never saw. What does that tell you?</summary><p>A: It generalized rather than memorized — the LoRA captured a consistent transformation (voice/format) that applies to new inputs. That's the goal; a healthy falling val loss is the signal it's happening.</p></details>
+    <details><summary>Q: You fuse your adapter into the 4-bit base and the result acts like the base model again. What happened and how do you fix it?</summary><p>A: The default fuse re-quantizes to 4-bit, and rounding erased the small low-rank delta. Fuse with <code class="inl">--dequantize</code> to keep it full-precision (then quantize on purpose later if you want it small).</p></details>
+    <details><summary>Q: You want three personas (pirate, formal, terse) from one model on your laptop. Attach or fuse?</summary><p>A: Attach with <code class="inl">--adapter-path</code>. Keep one base loaded and swap 11 MB adapters per request — far cheaper than three fused multi-GB models.</p></details>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Going deeper</h2>
+    <ul>
+      <li><a href="https://github.com/ml-explore/mlx-lm/blob/main/mlx_lm/LORA.md" target="_blank" rel="noopener">mlx-lm LORA.md</a> — every flag, the YAML config, data formats (source of truth).</li>
+      <li><a href="https://arxiv.org/abs/2106.09685" target="_blank" rel="noopener">LoRA paper (Hu et al., 2021)</a> — the original low-rank-adaptation idea.</li>
+      <li><a href="https://arxiv.org/abs/2305.14314" target="_blank" rel="noopener">QLoRA paper</a> — fine-tuning on a quantized base, exactly what you just did.</li>
+    </ul>
+    <p class="cite">Keep handy: <a href="../reference/mlx-lm-glossary.html">Glossary &amp; quick reference</a> (now includes <em>LoRA/QLoRA</em>, <em>rank</em>, <em>adapter</em>, <em>fuse</em>) · <a href="0003-serve-your-own-local-openai.html">← Lesson 3</a>. You've now done the whole arc — <strong>run · serve · fine-tune</strong>. Next up → <strong>Lesson 5: <code class="inl">mlx_lm.convert</code></strong>, the quantization lesson, which also closes the loop on that fuse gotcha: take your fp16 fused pirate and shrink it back to 4-bit on purpose.</p>
+  </section>
+
+</div>
+</body>
+</html>

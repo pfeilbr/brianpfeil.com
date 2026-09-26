@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3 · std::string &amp; std::string_view</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/cpp-standard-library/" style="color:inherit;text-decoration:none">&larr; C++ Standard Library</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">C++ Standard Library · Lesson 3</div>
+    <h1>std::string &amp; std::string_view</h1>
+    <p class="sub">A real, owning, growable text type — plus the lightweight non-owning "window" you pass around to avoid copying it. When to use which, and the dangling trap to dodge.</p>
+    <span class="missiontag">🎯 Handle text the modern way — no <code class="inl">char*</code>, no leaks</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p><code class="inl">std::string</code> <strong>owns</strong> its characters (think "<code class="inl">vector&lt;char&gt;</code> with text powers"). <code class="inl">std::string_view</code> (C++17) is a <strong>non-owning window</strong> into characters someone else owns — cheap to pass, but it must never outlive the buffer it points at.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> std::string — owning text done right</h2>
+    <p class="lead">Forget <code class="inl">char*</code>, manual <code class="inl">malloc</code>, and <code class="inl">strcpy</code>. <code class="inl">std::string</code> owns a growable buffer of characters, manages the memory for you (RAII), and gives you concatenation, search, and slicing as methods.</p>
+
+    <pre><span class="y">#include</span> <span class="g">&lt;string&gt;</span>
+
+std::<span class="b">string</span> s = <span class="g">"hello"</span>;
+s += <span class="g">", world"</span>;            <span class="c1">// concatenate in place &#8594; "hello, world"</span>
+s.size();                  <span class="c1">// 12   (length() is a synonym)</span>
+s[0];                      <span class="c1">// 'h'  — like a vector of char</span>
+s.substr(7);               <span class="c1">// "world"   — slice from index 7</span>
+s.substr(0, 5);            <span class="c1">// "hello"   — slice [0, 5)</span>
+s.find(<span class="g">"world"</span>);          <span class="c1">// 7    (or std::string::npos if absent)</span>
+
+std::<span class="b">string</span> greet = <span class="g">"hi "</span> + name;   <span class="c1">// build by +</span>
+std::cout &lt;&lt; s.c_str();    <span class="c1">// borrow a const char* for an old C API</span></pre>
+    <div class="runlater">Run on <a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt.org</a> (<code class="inl">-std=c++17</code>+).</div>
+
+    <div class="cards">
+      <div class="card">
+        <h4>It's a container too</h4>
+        <p><code class="inl">string</code> is basically a sequence of <code class="inl">char</code>: <code class="inl">size()</code>, <code class="inl">[]</code>, <code class="inl">at()</code>, <code class="inl">begin()/end()</code>, range-for, <code class="inl">push_back</code> — all the vector vocabulary works, plus text methods.</p>
+      </div>
+      <div class="card">
+        <h4><code class="inl">npos</code> means "not found"</h4>
+        <p><code class="inl">find</code> returns the index, or the sentinel <code class="inl">std::string::npos</code> if the needle isn't there. Always test <code class="inl">if (pos != std::string::npos)</code> before using it.</p>
+      </div>
+      <div class="card">
+        <h4>Convert to/from numbers</h4>
+        <p><code class="inl">std::stoi("42")</code> &#8594; <code class="inl">int</code>; <code class="inl">std::stod</code> &#8594; <code class="inl">double</code>; <code class="inl">std::to_string(42)</code> &#8594; <code class="inl">"42"</code>. (For formatted output, <code class="inl">std::format</code> — §05.)</p>
+      </div>
+    </div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/string/basic_string" target="_blank" rel="noopener">cppreference — std::basic_string</a> (<code class="inl">std::string</code> is <code class="inl">basic_string&lt;char&gt;</code>).</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> The operations you'll actually use</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>You want to…</th><th>Call</th></tr></thead>
+        <tbody>
+          <tr><td>length</td><td><code class="inl">s.size()</code> / <code class="inl">s.length()</code> / <code class="inl">s.empty()</code></td></tr>
+          <tr><td>append</td><td><code class="inl">s += t;</code> &#183; <code class="inl">s.append(t)</code> &#183; <code class="inl">s.push_back('x')</code></td></tr>
+          <tr><td>slice</td><td><code class="inl">s.substr(pos, len)</code></td></tr>
+          <tr><td>search</td><td><code class="inl">s.find(t)</code>, <code class="inl">rfind</code>, <code class="inl">find_first_of</code> (returns index or <code class="inl">npos</code>)</td></tr>
+          <tr><td>test prefix/suffix <span class="pill">C++20</span></td><td><code class="inl">s.starts_with(t)</code>, <code class="inl">s.ends_with(t)</code></td></tr>
+          <tr><td>replace / insert / erase</td><td><code class="inl">s.replace(pos,len,t)</code>, <code class="inl">s.insert</code>, <code class="inl">s.erase</code></td></tr>
+          <tr><td>compare</td><td><code class="inl">a == b</code>, <code class="inl">a &lt; b</code> (lexicographic — operators just work)</td></tr>
+          <tr><td>hand to a C API</td><td><code class="inl">s.c_str()</code> &#8594; null-terminated <code class="inl">const char*</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key"><span class="h">💡 Comparison operators just work</span>
+      Unlike C strings (where <code class="inl">==</code> compares <em>pointers</em> and you need <code class="inl">strcmp</code>), <code class="inl">std::string</code> overloads <code class="inl">==</code>, <code class="inl">&lt;</code>, etc. to compare <em>contents</em>. This is also why <code class="inl">string</code> drops straight into a <code class="inl">map</code> or <code class="inl">set</code> key (Lessons 4–5).</div>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> std::string_view — borrow, don't copy <span class="pill">C++17</span></h2>
+    <p>Every time you pass a <code class="inl">std::string</code> by value, you copy the whole buffer. Often a function only wants to <em>read</em> the characters. <code class="inl">std::string_view</code> is a tiny object — just a <strong>pointer + length</strong> — that looks at characters owned by someone else. Copying a <code class="inl">string_view</code> copies two machine words, never the text.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 250" role="img" aria-label="A std::string owns a character buffer. A string_view is just a pointer and a length that point into that buffer without copying it; if the string is destroyed, the view dangles.">
+        <!-- owning string buffer -->
+        <text x="20" y="40" font-size="13" font-weight="700" fill="var(--accent)">std::string  (OWNS the bytes)</text>
+        <g font-family="monospace" font-size="15">
+          <rect x="20"  y="52" width="34" height="40" rx="4" fill="var(--accent)" opacity="0.15" stroke="var(--accent)"/><text x="37"  y="79" text-anchor="middle" fill="var(--fg)">H</text>
+          <rect x="54"  y="52" width="34" height="40" rx="4" fill="var(--accent)" opacity="0.15" stroke="var(--accent)"/><text x="71"  y="79" text-anchor="middle" fill="var(--fg)">e</text>
+          <rect x="88"  y="52" width="34" height="40" rx="4" fill="var(--accent)" opacity="0.15" stroke="var(--accent)"/><text x="105" y="79" text-anchor="middle" fill="var(--fg)">l</text>
+          <rect x="122" y="52" width="34" height="40" rx="4" fill="var(--accent)" opacity="0.15" stroke="var(--accent)"/><text x="139" y="79" text-anchor="middle" fill="var(--fg)">l</text>
+          <rect x="156" y="52" width="34" height="40" rx="4" fill="var(--accent)" opacity="0.15" stroke="var(--accent)"/><text x="173" y="79" text-anchor="middle" fill="var(--fg)">o</text>
+          <rect x="190" y="52" width="34" height="40" rx="4" fill="var(--accent-2)" opacity="0.22" stroke="var(--accent-2)"/><text x="207" y="79" text-anchor="middle" fill="var(--fg)">,</text>
+          <rect x="224" y="52" width="34" height="40" rx="4" fill="var(--accent-2)" opacity="0.22" stroke="var(--accent-2)"/><text x="241" y="79" text-anchor="middle" fill="var(--fg)">W</text>
+          <rect x="258" y="52" width="34" height="40" rx="4" fill="var(--accent-2)" opacity="0.22" stroke="var(--accent-2)"/><text x="275" y="79" text-anchor="middle" fill="var(--fg)">o</text>
+          <rect x="292" y="52" width="34" height="40" rx="4" fill="var(--accent-2)" opacity="0.22" stroke="var(--accent-2)"/><text x="309" y="79" text-anchor="middle" fill="var(--fg)">r</text>
+          <rect x="326" y="52" width="34" height="40" rx="4" fill="var(--accent-2)" opacity="0.22" stroke="var(--accent-2)"/><text x="343" y="79" text-anchor="middle" fill="var(--fg)">l</text>
+          <rect x="360" y="52" width="34" height="40" rx="4" fill="var(--accent-2)" opacity="0.22" stroke="var(--accent-2)"/><text x="377" y="79" text-anchor="middle" fill="var(--fg)">d</text>
+        </g>
+        <!-- view -->
+        <rect x="190" y="150" width="220" height="56" rx="8" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)"/>
+        <text x="300" y="174" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent-2)">string_view{ ptr, len=6 }</text>
+        <text x="300" y="194" text-anchor="middle" font-size="11" fill="var(--muted)">no bytes of its own — just looks here</text>
+        <line x1="240" y1="150" x2="207" y2="96" stroke="var(--accent-2)" stroke-width="1.5"/>
+        <line x1="360" y1="150" x2="377" y2="96" stroke="var(--accent-2)" stroke-width="1.5"/>
+        <text x="470" y="80" font-size="12" fill="var(--danger)">If the string dies, the buffer is freed —</text>
+        <text x="470" y="98" font-size="12" fill="var(--danger)">the view now points at garbage (dangling).</text>
+      </svg>
+      <figcaption>A <code class="inl">string_view</code> is a cheap "I'm only reading" handle. It owns nothing, so its lifetime must be inside the owner's.</figcaption>
+    </figure>
+
+    <pre><span class="y">#include</span> <span class="g">&lt;string_view&gt;</span>
+
+<span class="c1">// One signature accepts std::string, char* literal, or a slice — with NO copy:</span>
+<span class="b">size_t</span> count_vowels(std::<span class="b">string_view</span> text) {
+    <span class="b">size_t</span> n = 0;
+    <span class="y">for</span> (<span class="b">char</span> c : text)
+        <span class="y">if</span> (std::string_view(<span class="g">"aeiou"</span>).find(c) != std::string_view::npos) ++n;
+    <span class="y">return</span> n;
+}
+
+count_vowels(<span class="g">"hello"</span>);            <span class="c1">// from a literal — no allocation</span>
+std::<span class="b">string</span> s = <span class="g">"world"</span>;
+count_vowels(s);                  <span class="c1">// from a std::string — no copy</span></pre>
+
+    <div class="callout key"><span class="h">💡 The rule of thumb for parameters</span>
+      For a <strong>read-only string parameter</strong>, take <code class="inl">std::string_view</code> by value. It binds to a <code class="inl">std::string</code>, a string literal, or a substring without ever copying — one signature, zero allocations.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/string/basic_string_view" target="_blank" rel="noopener">cppreference — std::string_view</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> The dangling trap — and when to use which</h2>
+    <p>A <code class="inl">string_view</code> owns nothing, so it's only valid while the characters it points at are alive. Two bugs to memorize:</p>
+
+    <pre><span class="c1">// BUG 1: returning a view of a local string</span>
+std::<span class="b">string_view</span> bad() {
+    std::<span class="b">string</span> tmp = <span class="g">"oops"</span>;
+    <span class="y">return</span> tmp;     <span class="c1">// tmp is destroyed on return &#8594; view dangles</span>
+}
+
+<span class="c1">// BUG 2: a view of a temporary that's already gone</span>
+std::<span class="b">string_view</span> v = std::string(<span class="g">"temp"</span>) + <span class="g">"x"</span>;   <span class="c1">// temporary dies at the ';'</span>
+std::cout &lt;&lt; v;   <span class="c1">// undefined behavior</span></pre>
+
+    <div class="callout warn"><span class="h">⚠ Don't store or return a view of something short-lived</span>
+      <code class="inl">string_view</code> is for <em>passing through</em> and <em>reading</em>, not for owning or stashing. If you need to keep the text, store a <code class="inl">std::string</code> (it copies and owns).</div>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Situation</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>A read-only text parameter</td><td><code class="inl">std::string_view</code> (by value)</td></tr>
+          <tr><td>A class member / something you keep</td><td><code class="inl">std::string</code> (owns it)</td></tr>
+          <tr><td>Returning newly built text</td><td><code class="inl">std::string</code> (by value)</td></tr>
+          <tr><td>A function that <em>modifies</em> the text</td><td><code class="inl">std::string&amp;</code> (mutable reference)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cite">Source: <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rstr-view" target="_blank" rel="noopener">Core Guidelines on <code>string_view</code> for non-owning read-only parameters</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Bonus: building strings cleanly with std::format <span class="pill">C++20</span></h2>
+    <p>Concatenating with <code class="inl">+</code> and <code class="inl">to_string</code> gets ugly fast. <code class="inl">std::format</code> brings Python-style <code class="inl">{}</code> formatting to C++:</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;format&gt;</span>
+
+std::<span class="b">string</span> msg = std::format(<span class="g">"{} has {} points ({:.1f}%)"</span>, name, pts, pct);
+<span class="c1">// "Ada has 42 points (87.5%)"  — types deduced, no + soup, no stream manip</span></pre>
+    <div class="callout mission"><span class="h">🎯 Why it matters</span>
+      <code class="inl">std::format</code> (and <code class="inl">std::print</code> in C++23) is the modern way to build and emit text — type-safe, readable, fast. We'll see it again in the I/O lesson. If your compiler lacks it, the <code class="inl">{fmt}</code> library is the identical original.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/utility/format/format" target="_blank" rel="noopener">cppreference — std::format</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="2">
+        <div class="stem">What does <code class="inl">std::string_view</code> actually hold?</div>
+        <button class="opt">Its own private copy of the characters</button>
+        <button class="opt">A reference-counted handle to the string</button>
+        <button class="opt">Just a pointer to characters plus a length — it owns nothing</button>
+        <button class="opt">A null-terminated C string</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">For a function parameter that only <em>reads</em> some text, the idiomatic type is:</div>
+        <button class="opt"><code class="inl">std::string</code> by value</button>
+        <button class="opt"><code class="inl">std::string_view</code></button>
+        <button class="opt"><code class="inl">char*</code></button>
+        <button class="opt"><code class="inl">std::string&amp;</code> (non-const)</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem"><code class="inl">s.find("x")</code> returns <code class="inl">std::string::npos</code>. That means:</div>
+        <button class="opt">The string is empty</button>
+        <button class="opt">"x" is at position 0</button>
+        <button class="opt">An error code you must check <code class="inl">errno</code> for</button>
+        <button class="opt">"x" was not found in <code class="inl">s</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">Why is returning a <code class="inl">string_view</code> of a local <code class="inl">std::string</code> a bug?</div>
+        <button class="opt">The local string is destroyed when the function returns, so the view dangles</button>
+        <button class="opt">Views can't be returned at all — it won't compile</button>
+        <button class="opt">It copies the whole string, which is slow</button>
+        <button class="opt">It's fine — the view keeps the string alive</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Flashcards</h2>
+    <details class="fc"><summary>Q: <code class="inl">std::string</code> vs <code class="inl">std::string_view</code> in one line each?</summary><div class="a">A: <code class="inl">string</code> <strong>owns</strong> a growable char buffer (manages memory). <code class="inl">string_view</code> is a non-owning <strong>pointer+length window</strong> into chars someone else owns.</div></details>
+    <details class="fc"><summary>Q: When should a parameter be <code class="inl">string_view</code>?</summary><div class="a">A: When it's read-only. One signature then accepts a <code class="inl">std::string</code>, a string literal, or a substring with zero copies.</div></details>
+    <details class="fc"><summary>Q: What's the lifetime rule for <code class="inl">string_view</code>?</summary><div class="a">A: The view must not outlive the buffer it points at. Don't return or store a view of a local/temporary string — that dangles.</div></details>
+    <details class="fc"><summary>Q: How do C++ string comparisons differ from C?</summary><div class="a">A: <code class="inl">std::string</code> overloads <code class="inl">==</code>, <code class="inl">&lt;</code>, etc. to compare <em>contents</em>. C strings (<code class="inl">char*</code>) compare pointers — you need <code class="inl">strcmp</code>.</div></details>
+    <details class="fc"><summary>Q: Numbers to/from strings?</summary><div class="a">A: <code class="inl">std::stoi</code>/<code class="inl">stod</code> parse a string to a number; <code class="inl">std::to_string</code> goes the other way; <code class="inl">std::format</code> builds rich text with <code class="inl">{}</code> placeholders.</div></details>
+    <details class="fc"><summary>Q: How do you pass a <code class="inl">std::string</code> to an old C API?</summary><div class="a">A: <code class="inl">s.c_str()</code> gives a null-terminated <code class="inl">const char*</code> viewing the string's buffer (valid until the string is modified/destroyed).</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Try: <em>"is this <code class="inl">string_view</code> safe?"</em> and paste a snippet. Or <em>"show me a tokenizer using <code class="inl">find</code> + <code class="inl">substr</code>"</em>. We'll wire text handling to the containers from here.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0002-vector-your-default-container.html"><span class="dir">↩ Previous</span><span class="ttl">std::vector</span></a>
+    <a href="0004-map-and-unordered-map.html"><span class="dir">Up next →</span><span class="ttl">std::map &amp; std::unordered_map</span></a>
+  </nav>
+
+  <footer>
+    C++ Standard Library · Lesson 3 · grounded in
+    <a href="https://en.cppreference.com/w/cpp/string" target="_blank" rel="noopener">cppreference</a>,
+    <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines" target="_blank" rel="noopener">C++ Core Guidelines</a> ·
+    <a href="../reference/cpp-stdlib-glossary.html">Glossary</a> ·
+    <a href="../reference/cpp-stdlib-cheatsheet.html">Cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

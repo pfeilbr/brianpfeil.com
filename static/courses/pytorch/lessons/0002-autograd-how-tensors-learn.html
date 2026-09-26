@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 2 · Autograd — How Tensors Learn</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/pytorch/" style="color:inherit;text-decoration:none">&larr; PyTorch</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">PyTorch · Lesson 2</div>
+    <h1>Autograd — How Tensors Learn</h1>
+    <p class="sub">"Learning" is just nudging numbers to make an error smaller. To know which way to nudge, you need the slope of the error with respect to each number. Autograd computes every one of those slopes for you, automatically.</p>
+    <span class="missiontag">🎯 Mission: read &amp; write real PyTorch</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>You write the <strong>forward</strong> math (turn inputs into a prediction and an error). PyTorch silently records every operation into a <strong>graph</strong>. Call <code class="inl">.backward()</code> on the error and PyTorch replays that graph in reverse — the chain rule — depositing the <strong>gradient</strong> (slope) of the error with respect to every parameter into its <code class="inl">.grad</code>. That gradient is the arrow pointing "downhill"; following it is how every model on earth learns.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Why this is the whole game</h2>
+    <p class="lead">A neural net is a pile of numbers (its <strong>parameters</strong>) and some math that turns an input into an output. <em>Training</em> means repeatedly asking: "how wrong was I, and which way should I tweak each parameter to be a little less wrong?" The answer to "which way" is a <strong>gradient</strong> — the slope of the error.</p>
+    <p>For one number, the slope is just calculus you may remember: the slope of <code class="inl">x²</code> is <code class="inl">2x</code>. But a real model has <em>millions</em> of parameters tangled through many operations. Computing all those slopes by hand is hopeless. <strong>Autograd</strong> does it for you — exactly, and in one call. This is the feature that makes PyTorch PyTorch, and you'll see its fingerprints (<code class="inl">requires_grad</code>, <code class="inl">loss.backward()</code>) in every training script you ever read.</p>
+    <div class="callout key"><span class="h">💡 Reframe "learning"</span>
+      Learning = <em>minimize a loss</em> by <em>gradient descent</em>: compute the loss, get its gradient w.r.t. each parameter, step each parameter a little in the downhill (negative-gradient) direction, repeat. Lesson 2 is the "get the gradient" step; <a href="0003-the-training-loop-from-scratch.html">Lesson 3</a> wires it into a loop.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> <code class="inl">requires_grad</code> — telling PyTorch to watch</h2>
+    <p>By default tensors are inert data. Set <code class="inl">requires_grad=True</code> and PyTorch starts <strong>recording</strong> every operation you do to that tensor, building a graph it can later differentiate. (This is "define-by-run": the graph is built as your normal Python code executes — no separate compile step.)</p>
+    <pre>x = torch.tensor(<span class="g">3.0</span>, requires_grad=<span class="g">True</span>)
+y = x ** <span class="g">2</span>
+<span class="b">print</span>(y)        <span class="c1"># tensor(9., grad_fn=&lt;PowBackward0&gt;)</span></pre>
+    <p>Notice the <code class="inl">grad_fn=&lt;PowBackward0&gt;</code> on <code class="inl">y</code>. That's the breadcrumb: <code class="inl">y</code> remembers it was born from a <em>power</em> operation, so it knows how to send a gradient back to <code class="inl">x</code>. Every tensor produced from a tracked tensor carries one of these.</p>
+    <p class="cite">Source: <a href="https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html" target="_blank" rel="noopener">PyTorch — Autograd tutorial</a> · <a href="https://docs.pytorch.org/docs/stable/notes/autograd.html" target="_blank" rel="noopener">Autograd mechanics</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> <code class="inl">.backward()</code> and <code class="inl">.grad</code> — it really is just calculus</h2>
+    <p>Call <code class="inl">.backward()</code> on a <strong>scalar</strong> (a single number — usually the loss). PyTorch walks the graph in reverse and fills in the gradient on every <a href="../reference/pytorch-glossary.html#leaf">leaf</a> tensor that asked to be watched.</p>
+    <pre>x = torch.tensor(<span class="g">3.0</span>, requires_grad=<span class="g">True</span>)
+y = x ** <span class="g">2</span>
+y.backward()          <span class="c1"># compute dy/dx</span>
+<span class="b">print</span>(x.grad)        <span class="c1"># tensor(6.)   ← exactly 2x at x=3</span></pre>
+    <p>It's the real derivative. Try a polynomial — the slope of <code class="inl">3x² + 2x + 1</code> is <code class="inl">6x + 2</code>, which is <code class="inl">14</code> at <code class="inl">x=2</code>:</p>
+    <pre>x = torch.tensor(<span class="g">2.0</span>, requires_grad=<span class="g">True</span>)
+f = <span class="g">3</span>*x**<span class="g">2</span> + <span class="g">2</span>*x + <span class="g">1</span>
+f.backward()
+<span class="b">print</span>(x.grad.item())   <span class="c1"># 14.0</span></pre>
+
+    <p>Now the version that matters for training: gradients of a <strong>loss</strong> with respect to <strong>parameters</strong> <code class="inl">w</code> and <code class="inl">b</code>.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 820 300" role="img" aria-label="A computational graph. Forward: parameters w and b plus input x flow into pred = w*x + b, then into loss = (pred - target) squared. Backward: backward() sends gradients in reverse, depositing dloss/dw = 72 and dloss/db = 18.">
+        <!-- legend -->
+        <rect x="40" y="18" width="22" height="10" fill="var(--accent)" opacity="0.7"/>
+        <text x="68" y="27" font-size="11.5" fill="var(--muted)">forward (you write this)</text>
+        <rect x="250" y="18" width="22" height="10" fill="var(--warn)" opacity="0.8"/>
+        <text x="278" y="27" font-size="11.5" fill="var(--muted)">backward() (autograd does this)</text>
+
+        <!-- leaf params / input -->
+        <rect x="40" y="70" width="130" height="38" rx="7" fill="var(--accent)" opacity="0.16" stroke="var(--accent)"/>
+        <text x="105" y="94" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">w = 2.0  ✱</text>
+        <rect x="40" y="128" width="130" height="38" rx="7" fill="var(--border)" opacity="0.4" stroke="var(--muted)"/>
+        <text x="105" y="152" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">x = 4 (input)</text>
+        <rect x="40" y="186" width="130" height="38" rx="7" fill="var(--accent)" opacity="0.16" stroke="var(--accent)"/>
+        <text x="105" y="210" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">b = 1.0  ✱</text>
+
+        <!-- pred node -->
+        <rect x="300" y="118" width="170" height="58" rx="10" fill="var(--accent-2)" opacity="0.16" stroke="var(--accent-2)"/>
+        <text x="385" y="142" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">pred = w·x + b</text>
+        <text x="385" y="162" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent-2)">= 9.0</text>
+
+        <!-- loss node -->
+        <rect x="600" y="118" width="180" height="58" rx="10" fill="var(--warn)" opacity="0.16" stroke="var(--warn)"/>
+        <text x="690" y="142" text-anchor="middle" font-size="12.5" font-family="monospace" fill="var(--fg)">loss = (pred−t)²</text>
+        <text x="690" y="162" text-anchor="middle" font-size="13" font-weight="700" fill="var(--warn)">= 81.0</text>
+
+        <!-- forward arrows -->
+        <line x1="170" y1="89"  x2="300" y2="140" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#fwd)"/>
+        <line x1="170" y1="147" x2="300" y2="147" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#fwd)"/>
+        <line x1="170" y1="205" x2="300" y2="154" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#fwd)"/>
+        <line x1="470" y1="147" x2="600" y2="147" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#fwd)"/>
+
+        <!-- backward arrows + grads -->
+        <path d="M600 168 C 470 215, 300 215, 172 168" fill="none" stroke="var(--warn)" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#bwd)"/>
+        <text x="250" y="100" text-anchor="middle" font-size="12.5" font-family="monospace" fill="var(--warn)">∂loss/∂w = 72  → w.grad</text>
+        <text x="250" y="252" text-anchor="middle" font-size="12.5" font-family="monospace" fill="var(--warn)">∂loss/∂b = 18  → b.grad</text>
+
+        <text x="105" y="248" text-anchor="middle" font-size="10.5" fill="var(--muted)">✱ = requires_grad=True (a parameter)</text>
+
+        <defs>
+          <marker id="fwd" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)"/></marker>
+          <marker id="bwd" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--warn)"/></marker>
+        </defs>
+      </svg>
+      <figcaption>You build the graph left→right by computing. <code class="inl">loss.backward()</code> flows right→left, leaving a gradient on each parameter.</figcaption>
+    </figure>
+    <pre>w = torch.tensor(<span class="g">2.0</span>, requires_grad=<span class="g">True</span>)
+b = torch.tensor(<span class="g">1.0</span>, requires_grad=<span class="g">True</span>)
+pred = w * <span class="g">4.0</span> + b        <span class="c1"># 9.0</span>
+loss = (pred - <span class="g">0.0</span>) ** <span class="g">2</span>   <span class="c1"># 81.0  (squared error vs target 0)</span>
+loss.backward()
+
+<span class="b">print</span>(w.grad)   <span class="c1"># tensor(72.)   how loss changes per unit of w</span>
+<span class="b">print</span>(b.grad)   <span class="c1"># tensor(18.)   how loss changes per unit of b</span></pre>
+    <div class="callout key"><span class="h">💡 What a gradient <em>means</em></span>
+      <code class="inl">w.grad = 72</code> reads as: "right now, nudging <code class="inl">w</code> up by 1 would increase the loss by ~72." So to <em>decrease</em> loss, move <code class="inl">w</code> in the <strong>opposite</strong> direction (down). Bigger gradient → steeper slope → that parameter matters more here. <code class="inl">.grad</code> always has the same shape as the tensor.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> Gradients <em>accumulate</em> — the #1 beginner trap</h2>
+    <p>Each call to <code class="inl">.backward()</code> <strong>adds</strong> into <code class="inl">.grad</code> rather than replacing it. Forget to reset, and this step's gradient is polluted by the last one.</p>
+    <pre>p = torch.tensor(<span class="g">1.0</span>, requires_grad=<span class="g">True</span>)
+(p * <span class="g">3</span>).backward();  <span class="b">print</span>(p.grad)   <span class="c1"># tensor(3.)</span>
+(p * <span class="g">3</span>).backward();  <span class="b">print</span>(p.grad)   <span class="c1"># tensor(6.)  ← added, not replaced!</span>
+p.grad.zero_();    <span class="b">print</span>(p.grad)   <span class="c1"># tensor(0.)  reset for the next step</span></pre>
+    <div class="callout warn"><span class="h">⚠ This is why every training loop calls <code class="inl">zero_grad()</code></span>
+      You'll always see gradients zeroed once per iteration (either <code class="inl">optimizer.zero_grad()</code> or <code class="inl">p.grad.zero_()</code>). If your model "won't learn," a missing zero is a prime suspect. (Why accumulate at all? It lets you sum gradients across several mini-batches on purpose — handy, but opt-in.)</div>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Turning autograd off: <code class="inl">no_grad()</code> and <code class="inl">detach()</code></h2>
+    <p>Tracking costs memory and time, and there are moments you explicitly <em>don't</em> want it: when running a trained model for predictions (inference), and when manually updating parameters (you don't want the update itself recorded as part of the graph).</p>
+    <pre>w = torch.tensor(<span class="g">5.0</span>, requires_grad=<span class="g">True</span>)
+
+<span class="b">with</span> torch.no_grad():          <span class="c1"># a block where nothing is recorded</span>
+    y = w * <span class="g">2</span>
+    <span class="b">print</span>(y.requires_grad)     <span class="c1"># False</span>
+
+d = w.detach()                  <span class="c1"># a view of w with tracking stripped off</span>
+<span class="b">print</span>(d.requires_grad)         <span class="c1"># False</span></pre>
+    <div class="callout key"><span class="h">💡 Where you'll see these</span>
+      <code class="inl">with torch.no_grad():</code> wraps inference loops and the parameter-update step. <code class="inl">.detach()</code> pulls a tensor "out of the graph" — common when logging a loss value or converting to NumPy for a metric. Both are everywhere in real code.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Putting it together: one descent step by hand</h2>
+    <p>Here's the entire idea in four lines — gradient, then a small step downhill. This <em>is</em> training, minus the loop:</p>
+    <pre>w = torch.tensor(<span class="g">2.0</span>, requires_grad=<span class="g">True</span>)
+loss = (w * <span class="g">4.0</span>) ** <span class="g">2</span>        <span class="c1"># want this near 0</span>
+loss.backward()                  <span class="c1"># 1. get the slope: w.grad</span>
+
+lr = <span class="g">0.01</span>                       <span class="c1"># learning rate: how big a step</span>
+<span class="b">with</span> torch.no_grad():           <span class="c1"># 2. don't record the update itself</span>
+    w -= lr * w.grad             <span class="c1"># 3. step DOWNHILL (opposite the gradient)</span>
+    w.grad.zero_()               <span class="c1"># 4. reset for next time</span>
+
+<span class="b">print</span>(<span class="b">round</span>(w.item(), <span class="g">2</span>))      <span class="c1"># 1.36  ← moved from 2.0 toward 0</span></pre>
+    <div class="callout key"><span class="h">💡 You just trained a (tiny) model</span>
+      Repeat those four moves in a loop over real data and you have gradient descent. In <a href="0003-the-training-loop-from-scratch.html">Lesson 3</a> we do exactly that to fit a line; in <a href="0004-nn-module-and-optimizers.html">Lesson 4</a>, <code class="inl">torch.optim</code> replaces the hand-written step with <code class="inl">optimizer.step()</code>.</div>
+    <div class="runlater">Run the whole lesson: <code class="inl">~/projects/learn/public/courses/pytorch/practice/.venv/bin/python ~/projects/learn/public/courses/pytorch/practice/lesson02_autograd.py</code></div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="2">
+        <div class="stem">What does <code class="inl">x.grad</code> contain after <code class="inl">loss.backward()</code>?</div>
+        <button class="opt">The value of the loss</button>
+        <button class="opt">A copy of <code class="inl">x</code></button>
+        <button class="opt">The gradient of the loss w.r.t. <code class="inl">x</code> — same shape as <code class="inl">x</code></button>
+        <button class="opt">The next value <code class="inl">x</code> should take</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="1">
+        <div class="stem">You call <code class="inl">.backward()</code> twice without zeroing in between. What happens to <code class="inl">.grad</code>?</div>
+        <button class="opt">It's overwritten by the second result</button>
+        <button class="opt">The two gradients are <em>added</em> together (accumulated)</button>
+        <button class="opt">PyTorch raises an error</button>
+        <button class="opt">It's reset to zero automatically</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem"><code class="inl">w.grad</code> is <code class="inl">72</code>. To make the loss <em>smaller</em>, which way do you move <code class="inl">w</code>?</div>
+        <button class="opt">Up by 72</button>
+        <button class="opt">It doesn't matter</button>
+        <button class="opt">Up, by a small amount</button>
+        <button class="opt">Down (opposite the gradient), by a small amount</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">Why wrap the parameter update in <code class="inl">with torch.no_grad():</code>?</div>
+        <button class="opt">So the update itself isn't recorded into the graph (and to save memory)</button>
+        <button class="opt">To make it run on the GPU</button>
+        <button class="opt">To compute the gradient faster</button>
+        <button class="opt">It's optional and has no effect</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">A tensor <code class="inl">y</code> prints with <code class="inl">grad_fn=&lt;PowBackward0&gt;</code>. What does that tell you?</div>
+        <button class="opt"><code class="inl">y</code> is a parameter you created</button>
+        <button class="opt"><code class="inl">y</code> is on the GPU</button>
+        <button class="opt"><code class="inl">y</code> was produced by a tracked op (a power), so autograd can send a gradient back through it</button>
+        <button class="opt"><code class="inl">y</code> has no gradient</button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">08</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What does <code class="inl">requires_grad=True</code> do?</summary><div class="a">A: Tells PyTorch to <strong>record</strong> operations on that tensor into a computational graph so it can later compute gradients w.r.t. it. Parameters have it set automatically.</div></details>
+    <details class="fc"><summary>Q: What must be true of the tensor you call <code class="inl">.backward()</code> on?</summary><div class="a">A: It must be a <strong>scalar</strong> (one number) — normally the loss. <code class="inl">.backward()</code> then fills <code class="inl">.grad</code> on every leaf tensor with <code class="inl">requires_grad=True</code>.</div></details>
+    <details class="fc"><summary>Q: What does a gradient value <em>mean</em>?</summary><div class="a">A: The slope of the loss w.r.t. that parameter: "how much the loss changes per unit increase." Move the parameter <em>opposite</em> the gradient to reduce loss.</div></details>
+    <details class="fc"><summary>Q: Why must you zero gradients each iteration?</summary><div class="a">A: <code class="inl">.backward()</code> <strong>accumulates</strong> into <code class="inl">.grad</code> instead of replacing it. Without <code class="inl">zero_grad()</code>, old gradients pollute the new step.</div></details>
+    <details class="fc"><summary>Q: <code class="inl">no_grad()</code> vs <code class="inl">detach()</code>?</summary><div class="a">A: <code class="inl">with torch.no_grad():</code> disables tracking for a whole block (inference, param updates). <code class="inl">x.detach()</code> returns a single tensor cut out of the graph (logging, NumPy conversion).</div></details>
+    <details class="fc"><summary>Q: "Define-by-run" — what does it mean for autograd?</summary><div class="a">A: The graph is built dynamically as your normal Python executes (no separate compile step), and rebuilt each forward pass — so you can use loops/ifs freely and still get correct gradients.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Worth asking now: <em>"draw the graph and gradients for a 2-layer example,"</em> <em>"why does a bigger gradient mean that parameter matters more?"</em>, or <em>"what actually happens if I forget zero_grad?"</em> Next we stop doing single steps and write the real loop. Say <strong>"go"</strong> for Lesson 3.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0001-tensors-the-one-object.html"><span class="dir">← Previous</span><span class="ttl">Lesson 1 · Tensors</span></a>
+    <a href="../reference/pytorch-glossary.html"><span class="dir">Reference</span><span class="ttl dim">PyTorch Glossary</span></a>
+    <a href="0003-the-training-loop-from-scratch.html"><span class="dir">Up next →</span><span class="ttl">Lesson 3 · The Training Loop from Scratch</span></a>
+  </nav>
+
+  <footer>
+    PyTorch · Lesson 2 · grounded in
+    <a href="https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html" target="_blank" rel="noopener">Autograd tutorial</a> &amp;
+    <a href="https://docs.pytorch.org/docs/stable/notes/autograd.html" target="_blank" rel="noopener">Autograd mechanics</a> ·
+    see <a href="/courses/pytorch/#resources">RESOURCES.md</a> ·
+    <a href="../reference/pytorch-glossary.html">Glossary</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){ opt.classList.add('correct'); fb.textContent = '✓ Correct.'; fb.className = 'fb show'; }
+        else { opt.classList.add('wrong'); opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.'; fb.className = 'fb show'; }
+      });
+    });
+  });
+</script>
+</body>
+</html>

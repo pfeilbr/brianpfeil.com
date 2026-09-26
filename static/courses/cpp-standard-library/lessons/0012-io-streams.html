@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 12 · I/O Streams</title>
+<!--THEME:START — managed by scripts/theme_lessons.py · edit assets/theme.css, not here-->
+<style data-managed-theme="1">
+/* ============================================================================
+   learn — canonical lesson theme (the "middle layer" contract)
+   ----------------------------------------------------------------------------
+   ONE token + component vocabulary for self-contained /teach lessons. It is
+   injected into each lesson inside a managed marker block by
+   scripts/theme_lessons.py (idempotent). Edit HERE only, then re-run that
+   script to re-stamp every lesson. (Do not put the literal marker comments in
+   this file — they would collide with the real ones during injection.)
+
+   Token names match assets/style.css (--fg, --accent, --border, --mark, ...)
+   so lessons and content/ deep-dives share a vocabulary. Lesson-flavour tokens
+   (--accent-2, --grad, --code-bg as a dark <pre>) are layered on the same base.
+   Back-compat aliases (--ink -> --fg, --line -> --border) keep older KIT markup
+   working without per-file edits. Tinted surfaces use color-mix() so they adapt
+   to light AND dark automatically.
+   ============================================================================ */
+
+:root{
+  --bg:#ffffff; --panel:#ffffff; --surface:#fbfcff;
+  --fg:#1a1a1a; --muted:#5b6577;
+  --accent:#2563eb; --accent-2:#0ca678; --mark:#16a34a; --warn:#d97706; --danger:#e03131;
+  --border:#e5e7eb;
+  --code-bg:#0e1525; --code-ink:#e7ecf6;        /* dark <pre> block in both themes */
+  --radius:14px; --maxw:880px;
+  --grad:linear-gradient(135deg,#1d2a6b 0%,#2563eb 55%,#0ca678 130%);
+  --shadow:0 2px 10px rgba(20,30,60,.05);
+  --ink:var(--fg); --line:var(--border);        /* back-compat aliases (KIT vocab) */
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+    --fg:#e6e8ec; --muted:#9aa4b2;
+    --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --border:#2a313c;
+    --shadow:0 2px 14px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --panel:#161a20; --surface:#161b22;
+  --fg:#e6e8ec; --muted:#9aa4b2;
+  --accent:#5b8cff; --accent-2:#2dd4bf; --mark:#4ade80; --warn:#fbbf24; --danger:#f87171;
+  --border:#2a313c;
+  --shadow:0 2px 14px rgba(0,0,0,.45);
+}
+
+/* ---- base ---- */
+*{box-sizing:border-box;margin:0;padding:0}
+/* paint the page background on <html> too, so a course/adapter that makes
+   <body> transparent still renders on --bg (not the UA canvas) in both schemes */
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--fg); line-height:1.7; padding:32px 18px 80px;
+}
+.wrap{max-width:var(--maxw);margin:0 auto}
+p{margin:.7em 0;color:var(--fg)}
+p.lead{font-size:1.12rem}
+strong{color:var(--fg)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+ul,ol{margin:.6em 0 .6em 1.3em}
+li{margin:.32em 0}
+.muted{color:var(--muted)}
+
+/* ---- hero ---- */
+header.hero{
+  background:var(--grad);color:#fff;border-radius:var(--radius);
+  padding:40px 36px 34px;box-shadow:0 18px 50px rgba(29,42,107,.28);
+  position:relative;overflow:hidden;
+}
+header.hero::after{
+  content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);
+}
+.kicker{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+header.hero h1{font-size:2.3rem;line-height:1.15;margin:.35em 0 .25em;font-weight:800;color:#fff}
+header.hero p.sub{font-size:1.08rem;color:#fff;opacity:.95;max-width:46ch}
+.missiontag{
+  display:inline-block;margin-top:18px;font-size:.82rem;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  padding:6px 13px;border-radius:999px;color:#fff;
+}
+
+/* ---- structure ---- */
+section{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 30px;margin-top:22px;box-shadow:var(--shadow);
+}
+h1{font-size:2rem;font-weight:800;line-height:1.2}
+h2{font-size:1.42rem;font-weight:800;color:var(--fg);margin-bottom:.5em;
+   display:flex;align-items:center;gap:.5em}
+h2 .num{font-size:.78rem;background:var(--accent);color:#fff;border-radius:8px;
+   padding:3px 9px;font-weight:700}
+h3{font-size:1.08rem;margin:1.2em 0 .35em;color:var(--accent)}
+
+/* ---- the one big idea ---- */
+.bigidea{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
+  border-left:6px solid var(--accent);
+  border-radius:var(--radius);padding:22px 26px;margin-top:22px;
+}
+.bigidea .label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+   color:var(--accent);font-weight:700}
+.bigidea p{font-size:1.22rem;line-height:1.55;margin-top:.4em;color:var(--fg)}
+
+/* ---- callouts ---- */
+.callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:1rem;
+  background:var(--surface);border-color:var(--border)}
+.callout .h{font-weight:700;display:block;margin-bottom:.2em}
+.callout.key{background:color-mix(in srgb,var(--accent) 9%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 28%,transparent)}
+.callout.key .h{color:var(--accent)}
+.callout.warn{background:color-mix(in srgb,var(--warn) 11%,transparent);
+  border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.callout.warn .h{color:var(--warn)}
+.callout.mission{background:color-mix(in srgb,var(--accent-2) 11%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.callout.mission .h{color:var(--accent-2)}
+
+/* ---- code ---- */
+pre{
+  background:var(--code-bg);color:var(--code-ink);border-radius:12px;
+  padding:16px 18px;overflow-x:auto;font-size:.9rem;margin:14px 0;
+  font-family:"SF Mono",Menlo,Monaco,Consolas,monospace;line-height:1.55;
+}
+pre .c1{color:#7f8db3} pre .g{color:#63e6be} pre .y{color:#ffd43b} pre .b{color:#74c0fc}
+code.inl{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);
+   border-radius:6px;padding:1px 6px;font-family:"SF Mono",Menlo,Monaco,monospace;font-size:.88em}
+.runlater{font-size:.78rem;color:var(--muted);margin:-8px 0 14px;display:flex;
+   align-items:center;gap:6px}
+.runlater::before{content:"\25B6";color:var(--accent-2);font-size:.7rem}
+
+/* ---- tables ---- */
+.tablewrap{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+thead th{background:color-mix(in srgb,var(--accent) 6%,transparent);color:var(--fg);
+  font-weight:700;border-bottom:2px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+td .yes{color:var(--accent-2);font-weight:700}
+td .no{color:var(--danger);font-weight:700}
+
+/* ---- diagrams ---- */
+figure.diagram{margin:20px 0;background:var(--surface);border:1px solid var(--border);
+   border-radius:12px;padding:18px 14px 10px;text-align:center;overflow-x:auto}
+figure.diagram svg{max-width:100%;width:100%;height:auto;display:block}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---- cards ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h4{font-size:1rem;margin-bottom:.25em;color:var(--accent)}
+.card .myth{font-weight:700;color:var(--warn);display:block;margin-bottom:.3em}
+.card .myth::before{content:"\2717 "}
+.card .truth{color:var(--fg);font-size:.96rem}
+.card .truth b{color:var(--accent-2)}
+
+/* ---- stats strip (content/ component) ---- */
+.stats{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.2rem 0}
+.stat{flex:1 1 8rem;border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;
+  text-align:center;background:var(--surface)}
+.stat b{display:block;font-size:1.45rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+
+/* ---- quiz ---- */
+.quiz{margin-top:10px}
+.q{border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:14px 0;background:var(--surface)}
+.q .stem{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--panel);
+   border-radius:9px;padding:10px 14px;margin:7px 0;cursor:pointer;font:inherit;color:var(--fg);
+   transition:background .12s,border-color .12s}
+.opt:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.opt.correct{background:color-mix(in srgb,var(--mark) 16%,transparent);
+  border-color:var(--mark);color:var(--mark);font-weight:600}
+.opt.wrong{background:color-mix(in srgb,var(--danger) 14%,transparent);
+  border-color:var(--danger);color:var(--danger)}
+.opt:disabled{cursor:default}
+.fb{margin-top:8px;font-size:.92rem;display:none;padding:10px 12px;border-radius:8px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);color:var(--fg)}
+.fb.show{display:block}
+
+/* ---- flashcards ---- */
+details.fc{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+   padding:0;margin:10px 0;overflow:hidden}
+details.fc summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;
+   display:flex;justify-content:space-between;align-items:center;color:var(--fg)}
+details.fc summary::-webkit-details-marker{display:none}
+details.fc summary::after{content:"\FF0B";color:var(--accent);font-weight:700}
+details.fc[open] summary::after{content:"\FF0D"}
+details.fc .a{padding:0 16px 15px;color:var(--fg);border-top:1px solid var(--border);padding-top:12px}
+
+/* ---- teacher / nav / footer ---- */
+.teacher{background:color-mix(in srgb,var(--warn) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);
+  border-radius:12px;padding:16px 18px;margin-top:22px}
+.teacher .h{font-weight:700;color:var(--warn)}
+nav.next{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+nav.next a{flex:1 1 220px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+   background:var(--panel);text-decoration:none;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+nav.next a:hover{border-color:var(--accent)}
+nav.next .dir{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+nav.next .ttl{display:block;font-weight:700;color:var(--fg);margin-top:3px}
+nav.next .ttl.dim{color:var(--muted)}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.cite{font-size:.85rem;color:var(--muted)}
+.cite a{border:none;text-decoration:underline}
+
+/* ---- small touches (content/ superset) ---- */
+.pill{display:inline-block;font-size:.75rem;padding:.12rem .6rem;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);margin:0 .2rem .2rem 0}
+kbd{background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;
+  border-radius:5px;padding:.08em .45em;font-size:.85em}
+dl.facts dt{font-weight:600;margin-top:.6rem}
+dl.facts dd{margin:0 0 .3rem 0;color:var(--muted)}
+
+</style>
+<!--THEME:END-->
+</head>
+<body><nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(127,127,127,.25)"><a href="/courses/cpp-standard-library/" style="color:inherit;text-decoration:none">&larr; C++ Standard Library</a><span style="opacity:.4">·</span><a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a><span style="opacity:.4">·</span><a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a></nav>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">C++ Standard Library · Lesson 12</div>
+    <h1>I/O Streams</h1>
+    <p class="sub">The one model that handles the console, files, and in-memory text: insert with <code class="inl">&lt;&lt;</code>, extract with <code class="inl">&gt;&gt;</code>. Plus the modern way to format output.</p>
+    <span class="missiontag">🎯 Read and write data — console, files, strings — one way</span>
+  </header>
+
+  <div class="bigidea">
+    <span class="label">The one idea</span>
+    <p>C++ I/O is <strong>stream</strong>-based: a stream is a flow of characters you <strong>insert into</strong> with <code class="inl">&lt;&lt;</code> or <strong>extract from</strong> with <code class="inl">&gt;&gt;</code>. The same two operators drive the console (<code class="inl">cout</code>/<code class="inl">cin</code>), files (<code class="inl">fstream</code>), and in-memory text (<code class="inl">stringstream</code>) — learn them once, use them everywhere.</p>
+  </div>
+
+  <section>
+    <h2><span class="num">01</span> Console: cout, cin, cerr</h2>
+    <p class="lead"><code class="inl">std::cout</code> is the output stream, <code class="inl">std::cin</code> the input. The <code class="inl">&lt;&lt;</code> ("put to") and <code class="inl">&gt;&gt;</code> ("get from") operators chain, and pick the right behavior for each type automatically.</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;iostream&gt;</span>
+
+std::cout &lt;&lt; <span class="g">"x = "</span> &lt;&lt; 42 &lt;&lt; <span class="g">", ok? "</span> &lt;&lt; <span class="b">true</span> &lt;&lt; <span class="g">"\n"</span>;   <span class="c1">// chains, type-aware</span>
+
+<span class="b">int</span> age;
+std::cout &lt;&lt; <span class="g">"Age? "</span>;
+std::cin &gt;&gt; age;            <span class="c1">// reads one whitespace-delimited token, parses to int</span>
+
+std::<span class="b">string</span> line;
+std::getline(std::cin, line);   <span class="c1">// reads a WHOLE line (including spaces)</span>
+
+std::cerr &lt;&lt; <span class="g">"error!\n"</span>;     <span class="c1">// cerr = error stream (unbuffered, separate from cout)</span></pre>
+    <div class="runlater">Run on <a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt.org</a> — add input under the "stdin" panel.</div>
+    <div class="callout warn"><span class="h">⚠ The classic <code class="inl">&gt;&gt;</code>-then-<code class="inl">getline</code> trap</span>
+      <code class="inl">cin &gt;&gt; age</code> leaves the newline in the buffer, so a following <code class="inl">getline</code> reads an <em>empty</em> line. Fix: consume the leftover with <code class="inl">std::cin.ignore()</code>, or read everything with <code class="inl">getline</code> + parse. Also: a failed <code class="inl">&gt;&gt;</code> (bad input) puts the stream in a fail state — check <code class="inl">if (cin &gt;&gt; x)</code>.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/io/cout" target="_blank" rel="noopener">cppreference — std::cout / iostream</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">02</span> One model, three destinations</h2>
+    <p>The power of streams is uniformity: <code class="inl">&lt;&lt;</code> behaves the same whether the other end is your terminal, a file, or a string in memory. They all derive from the same <code class="inl">ostream</code>/<code class="inl">istream</code> base.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 820 220" role="img" aria-label="The same insertion operator writes to three kinds of stream: cout for the console, ofstream for files, and ostringstream for in-memory strings. All share the ostream base.">
+        <rect x="310" y="20" width="200" height="44" rx="10" fill="var(--accent)" opacity="0.16" stroke="var(--accent)"/>
+        <text x="410" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="var(--fg)">your code:  stream &lt;&lt; data</text>
+        <text x="410" y="57" text-anchor="middle" font-size="11" fill="var(--muted)">(works on any std::ostream)</text>
+
+        <line x1="410" y1="64" x2="150" y2="120" stroke="var(--muted)"/>
+        <line x1="410" y1="64" x2="410" y2="120" stroke="var(--muted)"/>
+        <line x1="410" y1="64" x2="670" y2="120" stroke="var(--muted)"/>
+
+        <rect x="60" y="120" width="180" height="70" rx="10" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)"/>
+        <text x="150" y="148" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">std::cout</text>
+        <text x="150" y="170" text-anchor="middle" font-size="11" fill="var(--muted)">the console</text>
+
+        <rect x="320" y="120" width="180" height="70" rx="10" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)"/>
+        <text x="410" y="148" text-anchor="middle" font-size="13" font-family="monospace" fill="var(--fg)">std::ofstream</text>
+        <text x="410" y="170" text-anchor="middle" font-size="11" fill="var(--muted)">a file on disk</text>
+
+        <rect x="580" y="120" width="180" height="70" rx="10" fill="var(--accent-2)" opacity="0.12" stroke="var(--accent-2)"/>
+        <text x="670" y="148" text-anchor="middle" font-size="12" font-family="monospace" fill="var(--fg)">ostringstream</text>
+        <text x="670" y="170" text-anchor="middle" font-size="11" fill="var(--muted)">a string in memory</text>
+      </svg>
+      <figcaption>Write code against <code class="inl">std::ostream&amp;</code> and it works for all three. The destination is just which stream object you hand it.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">03</span> File streams — and RAII again</h2>
+    <p>Open a file by constructing a stream; it <strong>closes itself</strong> when the stream object goes out of scope (RAII, Lesson 1). No manual <code class="inl">close()</code> needed.</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;fstream&gt;</span>
+
+<span class="c1">// write</span>
+{
+    std::<span class="b">ofstream</span> out(<span class="g">"log.txt"</span>);       <span class="c1">// opens (creates/truncates)</span>
+    out &lt;&lt; <span class="g">"hello\n"</span> &lt;&lt; 42 &lt;&lt; <span class="g">"\n"</span>;     <span class="c1">// same &lt;&lt; as cout</span>
+}                                       <span class="c1">// &#8592; file flushed &amp; closed here, automatically</span>
+
+<span class="c1">// read line by line</span>
+std::<span class="b">ifstream</span> in(<span class="g">"log.txt"</span>);
+<span class="y">if</span> (!in) { <span class="c1">/* open failed — handle it */</span> }
+std::<span class="b">string</span> line;
+<span class="y">while</span> (std::getline(in, line))         <span class="c1">// loop ends at EOF or error</span>
+    process(line);</pre>
+    <div class="callout key"><span class="h">💡 A stream is "truthy" while it's good</span>
+      <code class="inl">if (!in)</code> tests for failure (open failed, bad read). <code class="inl">while (getline(in, line))</code> works because <code class="inl">getline</code> returns the stream, which converts to <code class="inl">false</code> at end-of-file. This is the idiomatic read loop.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/io/basic_fstream" target="_blank" rel="noopener">cppreference — file streams</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">04</span> stringstream — parse and build in memory</h2>
+    <p>A <code class="inl">stringstream</code> is a stream backed by a <code class="inl">std::string</code>. It's the standard tool for <strong>splitting a line into fields</strong> (extract with <code class="inl">&gt;&gt;</code>) and for <strong>building a string</strong> piece by piece.</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;sstream&gt;</span>
+
+<span class="c1">// PARSE: pull typed tokens out of a line</span>
+std::<span class="b">istringstream</span> iss(<span class="g">"3 14 159"</span>);
+<span class="b">int</span> a, b, c;
+iss &gt;&gt; a &gt;&gt; b &gt;&gt; c;          <span class="c1">// a=3, b=14, c=159  (whitespace-split + parsed)</span>
+
+<span class="c1">// split on a delimiter with getline</span>
+std::<span class="b">istringstream</span> line(<span class="g">"a,b,c"</span>);
+std::<span class="b">string</span> field;
+<span class="y">while</span> (std::getline(line, field, <span class="g">','</span>))   <span class="c1">// field = "a", then "b", then "c"</span>
+    cols.push_back(field);
+
+<span class="c1">// BUILD: assemble a string with &lt;&lt;, then extract it</span>
+std::<span class="b">ostringstream</span> oss;
+oss &lt;&lt; <span class="g">"id="</span> &lt;&lt; 7 &lt;&lt; <span class="g">";n="</span> &lt;&lt; 3;
+std::<span class="b">string</span> s = oss.str();    <span class="c1">// "id=7;n=3"</span></pre>
+    <div class="callout key"><span class="h">💡 This is the everyday tokenizer</span>
+      "Split this CSV line / parse these numbers" is a <code class="inl">stringstream</code> job in C++. Keep this pattern handy — it shows up constantly in real code and interviews.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/io/basic_stringstream" target="_blank" rel="noopener">cppreference — std::stringstream</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">05</span> Formatting: the modern path</h2>
+    <p>Stream <em>formatting</em> via manipulators is verbose and stateful:</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;iomanip&gt;</span>
+std::cout &lt;&lt; std::fixed &lt;&lt; std::setprecision(2) &lt;&lt; std::setw(8) &lt;&lt; price;   <span class="c1">// clunky &amp; sticky</span></pre>
+    <p>Since C++20, prefer <code class="inl">std::format</code> (build a string) and C++23's <code class="inl">std::print</code> (write it straight out) — type-safe, positional, far cleaner:</p>
+    <pre><span class="y">#include</span> <span class="g">&lt;print&gt;</span>     <span class="c1">// C++23</span>
+std::print(<span class="g">"{:&gt;8.2f}\n"</span>, price);          <span class="c1">// width 8, 2 decimals — no sticky state</span></pre>
+    <div class="callout mission"><span class="h">🎯 Rule of thumb</span>
+      Use streams for the <em>plumbing</em> (where bytes go: file, console, string). Use <code class="inl">std::format</code>/<code class="inl">std::print</code> for the <em>formatting</em> (how they look). One performance note: for heavy console output, <code class="inl">std::ios::sync_with_stdio(false)</code> speeds up <code class="inl">cin</code>/<code class="inl">cout</code>.</div>
+    <p class="cite">Source: <a href="https://en.cppreference.com/w/cpp/io/print" target="_blank" rel="noopener">cppreference — std::print (C++23)</a>.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">06</span> Check yourself</h2>
+    <div class="quiz" id="quiz">
+
+      <div class="q" data-correct="1">
+        <div class="stem">What do <code class="inl">&lt;&lt;</code> and <code class="inl">&gt;&gt;</code> do on a stream?</div>
+        <button class="opt">Bit-shift the data</button>
+        <button class="opt">Insert into (<code class="inl">&lt;&lt;</code>) and extract from (<code class="inl">&gt;&gt;</code>) the stream</button>
+        <button class="opt">Compare two streams</button>
+        <button class="opt">Open and close a file</button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="2">
+        <div class="stem">When does a <code class="inl">std::ofstream</code> close its file?</div>
+        <button class="opt">Never — you must call <code class="inl">close()</code></button>
+        <button class="opt">At program exit only</button>
+        <button class="opt">Automatically when the stream object goes out of scope (RAII)</button>
+        <button class="opt">After each <code class="inl">&lt;&lt;</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="0">
+        <div class="stem">You need to split <code class="inl">"3 14 159"</code> into three ints. Reach for:</div>
+        <button class="opt"><code class="inl">std::istringstream</code> + <code class="inl">&gt;&gt;</code></button>
+        <button class="opt">A <code class="inl">priority_queue</code></button>
+        <button class="opt">Manual character indexing only</button>
+        <button class="opt"><code class="inl">std::cout</code></button>
+        <div class="fb"></div>
+      </div>
+
+      <div class="q" data-correct="3">
+        <div class="stem">For clean, type-safe formatted output in modern C++, prefer:</div>
+        <button class="opt"><code class="inl">printf</code></button>
+        <button class="opt">long chains of <code class="inl">setw</code>/<code class="inl">setprecision</code> manipulators</button>
+        <button class="opt">manual string concatenation</button>
+        <button class="opt"><code class="inl">std::format</code> / <code class="inl">std::print</code></button>
+        <div class="fb"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">07</span> Flashcards</h2>
+    <details class="fc"><summary>Q: What is a stream?</summary><div class="a">A: A flow of characters you insert into with <code class="inl">&lt;&lt;</code> or extract from with <code class="inl">&gt;&gt;</code>. The same model serves console, files, and in-memory strings.</div></details>
+    <details class="fc"><summary>Q: <code class="inl">cin &gt;&gt; x</code> vs <code class="inl">getline</code>?</summary><div class="a">A: <code class="inl">&gt;&gt;</code> reads one whitespace-delimited token and parses it; <code class="inl">getline</code> reads a whole line (spaces included). Mixing them needs an <code class="inl">ignore()</code> to drop the leftover newline.</div></details>
+    <details class="fc"><summary>Q: The idiomatic file read loop?</summary><div class="a">A: <code class="inl">std::ifstream in(path); std::string line; while (std::getline(in, line)) { ... }</code> — the stream is truthy until EOF/error, and closes itself (RAII).</div></details>
+    <details class="fc"><summary>Q: What's <code class="inl">stringstream</code> for?</summary><div class="a">A: A stream backed by a string — used to parse a line into typed fields (<code class="inl">&gt;&gt;</code> or <code class="inl">getline</code> with a delimiter) and to build a string piece by piece, then read it with <code class="inl">.str()</code>.</div></details>
+    <details class="fc"><summary>Q: How do you check a stream succeeded?</summary><div class="a">A: A stream converts to <code class="inl">bool</code>: <code class="inl">if (in)</code> / <code class="inl">if (cin &gt;&gt; x)</code> is true while good, false after a failed read or EOF.</div></details>
+    <details class="fc"><summary>Q: Streams vs <code class="inl">std::format</code> — division of labor?</summary><div class="a">A: Streams handle <em>where</em> bytes go (the plumbing); <code class="inl">std::format</code>/<code class="inl">std::print</code> handle <em>how</em> they're formatted. Prefer the latter over manipulators.</div></details>
+  </section>
+
+  <div class="teacher">
+    <span class="h">👩‍🏫 I'm your teacher — ask me anything</span>
+    <p>Try: <em>"write a CSV-line splitter with <code class="inl">stringstream</code>"</em>, or <em>"why did my <code class="inl">getline</code> read a blank line after <code class="inl">cin &gt;&gt;</code>?"</em> One lesson left — concurrency.</p>
+  </div>
+
+  <nav class="next">
+    <a href="0011-vocabulary-types-pair-tuple-optional-variant.html"><span class="dir">↩ Previous</span><span class="ttl">Vocabulary Types</span></a>
+    <a href="0013-concurrency-essentials.html"><span class="dir">Up next →</span><span class="ttl">Concurrency Essentials</span></a>
+  </nav>
+
+  <footer>
+    C++ Standard Library · Lesson 12 · grounded in
+    <a href="https://en.cppreference.com/w/cpp/io" target="_blank" rel="noopener">cppreference</a> ·
+    <a href="../reference/cpp-stdlib-glossary.html">Glossary</a> ·
+    <a href="../reference/cpp-stdlib-cheatsheet.html">Cheat sheet</a>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('#quiz .q').forEach(function(q){
+    var correct = parseInt(q.getAttribute('data-correct'), 10);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(opt, i){
+      opt.addEventListener('click', function(){
+        opts.forEach(function(o){ o.disabled = true; });
+        if (i === correct){
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct.';
+          fb.className = 'fb show';
+        } else {
+          opt.classList.add('wrong');
+          opts[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite — the highlighted answer is right. Re-read the section above, or ask me why.';
+          fb.className = 'fb show';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
