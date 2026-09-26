@@ -9,6 +9,11 @@ on:
   schedule:
     - cron: "17 10 * * *"   # 10:17 UTC: early morning US Eastern, off the top of the hour
   workflow_dispatch:
+    inputs:
+      only:
+        description: "Source ids to fetch (space-separated); empty = all"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -29,7 +34,9 @@ jobs:
       - name: Tests
         run: python -m unittest discover -s tools/ai-radar/tests
       - name: Fetch
-        run: python tools/ai-radar/radar.py
+        env:
+          ONLY: ${{ inputs.only }}
+        run: python tools/ai-radar/radar.py ${ONLY:+--only $ONLY}
       - name: Commit and push
         id: commit
         run: |

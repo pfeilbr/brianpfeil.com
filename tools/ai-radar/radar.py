@@ -130,13 +130,22 @@ def canonical(url):
                                     urllib.parse.urlencode(q), ""))
 
 
+# Substack answers a bot User-Agent from a datacenter IP (the daily Action)
+# with 403; the same request as a browser goes through.
+BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+
+
 def http_get(url, tries=3, timeout=30):
+    ua = UA
     for attempt in range(tries):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "*/*"})
+            req = urllib.request.Request(url, headers={"User-Agent": ua, "Accept": "*/*"})
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return r.read()
         except urllib.error.HTTPError as e:
+            if e.code == 403 and ua == UA and attempt + 1 < tries:
+                ua = BROWSER_UA
+                continue
             if e.code == 429 and attempt + 1 < tries:
                 time.sleep(5 * (attempt + 1))
                 continue
