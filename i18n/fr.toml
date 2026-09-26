@@ -546,6 +546,32 @@ other = "Impossible de charger les données de cette page. Essayez de la recharg
 [data_noscript]
 other = "Cette page est affichée avec JavaScript. Ses données se trouvent dans <a href=\"{{ .url }}\">{{ .url }}</a>."
 
+# --- Newsletter sign-up (partials/newsletter.html) ---
+
+[nl_title]
+other = "Recevez les nouveaux guides et cours par e-mail"
+
+[nl_blurb]
+other = "Un e-mail de temps en temps, quand je publie un nouveau guide, cours ou article. Pas de spam, et vous pouvez vous désabonner à tout moment."
+
+[nl_email_label]
+other = "Adresse e-mail"
+
+[nl_placeholder]
+other = "vous@exemple.fr"
+
+[nl_button]
+other = "S'abonner"
+
+[nl_fine]
+other = "Envoyé avec Buttondown. Je ne partage jamais votre adresse. Vous préférez un flux ? Utilisez le {{ .rss }}."
+
+[nl_rss]
+other = "flux RSS"
+
+[nl_english]
+other = "Les e-mails sont en anglais."
+
 # --- SEO (partials/head-meta.html) ---
 
 [site_description]

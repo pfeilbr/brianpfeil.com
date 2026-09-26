@@ -544,6 +544,32 @@ other = "このページのデータを読み込めませんでした。再読�
 [data_noscript]
 other = "このページは JavaScript で表示しています。データは <a href=\"{{ .url }}\">{{ .url }}</a> にあります。"
 
+# --- Newsletter sign-up (partials/newsletter.html) ---
+
+[nl_title]
+other = "新しいガイドや講座をメールで受け取る"
+
+[nl_blurb]
+other = "新しいガイドや講座、記事を公開したときに、ときどきメールでお知らせします。迷惑メールは送りません。配信はいつでも停止できます。"
+
+[nl_email_label]
+other = "メールアドレス"
+
+[nl_placeholder]
+other = "you@example.com"
+
+[nl_button]
+other = "登録する"
+
+[nl_fine]
+other = "配信には Buttondown を使っています。メールアドレスを第三者と共有することはありません。フィードで読みたい方は{{ .rss }}をご利用ください。"
+
+[nl_rss]
+other = "RSS フィード"
+
+[nl_english]
+other = "メールは英語です。"
+
 # --- SEO (partials/head-meta.html) ---
 
 [site_description]

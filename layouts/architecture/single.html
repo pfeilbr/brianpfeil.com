@@ -45,5 +45,7 @@
     {{ with $next }}<a class="arch-pager-link arch-pager-next" href="{{ .RelPermalink }}"><span>{{ i18n "arch_next" }}</span><b>{{ .Title }}</b></a>{{ end }}
   </nav>
   {{ end }}
+
+  {{ partial "newsletter.html" . }}
 </article>
 {{ end }}

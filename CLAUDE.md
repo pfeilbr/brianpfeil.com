@@ -247,6 +247,19 @@ touching a template:
   canonical link and meta description and writes `static/sitemap-courses.xml`,
   which `robots.txt` lists next to Hugo's sitemap.
 
+- **IndexNow:** the deploy writes `/indexnow-manifest.json` (a hash of each
+  page's title, description and `<main>`), diffs it against the live one, and
+  after the deploy submits only the changed URLs (`tools/indexnow/`). The key
+  file is `static/<key>.txt`; the key is public by design.
+
+## Newsletter
+
+`partials/newsletter.html` sits on the home page, posts, guides, /courses/ and
+/learn/. It renders nothing until `params.newsletter.buttondown` in
+`config.yaml` names a Buttondown account; the form posts straight to
+Buttondown (double opt-in, unsubscribe handled there). No script, no
+third-party request until someone presses Subscribe.
+
 ## Shared UI pieces
 
 - **Icons** — `layouts/partials/icons/`. `chip.html` renders a tinted square;

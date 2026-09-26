@@ -1,0 +1,7 @@
+{
+  "_comment": "IndexNow (https://www.indexnow.org). The key is public by design: search engines fetch https://brianpfeil.com/<key>.txt to confirm the site owns it. To rotate, generate a new 32-hex key, rename static/<key>.txt, and update this file.",
+  "site": "https://brianpfeil.com",
+  "key": "07c1376aeb228f27d3967a87b3ff9cb9",
+  "endpoint": "https://api.indexnow.org/indexnow",
+  "manifest": "indexnow-manifest.json"
+}

@@ -133,6 +133,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-github` | Tests for the GitHub page's data refresher |
 | `make test-learn-links` | Tests for the /learn/ link checker, and its offline check of data/learn.json |
 | `make test-courses` | Tests for the course sync, and a privacy check of every published lesson |
+| `make test-indexnow` | Tests for the IndexNow change detector |
 | `make test-i18n` | Tests for, and a run of, the i18n consistency check |
 | `make test-docs` | Every Makefile target has help text and is in the README |
 | `make test-ai` | Unit tests for the AI radar, and its i18n block is current |

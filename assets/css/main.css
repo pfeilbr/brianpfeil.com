@@ -3064,3 +3064,50 @@ a.ai-badge:hover { color: var(--brand); border-color: var(--brand); }
   .arch-pager, .course-back, .toc { display: none; }
   .callout, .diagram { break-inside: avoid; }
 }
+
+/* ---------------------------------------------------------------------------
+   Newsletter sign-up (partials/newsletter.html). Hidden entirely until
+   params.newsletter.buttondown is set.
+   --------------------------------------------------------------------------- */
+
+.newsletter {
+  margin-top: 2.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background-color: var(--bg-subtle);
+  background-color: color-mix(in srgb, var(--brand) 5%, var(--bg));
+}
+.nl-title { margin: 0 0 0.25rem; font-size: 1rem; font-weight: 700; color: var(--text-strong); }
+.nl-blurb { margin: 0 0 0.875rem; font-size: 0.875rem; line-height: 1.55; color: var(--text-muted); }
+.nl-form { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.nl-input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  font: inherit;
+  font-size: 0.9375rem;
+  padding: 0.5625rem 0.875rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background-color: var(--bg);
+  color: var(--text-strong);
+}
+.nl-input::placeholder { color: var(--text-fainter); }
+.nl-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 20%, transparent); }
+.nl-button {
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5625rem 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  color: var(--on-brand);
+  background-color: var(--brand);
+  cursor: pointer;
+}
+.nl-button:hover { background-color: var(--brand-hover); }
+.nl-button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.nl-fine { margin: 0.75rem 0 0; font-size: 0.75rem; color: var(--text-faint); }
+.nl-fine a { color: inherit; text-decoration: underline; }
+.prose + .newsletter, .newsletter + nav { margin-top: 2rem; }
+@media print { .newsletter { display: none; } }

@@ -544,6 +544,32 @@ other = "The data for this page could not be loaded. Try reloading."
 [data_noscript]
 other = "This page is drawn with JavaScript. Its data is at <a href=\"{{ .url }}\">{{ .url }}</a>."
 
+# --- Newsletter sign-up (partials/newsletter.html) ---
+
+[nl_title]
+other = "Get new guides and courses by email"
+
+[nl_blurb]
+other = "An occasional email when I publish a new guide, course or post. No spam, and you can unsubscribe any time."
+
+[nl_email_label]
+other = "Email address"
+
+[nl_placeholder]
+other = "you@example.com"
+
+[nl_button]
+other = "Subscribe"
+
+[nl_fine]
+other = "Sent with Buttondown. I never share your address. Prefer a feed? Use the {{ .rss }}."
+
+[nl_rss]
+other = "RSS feed"
+
+[nl_english]
+other = "The emails are in English."
+
 # --- SEO (partials/head-meta.html) ---
 
 [site_description]

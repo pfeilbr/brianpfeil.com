@@ -544,6 +544,32 @@ other = "이 페이지의 데이터를 불러오지 못했습니다. 새로 고�
 [data_noscript]
 other = "이 페이지는 JavaScript로 그려집니다. 데이터는 <a href=\"{{ .url }}\">{{ .url }}</a>에 있습니다."
 
+# --- Newsletter sign-up (partials/newsletter.html) ---
+
+[nl_title]
+other = "새 가이드와 강좌를 이메일로 받아 보세요"
+
+[nl_blurb]
+other = "새 가이드나 강좌, 글을 올릴 때 가끔 이메일을 보내 드립니다. 스팸은 보내지 않으며, 언제든지 구독을 해지할 수 있습니다."
+
+[nl_email_label]
+other = "이메일 주소"
+
+[nl_placeholder]
+other = "you@example.com"
+
+[nl_button]
+other = "구독하기"
+
+[nl_fine]
+other = "Buttondown으로 발송됩니다. 이메일 주소는 절대 공유하지 않습니다. 피드가 더 편하신가요? {{ .rss }}를 이용하세요."
+
+[nl_rss]
+other = "RSS 피드"
+
+[nl_english]
+other = "이메일은 영어로 작성됩니다."
+
 # --- SEO (partials/head-meta.html) ---
 
 [site_description]

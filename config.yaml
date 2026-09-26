@@ -55,6 +55,10 @@ params:
   dateFormat: "January 2, 2006"
   rss: true
   rssLimit: 500
+  # Newsletter sign-up (partials/newsletter.html). Set to the Buttondown
+  # username to show the form; empty hides it everywhere.
+  newsletter:
+    buttondown: ""
   author:
     name: "Brian Pfeil"
     website: "https://brianpfeil.com"

@@ -1,0 +1,19 @@
+{{- /* Newsletter sign-up. Renders nothing until params.newsletter.buttondown
+   (config.yaml) names a Buttondown account, so the site never shows a form
+   that can't subscribe anyone. The form posts straight to Buttondown, which
+   runs the double opt-in in a new tab: no script, no third-party request
+   until someone presses Subscribe. */ -}}
+{{- with site.Params.newsletter.buttondown -}}
+{{- $rss := printf `<a href="%s">%s</a>` ("index.xml" | absURL) (i18n "nl_rss") -}}
+<section class="newsletter" aria-labelledby="nl-title">
+  <h2 id="nl-title" class="nl-title">{{ i18n "nl_title" }}</h2>
+  <p class="nl-blurb">{{ i18n "nl_blurb" }}{{ if ne site.Language.Lang "en" }} {{ i18n "nl_english" }}{{ end }}</p>
+  <form class="nl-form" action="https://buttondown.com/api/emails/embed-subscribe/{{ . | urlquery }}" method="post" target="_blank">
+    <label class="sr-only" for="nl-email">{{ i18n "nl_email_label" }}</label>
+    <input class="nl-input" id="nl-email" type="email" name="email" required autocomplete="email" inputmode="email" placeholder="{{ i18n "nl_placeholder" }}">
+    <input type="hidden" name="embed" value="1">
+    <button class="nl-button" type="submit">{{ i18n "nl_button" }}</button>
+  </form>
+  <p class="nl-fine">{{ i18n "nl_fine" (dict "rss" $rss) | safeHTML }}</p>
+</section>
+{{- end -}}

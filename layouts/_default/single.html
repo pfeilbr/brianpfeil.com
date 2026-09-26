@@ -30,6 +30,7 @@
 </article>
 
 {{ if $isPost }}
+{{ partial "newsletter.html" . }}
 {{ $related := first 4 (.Site.RegularPages.Related .) }}
 {{ if $related }}
 <nav class="mt-12 pt-6 border-t border-gray-200" aria-label="{{ i18n "related_posts" }}">

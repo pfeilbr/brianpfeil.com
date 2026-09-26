@@ -544,6 +544,32 @@ other = "无法加载此页面的数据，请刷新重试。"
 [data_noscript]
 other = "此页面由 JavaScript 绘制。数据见 <a href=\"{{ .url }}\">{{ .url }}</a>。"
 
+# --- Newsletter sign-up (partials/newsletter.html) ---
+
+[nl_title]
+other = "通过邮件获取新的指南和课程"
+
+[nl_blurb]
+other = "我发布新的指南、课程或文章时，偶尔会发一封邮件。绝无垃圾邮件，随时可以退订。"
+
+[nl_email_label]
+other = "电子邮件地址"
+
+[nl_placeholder]
+other = "you@example.com"
+
+[nl_button]
+other = "订阅"
+
+[nl_fine]
+other = "由 Buttondown 发送。我绝不会分享你的邮箱地址。更喜欢订阅源？请使用{{ .rss }}。"
+
+[nl_rss]
+other = "RSS 订阅源"
+
+[nl_english]
+other = "邮件内容为英文。"
+
 # --- SEO (partials/head-meta.html) ---
 
 [site_description]

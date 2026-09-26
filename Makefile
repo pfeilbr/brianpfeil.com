@@ -4,7 +4,7 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-i18n test-docs test-github test-ai ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-i18n test-docs test-github test-ai ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
 	python3 tools/github-repos/check_page.py --public public
@@ -83,6 +83,9 @@ test-learn-links: ## Tests for the /learn/ link checker, and its offline check o
 test-courses: ## Tests for the course sync, and a privacy check of every published lesson
 	python3 -m unittest discover -s tools/courses -p 'test_*.py'
 
+test-indexnow: ## Tests for the IndexNow change detector
+	python3 -m unittest discover -s tools/indexnow -p 'test_*.py'
+
 # Live and network-bound, so not part of verify: lists posts whose repo
 # link 404s for a visitor (the repo went private or was deleted).
 test-docs: ## Every Makefile target has help text and is in the README
@@ -150,4 +153,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: help dev build verify generate-posts movies-refresh ai-refresh ai-i18n test-ai github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-i18n test-docs check-repo-links check-learn-links courses-sync tf-init tf-plan tf-validate
+.PHONY: help dev build verify generate-posts movies-refresh ai-refresh ai-i18n test-ai github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-i18n test-docs check-repo-links check-learn-links courses-sync tf-init tf-plan tf-validate

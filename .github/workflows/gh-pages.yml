@@ -37,6 +37,19 @@ jobs:
       - name: Build
         run: hugo --minify
 
+      # Writes public/indexnow-manifest.json (ships with the site) and lists
+      # the pages that differ from the live manifest. Never blocks a deploy.
+      - name: Plan IndexNow submission
+        run: python3 tools/indexnow/indexnow.py plan public --out changed-urls.txt || true
+
+      - name: Keep the changed-URL list for after the deploy
+        uses: actions/upload-artifact@v4
+        with:
+          name: indexnow-changed
+          path: changed-urls.txt
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -52,3 +65,27 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Tell Bing and the other IndexNow engines what just changed, once the new
+  # pages are actually live (they fetch the key file to verify us).
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/indexnow
+
+      - name: Fetch the changed-URL list
+        uses: actions/download-artifact@v4
+        with:
+          name: indexnow-changed
+        continue-on-error: true
+
+      - name: Submit to IndexNow
+        run: |
+          if [ -f changed-urls.txt ]; then
+            python3 tools/indexnow/indexnow.py submit changed-urls.txt
+          else
+            echo "no changed-URL list; skipping"
+          fi
