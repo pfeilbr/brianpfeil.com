@@ -1,9 +1,8 @@
 <script>
-/* Copy-to-clipboard buttons on code blocks */
+/* Copy-to-clipboard buttons on code blocks, and window.copyText for any
+   other copy button on the page. */
 (function() {
   var T = {{ dict "copy" (i18n "code_copy") "copied" (i18n "code_copied") "failed" (i18n "code_copy_failed") "label" (i18n "code_copy_label") | jsonify | safeJS }};
-  var blocks = document.querySelectorAll(".prose pre");
-  if (!blocks.length) return;
 
   /* Async Clipboard API where allowed; execCommand fallback where it isn't
      (older browsers, non-secure origins, embedded views without permission). */
@@ -28,6 +27,12 @@
       ok ? resolve() : reject(new Error("copy failed"));
     });
   }
+
+  /* Shared with the footer's copy-the-handle buttons (footer.html). */
+  window.copyText = copyText;
+
+  var blocks = document.querySelectorAll(".prose pre");
+  if (!blocks.length) return;
 
   blocks.forEach(function(pre) {
     var wrap = document.createElement("div");

@@ -25,14 +25,14 @@
   </div>
 </footer>
 <script>
-/* Copy-to-clipboard for a handle that has no useful URL. If the clipboard is
-   unavailable (insecure context, permission denied) the title attribute still
-   spells the username out. */
+/* Copy-to-clipboard for a handle that has no useful URL. window.copyText
+   (code-copy.html) falls back to execCommand where the Clipboard API is
+   unavailable; if both fail, the title attribute still spells the username out. */
 (function () {
   document.querySelectorAll(".social-copy").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      if (!navigator.clipboard || !navigator.clipboard.writeText) return;
-      navigator.clipboard.writeText(btn.dataset.copy).then(function () {
+      if (!window.copyText) return;
+      window.copyText(btn.dataset.copy).then(function () {
         btn.classList.add("is-copied");
         setTimeout(function () { btn.classList.remove("is-copied"); }, 1600);
       }, function () {});
