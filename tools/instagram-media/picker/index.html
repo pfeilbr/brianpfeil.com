@@ -68,7 +68,7 @@ section.content { padding: 12px 16px 80px; }
 #viewer .meta .reasons { color: #fbbf24; }
 #viewer .meta .blocked { color: #f87171; }
 #log { position: fixed; right: 16px; bottom: 16px; width: min(520px, calc(100vw - 32px)); max-height: 40vh; overflow: auto; z-index: 8;
-  background: #111; color: #ddd; font: 12px/1.5 ui-monospace, monospace; padding: 10px 12px; border-radius: 10px; display: none; white-space: pre-wrap; }
+  background: #111; color: #ddd; font: 12px/1.5 ui-monospace, monospace; padding: 10px 12px; border-radius: 10px; display: none; white-space: pre-wrap; cursor: pointer; }
 #log.open { display: block; }
 @media (max-width: 700px) { main { grid-template-columns: 1fr; } nav { border-right: 0; border-bottom: 1px solid var(--line); } :root { --tile: 120px; } }
 </style>
@@ -244,7 +244,7 @@ function renderStatus() {
   p.title = S.to_fetch ? `${S.to_fetch} pick(s) still to download: click “Send to picker” on any Google Photos tab first` : "";
   if (S.to_fetch) $("#status").textContent += ` · ${S.to_fetch} pick(s) to download first`;
   const log = $("#log");
-  if (S.log && S.log.length) { log.classList.add("open"); log.textContent = S.log.join("\n"); log.scrollTop = log.scrollHeight; }
+  if (S.log && S.log.length && !log.dataset.dismissed) { log.classList.add("open"); log.textContent = S.log.join("\n"); log.scrollTop = log.scrollHeight; }
 }
 
 function renderHarvest() {
@@ -378,11 +378,14 @@ viewer.addEventListener("click", (e) => { if (e.target === viewer || e.target.cl
 
 $("#tabs").onclick = (e) => { if (e.target.dataset.view) { view = e.target.dataset.view; focus = 0; render(); } };
 $("#skip-rest").onclick = skipRest;
+$("#log").title = "Click to hide";
+$("#log").onclick = () => { $("#log").classList.remove("open"); $("#log").dataset.dismissed = "1"; };
 $("#size").oninput = (e) => document.documentElement.style.setProperty("--tile", e.target.value + "px");
 $("#harvest-toggle").onclick = () => { const h = $("#harvest"); h.hidden = !h.hidden; if (!h.hidden) renderHarvest(); };
 $("#publish").onclick = async () => {
   const inc = S.items.filter((it) => it.decision === "include").length;
   if (!confirm(`Encode ${inc} item(s), upload them, and push data/photos.yaml live?`)) return;
+  delete $("#log").dataset.dismissed;
   await api("/api/publish", {});
   poll(true);
 };
