@@ -233,6 +233,7 @@
     "new-project",
     "minotes-website",
     "sinatra-canvas-app",
+    "brianpfeil.com",
     "morning-brief",
     "azure-static-website-hosting-in-blob-storage",
     "react-native-ios-split-screen",
@@ -334,7 +335,6 @@
     "jupyter-javascript-docker",
     "pokemon-game",
     "azure-scripts",
-    "brianpfeil.com",
     "wavbot"
    ]
   },
@@ -4157,35 +4157,31 @@
   {
    "name": "brianpfeil.com",
    "desc": "personal website",
-   "lang": "Python",
+   "lang": "HTML",
    "langs": [
     [
-     "Python",
-     43
+     "HTML",
+     88
     ],
     [
-     "HTML",
-     26
+     "Python",
+     8
     ],
     [
      "CSS",
-     14
+     2
     ],
     [
      "Go",
-     11
-    ],
-    [
-     "HCL",
-     3
+     1
     ],
     [
      "JavaScript",
-     2
+     1
     ]
    ],
    "areas": [
-    "python"
+    "web"
    ],
    "tags": [],
    "kind": "project",
@@ -4268,19 +4264,19 @@
    "langs": [
     [
      "JavaScript",
-     48
-    ],
-    [
-     "CSS",
-     23
+     45
     ],
     [
      "Python",
-     15
+     22
+    ],
+    [
+     "CSS",
+     21
     ],
     [
      "HTML",
-     13
+     12
     ]
    ],
    "areas": [
@@ -4291,7 +4287,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-09-20",
-   "pushed": "2026-09-22",
+   "pushed": "2026-09-26",
    "readme": "An in-ear phrase prompter for speaking Burmese to someone you actually live with. Pick an English phrase, hear it spoken in Burmese at whatever speed you need, say it back. Built for the case where you have AirPods in, your phone is in your pocket, and your partner is in the next room. Live app: https://pfeilbr.github.io/burmese--language/ It is a direct sibling of [Say It In Mandarin][mandarin] — same shape, same interaction model, same build pipeline — retargeted at a language that works very differently, which is where all the interesting differences are. Open the link in Safari on iPhone…",
    "post": false
   },
