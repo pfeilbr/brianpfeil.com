@@ -93,8 +93,9 @@ def build(picks: dict, cands: dict, categories: list[str], workdir: Path, prefix
           lock: "derive.Lock", vision, source, log=print) -> tuple[list[dict], list[str]]:
     """Derive every included pick. Returns (entries, keys refused on re-screen).
 
-    source(candidate) is the file to publish from: the 1600px photo or the
-    1080p video the browser downloaded. Every one must be on disk first.
+    source(candidate) is the file to publish from: the 1600px photo (without
+    Google's motion-photo play button) or the 1080p video the browser
+    downloaded once it was picked. Every one must be on disk first.
     """
     outdir = workdir / "web"
     entries, refused = [], []

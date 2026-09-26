@@ -11,17 +11,20 @@ import subprocess
 from pathlib import Path
 
 # Size suffixes on Google's image URLs, tried in order until one works:
-# =wW-hH a JPEG of at most that size; =mNN an MP4 rendition (18: 360p,
+# =wW-hH-no a JPEG of at most that size ("-no": without the play button
+# Google otherwise paints on a motion photo); =mNN an MP4 rendition (18: 360p,
 # 22: 720p, 37: 1080p); =dv the original video. The site caps photos at
-# 1600px and video at 1280px, so "large" and "hq" are all publishing needs —
-# the original is never required.
+# 1600px and video at 1280px, so the publish copies ("hq" for a video,
+# "final" for a photo) are all it needs — the original is never required.
 SUFFIXES = {
-    "small": ["=w480-h480"],
-    "large": ["=w1600-h1600"],
+    "small": ["=w480-h480-no"],
+    "large": ["=w1600-h1600-no"],
     "preview": ["=m18", "=m22", "=dv"],
     "hq": ["=m37", "=m22", "=dv"],
+    "final": ["=w1600-h1600-no"],
 }
-MAX_BYTES = {"small": 5 << 20, "large": 30 << 20, "preview": 200 << 20, "hq": 2 << 30}
+MAX_BYTES = {"small": 5 << 20, "large": 30 << 20, "preview": 200 << 20, "hq": 2 << 30,
+             "final": 30 << 20}
 
 
 def sniff(data: bytes) -> str:

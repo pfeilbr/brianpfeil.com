@@ -99,9 +99,10 @@ window.MediaGrid = function (raw, strings) {
   var tile = 0;
   function makeTile(p, idx) {
     var m = first[idx];
+    var base = m.b || raw.base;
     var a = document.createElement("a");
     a.className = "media-tile" + (p.story ? " media-tile-story" : "");
-    a.href = raw.base + m.s;
+    a.href = base + m.s;
     a.dataset.item = p.id;
     var text = (p.caption || "").replace(/\s+/g, " ").trim();
     var label = text ? (text.length > 120 ? text.slice(0, 119) + "\u2026" : text) : s.untitled;
@@ -110,9 +111,9 @@ window.MediaGrid = function (raw, strings) {
     if (m.c && /^#[0-9a-f]{6}$/.test(m.c)) a.style.backgroundColor = m.c;
     tile++;
     var img = document.createElement("img");
-    img.src = raw.base + (m.g ? m.g[0] : m.t);
+    img.src = base + (m.g ? m.g[0] : m.t);
     if (m.g) {
-      img.srcset = raw.base + m.g[0] + " 360w, " + raw.base + m.g[1] + " 720w";
+      img.srcset = base + m.g[0] + " 360w, " + base + m.g[1] + " 720w";
       img.sizes = "(min-width: 640px) 162px, 31vw";
     }
     img.alt = "";
@@ -237,12 +238,10 @@ window.MediaGrid = function (raw, strings) {
           var row = {};
           for (var k in m) row[k] = m[k];
           row.i = m.i + offset;
+          row.b = photos.base;  /* each half keeps its own CDN address */
           return row;
         }));
         raw.cats = photos.categories;
-        /* Both halves live on the same CDN; if they ever don't, say so
-           loudly rather than show broken tiles. */
-        if (photos.base !== raw.base) console.warn("media: photos.json has a different base URL");
       }
       if (!raw.posts || !raw.posts.length) return empty();
       window.MediaGrid(raw, strings);
@@ -262,7 +261,8 @@ window.MediaGrid = function (raw, strings) {
     return {
       item: post.id, post: post, caption: post.caption || "", date: post.date,
       kind: m.k === "v" ? "video" : "photo",
-      src: raw.base + m.s, thumb: raw.base + m.t, poster: m.p ? raw.base + m.p : "",
+      src: (m.b || raw.base) + m.s, thumb: (m.b || raw.base) + m.t,
+      poster: m.p ? (m.b || raw.base) + m.p : "",
       w: m.w, h: m.h, n: seen[m.i], total: perPost[m.i], music: m.m || ""
     };
   });

@@ -240,6 +240,9 @@ function renderStatus() {
   const p = $("#publish");
   p.disabled = S.publishing;
   p.textContent = S.publishing ? "Publishing…" : `Publish ${inc}`;
+  // Picks are published from a full-size copy only the browser can fetch.
+  p.title = S.to_fetch ? `${S.to_fetch} pick(s) still to download: click “Send to picker” on any Google Photos tab first` : "";
+  if (S.to_fetch) $("#status").textContent += ` · ${S.to_fetch} pick(s) to download first`;
   const log = $("#log");
   if (S.log && S.log.length) { log.classList.add("open"); log.textContent = S.log.join("\n"); log.scrollTop = log.scrollHeight; }
 }

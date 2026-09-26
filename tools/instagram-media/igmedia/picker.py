@@ -68,9 +68,12 @@ class Picker:
     def hq(self, key: str) -> Path:
         return self.work / "hq" / f"{key}.mp4"
 
+    def final(self, key: str) -> Path:
+        return self.work / "final" / f"{key}.jpg"
+
     def path_for(self, key: str, variant: str) -> Path:
         return {"small": self.small, "large": self.large, "preview": self.preview,
-                "hq": self.hq}[variant](key)
+                "hq": self.hq, "final": self.final}[variant](key)
 
     # --- downloads, done by the browser ------------------------------------------
     # Google's image host only answers B's signed-in browser, so the page that
@@ -82,8 +85,9 @@ class Picker:
             included = {k for k, p in self.picks.items() if p.get("decision") == "include"}
             for c in self.cands.items.values():
                 key, need = c["key"], []
-                if c["kind"] == "video" and key in included and not self.hq(key).exists():
-                    need.append("hq")
+                # The copy a pick is published from, fetched once it is picked.
+                if key in included:
+                    need.append("hq" if c["kind"] == "video" else "final")
                 if not c.get("screen") or c["screen"].get("status") == "error":
                     need.append("small")
                     need.append("preview" if c["kind"] == "video" else "large")
@@ -94,7 +98,7 @@ class Picker:
                 if len(out) >= limit:
                     break
         # Screening material first, so suggestions appear while videos download.
-        return sorted(out, key=lambda w: w["variant"] == "hq")[:limit]
+        return sorted(out, key=lambda w: w["variant"] in ("hq", "final"))[:limit]
 
     def receive(self, key: str, variant: str, stream, length: int) -> dict:
         """Store one file the browser sent, streamed to disk (an hq video can
@@ -124,7 +128,7 @@ class Picker:
             tmp.unlink(missing_ok=True)
             return {"ok": False, "error": f"expected {want}, got {got}" if not left else "truncated"}
         tmp.replace(dest)
-        if variant != "hq":
+        if variant not in ("hq", "final"):
             with self.lock:
                 if (c.get("screen") or {}).get("status") == "error":
                     c.pop("screen")
@@ -235,7 +239,8 @@ class Picker:
                                for c in self.categories],
                 "items": out,
                 "pending": self.jobs.qsize(),
-                "waiting": len(self.wanted(limit=10_000)),
+                "waiting": len(waiting := self.wanted(limit=10_000)),
+                "to_fetch": sum(1 for w in waiting if w["variant"] in ("hq", "final")),
                 "harvests": self.harvests,
                 "publishing": self.publishing,
                 "log": self.publish_log[-200:],
@@ -288,7 +293,7 @@ class Picker:
                 picks = {k: v for k, v in self.picks.items() if k not in self.cands.excluded}
                 cands = dict(self.cands.items)
             cats = [c.key for c in self.categories]
-            source = lambda c: self.hq(c["key"]) if c["kind"] == "video" else self.large(c["key"])  # noqa: E731
+            source = lambda c: self.hq(c["key"]) if c["kind"] == "video" else self.final(c["key"])  # noqa: E731
             entries, refused = gphotos_publish.build(picks, cands, cats, self.work, g["s3_prefix"],
                                                      lock, vision, source, log=self.log)
             if refused:
@@ -426,7 +431,7 @@ def make_handler(p: Picker, static: Path):
                 if ".." in rel.parts:
                     return self._send(400, b"bad path", "text/plain")
                 return self._file(p.work / "web" / rel.relative_to(p.g["s3_prefix"]) if rel.parts and rel.parts[0] == p.g["s3_prefix"] else p.work / "web" / rel)
-            for prefix, fn in (("/small/", p.small), ("/large/", p.large), ("/preview/", p.preview), ("/hq/", p.hq)):
+            for prefix, fn in (("/small/", p.small), ("/large/", p.large), ("/preview/", p.preview), ("/hq/", p.hq), ("/final/", p.final)):
                 if path.startswith(prefix):
                     key = path[len(prefix):].rsplit(".", 1)[0]
                     if not gphotos.KEY.match(key):

@@ -10,7 +10,7 @@
  *    one of the searches the picker lists. Anywhere else this step is skipped.
  * 2. Google's image host only answers this signed-in browser, so the page
  *    also does the downloading: it asks the picker what it wants (thumbnails
- *    and screening copies for new results, 1080p video for picks), fetches
+ *    and screening copies for new results, full-size copies of picks), fetches
  *    each file and POSTs the bytes to the picker. Nothing goes anywhere but
  *    127.0.0.1, and no cookie leaves the browser.
  *
