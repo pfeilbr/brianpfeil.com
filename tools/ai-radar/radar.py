@@ -197,6 +197,27 @@ def parse_feed(body):
     return [x for x in out if x["title"] and x["url"].startswith("http")]
 
 
+def parse_feedly(body):
+    """Feedly's public stream API (the fallback for feeds that refuse the
+    daily Action's IP) -> the same shape as parse_feed."""
+    out = []
+    for i in json.loads(body).get("items", []):
+        link = (i.get("alternate") or [{}])[0].get("href") or i.get("canonicalUrl") or i.get("originId", "")
+        out.append({
+            "title": plain(i.get("title", ""), 200),
+            "url": link,
+            "published": iso(parse_date(i["published"] / 1000)) if i.get("published") else "",
+            "summary": (i.get("summary") or i.get("content") or {}).get("content", ""),
+            "author": i.get("author", ""),
+        })
+    return [x for x in out if x["title"] and x["url"].startswith("http")]
+
+
+def feedly_url(feed, count=20):
+    return ("https://cloud.feedly.com/v3/streams/contents?count=%d&streamId=" % count
+            + urllib.parse.quote("feed/" + feed, safe=""))
+
+
 def parse_sitemap(body, paths):
     """Sitemap URLs under one of `paths` that carry a lastmod, newest first.
     Index pages (/news/ itself) are skipped: an entry needs a slug."""
@@ -363,6 +384,10 @@ def my_posts(posts_dir=POSTS, limit=8):
 
 # --- fetching -----------------------------------------------------------------
 
+def get_feedly(feed):
+    return http_get(feedly_url(feed), tries=2)
+
+
 def keep_entry(src, e):
     f = FILTERS.get(src.get("filter", ""))
     if f and not (f.search(e["title"]) or f.search(plain(e["summary"], 600))):
@@ -381,12 +406,21 @@ def fetch_source(src, now):
             url = ("https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=1000"
                    "&numericFilters=" + urllib.parse.quote("created_at_i>%d,points>%d" % (since, src.get("min_points", 100))))
             entries = parse_hn(http_get(url), src.get("min_points", 100))
-        elif kind == "reddit":
-            entries = parse_reddit(http_get(src["feed"]))
         elif kind == "sitemap":
             entries = parse_sitemap(http_get(src["feed"]), src["paths"])
         else:
-            entries = parse_feed(http_get(src["feed"]))
+            parse = parse_reddit if kind == "reddit" else parse_feed
+            try:
+                entries = parse(http_get(src["feed"]))
+            except Exception as direct:  # noqa: BLE001
+                # Substack 403s GitHub's IP ranges and Reddit rate-limits
+                # them; Feedly has usually read the same feed recently.
+                try:
+                    entries = parse_feedly(get_feedly(src["feed"]))
+                except Exception:  # noqa: BLE001
+                    raise direct
+                if not entries:
+                    raise direct
     except Exception as e:  # noqa: BLE001 -- recorded on the source, shown on the page
         return [], "%s: %s" % (type(e).__name__, str(e)[:160])
     entries = [e for e in entries if keep_entry(src, e)]

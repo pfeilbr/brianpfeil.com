@@ -4,6 +4,7 @@ fixture, and build() is given fake fetchers.
   python3 -m unittest discover -s tools/ai-radar/tests
 """
 import datetime as dt
+import io
 import json
 import sys
 import unittest
@@ -74,6 +75,28 @@ class Parsers(unittest.TestCase):
         self.assertEqual(m[0]["summary"], "A frontier model.", "markdown links flattened")
         self.assertIsNone(m[0]["open_weights"])
         self.assertEqual(m[1]["open_weights"], "open/weights-7b")
+
+    def test_feedly_stream(self):
+        [e] = radar.parse_feedly(fx("feedly.json"))
+        self.assertEqual((e["title"], e["url"]), ("BREAKING: a post", "https://garymarcus.substack.com/p/breaking"))
+        self.assertEqual(e["published"], "2026-09-25T21:58:42Z")
+        self.assertIn("streamId=feed%2Fhttps%3A%2F%2Fx.com%2Ffeed", radar.feedly_url("https://x.com/feed"))
+
+    def test_blocked_feed_falls_back_to_feedly(self):
+        def refuse(url, **kw):
+            raise radar.urllib.error.HTTPError(url, 403, "Forbidden", {}, io.BytesIO())
+        real_get, real_feedly = radar.http_get, radar.get_feedly
+        radar.http_get, radar.get_feedly = refuse, lambda feed: fx("feedly.json")
+        try:
+            entries, err = radar.fetch_source({"id": "g", "feed": "https://g.substack.com/feed"}, NOW)
+            self.assertIsNone(err)
+            self.assertEqual(len(entries), 1)
+            radar.get_feedly = refuse
+            entries, err = radar.fetch_source({"id": "g", "feed": "https://g.substack.com/feed"}, NOW)
+            self.assertEqual(entries, [])
+            self.assertIn("403", err, "the direct error is the one reported")
+        finally:
+            radar.http_get, radar.get_feedly = real_get, real_feedly
 
     def test_hf_skips_private(self):
         self.assertEqual([x["id"] for x in radar.parse_hf(fx("hf.json"), 10)], ["Qwen/Qwen-Image-2.1"])
