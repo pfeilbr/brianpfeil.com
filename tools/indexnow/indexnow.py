@@ -6,15 +6,22 @@ site announce new and changed URLs instead of waiting to be recrawled. The
 deploy workflow runs this in two steps:
 
     # build job, after `hugo --minify`, before the artifact is uploaded:
-    python3 tools/indexnow/indexnow.py plan public --out changed.txt
+    python3 tools/indexnow/indexnow.py plan public --out changed.txt \
+        --previous-file .indexnow/manifest.json
 
         Hashes every page in public/, writes that as
-        public/indexnow-manifest.json (so it ships with the site), fetches the
-        manifest the live site is serving right now, and writes the URLs whose
-        hash is new or different to changed.txt.
+        public/indexnow-manifest.json (so it ships with the site), compares it
+        with the manifest of the last *successful* submission (kept in the
+        Actions cache; the live manifest if the cache is gone), and writes
+        the URLs whose hash is new or different to changed.txt.
 
     # after the deploy job succeeds:
     python3 tools/indexnow/indexnow.py submit changed.txt
+
+        Exit 0 when IndexNow accepted the URLs (or there were none), 3 when
+        it asked us to come back later (key not verified yet, rate limited),
+        1 on anything else. The workflow only records the new manifest as
+        submitted on 0, so a refused batch is sent again next deploy.
 
 A page's hash covers its <title>, meta description and <main> -- not the
 nav, footer or fingerprinted asset links, which change on every page whenever
@@ -39,6 +46,7 @@ from pathlib import Path
 
 CONFIG = json.loads(Path(__file__).with_name("config.json").read_text(encoding="utf-8"))
 BATCH = 10_000  # IndexNow's per-request limit
+RETRY = 3       # exit status: not accepted this time, send again next deploy
 
 TITLE = re.compile(r"<title[^>]*>.*?</title>", re.S | re.I)
 DESCRIPTION = re.compile(r"<meta\s+name=[\"']?description[\"']?\s+content=(\"[^\"]*\"|'[^']*'|[^\s>]+)", re.I)
@@ -120,10 +128,13 @@ def submit(urls: list[str], cfg: dict, dry_run: bool = False) -> int:
             with urllib.request.urlopen(req, timeout=30) as resp:
                 print(f"submitted {len(body['urlList'])} URL(s): HTTP {resp.status}")
         except urllib.error.HTTPError as err:
-            # 200/202 are success. 403 = key not verified yet, 422 = URLs not
-            # on this host, 429 = too many requests. None should fail a deploy.
+            # 200/202 are success. 403 = key not verified yet, 429 = too many
+            # requests: try again next deploy. 422 = URLs not on this host.
             print(f"IndexNow answered HTTP {err.code}: {err.read()[:200]!r}", file=sys.stderr)
-            return 0 if err.code in (403, 429) else 1
+            return RETRY if err.code in (403, 429) else 1
+        except (urllib.error.URLError, TimeoutError) as err:
+            print(f"IndexNow unreachable: {err}", file=sys.stderr)
+            return RETRY
     return 0
 
 
@@ -134,6 +145,8 @@ def main(argv: list[str]) -> int:
     p.add_argument("public", type=Path)
     p.add_argument("--out", type=Path, default=Path("changed.txt"))
     p.add_argument("--previous", help="manifest URL, or 'none' (default: the live one)")
+    p.add_argument("--previous-file", type=Path,
+                   help="manifest of the last successful submission; used instead of --previous when it exists")
     s = sub.add_parser("submit", help="send the URLs in FILE to IndexNow")
     s.add_argument("file", type=Path)
     s.add_argument("--dry-run", action="store_true")
@@ -144,8 +157,12 @@ def main(argv: list[str]) -> int:
         new = manifest(args.public, site)
         (args.public / CONFIG["manifest"]).write_text(
             json.dumps({"pages": new}, separators=(",", ":"), sort_keys=True), encoding="utf-8")
-        prev_url = args.previous or f"{site}/{CONFIG['manifest']}"
-        old = {} if prev_url == "none" else fetch_previous(prev_url)
+        if args.previous_file and args.previous_file.exists():
+            old = json.loads(args.previous_file.read_text(encoding="utf-8")).get("pages", {})
+            print(f"comparing with the last successful submission ({args.previous_file})")
+        else:
+            prev_url = args.previous or f"{site}/{CONFIG['manifest']}"
+            old = {} if prev_url == "none" else fetch_previous(prev_url)
         urls = changed(new, old)
         args.out.write_text("".join(u + "\n" for u in urls), encoding="utf-8")
         print(f"{len(new)} pages, {len(urls)} new or changed -> {args.out}")

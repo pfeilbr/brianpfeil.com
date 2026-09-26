@@ -37,16 +37,32 @@ jobs:
       - name: Build
         run: hugo --minify
 
+      # The manifest of the last batch IndexNow actually accepted. Saved by
+      # the indexnow job only on success, so a refused batch is retried.
+      - name: Restore last IndexNow submission
+        uses: actions/cache/restore@v4
+        with:
+          path: .indexnow/manifest.json
+          key: indexnow-${{ github.run_id }}
+          restore-keys: indexnow-
+
       # Writes public/indexnow-manifest.json (ships with the site) and lists
-      # the pages that differ from the live manifest. Never blocks a deploy.
+      # the pages that changed since the last accepted submission. Never
+      # blocks a deploy.
       - name: Plan IndexNow submission
-        run: python3 tools/indexnow/indexnow.py plan public --out changed-urls.txt || true
+        run: |
+          # No cached record of an accepted submission = submit everything.
+          python3 tools/indexnow/indexnow.py plan public --out changed-urls.txt \
+            --previous-file .indexnow/manifest.json --previous none || true
+          cp public/indexnow-manifest.json new-manifest.json || true
 
       - name: Keep the changed-URL list for after the deploy
         uses: actions/upload-artifact@v4
         with:
           name: indexnow-changed
-          path: changed-urls.txt
+          path: |
+            changed-urls.txt
+            new-manifest.json
           if-no-files-found: ignore
           retention-days: 7
 
@@ -83,9 +99,24 @@ jobs:
         continue-on-error: true
 
       - name: Submit to IndexNow
+        id: submit
         run: |
-          if [ -f changed-urls.txt ]; then
-            python3 tools/indexnow/indexnow.py submit changed-urls.txt
-          else
-            echo "no changed-URL list; skipping"
-          fi
+          if [ ! -f changed-urls.txt ]; then echo "no changed-URL list; skipping"; exit 0; fi
+          status=0
+          python3 tools/indexnow/indexnow.py submit changed-urls.txt || status=$?
+          if [ "$status" = 0 ]; then echo "accepted=1" >> "$GITHUB_OUTPUT"; fi
+          # 3 = come back later (key not verified yet, rate limited): keep the
+          # deploy green and retry these URLs next time.
+          if [ "$status" = 3 ]; then status=0; fi
+          exit $status
+
+      - name: Record the accepted manifest
+        if: steps.submit.outputs.accepted == '1'
+        run: mkdir -p .indexnow && cp new-manifest.json .indexnow/manifest.json
+
+      - name: Save it for the next deploy
+        if: steps.submit.outputs.accepted == '1'
+        uses: actions/cache/save@v4
+        with:
+          path: .indexnow/manifest.json
+          key: indexnow-${{ github.run_id }}

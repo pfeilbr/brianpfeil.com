@@ -73,6 +73,36 @@ class PayloadTest(unittest.TestCase):
         self.assertEqual(bodies[0]["keyLocation"], "https://example.com/" + "k" * 32 + ".txt")
 
 
+class SubmitTest(unittest.TestCase):
+    def test_nothing_to_submit_is_success(self):
+        self.assertEqual(ix.submit([], {"site": "https://example.com", "key": "k", "endpoint": "x"}), 0)
+
+    def test_refusal_to_verify_is_retry(self):
+        import io
+        from unittest import mock
+        err = ix.urllib.error.HTTPError("x", 403, "Forbidden", {}, io.BytesIO(b"{}"))
+        cfg = {"site": "https://example.com", "key": "k", "endpoint": "https://api.example/indexnow"}
+        with mock.patch.object(ix.urllib.request, "urlopen", side_effect=err):
+            self.assertEqual(ix.submit(["https://example.com/"], cfg), ix.RETRY)
+
+
+class PlanTest(unittest.TestCase):
+    def test_previous_file_wins_over_live(self):
+        import json
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as tmp:
+            pub = Path(tmp) / "public"
+            (pub / "a").mkdir(parents=True)
+            (pub / "a" / "index.html").write_text(page())
+            prev = Path(tmp) / "prev.json"
+            prev.write_text(json.dumps({"pages": ix.manifest(pub, "https://brianpfeil.com")}))
+            out = Path(tmp) / "changed.txt"
+            with mock.patch.object(ix, "fetch_previous", side_effect=AssertionError("should not fetch")):
+                ix.main(["plan", str(pub), "--out", str(out), "--previous-file", str(prev)])
+            self.assertEqual(out.read_text(), "")
+            self.assertTrue((pub / "indexnow-manifest.json").exists())
+
+
 class ConfigTest(unittest.TestCase):
     def test_key_file_is_published(self):
         key = ix.CONFIG["key"]
