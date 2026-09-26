@@ -51,7 +51,7 @@ source in `people`, `learning` and `tools` keeps its latest three entries, so a 
 
 ## What it cannot read
 
-**X (Twitter).** The timeline needs a paid API. B's follows were read once
+**X (Twitter).** The timeline needs a paid API, and B decided (2026-09-26) not to pay for it -- don't propose it again. B's follows were read once
 by hand (2026-09-26, 201 accounts, mostly AWS and serverless people); the
 AI voices among them are marked `follow: true`.
 **Reddit** rate-limits by IP; staggering helps, and a 429 just keeps
