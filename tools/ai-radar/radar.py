@@ -54,6 +54,8 @@ SUMMARY_CHARS = 280
 PERSON_KEEP = 3          # latest posts a writer keeps past the window
 EVERGREEN = ("people", "learning", "tools")   # sections whose sources keep their latest few
 DEFAULT_LIMIT = 5
+SOURCE_KEEP = 10         # most items a non-evergreen source keeps across runs
+TOPIC_LIMIT = 12
 
 # Title/summary words that make an entry from a general-purpose feed count as AI.
 AI_WORDS = re.compile(
@@ -64,7 +66,8 @@ AI_WORDS = re.compile(
     r"codex|cursor|superintelligence|agi|openrouter|hugging ?face|ollama)\b", re.I)
 BEDROCK_WORDS = re.compile(r"\b(bedrock|sagemaker|amazon q|kiro|nova|agentcore|generative ai)\b", re.I)
 FILTERS = {"ai": AI_WORDS, "bedrock": BEDROCK_WORDS}
-PRERELEASE = re.compile(r"(alpha|beta|preview|nightly|\brc\d*|-pre\b|canary|insiders)", re.I)
+# Pre-releases, including "v0.30.1rc0" and date-stamped builds ("v0.43.2026040705").
+PRERELEASE = re.compile(r"(alpha|beta|preview|nightly|(?<![a-z])rc\d*\b|-pre\b|canary|insiders|\.\d{8,}\b)", re.I)
 
 ATOM = "{http://www.w3.org/2005/Atom}"
 MEDIA = "{http://search.yahoo.com/mrss/}"
@@ -113,6 +116,25 @@ def plain(s, limit=SUMMARY_CHARS):
     if len(s) > limit:
         s = s[:limit].rsplit(" ", 1)[0].rstrip(",.;:-–— ") + "…"
     return s
+
+
+# Boilerplate release notes open with; it says nothing about the release.
+RELEASE_NOISE = re.compile(
+    r"^(release notes?|what'?s changed|changes|changelog|release highlights could not be determined[^.]*\.?|"
+    r"chores?|release:?\s*v?[\d.]+[\w.-]*|v?[\d]+\.[\d.]+[\w.-]*|full changelog:?\S*)\s*[:.-]?\s*", re.I)
+COMMIT_REF = re.compile(
+    r"\s*(\(\s*#\d+\s*\)|by @[\w-]+ in \S+|\b[0-9a-f]{7,40}\b|\S+\.\.\.\S+|"
+    r"merge pull request #\d+ from \S+|(signed-off-by|co-authored-by):.*$)", re.I)
+
+
+def clean_release(summary):
+    """"What's Changed Release highlights could not be determined... Fix x (#12)"
+    -> "Fix x". Strips leading boilerplate (repeatedly) and PR/commit refs."""
+    s = COMMIT_REF.sub("", summary or "")
+    prev = None
+    while prev != s:
+        prev, s = s, RELEASE_NOISE.sub("", s.strip(), count=1)
+    return re.sub(r"\s+", " ", s).strip()
 
 
 def item_id(url):
@@ -451,6 +473,7 @@ def to_item(src, e, now):
     }
     if src.get("release"):
         item["kind"] = "release"
+        item["summary"] = clean_release(item["summary"])
     for k in ("points", "comments", "discuss"):
         if e.get(k):
             item[k] = e[k]
@@ -473,37 +496,105 @@ def merge_items(old, new, now, window_days, person_ids):
         by_id[(i["id"], i["source"])] = i
 
     cutoff = iso(now - dt.timedelta(days=window_days))
-    kept, per_person = [], {}
+    kept, per_source = [], {}
     for i in sorted(by_id.values(), key=lambda i: i["published"], reverse=True):
+        n = per_source.get(i["source"], 0)
         if i["source"] in person_ids:
-            n = per_person.get(i["source"], 0)
-            if i["published"] >= cutoff or n < PERSON_KEEP:
-                per_person[i["source"]] = n + 1
-                kept.append(i)
-        elif i["published"] >= cutoff:
+            keep = i["published"] >= cutoff or n < PERSON_KEEP
+        else:
+            # A busy feed (the AWS blog posts daily) would otherwise pile up
+            # a fortnight of entries and crowd its section.
+            keep = i["published"] >= cutoff and n < SOURCE_KEEP
+        if keep:
+            per_source[i["source"]] = n + 1
             kept.append(i)
     return kept
 
 
+STOP = set("a an and are as at be by for from has have how i in is it its of on or that the this to was we what when why will with you your new now vs via".split())
+
+
+def title_words(title):
+    return {w for w in re.findall(r"[a-z0-9][a-z0-9.+-]*", title.lower()) if w not in STOP and len(w) > 1}
+
+
+def same_story(a, b):
+    """Two headlines about one story: most of the shorter one's words appear
+    in the other, and they share at least four."""
+    wa, wb = title_words(a), title_words(b)
+    if len(wa) < 4 or len(wb) < 4:
+        return False
+    shared = len(wa & wb)
+    return shared >= 4 and shared / min(len(wa), len(wb)) >= 0.7
+
+
 def crosslink(items):
     """The same story from several sources: record where else it appeared
-    (`also`), which the page shows and uses to rank the Latest tab."""
-    by_url = {}
+    (`also`), which the page shows and uses to rank the Latest tab. A story
+    counts as the same by URL (either the link or its discussion thread) or
+    by near-identical headline within two days. When one of the copies is
+    on Hacker News, the others get its thread (`hn`)."""
+    groups, by_url = [], {}
     for i in items:
-        by_url.setdefault(canonical(i["url"]), []).append(i)
-        if i.get("discuss"):
-            by_url.setdefault(canonical(i["discuss"]), []).append(i)
-    also = {}
-    for group in by_url.values():
+        keys = {canonical(i["url"])} | ({canonical(i["discuss"])} if i.get("discuss") else set())
+        found = next((by_url[k] for k in keys if k in by_url), None)
+        if found is None:
+            day = i["published"][:10]
+            found = next((g for g in groups if any(
+                abs((parse_date(day) - parse_date(o["published"][:10])).days) <= 2 and same_story(i["title"], o["title"])
+                for o in g)), None)
+        if found is None:
+            found = []
+            groups.append(found)
+        found.append(i)
+        for k in keys:
+            by_url.setdefault(k, found)
+    for group in groups:
         srcs = {g["source"] for g in group}
+        hn = next((g for g in group if g["source"] == "hn"), None)
         for g in group:
-            also.setdefault(id(g), set()).update(srcs - {g["source"]})
-    for i in items:
-        if also.get(id(i)):
-            i["also"] = sorted(also[id(i)])
-        else:
-            i.pop("also", None)
+            others = sorted(srcs - {g["source"]})
+            if others:
+                g["also"] = others
+            else:
+                g.pop("also", None)
+            if hn and g is not hn and hn.get("discuss"):
+                g["hn"] = {"url": hn["discuss"], "points": hn.get("points", 0), "comments": hn.get("comments", 0)}
+            else:
+                g.pop("hn", None)
     return items
+
+
+def topics(items, now, hours=48, limit=TOPIC_LIMIT):
+    """What today's items keep mentioning: known names counted once per
+    item across the last two days, most-mentioned first."""
+    cutoff = iso(now - dt.timedelta(hours=hours))
+    counts = {}
+    for i in items:
+        if i["published"] < cutoff or i["section"] == "tools":
+            continue
+        text = i["title"] + " " + i.get("summary", "")[:200]
+        for key, rx in TOPICS:
+            if rx.search(text):
+                counts[key] = counts.get(key, 0) + 1
+    ranked = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
+    return [{"key": k, "n": n} for k, n in ranked if n >= 2][:limit]
+
+
+# Display name -> pattern. The display name is also what the page searches for.
+TOPICS = [(k, re.compile(p, re.I)) for k, p in [
+    ("Claude", r"\bclaude\b"), ("Anthropic", r"\banthropic\b"), ("OpenAI", r"\bopenai\b"),
+    ("GPT", r"\bgpt[-\s]?\d"), ("Gemini", r"\bgemini\b"), ("Google", r"\bgoogle\b|\bdeepmind\b"),
+    ("Meta", r"\bmeta\b|\bllama\b"), ("Qwen", r"\bqwen"), ("DeepSeek", r"\bdeepseek"),
+    ("Mistral", r"\bmistral\b"), ("Grok", r"\bgrok\b|\bxai\b"), ("Nvidia", r"\bnvidia\b|\bjensen\b"),
+    ("Microsoft", r"\bmicrosoft\b"), ("Copilot", r"\bcopilot\b"), ("Cursor", r"\bcursor\b"),
+    ("Codex", r"\bcodex\b"), ("AWS", r"\baws\b|\bamazon\b|\bbedrock\b"), ("Hugging Face", r"hugging ?face"),
+    ("Agents", r"\bagents?\b|\bagentic\b"), ("MCP", r"\bmcp\b|model context protocol"),
+    ("Open weights", r"open[- ]weights?|open[- ]source model"), ("Safety", r"\bsafety\b|\balignment\b"),
+    ("Coding", r"\bcoding\b|\bcode review\b|\bprogramm"), ("Security", r"\bsecurity\b|\bvulnerab|\bhack"),
+    ("Robotics", r"\brobot"), ("Chips", r"\bgpus?\b|\bchips?\b|\btpu"), ("Evals", r"\bevals?\b|\bbenchmark"),
+    ("Regulation", r"\bregulat|\blaw\b|\bcourt\b|\bcongress\b|\beu ai act"),
+]]
 
 
 def dedupe(items):
@@ -580,6 +671,8 @@ def validate(value, schema, path="$"):
                 errs += validate(v, props[k], "%s.%s" % (path, k))
             elif schema.get("additionalProperties") is False:
                 errs.append("%s: unexpected field %s" % (path, k))
+            elif isinstance(schema.get("additionalProperties"), dict):
+                errs += validate(v, schema["additionalProperties"], "%s.%s" % (path, k))
     if isinstance(value, list) and "items" in schema:
         for n, v in enumerate(value):
             errs += validate(v, schema["items"], "%s[%d]" % (path, n))
@@ -588,7 +681,7 @@ def validate(value, schema, path="$"):
 
 # --- the run ----------------------------------------------------------------------
 
-def public_source(src, status, checked, error, feedly):
+def public_source(src, status, checked, error, feedly, streak=0):
     host = urllib.parse.urlsplit(src["home"]).netloc.lower().removeprefix("www.")
     out = {
         "id": src["id"],
@@ -610,6 +703,8 @@ def public_source(src, status, checked, error, feedly):
         out["via"] = via
     if error:
         out["error"] = error
+    if streak:
+        out["fail_streak"] = streak
     return out
 
 
@@ -631,7 +726,8 @@ def build(cfg, prev, now, only=None, fetch=fetch_source, get=http_get, posts_dir
         if error:
             failed.add(src["id"])
             p = prev_sources.get(src["id"], {})
-            sources[src["id"]] = public_source(src, "error", p.get("checked"), error, feedly)
+            sources[src["id"]] = public_source(src, "error", p.get("checked"), error, feedly,
+                                               p.get("fail_streak", 0) + 1)
         else:
             new_items += [to_item(src, e, now) for e in entries]
             sources[src["id"]] = public_source(src, "ok", iso(now), None, feedly)
@@ -641,7 +737,8 @@ def build(cfg, prev, now, only=None, fetch=fetch_source, get=http_get, posts_dir
             p = prev_sources.get(src["id"])
             sources[src["id"]] = public_source(src, p["status"] if p else "pending",
                                                p.get("checked") if p else None,
-                                               p.get("error") if p else None, feedly)
+                                               p.get("error") if p else None, feedly,
+                                               p.get("fail_streak", 0) if p else 0)
 
     # Yesterday's items still have to pass today's config: a source that was
     # removed, or given a filter, stops showing what it no longer would.
@@ -669,7 +766,7 @@ def build(cfg, prev, now, only=None, fetch=fetch_source, get=http_get, posts_dir
             models["trending_error"] = str(e)[:160]
 
     order = {s["id"]: n for n, s in enumerate(cfg["sources"])}
-    return {
+    out = {
         "schema_version": SCHEMA_VERSION,
         "generated": iso(now),
         "window_days": cfg.get("window_days", 14),
@@ -678,7 +775,12 @@ def build(cfg, prev, now, only=None, fetch=fetch_source, get=http_get, posts_dir
         "items": items,
         "models": models,
         "mine": my_posts(posts_dir),
+        "topics": topics(items, now),
     }
+    # The briefing is written by digest.py; a feed refresh carries it over.
+    if prev.get("digest"):
+        out["digest"] = prev["digest"]
+    return out
 
 
 # Reddit answers a burst from one IP with 429s, so its feeds are staggered.

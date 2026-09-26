@@ -139,6 +139,52 @@ def item(source, n, days_ago, section="people"):
             "first_seen": radar.iso(d), "summary": ""}
 
 
+class Improvements(unittest.TestCase):
+    def test_clean_release(self):
+        self.assertEqual(radar.clean_release("What's Changed Release highlights could not be determined from the supplied PR index. Fix login loop (#123) by @dev in https://x/pull/1"),
+                         "Fix login loop")
+        self.assertEqual(radar.clean_release("release: v2.0.18"), "")
+        self.assertEqual(radar.clean_release("Bug Fixes: faster startup"), "Bug Fixes: faster startup")
+        self.assertEqual(radar.clean_release("rust-v0.157.0...rust-v0.157.1"), "")
+        self.assertEqual(radar.clean_release("jinja : implement sameas test ( #29448 ) done"), "jinja : implement sameas test done")
+        self.assertEqual(radar.clean_release("Merge pull request #5036 from ms/branch nes: clipping"), "nes: clipping")
+        self.assertEqual(radar.clean_release("Fix x Signed-off-by: A B a@b.c"), "Fix x")
+
+    def test_prerelease_patterns(self):
+        for t in ("v0.30.1rc0: [ROCm] x", "v0.43.2026040705", "v1.2.0-beta.1", "VS Code 1.140 (Insiders)"):
+            self.assertTrue(radar.PRERELEASE.search(t), t)
+        for t in ("v0.30.0", "v2.1.283", "Release v0.61.0", "Desktop v0.0.37", "source maps"):
+            self.assertFalse(radar.PRERELEASE.search(t), t)
+
+    def test_same_story_by_headline(self):
+        self.assertTrue(radar.same_story("OpenAI releases GPT-6 Luna with 2M context window",
+                                         "GPT-6 Luna: OpenAI releases model with 2M context window"))
+        self.assertFalse(radar.same_story("OpenAI releases GPT-6 Luna", "Anthropic releases Claude Opus 5.5"))
+
+    def test_crosslink_by_headline_gives_hn_thread(self):
+        a = dict(item("openai", 1, 0, "labs"), title="Introducing GPT-6 Luna Pro reasoning model for developers")
+        b = dict(item("hn", 7, 0, "community"), title="GPT-6 Luna Pro reasoning model for developers",
+                 discuss="https://news.ycombinator.com/item?id=7", points=400, comments=120)
+        radar.crosslink([a, b])
+        self.assertEqual(a["also"], ["hn"])
+        self.assertEqual(a["hn"], {"url": "https://news.ycombinator.com/item?id=7", "points": 400, "comments": 120})
+        self.assertNotIn("hn", b)
+
+    def test_topics(self):
+        items = [dict(item("hn", n, 0, "community"), title=t) for n, t in enumerate(
+            ["Claude gets agents", "Claude Code 2", "Gemini update", "Qwen open weights", "Qwen 4 open-weights model"])]
+        got = {t["key"]: t["n"] for t in radar.topics(items, NOW)}
+        self.assertEqual(got.get("Claude"), 2)
+        self.assertEqual(got.get("Qwen"), 2)
+        self.assertEqual(got.get("Open weights"), 2)
+        self.assertNotIn("Gemini", got, "a single mention is not a topic")
+
+    def test_busy_source_is_capped(self):
+        old = [item("awsml", n, 0.1 * n, "labs") for n in range(radar.SOURCE_KEEP + 5)]
+        out = radar.merge_items(old, [], NOW, 14, set())
+        self.assertEqual(len(out), radar.SOURCE_KEEP)
+
+
 class Merge(unittest.TestCase):
     def test_first_seen_survives_and_window_applies(self):
         old = [item("hn", 1, 1, "community"), item("hn", 2, 30, "community")]
@@ -219,6 +265,19 @@ class Build(unittest.TestCase):
         self.assertEqual({s["id"]: s["checked"] for s in doc["sources"]}["simonw"], radar.iso(NOW))
         self.assertTrue(any(i["source"] == "simonw" for i in doc["items"]))
 
+    def test_fail_streak_counts_and_resets(self):
+        prev = self.run_build(radar.load_previous(FX / "missing.json"), {"werner": ([], "boom")})
+        prev = self.run_build(json.loads(json.dumps(prev)), {"werner": ([], "boom")})
+        self.assertEqual({s["id"]: s for s in prev["sources"]}["werner"]["fail_streak"], 2)
+        doc = self.run_build(json.loads(json.dumps(prev)), {"werner": ([], None)})
+        self.assertNotIn("fail_streak", {s["id"]: s for s in doc["sources"]}["werner"])
+
+    def test_briefing_survives_a_refresh(self):
+        prev = radar.load_previous(FX / "missing.json")
+        prev["digest"] = {"date": "2026-09-26"}
+        doc = self.run_build(prev, {})
+        self.assertEqual(doc["digest"], {"date": "2026-09-26"})
+
     def test_removed_source_items_are_dropped(self):
         prev = {"schema_version": 1, "items": [item("gone", 1, 0)], "sources": []}
         doc = self.run_build(radar.migrate(prev), {})
@@ -258,6 +317,8 @@ class Schema(unittest.TestCase):
         self.assertTrue(any("missing generated" in e for e in errs))
         self.assertTrue(any("unexpected field extra" in e for e in errs))
         self.assertEqual(radar.validate(True, {"type": "integer"}), ["$: expected integer, got bool"])
+        self.assertEqual(radar.validate({"a": 1}, {"type": "object", "additionalProperties": {"type": "string"}}),
+                         ["$.a: expected string, got int"])
 
     def test_committed_data_file_is_valid(self):
         p = radar.OUT
