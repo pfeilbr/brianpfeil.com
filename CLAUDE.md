@@ -257,6 +257,13 @@ touching a template:
   after the deploy submits only the changed URLs (`tools/indexnow/`). The key
   file is `static/<key>.txt`; the key is public by design.
 
+- **Site check** (`tools/site-check`, in verify and CI): every same-site
+  link in the build must resolve, and no tag/category may be used with two
+  casings — with `disablePathToLower`, "HTML" and "html" race for one URL
+  and the build output changes from run to run.
+- **Contrast:** secondary text uses a colour token (`--text-subtle`), never
+  `opacity` — the opacity versions measured 2–4:1 and failed WCAG AA.
+
 ## Newsletter
 
 `partials/newsletter.html` sits on the home page, posts, guides, /courses/ and

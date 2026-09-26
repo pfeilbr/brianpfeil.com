@@ -4,9 +4,10 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-i18n test-docs test-github test-ai ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs test-github test-ai ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
+	python3 tools/site-check/check_site.py --public public
 	python3 tools/github-repos/check_page.py --public public
 
 generate-posts: ## Regenerate generated-*.md posts from GitHub
@@ -86,6 +87,9 @@ test-courses: ## Tests for the course sync, and a privacy check of every publish
 test-indexnow: ## Tests for the IndexNow change detector
 	python3 -m unittest discover -s tools/indexnow -p 'test_*.py'
 
+test-site-check: ## Tests for the built-site link and taxonomy checker
+	python3 -m unittest discover -s tools/site-check -p 'test_*.py'
+
 # Live and network-bound, so not part of verify: lists posts whose repo
 # link 404s for a visitor (the repo went private or was deleted).
 test-docs: ## Every Makefile target has help text and is in the README
@@ -131,6 +135,13 @@ check-learn-links: ## Open every /learn/ link as an anonymous visitor (live, nee
 courses-sync: ## Publish the /teach courses from ~/projects/learn to /courses/
 	python3 tools/courses/sync_courses.py
 
+check-course-links: ## Open every course resource link as an anonymous visitor (live, needs network)
+	python3 tools/courses/check_course_links.py
+
+# Quantizes PNGs over 300 KB when it's clearly smaller and visually close.
+images-optimize: ## Shrink heavy PNGs in content/ and static/ in place (needs ImageMagick)
+	python3 tools/images/optimize_pngs.py --apply
+
 
 # --- Terraform (infra/) ---------------------------------------------------
 # State lives in S3 (infra/backend.hcl). The provider comes from a local
@@ -154,4 +165,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: help dev build verify generate-posts movies-refresh ai-refresh ai-i18n test-ai github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-i18n test-docs check-repo-links check-learn-links courses-sync tf-init tf-plan tf-validate
+.PHONY: help dev build verify generate-posts movies-refresh ai-refresh ai-i18n test-ai github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize tf-init tf-plan tf-validate

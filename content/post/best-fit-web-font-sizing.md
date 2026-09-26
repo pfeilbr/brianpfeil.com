@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["html", "javascript", "fonts"]
+categories = ["HTML", "JavaScript", "fonts"]
 date = 2011-09-27T19:31:00Z
 description = ""
 draft = false

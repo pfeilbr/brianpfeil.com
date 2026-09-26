@@ -13,7 +13,6 @@ weight = 5
 <img style="display: inline; width: 40%" src="images/mst2.png" width="40%">
 </div>
 
-[Music Sound Touch 产品页](/ios-apps/music-sound-touch)
 
 <a href="http://itunes.apple.com/us/app/music-sound-touch/id513151670?mt=8">
 <img src="images/app-store-badge-200x100.png" width="125px">

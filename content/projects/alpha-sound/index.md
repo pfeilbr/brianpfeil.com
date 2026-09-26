@@ -1,4 +1,6 @@
 +++
+# The old product page, removed as a duplicate of this one.
+aliases = ["/ios-apps/alpha-sound/"]
 title = "Alpha Sound"
 description = "A simple ABC's learning program for children."
 date = 2014-08-04T18:55:46Z
@@ -13,7 +15,6 @@ Alpha Sound is a simple ABC's learning program for children. Children learn thei
 <img style="display: inline; width: 200px;" width="200px" src="images/as2.png"></img>
 </div>
 
-[Alpha Sound Product Page](/ios-apps/alpha-sound)
 
 <a href="http://itunes.apple.com/us/app/alpha-sound/id493812596?mt=8">
 <img src="images/app-store-badge-200x100.png" width="125px">

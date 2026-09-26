@@ -1,0 +1,12 @@
+# Keeps the GitHub Actions used by the workflows on current versions
+# (checkout, setup-*, upload/deploy-pages, cache...). The Hugo version is a
+# workflow input, not an action version, so it stays pinned by hand.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]

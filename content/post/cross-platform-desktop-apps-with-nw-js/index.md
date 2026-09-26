@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["javascript", "nodejs", "desktop", "nw.js"]
+categories = ["JavaScript", "nodejs", "desktop", "nw.js"]
 date = 2015-02-15T11:22:57Z
 description = ""
 draft = false

@@ -25,7 +25,7 @@
   {{ end }}
 
   <div class="prose">
-    {{ .Content }}
+    {{ partial "content-a11y.html" .Content | safeHTML }}
   </div>
 </article>
 

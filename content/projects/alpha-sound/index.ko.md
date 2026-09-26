@@ -13,7 +13,6 @@ Alpha Sound는 아이들을 위한 간단한 알파벳 학습 프로그램입니
 <img style="display: inline; width: 200px;" width="200px" src="images/as2.png"></img>
 </div>
 
-[Alpha Sound 제품 페이지](/ios-apps/alpha-sound)
 
 <a href="http://itunes.apple.com/us/app/alpha-sound/id493812596?mt=8">
 <img src="images/app-store-badge-200x100.png" width="125px">

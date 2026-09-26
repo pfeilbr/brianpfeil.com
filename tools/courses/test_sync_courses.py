@@ -85,6 +85,8 @@ class BuildTest(unittest.TestCase):
         self.assertIn('<link rel="canonical" href="https://brianpfeil.com/courses/auth/lessons/0002-cookies.html">', page)
         self.assertIn('<meta name="description" content="Cookies — lesson 2 of 2 in the free Web Auth course. Sessions and tokens.">', page)
         self.assertLess(page.index("canonical"), page.index("</head>"))
+        self.assertIn('<meta property="og:title" content="Cookies · Web Auth">', page)
+        self.assertIn('<meta property="og:url" content="https://brianpfeil.com/courses/auth/lessons/0002-cookies.html">', page)
 
     def test_existing_description_is_kept(self):
         _, files = self.build(lesson='<html><head><meta name="description" content="Mine"></head><body></body></html>')

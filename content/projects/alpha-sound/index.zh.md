@@ -13,7 +13,6 @@ Alpha Sound 是一款面向儿童的简易字母（ABC）学习程序。孩子�
 <img style="display: inline; width: 200px;" width="200px" src="images/as2.png"></img>
 </div>
 
-[Alpha Sound 产品页](/ios-apps/alpha-sound)
 
 <a href="http://itunes.apple.com/us/app/alpha-sound/id493812596?mt=8">
 <img src="images/app-store-badge-200x100.png" width="125px">

@@ -123,17 +123,26 @@ def site_bar(text: str, slug: str, course_title: str) -> str:
 HEAD_END = re.compile(r"</head>", re.I)
 DESCRIPTION = re.compile(r"<meta\s+name=[\"']description[\"']", re.I)
 CANONICAL = re.compile(r"<link\s+rel=[\"']canonical[\"']", re.I)
+OG = re.compile(r"<meta\s+property=[\"']og:", re.I)
 
 
-def seo_head(text: str, url: str, description: str) -> str:
-    """Give a lesson the canonical URL and meta description search engines
-    need -- lessons are static files, so Hugo's head partial never sees them.
-    Leaves a lesson's own tags alone if it already has them."""
+def seo_head(text: str, url: str, description: str, title: str = "") -> str:
+    """Give a lesson the canonical URL, meta description and social-preview
+    tags that Hugo's head partial adds to every other page -- lessons are
+    static files, so it never sees them. Leaves a lesson's own tags alone
+    if it already has them."""
     tags = ""
     if not CANONICAL.search(text):
         tags += f'<link rel="canonical" href="{html.escape(url, quote=True)}">\n'
     if not DESCRIPTION.search(text):
         tags += f'<meta name="description" content="{html.escape(description, quote=True)}">\n'
+    if title and not OG.search(text):
+        t, d, u = (html.escape(x, quote=True) for x in (title, description, url))
+        tags += (f'<meta property="og:type" content="article">\n'
+                 f'<meta property="og:title" content="{t}">\n'
+                 f'<meta property="og:description" content="{d}">\n'
+                 f'<meta property="og:url" content="{u}">\n'
+                 f'<meta name="twitter:card" content="summary">\n')
     m = HEAD_END.search(text)
     return text[:m.start()] + tags + text[m.start():] if (tags and m) else text
 
@@ -268,7 +277,8 @@ def build_course(course_dir: Path, cfg: dict) -> tuple[dict, dict[str, str]]:
             desc = lesson_description(entry["title"], len(bucket), n_lessons, title, about)
         else:
             desc = f"{entry['title']} — quick reference for the free {title} course. {about}"[:200]
-        files[rel] = seo_head(text, cfg.get("site", "").rstrip("/") + entry["href"], desc)
+        files[rel] = seo_head(text, cfg.get("site", "").rstrip("/") + entry["href"], desc,
+                              f"{entry['title']} · {title}")
 
     resources = []
     res_file = course_dir / "RESOURCES.md"

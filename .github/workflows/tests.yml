@@ -51,6 +51,17 @@ jobs:
           python tools/ai-radar/i18n_strings.py --check
       - name: i18n-check tests
         run: python -m unittest discover -s tools/i18n-check -p 'test_*.py' -v
+      - name: learn-links tests and offline data check
+        run: |
+          python -m unittest discover -s tools/learn-links -p 'test_*.py' -v
+          python tools/learn-links/check_learn_links.py --offline
+      # Includes a privacy check of every published lesson page.
+      - name: course sync tests
+        run: python -m unittest discover -s tools/courses -p 'test_*.py' -v
+      - name: IndexNow tests
+        run: python -m unittest discover -s tools/indexnow -p 'test_*.py' -v
+      - name: site-check tests
+        run: python -m unittest discover -s tools/site-check -p 'test_*.py' -v
       - name: docs check (every Makefile target documented)
         run: |
           python -m unittest discover -s tools/docs-check -p 'test_*.py' -v
@@ -77,6 +88,9 @@ jobs:
       # all nine languages.
       - name: GitHub page render check
         run: python3 tools/github-repos/check_page.py --public public
+      # Every same-site link resolves; no tag/category casing clashes.
+      - name: Internal link check
+        run: python3 tools/site-check/check_site.py --public public
       - name: Media page render check
         run: python3 tools/instagram-media/tests/check_layout.py --build
 

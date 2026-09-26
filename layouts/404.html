@@ -1,4 +1,29 @@
 {{ define "main" }}
+{{- /* GitHub Pages serves this English page for every missing URL, including
+   /ja/… ones. When the path starts with another language's prefix, swap in
+   that language's own 404 page (Hugo builds one per language) with
+   document.write, which keeps the URL the visitor typed and runs its scripts. */ -}}
+{{- if eq .Site.Language.Lang hugo.Sites.Default.Language.Lang }}
+{{- $prefixes := slice }}{{ range site.Languages }}{{ if ne .Lang hugo.Sites.Default.Language.Lang }}{{ $prefixes = $prefixes | append .Lang }}{{ end }}{{ end }}
+<script>
+(function () {
+  var langs = {{ $prefixes | jsonify | safeJS }};
+  var m = location.pathname.match(/^\/([a-z]{2})\//);
+  if (!m || langs.indexOf(m[1]) === -1 || location.pathname === "/" + m[1] + "/404.html") return;
+  document.documentElement.style.visibility = "hidden";
+  fetch("/" + m[1] + "/404.html").then(function (r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.text();
+  }).then(function (html) {
+    document.open();
+    document.write(html);
+    document.close();
+  }).catch(function () {
+    document.documentElement.style.visibility = "";
+  });
+})();
+</script>
+{{- end }}
 <section class="text-center py-8">
   <p class="text-sm font-medium text-brand mb-2">404</p>
   <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ i18n "not_found_title" }}</h1>

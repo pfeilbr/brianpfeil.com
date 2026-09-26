@@ -36,7 +36,7 @@
   {{ end }}
 
   <div class="prose arch-prose">
-    {{ .Content }}
+    {{ partial "content-a11y.html" .Content | safeHTML }}
   </div>
 
   {{ if or $prev $next }}

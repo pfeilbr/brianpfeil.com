@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["javascript", "ios", "react", "react native"]
+categories = ["JavaScript", "ios", "react", "react native"]
 date = 2015-03-27T16:36:59Z
 description = ""
 draft = false

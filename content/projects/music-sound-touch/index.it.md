@@ -13,7 +13,6 @@ Un'app musicale interattiva, divertente e semplice, ideata da genitori per i bam
 <img style="display: inline; width: 40%" src="images/mst2.png" width="40%">
 </div>
 
-[Pagina del prodotto Music Sound Touch](/ios-apps/music-sound-touch)
 
 <a href="http://itunes.apple.com/us/app/music-sound-touch/id513151670?mt=8">
 <img src="images/app-store-badge-200x100.png" width="125px">

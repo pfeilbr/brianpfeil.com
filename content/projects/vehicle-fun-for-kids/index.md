@@ -1,4 +1,6 @@
 +++
+# The old product page, removed as a duplicate of this one.
+aliases = ["/ios-apps/vehicle-fun-for-kids/"]
 title = "Vehicle Fun for Kids"
 description = "Interactive vehicle app with real pictures and sounds for young children."
 date = 2014-08-04T18:55:46Z
@@ -13,7 +15,6 @@ Fun and easy interactive vehicle app designed by parents for young children who 
 <img style="display: inline; width: 40%;" src="images/vf2.png" width="40%">
 </div>
 
-[Vehicle Fun for Kids Product Page](/ios-apps/vehicle-fun-for-kids)
 
 <a href="http://itunes.apple.com/us/app/vehicle-fun-for-kids/id513634934?mt=8">
 <img src="images/app-store-badge-200x100.png" width="125px">

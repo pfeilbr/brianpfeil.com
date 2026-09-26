@@ -1,0 +1,15 @@
+{{- /* Post-processes rendered Markdown before it is printed:
+   - task-list checkboxes (- [ ]) are decorative -- the item text is the
+     label -- so hide them from assistive tech instead of announcing 40
+     unlabelled, disabled checkboxes;
+   - raw HTML <img> tags written straight into content (project pages)
+     never pass through the image render hook, so give them the same
+     lazy loading and async decoding it adds. */ -}}
+{{- $c := . -}}
+{{- $c = replace $c `<input disabled="" type="checkbox">` `<input disabled="" type="checkbox" aria-hidden="true">` -}}
+{{- $c = replace $c `<input checked="" disabled="" type="checkbox">` `<input checked="" disabled="" type="checkbox" aria-hidden="true">` -}}
+{{- /* Add to every <img>, then drop the copy the render hook already put at
+   the end of Markdown images (RE2 has no lookahead to skip them). */ -}}
+{{- $c = replaceRE `<img\b` `<img loading="lazy" decoding="async"` $c -}}
+{{- $c = replace $c ` loading="lazy" decoding="async">` `>` -}}
+{{- return $c -}}

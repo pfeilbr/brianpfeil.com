@@ -13,7 +13,6 @@ Alpha Sound ist ein einfaches Programm, mit dem Kinder das Alphabet lernen. Sie 
 <img style="display: inline; width: 200px;" width="200px" src="images/as2.png"></img>
 </div>
 
-[Alpha Sound Produktseite](/ios-apps/alpha-sound)
 
 <a href="http://itunes.apple.com/us/app/alpha-sound/id493812596?mt=8">
 <img src="images/app-store-badge-200x100.png" width="125px">

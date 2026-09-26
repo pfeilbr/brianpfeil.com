@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["ruby"]
+categories = ["Ruby"]
 date = 2012-05-11T01:34:00Z
 description = ""
 draft = false

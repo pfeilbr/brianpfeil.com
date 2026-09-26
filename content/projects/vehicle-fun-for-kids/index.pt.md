@@ -13,7 +13,6 @@ App de veículos interativo, divertido e fácil, criado por pais para crianças 
 <img style="display: inline; width: 40%;" src="images/vf2.png" width="40%">
 </div>
 
-[Página do Vehicle Fun for Kids](/ios-apps/vehicle-fun-for-kids)
 
 <a href="http://itunes.apple.com/us/app/vehicle-fun-for-kids/id513634934?mt=8">
 <img src="images/app-store-badge-200x100.png" width="125px">

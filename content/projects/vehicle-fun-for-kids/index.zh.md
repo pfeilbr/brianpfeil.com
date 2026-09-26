@@ -13,7 +13,6 @@ weight = 3
 <img style="display: inline; width: 40%;" src="images/vf2.png" width="40%">
 </div>
 
-[Vehicle Fun for Kids 产品页](/ios-apps/vehicle-fun-for-kids)
 
 <a href="http://itunes.apple.com/us/app/vehicle-fun-for-kids/id513634934?mt=8">
 <img src="images/app-store-badge-200x100.png" width="125px">
