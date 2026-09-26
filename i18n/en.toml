@@ -544,6 +544,35 @@ other = "The data for this page could not be loaded. Try reloading."
 [data_noscript]
 other = "This page is drawn with JavaScript. Its data is at <a href=\"{{ .url }}\">{{ .url }}</a>."
 
+# --- /architecture/ (layouts/architecture/, content/architecture/) ---
+
+[arch_intro]
+other = "Practical guides from the reviewing side of the table: what I've learned from a few hundred cloud architecture reviews. No company specifics — just the questions, patterns and templates that apply anywhere."
+
+[arch_english_note]
+other = "The guides are in English."
+
+[arch_guide_n]
+other = "Guide {{ .n }}"
+
+[arch_back]
+other = "All architecture guides"
+
+[arch_next]
+other = "Next guide"
+
+[arch_prev]
+other = "Previous guide"
+
+[hub_architecture_title]
+other = "Architecture"
+
+[hub_architecture_blurb]
+other = "Guides from hundreds of cloud architecture reviews"
+
+[hub_architecture_count]
+other = "{{ .count }} guides"
+
 # --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
 
 [courses_intro]

@@ -1,0 +1,5 @@
+{{- /* A highlighted aside in long-form content.
+   {{< callout "key" >}}…{{< /callout >}} for an insight, "warn" for a caveat.
+   The body is Markdown. */ -}}
+{{- $kind := .Get 0 | default "key" -}}
+<aside class="callout callout-{{ $kind }}">{{ .Inner | .Page.RenderString (dict "display" "block") }}</aside>

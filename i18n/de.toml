@@ -545,6 +545,35 @@ other = "Die Daten dieser Seite konnten nicht geladen werden. Bitte neu laden."
 
 [data_noscript]
 other = "Diese Seite wird mit JavaScript gezeichnet. Die Daten liegen unter <a href=\"{{ .url }}\">{{ .url }}</a>."
+
+# --- /architecture/ (layouts/architecture/, content/architecture/) ---
+
+[arch_intro]
+other = "Praxisnahe Leitfäden von der Prüferseite des Tisches: was ich aus ein paar hundert Cloud-Architektur-Reviews gelernt habe. Keine Firmeninterna – nur die Fragen, Muster und Vorlagen, die überall gelten."
+
+[arch_english_note]
+other = "Die Leitfäden sind auf Englisch."
+
+[arch_guide_n]
+other = "Leitfaden {{ .n }}"
+
+[arch_back]
+other = "Alle Architektur-Leitfäden"
+
+[arch_next]
+other = "Nächster Leitfaden"
+
+[arch_prev]
+other = "Vorheriger Leitfaden"
+
+[hub_architecture_title]
+other = "Architektur"
+
+[hub_architecture_blurb]
+other = "Leitfäden aus Hunderten Cloud-Architektur-Reviews"
+
+[hub_architecture_count]
+other = "{{ .count }} Leitfäden"
 # --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
 
 [courses_intro]

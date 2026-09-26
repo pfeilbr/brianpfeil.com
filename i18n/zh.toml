@@ -543,6 +543,35 @@ other = "无法加载此页面的数据，请刷新重试。"
 
 [data_noscript]
 other = "此页面由 JavaScript 绘制。数据见 <a href=\"{{ .url }}\">{{ .url }}</a>。"
+
+# --- /architecture/ (layouts/architecture/, content/architecture/) ---
+
+[arch_intro]
+other = "来自评审桌另一侧的实用指南：我从几百次云架构评审中学到的东西。不涉及任何公司细节——只有放之四海皆准的问题、模式和模板。"
+
+[arch_english_note]
+other = "这些指南为英文。"
+
+[arch_guide_n]
+other = "指南 {{ .n }}"
+
+[arch_back]
+other = "全部架构指南"
+
+[arch_next]
+other = "下一篇指南"
+
+[arch_prev]
+other = "上一篇指南"
+
+[hub_architecture_title]
+other = "架构"
+
+[hub_architecture_blurb]
+other = "来自数百次云架构评审的指南"
+
+[hub_architecture_count]
+other = "{{ .count }} 篇指南"
 # --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
 
 [courses_intro]

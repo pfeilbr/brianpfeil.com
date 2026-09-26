@@ -543,6 +543,35 @@ other = "Não foi possível carregar os dados desta página. Tente recarregar."
 
 [data_noscript]
 other = "Esta página é desenhada com JavaScript. Os dados estão em <a href=\"{{ .url }}\">{{ .url }}</a>."
+
+# --- /architecture/ (layouts/architecture/, content/architecture/) ---
+
+[arch_intro]
+other = "Guias práticos do lado de quem revisa: o que aprendi em algumas centenas de revisões de arquitetura em nuvem. Nada específico de nenhuma empresa — só as perguntas, os padrões e os modelos que valem em qualquer lugar."
+
+[arch_english_note]
+other = "Os guias estão em inglês."
+
+[arch_guide_n]
+other = "Guia {{ .n }}"
+
+[arch_back]
+other = "Todos os guias de arquitetura"
+
+[arch_next]
+other = "Próximo guia"
+
+[arch_prev]
+other = "Guia anterior"
+
+[hub_architecture_title]
+other = "Arquitetura"
+
+[hub_architecture_blurb]
+other = "Guias baseados em centenas de revisões de arquitetura em nuvem"
+
+[hub_architecture_count]
+other = "{{ .count }} guias"
 # --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
 
 [courses_intro]

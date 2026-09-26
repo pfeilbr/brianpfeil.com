@@ -545,6 +545,35 @@ other = "Impossible de charger les données de cette page. Essayez de la recharg
 
 [data_noscript]
 other = "Cette page est affichée avec JavaScript. Ses données se trouvent dans <a href=\"{{ .url }}\">{{ .url }}</a>."
+
+# --- /architecture/ (layouts/architecture/, content/architecture/) ---
+
+[arch_intro]
+other = "Des guides pratiques, vus du côté de celui qui fait la revue : ce que j'ai appris de quelques centaines de revues d'architecture cloud. Rien de propre à une entreprise — seulement les questions, les modèles et les gabarits qui s'appliquent partout."
+
+[arch_english_note]
+other = "Les guides sont en anglais."
+
+[arch_guide_n]
+other = "Guide {{ .n }}"
+
+[arch_back]
+other = "Tous les guides d'architecture"
+
+[arch_next]
+other = "Guide suivant"
+
+[arch_prev]
+other = "Guide précédent"
+
+[hub_architecture_title]
+other = "Architecture"
+
+[hub_architecture_blurb]
+other = "Des guides tirés de centaines de revues d'architecture cloud"
+
+[hub_architecture_count]
+other = "{{ .count }} guides"
 # --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
 
 [courses_intro]

@@ -1,0 +1,49 @@
+{{ define "main" }}
+{{- /* One architecture guide (content/architecture/<slug>.md). English only.
+   Guides are ordered by `weight`; prev/next follow that order. */ -}}
+{{ $pages := .CurrentSection.Pages.ByWeight }}
+{{ $n := 0 }}{{ $prev := false }}{{ $next := false }}
+{{ range $i, $p := $pages }}
+  {{ if eq $p.RelPermalink $.RelPermalink }}
+    {{ $n = add $i 1 }}
+    {{ if gt $i 0 }}{{ $prev = index $pages (sub $i 1) }}{{ end }}
+    {{ if lt (add $i 1) (len $pages) }}{{ $next = index $pages (add $i 1) }}{{ end }}
+  {{ end }}
+{{ end }}
+<article class="arch-guide">
+  <p class="course-back"><a href="{{ .CurrentSection.RelPermalink }}">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    {{ i18n "arch_back" }}</a></p>
+
+  <header class="mb-6">
+    <p class="arch-n">{{ i18n "arch_guide_n" (dict "n" $n) }}</p>
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="arch-lede">{{ .Description }}</p>
+    <div class="text-sm text-gray-500">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006") }}</time>
+      <span class="mx-1.5 text-gray-300" aria-hidden="true">&middot;</span>
+      <span>{{ i18n "min_read" .ReadingTime }}</span>
+    </div>
+  </header>
+
+  {{ if gt (len (findRE "<h2" .Content)) 2 }}
+  <nav class="toc" aria-label="{{ i18n "table_of_contents" }}">
+    <details open>
+      <summary>{{ i18n "contents" }}</summary>
+      {{ .TableOfContents }}
+    </details>
+  </nav>
+  {{ end }}
+
+  <div class="prose arch-prose">
+    {{ .Content }}
+  </div>
+
+  {{ if or $prev $next }}
+  <nav class="arch-pager" aria-label="{{ i18n "arch_back" }}">
+    {{ with $prev }}<a class="arch-pager-link" href="{{ .RelPermalink }}"><span>{{ i18n "arch_prev" }}</span><b>{{ .Title }}</b></a>{{ else }}<span></span>{{ end }}
+    {{ with $next }}<a class="arch-pager-link arch-pager-next" href="{{ .RelPermalink }}"><span>{{ i18n "arch_next" }}</span><b>{{ .Title }}</b></a>{{ end }}
+  </nav>
+  {{ end }}
+</article>
+{{ end }}

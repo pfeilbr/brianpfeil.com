@@ -209,6 +209,8 @@
   {{ $count := "" }}
   {{ if eq .key "projects" }}
     {{ with site.GetPage "/projects" }}{{ $count = i18n "hub_projects_count" (dict "count" (len .Pages)) }}{{ end }}
+  {{ else if eq .key "architecture" }}
+    {{ with hugo.Sites.Default.GetPage "/architecture" }}{{ $count = i18n "hub_architecture_count" (dict "count" (len .Pages)) }}{{ end }}
   {{ else if eq .key "courses" }}
     {{ with hugo.Data.courses }}{{ $count = i18n "hub_courses_count" (dict "count" (len .courses)) }}{{ end }}
   {{ else if eq .key "music" }}

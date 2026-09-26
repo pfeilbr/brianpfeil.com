@@ -1,0 +1,5 @@
+{{- /* An inline SVG diagram that follows the site theme. Draw with
+   currentColor and the --dg-* custom properties (fill, line, muted, accent,
+   accent-fill) so it works in light and dark. The SVG needs its own
+   role="img" and aria-label. */ -}}
+<figure class="diagram">{{ .Inner | safeHTML }}</figure>

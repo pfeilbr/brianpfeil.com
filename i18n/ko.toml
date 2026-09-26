@@ -543,6 +543,35 @@ other = "이 페이지의 데이터를 불러오지 못했습니다. 새로 고�
 
 [data_noscript]
 other = "이 페이지는 JavaScript로 그려집니다. 데이터는 <a href=\"{{ .url }}\">{{ .url }}</a>에 있습니다."
+
+# --- /architecture/ (layouts/architecture/, content/architecture/) ---
+
+[arch_intro]
+other = "리뷰하는 쪽에서 쓴 실전 가이드입니다. 수백 건의 클라우드 아키텍처 리뷰에서 배운 것을 담았습니다. 특정 회사 이야기는 없고, 어디에나 적용되는 질문과 패턴, 템플릿만 있습니다."
+
+[arch_english_note]
+other = "가이드는 영어로 되어 있습니다."
+
+[arch_guide_n]
+other = "가이드 {{ .n }}"
+
+[arch_back]
+other = "전체 아키텍처 가이드"
+
+[arch_next]
+other = "다음 가이드"
+
+[arch_prev]
+other = "이전 가이드"
+
+[hub_architecture_title]
+other = "아키텍처"
+
+[hub_architecture_blurb]
+other = "수백 건의 클라우드 아키텍처 리뷰에서 나온 가이드"
+
+[hub_architecture_count]
+other = "가이드 {{ .count }}개"
 # --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
 
 [courses_intro]

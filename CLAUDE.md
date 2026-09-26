@@ -183,6 +183,12 @@ touching a template:
   output, since a year match can pick a same-year namesake. Synopses, titles
   and genres come back in all nine languages from JustWatch, so they are
   data, not i18n. Set `"mpa"` on an entry to override a wrong rating.
+- **/architecture/:** hand-written guides in `content/architecture/*.md`,
+  English only, ordered by `weight`; the section index is translated. They
+  are generic by design — drawn from B's review practice with every company,
+  system and person removed; keep it that way. `{{< callout "key"|"warn" >}}`
+  and `{{< diagram >}}` (inline SVG using `--dg-*` colours) are the two
+  shortcodes; `- [ ]` task lists render as a checklist.
 - **/courses/:** generated from the learn project (`~/projects/learn`) by
   `make courses-sync`. Only `lessons/` and `reference/` are published —
   MISSION, NOTES and learning records describe B and never leave that repo.

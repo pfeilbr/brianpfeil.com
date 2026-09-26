@@ -2949,3 +2949,118 @@ a.ai-badge:hover { color: var(--brand); border-color: var(--brand); }
 @media (prefers-reduced-motion: reduce) {
   .course-card, .course-start svg, .learn-cta-go { transition: none; }
 }
+
+/* ---------------------------------------------------------------------------
+   Architecture guides (/architecture/). Long-form Markdown, so most styling
+   is .prose; these add the list, callouts, diagrams, checklists and pager.
+   --------------------------------------------------------------------------- */
+
+.arch-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.625rem; }
+.arch-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background-color: var(--bg);
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.arch-card:hover { border-color: var(--brand); box-shadow: var(--shadow-sm); }
+.arch-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.arch-n {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--brand);
+}
+.arch-title { font-size: 1.0625rem; font-weight: 700; line-height: 1.35; color: var(--text-strong); }
+.arch-card:hover .arch-title { color: var(--brand); }
+.arch-desc { font-size: 0.875rem; line-height: 1.55; color: var(--text-muted); }
+.arch-meta { font-size: 0.75rem; color: var(--text-faint); }
+
+.arch-lede { margin: 0 0 0.75rem; font-size: 1.0625rem; line-height: 1.6; color: var(--text-body); }
+
+/* Callouts: {{< callout "key" >}} / {{< callout "warn" >}}. */
+.callout {
+  margin: 1.5rem 0;
+  padding: 0.875rem 1.125rem;
+  border-left: 4px solid var(--brand);
+  border-radius: 0 0.5rem 0.5rem 0;
+  background-color: var(--bg-subtle);
+  background-color: color-mix(in srgb, var(--brand) 7%, var(--bg));
+}
+.callout-warn {
+  border-left-color: #d97706;
+  background-color: color-mix(in srgb, #d97706 8%, var(--bg));
+}
+.prose .callout p { margin: 0.375rem 0; }
+
+/* Inline SVG diagrams: {{< diagram >}}. Colours are custom properties so a
+   diagram follows the theme. */
+.diagram {
+  --dg-fill: var(--bg);
+  --dg-line: var(--border-strong);
+  --dg-muted: var(--text-subtle);
+  --dg-accent: var(--brand);
+  --dg-accent-fill: color-mix(in srgb, var(--brand) 12%, var(--bg));
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background-color: var(--bg-subtle);
+  color: var(--text-strong);
+}
+.diagram svg { display: block; width: 100%; height: auto; max-height: 22rem; }
+
+/* Checklists: Markdown task lists (- [ ]) render as disabled checkboxes. */
+.prose ul:has(> li > input[type="checkbox"]) { list-style: none; margin-left: 0; padding-left: 0; }
+.prose li:has(> input[type="checkbox"]) {
+  position: relative;
+  padding: 0.3125rem 0 0.3125rem 1.625rem;
+  margin: 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.prose li > input[type="checkbox"] {
+  position: absolute;
+  left: 0.125rem;
+  top: 0.5625rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  margin: 0;
+  accent-color: var(--brand);
+}
+
+/* Tables in guides scroll on a phone rather than squashing. */
+.arch-prose table { display: block; overflow-x: auto; }
+
+/* Prev / next guide. */
+.arch-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.625rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.arch-pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  text-decoration: none;
+}
+.arch-pager-link:hover { border-color: var(--brand); }
+.arch-pager-link span { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint); }
+.arch-pager-link b { font-size: 0.875rem; line-height: 1.35; color: var(--text-strong); }
+.arch-pager-next { text-align: right; grid-column: 2; }
+
+@media print {
+  .arch-pager, .course-back, .toc { display: none; }
+  .callout, .diagram { break-inside: avoid; }
+}

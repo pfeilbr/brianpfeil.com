@@ -543,6 +543,35 @@ other = "このページのデータを読み込めませんでした。再読�
 
 [data_noscript]
 other = "このページは JavaScript で表示しています。データは <a href=\"{{ .url }}\">{{ .url }}</a> にあります。"
+
+# --- /architecture/ (layouts/architecture/, content/architecture/) ---
+
+[arch_intro]
+other = "レビューする側から見た実践ガイドです。数百件のクラウドアーキテクチャレビューで学んだことをまとめました。特定の企業の話は一切なく、どこでも通用する問い・パターン・テンプレートだけを載せています。"
+
+[arch_english_note]
+other = "ガイドは英語です。"
+
+[arch_guide_n]
+other = "ガイド {{ .n }}"
+
+[arch_back]
+other = "アーキテクチャガイド一覧"
+
+[arch_next]
+other = "次のガイド"
+
+[arch_prev]
+other = "前のガイド"
+
+[hub_architecture_title]
+other = "アーキテクチャ"
+
+[hub_architecture_blurb]
+other = "数百件のクラウドアーキテクチャレビューから生まれたガイド"
+
+[hub_architecture_count]
+other = "{{ .count }} 本のガイド"
 # --- /courses/ (layouts/courses/, data/courses.json from tools/courses) ---
 
 [courses_intro]
