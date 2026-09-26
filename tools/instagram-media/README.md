@@ -165,6 +165,8 @@ clips, landscapes). Then:
 - anything Google matched to someone in `gphotos.exclude_people` (B's sons)
   is blocked, whatever else found it — "Wyatt Pfeil skiing" and so on are
   harvested for that alone;
+- a "scene" shot (found by the activity alone) is blocked by anyone at all
+  in it, however small — a swimmer far out on a beach counts;
 - readable text that looks like a number plate, house number, phone number,
   street, email or a page of writing blocks it; other text (a logo, a trail
   sign) is shown as a warning; receipts, screenshots and documents are blocked;
@@ -184,7 +186,10 @@ screen, `1`–`9` to include into another category, `z` to undo. What is
 picked for the category sits in a strip above the grid (× to remove; red if
 it no longer passes screening). Enter, `p` or a video's ▶ opens it large —
 videos play with sound, and the viewer has Include and Skip buttons.
-Videos also play silently on hover. Every decision is written to
+Videos also play silently on hover. A motion photo (a still with a few
+seconds of video, which Google marks with a play button) plays its clip
+too, labelled "motion"; the still is what goes on the site, and its clip is
+screened along with it, since the clip can show someone the still doesn't. Every decision is written to
 `picks.yaml` at once; skipped items are never suggested again. **Publish**
 encodes, uploads to `s3://brianpfeil-media01/photos/`, writes
 `data/photos.yaml`, and commits and pushes just those two files.

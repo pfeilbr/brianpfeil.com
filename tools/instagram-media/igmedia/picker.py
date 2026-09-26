@@ -71,9 +71,12 @@ class Picker:
     def final(self, key: str) -> Path:
         return self.work / "final" / f"{key}.jpg"
 
+    def motion(self, key: str) -> Path:
+        return self.work / "motion" / f"{key}.mp4"
+
     def path_for(self, key: str, variant: str) -> Path:
         return {"small": self.small, "large": self.large, "preview": self.preview,
-                "hq": self.hq, "final": self.final}[variant](key)
+                "hq": self.hq, "final": self.final, "motion": self.motion}[variant](key)
 
     # --- downloads, done by the browser ------------------------------------------
     # Google's image host only answers B's signed-in browser, so the page that
@@ -88,11 +91,23 @@ class Picker:
                 # The copy a pick is published from, fetched once it is picked.
                 if key in included:
                     need.append("hq" if c["kind"] == "video" else "final")
-                if not c.get("screen") or c["screen"].get("status") == "error":
+                status = (c.get("screen") or {}).get("status")
+                if not status or status == "error":
                     need.append("small")
                     need.append("preview" if c["kind"] == "video" else "large")
-                for v in need:
-                    if not self.path_for(key, v).exists():
+                stale = set()
+                if c["kind"] == "photo" and (status in ("ok", "warn") or key in included):
+                    # Thumbnails from before -no carry a fake play button.
+                    for v in ("small", "large"):
+                        if c.get("thumbs") != fetch.THUMBS_VERSION:
+                            need.append(v)
+                            stale.add(v)
+                    # Whether it is a motion photo, and if so its clip, which
+                    # is screened too: the clip can show who the still doesn't.
+                    if c.get("motion") is None:
+                        need.append("motion")
+                for v in dict.fromkeys(need):
+                    if v in stale or not self.path_for(key, v).exists():
                         out.append({"key": key, "variant": v, "url": c["url"],
                                     "suffixes": fetch.SUFFIXES[v]})
                 if len(out) >= limit:
@@ -128,11 +143,35 @@ class Picker:
             tmp.unlink(missing_ok=True)
             return {"ok": False, "error": f"expected {want}, got {got}" if not left else "truncated"}
         tmp.replace(dest)
-        if variant not in ("hq", "final"):
-            with self.lock:
-                if (c.get("screen") or {}).get("status") == "error":
-                    c.pop("screen")
-            self.jobs.put(key)
+        with self.lock:
+            if variant in ("small", "large") and c["kind"] == "photo":
+                c.setdefault("fresh", [])
+                if variant not in c["fresh"]:
+                    c["fresh"].append(variant)
+                if set(c["fresh"]) >= {"small", "large"}:
+                    c["thumbs"] = fetch.THUMBS_VERSION
+                    c.pop("fresh")
+                self.cands.save()
+                return {"ok": True}  # a refreshed thumbnail changes no verdict
+            if variant == "motion":
+                c["motion"] = True
+                c.pop("screen", None)  # judge it again, clip included
+                self.cands.save()
+            elif variant in ("hq", "final"):
+                return {"ok": True}
+            elif (c.get("screen") or {}).get("status") == "error":
+                c.pop("screen")
+        self.jobs.put(key)
+        return {"ok": True}
+
+    def no_motion(self, key: str) -> dict:
+        """The browser found no clip behind this photo: it is a plain one."""
+        with self.lock:
+            c = self.cands.items.get(key)
+            if c is None or c["kind"] != "photo":
+                return {"ok": False, "error": "unknown photo"}
+            c["motion"] = False
+            self.cands.save()
         return {"ok": True}
 
     # --- harvest ---------------------------------------------------------------
@@ -197,7 +236,11 @@ class Picker:
                 results = screen.run_vision(self.vision_bin, images)
             dur = fetch.duration(self.preview(key))
         else:
-            results = screen.run_vision(self.vision_bin, [self.large(key)])
+            images = [self.large(key)]
+            with tempfile.TemporaryDirectory() as tmp:
+                if c.get("motion") and self.motion(key).exists():
+                    images += fetch.frames(self.motion(key), Path(tmp), count=6)
+                results = screen.run_vision(self.vision_bin, images)
             dur = None
         v = screen.verdict(results, c.get("tier", "me"), key in self.cands.excluded)
         labels = {}
@@ -229,6 +272,7 @@ class Picker:
                     "key": c["key"], "id": c["id"], "kind": c["kind"], "taken": c.get("taken"),
                     "orient": c.get("orient"), "categories": c["categories"], "tier": c.get("tier"),
                     "duration": c.get("duration"), "screen": c.get("screen"),
+                    "motion": bool(c.get("motion")) and self.motion(c["key"]).exists(),
                     "leader": leaders.get(c["key"], c["key"]),
                     "decision": p.get("decision"), "category": p.get("category"),
                 })
@@ -431,7 +475,8 @@ def make_handler(p: Picker, static: Path):
                 if ".." in rel.parts:
                     return self._send(400, b"bad path", "text/plain")
                 return self._file(p.work / "web" / rel.relative_to(p.g["s3_prefix"]) if rel.parts and rel.parts[0] == p.g["s3_prefix"] else p.work / "web" / rel)
-            for prefix, fn in (("/small/", p.small), ("/large/", p.large), ("/preview/", p.preview), ("/hq/", p.hq), ("/final/", p.final)):
+            for prefix, fn in (("/small/", p.small), ("/large/", p.large), ("/preview/", p.preview), ("/hq/", p.hq), ("/final/", p.final),
+                               ("/motion/", p.motion)):
                 if path.startswith(prefix):
                     key = path[len(prefix):].rsplit(".", 1)[0]
                     if not gphotos.KEY.match(key):
@@ -443,6 +488,17 @@ def make_handler(p: Picker, static: Path):
             path = self.path.split("?")[0]
             if path == "/api/blob":
                 return self._blob()
+            if path == "/api/failed":
+                # The browser could not fetch a variant. Only "motion" means
+                # anything: a photo with no clip behind it.
+                from urllib.parse import parse_qs, urlparse
+                cors = self._cors()
+                if not cors and not self._local():
+                    return self._json({"ok": False, "error": "origin"}, 403)
+                q = parse_qs(urlparse(self.path).query)
+                if (q.get("variant") or [""])[0] == "motion":
+                    return self._json(p.no_motion((q.get("key") or [""])[0]), extra=cors)
+                return self._json({"ok": True}, extra=cors)
             length = int(self.headers.get("Content-Length") or 0)
             if length > 50_000_000:
                 return self._send(413, b"too large", "text/plain")

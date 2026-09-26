@@ -128,6 +128,8 @@
         if (!r.ok) continue;
         var blob = await r.blob();
         if (!/^(image|video)\//.test(blob.type)) continue;
+        /* A plain photo answers the motion-clip request with a picture. */
+        if (w.variant === "motion" && !/^video\//.test(blob.type)) return false;
         var up = await fetch(BASE + "/api/blob?key=" + encodeURIComponent(w.key) + "&variant=" + w.variant,
                              { method: "POST", body: blob });
         var j = await up.json();
@@ -146,7 +148,13 @@
       /* Four at a time: quick, without hammering Google. */
       for (var i = 0; i < w.length; i += 4) {
         await Promise.all(w.slice(i, i + 4).map(async function (x) {
-          if (await download(x)) done++; else failed.add(x.key + x.variant);
+          if (await download(x)) { done++; return; }
+          failed.add(x.key + x.variant);
+          /* Tell the picker, so a photo with no motion clip isn't asked for again. */
+          try {
+            await fetch(BASE + "/api/failed?key=" + encodeURIComponent(x.key) + "&variant=" + x.variant,
+                        { method: "POST" });
+          } catch (e) {}
         }));
         state.downloaded = done;
         toast("Picker: downloaded " + done + " file(s)\u2026" + (failed.size ? " (" + failed.size + " failed)" : ""));

@@ -41,11 +41,14 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def rescreen(path: Path, kind: str, tier: str, vision, workdir: Path) -> dict:
+def rescreen(path: Path, kind: str, tier: str, vision, workdir: Path,
+             motion: Path | None = None) -> dict:
     if kind == "video":
         images = fetch.frames(path, workdir / "frames-full" / path.stem, count=10)
     else:
         images = [path]
+        if motion is not None and motion.exists():  # a motion photo's clip
+            images += fetch.frames(motion, workdir / "frames-full" / f"{path.stem}-motion", count=6)
     return screen.verdict(vision(images), tier)
 
 
@@ -113,7 +116,8 @@ def build(picks: dict, cands: dict, categories: list[str], workdir: Path, prefix
         digest = sha256(path)
         cached = lock.get(digest)
         if cached is None:
-            v = rescreen(path, cand["kind"], cand.get("tier", "me"), vision, workdir)
+            motion = workdir / "motion" / f"{key}.mp4" if cand.get("motion") else None
+            v = rescreen(path, cand["kind"], cand.get("tier", "me"), vision, workdir, motion)
             if v["status"] == "blocked":
                 log(f"[{n}/{len(included)}] {cand['id']} refused at full size: {'; '.join(v['reasons'])}")
                 refused.append(key)

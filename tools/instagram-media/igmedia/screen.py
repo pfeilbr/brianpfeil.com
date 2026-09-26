@@ -49,6 +49,11 @@ def faces(result: dict) -> int:
     return sum(1 for a in result.get("faceAreas") or [] if a >= MIN_FACE_AREA)
 
 
+def anyone(result: dict) -> int:
+    """People at any size at all — for shots that must have nobody in them."""
+    return max(len(result.get(k) or []) for k in ("faceAreas", "humanAreas", "upperBodies", "personAreas"))
+
+
 def people(result: dict) -> int:
     bodies = sum(1 for a in result.get("humanAreas") or [] if a >= MIN_HUMAN_AREA)
     upper = sum(1 for a in result.get("upperBodies") or [] if a >= MIN_HUMAN_AREA)
@@ -88,7 +93,9 @@ def verdict(frames: list[dict], tier: str, excluded: bool = False) -> dict:
                 "text": [], "score": None}
 
     most = max(people(f) for f in ok_frames)
-    if tier == "scene" and most > 0:
+    if tier == "scene" and max(anyone(f) for f in ok_frames) > 0:
+        # No size cut-off: a swimmer far out in a "nobody in it" beach shot
+        # is still somebody.
         reasons.append("has people in it, and Google didn't match B's face")
     elif most > 1:
         reasons.append(f"{most} people in frame")

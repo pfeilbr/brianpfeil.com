@@ -22,9 +22,16 @@ SUFFIXES = {
     "preview": ["=m18", "=m22", "=dv"],
     "hq": ["=m37", "=m22", "=dv"],
     "final": ["=w1600-h1600-no"],
+    # A motion photo's few seconds of video. A plain photo has none, and the
+    # browser reports that back (see Picker.no_motion).
+    "motion": ["=m18"],
 }
 MAX_BYTES = {"small": 5 << 20, "large": 30 << 20, "preview": 200 << 20, "hq": 2 << 30,
-             "final": 30 << 20}
+             "final": 30 << 20, "motion": 100 << 20}
+
+# Bumped when the thumbnails themselves change; older ones are fetched again.
+# 2: without Google's play button on motion photos (-no).
+THUMBS_VERSION = 2
 
 
 def sniff(data: bytes) -> str:

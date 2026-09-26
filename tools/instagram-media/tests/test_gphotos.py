@@ -143,6 +143,13 @@ class ScreenTest(unittest.TestCase):
         self.assertEqual(screen.verdict([frame()], "scene")["status"], "ok")
         self.assertEqual(screen.verdict([frame(humans=[0.1])], "scene")["status"], "blocked")
 
+    def test_scene_blocks_anyone_at_all(self):
+        # A swimmer far out in a "nobody in it" beach shot.
+        self.assertEqual(screen.verdict([frame(humans=[0.0002])], "scene")["status"], "blocked")
+        # The same speck doesn't block a shot of B.
+        v = screen.verdict([frame(faces=[0.05], humans=[0.4, 0.0002], persons=[0.3])], "me")
+        self.assertEqual(v["status"], "ok")
+
     def test_worst_video_frame_decides(self):
         frames = [frame(faces=[0.05], persons=[0.3])] * 5 + [frame(faces=[0.05, 0.05], persons=[0.3, 0.3])]
         self.assertEqual(screen.verdict(frames, "me")["status"], "blocked")

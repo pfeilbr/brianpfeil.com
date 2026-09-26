@@ -146,6 +146,8 @@ let cat = null, view = "suggested", focus = 0, expanded = new Set(), undo = [];
 let shown = [];               // items currently in the grid, in order
 
 const label = (k) => LABELS[k] || k.replace(/-/g, " ");
+// What plays for an item: a video's preview, or a motion photo's clip.
+const clip = (it) => it.kind === "video" ? `/preview/${it.key}.mp4` : it.motion ? `/motion/${it.key}.mp4` : null;
 const ok = (it) => it.screen && (it.screen.status === "ok" || it.screen.status === "warn");
 const score = (it) => (it.screen && it.screen.score != null ? it.screen.score : -9);
 
@@ -206,19 +208,25 @@ function tile(it, i) {
   img.src = `/small/${it.key}.jpg`;
   img.alt = "";
   d.appendChild(img);
-  if (it.kind === "video") {
+  if (clip(it)) {
     d.onmouseenter = () => {
       const v = document.createElement("video");
-      v.src = `/preview/${it.key}.mp4`; v.muted = true; v.autoplay = true; v.loop = true; v.playsInline = true;
+      v.src = clip(it); v.muted = true; v.autoplay = true; v.loop = true; v.playsInline = true;
       v.onplaying = () => { img.style.display = "none"; };
       d.insertBefore(v, img);
     };
-    d.onmouseleave = () => { const v = d.querySelector("video"); if (v) { v.remove(); img.style.display = ""; } };
+    // Release the file as well as the element: a video left loading holds
+    // one of the browser's six connections to the picker.
+    d.onmouseleave = () => {
+      const v = d.querySelector("video");
+      if (v) { v.pause(); v.removeAttribute("src"); v.load(); v.remove(); img.style.display = ""; }
+    };
   }
   const badge = document.createElement("div");
   badge.className = "badge";
   const add = (text, cls, title) => { const s = document.createElement("span"); s.textContent = text; if (cls) s.className = cls; if (title) s.title = title; badge.appendChild(s); return s; };
   if (it.kind === "video") add("▶ " + (it.duration ? Math.round(it.duration) + "s" : ""));
+  if (it.motion) add("motion", null, "Motion photo: the still goes on the site; ▶ plays its clip");
   if (it.taken) add(it.taken.slice(0, 4));
   if (it.tier === "scene") add("no people", null, "Found by the activity search; nobody is in it");
   const st = it.screen || {};
@@ -229,7 +237,7 @@ function tile(it, i) {
     if (n > 0) add(`+${n} similar`, "sim").onclick = (e) => { e.stopPropagation(); toggleBurst(it.key); };
   }
   d.appendChild(badge);
-  if (it.kind === "video") {
+  if (clip(it)) {
     // Watch it with sound before deciding; the tile itself still includes.
     const b = document.createElement("button");
     b.className = "play";
@@ -399,7 +407,7 @@ function openViewer(list, pos) {
 function closeViewer() {
   viewer.classList.remove("open");
   const v = viewer.querySelector("video");
-  if (v) v.pause();
+  if (v) { v.pause(); v.removeAttribute("src"); v.load(); }
   viewer.querySelector(".stage").innerHTML = "";
   render();
 }
@@ -412,12 +420,16 @@ function drawViewer() {
   const it = vlist && vlist[vpos];
   if (!it) return closeViewer();
   const stage = viewer.querySelector(".stage");
+  const old = stage.querySelector("video");
+  if (old) { old.pause(); old.removeAttribute("src"); old.load(); }
   stage.innerHTML = "";
-  if (it.kind === "video") {
+  if (clip(it)) {
     const v = document.createElement("video");
     // With sound: opening it was a click or a key press, which is the
     // gesture browsers want before playing audio.
-    v.src = `/preview/${it.key}.mp4`; v.controls = true; v.autoplay = true; v.playsInline = true; v.loop = true;
+    v.src = clip(it); v.controls = true; v.autoplay = true; v.playsInline = true; v.loop = true;
+    if (it.motion) v.poster = `/large/${it.key}.jpg`;
+    v.onerror = () => { stage.textContent = "This clip would not play \u2014 the file may be damaged. Skip it, or fetch it again."; };
     stage.appendChild(v);
   } else {
     const img = document.createElement("img");
@@ -434,6 +446,7 @@ function drawViewer() {
   btn("\u2192", "skp", () => vmove(1));
   t(`${vpos + 1} / ${vlist.length}`);
   t(it.taken ? it.taken.replace("T", " ") : "undated");
+  if (it.motion) t("motion photo \u2014 the still goes on the site");
   t(it.decision === "include" ? `✓ included in ${label(it.category)}` : it.decision === "skip" ? "skipped" : "undecided");
   const st = it.screen || {};
   if (st.reasons && st.reasons.length) t(st.reasons.join(" · "), ok(it) ? "reasons" : "blocked");
