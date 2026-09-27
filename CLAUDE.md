@@ -158,7 +158,7 @@ touching a template:
 
 | Page | Data | Layout |
 | --- | --- | --- |
-| `/music/` | `data/music.yaml` | `layouts/_default/music.html` |
+| `/music/` | `data/music.yaml` (`make music-refresh`) | `layouts/_default/music.html` |
 | `/subscriptions/` | `data/subscriptions.yaml`, `data/twitch.yaml` | `layouts/_default/subscriptions.html` |
 | `/media/` | `data/media.yaml`, `data/photos.yaml` (both generated) | `layouts/_default/media.html` |
 | `/movies/` | `data/movies.json` (`make movies-refresh`) | `layouts/_default/movies.html` |

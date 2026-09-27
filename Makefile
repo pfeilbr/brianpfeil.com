@@ -4,7 +4,7 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs test-github test-ai test-ai-page test-social ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs test-github test-music test-ai test-ai-page test-social ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
 	python3 tools/site-check/check_site.py --public public
@@ -101,6 +101,12 @@ test-i18n: ## Tests for, and a run of, the i18n consistency check
 	python3 tools/i18n-check/check_i18n.py
 
 # Add a movie to data/movies.json as {"title": …, "year": …} (or "imdb": "tt…"), then run this.
+music-refresh: ## Refresh data/music.yaml from my public YouTube Music playlists
+	python3 tools/music/refresh.py
+
+test-music: ## Tests for the music page's playlist refresher
+	python3 -m unittest discover -s tools/music -p 'test_*.py'
+
 movies-refresh: ## Fill in and refresh data/movies.json (posters, scores, trailers, streaming)
 	python3 tools/movies/refresh.py
 
@@ -177,4 +183,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: social-kit test-social help dev build verify generate-posts movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize tf-init tf-plan tf-validate
+.PHONY: social-kit test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize tf-init tf-plan tf-validate
