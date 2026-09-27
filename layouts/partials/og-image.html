@@ -1,0 +1,34 @@
+{{- /* A 1200x630 share card for the page, drawn at build time: section label,
+   title, avatar and name on assets/og/base.png (tools/og/make_base.py).
+   Returns the card's absolute URL, or "" when the page should keep the
+   default image (home page) or has none of its own title.
+
+   Inter here is the Latin subset, so zh/ja/ko pages share their English
+   translation's card rather than render tofu. */ -}}
+{{- $url := "" -}}
+{{- $p := . -}}
+{{- if in (slice "zh" "ja" "ko") .Language.Lang -}}
+  {{- $p = "" -}}
+  {{- range .Translations }}{{ if eq .Language.Lang "en" }}{{ $p = . }}{{ end }}{{ end -}}
+{{- end -}}
+{{- if and $p (not $p.IsHome) $p.Title -}}
+  {{- $bold := resources.Get "og/inter-700.ttf" -}}
+  {{- $semi := resources.Get "og/inter-600.ttf" -}}
+  {{- $label := $p.Site.Title -}}
+  {{- with $p.FirstSection }}{{ if and (not .IsHome) (ne .RelPermalink $p.RelPermalink) }}{{ $label = .LinkTitle }}{{ end }}{{ end -}}
+  {{- $title := $p.Title -}}
+  {{- $size := 68 -}}
+  {{- if gt (len $title) 90 }}{{ $size = 48 }}{{ else if gt (len $title) 55 }}{{ $size = 58 }}{{ end -}}
+  {{- $avatar := (resources.Get "og/avatar.jpg").Fill "112x112 Center png" | images.Filter (images.Mask (resources.Get "og/avatar-mask.png")) -}}
+  {{- $titleImg := resources.Get "og/title-canvas.png" | images.Filter
+      (images.Text $title (dict "font" $bold "size" $size "color" "#f3f4f6" "x" 0 "y" 0 "linespacing" 10)) -}}
+  {{- $img := resources.Get "og/base.png" | images.Filter
+      (images.Text (upper $label) (dict "font" $semi "size" 26 "color" "#5ec8ee" "x" 80 "y" 72))
+      (images.Overlay $titleImg 80 128)
+      (images.Overlay $avatar 80 464)
+      (images.Text $p.Site.Params.author.name (dict "font" $bold "size" 32 "color" "#f3f4f6" "x" 214 "y" 482))
+      (images.Text "brianpfeil.com" (dict "font" $semi "size" 26 "color" "#9ca3af" "x" 214 "y" 526)) -}}
+  {{- $name := printf "og/%s.jpg" (md5 (printf "%s|%s|%s" $label $title $p.Site.Params.author.name)) -}}
+  {{- $url = ($img.Process "jpg q82" | resources.Copy $name).Permalink -}}
+{{- end -}}
+{{- return $url -}}

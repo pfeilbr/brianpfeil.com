@@ -730,6 +730,36 @@ other = "自分のマシンでモデルを動かす"
 [learn_group_made_here]
 other = "このサイト製"
 
+[learn_path_people]
+other = "私がフォローしている人から学ぶ"
+
+[learn_path_blurb_people]
+other = "私がいちばんよく読み、聴いている作り手と思想家たち。そして彼らが無料で教えている場所。"
+
+[learn_res_simonw_blog]
+other = "LLM を使ったソフトウェア開発の実践メモを毎日更新。エンジニアが AI を追いかけるならまずここ。"
+
+[learn_res_simonw_llm]
+other = "ローカルでもクラウドでも、ほぼどんなモデルとも対話できるコマンドラインツール。ドキュメントがそのままチュートリアルになっています。"
+
+[learn_res_lex_podcast]
+other = "AI 研究者、エンジニア、科学者との長時間対談。全エピソードに書き起こし付き。"
+
+[learn_res_huberman_podcast]
+other = "脳と体の仕組み、そして睡眠・集中・学習のための科学に基づく習慣。"
+
+[learn_res_patterns_dev]
+other = "モダンな Web アプリの設計・レンダリング・パフォーマンスのパターン集。JavaScript デザインパターンの本も含めて無料。"
+
+[learn_res_addy_blog]
+other = "Google のエンジニアリングリードによる、AI 支援コーディング、エージェントとの協働、Web パフォーマンスについてのエッセイ。"
+
+[learn_res_mitchellh_writing]
+other = "HashiCorp 共同創業者が、Ghostty の開発、Zig によるシステムプログラミング、AI エージェントとの働き方を語ります。"
+
+[learn_res_levels_blog]
+other = "たった一人で収益の出るプロダクトを出し、運営する方法。公開で作る、スタックはシンプルに、すばやくローンチ。"
+
 [learn_path_code]
 other = "ゼロからプログラミングを学ぶ"
 
@@ -1736,6 +1766,12 @@ other = "網羅的な週刊 AI まとめ"
 
 [ai_role_mitsuhiko]
 other = "Flask、Sentry の作者。エージェント型コーディングの実践"
+
+[ai_role_addyosmani]
+other = "Google のエンジニアリングリード。AI 支援コーディングと Web パフォーマンス"
+
+[ai_role_levelsio]
+other = "AI プロダクトを公開ですばやく出し続ける一人起業家"
 
 [ai_role_mitchellh]
 other = "Ghostty、HashiCorp の創業者。AI でソフトウェアを作る"

@@ -74,6 +74,17 @@ class Digest(unittest.TestCase):
         self.assertEqual([m["id"] for m in models], ["model:acme/m1"])
         self.assertIn('"a1"', prompt)
 
+    def test_pinned_people_come_first_and_are_marked(self):
+        d = doc()
+        d["sources"].append({"id": "simonw", "section": "people", "name": "Simon Willison", "home": "https://simonwillison.net/",
+                             "status": "ok", "checked": radar.iso(NOW), "pin": True})
+        d["items"].append({"id": "c3", "source": "simonw", "section": "people", "title": "A note", "url": "https://simonwillison.net/n",
+                           "published": radar.iso(NOW - dt.timedelta(hours=8)), "first_seen": radar.iso(NOW), "summary": ""})
+        _, items, _ = digest.build_prompt(d, NOW)
+        self.assertEqual([i["id"] for i in items], ["c3", "a1"])
+        self.assertTrue(items[0]["followed"])
+        self.assertNotIn("followed", items[1])
+
     def test_request_shape(self):
         c = FakeClient(answer([["a1"]]))
         digest.make_digest(doc(), NOW, client=c)

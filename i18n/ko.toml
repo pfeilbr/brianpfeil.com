@@ -730,6 +730,36 @@ other = "내 컴퓨터에서 모델 실행하기"
 [learn_group_made_here]
 other = "직접 만든 것"
 
+[learn_path_people]
+other = "내가 팔로우하는 사람들에게 배우기"
+
+[learn_path_blurb_people]
+other = "제가 가장 많이 읽고 듣는 빌더와 사상가들, 그리고 그들이 무료로 가르치는 곳."
+
+[learn_res_simonw_blog]
+other = "LLM으로 소프트웨어를 만드는 실전 기록을 매일 올립니다. 엔지니어가 AI를 따라잡기에 가장 좋은 한 곳."
+
+[learn_res_simonw_llm]
+other = "로컬이든 호스팅이든 거의 모든 모델과 대화할 수 있는 명령줄 도구. 문서가 곧 튜토리얼입니다."
+
+[learn_res_lex_podcast]
+other = "AI 연구자, 엔지니어, 과학자들과의 긴 대화. 전체 에피소드에 대본이 있습니다."
+
+[learn_res_huberman_podcast]
+other = "뇌와 몸이 작동하는 방식, 그리고 수면·집중·학습을 위한 과학 기반 습관."
+
+[learn_res_patterns_dev]
+other = "최신 웹 앱을 위한 설계·렌더링·성능 패턴을 무료로. 그의 JavaScript 디자인 패턴 책도 포함됩니다."
+
+[learn_res_addy_blog]
+other = "Google 엔지니어링 리드가 쓴 AI 보조 코딩, 에이전트와 일하는 법, 웹 성능에 관한 에세이."
+
+[learn_res_mitchellh_writing]
+other = "HashiCorp 공동 창업자가 Ghostty 개발, Zig로 하는 시스템 프로그래밍, AI 에이전트와 일하는 방식을 이야기합니다."
+
+[learn_res_levels_blog]
+other = "혼자서 수익을 내는 제품을 만들고 운영하는 법: 공개적으로 만들기, 단순한 스택, 빠른 출시."
+
 [learn_path_code]
 other = "처음부터 코딩 배우기"
 
@@ -1736,6 +1766,12 @@ other = "빠짐없는 주간 AI 정리"
 
 [ai_role_mitsuhiko]
 other = "Flask와 Sentry 제작자. 에이전트 코딩 실전"
+
+[ai_role_addyosmani]
+other = "Google 엔지니어링 리드. AI 보조 코딩과 웹 성능"
+
+[ai_role_levelsio]
+other = "AI 제품을 공개적으로 빠르게 내놓는 1인 창업자"
 
 [ai_role_mitchellh]
 other = "Ghostty와 HashiCorp 창업자. AI로 소프트웨어 만들기"

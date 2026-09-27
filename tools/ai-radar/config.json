@@ -8,11 +8,16 @@
     "Each person's one-line description is i18n (ai_role_<id>), never here: it has to translate.",
     "x: the person's X handle; follow: true when B follows them there. feedly is worked out",
     "from data/feedly.yaml by host, so it never goes stale.",
-    "pin: shown first in its section regardless of date."
+    "pin: shown first in its section regardless of date, in the order listed here (B's priority);",
+    "the daily briefing also leans on pinned people's posts (digest.py)."
   ],
   "window_days": 14,
   "sources": [
-    {"id": "simonw", "section": "people", "name": "Simon Willison", "home": "https://simonwillison.net/", "feed": "https://simonwillison.net/atom/everything/", "x": "simonw", "pin": true, "limit": 12},
+    {"id": "simonw", "section": "people", "name": "Simon Willison", "home": "https://simonwillison.net/", "feed": "https://simonwillison.net/atom/everything/", "x": "simonw", "follow": true, "pin": true, "limit": 12},
+    {"id": "lexfridman", "section": "people", "name": "Lex Fridman", "home": "https://lexfridman.com/podcast/", "feed": "https://lexfridman.com/feed/podcast/", "x": "lexfridman", "follow": true, "pin": true, "filter": "ai", "limit": 3},
+    {"id": "addyosmani", "section": "people", "name": "Addy Osmani", "home": "https://addyosmani.com/", "feed": "https://addyosmani.com/rss.xml", "x": "addyosmani", "follow": true, "pin": true, "limit": 6},
+    {"id": "mitchellh", "section": "people", "name": "Mitchell Hashimoto", "home": "https://mitchellh.com/", "feed": "https://mitchellh.com/feed.xml", "x": "mitchellh", "follow": true, "pin": true},
+    {"id": "levelsio", "section": "people", "name": "Pieter Levels (@levelsio)", "home": "https://levels.io/", "feed": "https://levels.io/rss/", "x": "levelsio", "follow": true, "pin": true, "limit": 4},
     {"id": "karpathy", "section": "people", "name": "Andrej Karpathy", "home": "https://karpathy.bearblog.dev/", "feed": "https://karpathy.bearblog.dev/feed/", "x": "karpathy"},
     {"id": "latentspace", "section": "people", "name": "swyx · Latent Space", "home": "https://www.latent.space/", "feed": "https://www.latent.space/feed", "x": "swyx"},
     {"id": "interconnects", "section": "people", "name": "Nathan Lambert · Interconnects", "home": "https://www.interconnects.ai/", "feed": "https://www.interconnects.ai/feed", "x": "natolambert"},
@@ -20,7 +25,6 @@
     {"id": "importai", "section": "people", "name": "Jack Clark · Import AI", "home": "https://importai.substack.com/", "feed": "https://importai.substack.com/feed", "x": "jackclarkSF"},
     {"id": "zvi", "section": "people", "name": "Zvi Mowshowitz", "home": "https://thezvi.substack.com/", "feed": "https://thezvi.substack.com/feed", "x": "TheZvi", "limit": 4},
     {"id": "mitsuhiko", "section": "people", "name": "Armin Ronacher", "home": "https://lucumr.pocoo.org/", "feed": "https://lucumr.pocoo.org/feed.atom", "x": "mitsuhiko"},
-    {"id": "mitchellh", "section": "people", "name": "Mitchell Hashimoto", "home": "https://mitchellh.com/", "feed": "https://mitchellh.com/feed.xml", "x": "mitchellh"},
     {"id": "thorstenball", "section": "people", "name": "Thorsten Ball · Register Spill", "home": "https://registerspill.thorstenball.com/", "feed": "https://registerspill.thorstenball.com/feed", "x": "thorstenball", "follow": true},
     {"id": "steipete", "section": "people", "name": "Peter Steinberger", "home": "https://steipete.me/", "feed": "https://steipete.me/rss.xml", "x": "steipete"},
     {"id": "badlogic", "section": "people", "name": "Mario Zechner", "home": "https://mariozechner.at/", "feed": "https://mariozechner.at/rss.xml", "x": "badlogicgames"},
@@ -31,7 +35,6 @@
     {"id": "worksonmymachine", "section": "people", "name": "Works on My Machine", "home": "https://worksonmymachine.ai/", "feed": "https://worksonmymachine.ai/feed"},
     {"id": "garymarcus", "section": "people", "name": "Gary Marcus", "home": "https://garymarcus.substack.com/", "feed": "https://garymarcus.substack.com/feed", "x": "GaryMarcus", "limit": 3},
     {"id": "dwarkesh", "section": "people", "name": "Dwarkesh Patel", "home": "https://www.dwarkesh.com/", "feed": "https://www.dwarkesh.com/feed", "x": "dwarkesh_sp"},
-    {"id": "lexfridman", "section": "people", "name": "Lex Fridman", "home": "https://lexfridman.com/podcast/", "feed": "https://lexfridman.com/feed/podcast/", "x": "lexfridman", "follow": true, "filter": "ai", "limit": 3},
     {"id": "werner", "section": "people", "name": "Werner Vogels · All Things Distributed", "home": "https://www.allthingsdistributed.com/", "feed": "https://www.allthingsdistributed.com/atom.xml", "x": "Werner", "follow": true, "filter": "ai", "limit": 3},
     {"id": "pragmatic", "section": "people", "name": "Gergely Orosz · The Pragmatic Engineer", "home": "https://newsletter.pragmaticengineer.com/", "feed": "https://newsletter.pragmaticengineer.com/feed", "x": "GergelyOrosz", "filter": "ai", "limit": 3},
 

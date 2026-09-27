@@ -113,6 +113,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | **GitHub** | |
 | `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/`. Also runs every Monday (`.github/workflows/github-refresh.yml`), committing only when something changed |
 | **AI radar** | |
+| `make social-kit` | Write `tools/social/build/kit.html`: ready-to-post copy per channel for every learn path, guide and course, one per weekday |
 | `make ai-refresh` | Fetch every `/ai/` source and rewrite `data/ai.json` (the daily Action does this) |
 | `make ai-i18n` | Write the `/ai/` UI strings into all nine i18n files |
 | `make ai-digest` | Write today's briefing with Claude (needs `ANTHROPIC_API_KEY`; the daily Action does this) |
@@ -142,8 +143,24 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-docs` | Every Makefile target has help text and is in the README |
 | `make test-ai` | Unit tests for the AI radar, and its i18n block is current |
 | `make test-ai-page` | Build `/ai/` from a fixture and with no data; check page, briefing, feed and home card in all nine languages |
+| `make test-social` | Unit tests for the social posting kit |
 | **Infrastructure** | |
 | `make tf-init` / `tf-plan` / `tf-validate` | Terraform, both stacks, S3 backend |
+
+## Share cards and the social kit
+
+Every page except the home page gets its own 1200×630 share card, drawn by
+Hugo at build time (`partials/og-image.html`): the section, the title, the
+avatar and the domain on `assets/og/base.png`. `tools/og/make_base.py`
+writes that backdrop and the avatar mask; re-run it only to change the
+design. The font is Inter's Latin subset, so zh/ja/ko pages use their
+English translation's card. A page's own `image:` front matter still wins.
+
+`make social-kit` writes a local page with copy for X, Bluesky, Threads,
+Mastodon, LinkedIn and Facebook, Reddit and Hacker News submit links, and a
+weekday calendar. It covers every learn path (the people-I-follow path
+first), every guide and every course. "Open" pre-fills each composer; nothing
+is posted for you. Links carry `utm_source=<channel>` for Analytics.
 
 ## CI and deployment
 

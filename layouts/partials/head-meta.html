@@ -25,7 +25,7 @@
 {{- $person := printf "%s#person" hugo.Sites.Default.Home.Permalink -}}
 {{- $img := "" -}}
 {{- $defaultImg := true -}}
-{{- with .Params.image }}{{ $img = . | absURL }}{{ $defaultImg = false }}{{ else }}{{ $img = "/images/2025-03-01-profile-brian-pfeil-portrait.jpg" | absURL }}{{ end -}}
+{{- with .Params.image }}{{ $img = . | absURL }}{{ $defaultImg = false }}{{ else }}{{ with partial "og-image.html" $ }}{{ $img = . }}{{ $defaultImg = false }}{{ else }}{{ $img = "/images/2025-03-01-profile-brian-pfeil-portrait.jpg" | absURL }}{{ end }}{{ end -}}
 
 <meta name="description" content="{{ $desc }}">
 <meta name="theme-color" content="#0d7ea8" media="(prefers-color-scheme: light)">

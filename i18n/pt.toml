@@ -730,6 +730,36 @@ other = "Modelos na sua própria máquina"
 [learn_group_made_here]
 other = "Feito aqui"
 
+[learn_path_people]
+other = "Aprenda com as pessoas que eu sigo"
+
+[learn_path_blurb_people]
+other = "Os criadores e pensadores que eu mais leio e ouço, e onde eles ensinam de graça."
+
+[learn_res_simonw_blog]
+other = "Notas diárias e práticas sobre como usar LLMs para criar software. O melhor lugar para um engenheiro acompanhar a IA."
+
+[learn_res_simonw_llm]
+other = "Uma ferramenta de linha de comando para conversar com quase qualquer modelo, local ou hospedado. A documentação também funciona como tutorial."
+
+[learn_res_lex_podcast]
+other = "Conversas longas com pesquisadores de IA, engenheiros e cientistas. Episódios completos com transcrição."
+
+[learn_res_huberman_podcast]
+other = "Como o cérebro e o corpo funcionam, e hábitos baseados em ciência para sono, foco e aprendizado."
+
+[learn_res_patterns_dev]
+other = "Padrões de design, renderização e desempenho para aplicativos web modernos, de graça, incluindo o livro dele sobre padrões de projeto em JavaScript."
+
+[learn_res_addy_blog]
+other = "Ensaios de um líder de engenharia do Google sobre programação assistida por IA, trabalho com agentes e desempenho web."
+
+[learn_res_mitchellh_writing]
+other = "O cofundador da HashiCorp sobre a criação do Ghostty, programação de sistemas em Zig e como ele trabalha com agentes de IA."
+
+[learn_res_levels_blog]
+other = "Como uma pessoa sozinha lança e mantém produtos lucrativos: construir em público, stack simples e lançar rápido."
+
 [learn_path_code]
 other = "Aprender a programar do zero"
 
@@ -1736,6 +1766,12 @@ other = "Resumos semanais exaustivos sobre IA"
 
 [ai_role_mitsuhiko]
 other = "Flask e Sentry; programação com agentes na prática"
+
+[ai_role_addyosmani]
+other = "Líder de engenharia no Google; programação assistida por IA e desempenho web"
+
+[ai_role_levelsio]
+other = "Fundador solo que lança produtos de IA rápido e em público"
 
 [ai_role_mitchellh]
 other = "Ghostty e HashiCorp; construir software com IA"

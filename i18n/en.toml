@@ -731,6 +731,36 @@ other = "Run models on your own machine"
 [learn_group_made_here]
 other = "Made here"
 
+[learn_path_people]
+other = "Learn from the people I follow"
+
+[learn_path_blurb_people]
+other = "The builders and thinkers I read and listen to most, and where they teach for free."
+
+[learn_res_simonw_blog]
+other = "Daily, hands-on notes on using LLMs to build software. The best single place to keep up with AI as an engineer."
+
+[learn_res_simonw_llm]
+other = "A command-line tool for talking to almost any model, local or hosted. Its docs double as a tutorial."
+
+[learn_res_lex_podcast]
+other = "Long-form conversations with AI researchers, engineers and scientists. Full episodes with transcripts."
+
+[learn_res_huberman_podcast]
+other = "How the brain and body work, and science-based habits for sleep, focus and learning."
+
+[learn_res_patterns_dev]
+other = "Design, rendering and performance patterns for modern web apps, free, including his JavaScript design patterns book."
+
+[learn_res_addy_blog]
+other = "Essays from a Google engineering lead on AI-assisted coding, working with agents and web performance."
+
+[learn_res_mitchellh_writing]
+other = "The HashiCorp co-founder on building Ghostty, systems programming in Zig and how he works with AI agents."
+
+[learn_res_levels_blog]
+other = "How one person ships and runs profitable products alone: building in public, keeping the stack simple, launching fast."
+
 [learn_path_code]
 other = "Learn to code from zero"
 
@@ -1737,6 +1767,12 @@ other = "Exhaustive weekly AI roundups"
 
 [ai_role_mitsuhiko]
 other = "Flask and Sentry; agentic coding in practice"
+
+[ai_role_addyosmani]
+other = "Google engineering lead; AI-assisted coding and web performance"
+
+[ai_role_levelsio]
+other = "Solo founder shipping AI products fast, in public"
 
 [ai_role_mitchellh]
 other = "Ghostty and HashiCorp; building software with AI"

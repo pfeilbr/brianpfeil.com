@@ -47,6 +47,8 @@ You are given the items the page collected in the last day, each with an id. Wri
 - headline: one sentence naming the day's most important development.
 - points: between {min} and {max} bullet points, most important first. Each is one or two plain sentences: what happened, then why it matters to a builder. Group items about the same story into one point. Cite the items each point is based on by id in refs (one to four ids).
 
+Items marked "followed" are from the people Brian follows most closely (Simon Willison, Lex Fridman, Addy Osmani, Mitchell Hashimoto, Pieter Levels). When one of them says something substantive about AI or building software, include it and name them; skip their posts that are off-topic for builders.
+
 Only state what the items support; if the items are thin, write fewer points rather than padding. No hype words, no exclamation marks, no markdown. Keep product, model and company names as they are.
 
 Write the English version first, then translate it faithfully into each of the other languages, keeping the same points in the same order with the same refs. Use natural, fluent phrasing for native readers of each language.""".format(min=MIN_POINTS, max=MAX_POINTS)
@@ -83,7 +85,10 @@ def recent_items(doc, now, hours=LOOKBACK_HOURS):
     cutoff = radar.iso(now - dt.timedelta(hours=hours))
     src = {s["id"]: s for s in doc["sources"]}
     picked = [i for i in doc["items"] if max(i["published"], i.get("first_seen", "")) >= cutoff]
-    picked.sort(key=lambda i: (len(i.get("also", [])), i.get("points", 0), i["published"]), reverse=True)
+    # Posts by the people B follows most closely (pinned) go in first, so a
+    # busy day never crowds them out of the MAX_ITEMS window.
+    picked.sort(key=lambda i: (bool(src.get(i["source"], {}).get("pin")), len(i.get("also", [])),
+                               i.get("points", 0), i["published"]), reverse=True)
     out = []
     for i in picked[:MAX_ITEMS]:
         row = {"id": i["id"], "source": src.get(i["source"], {}).get("name", i["source"]),
@@ -93,6 +98,8 @@ def recent_items(doc, now, hours=LOOKBACK_HOURS):
         for k in ("points", "comments", "kind"):
             if i.get(k):
                 row[k] = i[k]
+        if src.get(i["source"], {}).get("pin"):
+            row["followed"] = True
         if i.get("also"):
             row["also_in"] = [src.get(s, {}).get("name", s) for s in i["also"]]
         out.append(row)

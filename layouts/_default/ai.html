@@ -441,8 +441,12 @@
     box.setAttribute("aria-busy", "false");
     var ps = doc.sources.filter(function (s) { return s.section === "people"; });
     function latest(s) { var l = bySource[s.id]; return l && l.length ? l[0].published : ""; }
+    /* Pinned people keep config order (B's priority); the rest, newest first. */
+    var order = {};
+    ps.forEach(function (s, i) { order[s.id] = i; });
     ps.sort(function (a, b) {
       if (!!a.pin !== !!b.pin) return a.pin ? -1 : 1;
+      if (a.pin) return order[a.id] - order[b.id];
       return latest(b) < latest(a) ? -1 : latest(b) > latest(a) ? 1 : 0;
     });
     var cards = ps.map(function (s) {
