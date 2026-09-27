@@ -1,0 +1,60 @@
+name: dev.to cross-post
+
+# Run by hand (Actions → dev.to cross-post → Run workflow). Creates or
+# updates dev.to *drafts* of the architecture guides, canonical to
+# brianpfeil.com (tools/social/devto.py), then commits tools/social/devto.json
+# so the next run updates the same drafts. Nothing is public until you press
+# Publish on dev.to. Needs the DEVTO_API_KEY secret; DEVTO_ORG_ID optional.
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Guide slugs (space-separated); empty = all"
+        required: false
+        default: ""
+      update_published:
+        description: "Also overwrite articles already published on dev.to"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: devto-crosspost
+  cancel-in-progress: false
+
+jobs:
+  crosspost:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Tests
+        run: python -m unittest discover -s tools/social/tests
+      - name: Cross-post
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+          DEVTO_ORG_ID: ${{ secrets.DEVTO_ORG_ID }}
+          ONLY: ${{ inputs.only }}
+          UPDATE: ${{ inputs.update_published }}
+        run: |
+          args="--push"
+          [ -n "$ONLY" ] && args="$args --only $ONLY"
+          [ "$UPDATE" = "true" ] && args="$args --update-published"
+          python tools/social/devto.py $args
+      - name: Commit the ledger
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/social/devto.json 2>/dev/null || exit 0
+          git diff --cached --quiet && exit 0
+          git commit -q -m "dev.to: cross-posted $(date -u +%Y-%m-%d)"
+          for i in 1 2 3 4 5; do
+            git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0
+            sleep 7
+          done
+          exit 1

@@ -115,6 +115,8 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/`. Also runs every Monday (`.github/workflows/github-refresh.yml`), committing only when something changed |
 | **AI radar** | |
 | `make social-kit` | Write `tools/social/build/kit.html`: ready-to-post copy per channel for every learn path, guide and course, one per weekday |
+| `make devto-preview` | Convert the architecture guides to dev.to Markdown in `tools/social/build/devto/` |
+| `make devto-push` | Create/update dev.to drafts of the guides, canonical to this site (needs `DEVTO_API_KEY`) |
 | `make social-post` | Dry run: what the weekday Action posts next to Bluesky and Mastodon |
 | `make ai-refresh` | Fetch every `/ai/` source and rewrite `data/ai.json` (the daily Action does this) |
 | `make ai-i18n` | Write the `/ai/` UI strings into all nine i18n files |
@@ -146,7 +148,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-docs` | Every Makefile target has help text and is in the README |
 | `make test-ai` | Unit tests for the AI radar, and its i18n block is current |
 | `make test-ai-page` | Build `/ai/` from a fixture and with no data; check page, briefing, feed and home card in all nine languages |
-| `make test-social` | Unit tests for the social posting kit and the Bluesky/Mastodon poster |
+| `make test-social` | Unit tests for the social kit, the Bluesky/Mastodon poster and the dev.to cross-poster |
 | **Infrastructure** | |
 | `make tf-init` / `tf-plan` / `tf-validate` | Terraform, both stacks, S3 backend |
 
@@ -172,6 +174,14 @@ the queue; a channel without its secrets is skipped. Bluesky gets the share
 card as a link card; Mastodon builds its own from the page. To re-post
 something, delete its entry from `posted.json`. To pause, disable the
 workflow in the Actions tab.
+
+**dev.to.** `tools/social/devto.py` turns the architecture guides into dev.to
+*drafts* with `canonical_url` back here (callouts → blockquotes, SVG
+diagrams → a described link to the original, share card as cover, one
+series). Re-running updates the same drafts (`tools/social/devto.json`, or
+a canonical-URL match on your account); published articles are left alone.
+Run it from the Actions tab ("dev.to cross-post", uses the `DEVTO_API_KEY`
+secret) or locally with `make devto-push`; `make devto-preview` only converts.
 
 ## CI and deployment
 
