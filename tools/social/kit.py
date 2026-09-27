@@ -181,14 +181,15 @@ def x_len(text):
 def fit(parts, url, limit, measure=len):
     """Join parts + url, dropping trailing parts until it fits."""
     parts = [p for p in parts if p]
+    tail = [url] if url else []
     while parts:
-        text = "\n\n".join(parts + [url])
+        text = "\n\n".join(parts + tail)
         if measure(text) <= limit:
             return text
         if len(parts) == 1:
             head = parts[0]
-            room = limit - measure("\n\n" + url) - 1
-            return head[:room].rstrip() + "…\n\n" + url
+            room = limit - (measure("\n\n" + url) if url else 0) - 1
+            return head[:room].rstrip() + "…" + ("\n\n" + url if url else "")
         parts = parts[:-1]
     return url
 
@@ -229,6 +230,8 @@ def copy_for(item):
     posts = {}
     posts["x"] = fit([h, body_lines(item, "x"), b], link(item, "x"), X_MAX, x_len)
     posts["bluesky"] = fit([h, body_lines(item, "bluesky"), b], link(item, "bluesky"), BSKY_MAX)
+    # For the auto-poster (post.py): the link rides as a card, not in the text.
+    posts["bluesky_card"] = fit([h, body_lines(item, "bluesky"), b], "", BSKY_MAX).rstrip()
     posts["threads"] = fit([h, body_lines(item, "threads"), b], link(item, "threads"), THREADS_MAX)
     posts["mastodon"] = fit([h, body_lines(item, "mastodon"), b, hashtags(item)], link(item, "mastodon"), MASTODON_MAX)
     posts["linkedin"] = linkedin(item)

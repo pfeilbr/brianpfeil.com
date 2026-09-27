@@ -115,6 +115,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/`. Also runs every Monday (`.github/workflows/github-refresh.yml`), committing only when something changed |
 | **AI radar** | |
 | `make social-kit` | Write `tools/social/build/kit.html`: ready-to-post copy per channel for every learn path, guide and course, one per weekday |
+| `make social-post` | Dry run: what the weekday Action posts next to Bluesky and Mastodon |
 | `make ai-refresh` | Fetch every `/ai/` source and rewrite `data/ai.json` (the daily Action does this) |
 | `make ai-i18n` | Write the `/ai/` UI strings into all nine i18n files |
 | `make ai-digest` | Write today's briefing with Claude (needs `ANTHROPIC_API_KEY`; the daily Action does this) |
@@ -145,7 +146,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-docs` | Every Makefile target has help text and is in the README |
 | `make test-ai` | Unit tests for the AI radar, and its i18n block is current |
 | `make test-ai-page` | Build `/ai/` from a fixture and with no data; check page, briefing, feed and home card in all nine languages |
-| `make test-social` | Unit tests for the social posting kit |
+| `make test-social` | Unit tests for the social posting kit and the Bluesky/Mastodon poster |
 | **Infrastructure** | |
 | `make tf-init` / `tf-plan` / `tf-validate` | Terraform, both stacks, S3 backend |
 
@@ -163,6 +164,14 @@ Mastodon, LinkedIn and Facebook, Reddit and Hacker News submit links, and a
 weekday calendar. It covers every learn path (the people-I-follow path
 first), every guide and every course. "Open" pre-fills each composer; nothing
 is posted for you. Links carry `utm_source=<channel>` for Analytics.
+
+**Auto-posting.** `.github/workflows/social-post.yml` posts the next kit item
+to Bluesky and Mastodon each weekday (`tools/social/post.py`), in kit order,
+and commits `tools/social/posted.json`. Each channel keeps its own place in
+the queue; a channel without its secrets is skipped. Bluesky gets the share
+card as a link card; Mastodon builds its own from the page. To re-post
+something, delete its entry from `posted.json`. To pause, disable the
+workflow in the Actions tab.
 
 ## CI and deployment
 

@@ -130,7 +130,10 @@ ai-i18n: ## Write the /ai/ UI strings (tools/ai-radar/i18n_strings.py) into all 
 social-kit: ## Write the posting kit (tools/social/build/kit.html): copy per channel for every learn path, guide and course
 	python3 tools/social/kit.py
 
-test-social: ## Unit tests for the social kit
+social-post: ## Dry run: show what the weekday Action would post next to Bluesky and Mastodon
+	python3 tools/social/post.py
+
+test-social: ## Unit tests for the social kit and poster
 	python3 -m unittest discover -s tools/social/tests
 
 test-ai: ## Unit tests for the AI radar, and a check that its i18n block is current
@@ -183,4 +186,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: social-kit test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize tf-init tf-plan tf-validate
+.PHONY: social-kit social-post test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize tf-init tf-plan tf-validate

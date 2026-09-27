@@ -275,6 +275,17 @@ touching a template:
 Buttondown (double opt-in, unsubscribe handled there). No script, no
 third-party request until someone presses Subscribe.
 
+## Social
+
+Every page but home has a Hugo-drawn share card (`partials/og-image.html`).
+`make social-kit` writes per-channel copy for every learn path, guide and
+course; the "people I follow" path (Simon Willison, Lex Fridman, Andrew
+Huberman, Addy Osmani, Mitchell Hashimoto, levelsio — B's priority, also
+pinned in that order on /ai/) always goes first. The weekday
+`social-post.yml` Action posts the next item to Bluesky and Mastodon and
+commits `tools/social/posted.json` — never hand-commit a local copy of it.
+X, LinkedIn, Threads and Facebook stay manual (from the kit).
+
 ## Shared UI pieces
 
 - **Icons** — `layouts/partials/icons/`. `chip.html` renders a tinted square;

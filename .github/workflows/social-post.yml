@@ -1,0 +1,68 @@
+name: Social post
+
+# Each weekday, posts the next item from the social kit (tools/social/kit.py:
+# the people-I-follow path first, then /learn/, guides, courses) to Bluesky
+# and Mastodon, then commits tools/social/posted.json so the next run moves
+# down the queue. A channel whose secrets aren't set is skipped, so this is
+# a no-op until they are:
+#   BLUESKY_HANDLE, BLUESKY_APP_PASSWORD      (Bluesky app password)
+#   MASTODON_INSTANCE, MASTODON_TOKEN         (write:statuses token)
+# The ledger commit is a GITHUB_TOKEN push, so it doesn't trigger a deploy.
+on:
+  schedule:
+    - cron: "37 14 * * 1-5"   # 14:37 UTC weekdays: mid-morning US Eastern
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "bluesky, mastodon, or empty for both"
+        required: false
+        default: ""
+      dry_run:
+        description: "Only show what would post"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: social-post
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Tests
+        run: python -m unittest discover -s tools/social/tests
+      - name: Post
+        env:
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          MASTODON_INSTANCE: ${{ secrets.MASTODON_INSTANCE }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          CHANNEL: ${{ inputs.channel }}
+          DRY: ${{ inputs.dry_run }}
+        run: |
+          args=""
+          [ "$DRY" = "true" ] || args="--post"
+          [ -n "$CHANNEL" ] && args="$args --channel $CHANNEL"
+          python tools/social/post.py $args
+      - name: Commit the ledger
+        # Runs even if one channel failed, so the other's post is recorded.
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/social/posted.json 2>/dev/null || exit 0
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Social: posted $(date -u +%Y-%m-%d)"
+          for i in 1 2 3 4 5; do
+            git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0
+            sleep 7
+          done
+          exit 1
