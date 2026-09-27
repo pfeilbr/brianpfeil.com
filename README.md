@@ -109,6 +109,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make check-course-links` | Open every course resource link as an anonymous visitor (live, needs network) |
 | `make images-optimize` | Shrink heavy PNGs in content/ and static/ in place (needs ImageMagick) |
 | **Movies** | |
+| `make music-refresh` | Refresh `data/music.yaml` from YouTube: every public playlist on @pfeilbr, the saved ones in `tools/music/config.json`, track counts and top artists. Then press play on any new playlist on `/music/`; add the ones that won't play to `exclude` in the config |
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
 | **GitHub** | |
 | `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/`. Also runs every Monday (`.github/workflows/github-refresh.yml`), committing only when something changed |
@@ -134,6 +135,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-media` | Python tests for the media tool |
 | `make test-layout` | Build `/media/` from a fixture; check `/data/media.json` and the page in all nine languages |
 | `make test-link-check` | Tests for the repo-link checker |
+| `make test-music` | Tests for the music page's playlist refresher |
 | `make test-github` | Tests for the GitHub page's data refresher (Python) and its search (node) |
 | `make test-learn-links` | Tests for the /learn/ link checker, and its offline check of data/learn.json |
 | `make test-courses` | Tests for the course sync, and a privacy check of every published lesson |
