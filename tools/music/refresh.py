@@ -3,7 +3,7 @@
 
 Where the playlists come from:
   mine   every public playlist on the channel in config.json ("channel"),
-         minus config "exclude". Discovered from the channel's Playlists
+         minus config "exclude" (id -> why). Discovered from the channel's Playlists
          tab, so a playlist made public on YouTube shows up on the next run
          and one made private drops off.
   saved  the ids in config "saved" -- other people's playlists I saved.
@@ -13,7 +13,10 @@ Where the playlists come from:
 
 A playlist is listed only if a stranger can play it: its page loads without
 signing in and its first track allows embedding (YouTube's oEmbed answers
-401 for a video whose owner turned embedding off).
+401 for a video whose owner turned embedding off). That check misses a
+track blocked by a rights claim, which only shows once the embed is running
+on a real page -- so after a refresh, press play on each new playlist on
+/music/ and add any that show "Video unavailable" to "exclude".
 
 Track lists come from YouTube Music's own API (the one music.youtube.com
 calls), which names artists properly -- "Drake, 21 Savage" rather than a
