@@ -1,6 +1,6 @@
 {
  "schema_version": 1,
- "generated": "2026-09-27T00:40:35Z",
+ "generated": "2026-09-27T13:18:49Z",
  "window_days": 14,
  "sections": [
   "people",
@@ -16,77 +16,38 @@
    "name": "Simon Willison",
    "home": "https://simonwillison.net/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "simonw",
    "pin": true,
    "via": [
-    "feedly"
+    "feedly",
+    "x"
    ]
   },
   {
-   "id": "karpathy",
+   "id": "lexfridman",
    "section": "people",
-   "name": "Andrej Karpathy",
-   "home": "https://karpathy.bearblog.dev/",
+   "name": "Lex Fridman",
+   "home": "https://lexfridman.com/podcast/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
-   "x": "karpathy"
-  },
-  {
-   "id": "latentspace",
-   "section": "people",
-   "name": "swyx · Latent Space",
-   "home": "https://www.latent.space/",
-   "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
-   "x": "swyx"
-  },
-  {
-   "id": "interconnects",
-   "section": "people",
-   "name": "Nathan Lambert · Interconnects",
-   "home": "https://www.interconnects.ai/",
-   "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
-   "x": "natolambert"
-  },
-  {
-   "id": "mollick",
-   "section": "people",
-   "name": "Ethan Mollick · One Useful Thing",
-   "home": "https://www.oneusefulthing.org/",
-   "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
-   "x": "emollick"
-  },
-  {
-   "id": "importai",
-   "section": "people",
-   "name": "Jack Clark · Import AI",
-   "home": "https://importai.substack.com/",
-   "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
-   "x": "jackclarkSF"
-  },
-  {
-   "id": "zvi",
-   "section": "people",
-   "name": "Zvi Mowshowitz",
-   "home": "https://thezvi.substack.com/",
-   "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
-   "x": "TheZvi"
-  },
-  {
-   "id": "mitsuhiko",
-   "section": "people",
-   "name": "Armin Ronacher",
-   "home": "https://lucumr.pocoo.org/",
-   "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
-   "x": "mitsuhiko",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "lexfridman",
+   "pin": true,
    "via": [
-    "feedly"
+    "x"
+   ]
+  },
+  {
+   "id": "addyosmani",
+   "section": "people",
+   "name": "Addy Osmani",
+   "home": "https://addyosmani.com/",
+   "status": "ok",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "addyosmani",
+   "pin": true,
+   "via": [
+    "x"
    ]
   },
   {
@@ -95,8 +56,89 @@
    "name": "Mitchell Hashimoto",
    "home": "https://mitchellh.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "mitchellh",
+   "pin": true,
+   "via": [
+    "feedly",
+    "x"
+   ]
+  },
+  {
+   "id": "levelsio",
+   "section": "people",
+   "name": "Pieter Levels (@levelsio)",
+   "home": "https://levels.io/",
+   "status": "ok",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "levelsio",
+   "pin": true,
+   "via": [
+    "x"
+   ]
+  },
+  {
+   "id": "karpathy",
+   "section": "people",
+   "name": "Andrej Karpathy",
+   "home": "https://karpathy.bearblog.dev/",
+   "status": "ok",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "karpathy"
+  },
+  {
+   "id": "latentspace",
+   "section": "people",
+   "name": "swyx · Latent Space",
+   "home": "https://www.latent.space/",
+   "status": "ok",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "swyx"
+  },
+  {
+   "id": "interconnects",
+   "section": "people",
+   "name": "Nathan Lambert · Interconnects",
+   "home": "https://www.interconnects.ai/",
+   "status": "ok",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "natolambert"
+  },
+  {
+   "id": "mollick",
+   "section": "people",
+   "name": "Ethan Mollick · One Useful Thing",
+   "home": "https://www.oneusefulthing.org/",
+   "status": "ok",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "emollick"
+  },
+  {
+   "id": "importai",
+   "section": "people",
+   "name": "Jack Clark · Import AI",
+   "home": "https://importai.substack.com/",
+   "status": "ok",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "jackclarkSF"
+  },
+  {
+   "id": "zvi",
+   "section": "people",
+   "name": "Zvi Mowshowitz",
+   "home": "https://thezvi.substack.com/",
+   "status": "ok",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "TheZvi"
+  },
+  {
+   "id": "mitsuhiko",
+   "section": "people",
+   "name": "Armin Ronacher",
+   "home": "https://lucumr.pocoo.org/",
+   "status": "ok",
+   "checked": "2026-09-27T13:18:49Z",
+   "x": "mitsuhiko",
    "via": [
     "feedly"
    ]
@@ -107,7 +149,7 @@
    "name": "Thorsten Ball · Register Spill",
    "home": "https://registerspill.thorstenball.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "thorstenball",
    "via": [
     "x"
@@ -119,7 +161,7 @@
    "name": "Peter Steinberger",
    "home": "https://steipete.me/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "steipete"
   },
   {
@@ -128,7 +170,7 @@
    "name": "Mario Zechner",
    "home": "https://mariozechner.at/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "badlogicgames",
    "via": [
     "feedly"
@@ -140,7 +182,7 @@
    "name": "Sean Goedecke",
    "home": "https://www.seangoedecke.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "via": [
     "feedly"
    ]
@@ -151,7 +193,7 @@
    "name": "Martin Alderson",
    "home": "https://martinalderson.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "via": [
     "feedly"
    ]
@@ -162,7 +204,7 @@
    "name": "Max Woolf",
    "home": "https://minimaxir.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "minimaxir",
    "via": [
     "feedly"
@@ -174,7 +216,7 @@
    "name": "Geoffrey Litt",
    "home": "https://www.geoffreylitt.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "geoffreylitt",
    "via": [
     "feedly"
@@ -186,7 +228,7 @@
    "name": "Works on My Machine",
    "home": "https://worksonmymachine.ai/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "via": [
     "feedly"
    ]
@@ -197,7 +239,7 @@
    "name": "Gary Marcus",
    "home": "https://garymarcus.substack.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "GaryMarcus",
    "via": [
     "feedly"
@@ -209,22 +251,10 @@
    "name": "Dwarkesh Patel",
    "home": "https://www.dwarkesh.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "dwarkesh_sp",
    "via": [
     "feedly"
-   ]
-  },
-  {
-   "id": "lexfridman",
-   "section": "people",
-   "name": "Lex Fridman",
-   "home": "https://lexfridman.com/podcast/",
-   "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
-   "x": "lexfridman",
-   "via": [
-    "x"
    ]
   },
   {
@@ -233,7 +263,7 @@
    "name": "Werner Vogels · All Things Distributed",
    "home": "https://www.allthingsdistributed.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "Werner",
    "via": [
     "feedly",
@@ -246,7 +276,7 @@
    "name": "Gergely Orosz · The Pragmatic Engineer",
    "home": "https://newsletter.pragmaticengineer.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "GergelyOrosz"
   },
   {
@@ -255,7 +285,7 @@
    "name": "Anthropic",
    "home": "https://www.anthropic.com/news",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "openai",
@@ -263,7 +293,7 @@
    "name": "OpenAI",
    "home": "https://openai.com/news/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "deepmind",
@@ -271,7 +301,7 @@
    "name": "Google DeepMind",
    "home": "https://deepmind.google/discover/blog/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "googleai",
@@ -279,7 +309,7 @@
    "name": "Google AI",
    "home": "https://blog.google/technology/ai/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "hfblog",
@@ -287,7 +317,7 @@
    "name": "Hugging Face",
    "home": "https://huggingface.co/blog",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "awsml",
@@ -295,7 +325,7 @@
    "name": "AWS Machine Learning Blog",
    "home": "https://aws.amazon.com/blogs/machine-learning/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "via": [
     "feedly"
    ]
@@ -306,7 +336,7 @@
    "name": "AWS What's New · Bedrock & SageMaker",
    "home": "https://aws.amazon.com/about-aws/whats-new/recent/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "via": [
     "feedly"
    ]
@@ -317,7 +347,7 @@
    "name": "Claude Code",
    "home": "https://github.com/anthropics/claude-code",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "codex",
@@ -325,7 +355,7 @@
    "name": "OpenAI Codex CLI",
    "home": "https://github.com/openai/codex",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "gemini-cli",
@@ -333,7 +363,7 @@
    "name": "Gemini CLI",
    "home": "https://github.com/google-gemini/gemini-cli",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "copilot-chat",
@@ -341,7 +371,7 @@
    "name": "GitHub Copilot Chat (VS Code)",
    "home": "https://github.com/microsoft/vscode-copilot-chat",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "vscode",
@@ -349,7 +379,7 @@
    "name": "VS Code release notes",
    "home": "https://code.visualstudio.com/updates",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "gh-changelog",
@@ -357,7 +387,7 @@
    "name": "GitHub Changelog · Copilot",
    "home": "https://github.blog/changelog/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "cursor",
@@ -365,7 +395,7 @@
    "name": "Cursor",
    "home": "https://cursor.com/changelog",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "chrome",
@@ -373,7 +403,7 @@
    "name": "Chrome for Developers · AI",
    "home": "https://developer.chrome.com/docs/ai",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "cline",
@@ -381,7 +411,7 @@
    "name": "Cline",
    "home": "https://github.com/cline/cline",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "opencode",
@@ -389,7 +419,7 @@
    "name": "OpenCode",
    "home": "https://github.com/sst/opencode",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "agent-sdk",
@@ -397,7 +427,7 @@
    "name": "Claude Agent SDK (Python)",
    "home": "https://github.com/anthropics/claude-agent-sdk-python",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "mcp",
@@ -405,7 +435,7 @@
    "name": "Model Context Protocol",
    "home": "https://modelcontextprotocol.io/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "ollama",
@@ -413,7 +443,7 @@
    "name": "Ollama",
    "home": "https://github.com/ollama/ollama",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "llamacpp",
@@ -421,7 +451,7 @@
    "name": "llama.cpp",
    "home": "https://github.com/ggml-org/llama.cpp",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "vllm",
@@ -429,7 +459,7 @@
    "name": "vLLM",
    "home": "https://github.com/vllm-project/vllm",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "hn",
@@ -437,7 +467,7 @@
    "name": "Hacker News",
    "home": "https://news.ycombinator.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "r-localllama",
@@ -445,7 +475,7 @@
    "name": "r/LocalLLaMA",
    "home": "https://www.reddit.com/r/LocalLLaMA/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "r-claudeai",
@@ -453,7 +483,7 @@
    "name": "r/ClaudeAI",
    "home": "https://www.reddit.com/r/ClaudeAI/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "r-chatgptcoding",
@@ -463,7 +493,7 @@
    "status": "error",
    "checked": "2026-09-26T16:39:12Z",
    "error": "HTTPError: HTTP Error 429: Too Many Requests",
-   "fail_streak": 1
+   "fail_streak": 2
   },
   {
    "id": "smolai",
@@ -471,7 +501,7 @@
    "name": "AINews (smol.ai)",
    "home": "https://news.smol.ai/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z"
+   "checked": "2026-09-27T13:18:49Z"
   },
   {
    "id": "raschka",
@@ -479,7 +509,7 @@
    "name": "Sebastian Raschka · Ahead of AI",
    "home": "https://magazine.sebastianraschka.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "rasbt"
   },
   {
@@ -488,7 +518,7 @@
    "name": "Lilian Weng · Lil'Log",
    "home": "https://lilianweng.github.io/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "lilianweng"
   },
   {
@@ -497,7 +527,7 @@
    "name": "Hamel Husain",
    "home": "https://hamel.dev/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "HamelHusain"
   },
   {
@@ -506,7 +536,7 @@
    "name": "Eugene Yan",
    "home": "https://eugeneyan.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "eugeneyan"
   },
   {
@@ -515,7 +545,7 @@
    "name": "Chip Huyen",
    "home": "https://huyenchip.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "x": "chipro",
    "via": [
     "feedly"
@@ -527,13 +557,273 @@
    "name": "Giles Thomas · LLM from scratch",
    "home": "https://www.gilesthomas.com/",
    "status": "ok",
-   "checked": "2026-09-27T00:40:35Z",
+   "checked": "2026-09-27T13:18:49Z",
    "via": [
     "feedly"
    ]
   }
  ],
  "items": [
+  {
+   "id": "38c46b1d37bf",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "The Opus 5.5 posts about motion graphics are cool but Qwen 27B made this on a 4090",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wrjlls/the_opus_55_posts_about_motion_graphics_are_cool/",
+   "published": "2026-09-27T12:58:39Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "Saw the hundreds of tweets where people just keep asking Opus 5.5 for motion graphic videos. Decided to ask qwen to look at them and make its own. Quite amazing what local can achieve. **EDIT** It looks laggy because of reddits .gif limit btw the full high res version (with…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wrjlls/the_opus_55_posts_about_motion_graphics_are_cool/",
+   "topics": [
+    "Qwen"
+   ]
+  },
+  {
+   "id": "347c6db7dafb",
+   "source": "llamacpp",
+   "section": "tools",
+   "title": "b11214",
+   "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b11214",
+   "published": "2026-09-27T12:47:48Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "HIP: Enable fattn-mma kernel on cdna for dkq > 256 for large batch sizes HIP: Enable fattn-mma kernel on cdna for dkq > 256 for large batch sizes CI: hip-quality-check: ignore spills for very large mfma mma kernels Website: https://llama.app Attestations…",
+   "kind": "release"
+  },
+  {
+   "id": "10d1efefb0f2",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Nonobench v1.2: 43 LLMs on nonogram puzzles. Open-weight DeepSeek V4 Pro ties for 4th, and no open model solves the new 20×20 Hard mode",
+   "url": "https://i.redd.it/w192qu47m1sh1.png",
+   "published": "2026-09-27T10:51:28Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "Follow-up to my January post: https://www.reddit.com/r/LocalLLaMA/comments/1q4i19c/benchmarking_23_llms_on_nonogram_logic_puzzle/ . That thread shaped v1.2: Reasoning effort is explicit per run Every prompt and output is public. All current top ranking private and open weight…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wrh7b2/nonobench_v12_43_llms_on_nonogram_puzzles/",
+   "topics": [
+    "DeepSeek",
+    "Open weights",
+    "Evals"
+   ]
+  },
+  {
+   "id": "f728ed9dc692",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "I made a relaxing constellation typing game with Opus 5.5 in just 2 prompt iterations",
+   "url": "https://v.redd.it/72zogkp5j1sh1",
+   "published": "2026-09-27T10:40:39Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "I wanted something with the simplicity and style of Monkeytype, but more relaxing and visually satisfying, so I made Stillwater. As you type, stars appear and connect into constellations while the site tracks your WPM and accuracy. The idea was to make typing slowly build…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wrh0tl/i_made_a_relaxing_constellation_typing_game_with/"
+  },
+  {
+   "id": "da7a879468eb",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Which of the 16gb VRAM qwen3.8 27b’s is the best?",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wrgk8z/which_of_the_16gb_vram_qwen38_27bs_is_the_best/",
+   "published": "2026-09-27T10:13:38Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "I’m having a hard time finding out which one gives you fastest speed, maximum context with best possible quality. I can run unsloth qwen3.8 27b iq4_xs with 65k q8 kv, context without MTP and vision offloaded to cpu. But also kinda slow for agentic work at like 30ish tok/s )I…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wrgk8z/which_of_the_16gb_vram_qwen38_27bs_is_the_best/",
+   "topics": [
+    "Qwen"
+   ]
+  },
+  {
+   "id": "a4e51b0e901e",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Another \"Harness matters\" post (codex cli > pi and opencode)",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wrfp50/another_harness_matters_post_codex_cli_pi_and/",
+   "published": "2026-09-27T09:20:52Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "I run my own LLM while also having a Openai subscription. Also tried DeepSeek (latest flash now). I run Qwen 3.8 flash Next at an amazing speed on my 2x3090 + Ram! But local LLM never did worked for me outside some demos like build me a \"3D Mario Game, multistage\" which I've…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wrfp50/another_harness_matters_post_codex_cli_pi_and/",
+   "topics": [
+    "OpenAI",
+    "Qwen",
+    "DeepSeek",
+    "Codex"
+   ]
+  },
+  {
+   "id": "399f740af4b7",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "5 items in MiMo-V2.6",
+   "url": "https://i.redd.it/ew8gd01t01sh1.png",
+   "published": "2026-09-27T08:50:51Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "3 visible models are 1T, 311B and 9B, let's dream about two more... ;)",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wrf7ac/5_items_in_mimov26/"
+  },
+  {
+   "id": "159f153d9521",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Splash fork optimised for M5 Max: ~1.5× faster (1.25× single request)",
+   "url": "https://github.com/publicExcess/splish/",
+   "published": "2026-09-27T06:40:58Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "I’ve spent the last couple of days with Opus 5.5 working on a fork of Inco’s excellent and already blazingly fast Splash engine to optimise it for M5 Max chips. Taking liberties and referring to it as Splish. Roughly the opposite direction to u/Erp4759 ’s great M1 port ( Splash…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wrd1p1/splash_fork_optimised_for_m5_max_15_faster_125/",
+   "topics": [
+    "Chips"
+   ]
+  },
+  {
+   "id": "994dfeaaa4d7",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "When is the next generation of \"B tier\" models releasing?",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wrcy7x/when_is_the_next_generation_of_b_tier_models/",
+   "published": "2026-09-27T06:35:06Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "The only things released in the last couple weeks seem to be bigger models like Qwen, DeepSeek, GLM, etc. Where are the Laguna's, Nemotrons, Olmo's, LongCats, Minimax, etc releases?",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wrcy7x/when_is_the_next_generation_of_b_tier_models/",
+   "topics": [
+    "Qwen",
+    "DeepSeek"
+   ]
+  },
+  {
+   "id": "9fe0a063f817",
+   "source": "hn",
+   "section": "community",
+   "title": "OpenAI Feared \"Optics\" of what might appear on Hacker News",
+   "url": "https://authorsguild.org/news/ag-v-openai-top-execs-knew-mass-book-piracy-was-illegal/",
+   "published": "2026-09-27T06:19:33Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "",
+   "points": 365,
+   "comments": 304,
+   "discuss": "https://news.ycombinator.com/item?id=49863864",
+   "topics": [
+    "OpenAI",
+    "Security"
+   ]
+  },
+  {
+   "id": "7d5551ed413e",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "What tool have you built for yourself with Claude code that removes so much headache in your work or personal life?",
+   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wrckhp/what_tool_have_you_built_for_yourself_with_claude/",
+   "published": "2026-09-27T06:12:55Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "I built a tool that reads emails from my kid’s school and other activities (swimming, music classes, scouts) etc and then: - Adds them to our shared calendar - Sends us a WhatsApp message to remind us the day before of what to pack in his school bag - Tells us what is on his…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wrckhp/what_tool_have_you_built_for_yourself_with_claude/",
+   "topics": [
+    "Claude"
+   ]
+  },
+  {
+   "id": "db098e5aaa40",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "Opus 5.5 is the first model that does everything I need",
+   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wrbwmc/opus_55_is_the_first_model_that_does_everything_i/",
+   "published": "2026-09-27T05:34:53Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "Taste. I think this is what makes Opus 5.5 the best model out right now. The capabilities matter too, but taste is the main thing. It's an incredibly \"tasteful\" model. It communicates in a very human, understandable way, and it seems to grasp what's good and what isn't extremely…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wrbwmc/opus_55_is_the_first_model_that_does_everything_i/"
+  },
+  {
+   "id": "15377c314727",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "SupersonicLabs/Julia-1 · Hugging Face",
+   "url": "https://huggingface.co/SupersonicLabs/Julia-1",
+   "published": "2026-09-27T02:24:05Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "New open source Jev like model for running on local devices from a group called Supersonic Labs. It's a 144M param local non-generative local classifier. From their site : Julia 1 opens our research into compact decision models. It builds on mmBERT-small , a multilingual…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wr8d4d/supersoniclabsjulia1_hugging_face/",
+   "topics": [
+    "Hugging Face"
+   ]
+  },
+  {
+   "id": "e7fe4dd328eb",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "Navigating Cost Efficient Hardware in these Volatile Times",
+   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wr7tgb/navigating_cost_efficient_hardware_in_these/",
+   "published": "2026-09-27T01:55:54Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "Where to even begin on this one...I guess I should start by acknowledging the risk vs reward for vendors other than nvidia, so: Yes I understand that nvidia are dominant currently on speed (llm and imagegen) and software ecosystem. I am too am hopefuly that software stack…",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wr7tgb/navigating_cost_efficient_hardware_in_these/",
+   "topics": [
+    "Nvidia"
+   ]
+  },
+  {
+   "id": "021e0d437459",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "I asked Claude Code to make three US-only N64 ROM hacks work on my European PAL N64. It reverse-engineered them and patched them itself.",
+   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wr7dpw/i_asked_claude_code_to_make_three_usonly_n64_rom/",
+   "published": "2026-09-27T01:34:17Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "You can play NTSC romhacks on PAL N64 Consoles! Setup: a folder with Super Mario 64 Splitscreen Multiplayer , Mario Kart 64 4-Player Grand Prix and Smash Remix 2.0.1 , plus the prompt \"make these work on a real PAL N64, download whatever tools you need.\" What Claude did, step by…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wr7dpw/i_asked_claude_code_to_make_three_usonly_n64_rom/",
+   "topics": [
+    "Claude",
+    "Security"
+   ]
+  },
+  {
+   "id": "119e5a2b707f",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "Theory: Opus 5’s bizarre communication style was an anti-distillation feature, not a bug",
+   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wr64ez/theory_opus_5s_bizarre_communication_style_was_an/",
+   "published": "2026-09-27T00:31:33Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "I have a theory that Opus 5’s strangely poor communication style was an anti-distillation strategy, a kind of Trojan horse for anyone training on its outputs. The idea is that a company using Opus 5’s outputs as training data would end up sabotaging its own models, even though…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wr64ez/theory_opus_5s_bizarre_communication_style_was_an/"
+  },
+  {
+   "id": "88d8716b2be3",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "What paid software or subscription did you replace?",
+   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wr61sr/what_paid_software_or_subscription_did_you_replace/",
+   "published": "2026-09-27T00:28:09Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "I've been using Claude more and more for side projects, and one of my favorite outcomes so far is that I stopped paying for an app I used daily and built my own instead. For me it's Trendcurve, an iOS weight tracking app that smooths out daily fluctuations and shows the actual…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wr61sr/what_paid_software_or_subscription_did_you_replace/",
+   "topics": [
+    "Claude"
+   ]
+  },
+  {
+   "id": "e6f2eebb259b",
+   "source": "r-localllama",
+   "section": "community",
+   "title": "42x Faster Prompt Lookup Drafting in llama.cpp",
+   "url": "https://jadidbourbaki.github.io/blog/prompt-lookup-llama-cpp/",
+   "published": "2026-09-27T00:23:41Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "",
+   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wr5ylm/42x_faster_prompt_lookup_drafting_in_llamacpp/",
+   "topics": [
+    "Meta"
+   ]
+  },
+  {
+   "id": "4f80dea3865a",
+   "source": "seangoedecke",
+   "section": "people",
+   "title": "Human-AI partnerships are for alignment, not capability",
+   "url": "https://seangoedecke.com/human-ai-partnerships-are-for-alignment-not-capability/",
+   "published": "2026-09-27T00:00:00Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "It’s common to compare the current AI takeover of software engineering to the rise of AI in chess. Chess AIs went from much weaker than serious players to much stronger than even the strongest humans. Between those points, there was a middle period dominated by “centaurs”…",
+   "topics": [
+    "Safety"
+   ]
+  },
   {
    "id": "ee9b8774a2c5",
    "source": "garymarcus",
@@ -548,6 +838,17 @@
    ]
   },
   {
+   "id": "2a9ca88f6603",
+   "source": "r-claudeai",
+   "section": "community",
+   "title": "Opus 5.5 animating a 3d printing model",
+   "url": "https://v.redd.it/89ljnbwubyrh1",
+   "published": "2026-09-26T23:51:16Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "Mind officially blown (keep in mind that I don't even know how to use blender): I just tested out the Opus 5.5/Higgsfield bridge/Blender for animation on this 3d printing model that I had used to flatten out the bottom and put in a picture frame on the wall. This is what I…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wr59p1/opus_55_animating_a_3d_printing_model/"
+  },
+  {
    "id": "633946563354",
    "source": "simonw",
    "section": "people",
@@ -555,21 +856,21 @@
    "url": "https://simonwillison.net/2026/Sep/26/kakapo-party/",
    "published": "2026-09-26T23:39:06Z",
    "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "Tool: Kākāpō Party I gave presented a closing keynote for the WeAreDevelopers World Congress North America yesterday. As a STAR moment I decided to weave in references to the record breaking kākāpō breeding season we had in 2026. For my closing slide I wanted to celebrate, and I…",
+   "summary": "Tool: Kākāpō Party I presented a closing keynote for the WeAreDevelopers World Congress North America yesterday. As a STAR moment I decided to weave in references to the record breaking kākāpō breeding season we had in 2026. For my closing slide I wanted to celebrate, and I had…",
    "topics": [
     "Regulation"
    ]
   },
   {
-   "id": "c51a8d09094e",
-   "source": "r-localllama",
+   "id": "40e82460d2f7",
+   "source": "r-claudeai",
    "section": "community",
-   "title": "Koboldcpp v1.122 released",
-   "url": "https://github.com/LostRuins/koboldcpp/releases/tag/v1.122",
-   "published": "2026-09-26T22:24:22Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wr3esw/koboldcpp_v1122_released/"
+   "title": "Opus 5.5 is amazing. I built a whole cozy pixel game for my daughter, and it even made the trailer",
+   "url": "https://v.redd.it/kr7ztt778yrh1",
+   "published": "2026-09-26T23:30:31Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "My daughter loves squishy toys and anything cute, so I made her a game. It's a pastel pixel-art game about opening bamboo steamers and collecting squishy buns. I built it with Opus 5.5. The amazing thing to me are the game assets. Claude made all the assets by hand, as well as…",
+   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wr4twl/opus_55_is_amazing_i_built_a_whole_cozy_pixel/"
   },
   {
    "id": "2f7440de5443",
@@ -597,21 +898,6 @@
    ]
   },
   {
-   "id": "ff001ac3de98",
-   "source": "r-localllama",
-   "section": "community",
-   "title": "Run Qwen3.8+Flash-Next and tiny models on Apple Silicon up to 3x faster",
-   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wr1qlz/run_qwen38flashnext_and_tiny_models_on_apple/",
-   "published": "2026-09-26T21:10:37Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "Maybe you'll like it? I hope I get to use my self-promotion credit a tiny little bit here after being in the community so long haha. I was the top of MLX.fast for a while and remain the winner on chips below M5. If you have capacity to contribute further enhancements I'd love…",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wr1qlz/run_qwen38flashnext_and_tiny_models_on_apple/",
-   "topics": [
-    "Qwen",
-    "Chips"
-   ]
-  },
-  {
    "id": "0e3c955598f7",
    "source": "llamacpp",
    "section": "tools",
@@ -626,117 +912,6 @@
    ]
   },
   {
-   "id": "f9adc89f5e8d",
-   "source": "r-claudeai",
-   "section": "community",
-   "title": "I built my own Monarch-style finance dashboard with Opus 5.5 for less than $20",
-   "url": "https://www.reddit.com/gallery/1wr140j",
-   "published": "2026-09-26T20:44:05Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "SharkFin is my personal finance dashboard inspired by Monarch. I can connect bank accounts through SimpleFin and then link those to Actual Budget to feed the backend. The great thing about Actual is that its open source, allowing me to store the data locally and have full…",
-   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wr140j/i_built_my_own_monarchstyle_finance_dashboard/"
-  },
-  {
-   "id": "d5d981c554ee",
-   "source": "r-localllama",
-   "section": "community",
-   "title": "Improved and fixed template for GPT-OSS (again). Includes preserve_thinking and fix for Unsloth-induced bug",
-   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wr0wki/improved_and_fixed_template_for_gptoss_again/",
-   "published": "2026-09-26T20:35:32Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "I posted an updated GPT-OSS template a couple of months ago , which was based on Unsloth's version . It turns out that both Unsloth's version (and, thus, mine) contain a very serious bug that can degrade the model when chat history is replayed and contains previous reasoning…",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wr0wki/improved_and_fixed_template_for_gptoss_again/"
-  },
-  {
-   "id": "159050b44a6f",
-   "source": "r-claudeai",
-   "section": "community",
-   "title": "5.5 is IN-SANE. It almost broke our benchmark. I thought it was a bug.",
-   "url": "https://www.reddit.com/gallery/1wr03jc",
-   "published": "2026-09-26T20:01:34Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "Claude Opus 5.5 is the new #1 on our writing benchmark, and it is not close at all. 2631 Elo. Second one, Fable, is at 2324. That is a 307 point gap, the largest single jump we have recorded since we started running this in June 2026. It is also the first model to clear 91 out…",
-   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wr03jc/55_is_insane_it_almost_broke_our_benchmark_i/",
-   "topics": [
-    "Claude",
-    "Evals"
-   ]
-  },
-  {
-   "id": "a97105580669",
-   "source": "r-localllama",
-   "section": "community",
-   "title": "Qwen 3.8 flash next is based on Qwen 4 architecture, if the announced Qwen 4 27b is also the same architecture with n-grams does it mean I can actually have faster inference on a single 3090 without…",
-   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqzx12/qwen_38_flash_next_is_based_on_qwen_4/",
-   "published": "2026-09-26T19:54:27Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "I wish Qwen also released dataset and method to fully train a model ourselves but it is what it is. However, I come here with my stupid question because someone can answer it better. And will the model still be an over thinker of faster inference will make up for that.",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqzx12/qwen_38_flash_next_is_based_on_qwen_4/",
-   "topics": [
-    "Qwen"
-   ]
-  },
-  {
-   "id": "822decfafd48",
-   "source": "r-claudeai",
-   "section": "community",
-   "title": "Opus 5.5 picked Squirtle because of Brock. Fable 5.1 picked Charmander because it was the closest ball. One cost $8, the other $100.",
-   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wqzubb/opus_55_picked_squirtle_because_of_brock_fable_51/",
-   "published": "2026-09-26T19:51:18Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "I run a benchmark that drops a model into Pokemon Red on a fresh save and scores it on milestones read out of the game's RAM. Every model gets the same prompt, one screenshot per turn, the game state and the words on screen. No pathfinding, no map hints. 1,000 turns to beat…",
-   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqzubb/opus_55_picked_squirtle_because_of_brock_fable_51/",
-   "topics": [
-    "Evals"
-   ]
-  },
-  {
-   "id": "a8bc8b8c0e69",
-   "source": "r-claudeai",
-   "section": "community",
-   "title": "Elon Musk admits Grok isn’t as good as Anthropic’s Claude",
-   "url": "https://madrobot.blog/2026/09/26/elon-musk-admits-grok-behind-anthropic-claude-opus-5-5/",
-   "published": "2026-09-26T19:51:13Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "Quite the omission by Elon that Opus 5.5 is better...",
-   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqzu96/elon_musk_admits_grok_isnt_as_good_as_anthropics/",
-   "topics": [
-    "Claude",
-    "Anthropic",
-    "Grok"
-   ]
-  },
-  {
-   "id": "ed0c358852f4",
-   "source": "r-claudeai",
-   "section": "community",
-   "title": "I built a news-driven world map of current conflicts with Claude Code",
-   "url": "https://v.redd.it/q69hi6ni5xrh1",
-   "published": "2026-09-26T19:50:49Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "I built Conflict Map, a website that turns the news into a map of current armed conflicts: who is involved on each side, what the consequences are, and where attacks are being reported. I'm a very visual person and i like to keep up to date with what's going on in the world. So…",
-   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqztx3/i_built_a_newsdriven_world_map_of_current/",
-   "topics": [
-    "Claude"
-   ]
-  },
-  {
-   "id": "d1710755c0dd",
-   "source": "r-claudeai",
-   "section": "community",
-   "title": "Opus 5.5",
-   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wqzhqg/opus_55/",
-   "published": "2026-09-26T19:37:12Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "There was this unverified claim that OpenAI believed Anthropic would have no response to their latest Astra aka GPT-6 model. But then came Opus 5.5 released right before GPT 6 Sol and Luna, I think Anthropic completely sniped and stole the show with this release. Opus 5.5, after…",
-   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqzhqg/opus_55/",
-   "topics": [
-    "Anthropic",
-    "OpenAI",
-    "GPT"
-   ]
-  },
-  {
    "id": "755e3dc914b2",
    "source": "hn",
    "section": "community",
@@ -745,76 +920,11 @@
    "published": "2026-09-26T18:22:41Z",
    "first_seen": "2026-09-27T00:40:35Z",
    "summary": "",
-   "points": 143,
-   "comments": 40,
+   "points": 277,
+   "comments": 92,
    "discuss": "https://news.ycombinator.com/item?id=49859112",
    "topics": [
     "DeepSeek"
-   ]
-  },
-  {
-   "id": "f325a45ca2e4",
-   "source": "r-localllama",
-   "section": "community",
-   "title": "New to playing around with local ai. why are they free?",
-   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqwzk3/new_to_playing_around_with_local_ai_why_are_they/",
-   "published": "2026-09-26T17:56:16Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "I am new to playing around with local ai and have a ton to learn about it but I was curious, why are they (who is they?) releasing them for free, don't they want you to pay them to use them, why release free models?",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqwzk3/new_to_playing_around_with_local_ai_why_are_they/"
-  },
-  {
-   "id": "260fa32be7ff",
-   "source": "r-localllama",
-   "section": "community",
-   "title": "85 GB DeepSeek-V4-Flash at ~3 tok/s on a 12 GB RTX 3060 + 64 GB DDR5 RAM - Overspill for FreeToken, inspired by Colibri",
-   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqwm3o/85_gb_deepseekv4flash_at_3_toks_on_a_12_gb_rtx/",
-   "published": "2026-09-26T17:41:06Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "I've been experimenting with ways to run MoE models that don't fit comfortably in RAM, and I ended up making Overspill, a disk tier for FreeToken . The basic idea came from looking at how Colibri handles experts across disk/RAM/VRAM so I took inspiration from the general…",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqwm3o/85_gb_deepseekv4flash_at_3_toks_on_a_12_gb_rtx/",
-   "topics": [
-    "DeepSeek"
-   ]
-  },
-  {
-   "id": "6b06c863283e",
-   "source": "r-localllama",
-   "section": "community",
-   "title": "Splash 1.1.0 released, GGUF quants support, MLX import and more",
-   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqw9rn/splash_110_released_gguf_quants_support_mlx/",
-   "published": "2026-09-26T17:27:22Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "On my M5 Pro 64GB I can comfortably work in an agentic setup with the Qwen3.8 27B model in good quality (Unsloth UD-Q4_K_XL) at a decent speed of 50 t/s. Splash combines optimized kernels, excellent speculative decoding, a well-implemented prefix cache, and mixed-weight support…",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqw9rn/splash_110_released_gguf_quants_support_mlx/",
-   "topics": [
-    "Qwen",
-    "Agents"
-   ]
-  },
-  {
-   "id": "6af1b27d76cd",
-   "source": "r-localllama",
-   "section": "community",
-   "title": "Getting stupidly good results on my 4x3060ti setup.",
-   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqv9o8/getting_stupidly_good_results_on_my_4x3060ti_setup/",
-   "published": "2026-09-26T16:47:48Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "About a month ago I was having FOMO and was going to spend coin I don't really have on new graphics cards. Instead of doing that though I decided to spend the money on a new motherboard+cpu and try to utilize my 3060tis I had lying around from my old crypto miner. Yes, I…",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqv9o8/getting_stupidly_good_results_on_my_4x3060ti_setup/"
-  },
-  {
-   "id": "c38f44a3e066",
-   "source": "r-localllama",
-   "section": "community",
-   "title": "Just bought a second 3090 but now I don't see the benefits right now.",
-   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqv0qj/just_bought_a_second_3090_but_now_i_dont_see_the/",
-   "published": "2026-09-26T16:37:26Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "Hi, My local AI server consists of 96GB Ddr5 and one rtx 3090. I got plenty of stuff running, like krea2, qwen image 2.1, minimax h3, ltx 2.5, qwen 3.6, qwen 3.8 q4...,got even qwen 3.8 Flash next running. But now I am thinking of what I can utilize the second card for. I am a…",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqv0qj/just_bought_a_second_3090_but_now_i_dont_see_the/",
-   "topics": [
-    "Qwen"
    ]
   },
   {
@@ -839,26 +949,12 @@
    "published": "2026-09-26T15:56:34Z",
    "first_seen": "2026-09-27T00:40:35Z",
    "summary": "",
-   "points": 102,
-   "comments": 32,
+   "points": 163,
+   "comments": 43,
    "discuss": "https://news.ycombinator.com/item?id=49857729",
    "topics": [
     "Agents",
     "Coding"
-   ]
-  },
-  {
-   "id": "050807fd5f4b",
-   "source": "r-localllama",
-   "section": "community",
-   "title": "How accessible is local AI actually, and what happens if affordable access to frontier models doesn’t last?",
-   "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wqtrfi/how_accessible_is_local_ai_actually_and_what/",
-   "published": "2026-09-26T15:45:31Z",
-   "first_seen": "2026-09-27T00:40:35Z",
-   "summary": "Sometimes it’s easy to forget that this sub and others like it are probably the extreme minority when it comes to this hobby. Most people, I would think, don’t use or can’t afford one good GPU, let alone multiple GPUs, Mac Studios, Sparks, Strix Halos, etc. Is the average tech…",
-   "discuss": "https://www.reddit.com/r/LocalLLaMA/comments/1wqtrfi/how_accessible_is_local_ai_actually_and_what/",
-   "topics": [
-    "Chips"
    ]
   },
   {
@@ -873,31 +969,6 @@
    "discuss": "https://www.reddit.com/r/ChatGPTCoding/comments/1wqsm98/chatgpt_was_getting_mad_why_the_bug_wasnt_fixed/"
   },
   {
-   "id": "0fd252b96ed0",
-   "source": "r-claudeai",
-   "section": "community",
-   "title": "I just Fight Clubbed myself and can't get out...",
-   "url": "https://i.redd.it/vry2ugr6ovrh1.png",
-   "published": "2026-09-26T14:52:22Z",
-   "first_seen": "2026-09-26T16:27:56Z",
-   "summary": "",
-   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqshgp/i_just_fight_clubbed_myself_and_cant_get_out/"
-  },
-  {
-   "id": "723d0205ebab",
-   "source": "r-claudeai",
-   "section": "community",
-   "title": "How many of us are non coders?",
-   "url": "https://www.reddit.com/r/ClaudeAI/comments/1wqrma5/how_many_of_us_are_non_coders/",
-   "published": "2026-09-26T14:15:22Z",
-   "first_seen": "2026-09-26T16:27:56Z",
-   "summary": "Being a developer myself i believe I am in this echo chamber of coders who use claude for development and are singing praises. Just wanted to know how many of us are from non tech background and how do you use claude. Also do models (new or old) mean any difference to you?",
-   "discuss": "https://www.reddit.com/r/ClaudeAI/comments/1wqrma5/how_many_of_us_are_non_coders/",
-   "topics": [
-    "Claude"
-   ]
-  },
-  {
    "id": "f228e54bab0a",
    "source": "hn",
    "section": "community",
@@ -906,8 +977,8 @@
    "published": "2026-09-26T14:03:54Z",
    "first_seen": "2026-09-27T00:40:35Z",
    "summary": "",
-   "points": 101,
-   "comments": 159,
+   "points": 122,
+   "comments": 181,
    "discuss": "https://news.ycombinator.com/item?id=49856665",
    "topics": [
     "OpenAI"
@@ -950,8 +1021,8 @@
    "published": "2026-09-26T10:08:21Z",
    "first_seen": "2026-09-26T14:31:27Z",
    "summary": "",
-   "points": 169,
-   "comments": 209,
+   "points": 176,
+   "comments": 223,
    "discuss": "https://news.ycombinator.com/item?id=49855018"
   },
   {
@@ -963,8 +1034,8 @@
    "published": "2026-09-26T09:55:38Z",
    "first_seen": "2026-09-27T00:40:35Z",
    "summary": "",
-   "points": 102,
-   "comments": 64,
+   "points": 104,
+   "comments": 67,
    "discuss": "https://news.ycombinator.com/item?id=49854945",
    "topics": [
     "Copilot"
@@ -979,8 +1050,8 @@
    "published": "2026-09-26T09:41:58Z",
    "first_seen": "2026-09-27T00:40:35Z",
    "summary": "",
-   "points": 149,
-   "comments": 208,
+   "points": 259,
+   "comments": 292,
    "discuss": "https://news.ycombinator.com/item?id=49854875",
    "topics": [
     "Coding"
@@ -1033,8 +1104,8 @@
    "published": "2026-09-26T04:20:58Z",
    "first_seen": "2026-09-26T14:31:27Z",
    "summary": "",
-   "points": 132,
-   "comments": 42,
+   "points": 145,
+   "comments": 44,
    "discuss": "https://news.ycombinator.com/item?id=49853175"
   },
   {
@@ -1050,6 +1121,22 @@
    "topics": [
     "OpenAI",
     "Codex"
+   ]
+  },
+  {
+   "id": "a922caa29d65",
+   "source": "hn",
+   "section": "community",
+   "title": "An agent used DNS to reach an external chatbot",
+   "url": "https://alignment.openai.com/misalignment-reports/an-agent-used-dns-to-reach-an-external-chatbot/",
+   "published": "2026-09-26T04:14:11Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "",
+   "points": 117,
+   "comments": 116,
+   "discuss": "https://news.ycombinator.com/item?id=49853137",
+   "topics": [
+    "Agents"
    ]
   },
   {
@@ -1109,6 +1196,29 @@
    "published": "2026-09-26T00:00:00Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "In general, you should be suspicious of engineers who are trying to give you advice. Even during ordinary times, this industry is so wide and changes so quickly that nobody really knows anything for sure. And we are not in ordinary times. The advent of LLMs and AI agents is the…"
+  },
+  {
+   "id": "2c8e59167f75",
+   "source": "levelsio",
+   "section": "people",
+   "title": "I got a Dell package from DHH",
+   "url": "https://levels.io/dell-package-from-dhh",
+   "published": "2026-09-26T00:00:00Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": ""
+  },
+  {
+   "id": "09a56eee978c",
+   "source": "levelsio",
+   "section": "people",
+   "title": "It's really crazy how strongly wealth inverse correlates with regulatory burden",
+   "url": "https://levels.io/wealth-inverse-correlates-regulatory-burden",
+   "published": "2026-09-26T00:00:00Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "",
+   "topics": [
+    "Regulation"
+   ]
   },
   {
    "id": "06fc6ddab390",
@@ -1220,8 +1330,8 @@
    "published": "2026-09-25T21:09:27Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
-   "points": 700,
-   "comments": 444,
+   "points": 726,
+   "comments": 453,
    "discuss": "https://news.ycombinator.com/item?id=49849985",
    "topics": [
     "OpenAI",
@@ -1240,19 +1350,6 @@
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "",
    "kind": "release"
-  },
-  {
-   "id": "3a9d213a3cc2",
-   "source": "hn",
-   "section": "community",
-   "title": "Too AI; Didn't Read",
-   "url": "https://www.tai-dr.com/",
-   "published": "2026-09-25T20:37:56Z",
-   "first_seen": "2026-09-26T07:08:00Z",
-   "summary": "",
-   "points": 111,
-   "comments": 111,
-   "discuss": "https://news.ycombinator.com/item?id=49849625"
   },
   {
    "id": "268baa15d9bd",
@@ -1295,19 +1392,6 @@
    "topics": [
     "Agents"
    ]
-  },
-  {
-   "id": "d1defbaf4de8",
-   "source": "hn",
-   "section": "community",
-   "title": "Ollaya – Ollama for open-source, Jev-style decision models",
-   "url": "https://ollaya.dev/",
-   "published": "2026-09-25T18:33:50Z",
-   "first_seen": "2026-09-26T07:08:00Z",
-   "summary": "",
-   "points": 583,
-   "comments": 142,
-   "discuss": "https://news.ycombinator.com/item?id=49848269"
   },
   {
    "id": "925b830b81ef",
@@ -1785,6 +1869,26 @@
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "Structured outputs on thinking models now apply in a single pass, making them faster and more reliable. Fixed intermittent \"model not found\" errors with a large local library Fixed the macOS app becoming unresponsive when checking if ChatGPT or Codex is running…",
    "kind": "release"
+  },
+  {
+   "id": "f562bd784329",
+   "source": "levelsio",
+   "section": "people",
+   "title": "Monthly payment volume of AI businesses on Stripe is exploding in the US while the EU stays flat",
+   "url": "https://levels.io/ai-stripe-volume-us-vs-eu",
+   "published": "2026-09-24T00:00:00Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": ""
+  },
+  {
+   "id": "b42f1855d99d",
+   "source": "levelsio",
+   "section": "people",
+   "title": "Dymocks Tutoring told parents to save their money and use AI instead",
+   "url": "https://levels.io/dymocks-tutoring-told-parents-use-ai",
+   "published": "2026-09-24T00:00:00Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": ""
   },
   {
    "id": "e81407e8dd92",
@@ -2265,7 +2369,7 @@
    "title": "AWS Glue Data Quality delivers context-specific rule recommendations in seconds",
    "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/glue-data-quality-rule-recommendations/",
    "published": "2026-09-22T08:00:00Z",
-   "first_seen": "2026-09-27T00:40:35Z",
+   "first_seen": "2026-09-27T13:18:49Z",
    "summary": "AWS Glue Data Quality now generates data quality rules in seconds, reducing the time to establish data quality checks for your tables in the AWS Glue Data Catalog. You get a ready-to-use set of rules with full coverage across every column, with no manual setup—so you can move…",
    "topics": [
     "AWS"
@@ -2498,7 +2602,7 @@
    "title": "Amazon SNS now supports message payloads up to 1 MiB",
    "url": "https://aws.amazon.com/about-aws/whats-new/2026/09/amazon-sns-1mib-support",
    "published": "2026-09-18T15:00:00Z",
-   "first_seen": "2026-09-27T00:40:35Z",
+   "first_seen": "2026-09-27T13:18:49Z",
    "summary": "Amazon Simple Notification Service (Amazon SNS) now supports message payloads up to 1 MiB, a 4x increase from the previous 256 KiB limit, so you can publish larger messages to your SNS topics. Amazon SNS is a fully managed pub/sub messaging service that enables you to decouple…",
    "topics": [
     "AWS"
@@ -2672,6 +2776,19 @@
    "published": "2026-09-14T00:00:00Z",
    "first_seen": "2026-09-26T07:08:00Z",
    "summary": "Yesterday David Sacks wrote a tweet and within a few minutes people did, what they usually do, and they asked Pangram if it was AI. And Pangram said it’s entirely AI generated . To which David replied that these AI detectors are bogus . Now Pangram has a pretty low false…"
+  },
+  {
+   "id": "343c9123d56f",
+   "source": "addyosmani",
+   "section": "people",
+   "title": "Brownfield Agentic Engineering",
+   "url": "https://addyosmani.com/blog/brownfield-agentic-engineering/",
+   "published": "2026-09-14T00:00:00Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "What it takes to run agents in a codebase older than the team",
+   "topics": [
+    "Agents"
+   ]
   },
   {
    "id": "9fa8651f2be7",
@@ -2877,6 +2994,19 @@
    ]
   },
   {
+   "id": "45e23685c0f0",
+   "source": "addyosmani",
+   "section": "people",
+   "title": "Agentic Skill Decay",
+   "url": "https://addyosmani.com/blog/agentic-skill-decay/",
+   "published": "2026-08-31T00:00:00Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "Agents can finish the task without teaching you anything. Building expertise now has to be deliberate.",
+   "topics": [
+    "Agents"
+   ]
+  },
+  {
    "id": "e6cc5ca4171c",
    "source": "alderson",
    "section": "people",
@@ -2901,6 +3031,20 @@
    "topics": [
     "OpenAI",
     "GPT"
+   ]
+  },
+  {
+   "id": "ac49e584eb78",
+   "source": "addyosmani",
+   "section": "people",
+   "title": "Audit your Agent files",
+   "url": "https://addyosmani.com/blog/audit-your-agent-files/",
+   "published": "2026-08-27T00:00:00Z",
+   "first_seen": "2026-09-27T13:18:49Z",
+   "summary": "A practical guide to auditing what your coding agent still needs.",
+   "topics": [
+    "Agents",
+    "Coding"
    ]
   },
   {
@@ -3794,8 +3938,8 @@
     "provider": "DeepSeek",
     "created": "2026-09-14T15:19:34Z",
     "context": 1048576,
-    "price_in": 0.2468,
-    "price_out": 0.7405,
+    "price_in": 0.2442,
+    "price_out": 0.7326,
     "modalities": [
      "text"
     ],
@@ -4093,7 +4237,7 @@
    {
     "id": "convaiinnovations/laya",
     "task": "text-classification",
-    "likes": 3895,
+    "likes": 4003,
     "downloads": 0,
     "created": "2026-09-18T05:05:55Z",
     "url": "https://huggingface.co/convaiinnovations/laya"
@@ -4101,158 +4245,158 @@
    {
     "id": "Qwen/Qwen-Image-2.1",
     "task": "text-to-image",
-    "likes": 2399,
-    "downloads": 48361,
+    "likes": 2445,
+    "downloads": 52804,
     "created": "2026-09-14T03:47:26Z",
     "url": "https://huggingface.co/Qwen/Qwen-Image-2.1"
    },
    {
     "id": "abenzerps/Qwen-Image-2.1-Uncensored-GGUF",
     "task": "text-to-image",
-    "likes": 1935,
-    "downloads": 876673,
+    "likes": 2013,
+    "downloads": 964220,
     "created": "2026-09-20T15:51:13Z",
     "url": "https://huggingface.co/abenzerps/Qwen-Image-2.1-Uncensored-GGUF"
    },
    {
     "id": "XingChen-AGI/Xing4.0-29B-A4B",
     "task": "text-generation",
-    "likes": 1725,
-    "downloads": 43947,
+    "likes": 1774,
+    "downloads": 45028,
     "created": "2026-09-16T06:44:40Z",
     "url": "https://huggingface.co/XingChen-AGI/Xing4.0-29B-A4B"
    },
    {
-    "id": "prism-ml/Ternary-Bonsai-2-27B-gguf",
-    "task": "text-generation",
-    "likes": 2135,
-    "downloads": 3247527,
-    "created": "2026-09-16T23:40:56Z",
-    "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf"
-   },
-   {
-    "id": "Comfy-Org/Qwen-Image-2.1",
-    "task": null,
-    "likes": 777,
-    "downloads": 3641785,
-    "created": "2026-09-15T19:41:09Z",
-    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1"
-   },
-   {
     "id": "Edge0/Audio8-ASR-Infinite",
     "task": "automatic-speech-recognition",
-    "likes": 794,
-    "downloads": 7859,
+    "likes": 968,
+    "downloads": 19434,
     "created": "2026-09-21T15:03:21Z",
     "url": "https://huggingface.co/Edge0/Audio8-ASR-Infinite"
    },
    {
+    "id": "Comfy-Org/Qwen-Image-2.1",
+    "task": null,
+    "likes": 792,
+    "downloads": 3987373,
+    "created": "2026-09-15T19:41:09Z",
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1"
+   },
+   {
     "id": "Altworld/Hemmingway-1",
     "task": "text-generation",
-    "likes": 710,
-    "downloads": 5590,
+    "likes": 724,
+    "downloads": 5904,
     "created": "2026-09-20T12:10:31Z",
     "url": "https://huggingface.co/Altworld/Hemmingway-1"
    },
    {
+    "id": "prism-ml/Ternary-Bonsai-2-27B-gguf",
+    "task": "text-generation",
+    "likes": 2165,
+    "downloads": 3343748,
+    "created": "2026-09-16T23:40:56Z",
+    "url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf"
+   },
+   {
     "id": "XiaomiMiMo/MiMo-V2.6-Pro-RL",
     "task": "text-generation",
-    "likes": 526,
-    "downloads": 74497,
+    "likes": 542,
+    "downloads": 75079,
     "created": "2026-09-21T15:39:33Z",
     "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL"
    },
    {
     "id": "XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B",
     "task": "image-text-to-text",
-    "likes": 497,
-    "downloads": 7905,
+    "likes": 514,
+    "downloads": 8839,
     "created": "2026-09-21T18:18:40Z",
     "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"
    },
    {
-    "id": "TaichuAI/ZDTaichu5.0-9B",
-    "task": "image-text-to-text",
-    "likes": 1514,
-    "downloads": 11063,
-    "created": "2026-09-04T02:55:48Z",
-    "url": "https://huggingface.co/TaichuAI/ZDTaichu5.0-9B"
-   },
-   {
     "id": "XiaomiMiMo/MiMo-V2.6-Flash-RL",
     "task": "text-generation",
-    "likes": 479,
-    "downloads": 23000,
+    "likes": 487,
+    "downloads": 25661,
     "created": "2026-09-21T15:39:51Z",
     "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL"
    },
    {
+    "id": "TaichuAI/ZDTaichu5.0-9B",
+    "task": "image-text-to-text",
+    "likes": 1677,
+    "downloads": 11612,
+    "created": "2026-09-04T02:55:48Z",
+    "url": "https://huggingface.co/TaichuAI/ZDTaichu5.0-9B"
+   },
+   {
+    "id": "StarDoc-AI/TeleOCR",
+    "task": "image-text-to-text",
+    "likes": 530,
+    "downloads": 27837,
+    "created": "2026-08-14T06:15:03Z",
+    "url": "https://huggingface.co/StarDoc-AI/TeleOCR"
+   },
+   {
     "id": "Qwen/Qwen3.8-27B",
     "task": "image-text-to-text",
-    "likes": 16350,
-    "downloads": 6652309,
+    "likes": 16384,
+    "downloads": 6727629,
     "created": "2026-08-05T08:22:59Z",
     "url": "https://huggingface.co/Qwen/Qwen3.8-27B"
    },
    {
+    "id": "nvidia/Nemotron-3-Diarization",
+    "task": "voice-activity-detection",
+    "likes": 389,
+    "downloads": 22514,
+    "created": "2026-09-01T13:16:57Z",
+    "url": "https://huggingface.co/nvidia/Nemotron-3-Diarization"
+   },
+   {
+    "id": "Lightricks/LTX-2.5",
+    "task": "image-to-video",
+    "likes": 5283,
+    "downloads": 1601089,
+    "created": "2026-07-23T07:55:24Z",
+    "url": "https://huggingface.co/Lightricks/LTX-2.5"
+   },
+   {
+    "id": "Contrastive-LM/CLM-v0.1-8B",
+    "task": "text-ranking",
+    "likes": 359,
+    "downloads": 766,
+    "created": "2026-09-21T20:09:04Z",
+    "url": "https://huggingface.co/Contrastive-LM/CLM-v0.1-8B"
+   },
+   {
     "id": "AlexWortega/openjev",
     "task": "text-classification",
-    "likes": 595,
+    "likes": 605,
     "downloads": 0,
     "created": "2026-09-16T18:25:10Z",
     "url": "https://huggingface.co/AlexWortega/openjev"
    },
    {
-    "id": "Lightricks/LTX-2.5",
-    "task": "image-to-video",
-    "likes": 5225,
-    "downloads": 1604804,
-    "created": "2026-07-23T07:55:24Z",
-    "url": "https://huggingface.co/Lightricks/LTX-2.5"
-   },
-   {
-    "id": "nvidia/Nemotron-3-Diarization",
-    "task": "voice-activity-detection",
-    "likes": 372,
-    "downloads": 19620,
-    "created": "2026-09-01T13:16:57Z",
-    "url": "https://huggingface.co/nvidia/Nemotron-3-Diarization"
-   },
-   {
-    "id": "StarDoc-AI/TeleOCR",
-    "task": "image-text-to-text",
-    "likes": 409,
-    "downloads": 26152,
-    "created": "2026-08-14T06:15:03Z",
-    "url": "https://huggingface.co/StarDoc-AI/TeleOCR"
-   },
-   {
-    "id": "deepseek-ai/DeepSeek-V4.1-Flash",
-    "task": "image-text-to-text",
-    "likes": 3771,
-    "downloads": 640577,
-    "created": "2026-09-10T02:17:58Z",
-    "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"
+    "id": "Viggle/Qwen-Image-2.1-viggle-turbo",
+    "task": "text-to-image",
+    "likes": 313,
+    "downloads": 133151,
+    "created": "2026-09-22T04:14:56Z",
+    "url": "https://huggingface.co/Viggle/Qwen-Image-2.1-viggle-turbo"
    },
    {
     "id": "netease-youdao/Confucius4-R2T2",
     "task": "automatic-speech-recognition",
-    "likes": 426,
-    "downloads": 7155,
+    "likes": 431,
+    "downloads": 8243,
     "created": "2026-09-10T12:16:21Z",
     "url": "https://huggingface.co/netease-youdao/Confucius4-R2T2"
-   },
-   {
-    "id": "Viggle/Qwen-Image-2.1-viggle-turbo",
-    "task": "text-to-image",
-    "likes": 292,
-    "downloads": 101512,
-    "created": "2026-09-22T04:14:56Z",
-    "url": "https://huggingface.co/Viggle/Qwen-Image-2.1-viggle-turbo"
    }
   ],
-  "new_checked": "2026-09-27T00:40:35Z",
-  "trending_checked": "2026-09-27T00:40:35Z"
+  "new_checked": "2026-09-27T13:18:49Z",
+  "trending_checked": "2026-09-27T13:18:49Z"
  },
  "mine": [
   {
@@ -4329,11 +4473,11 @@
  ],
  "topics": [
   {
-   "key": "Claude",
-   "n": 8
+   "key": "Agents",
+   "n": 7
   },
   {
-   "key": "Agents",
+   "key": "Claude",
    "n": 7
   },
   {
@@ -4349,31 +4493,31 @@
    "n": 6
   },
   {
+   "key": "Security",
+   "n": 5
+  },
+  {
    "key": "Coding",
    "n": 4
   },
   {
-   "key": "GPT",
-   "n": 3
-  },
-  {
-   "key": "Security",
-   "n": 3
-  },
-  {
-   "key": "Anthropic",
-   "n": 2
-  },
-  {
-   "key": "Chips",
-   "n": 2
+   "key": "DeepSeek",
+   "n": 4
   },
   {
    "key": "Codex",
+   "n": 3
+  },
+  {
+   "key": "Hugging Face",
+   "n": 3
+  },
+  {
+   "key": "GPT",
    "n": 2
   },
   {
-   "key": "DeepSeek",
+   "key": "Meta",
    "n": 2
   }
  ]
