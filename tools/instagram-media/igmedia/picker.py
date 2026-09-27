@@ -364,7 +364,16 @@ class Picker:
                 self.log(f"dry run: {len(entries)} items encoded; data file at {preview}")
                 return
             self.log(f"uploading to s3://{cfg['bucket']}/{g['s3_prefix']}/ …")
-            out = publish.sync(self.work / "web", cfg["bucket"], g["s3_prefix"])
+            # The uplink here is slow enough that S3 sometimes drops a
+            # connection mid-upload; sync is size-only, so a retry resumes.
+            for attempt in range(1, 5):
+                try:
+                    out = publish.sync(self.work / "web", cfg["bucket"], g["s3_prefix"])
+                    break
+                except RuntimeError as exc:
+                    if attempt == 4:
+                        raise
+                    self.log(f"upload interrupted ({str(exc)[:80]}…), resuming — try {attempt + 1}")
             self.log(f"uploaded {sum(1 for l in out.splitlines() if l.startswith('upload:'))} files")
             data_path = self.repo_root / g["data_file"]
             gphotos_publish.write(data_path, cfg["base_url"], cats, entries)
