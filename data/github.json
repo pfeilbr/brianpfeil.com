@@ -1,6 +1,6 @@
 {
  "user": "pfeilbr",
- "updated": "2026-09-26",
+ "updated": "2026-09-28",
  "count": 412,
  "areas": [
   {
@@ -4161,11 +4161,11 @@
    "langs": [
     [
      "HTML",
-     88
+     86
     ],
     [
      "Python",
-     8
+     10
     ],
     [
      "CSS",
@@ -4187,7 +4187,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-02-16",
-   "pushed": "2026-09-26",
+   "pushed": "2026-09-28",
    "readme": "Personal site built with Hugo, in nine languages: English at the root, and zh es pt fr de it ja ko under //. Posts are English-only; pages, layouts and UI strings are translated. For working on it with an AI agent, CLAUDE.md holds the conventions and the gotchas that have bitten before, and opens with where current work stands. Hugo Extended 0.166.0 — the version CI is pinned to. A different local version can build fine and still fail to deploy. Go 1.25+ — only for generating posts from GitHub repos Python 3.11+ and ffmpeg — only for the media page Terraform 1.10+ and the AWS CLI — only for…",
    "post": false,
    "homepage": "https://brianpfeil.com/"
@@ -4264,7 +4264,7 @@
    "langs": [
     [
      "JavaScript",
-     45
+     46
     ],
     [
      "Python",
@@ -4287,7 +4287,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-09-20",
-   "pushed": "2026-09-26",
+   "pushed": "2026-09-27",
    "readme": "An in-ear phrase prompter for speaking Burmese to someone you actually live with. Pick an English phrase, hear it spoken in Burmese at whatever speed you need, say it back. Built for the case where you have AirPods in, your phone is in your pocket, and your partner is in the next room. Live app: https://pfeilbr.github.io/burmese--language/ It is a direct sibling of [Say It In Mandarin][mandarin] — same shape, same interaction model, same build pipeline — retargeted at a language that works very differently, which is where all the interesting differences are. Open the link in Safari on iPhone…",
    "post": false
   },
