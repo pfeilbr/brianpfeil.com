@@ -75,6 +75,16 @@ def page_title(text: str, lesson: bool) -> str:
     return LESSON_PREFIX.sub("", title) if lesson else title
 
 
+def plain_title(text: str) -> str:
+    """Strip markup inside <title>. Browsers and search engines show it
+    literally: "What <code>terraform plan</code> actually does". The
+    lesson's <h1> keeps its <code>."""
+    def clean(m: re.Match) -> str:
+        inner = TAG.sub("", m.group(2))
+        return m.group(1) + inner + m.group(3)
+    return re.sub(r"(<title[^>]*>)(.*?)(</title>)", clean, text, count=1, flags=re.S | re.I)
+
+
 def redact(text: str, rules: list) -> str:
     for pattern, repl in rules:
         text = re.sub(pattern, repl, text)
@@ -269,6 +279,7 @@ def build_course(course_dir: Path, cfg: dict) -> tuple[dict, dict[str, str]]:
         text = redact(text, cfg["redact"])
         text = rewrite_links(text, slug, here, published)
         text = site_bar(text, slug, title)
+        text = plain_title(text)
         problems += [f"{slug}/{rel}: {h}" for h in deny_hits(text, cfg["deny"])]
         entry = {"href": f"/courses/{slug}/{rel}", "title": page_title(text, here == "lessons")}
         bucket = lessons if here == "lessons" else reference

@@ -150,12 +150,29 @@ class CategoryKeyTest(unittest.TestCase):
         self.assertEqual(s.category_key(""), "other")
 
 
+class PlainTitleTest(unittest.TestCase):
+    def test_markup_in_title_is_stripped(self):
+        page = "<head><title>Lesson 1 — What <code>plan</code> does</title></head><h1>What <code>plan</code> does</h1>"
+        out = s.plain_title(page)
+        self.assertIn("<title>Lesson 1 — What plan does</title>", out)
+        self.assertIn("<h1>What <code>plan</code> does</h1>", out)
+
+    def test_plain_title_unchanged(self):
+        page = "<title>Just text</title>"
+        self.assertEqual(s.plain_title(page), page)
+
+
 class RealDataTest(unittest.TestCase):
     """What is committed must be what the sync would write, and pass the gate."""
 
     def test_published_pages_pass_the_deny_list(self):
         for page in s.STATIC.rglob("*.html"):
             self.assertEqual(s.deny_hits(page.read_text(encoding="utf-8"), CFG["deny"], (CFG["site"],)), [], page)
+
+    def test_titles_are_plain_text(self):
+        for page in s.STATIC.rglob("*.html"):
+            m = s.TITLE.search(page.read_text(encoding="utf-8"))
+            self.assertTrue(m and not s.TAG.search(m.group(1)), page)
 
     def test_relative_links_resolve(self):
         """Every same-site link in a published page lands on something."""
