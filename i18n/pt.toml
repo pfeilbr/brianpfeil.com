@@ -1848,3 +1848,62 @@ other = "Jan 2006"
 
 [date_day_month]
 other = "2 Jan"
+
+# --- /github/, second round ---------------------------------------------------
+
+[gh_syntax_path]
+other = "uma trilha de aprendizado (serverless, iac, ai, go…)"
+
+[gh_in_readme]
+other = "No README:"
+
+[gh_active_filters]
+other = "Filtros ativos"
+
+[gh_remove_filter]
+other = "Remover filtro: {name}"
+
+[gh_filters]
+other = "Filtros"
+
+[gh_retry]
+other = "Tentar de novo"
+
+[gh_lang_none]
+other = "Sem linguagem"
+
+[gh_lang_other]
+other = "Outras linguagens"
+
+[gh_mark_done]
+other = "Marcar como concluído"
+
+[gh_done]
+other = "Concluído"
+
+[gh_progress]
+other = "{done} de {total} concluídos"
+
+[gh_reset_progress]
+other = "Zerar progresso"
+
+[gh_progress_note]
+other = "O progresso fica salvo só neste navegador."
+
+[gh_read_article]
+other = "Ler: {title}"
+
+[gh_timeline_by]
+other = "Agrupar por"
+
+[gh_browse_year]
+other = "Ver os {n} repos de {year}"
+
+[gh_surprise]
+other = "Me surpreenda"
+
+[gh_surprise_title]
+other = "Mostrar um laboratório aleatório que tenha artigo"
+
+[gh_best_needs_query]
+other = "Mais relevantes (digite uma busca)"

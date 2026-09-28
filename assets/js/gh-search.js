@@ -5,7 +5,7 @@
    Free words must all match somewhere (name, description, tags, area,
    language; README text too unless switched off). Qualifiers follow
    GitHub's own search syntax, and any of them can be negated:
-     lang:go  area:ai  tag:lambda  is:fork  has:article  -is:fork
+     lang:go  area:ai  tag:lambda  path:serverless  is:fork  has:article  -is:fork
      created:2019  created:2018..2020  pushed:>2023  stars:>2
      -word  "exact phrase" */
 (function (root) {
@@ -29,7 +29,7 @@
     return null;
   }
 
-  var LISTS = ["lang", "area", "tag", "is", "has"];
+  var LISTS = ["lang", "area", "tag", "path", "is", "has"];
   var ALIAS = { language: "lang", topic: "tag", year: "created", updated: "pushed" };
 
   function parse(text) {
@@ -56,7 +56,7 @@
 
   /* Adds the lowercase copies matching reads, and fills in anything an older
      or partial github.json left out so one odd record can't break the page. */
-  function prep(r, areaLabel, article) {
+  function prep(r, areaLabel, article, paths) {
     r.tags = r.tags || [];
     r.langs = r.langs || [];
     r.areas = r.areas && r.areas.length ? r.areas : ["other"];
@@ -75,6 +75,7 @@
     r._meta = [r._tags.join(" "), norm(r.lang), r.areas.join(" "), r._areaLabels.join(" ")].join(" ");
     r._readme = norm(r.readme);
     r._post = article || "";
+    r._paths = paths || [];
     r._hay = r._name + " " + r._nameWords + " " + r._desc + " " + r._meta;
     r._hayRm = r._hay + " " + r._readme;
     r._cy = year(r.created);
@@ -82,8 +83,15 @@
     return r;
   }
 
-  /* 0 = no match; higher is better. */
+  /* 0 = no match; higher is better. A plural that finds nothing is tried
+     singular ("containers" -> "container", "lambdas" -> "lambda"), a notch
+     lower so an exact hit still ranks first. */
   function wordScore(r, w, readme) {
+    var s = exactScore(r, w, readme);
+    if (!s && w.length > 3 && /[^s]s$/.test(w)) s = Math.max(0, exactScore(r, w.slice(0, -1), readme) - 1);
+    return s;
+  }
+  function exactScore(r, w, readme) {
     if (r._name === w) return 100;
     if (r._nameList.indexOf(w) >= 0) return 40;
     if (r._name.indexOf(w) >= 0 || r._nameWords.indexOf(w) >= 0) return 25;
@@ -126,6 +134,8 @@
     if (P.lang.length && !P.lang.some(function (l) { return hasLang(r, l); })) return -1;
     if (P.not.lang.some(function (l) { return hasLang(r, l); })) return -1;
     if (!P.tag.every(function (t) { return r._tags.indexOf(t) >= 0; })) return -1;
+    if (P.path.length && !P.path.some(function (p) { return r._paths.indexOf(p) >= 0; })) return -1;
+    if (P.not.path.some(function (p) { return r._paths.indexOf(p) >= 0; })) return -1;
     if (P.not.tag.some(function (t) { return r._tags.indexOf(t) >= 0; })) return -1;
     if (S.art && !has(r, "article")) return -1;
     if (S.demo && !has(r, "demo")) return -1;
@@ -158,11 +168,37 @@
     name: function (a, b) { return a._name.localeCompare(b._name); }
   };
 
+  /* The first search word that r matched only in its README, if any: the
+     card then shows where, since nothing visible on it would explain the hit. */
+  function readmeOnly(r, words) {
+    for (var i = 0; i < words.length; i++) {
+      var w = words[i];
+      if (w.indexOf(":") >= 0 || r._readme.indexOf(w) < 0) continue;
+      if (r._hay.indexOf(w) < 0) return w;
+    }
+    return "";
+  }
+
+  /* ~radius characters either side of the first occurrence of word in text,
+     cut on spaces, with ellipses where it was trimmed. */
+  function snippet(text, word, radius) {
+    text = String(text || "");
+    radius = radius || 70;
+    var folded = norm(text);
+    var i = (folded.length === text.length ? folded : text.toLowerCase()).indexOf(word);
+    if (i < 0) return "";
+    var a = Math.max(0, i - radius), b = Math.min(text.length, i + word.length + radius);
+    /* Trim to whole words, unless the cut already sits on a word boundary. */
+    if (a > 0 && text[a - 1] !== " ") { var sp = text.indexOf(" ", a); if (sp > 0 && sp < i) a = sp + 1; }
+    if (b < text.length && text[b] !== " ") { var sp2 = text.lastIndexOf(" ", b); if (sp2 > i + word.length) b = sp2; }
+    return (a > 0 ? "…" : "") + text.slice(a, b) + (b < text.length ? "…" : "");
+  }
+
   /* Only http(s) becomes a link, whatever the JSON says. */
   function safeHref(u) { return /^https?:\/\/[^\s]+$/i.test(u || "") ? u : ""; }
 
   var api = { norm: norm, year: year, range: range, parse: parse, prep: prep, wordScore: wordScore,
-    match: match, inRange: inRange, SORTS: SORTS, safeHref: safeHref };
+    match: match, inRange: inRange, SORTS: SORTS, safeHref: safeHref, readmeOnly: readmeOnly, snippet: snippet };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.GhSearch = api;
 })(this);

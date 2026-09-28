@@ -12,10 +12,10 @@ const S0 = { kind: "all", area: [], lang: [], forks: false, art: false, demo: fa
 
 function repo(o) {
   return G.prep(Object.assign({ name: "x", desc: "", lang: "", langs: [], areas: ["other"], tags: [],
-    kind: "playground", stars: 0, created: "2019-05-01", pushed: "2021-01-01", readme: "" }, o), AREA, o.post);
+    kind: "playground", stars: 0, created: "2019-05-01", pushed: "2021-01-01", readme: "" }, o), AREA, o.post, o.paths);
 }
 const R = [
-  repo({ name: "aws-lambda-go-playground", lang: "Go", areas: ["serverless", "cloud"], tags: ["lambda"], post: "/post/a/" }),
+  repo({ name: "aws-lambda-go-playground", lang: "Go", areas: ["serverless", "cloud"], tags: ["lambda"], post: "/post/a/", paths: ["serverless", "go"] }),
   repo({ name: "aws-step-functions-playground", lang: "JavaScript", areas: ["serverless"], tags: ["step-functions"],
     desc: "Learn Step Functions", created: "2021-02-02", pushed: "2024-03-03", stars: 3 }),
   repo({ name: "dynamo-thing", lang: "Python", areas: ["data"], kind: "project", homepage: "https://x.dev",
@@ -111,4 +111,26 @@ test("prep tolerates missing fields", () => {
   const r = G.prep({ name: "bare" }, AREA);
   assert.deepEqual(r.areas, ["other"]);
   assert.ok(G.match(r, G.parse("bare"), S0) >= 0);
+});
+
+test("path: qualifier and its negation", () => {
+  assert.deepEqual(find("path:go"), ["aws-lambda-go-playground"]);
+  assert.deepEqual(find("aws -path:serverless"), ["aws-step-functions-playground"]);
+});
+
+test("plurals fall back to the singular, ranked a notch lower", () => {
+  assert.deepEqual(find("lambdas"), ["aws-lambda-go-playground"]);
+  const r = R[0];
+  assert.ok(G.wordScore(r, "lambda", true) > G.wordScore(r, "lambdas", true));
+  assert.equal(G.wordScore(r, "gas", true), 0); // too short a stem is not tried
+});
+
+test("readmeOnly and snippet explain README-only hits", () => {
+  const d = R[2];
+  assert.equal(G.readmeOnly(d, ["sauce"]), "sauce");
+  assert.equal(G.readmeOnly(d, ["dynamo"]), "");
+  assert.equal(G.snippet("uses a secret sauce", "sauce", 8), "…secret sauce");
+  const long = "alpha beta gamma delta epsilon zeta eta theta iota kappa";
+  assert.equal(G.snippet(long, "epsilon", 12), "…gamma delta epsilon zeta eta…");
+  assert.equal(G.snippet("nothing here", "zzz"), "");
 });

@@ -1848,3 +1848,62 @@ other = "2006年1月"
 
 [date_day_month]
 other = "1月2日"
+
+# --- /github/, second round ---------------------------------------------------
+
+[gh_syntax_path]
+other = "学習パス（serverless, iac, ai, go…）"
+
+[gh_in_readme]
+other = "README 内："
+
+[gh_active_filters]
+other = "適用中の絞り込み"
+
+[gh_remove_filter]
+other = "絞り込みを解除：{name}"
+
+[gh_filters]
+other = "絞り込み"
+
+[gh_retry]
+other = "再試行"
+
+[gh_lang_none]
+other = "言語なし"
+
+[gh_lang_other]
+other = "その他の言語"
+
+[gh_mark_done]
+other = "完了にする"
+
+[gh_done]
+other = "完了"
+
+[gh_progress]
+other = "{total} 件中 {done} 件完了"
+
+[gh_reset_progress]
+other = "進捗をリセット"
+
+[gh_progress_note]
+other = "進捗はこのブラウザにのみ保存されます。"
+
+[gh_read_article]
+other = "読む：{title}"
+
+[gh_timeline_by]
+other = "グループ化"
+
+[gh_browse_year]
+other = "{year} 年のリポジトリ {n} 件を見る"
+
+[gh_surprise]
+other = "おまかせ"
+
+[gh_surprise_title]
+other = "記事のあるプレイグラウンドをランダムに表示"
+
+[gh_best_needs_query]
+other = "関連度順（検索語を入力）"

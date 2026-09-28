@@ -15,15 +15,15 @@
 {{ $lang := .Site.Language.Lang }}
 {{ $data := hugo.Data.github }}
 
-{{- /* Repo -> the article about it on this site, from the posts themselves,
-   so a renamed slug can never leave a dead link here. */ -}}
+{{- /* Repo -> the article about it on this site ({u: url, t: title}), from
+   the posts themselves, so a renamed slug can never leave a dead link here. */ -}}
 {{ $articles := dict }}
 {{ range partial "site-posts.html" . }}
   {{ $p := . }}
   {{ with $p.Params.repoFullName }}
     {{ $parts := split . "/" }}
     {{ if and (eq (len $parts) 2) (eq (lower (index $parts 0)) "pfeilbr") }}
-      {{ $articles = merge $articles (dict (lower (index $parts 1)) $p.RelPermalink) }}
+      {{ $articles = merge $articles (dict (lower (index $parts 1)) (dict "u" $p.RelPermalink "t" $p.Title)) }}
     {{ end }}
   {{ end }}
 {{ end }}
@@ -64,6 +64,34 @@
   "error" (i18n "gh_load_error")
   "footnote" (i18n "gh_footnote")
   "other" (i18n "gh_area_other")
+  "inReadme" (i18n "gh_in_readme")
+  "activeFilters" (i18n "gh_active_filters")
+  "removeFilter" (i18n "gh_remove_filter")
+  "filters" (i18n "gh_filters")
+  "retry" (i18n "gh_retry")
+  "langNone" (i18n "gh_lang_none")
+  "langOther" (i18n "gh_lang_other")
+  "markDone" (i18n "gh_mark_done")
+  "done" (i18n "gh_done")
+  "progress" (i18n "gh_progress")
+  "resetProgress" (i18n "gh_reset_progress")
+  "progressNote" (i18n "gh_progress_note")
+  "readArticle" (i18n "gh_read_article")
+  "browseYear" (i18n "gh_browse_year")
+  "surpriseTitle" (i18n "gh_surprise_title")
+  "bestNeedsQuery" (i18n "gh_best_needs_query")
+  "sortBest" (i18n "gh_sort_best")
+  "kindPlayground" (i18n "gh_kind_playground")
+  "kindProject" (i18n "gh_kind_project")
+  "kindFork" (i18n "gh_kind_fork")
+  "createdLabel" (i18n "gh_created")
+  "pushedLabel" (i18n "gh_pushed")
+  "onlyArticle" (i18n "gh_only_article")
+  "onlyDemo" (i18n "gh_only_demo")
+  "includeForks" (i18n "gh_include_forks")
+  "searchReadme" (i18n "gh_search_readme")
+  "minStars" (i18n "gh_min_stars")
+  "clear" (i18n "gh_clear")
 }}
 
 <article class="gh">
@@ -76,12 +104,13 @@
         <span class="sr-only">{{ i18n "gh_profile" }}</span></a>
     </div>
     <p class="gh-intro" id="gh-intro"></p>
-    <dl class="gh-stats" id="gh-stats" hidden>
-      <div><dt>{{ i18n "gh_stat_repos" }}</dt><dd data-stat="repos"></dd></div>
-      <div><dt>{{ i18n "gh_stat_playgrounds" }}</dt><dd data-stat="playgrounds"></dd></div>
-      <div><dt>{{ i18n "gh_stat_languages" }}</dt><dd data-stat="languages"></dd></div>
-      <div><dt>{{ i18n "gh_stat_articles" }}</dt><dd data-stat="articles"></dd></div>
-    </dl>
+    {{- /* Each figure is also a shortcut into Browse with that filter. */}}
+    <div class="gh-stats" id="gh-stats" hidden>
+      <button type="button" class="gh-stat" data-go="repos"><b data-stat="repos"></b><span>{{ i18n "gh_stat_repos" }}</span></button>
+      <button type="button" class="gh-stat" data-go="playgrounds"><b data-stat="playgrounds"></b><span>{{ i18n "gh_stat_playgrounds" }}</span></button>
+      <button type="button" class="gh-stat" data-go="languages"><b data-stat="languages"></b><span>{{ i18n "gh_stat_languages" }}</span></button>
+      <button type="button" class="gh-stat" data-go="articles"><b data-stat="articles"></b><span>{{ i18n "gh_stat_articles" }}</span></button>
+    </div>
     <div class="gh-langbar" id="gh-langbar" role="group" aria-label="{{ i18n "gh_lang_bar" }}" hidden>
       <div class="gh-langbar-track" id="gh-langbar-track"></div>
       <div class="gh-langbar-legend" id="gh-langbar-legend"></div>
@@ -123,6 +152,11 @@
       </button>
     </div>
 
+    <button type="button" class="gh-filter-toggle" id="gh-filter-toggle" aria-expanded="false" aria-controls="gh-facets">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+      <span>{{ i18n "gh_filters" }}</span> <span class="gh-n" id="gh-filter-n"></span>
+    </button>
+    <div class="gh-facets" id="gh-facets">
     <div class="gh-seg" role="group" aria-label="{{ i18n "gh_kind_label" }}" id="gh-kind">
       <button type="button" aria-pressed="false" data-kind="all">{{ i18n "gh_kind_all" }} <span class="gh-n"></span></button>
       <button type="button" aria-pressed="false" data-kind="playground">{{ i18n "gh_kind_playground" }} <span class="gh-n"></span></button>
@@ -137,6 +171,7 @@
     <div class="gh-facet">
       <h2 class="gh-facet-h">{{ i18n "gh_languages" }}</h2>
       <div class="gh-chips" id="gh-langs"></div>
+    </div>
     </div>
 
     <section class="gh-adv" id="gh-adv" hidden aria-label="{{ i18n "gh_advanced" }}">
@@ -174,6 +209,7 @@
           <tr><td><code>lang:go</code></td><td>{{ i18n "gh_syntax_lang" }}</td></tr>
           <tr><td><code>area:ai</code></td><td>{{ i18n "gh_syntax_area" }}</td></tr>
           <tr><td><code>tag:lambda</code></td><td>{{ i18n "gh_syntax_tag" }}</td></tr>
+          <tr><td><code>path:serverless</code></td><td>{{ i18n "gh_syntax_path" }}</td></tr>
           <tr><td><code>is:playground</code> <code>is:project</code> <code>is:fork</code></td><td>{{ i18n "gh_syntax_is" }}</td></tr>
           <tr><td><code>has:article</code> <code>has:demo</code></td><td>{{ i18n "gh_syntax_has" }}</td></tr>
           <tr><td><code>created:2019</code> <code>created:2018..2020</code></td><td>{{ i18n "gh_syntax_created" }}</td></tr>
@@ -212,6 +248,7 @@
       </div>
     </div>
 
+    <div class="gh-active" id="gh-active" role="group" aria-label="{{ i18n "gh_active_filters" }}" hidden></div>
     <ol class="gh-list" id="gh-list" aria-busy="true"></ol>
     <button type="button" class="gh-more" id="gh-more" hidden>{{ i18n "gh_show_more" }}</button>
   </div>
@@ -227,7 +264,14 @@
         <li>{{ partial "icons/chip.html" (dict "id" "i-terminal" "size" "sm") }}<span>{{ i18n "gh_learn_step3" }}</span></li>
       </ol>
     </div>
-    <h2 class="gh-facet-h gh-paths-h" id="gh-paths-h">{{ i18n "gh_track_pick" }}</h2>
+    <div class="gh-paths-row">
+      <h2 class="gh-facet-h gh-paths-h" id="gh-paths-h">{{ i18n "gh_track_pick" }}</h2>
+      <button type="button" class="gh-surprise" id="gh-surprise" title="{{ i18n "gh_surprise_title" }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+        <span>{{ i18n "gh_surprise" }}</span>
+      </button>
+    </div>
+    <div class="gh-pick" id="gh-pick" hidden aria-live="polite"></div>
     <div class="gh-tracks" id="gh-tracks"></div>
     <section class="gh-track" id="gh-track" hidden tabindex="-1"></section>
   </div>
@@ -235,6 +279,10 @@
   {{/* ---------- Timeline ---------- */}}
   <div class="ptab-panel" id="panel-timeline" role="tabpanel" aria-labelledby="tab-timeline">
     <p class="gh-lead">{{ i18n "gh_timeline_intro" }}</p>
+    <div class="gh-seg gh-tl-by" role="group" aria-label="{{ i18n "gh_timeline_by" }}" id="gh-tl-by">
+      <button type="button" aria-pressed="true" data-by="created">{{ i18n "gh_created" }}</button>
+      <button type="button" aria-pressed="false" data-by="pushed">{{ i18n "gh_pushed" }}</button>
+    </div>
     <div class="gh-timeline" id="gh-timeline"></div>
   </div>
 
@@ -261,6 +309,7 @@
   var nf = new Intl.NumberFormat(LANG);
   var reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var SCROLL = reduceMotion ? "auto" : "smooth";
+  var paths = {}, tlBy = "created";
 
   /* ---------- small DOM helpers ---------- */
   var SVG = "http://www.w3.org/2000/svg";
@@ -424,7 +473,11 @@
 
   function actions(r, learn) {
     var row = D.el("div", "gh-acts");
-    if (r._post) row.appendChild(actionLink(r._post, "i-pen", T.article, "gh-act gh-act-post", false));
+    if (r._post) {
+      var art = actionLink(r._post, "i-pen", learn && r._postTitle ? D.fill(T.readArticle, { title: r._postTitle }) : T.article, "gh-act gh-act-post", false);
+      if (learn && r._postTitle) art.title = r._postTitle;
+      row.appendChild(art);
+    }
     row.appendChild(actionLink(repoURL(r), "i-github", T.code, "gh-act"));
     var home = G.safeHref(r.homepage);
     if (home) row.appendChild(actionLink(home, "i-rocket", T.demo, "gh-act"));
@@ -437,17 +490,29 @@
     return row;
   }
 
+  /* A tag chip adds tag:x to the query, or takes it out again if it is
+     already there; the chips of active tags show as pressed. */
   function tagChip(t) {
     var b = btn(t, "gh-tag");
+    var on = results.P && results.P.tag.indexOf(G.norm(t)) >= 0;
+    pressed(b, !!on);
     b.addEventListener("click", function () {
       var tok = "tag:" + (/\s/.test(t) ? '"' + t + '"' : t);
-      if (S.q.split(/\s+/).indexOf(tok) < 0) S.q = (S.q + " " + tok).trim();
+      if (on) S.q = removeToken(S.q, "tag", t);
+      else if (S.q.split(/\s+/).indexOf(tok) < 0) S.q = (S.q + " " + tok).trim();
       q.value = S.q;
       shown = PAGE;
       update();
       scrollToEl(q, "nearest");
     });
     return b;
+  }
+
+  /* S.q without every key:value token whose value is v (quoted or not). */
+  function removeToken(query, key, v) {
+    var esc = String(v).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    var re = new RegExp("(^|\\s)-?" + key + ':(?:"' + esc + '"|' + esc + ')(?=\\s|$)', "ig");
+    return query.replace(re, " ").replace(/\s+/g, " ").trim();
   }
 
   function card(r, words) {
@@ -466,6 +531,13 @@
     if (r.archived) h.appendChild(badge(T.badgeArchived, "is-arch"));
     body.appendChild(h);
     if (r.desc) body.appendChild(D.el("p", "gh-repo-desc")).appendChild(hl(r.desc, words));
+    var rw = S.rm ? G.readmeOnly(r, words) : "";
+    if (rw) {
+      var rp = D.el("p", "gh-repo-readme");
+      rp.appendChild(D.el("span", "gh-repo-readme-l", T.inReadme + " "));
+      rp.appendChild(hl(G.snippet(r.readme, rw), [rw]));
+      body.appendChild(rp);
+    }
     if (r.parent) body.appendChild(D.el("p", "gh-repo-parent", D.fill(T.forkedFrom, { repo: r.parent })));
     if (r.tags.length) {
       var tags = D.el("div", "gh-tags");
@@ -577,7 +649,7 @@
       if (!b) {
         b = langBtns[l] = btn(null, "gh-chip gh-chip-lang");
         b.appendChild(dot(l));
-        b.appendChild(D.el("span", null, l === "—" ? T.other : l));
+        b.appendChild(D.el("span", null, l === "—" ? T.langNone : l));
         b.appendChild(D.el("span", "gh-n"));
         b.addEventListener("click", function () { toggle(S.lang, l); shown = PAGE; update(); });
       }
@@ -641,7 +713,13 @@
 
   function syncControls() {
     if (document.activeElement !== q) q.value = S.q;
-    $("gh-sort").value = S.sort;
+    /* "Best match" means nothing without words to match, and the list is then
+       sorted by recency; say so rather than show a sort that isn't applied. */
+    var noWords = !(results.P && results.P.words.length);
+    var sortSel = $("gh-sort"), bestOpt = sortSel.querySelector('option[value="best"]');
+    bestOpt.textContent = noWords ? T.bestNeedsQuery : T.sortBest;
+    bestOpt.disabled = noWords;
+    sortSel.value = S.sort === "best" && noWords ? "pushed" : S.sort;
     ["cf", "ct", "pf", "pt"].forEach(function (k) { $("gh-" + k).value = String(S[k] || ""); });
     if (document.activeElement !== $("gh-stars")) $("gh-stars").value = S.stars ? String(S.stars) : "";
     $("gh-art").checked = S.art; $("gh-demo").checked = S.demo;
@@ -652,6 +730,42 @@
     [].forEach.call($("gh-view").children, function (b) { pressed(b, b.dataset.view === S.view); });
     list.classList.toggle("is-list", S.view === "list");
     $("gh-clear").hidden = !filtersActive();
+    var nFacets = (S.kind !== "all" ? 1 : 0) + S.area.length + S.lang.length;
+    $("gh-filter-n").textContent = nFacets ? "(" + nf.format(nFacets) + ")" : "";
+    renderActive();
+  }
+
+  /* Everything applied outside the search box, one removable pill each, so
+     a filter set in a collapsed panel is never invisible. */
+  function renderActive() {
+    var box = $("gh-active"), pills = [];
+    function add(label, undo) { pills.push({ label: label, undo: undo }); }
+    var kindLabel = { playground: T.kindPlayground, project: T.kindProject, fork: T.kindFork };
+    if (S.kind !== "all") add(kindLabel[S.kind] || S.kind, function () { S.kind = "all"; });
+    S.area.forEach(function (a) { add(AREA[a] || a, function () { toggle(S.area, a); }); });
+    S.lang.forEach(function (l) { add(l === "—" ? T.langNone : l, function () { toggle(S.lang, l); }); });
+    function yr(lo, hi) { return lo && hi ? (lo === hi ? String(lo) : lo + "–" + hi) : lo ? "≥ " + lo : "≤ " + hi; }
+    if (S.cf || S.ct) add(T.createdLabel + " " + yr(S.cf, S.ct), function () { S.cf = S.ct = 0; });
+    if (S.pf || S.pt) add(T.pushedLabel + " " + yr(S.pf, S.pt), function () { S.pf = S.pt = 0; });
+    if (S.stars) add("★ ≥ " + S.stars, function () { S.stars = 0; });
+    if (S.art) add(T.onlyArticle, function () { S.art = false; });
+    if (S.demo) add(T.onlyDemo, function () { S.demo = false; });
+    if (S.forks && S.kind !== "fork") add(T.includeForks, function () { S.forks = false; });
+    if (!S.rm) add("✕ " + T.searchReadme, function () { S.rm = true; });
+    box.textContent = "";
+    box.hidden = !pills.length;
+    pills.forEach(function (p) {
+      var b = btn(null, "gh-pillx");
+      b.appendChild(D.el("span", null, p.label));
+      b.appendChild(D.el("span", "gh-pillx-x", "×"));
+      b.setAttribute("aria-label", D.fill(T.removeFilter, { name: p.label }));
+      b.addEventListener("click", function () {
+        p.undo(); shown = PAGE; update();
+        var next = $("gh-active").querySelector("button");
+        (next || q).focus({ preventScroll: true });
+      });
+      box.appendChild(b);
+    });
   }
 
   /* Screen readers hear the result count once typing settles, not per key. */
@@ -663,12 +777,29 @@
 
   /* Draws rows up to `shown`. "Show more" only appends; anything else that
      changes the results starts the list over. */
+  /* No results: say so, and offer the one-click ways out that apply. */
+  function emptyState() {
+    var li = D.el("li", "gh-empty");
+    li.appendChild(D.el("p", null, T.none));
+    var row = D.el("div", "gh-empty-acts");
+    function offer(label, act) {
+      var b = btn(label, "gh-act");
+      b.addEventListener("click", function () { act(); shown = PAGE; update(); q.focus({ preventScroll: true }); });
+      row.appendChild(b);
+    }
+    if (!S.rm) offer(T.searchReadme, function () { S.rm = true; });
+    if (!S.forks) offer(T.includeForks, function () { S.forks = true; });
+    if (filtersActive()) offer(T.clear, function () { reset(true); q.value = ""; });
+    if (row.childNodes.length) li.appendChild(row);
+    return li;
+  }
+
   function renderList(append) {
     var rs = results.list, make = S.view === "list" ? line : card;
     if (!append) {
       list.textContent = "";
       rendered = 0;
-      if (!rs.length) list.appendChild(D.el("li", "gh-empty", T.none));
+      if (!rs.length) list.appendChild(emptyState());
     }
     var frag = document.createDocumentFragment();
     rs.slice(rendered, shown).forEach(function (r) { frag.appendChild(make(r, results.words)); });
@@ -692,6 +823,88 @@
   }
 
   /* ---------- Learn ---------- */
+  /* Steps a visitor ticked off, by repo name. Kept in this browser only
+     (the page says so); a blocked or empty storage just means no ticks. */
+  var DONE_KEY = "gh-learn-done", done = {};
+  try { (JSON.parse(localStorage.getItem(DONE_KEY)) || []).forEach(function (n) { done[n] = true; }); } catch (e) {}
+  function saveDone() {
+    try { localStorage.setItem(DONE_KEY, JSON.stringify(Object.keys(done))); } catch (e) {}
+  }
+  function doneCount(t) { return t.repos.filter(function (n) { return done[n]; }).length; }
+
+  function progressBar(t, cls) {
+    var n = doneCount(t), wrap = D.el("span", "gh-prog " + (cls || ""));
+    var bar = D.el("span", "gh-prog-bar");
+    bar.setAttribute("aria-hidden", "true");
+    bar.appendChild(D.el("span")).style.width = Math.round(100 * n / t.repos.length) + "%";
+    wrap.appendChild(bar);
+    wrap.appendChild(D.el("span", "gh-n", D.fill(T.progress, { done: nf.format(n), total: nf.format(t.repos.length) })));
+    wrap.hidden = !n;
+    return wrap;
+  }
+  function refreshCardProgress() {
+    doc.tracks.forEach(function (t) {
+      var card = trackCard(t.key);
+      if (!card) return;
+      var old = card.querySelector(".gh-prog");
+      if (old) old.replaceWith(progressBar(t));
+    });
+  }
+
+  function doneButton(r, li, onChange) {
+    var b = btn(null, "gh-act gh-done");
+    function paint() {
+      var on = !!done[r.name];
+      pressed(b, on);
+      b.textContent = on ? "✓ " + T.done : T.markDone;
+      li.classList.toggle("is-done", on);
+    }
+    b.addEventListener("click", function () {
+      if (done[r.name]) delete done[r.name]; else done[r.name] = true;
+      saveDone();
+      paint();
+      if (onChange) onChange();
+    });
+    paint();
+    return b;
+  }
+
+  function stepItem(r, label, onChange) {
+    var li = D.el("li", "gh-step");
+    li.appendChild(D.el("span", "gh-step-n", label));
+    var b = D.el("div", "gh-step-body");
+    var h = D.el("h3", "gh-repo-name");
+    h.appendChild(D.link(repoURL(r), null, r.name));
+    if (r.lang) {
+      var l = D.el("span", "gh-meta-lang");
+      l.appendChild(dot(r.lang));
+      l.appendChild(document.createTextNode(r.lang));
+      h.appendChild(l);
+    }
+    b.appendChild(h);
+    if (r.desc) b.appendChild(D.el("p", "gh-repo-desc", r.desc));
+    var acts = actions(r, true);
+    acts.appendChild(doneButton(r, li, onChange));
+    b.appendChild(acts);
+    li.appendChild(b);
+    return li;
+  }
+
+  /* A random playground that has an article, never the same one twice running. */
+  var lastPick = "";
+  function surprise() {
+    var pool = repos.filter(function (r) { return r.kind === "playground" && r._post && r._paths.length && r.name !== lastPick; });
+    if (!pool.length) return;
+    var r = pool[Math.floor(Math.random() * pool.length)];
+    lastPick = r.name;
+    var box = $("gh-pick");
+    box.textContent = "";
+    var ol = D.el("ol", "gh-steps");
+    ol.appendChild(stepItem(r, "★", refreshCardProgress));
+    box.appendChild(ol);
+    box.hidden = false;
+  }
+
   function renderTracks() {
     var box = $("gh-tracks");
     doc.tracks.forEach(function (t) {
@@ -706,6 +919,7 @@
       tx.appendChild(D.el("span", "gh-trackcard-title", (TRACK[t.key] || {}).title || t.key));
       tx.appendChild(D.el("span", "gh-trackcard-blurb", (TRACK[t.key] || {}).blurb || ""));
       tx.appendChild(D.el("span", "gh-n", D.fill(T.trackCount, { n: t.repos.length })));
+      tx.appendChild(progressBar(t));
       b.appendChild(tx);
       b.addEventListener("click", function () { openTrack(t.key, true); });
       box.appendChild(b);
@@ -737,6 +951,27 @@
     var tx = D.el("div", "gh-track-text");
     tx.appendChild(D.el("h2", "gh-track-title", (TRACK[t.key] || {}).title || t.key));
     tx.appendChild(D.el("p", "gh-track-blurb", (TRACK[t.key] || {}).blurb || ""));
+    var prog = D.el("div", "gh-track-prog");
+    function paintProg() {
+      prog.textContent = "";
+      var bar = progressBar(t, "is-big");
+      bar.hidden = false;
+      prog.appendChild(bar);
+      if (doneCount(t)) {
+        var rs = btn(T.resetProgress, "gh-reset");
+        rs.addEventListener("click", function () {
+          t.repos.forEach(function (n) { delete done[n]; });
+          saveDone();
+          renderTrack(t, sec, all);
+          refreshCardProgress();
+          sec.focus({ preventScroll: true });
+        });
+        prog.appendChild(rs);
+      }
+      prog.appendChild(D.el("span", "gh-prog-note", T.progressNote));
+    }
+    paintProg();
+    tx.appendChild(prog);
     head.appendChild(tx);
     var close = btn("✕", "gh-track-close");
     close.title = T.closeTrack;
@@ -754,23 +989,7 @@
     var LIMIT = 8;
     t.repos.slice(0, all ? t.repos.length : LIMIT).forEach(function (name, i) {
       var r = byName[name];
-      if (!r) return;
-      var li = D.el("li", "gh-step");
-      li.appendChild(D.el("span", "gh-step-n", String(i + 1)));
-      var b = D.el("div", "gh-step-body");
-      var h = D.el("h3", "gh-repo-name");
-      h.appendChild(D.link(repoURL(r), null, r.name));
-      if (r.lang) {
-        var l = D.el("span", "gh-meta-lang");
-        l.appendChild(dot(r.lang));
-        l.appendChild(document.createTextNode(r.lang));
-        h.appendChild(l);
-      }
-      b.appendChild(h);
-      if (r.desc) b.appendChild(D.el("p", "gh-repo-desc", r.desc));
-      b.appendChild(actions(r, true));
-      li.appendChild(b);
-      ol.appendChild(li);
+      if (r) ol.appendChild(stepItem(r, String(i + 1), function () { paintProg(); refreshCardProgress(); }));
     });
     sec.appendChild(ol);
 
@@ -789,14 +1008,10 @@
     go.appendChild(document.createTextNode(T.inBrowse + " "));
     go.appendChild(glyph("i-arrow"));
     go.addEventListener("click", function () {
+      /* Exactly this path's repos, via the path: qualifier. */
       reset(true);
-      q.value = "";
-      /* A path is a named set of repos; Browse gets the area it mostly
-         overlaps, which is the closest single filter to it. */
-      var c = {};
-      t.repos.forEach(function (n) { var r = byName[n]; if (r) r.areas.forEach(function (a) { c[a] = (c[a] || 0) + 1; }); });
-      var best = Object.keys(c).sort(function (a, b) { return c[b] - c[a]; })[0];
-      if (best) S.area = [best];
+      S.q = "path:" + t.key;
+      q.value = S.q;
       shown = PAGE;
       $("tab-browse").click();
       update();
@@ -810,9 +1025,10 @@
   /* ---------- Timeline ---------- */
   function renderTimeline() {
     var box = $("gh-timeline"), by = {}, max = 0;
+    var field = tlBy === "pushed" ? "pushed" : "created", yk = field === "pushed" ? "_py" : "_cy";
     repos.forEach(function (r) {
       if (r.kind === "fork") return;
-      (by[r._cy] = by[r._cy] || []).push(r);
+      (by[r[yk]] = by[r[yk]] || []).push(r);
     });
     var ys = Object.keys(by).sort(function (a, b) { return b - a; });
     ys.forEach(function (y) { max = Math.max(max, by[y].length); });
@@ -820,7 +1036,21 @@
     ys.forEach(function (y) {
       var sec = D.el("section", "gh-year");
       var h = D.el("h2", "gh-year-h");
-      h.appendChild(D.el("span", "gh-year-y", y));
+      /* The year opens Browse filtered to it, by the same date the timeline uses. */
+      var go = btn(y, "gh-year-y");
+      var label = D.fill(T.browseYear, { n: by[y].length, year: y });
+      go.title = label;
+      go.setAttribute("aria-label", label);
+      go.addEventListener("click", function () {
+        reset(true);
+        q.value = "";
+        if (field === "pushed") { S.pf = S.pt = +y; } else { S.cf = S.ct = +y; }
+        shown = PAGE;
+        $("tab-browse").click();
+        update();
+        scrollToEl(document.querySelector(".gh-toolbar"));
+      });
+      h.appendChild(go);
       var bar = D.el("span", "gh-year-bar");
       bar.setAttribute("aria-hidden", "true");
       bar.appendChild(D.el("span")).style.width = Math.round(100 * by[y].length / max) + "%";
@@ -828,18 +1058,19 @@
       h.appendChild(D.el("span", "gh-n", D.fill(T.trackCount, { n: by[y].length })));
       sec.appendChild(h);
       var ul = D.el("ul", "gh-year-list");
-      by[y].sort(function (a, b) { return a.created > b.created ? 1 : -1; }).forEach(function (r) {
+      by[y].sort(function (a, b) { return a[field] > b[field] ? 1 : -1; }).forEach(function (r) {
         var li = D.el("li");
-        var a = D.link(repoURL(r), "gh-pill", null);
+        var a = D.link(repoURL(r), "gh-pill" + (r._post ? " has-post" : ""), null);
         a.appendChild(dot(r.lang));
         a.appendChild(document.createTextNode(r.name));
-        a.title = (r.desc ? r.desc + " · " : "") + month(r.created);
+        a.title = (r.desc ? r.desc + " · " : "") + month(r[field]);
         li.appendChild(a);
         ul.appendChild(li);
       });
       sec.appendChild(ul);
       frag.appendChild(sec);
     });
+    box.textContent = "";
     box.appendChild(frag);
   }
 
@@ -851,10 +1082,21 @@
     drawn[name] = true;
     if (name === "learn") {
       renderTracks();
+      $("gh-surprise").addEventListener("click", surprise);
       var tk = new URLSearchParams(location.search).get("track");
       if (tk) openTrack(tk, false);
     }
-    if (name === "timeline") renderTimeline();
+    if (name === "timeline") {
+      renderTimeline();
+      [].forEach.call($("gh-tl-by").children, function (b) {
+        b.addEventListener("click", function () {
+          tlBy = b.dataset.by;
+          [].forEach.call($("gh-tl-by").children, function (x) { pressed(x, x === b); });
+          renderTimeline();
+        });
+        pressed(b, b.dataset.by === tlBy);
+      });
+    }
   }
   function watchPanels() {
     ["learn", "timeline"].forEach(function (name) {
@@ -878,7 +1120,21 @@
       languages: Object.keys(langs).filter(function (l) { return l !== "—"; }).length,
       articles: repos.filter(function (r) { return r._post; }).length
     };
-    [].forEach.call($("gh-stats").querySelectorAll("dd"), function (dd) { dd.textContent = nf.format(stat[dd.dataset.stat]); });
+    [].forEach.call($("gh-stats").querySelectorAll("[data-stat]"), function (el) { el.textContent = nf.format(stat[el.dataset.stat]); });
+    [].forEach.call($("gh-stats").querySelectorAll(".gh-stat"), function (b) {
+      b.addEventListener("click", function () {
+        var go = b.dataset.go;
+        reset(true);
+        q.value = "";
+        if (go === "playgrounds") S.kind = "playground";
+        if (go === "articles") S.art = true;
+        if (go === "languages") langsOpen = true;
+        shown = PAGE;
+        $("tab-browse").click();
+        update();
+        scrollToEl(go === "languages" ? $("gh-langs") : document.querySelector(".gh-toolbar"), "center");
+      });
+    });
     $("gh-stats").hidden = false;
 
     var keys = Object.keys(langs).filter(function (l) { return l !== "—"; }).sort(function (a, b) { return langs[b] - langs[a]; });
@@ -903,18 +1159,22 @@
       });
       legend.appendChild(b);
     });
-    if (rest > 0) {
+    /* The remainder is two different things: repos in some other language,
+       and repos GitHub found no code in at all (docs, config, notes). */
+    var none = langs["—"] || 0, otherLangs = rest - none;
+    [[otherLangs, T.langOther, "var(--text-fainter)", "gh-dot-other"], [none, T.langNone, "var(--border-strong)", "gh-dot-none"]].forEach(function (x) {
+      if (x[0] <= 0) return;
       var o = D.el("span", "gh-seg-part");
-      o.style.width = (100 * rest / own.length) + "%";
-      o.style.backgroundColor = "var(--border-strong)";
-      o.title = T.other + " · " + rest;
+      o.style.width = (100 * x[0] / own.length) + "%";
+      o.style.backgroundColor = x[2];
+      o.title = x[1] + " · " + x[0];
       track.appendChild(o);
       var ol = D.el("span", "gh-legend gh-legend-other");
-      ol.appendChild(D.el("span", "gh-dot gh-dot-other"));
-      ol.appendChild(D.el("span", null, T.other));
-      ol.appendChild(D.el("span", "gh-n", pct(rest)));
+      ol.appendChild(D.el("span", "gh-dot " + x[3]));
+      ol.appendChild(D.el("span", null, x[1]));
+      ol.appendChild(D.el("span", "gh-n", pct(x[0])));
       legend.appendChild(ol);
-    }
+    });
     $("gh-langbar").hidden = false;
   }
 
@@ -987,6 +1247,10 @@
       q.focus();
     });
     moreBtn.addEventListener("click", more);
+    $("gh-filter-toggle").addEventListener("click", function () {
+      var open = $("gh-facets").classList.toggle("is-open");
+      this.setAttribute("aria-expanded", open ? "true" : "false");
+    });
     /* Keep loading as the reader nears the end, but only after they asked
        once: a page that grows on its own under a footer is a trap. */
     if ("IntersectionObserver" in window) {
@@ -998,37 +1262,56 @@
     }
   }
 
-  readURL();
-  D.load("github")
-    .then(function (d) {
-      doc = d;
-      user = d.user || user;
-      colors = d.colors || {};
-      (d.areas || []).forEach(function (a) { areaIcon[a.key] = a.icon; });
-      d.tracks = d.tracks || [];
-      repos = (d.repos || []).filter(function (r) { return r && r.name; });
-      repos.forEach(function (r) {
-        G.prep(r, AREA, ARTICLE[r.name.toLowerCase()]);
-        byName[r.name] = r;
+  var wired = false;
+  function start() {
+    list.setAttribute("aria-busy", "true");
+    list.textContent = "";
+    D.load("github")
+      .then(function (d) {
+        doc = d;
+        user = d.user || user;
+        colors = d.colors || {};
+        (d.areas || []).forEach(function (a) { areaIcon[a.key] = a.icon; });
+        d.tracks = d.tracks || [];
+        d.tracks.forEach(function (t) {
+          t.repos.forEach(function (n) { (paths[n] = paths[n] || []).push(t.key); });
+        });
+        repos = (d.repos || []).filter(function (r) { return r && r.name; });
+        repos.forEach(function (r) {
+          var art = ARTICLE[r.name.toLowerCase()];
+          G.prep(r, AREA, art && art.u, paths[r.name]);
+          r._postTitle = art ? art.t : "";
+          byName[r.name] = r;
+        });
+        renderHead();
+        yearOptions();
+        wire();
+        wired = true;
+        update();
+        list.setAttribute("aria-busy", "false");
+        watchPanels();
+        var foot = $("gh-foot");
+        foot.textContent = D.fill(T.footnote, {
+          date: new Date(d.updated + "T00:00:00Z").toLocaleDateString(LANG, { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })
+        }) + " ";
+        var raw = D.el("a", null, "github.json");
+        raw.href = "/data/github.json";
+        foot.appendChild(raw);
+      })
+      .catch(function (e) {
+        if (window.console) console.error(e);
+        if (wired) return;
+        /* A failed load (offline, a deploy mid-flight) gets a way to try again. */
+        D.fail(list, T.error);
+        var again = btn(T.retry, "gh-more");
+        again.addEventListener("click", function () { again.remove(); start(); });
+        list.after(again);
+        again.focus({ preventScroll: true });
       });
-      renderHead();
-      yearOptions();
-      wire();
-      update();
-      list.setAttribute("aria-busy", "false");
-      watchPanels();
-      var foot = $("gh-foot");
-      foot.textContent = D.fill(T.footnote, {
-        date: new Date(d.updated + "T00:00:00Z").toLocaleDateString(LANG, { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })
-      }) + " ";
-      var raw = D.el("a", null, "github.json");
-      raw.href = "/data/github.json";
-      foot.appendChild(raw);
-    })
-    .catch(function (e) {
-      if (window.console) console.error(e);
-      D.fail(list, T.error);
-    });
+  }
+
+  readURL();
+  start();
 })();
 </script>
 {{ partial "tabs-script.html" . }}

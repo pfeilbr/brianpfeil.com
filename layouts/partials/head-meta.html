@@ -123,6 +123,26 @@
       "inLanguage" .Site.Language.Lang
       "publisher" (dict "@id" $person)))
   | jsonify (dict "indent" "  ") | safeJS }}
+{{- else if and (eq .Layout "github") hugo.Data.github -}}
+{{- /* /github/ is drawn in the browser, so crawlers see no repos in the HTML;
+   this names the 30 most recently updated ones as SoftwareSourceCode. */ -}}
+{{- $items := slice -}}
+{{- range $i, $r := first 30 (sort (where hugo.Data.github.repos "kind" "ne" "fork") "pushed" "desc") -}}
+  {{- $code := dict "@type" "SoftwareSourceCode" "name" $r.name "codeRepository" (printf "https://github.com/%s/%s" hugo.Data.github.user $r.name) "dateModified" $r.pushed "author" (dict "@id" $person) -}}
+  {{- with $r.desc }}{{ $code = merge $code (dict "description" .) }}{{ end -}}
+  {{- with $r.lang }}{{ $code = merge $code (dict "programmingLanguage" .) }}{{ end -}}
+  {{- $items = $items | append (dict "@type" "ListItem" "position" (add $i 1) "item" $code) -}}
+{{- end -}}
+{{ dict
+  "@context" "https://schema.org"
+  "@type" "CollectionPage"
+  "name" .Title
+  "description" $desc
+  "url" .Permalink
+  "inLanguage" .Site.Language.Lang
+  "isPartOf" (dict "@id" (printf "%s#website" hugo.Sites.Default.Home.Permalink))
+  "mainEntity" (dict "@type" "ItemList" "numberOfItems" (len hugo.Data.github.repos) "itemListElement" $items)
+  | jsonify (dict "indent" "  ") | safeJS }}
 {{- else -}}
 {{ dict
   "@context" "https://schema.org"

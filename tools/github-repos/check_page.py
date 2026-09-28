@@ -2,8 +2,9 @@
 """Render check for /github/ against a built site (hugo --minify first).
 
 In all nine languages: the page shell is there, the translated strings the
-script needs reached it with their {placeholders} intact, and the home page
-links to it. /data/github.json is published and matches data/github.json.
+script needs reached it with their {placeholders} intact, the data preload,
+search module and structured data are in the head, and both the nav and the
+home page link to it. /data/github.json is published and matches data/github.json.
 
     python3 tools/github-repos/check_page.py --public public
 """
@@ -38,6 +39,17 @@ def check(public):
         for key in [a["key"] for a in src["areas"]]:
             if not re.search(r'(?:"%s"|\b%s):"[^"]+"' % (re.escape(key), re.escape(key)), html):
                 errors.append(f"{lang}: area {key} has no label")
+        # The data preload, the search module (fingerprinted, with SRI), the
+        # structured data and this page's nav link.
+        if not re.search(r'rel="?preload"? href="?/data/github\.json', html):
+            errors.append(f"{lang}: /github/ does not preload /data/github.json")
+        if not re.search(r'src="?/js/gh-search\.min\.[0-9a-f]{64}\.js"? integrity="?sha', html):
+            errors.append(f"{lang}: /github/ lacks the fingerprinted search module")
+        if "CollectionPage" not in html or "SoftwareSourceCode" not in html:
+            errors.append(f"{lang}: /github/ lacks its CollectionPage structured data")
+        nav = "/github/" if lang == "en" else f"/{lang}/github/"
+        if not re.search(r'<nav[^>]*>.*?href="?%s' % re.escape(nav), html, re.S):
+            errors.append(f"{lang}: nav does not link to {nav}")
         home = (pre / "index.html").read_text()
         href = "/github/" if lang == "en" else f"/{lang}/github/"
         if href not in home:

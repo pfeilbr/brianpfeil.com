@@ -36,6 +36,16 @@ jobs:
         run: python tools/github-repos/refresh.py
       - name: Check the refreshed file
         run: python -m unittest discover -s tools/github-repos -p 'test_*.py'
+      # The page must still build and render in all nine languages with the
+      # new data before anything is pushed. Same Hugo pin as the deploy.
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.166.0"
+          extended: true
+      - name: Build and render check
+        run: |
+          hugo --minify
+          python tools/github-repos/check_page.py --public public
       - name: Commit and push
         id: commit
         run: |

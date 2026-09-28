@@ -1848,3 +1848,62 @@ other = "2006년 1월"
 
 [date_day_month]
 other = "1월 2일"
+
+# --- /github/, second round ---------------------------------------------------
+
+[gh_syntax_path]
+other = "학습 경로 (serverless, iac, ai, go…)"
+
+[gh_in_readme]
+other = "README에서:"
+
+[gh_active_filters]
+other = "적용된 필터"
+
+[gh_remove_filter]
+other = "필터 제거: {name}"
+
+[gh_filters]
+other = "필터"
+
+[gh_retry]
+other = "다시 시도"
+
+[gh_lang_none]
+other = "언어 없음"
+
+[gh_lang_other]
+other = "기타 언어"
+
+[gh_mark_done]
+other = "완료로 표시"
+
+[gh_done]
+other = "완료"
+
+[gh_progress]
+other = "{total}개 중 {done}개 완료"
+
+[gh_reset_progress]
+other = "진행 상황 초기화"
+
+[gh_progress_note]
+other = "진행 상황은 이 브라우저에만 저장됩니다."
+
+[gh_read_article]
+other = "읽기: {title}"
+
+[gh_timeline_by]
+other = "그룹 기준"
+
+[gh_browse_year]
+other = "{year}년 저장소 {n}개 보기"
+
+[gh_surprise]
+other = "아무거나"
+
+[gh_surprise_title]
+other = "글이 있는 실습 저장소를 무작위로 보기"
+
+[gh_best_needs_query]
+other = "관련도순 (검색어를 입력하세요)"

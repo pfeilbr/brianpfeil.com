@@ -2188,12 +2188,15 @@ nav details > summary {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin: 1.125rem 0 0;
 }
 @media (min-width: 560px) { .gh-stats { grid-template-columns: repeat(4, 1fr); } }
-.gh-stats > div {
+.gh-stat {
   border: 1px solid var(--border); border-radius: 0.625rem; padding: 0.625rem 0.75rem;
-  background: var(--bg-subtle); display: flex; flex-direction: column-reverse;
+  background: var(--bg-subtle); display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 }
-.gh-stats dt { font-size: 0.75rem; color: var(--text-subtle); }
-.gh-stats dd { margin: 0; font-size: 1.375rem; font-weight: 700; line-height: 1.2; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.gh-stat:hover { border-color: var(--brand); background: color-mix(in srgb, var(--brand) 6%, var(--bg)); }
+.gh-stat:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.gh-stat span { font-size: 0.75rem; color: var(--text-subtle); }
+.gh-stat b { font-size: 1.375rem; font-weight: 700; line-height: 1.2; color: var(--text-strong); font-variant-numeric: tabular-nums; }
 
 .gh-langbar { margin-top: 1rem; }
 .gh-langbar-track {
@@ -3242,3 +3245,109 @@ html[data-theme="dark"] .course-cat { color: color-mix(in srgb, var(--ic-c, var(
 @media (prefers-reduced-motion: reduce) {
   .ai-search { transition: none; }
 }
+
+/* --- /github/, second round ---------------------------------------------- */
+
+/* Phones: the facets fold behind a Filters button so results aren't pushed
+   a screen and a half down. Wider screens always show them. */
+.gh-filter-toggle {
+  display: none; align-items: center; gap: 0.4rem; margin-top: 0.75rem;
+  padding: 0.35rem 0.8rem; border: 1px solid var(--border-strong); border-radius: 999px;
+  font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); background: var(--bg);
+}
+.gh-filter-toggle svg { width: 1rem; height: 1rem; }
+.gh-filter-toggle[aria-expanded="true"] { color: var(--brand); border-color: var(--brand); }
+@media (max-width: 639px) {
+  .gh-filter-toggle { display: inline-flex; }
+  .gh-facets:not(.is-open) { display: none; }
+}
+
+.gh-active { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: 0 0 0.5rem; }
+.gh-pillx {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.75rem; font-weight: 600; color: var(--brand);
+  padding: 0.2rem 0.4rem 0.2rem 0.65rem; border-radius: 999px;
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent);
+}
+.gh-pillx-x { font-size: 0.9rem; line-height: 1; opacity: 0.7; }
+.gh-pillx:hover { background: var(--brand); color: var(--on-brand); }
+.gh-pillx:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.gh-tag.is-on { background: var(--brand); color: var(--on-brand); }
+
+.gh-repo-readme {
+  margin-top: 0.3rem; font-size: 0.8125rem; line-height: 1.5; color: var(--text-subtle);
+  padding-left: 0.625rem; border-left: 2px solid var(--border-strong);
+}
+.gh-repo-readme-l { font-weight: 600; color: var(--text-muted); }
+
+.gh-empty p { margin-bottom: 0.75rem; }
+.gh-empty-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+
+/* Placeholder rows while github.json loads. */
+.gh-list[aria-busy="true"]:empty {
+  min-height: 18rem;
+  background:
+    linear-gradient(var(--bg-muted), var(--bg-muted)) 3.25rem 1.1rem / 40% 0.9rem no-repeat,
+    linear-gradient(var(--bg-muted), var(--bg-muted)) 3.25rem 2.4rem / 75% 0.7rem no-repeat,
+    linear-gradient(var(--bg-muted), var(--bg-muted)) 0 1rem / 2.375rem 2.375rem no-repeat,
+    linear-gradient(var(--bg-muted), var(--bg-muted)) 3.25rem 7.1rem / 35% 0.9rem no-repeat,
+    linear-gradient(var(--bg-muted), var(--bg-muted)) 3.25rem 8.4rem / 70% 0.7rem no-repeat,
+    linear-gradient(var(--bg-muted), var(--bg-muted)) 0 7rem / 2.375rem 2.375rem no-repeat,
+    linear-gradient(var(--bg-muted), var(--bg-muted)) 3.25rem 13.1rem / 45% 0.9rem no-repeat,
+    linear-gradient(var(--bg-muted), var(--bg-muted)) 3.25rem 14.4rem / 65% 0.7rem no-repeat,
+    linear-gradient(var(--bg-muted), var(--bg-muted)) 0 13rem / 2.375rem 2.375rem no-repeat;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .gh-list[aria-busy="true"]:empty { animation: gh-pulse 1.2s ease-in-out infinite alternate; }
+}
+@keyframes gh-pulse { from { opacity: 1; } to { opacity: 0.45; } }
+
+.gh-dot-none { background-color: var(--border-strong); }
+.gh-dot-other { background-color: var(--text-fainter); }
+
+/* Learn: surprise pick, progress, done steps. */
+.gh-paths-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 1.5rem; margin-bottom: 0.4rem; }
+.gh-paths-row .gh-paths-h { margin: 0; }
+.gh-surprise {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.8125rem; font-weight: 600; color: var(--brand);
+  padding: 0.3rem 0.75rem; border: 1px solid var(--border-strong); border-radius: 999px; background: var(--bg);
+}
+.gh-surprise svg { width: 1rem; height: 1rem; }
+.gh-surprise:hover { border-color: var(--brand); }
+.gh-surprise:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.gh-pick {
+  margin-bottom: 0.75rem; padding: 0 0.875rem; border-radius: 0.75rem;
+  border: 1px dashed color-mix(in srgb, var(--brand) 50%, var(--border));
+  background: color-mix(in srgb, var(--brand) 4%, var(--bg));
+}
+.gh-pick .gh-steps { margin: 0; }
+.gh-pick .gh-step { border-top: 0; }
+.gh-act-post span { max-width: 22rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.gh-prog { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; }
+.gh-prog[hidden] { display: none; }
+.gh-prog-bar { width: 4.5rem; height: 0.3rem; border-radius: 999px; background: var(--bg-muted); overflow: hidden; flex-shrink: 0; }
+.gh-prog-bar > span { display: block; height: 100%; border-radius: 999px; background: #16a34a; }
+.gh-prog.is-big .gh-prog-bar { width: 9rem; height: 0.4rem; }
+.gh-track-prog { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.875rem; margin-top: 0.4rem; }
+.gh-track-prog .gh-prog { margin-top: 0; }
+.gh-reset { font-size: 0.75rem; font-weight: 600; color: var(--brand); }
+.gh-reset:hover { text-decoration: underline; }
+.gh-prog-note { font-size: 0.6875rem; color: var(--text-faint); }
+.gh-done[aria-pressed="true"] { color: #15803d; border-color: color-mix(in srgb, #16a34a 55%, var(--border)); background: color-mix(in srgb, #16a34a 8%, var(--bg)); }
+html[data-theme="dark"] .gh-done[aria-pressed="true"] { color: #4ade80; }
+.gh-step.is-done .gh-step-n { background: #16a34a; color: #fff; }
+.gh-step.is-done .gh-repo-name a { text-decoration: line-through; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
+
+/* Timeline: grouping toggle, years that open Browse, article markers. */
+.gh-tl-by { margin-top: 0.75rem; }
+button.gh-year-y { text-align: left; padding: 0; border-radius: 0.25rem; }
+button.gh-year-y:hover { color: var(--brand); text-decoration: underline; }
+button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.gh-pill.has-post { border-color: color-mix(in srgb, var(--brand) 40%, var(--border)); }
+/* A class that sets display beats the hidden attribute; on this page hidden
+   must always win (it once left "Show more" showing with nothing more). */
+.gh [hidden] { display: none !important; }

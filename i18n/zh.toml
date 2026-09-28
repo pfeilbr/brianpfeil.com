@@ -1848,3 +1848,62 @@ other = "2006年1月"
 
 [date_day_month]
 other = "1月2日"
+
+# --- /github/, second round ---------------------------------------------------
+
+[gh_syntax_path]
+other = "一条学习路径（serverless, iac, ai, go…）"
+
+[gh_in_readme]
+other = "README 中："
+
+[gh_active_filters]
+other = "已启用的筛选"
+
+[gh_remove_filter]
+other = "移除筛选：{name}"
+
+[gh_filters]
+other = "筛选"
+
+[gh_retry]
+other = "重试"
+
+[gh_lang_none]
+other = "无语言"
+
+[gh_lang_other]
+other = "其他语言"
+
+[gh_mark_done]
+other = "标记为已完成"
+
+[gh_done]
+other = "已完成"
+
+[gh_progress]
+other = "已完成 {done}/{total}"
+
+[gh_reset_progress]
+other = "重置进度"
+
+[gh_progress_note]
+other = "进度仅保存在此浏览器中。"
+
+[gh_read_article]
+other = "阅读：{title}"
+
+[gh_timeline_by]
+other = "分组方式"
+
+[gh_browse_year]
+other = "浏览 {year} 年的 {n} 个仓库"
+
+[gh_surprise]
+other = "随便看看"
+
+[gh_surprise_title]
+other = "随机显示一个附有文章的练习项目"
+
+[gh_best_needs_query]
+other = "最佳匹配（请输入搜索词）"

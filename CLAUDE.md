@@ -233,6 +233,9 @@ touching a template:
   refuses to write (`--force` by hand if that is real). The query language
   lives in `assets/js/gh-search.js` (no DOM) and is tested with
   `node --test tools/github-repos/search.test.mjs`.
+  Learners' ticked-off steps live in `localStorage` (`gh-learn-done`) only.
+  On this page `.gh [hidden]` is forced to `display: none` -- a class that
+  sets `display` otherwise beats the attribute (it kept "Show more" visible).
 - **Only publish what a stranger can actually open.** Private YouTube playlists
   403 and some public ones refuse to embed, so every embed was verified against
   `youtube.com/embed/videoseries?list=<id>` (or the IFrame Player API) before
