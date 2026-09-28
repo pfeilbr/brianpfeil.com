@@ -1,4 +1,6 @@
 +++
+# Was a loose file in this folder, which put it at a doubled URL.
+aliases = ["/post/dockerized-nodejs-app-on-elastic-beanstalk-example/dockerized-nodejs-app-on-elastic-beanstalk-example/"]
 author = "Brian Pfeil"
 categories = ["nodejs", "docker", "elastic beanstalk", "aws"]
 date = 2015-03-25T19:06:15Z
@@ -79,7 +81,7 @@ Example of developing and deploying a [dockerized]((https://www.docker.com/)) [N
 
 **Output**
 
-![](http://note.io/1ETb45Y)
+![eb create output](images/image1.png)
 
 
 ## Deploying Updates
@@ -101,7 +103,7 @@ Example of developing and deploying a [dockerized]((https://www.docker.com/)) [N
 
 **Output**
 
-![](http://note.io/1FFQXuL)
+![eb deploy output](images/image2.png)
 
 ## Establish Interactive Bash Shell in Running Docker Container
 
@@ -125,4 +127,4 @@ Example of developing and deploying a [dockerized]((https://www.docker.com/)) [N
 
 **Example Session with Output**
 
-![](http://note.io/1CYSlIH)
+![Docker exec session in the container](images/image3.png)
