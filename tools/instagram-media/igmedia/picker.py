@@ -364,17 +364,31 @@ class Picker:
                 self.log(f"dry run: {len(entries)} items encoded; data file at {preview}")
                 return
             self.log(f"uploading to s3://{cfg['bucket']}/{g['s3_prefix']}/ …")
+            # Only what is published stays on the CDN: an un-picked item's
+            # folder is dropped here, and the sync deletes it from S3.
+            live = {e["id"] for e in entries}
+            web = self.work / "web"
+            for d in web.iterdir() if web.exists() else []:
+                if d.is_dir() and d.name not in live:
+                    shutil.rmtree(d)
+                    self.log(f"removing {d.name}: no longer picked")
             # The uplink here is slow enough that S3 sometimes drops a
             # connection mid-upload; sync is size-only, so a retry resumes.
             for attempt in range(1, 5):
                 try:
-                    out = publish.sync(self.work / "web", cfg["bucket"], g["s3_prefix"])
+                    out = publish.sync(web, cfg["bucket"], g["s3_prefix"], prune=True)
                     break
                 except RuntimeError as exc:
                     if attempt == 4:
                         raise
                     self.log(f"upload interrupted ({str(exc)[:80]}…), resuming — try {attempt + 1}")
             self.log(f"uploaded {sum(1 for l in out.splitlines() if l.startswith('upload:'))} files")
+            gone = publish.deleted_paths(out)
+            if gone:
+                # Cached for a year and immutable: deleting from S3 alone
+                # would leave the CDN serving them.
+                publish.invalidate(cfg["distribution_id"], gone)
+                self.log(f"deleted {len(gone)} files and evicted them from the CDN")
             data_path = self.repo_root / g["data_file"]
             gphotos_publish.write(data_path, cfg["base_url"], cats, entries)
             self.log(f"wrote {g['data_file']} ({len(entries)} items)")
