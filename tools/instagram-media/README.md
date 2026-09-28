@@ -197,6 +197,14 @@ screened along with it, since the clip can show someone the still doesn't. Every
 encodes, uploads to `s3://brianpfeil-media01/photos/`, writes
 `data/photos.yaml`, and commits and pushes just those two files.
 
+**Publishing without the page.** `make media-photos-publish` does what
+the Publish button does. `DATA_ONLY=1` rewrites `data/photos.yaml` without
+touching S3 (new dates, a removed pick) and refuses if any pick isn't on the
+CDN yet — useful when the AWS session has expired. Publish prunes: files of
+anything no longer picked are deleted from S3 and evicted from CloudFront.
+Dates come from Google's label, or from the image's EXIF when the label has
+none; eight published items have neither and show undated.
+
 **Getting more from Google Photos.** Google has no API that can read a
 library any more, and its image host only answers B's signed-in browser, so
 the browser does the fetching. "Get more from Google Photos" in the picker
@@ -214,8 +222,9 @@ opaque media keys and decisions, nothing else.
 
 ## Checking it
 
-`make media-audit` compares every file `data/media.yaml` references with what
-is actually in the bucket. Missing files are broken images on the live page
+`make media-audit` compares every file `data/media.yaml` and
+`data/photos.yaml` reference with what is actually in the bucket (under
+`instagram/` and `photos/` respectively). Missing files are broken images on the live page
 (an upload that died partway) and make it exit 1; files nothing references
 are reported as orphans that `publish --prune` would remove.
 

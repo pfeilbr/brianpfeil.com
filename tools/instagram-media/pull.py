@@ -222,35 +222,48 @@ def cmd_sync(args, cfg) -> int:
     return cmd_release(args, cfg)
 
 
-def cmd_audit(args, cfg) -> int:
-    """Check every file the page references exists on the CDN."""
+def audit_targets(cfg: dict) -> list[tuple[str, Path, str]]:
+    """(label, data file, S3 prefix) for each half of /media/."""
     _, _, data_path = paths(cfg)
-    if not data_path.exists():
-        print("nothing published yet; nothing to audit")
-        return 0
-    data = yaml.safe_load(data_path.read_text(encoding="utf-8")) or {}
-    referenced = audit.referenced_keys(data)
-    try:
-        present = audit.list_objects(cfg["bucket"], cfg["s3_prefix"])
-    except RuntimeError as exc:
-        print(exc, file=sys.stderr)
-        return 1
+    targets = [("Instagram", data_path, cfg["s3_prefix"])]
+    g = cfg.get("gphotos")
+    if g:
+        targets.append(("Google Photos", REPO_ROOT / g["data_file"], g["s3_prefix"]))
+    return targets
 
-    missing, orphaned = audit.audit(referenced, present)
-    print(f"{len(referenced)} files referenced by the page, {len(present)} in the bucket")
-    if missing:
-        print(f"MISSING — broken on the live page ({len(missing)}):")
-        for key in missing[:20]:
-            print(f"  {key}")
-        if len(missing) > 20:
-            print(f"  … and {len(missing) - 20} more")
-        print("re-run publish to upload them")
-    if orphaned:
-        print(f"{len(orphaned)} file(s) in the bucket that nothing references; "
-              "publish --prune removes them and evicts them from the CDN")
-    if not missing and not orphaned:
-        print("ok: bucket and page agree")
-    return 1 if missing else 0
+
+def cmd_audit(args, cfg) -> int:
+    """Check every file the page references exists on the CDN — both halves."""
+    failed = False
+    for label, data_path, prefix in audit_targets(cfg):
+        print(f"{label} ({data_path.name} vs s3://{cfg['bucket']}/{prefix}/):")
+        if not data_path.exists():
+            print("  nothing published yet; nothing to audit")
+            continue
+        data = yaml.safe_load(data_path.read_text(encoding="utf-8")) or {}
+        referenced = audit.referenced_keys(data)
+        try:
+            present = audit.list_objects(cfg["bucket"], prefix)
+        except RuntimeError as exc:
+            print(f"  {exc}", file=sys.stderr)
+            return 1
+
+        missing, orphaned = audit.audit(referenced, present)
+        print(f"  {len(referenced)} files referenced by the page, {len(present)} in the bucket")
+        if missing:
+            failed = True
+            print(f"  MISSING — broken on the live page ({len(missing)}):")
+            for key in missing[:20]:
+                print(f"    {key}")
+            if len(missing) > 20:
+                print(f"    … and {len(missing) - 20} more")
+            print("  re-run publish to upload them")
+        if orphaned:
+            print(f"  {len(orphaned)} file(s) in the bucket that nothing references; "
+                  "publish (--prune for Instagram) removes them and evicts them from the CDN")
+        if not missing and not orphaned:
+            print("  ok: bucket and page agree")
+    return 1 if failed else 0
 
 
 def add_source(parser) -> None:

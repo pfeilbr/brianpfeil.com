@@ -67,7 +67,10 @@ biking, kayaking, swimming, beach, hiking), with a row of links at the top of
 `make media-picker` (http://127.0.0.1:8790), which only suggests what passed
 screening: only B (Apple Vision people count + Google's own face matching of
 `exclude_people` — his sons must never appear), no plates, addresses or
-documents. The browser does all fetching from Google (a bookmarklet), since
+documents. **Live since 2026-09-26: 42 items** (skiing 8, mountain biking 4,
+kayaking 6, beach 13, hiking 11; swimming has no picks yet, so no section).
+`make media-photos-publish` publishes from the command line; `DATA_ONLY=1`
+when AWS is signed out. `make media-audit` checks both halves. The browser does all fetching from Google (a bookmarklet), since
 Google's image host refuses anything without B's session. Details and the one
 known screening gap: `tools/instagram-media/README.md`, "Google Photos
 categories". Never publish a pick B didn't make.

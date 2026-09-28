@@ -93,3 +93,19 @@ class AuditTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class BothHalvesTest(unittest.TestCase):
+    """make media-audit checks the Google Photos half as well as Instagram."""
+
+    def test_targets_include_google_photos(self):
+        import pull
+        labels = [t[0] for t in pull.audit_targets(pull.load_config())]
+        self.assertEqual(labels, ["Instagram", "Google Photos"])
+
+    def test_photos_fixture_keys(self):
+        import yaml
+        data = yaml.safe_load((Path(__file__).parent / "fixtures" / "photos.yaml").read_text())
+        keys = audit.referenced_keys(data)
+        self.assertIn("photos/20250301-gaaaa111111/v-p.jpg", keys)
+        self.assertEqual(len(keys), 7)  # video: file, thumb, poster, 2 tiles; photo: file, thumb
