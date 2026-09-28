@@ -31,6 +31,7 @@ import html
 import json
 import re
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
@@ -56,6 +57,9 @@ EVERGREEN = ("people", "learning", "tools")   # sections whose sources keep thei
 DEFAULT_LIMIT = 5
 SOURCE_KEEP = 10         # most items a non-evergreen source keeps across runs
 TOPIC_LIMIT = 12
+TOP_LIMIT = 6            # stories in the keyless "Top stories" box
+TOP_HOURS = 36
+FILL_LIMIT = 20          # summary look-ups per run, for entries whose feed has none
 
 # Title/summary words that make an entry from a general-purpose feed count as AI.
 AI_WORDS = re.compile(
@@ -157,6 +161,42 @@ def canonical(url):
 BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
 
 
+def retry_after(headers, default, cap=90):
+    """Seconds to wait after a 429: the server's Retry-After when it gives
+    one (Reddit does), else `default`, never more than `cap`."""
+    try:
+        return min(cap, max(1, int(float((headers or {}).get("Retry-After", default)))))
+    except (TypeError, ValueError):
+        return min(cap, default)
+
+
+class Gate:
+    """At most one request at a time to a host, at least `spacing` seconds
+    apart. Reddit answers three quick feed requests from one IP with 429s
+    (r/ChatGPTCoding, fetched third, failed almost every run); spaced out,
+    each one goes through."""
+    def __init__(self, spacing, clock=time.monotonic, sleep=time.sleep):
+        self.spacing, self.clock, self.sleep = spacing, clock, sleep
+        self.lock = threading.Lock()
+        self.last = None
+
+    def __enter__(self):
+        self.lock.acquire()
+        if self.last is not None:
+            wait = self.spacing - (self.clock() - self.last)
+            if wait > 0:
+                self.sleep(wait)
+        return self
+
+    def __exit__(self, *exc):
+        self.last = self.clock()
+        self.lock.release()
+        return False
+
+
+REDDIT_GATE = Gate(30)
+
+
 def http_get(url, tries=3, timeout=30):
     ua = UA
     for attempt in range(tries):
@@ -169,7 +209,7 @@ def http_get(url, tries=3, timeout=30):
                 ua = BROWSER_UA
                 continue
             if e.code == 429 and attempt + 1 < tries:
-                time.sleep(5 * (attempt + 1))
+                time.sleep(retry_after(e.headers, default=15 * (attempt + 1)))
                 continue
             if e.code < 500 or attempt + 1 == tries:
                 raise
@@ -433,7 +473,12 @@ def fetch_source(src, now):
         else:
             parse = parse_reddit if kind == "reddit" else parse_feed
             try:
-                entries = parse(http_get(src["feed"]))
+                if kind == "reddit":
+                    with REDDIT_GATE:
+                        body = http_get(src["feed"])
+                else:
+                    body = http_get(src["feed"])
+                entries = parse(body)
             except Exception as direct:  # noqa: BLE001
                 # Substack 403s GitHub's IP ranges and Reddit rate-limits
                 # them; Feedly has usually read the same feed recently.
@@ -482,7 +527,7 @@ def to_item(src, e, now):
 
 # --- merging and pruning --------------------------------------------------------
 
-def merge_items(old, new, now, window_days, person_ids):
+def merge_items(old, new, now, window_days, person_ids, caps=None):
     """Today's entries win, keeping each one's original first_seen. Yesterday's
     stay too -- a feed lists only its newest few, and a source that failed
     today must not empty its section -- until the window drops them."""
@@ -491,6 +536,8 @@ def merge_items(old, new, now, window_days, person_ids):
         prev = by_id.get((i["id"], i["source"]))
         if prev:
             i["first_seen"] = prev.get("first_seen", i["first_seen"])
+            if not i.get("summary") and prev.get("summary"):
+                i["summary"] = prev["summary"]
             if prev.get("points", 0) > i.get("points", 0):
                 i["points"], i["comments"] = prev["points"], prev.get("comments", 0)
         by_id[(i["id"], i["source"])] = i
@@ -504,7 +551,7 @@ def merge_items(old, new, now, window_days, person_ids):
         else:
             # A busy feed (the AWS blog posts daily) would otherwise pile up
             # a fortnight of entries and crowd its section.
-            keep = i["published"] >= cutoff and n < SOURCE_KEEP
+            keep = i["published"] >= cutoff and n < (caps or {}).get(i["source"], SOURCE_KEEP)
         if keep:
             per_source[i["source"]] = n + 1
             kept.append(i)
@@ -563,6 +610,70 @@ def crosslink(items):
             else:
                 g.pop("hn", None)
     return items
+
+
+def top_stories(items, now, hours=TOP_HOURS, limit=TOP_LIMIT):
+    """The day's biggest stories without a model: a story picked up by more
+    sources, or discussed more on Hacker News or Reddit, ranks higher; lab
+    announcements get a nudge; newer beats older. One entry per story
+    (copies share `also`), tools and people's posts left to their own tabs.
+    -> item ids, best first."""
+    cutoff = iso(now - dt.timedelta(hours=hours))
+    scored = []
+    for i in items:
+        if i["published"] < cutoff or i["section"] in ("tools", "people"):
+            continue
+        points = max(i.get("points", 0), (i.get("hn") or {}).get("points", 0))
+        age_h = (now - parse_date(i["published"])).total_seconds() / 3600
+        score = (3 * len(i.get("also", [])) + min(points, 1500) / 100
+                 + (1 if i["section"] == "labs" else 0) + max(0, 1 - age_h / hours))
+        scored.append((score, i["published"], i["id"]))
+    scored.sort(reverse=True)
+    by_id = {i["id"]: i for i in items}
+    picked, urls, per_source = [], set(), {}
+    for _, _, sid in scored:
+        i = by_id[sid]
+        # Copies of one story: same link, or a near-identical headline. And
+        # no more than two from one source, so a busy blog can't fill the box.
+        if canonical(i["url"]) in urls or any(same_story(i["title"], by_id[p]["title"]) for p in picked):
+            continue
+        if per_source.get(i["source"], 0) >= 2:
+            continue
+        per_source[i["source"]] = per_source.get(i["source"], 0) + 1
+        picked.append(sid)
+        urls.add(canonical(i["url"]))
+        if len(picked) == limit:
+            break
+    return picked
+
+
+# Site-wide boilerplate some pages use as their description, which says
+# nothing about the entry ("A Blog post by Liquid AI on Hugging Face").
+GENERIC_DESC = re.compile(r"^(a blog post by .* on hugging face|contribute to .* on github|.* - github)\.?$", re.I)
+
+
+def fill_summaries(items, have_summary, get, limit=FILL_LIMIT):
+    """Entries whose feed carried no summary (Hugging Face's blog, some
+    releases) get the page's own meta description. Entries that already
+    have one from an earlier run are skipped (merge_items carries it
+    forward); at most `limit` look-ups a run, in parallel; a failed
+    look-up leaves it empty to try again next run."""
+    todo = [i for i in items if not i.get("summary") and i["section"] != "community"
+            and i["id"] not in have_summary][:limit]
+
+    def one(i):
+        try:
+            _, desc = page_meta(get(i["url"]))
+        except Exception:  # noqa: BLE001
+            return i, ""
+        desc = plain(desc)
+        return i, "" if GENERIC_DESC.search(desc) or len(desc) < 40 else desc
+
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        for i, desc in pool.map(one, todo):
+            if desc:
+                i["summary"] = desc
+    return len(todo)
 
 
 def topics(items, now, hours=48, limit=TOPIC_LIMIT):
@@ -721,8 +832,6 @@ def build(cfg, prev, now, only=None, fetch=fetch_source, get=http_get, posts_dir
     prev_sources = {s["id"]: s for s in prev.get("sources", [])}
 
     def run(src):
-        if src.get("kind") == "reddit":
-            time.sleep(SOURCE_DELAY.get(src["id"], 0))
         return src, fetch(src, now)
 
     with ThreadPoolExecutor(max_workers=8) as pool:
@@ -751,8 +860,13 @@ def build(cfg, prev, now, only=None, fetch=fetch_source, get=http_get, posts_dir
     # removed, or given a filter, stops showing what it no longer would.
     by_id = {s["id"]: s for s in cfg["sources"]}
     old = [i for i in prev.get("items", []) if i["source"] in by_id and keep_entry(by_id[i["source"]], i)]
+    have_summary = {i["id"] for i in old if i.get("summary")}
+    fill_summaries(new_items, have_summary, get)
     person_ids = {s["id"] for s in cfg["sources"] if s["section"] in EVERGREEN}
-    items = merge_items(old, new_items, now, cfg.get("window_days", 14), person_ids)
+    # A source keeps at most twice what one fetch brings, and never fewer
+    # than SOURCE_KEEP: Hacker News (30 a day) was cut to 10 otherwise.
+    caps = {s["id"]: max(SOURCE_KEEP, 2 * s.get("limit", DEFAULT_LIMIT)) for s in cfg["sources"]}
+    items = merge_items(old, new_items, now, cfg.get("window_days", 14), person_ids, caps)
     items = crosslink(dedupe(items))
 
     models = prev.get("models") or {"new": [], "trending": []}
@@ -783,6 +897,7 @@ def build(cfg, prev, now, only=None, fetch=fetch_source, get=http_get, posts_dir
         "models": models,
         "mine": my_posts(posts_dir),
         "topics": topics(items, now),
+        "top": top_stories(items, now),
     }
     # The briefing is written by digest.py; a feed refresh carries it over.
     if prev.get("digest"):
@@ -790,8 +905,6 @@ def build(cfg, prev, now, only=None, fetch=fetch_source, get=http_get, posts_dir
     return out
 
 
-# Reddit answers a burst from one IP with 429s, so its feeds are staggered.
-SOURCE_DELAY = {"r-localllama": 0, "r-claudeai": 20, "r-chatgptcoding": 40}
 
 
 def summary(doc):

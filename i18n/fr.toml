@@ -1679,6 +1679,12 @@ other = "Le point du jour"
 [ai_briefing_by]
 other = "Résumé par {{ .model }} à partir des éléments de cette page, {{ .when }}. Chaque point renvoie à ses sources."
 
+[ai_top_stories]
+other = "À la une"
+
+[ai_top_note]
+other = "Classé selon l'écho et les discussions suscités par chaque sujet au cours du dernier jour et demi."
+
 [ai_briefing_sources]
 other = "Sources"
 

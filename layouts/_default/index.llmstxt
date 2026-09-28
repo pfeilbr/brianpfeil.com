@@ -18,6 +18,25 @@ The full text of every post and project is in {{ absURL "llms-full.txt" }}.
 - [{{ .title }}]({{ absURL (printf "courses/%s/" .slug) }}): {{ .description }} ({{ len .lessons }} lessons)
 {{- end }}{{ end }}
 
+## AI radar
+{{ with site.GetPage "/ai" }}
+- [{{ .Title }}]({{ .Permalink }}): {{ .Description }} Data: {{ absURL "data/ai.json" }}{{ with .OutputFormats.Get "rss" }}; daily briefing feed: {{ .Permalink }}{{ end }}
+{{- end }}
+{{- with hugo.Data.ai }}
+{{- with .digest }}{{ with index .lang "en" }}
+
+Today's briefing ({{ $.Site.Params.author.name | default "" }}{{ if $.Site.Params.author.name }}, {{ end }}{{ (time (index hugo.Data.ai.digest "generated")).Format "2006-01-02" }}): {{ .headline }}
+{{ range .points }}
+- {{ .text }}
+{{- end }}
+{{- end }}{{ else }}{{ $by := dict }}{{ range .items }}{{ $by = merge $by (dict .id .) }}{{ end }}{{ with .top }}
+
+Top stories:
+{{ range . }}{{ with index $by . }}
+- [{{ .title }}]({{ .url }})
+{{- end }}{{ end }}{{ end }}{{ end }}
+{{- end }}
+
 ## Learning resources
 {{ with site.GetPage "/learn" }}
 - [{{ .Title }}]({{ .Permalink }}): {{ .Description }}

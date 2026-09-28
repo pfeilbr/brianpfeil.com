@@ -186,6 +186,82 @@ class Improvements(unittest.TestCase):
         out = radar.merge_items(old, [], NOW, 14, set())
         self.assertEqual(len(out), radar.SOURCE_KEEP)
 
+    def test_cap_scales_with_the_source(self):
+        old = [item("hn", n, 0.05 * n, "community") for n in range(70)]
+        out = radar.merge_items(old, [], NOW, 14, set(), caps={"hn": 60})
+        self.assertEqual(len(out), 60)
+
+    def test_build_caps_hn_by_its_limit(self):
+        cfg = {"window_days": 14, "sources": [{"id": "hn", "section": "community", "name": "HN",
+                                              "home": "https://news.ycombinator.com/", "kind": "hn", "limit": 30}], "models": {}}
+        prev = {"schema_version": 1, "sources": [], "items": [item("hn", n, 0.05 * n, "community") for n in range(70)]}
+        doc = radar.build(cfg, radar.migrate(prev), NOW, fetch=lambda s, n: ([], None), get=None,
+                          posts_dir=FX / "posts", feedly=set(), only={"hn"})
+        self.assertEqual(len(doc["items"]), 60)
+
+    def test_gate_spaces_requests(self):
+        t = [100.0]
+        slept = []
+        gate = radar.Gate(30, clock=lambda: t[0], sleep=lambda s: (slept.append(s), t.__setitem__(0, t[0] + s)))
+        with gate:          # the request itself takes 5s
+            t[0] += 5
+        t[0] += 2           # 2s pass before the next one is asked for
+        with gate:
+            pass
+        self.assertEqual(slept, [28.0], "30s from the end of the previous request")
+
+    def test_retry_after(self):
+        self.assertEqual(radar.retry_after({"Retry-After": "7"}, default=15), 7)
+        self.assertEqual(radar.retry_after({"Retry-After": "600"}, default=15), 90)
+        self.assertEqual(radar.retry_after({}, default=15), 15)
+        self.assertEqual(radar.retry_after({"Retry-After": "Wed, 21 Oct"}, default=15), 15)
+
+
+class TopAndSummaries(unittest.TestCase):
+    def test_top_stories_rank_and_dedupe(self):
+        a = dict(item("openai", 1, 0.1, "labs"), title="OpenAI ships GPT-6 Luna reasoning model today", also=["hn"],
+                 hn={"url": "u", "points": 900, "comments": 300})
+        b = dict(item("hn", 2, 0.1, "community"), title="OpenAI ships GPT-6 Luna reasoning model", url=a["url"], also=["openai"], points=900)
+        c = dict(item("r-localllama", 3, 0.2, "community"), title="Small local model tricks", points=50)
+        d = dict(item("awsml", 4, 0.3, "labs"), title="SageMaker thing")
+        old = dict(item("hn", 5, 3, "community"), title="Old but huge", points=3000)
+        tool = dict(item("codex", 6, 0.1, "tools"), title="0.158.0")
+        top = radar.top_stories([c, d, b, a, old, tool], NOW)
+        self.assertEqual(top[0], a["id"], "the cross-posted, discussed lab story wins")
+        self.assertNotIn(b["id"], top, "its Hacker News copy is the same story")
+        self.assertNotIn(old["id"], top, "older than 36 hours")
+        self.assertNotIn(tool["id"], top)
+        self.assertEqual(set(top[1:]), {c["id"], d["id"]})
+
+    def test_top_stories_two_per_source(self):
+        titles = ["Voice apps with vLLM-Omni", "Synthetic monitoring using Nova Act", "Grok on Bedrock",
+                  "Datacor rental analytics", "Speech with Qwen3-TTS"]
+        many = [dict(item("awsml", n, 0.1, "labs"), title=t) for n, t in enumerate(titles)]
+        self.assertEqual(len(radar.top_stories(many, NOW)), 2)
+
+    def test_fill_summaries_only_new_and_capped(self):
+        got = []
+        def get(url):
+            got.append(url)
+            return b'<meta name="description" content="A real description taken from the page itself.">'
+        new = [dict(item("hfblog", n, 0, "labs"), summary="") for n in range(4)]
+        new[0]["summary"] = "has one"
+        n = radar.fill_summaries(new, {new[1]["id"]}, get, limit=1)
+        self.assertEqual(n, 1)
+        self.assertEqual([i["summary"] for i in new], ["has one", "", "A real description taken from the page itself.", ""],
+                         "skips the one that has a summary and the one known to have one; stops at the limit")
+
+    def test_generic_descriptions_are_ignored(self):
+        new = [dict(item("hfblog", 1, 0, "labs"), summary="")]
+        radar.fill_summaries(new, set(), lambda u: b'<meta name="description" content="A Blog post by Liquid AI on Hugging Face">')
+        self.assertEqual(new[0]["summary"], "")
+
+    def test_merge_keeps_an_earlier_summary(self):
+        old = [dict(item("hfblog", 1, 0, "labs"), summary="From the page.")]
+        new = [dict(item("hfblog", 1, 0, "labs"), summary="")]
+        [out] = radar.merge_items(old, new, NOW, 14, set())
+        self.assertEqual(out["summary"], "From the page.")
+
 
 class Merge(unittest.TestCase):
     def test_first_seen_survives_and_window_applies(self):

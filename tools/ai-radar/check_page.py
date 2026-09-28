@@ -27,7 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 LANGS = ["en", "zh", "es", "pt", "fr", "de", "it", "ja", "ko"]
 NAMES = ("ai.json", "ai-digests.json")
-SHELL_IDS = ("ai-briefing", "ai-briefing-points", "ai-q", "ai-topic-chips", "ai-people", "ai-sources", "ai-stamp")
+SHELL_IDS = ("ai-briefing", "ai-top", "ai-top-list", "ai-briefing-points", "ai-q", "ai-topic-chips", "ai-people", "ai-sources", "ai-stamp")
 TABS = ("latest", "labs", "models", "tools", "community", "learning", "mine")
 
 

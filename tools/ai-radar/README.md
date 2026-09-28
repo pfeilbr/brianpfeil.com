@@ -39,6 +39,15 @@ prints a line and exits 0, and the page shows no briefing. A failed
 request never fails the refresh. It runs once a day: the evening run sees
 today's briefing and skips.
 
+## Without a briefing: top stories
+
+With no briefing (no key, or a failed request), the same spot shows
+"Top stories": up to six stories from the last 36 hours, ranked by
+`radar.top_stories` — how many sources picked a story up, how much it is
+being discussed on Hacker News or Reddit, a nudge for lab announcements,
+recency — one per story and at most two per source. The ids are `top` in
+`data/ai.json`; `llms.txt` lists the briefing, or these, too.
+
 ## Source health
 
 Each source carries `fail_streak` while it keeps failing. When any source
@@ -84,7 +93,9 @@ or near-identical headline) and a source's `fail_streak`.
 
 The file is merged run to run, not replaced: each item keeps its
 `first_seen`, a source that fails keeps yesterday's items (its `status`
-says `error`), a busy source keeps at most ten items, and items age out after `window_days` — except that each
+says `error`), a source keeps at most twice its fetch `limit` (and at
+least ten) items, an entry whose feed has no summary gets the page's meta
+description (up to 20 look-ups a run), and items age out after `window_days` — except that each
 source in `people`, `learning` and `tools` keeps its latest three entries, so a quiet writer still has a card and a tool still shows its current version.
 
 ## What it cannot read
@@ -92,5 +103,6 @@ source in `people`, `learning` and `tools` keeps its latest three entries, so a 
 **X (Twitter).** The timeline needs a paid API, and B decided (2026-09-26) not to pay for it -- don't propose it again. B's follows were read once
 by hand (2026-09-26, 201 accounts, mostly AWS and serverless people); the
 AI voices among them are marked `follow: true`.
-**Reddit** rate-limits by IP; staggering helps, and a 429 just keeps
-yesterday's threads.
+**Reddit** rate-limits by IP. Its feeds go through a gate — one at a
+time, 30 seconds apart, and a 429 waits for Reddit's `Retry-After` — which
+took r/ChatGPTCoding from failing almost every run to succeeding.

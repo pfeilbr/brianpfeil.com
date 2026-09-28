@@ -1678,6 +1678,12 @@ other = "오늘의 브리핑"
 [ai_briefing_by]
 other = "이 페이지의 항목을 바탕으로 {{ .model }}가 요약했습니다({{ .when }}). 각 항목에 출처 링크가 있습니다."
 
+[ai_top_stories]
+other = "주요 뉴스"
+
+[ai_top_note]
+other = "지난 하루 반 동안 각 소식이 얼마나 널리 다뤄지고 논의됐는지를 기준으로 순위를 매겼습니다."
+
 [ai_briefing_sources]
 other = "출처"
 

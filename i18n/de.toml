@@ -1680,6 +1680,12 @@ other = "Das Briefing von heute"
 [ai_briefing_by]
 other = "Von {{ .model }} aus den Einträgen dieser Seite zusammengefasst, {{ .when }}. Jeder Punkt verlinkt seine Quellen."
 
+[ai_top_stories]
+other = "Top-Themen"
+
+[ai_top_note]
+other = "Sortiert danach, wie breit jede Meldung in den letzten anderthalb Tagen aufgegriffen und diskutiert wurde."
+
 [ai_briefing_sources]
 other = "Quellen"
 

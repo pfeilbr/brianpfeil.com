@@ -768,6 +768,13 @@
           }
         }
       }
+    },
+    "top": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "item ids of the day's biggest stories, best first (radar.top_stories) -- shown when there is no briefing"
     }
   }
 }

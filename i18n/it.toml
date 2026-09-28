@@ -1677,6 +1677,12 @@ other = "Il punto di oggi"
 [ai_briefing_by]
 other = "Riassunto da {{ .model }} a partire dai contenuti di questa pagina, {{ .when }}. Ogni punto rimanda alle sue fonti."
 
+[ai_top_stories]
+other = "In evidenza"
+
+[ai_top_note]
+other = "Ordinato in base a quanto ogni notizia è stata ripresa e discussa nell'ultimo giorno e mezzo."
+
 [ai_briefing_sources]
 other = "Fonti"
 

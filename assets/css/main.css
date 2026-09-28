@@ -3362,3 +3362,6 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
   font-style: italic;
   color: var(--text-subtle);
 }
+
+.ai-top-list { list-style: none; margin: 0.25rem 0 0; padding: 0; }
+.ai-top-list .ai-row { padding: 0.625rem 0; }

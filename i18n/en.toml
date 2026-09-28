@@ -1679,6 +1679,12 @@ other = "Today's briefing"
 [ai_briefing_by]
 other = "Summarized by {{ .model }} from the items on this page, {{ .when }}. Each point links to its sources."
 
+[ai_top_stories]
+other = "Top stories"
+
+[ai_top_note]
+other = "Ranked by how widely each story was picked up and discussed in the last day and a half."
+
 [ai_briefing_sources]
 other = "Sources"
 

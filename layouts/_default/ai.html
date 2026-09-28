@@ -85,6 +85,16 @@
     </details>
   </section>
 
+  {{/* ---------- Top stories: shown instead when there is no briefing ---------- */}}
+  <section class="ai-briefing ai-top" id="ai-top" aria-labelledby="ai-top-h" hidden>
+    <div class="ai-briefing-head">
+      {{ partial "icons/chip.html" (dict "id" "i-bolt" "size" "sm") }}
+      <h2 id="ai-top-h" class="ai-briefing-kicker">{{ i18n "ai_top_stories" }}</h2>
+    </div>
+    <ol class="ai-top-list" id="ai-top-list"></ol>
+    <p class="ai-briefing-by">{{ i18n "ai_top_note" }}</p>
+  </section>
+
   {{/* ---------- Search and today's topics ---------- */}}
   <div class="ai-search" role="search">
     <label class="sr-only" for="ai-q">{{ i18n "ai_search_label" }}</label>
@@ -397,9 +407,20 @@
       ol.appendChild(li);
     });
   }
+  /* Without a briefing, the ranked stories radar.py picked (doc.top). */
+  function topStories(doc) {
+    var byId = {};
+    doc.items.forEach(function (i) { byId[i.id] = i; });
+    var list = (doc.top || []).map(function (id) { return byId[id]; }).filter(Boolean);
+    if (!list.length) return;
+    document.getElementById("ai-top").hidden = false;
+    var ol = document.getElementById("ai-top-list");
+    list.forEach(function (i) { ol.appendChild(row(i, SRC[i.source], { summary: true })); });
+  }
+
   function briefing(doc) {
     var d = doc.digest;
-    if (!d || !briefingIn(d)) return;
+    if (!d || !briefingIn(d)) { topStories(doc); return; }
     var box = document.getElementById("ai-briefing");
     box.hidden = false;
     document.getElementById("ai-briefing-headline").textContent = briefingIn(d).headline;

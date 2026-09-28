@@ -1678,6 +1678,12 @@ other = "今日のブリーフィング"
 [ai_briefing_by]
 other = "このページの項目をもとに {{ .model }} が要約（{{ .when }}）。各項目に出典へのリンクがあります。"
 
+[ai_top_stories]
+other = "注目のニュース"
+
+[ai_top_note]
+other = "直近 1 日半で、各ニュースがどれだけ広く取り上げられ議論されたかで順位付けしています。"
+
 [ai_briefing_sources]
 other = "出典"
 

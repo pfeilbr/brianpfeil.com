@@ -1678,6 +1678,12 @@ other = "El resumen de hoy"
 [ai_briefing_by]
 other = "Resumido por {{ .model }} a partir de lo que recoge esta página, {{ .when }}. Cada punto enlaza a sus fuentes."
 
+[ai_top_stories]
+other = "Lo más destacado"
+
+[ai_top_note]
+other = "Ordenado según cuánto se ha recogido y comentado cada historia en el último día y medio."
+
 [ai_briefing_sources]
 other = "Fuentes"
 
