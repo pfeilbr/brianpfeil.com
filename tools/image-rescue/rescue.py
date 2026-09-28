@@ -26,6 +26,9 @@ put its images back on the page.
     python3 tools/image-rescue/rescue.py            # report
     python3 tools/image-rescue/rescue.py --apply    # download and write the map
 
+Live Evernote screenshots are self-hosted by selfhost.py into the same map;
+run that first so this only sees the dead ones.
+
 Standard library only.
 """
 

@@ -280,6 +280,11 @@ touching a template:
   website buckets (static-content-01, static-screenshots-01) were deleted;
   their names can be re-registered by anyone, so the site check fails on
   any page that loads or links to them (`DEAD_HOSTS` in the rescue tool).
+- **Evernote screenshots are self-hosted** (`make images-selfhost`, then
+  `make images-rescue`): the ~320 that still load are WebP copies in
+  `static/images/remote/`, mapped in the same `image_rewrites.json`. A new
+  post that embeds an Evernote image fails `make test-image-rescue` until
+  it's run.
 
 ## Newsletter
 

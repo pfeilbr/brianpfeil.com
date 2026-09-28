@@ -179,6 +179,10 @@ images-optimize: ## Shrink heavy PNGs in content/ and static/ in place (needs Im
 images-rescue: ## Rescue or retire remote images in posts that no longer load (live, needs network)
 	python3 tools/image-rescue/rescue.py --apply
 
+# Run before images-rescue: it maps the live ones, so rescue only sees the dead.
+images-selfhost: ## Self-host the Evernote screenshots posts still hotlink, as WebP (needs network, ImageMagick)
+	python3 tools/image-rescue/selfhost.py --apply
+
 
 # --- Terraform (infra/) ---------------------------------------------------
 # State lives in S3 (infra/backend.hcl). The provider comes from a local
@@ -202,4 +206,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue tf-init tf-plan tf-validate
+.PHONY: social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate
