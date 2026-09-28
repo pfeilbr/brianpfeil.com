@@ -15,14 +15,17 @@
 <article class="courses">
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
-    <p class="text-gray-600" id="courses-intro"></p>
+    {{- /* Filled at build time (the script only refreshes it), so the chips
+       and cards below don't jump down when the JSON arrives. */ -}}
+    {{- $n := 0 }}{{ $l := 0 }}{{ with hugo.Data.courses }}{{ $n = len .courses }}{{ $l = .total_lessons }}{{ end }}
+    <p class="text-gray-600" id="courses-intro">{{ replace (replace (i18n "courses_intro" (dict "count" "{count}" "lessons" "{lessons}")) "{count}" (string $n)) "{lessons}" (string $l) }}</p>
     {{ if ne .Site.Language.Lang "en" }}<p class="music-sub courses-en">{{ i18n "courses_english_note" }}</p>{{ end }}
   </header>
 
   <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/courses.json") | safeHTML }}</p></noscript>
 
   <div class="chips" role="group" aria-label="{{ i18n "courses_filter" }}" id="courses-chips">
-    <button type="button" class="chip is-on" data-cat="all" aria-pressed="true">{{ i18n "courses_all" }} <span class="chip-n" id="courses-n"></span></button>
+    <button type="button" class="chip is-on" data-cat="all" aria-pressed="true">{{ i18n "courses_all" }} <span class="chip-n" id="courses-n">{{ with hugo.Data.courses }}{{ len .courses }}{{ end }}</span></button>
   </div>
 
   <div class="courses-grid" id="courses-list" aria-busy="true"></div>

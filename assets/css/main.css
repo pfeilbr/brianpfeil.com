@@ -3411,3 +3411,14 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
 }
 .arch-pdf { color: var(--brand); font-weight: 600; text-decoration: none; }
 .arch-pdf:hover { text-decoration: underline; }
+
+/* Tag links under each post on /post/: big enough to tap (24px targets). */
+.post-tags a { display: inline-block; min-height: 1.5rem; min-width: 1.5rem; line-height: 1.5rem; }
+/* /courses/: hold the space the chips and cards will take while the JSON
+   loads, so nothing below them jumps (Lighthouse measured CLS 0.32). */
+#courses-chips { min-height: 3.75rem; align-content: flex-start; }
+.courses-grid[aria-busy="true"] { min-height: 150rem; }
+@media (min-width: 640px) {
+  #courses-chips { min-height: 3.5rem; }
+  .courses-grid[aria-busy="true"] { min-height: 64rem; }
+}
