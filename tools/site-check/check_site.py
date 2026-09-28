@@ -7,7 +7,11 @@
    file in the build -- a page's index.html, or the file itself. Links to
    pages that exist only on the live host (none today) can be listed in
    ALLOW.
-2. No two taxonomy terms differ only by case. With disablePathToLower on,
+2. No page loads or links to a host that is gone for good and could be
+   claimed by someone else (deleted S3 buckets, an expired domain) --
+   tools/image-rescue maps those images away; this makes sure none are
+   left or come back.
+3. No two taxonomy terms differ only by case. With disablePathToLower on,
    "HTML" and "html" fight over one URL and the build picks a winner at
    random, so the same source produces different sites.
 
@@ -25,6 +29,9 @@ REPO = Path(__file__).resolve().parents[2]
 ATTR = re.compile(r"""\b(?:href|src)=(?:"([^"]*)"|'([^']*)'|([^\s>"']+))""")
 SCRIPT = re.compile(r"<script\b.*?</script>", re.S | re.I)
 ALLOW: set[str] = set()
+sys.path.insert(0, str(REPO / "tools" / "image-rescue"))
+from rescue import DEAD_HOSTS  # noqa: E402
+REMOTE = re.compile(r"""\b(?:href|src|srcset)=(?:"(https?://[^"]*)"|'(https?://[^']*)'|(https?://[^\s>"']+))""", re.I)
 
 
 def targets(path: str) -> list[str]:
@@ -64,6 +71,21 @@ def broken_links(public: Path) -> dict[str, set[str]]:
     return broken
 
 
+def dead_hosts(public: Path) -> dict[str, set[str]]:
+    """{host: pages} for any attribute pointing at a DEAD_HOSTS host.
+    Text inside <script> and code samples doesn't count; only what a
+    browser would actually load or follow."""
+    hits: dict[str, set[str]] = defaultdict(set)
+    for page in public.rglob("*.html"):
+        text = SCRIPT.sub("", page.read_text(encoding="utf-8", errors="replace"))
+        for m in REMOTE.finditer(text):
+            url = next(g for g in m.groups() if g is not None)
+            h = re.sub(r"^https?://([^/:]+).*", r"\1", url).lower()
+            if h in DEAD_HOSTS:
+                hits[h].add("/" + page.relative_to(public).as_posix())
+    return hits
+
+
 def term_case_clashes(content: Path) -> dict[str, set[str]]:
     """Taxonomy values (tags, categories) used with more than one casing."""
     seen: dict[str, set[str]] = defaultdict(set)
@@ -85,13 +107,16 @@ def main(argv: list[str]) -> int:
     for path, pages in sorted(broken_links(args.public).items()):
         problems += 1
         print(f"broken link {path}  (on {len(pages)} page(s), e.g. {sorted(pages)[0]})")
+    for h, pages in sorted(dead_hosts(args.public).items()):
+        problems += 1
+        print(f"references dead host {h} (claimable by anyone) on {len(pages)} page(s), e.g. {sorted(pages)[0]}")
     for key, forms in sorted(term_case_clashes(args.content).items()):
         problems += 1
         print(f"{key.split(':')[0]} used with different casing: {sorted(forms)}")
     if problems:
         print(f"FAIL: {problems} problem(s)")
         return 1
-    print("ok: every same-site link resolves; no taxonomy casing clashes")
+    print("ok: every same-site link resolves; no dead hosts; no taxonomy casing clashes")
     return 0
 
 

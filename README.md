@@ -108,6 +108,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make courses-sync` | Publish the /teach courses from ~/projects/learn to /courses/ |
 | `make check-course-links` | Open every course resource link as an anonymous visitor (live, needs network) |
 | `make images-optimize` | Shrink heavy PNGs in content/ and static/ in place (needs ImageMagick) |
+| `make images-rescue` | Rescue or retire remote images in posts that no longer load (live, needs network) |
 | **Movies** | |
 | `make music-refresh` | Refresh `data/music.yaml` from YouTube: every public playlist on @pfeilbr, the saved ones in `tools/music/config.json`, track counts and top artists. Then press play on any new playlist on `/music/`; add the ones that won't play to `exclude` in the config |
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
@@ -145,6 +146,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-courses` | Tests for the course sync, and a privacy check of every published lesson |
 | `make test-indexnow` | Tests for the IndexNow change detector |
 | `make test-site-check` | Tests for the built-site link and taxonomy checker |
+| `make test-image-rescue` | Tests for the dead-image rescue map |
 | `make test-i18n` | Tests for, and a run of, the i18n consistency check |
 | `make test-docs` | Every Makefile target has help text and is in the README |
 | `make test-ai` | Unit tests for the AI radar, and its i18n block is current |

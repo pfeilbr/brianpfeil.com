@@ -29,6 +29,11 @@ class SiteTest(unittest.TestCase):
         self.write("public/lesson.html", "<p>l</p>")
         self.assertEqual(set(c.broken_links(self.root / "public")), {"/gone/"})
 
+    def test_dead_hosts(self):
+        self.write("public/a/index.html", '<img src="http://static-content-01.s3-website-us-east-1.amazonaws.com/x.png">'
+                   '<pre># http://note.io/abc</pre><a href="https://example.com/">ok</a>')
+        self.assertEqual(set(c.dead_hosts(self.root / "public")), {"static-content-01.s3-website-us-east-1.amazonaws.com"})
+
     def test_case_clash(self):
         self.write("content/a.md", '+++\ncategories = ["HTML"]\ntags = ["aws"]\n+++\n')
         self.write("content/b.md", '+++\ncategories = ["html"]\ntags = ["aws"]\n+++\n')

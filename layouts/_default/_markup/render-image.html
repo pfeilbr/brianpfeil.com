@@ -1,10 +1,25 @@
 {{- /* Page-bundle images get their intrinsic size so the page doesn't jump
    as they load. Remote images keep no size: fetching them at build time
-   would make the build depend on third-party hosts. */ -}}
+   would make the build depend on third-party hosts.
+
+   Remote images that died are looked up in data/image_rewrites.json
+   (tools/image-rescue): a local rescued copy replaces the URL, and a null
+   entry drops the image for a short note -- some of those URLs point at
+   deleted S3 buckets whose names anyone could re-register. */ -}}
+{{- $dest := .Destination -}}
+{{- $gone := false -}}
+{{- $map := hugo.Data.image_rewrites | default dict -}}
+{{- if isset $map $dest -}}
+  {{- with index $map $dest }}{{ $dest = . }}{{ else }}{{ $gone = true }}{{ end -}}
+{{- end -}}
+{{- if $gone -}}
+<span class="img-gone">{{ i18n "image_gone" }}{{ with .Text }} — {{ . }}{{ end }}</span>
+{{- else -}}
 {{- $dims := "" -}}
-{{- with .Page.Resources.Get .Destination -}}
+{{- with .Page.Resources.Get $dest -}}
   {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") -}}
     {{- $dims = printf ` width="%d" height="%d"` .Width .Height -}}
   {{- end -}}
 {{- end -}}
-<img src="{{ .Destination | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ $dims | safeHTMLAttr }} loading="lazy" decoding="async">
+<img src="{{ $dest | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ $dims | safeHTMLAttr }} loading="lazy" decoding="async">
+{{- end -}}

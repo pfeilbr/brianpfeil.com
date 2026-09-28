@@ -12,4 +12,18 @@
    the end of Markdown images (RE2 has no lookahead to skip them). */ -}}
 {{- $c = replaceRE `<img\b` `<img loading="lazy" decoding="async"` $c -}}
 {{- $c = replace $c ` loading="lazy" decoding="async">` `>` -}}
+{{- /* Raw <img> tags pointing at dead remote images (see
+   render-image.html): swap in the rescued copy, or replace the whole tag
+   with the "no longer available" note. */ -}}
+{{- range $url, $local := hugo.Data.image_rewrites | default dict -}}
+  {{- if in $c $url -}}
+    {{- if $local -}}
+      {{- $c = replace $c $url $local -}}
+    {{- else -}}
+      {{- $mark := printf "gone:%s" (md5 $url) -}}
+      {{- $c = replace $c $url $mark -}}
+      {{- $c = replaceRE (printf `<img\b[^>]*%s[^>]*>` $mark) (printf `<span class="img-gone">%s</span>` (i18n "image_gone")) $c -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
 {{- return $c -}}

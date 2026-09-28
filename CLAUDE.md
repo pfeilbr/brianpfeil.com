@@ -273,6 +273,14 @@ touching a template:
 - **Contrast:** secondary text uses a colour token (`--text-subtle`), never
   `opacity` — the opacity versions measured 2–4:1 and failed WCAG AA.
 
+- **Dead remote images** (`make images-rescue`): `data/image_rewrites.json`
+  maps each dead image URL to a Wayback copy in `static/images/rescued/`, or
+  to null (rendered as "image no longer available"). Applied at render
+  time, so `make generate-posts` can't bring them back. Two of B's old S3
+  website buckets (static-content-01, static-screenshots-01) were deleted;
+  their names can be re-registered by anyone, so the site check fails on
+  any page that loads or links to them (`DEAD_HOSTS` in the rescue tool).
+
 ## Newsletter
 
 `partials/newsletter.html` sits on the home page, posts, guides, /courses/ and

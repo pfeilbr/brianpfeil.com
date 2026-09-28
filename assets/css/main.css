@@ -3351,3 +3351,14 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
 /* A class that sets display beats the hidden attribute; on this page hidden
    must always win (it once left "Show more" showing with nothing more). */
 .gh [hidden] { display: none !important; }
+/* A remote image that no longer exists (data/image_rewrites.json). */
+.img-gone {
+  display: inline-block;
+  margin: 0.25rem 0;
+  padding: 0.375rem 0.75rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: 0.375rem;
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--text-subtle);
+}

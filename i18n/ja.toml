@@ -544,6 +544,10 @@ other = "このページのデータを読み込めませんでした。再読�
 [data_noscript]
 other = "このページは JavaScript で表示しています。データは <a href=\"{{ .url }}\">{{ .url }}</a> にあります。"
 
+# Dead remote image (render-image.html, data/image_rewrites.json)
+[image_gone]
+other = "この画像は現在表示できません"
+
 # --- Newsletter sign-up (partials/newsletter.html) ---
 
 [nl_title]
