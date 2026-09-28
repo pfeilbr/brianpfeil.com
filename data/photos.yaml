@@ -24,51 +24,6 @@ items:
     - photos/20251205-g30b2a3e0ab/c472133861c1-g360.webp
     - photos/20251205-g30b2a3e0ab/c472133861c1-g720.webp
     color: '#837d85'
-- id: undated-g2b3a9caea3
-  date: ''
-  year: ''
-  category: skiing
-  kind: photo
-  media:
-  - kind: photo
-    src: photos/undated-g2b3a9caea3/a27c1825d2a9.jpg
-    thumb: photos/undated-g2b3a9caea3/a27c1825d2a9-t.jpg
-    w: 1200
-    h: 1600
-    grid:
-    - photos/undated-g2b3a9caea3/a27c1825d2a9-g360.webp
-    - photos/undated-g2b3a9caea3/a27c1825d2a9-g720.webp
-    color: '#687994'
-- id: undated-g3109b2bc49
-  date: ''
-  year: ''
-  category: skiing
-  kind: photo
-  media:
-  - kind: photo
-    src: photos/undated-g3109b2bc49/90c3bbcc3e5a.jpg
-    thumb: photos/undated-g3109b2bc49/90c3bbcc3e5a-t.jpg
-    w: 1200
-    h: 1600
-    grid:
-    - photos/undated-g3109b2bc49/90c3bbcc3e5a-g360.webp
-    - photos/undated-g3109b2bc49/90c3bbcc3e5a-g720.webp
-    color: '#566981'
-- id: undated-gf80e189f97
-  date: ''
-  year: ''
-  category: skiing
-  kind: photo
-  media:
-  - kind: photo
-    src: photos/undated-gf80e189f97/ac934e8ccf5c.jpg
-    thumb: photos/undated-gf80e189f97/ac934e8ccf5c-t.jpg
-    w: 1200
-    h: 1600
-    grid:
-    - photos/undated-gf80e189f97/ac934e8ccf5c-g360.webp
-    - photos/undated-gf80e189f97/ac934e8ccf5c-g720.webp
-    color: '#93969a'
 - id: 20260122-g35eb4b0015
   date: '2026-01-22'
   year: '2026'
@@ -114,6 +69,51 @@ items:
     - photos/20250301-g238faa3e94/868c723e64c0-g360.webp
     - photos/20250301-g238faa3e94/868c723e64c0-g720.webp
     color: '#68687c'
+- id: undated-gf80e189f97
+  date: '2025-03-01'
+  year: '2025'
+  category: skiing
+  kind: photo
+  media:
+  - kind: photo
+    src: photos/undated-gf80e189f97/ac934e8ccf5c.jpg
+    thumb: photos/undated-gf80e189f97/ac934e8ccf5c-t.jpg
+    w: 1200
+    h: 1600
+    grid:
+    - photos/undated-gf80e189f97/ac934e8ccf5c-g360.webp
+    - photos/undated-gf80e189f97/ac934e8ccf5c-g720.webp
+    color: '#93969a'
+- id: undated-g2b3a9caea3
+  date: '2025-02-28'
+  year: '2025'
+  category: skiing
+  kind: photo
+  media:
+  - kind: photo
+    src: photos/undated-g2b3a9caea3/a27c1825d2a9.jpg
+    thumb: photos/undated-g2b3a9caea3/a27c1825d2a9-t.jpg
+    w: 1200
+    h: 1600
+    grid:
+    - photos/undated-g2b3a9caea3/a27c1825d2a9-g360.webp
+    - photos/undated-g2b3a9caea3/a27c1825d2a9-g720.webp
+    color: '#687994'
+- id: undated-g3109b2bc49
+  date: '2025-02-28'
+  year: '2025'
+  category: skiing
+  kind: photo
+  media:
+  - kind: photo
+    src: photos/undated-g3109b2bc49/90c3bbcc3e5a.jpg
+    thumb: photos/undated-g3109b2bc49/90c3bbcc3e5a-t.jpg
+    w: 1200
+    h: 1600
+    grid:
+    - photos/undated-g3109b2bc49/90c3bbcc3e5a-g360.webp
+    - photos/undated-g3109b2bc49/90c3bbcc3e5a-g720.webp
+    color: '#566981'
 - id: 20241230-g596b136f68
   date: '2024-12-30'
   year: '2024'
@@ -234,21 +234,6 @@ items:
     - photos/undated-gc2ad187b1b/641b6eb45b12-g360.webp
     - photos/undated-gc2ad187b1b/641b6eb45b12-g720.webp
     color: '#66754a'
-- id: undated-ge15443cc7c
-  date: ''
-  year: ''
-  category: kayaking
-  kind: photo
-  media:
-  - kind: photo
-    src: photos/undated-ge15443cc7c/3b4fd2384b58.jpg
-    thumb: photos/undated-ge15443cc7c/3b4fd2384b58-t.jpg
-    w: 1600
-    h: 1200
-    grid:
-    - photos/undated-ge15443cc7c/3b4fd2384b58-g360.webp
-    - photos/undated-ge15443cc7c/3b4fd2384b58-g720.webp
-    color: '#676c6e'
 - id: undated-ge40042ec79
   date: ''
   year: ''
@@ -279,6 +264,21 @@ items:
     - photos/20260805-g2409089119/7d68deeb2646-g360.webp
     - photos/20260805-g2409089119/7d68deeb2646-g720.webp
     color: '#606467'
+- id: undated-ge15443cc7c
+  date: '2017-05-26'
+  year: '2017'
+  category: kayaking
+  kind: photo
+  media:
+  - kind: photo
+    src: photos/undated-ge15443cc7c/3b4fd2384b58.jpg
+    thumb: photos/undated-ge15443cc7c/3b4fd2384b58-t.jpg
+    w: 1600
+    h: 1200
+    grid:
+    - photos/undated-ge15443cc7c/3b4fd2384b58-g360.webp
+    - photos/undated-ge15443cc7c/3b4fd2384b58-g720.webp
+    color: '#676c6e'
 - id: undated-g0dfaaa163e
   date: ''
   year: ''
@@ -478,24 +478,9 @@ items:
     - photos/20081011-gbb1128d846/4fdf9f01faac-g360.webp
     - photos/20081011-gbb1128d846/4fdf9f01faac-g720.webp
     color: '#5b708a'
-- id: undated-g1add08b9b6
-  date: ''
-  year: ''
-  category: hiking
-  kind: photo
-  media:
-  - kind: photo
-    src: photos/undated-g1add08b9b6/cfb323aaeedc.jpg
-    thumb: photos/undated-g1add08b9b6/cfb323aaeedc-t.jpg
-    w: 1200
-    h: 1600
-    grid:
-    - photos/undated-g1add08b9b6/cfb323aaeedc-g360.webp
-    - photos/undated-g1add08b9b6/cfb323aaeedc-g720.webp
-    color: '#6f6c5e'
 - id: undated-gd9f78297f2
-  date: ''
-  year: ''
+  date: '2026-04-14'
+  year: '2026'
   category: hiking
   kind: photo
   media:
@@ -508,36 +493,21 @@ items:
     - photos/undated-gd9f78297f2/4dacf87f2da9-g360.webp
     - photos/undated-gd9f78297f2/4dacf87f2da9-g720.webp
     color: '#7f8689'
-- id: undated-ge64f5c82a9
-  date: ''
-  year: ''
+- id: undated-g1add08b9b6
+  date: '2025-10-01'
+  year: '2025'
   category: hiking
   kind: photo
   media:
   - kind: photo
-    src: photos/undated-ge64f5c82a9/b97f351b2699.jpg
-    thumb: photos/undated-ge64f5c82a9/b97f351b2699-t.jpg
-    w: 1600
-    h: 1200
-    grid:
-    - photos/undated-ge64f5c82a9/b97f351b2699-g360.webp
-    - photos/undated-ge64f5c82a9/b97f351b2699-g720.webp
-    color: '#6d6669'
-- id: undated-gfab8eab02d
-  date: ''
-  year: ''
-  category: hiking
-  kind: photo
-  media:
-  - kind: photo
-    src: photos/undated-gfab8eab02d/846453b7a809.jpg
-    thumb: photos/undated-gfab8eab02d/846453b7a809-t.jpg
+    src: photos/undated-g1add08b9b6/cfb323aaeedc.jpg
+    thumb: photos/undated-g1add08b9b6/cfb323aaeedc-t.jpg
     w: 1200
     h: 1600
     grid:
-    - photos/undated-gfab8eab02d/846453b7a809-g360.webp
-    - photos/undated-gfab8eab02d/846453b7a809-g720.webp
-    color: '#937f86'
+    - photos/undated-g1add08b9b6/cfb323aaeedc-g360.webp
+    - photos/undated-g1add08b9b6/cfb323aaeedc-g720.webp
+    color: '#6f6c5e'
 - id: 20250704-g6cb13bbf68
   date: '2025-07-04'
   year: '2025'
@@ -643,3 +613,33 @@ items:
     - photos/20241221-gaa2152bfd1/cbb997f1255c-g360.webp
     - photos/20241221-gaa2152bfd1/cbb997f1255c-g720.webp
     color: '#715f59'
+- id: undated-ge64f5c82a9
+  date: '2023-01-16'
+  year: '2023'
+  category: hiking
+  kind: photo
+  media:
+  - kind: photo
+    src: photos/undated-ge64f5c82a9/b97f351b2699.jpg
+    thumb: photos/undated-ge64f5c82a9/b97f351b2699-t.jpg
+    w: 1600
+    h: 1200
+    grid:
+    - photos/undated-ge64f5c82a9/b97f351b2699-g360.webp
+    - photos/undated-ge64f5c82a9/b97f351b2699-g720.webp
+    color: '#6d6669'
+- id: undated-gfab8eab02d
+  date: '2023-01-16'
+  year: '2023'
+  category: hiking
+  kind: photo
+  media:
+  - kind: photo
+    src: photos/undated-gfab8eab02d/846453b7a809.jpg
+    thumb: photos/undated-gfab8eab02d/846453b7a809-t.jpg
+    w: 1200
+    h: 1600
+    grid:
+    - photos/undated-gfab8eab02d/846453b7a809-g360.webp
+    - photos/undated-gfab8eab02d/846453b7a809-g720.webp
+    color: '#937f86'
