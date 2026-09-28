@@ -16,12 +16,26 @@ func main() {
 		dest  string
 		cache bool
 		debug bool
+		trim  bool
 	)
 	flag.StringVar(&user, "user", "", "GitHub username")
 	flag.StringVar(&dest, "dest", "", "destination directory for generated posts")
 	flag.BoolVar(&cache, "cache", false, "cache GitHub API responses locally")
 	flag.BoolVar(&debug, "debug", false, "enable debug logging")
+	flag.BoolVar(&trim, "trim-existing", false, "apply the long-code-block rule to the generated posts already in -dest, without calling GitHub")
 	flag.Parse()
+
+	if trim {
+		if dest == "" {
+			log.Fatal("-trim-existing needs -dest")
+		}
+		n, err := trimExisting(dest)
+		if err != nil {
+			log.Fatalf("trim: %v", err)
+		}
+		log.Printf("trimmed %d post(s)", n)
+		return
+	}
 
 	if user == "" || dest == "" {
 		fmt.Fprintf(os.Stderr, "Usage: generate-posts -user=USER -dest=DIR [-cache] [-debug]\n")
