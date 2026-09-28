@@ -1917,3 +1917,6 @@ other = "随机显示一个附有文章的练习项目"
 
 [gh_best_needs_query]
 other = "最佳匹配（请输入搜索词）"
+
+[page_n]
+other = "第 {{ .n }} 页"

@@ -10,7 +10,7 @@
   {{- if eq .Kind "404" }}
   <meta name="robots" content="noindex">
   {{- else }}
-  <link rel="canonical" href="{{ .Permalink }}">
+  <link rel="canonical" href="{{ partial "canonical-url.html" . }}">
   {{- end }}
   {{- /* Posts (and therefore the feed) only exist on the default-language site. */}}
   <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ printf "%sindex.xml" hugo.Sites.Default.Home.Permalink }}">
@@ -18,7 +18,9 @@
   <link rel="alternate" type="application/rss+xml" title="{{ i18n "ai_briefing_feed_title" }}" href="{{ .Permalink }}">
   {{- end }}{{ end }}
   {{- /* hreflang alternates for the languages this page actually has. */}}
-  {{- if and .IsTranslated (ne .Kind "404") }}
+  {{- /* Page 2 onwards of a list has no per-language twin to point at. */}}
+  {{- $laterPage := false }}{{ with partial "pager.html" . }}{{ $laterPage = gt .PageNumber 1 }}{{ end }}
+  {{- if and .IsTranslated (ne .Kind "404") (not $laterPage) }}
   {{- range .AllTranslations }}
   <link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}">
   {{- end }}

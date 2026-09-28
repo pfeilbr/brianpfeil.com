@@ -35,7 +35,7 @@
 <meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $desc }}">
-<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:url" content="{{ partial "canonical-url.html" . }}">
 <meta property="og:image" content="{{ $img }}">
 <meta property="og:type" content="{{ if $isArticle }}article{{ else }}website{{ end }}">
 {{- /* Open Graph wants ll_CC ("en_US"); config locales are "en-us". */ -}}

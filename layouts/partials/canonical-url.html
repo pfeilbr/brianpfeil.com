@@ -1,0 +1,5 @@
+{{- /* This page's own URL: page N of a paginated list is its own page, not a
+   copy of page 1 (which is what .Permalink alone said for /post/page/2/). */ -}}
+{{- $u := .Permalink -}}
+{{- with partial "pager.html" . }}{{ $u = .URL | absURL }}{{ end -}}
+{{- return $u -}}

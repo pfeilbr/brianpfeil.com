@@ -1918,3 +1918,6 @@ other = "Show a random playground that has an article"
 
 [gh_best_needs_query]
 other = "Best match (type a search)"
+
+[page_n]
+other = "Page {{ .n }}"

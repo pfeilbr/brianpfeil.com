@@ -3,14 +3,20 @@
 
    Tag and category pages get their own wording: a tag named after a post
    ("Boto") otherwise shared that post's title exactly. The 404 page uses its
-   translated heading rather than Hugo's English "404 Page not found". */ -}}
-{{- $t := printf "%s | %s" .Title .Site.Title -}}
+   translated heading rather than Hugo's English "404 Page not found".
+   Page 2 onwards of a list says which page, so /post/page/2/ to /11/ aren't
+   ten identical titles. */ -}}
 {{- if .IsHome -}}
-  {{- $t = .Site.Params.homeTitle -}}
-{{- else if eq .Kind "404" -}}
-  {{- $t = printf "%s | %s" (i18n "not_found_title") .Site.Title -}}
+  {{- return .Site.Params.homeTitle -}}
+{{- end -}}
+{{- $name := .Title -}}
+{{- if eq .Kind "404" -}}
+  {{- $name = i18n "not_found_title" -}}
 {{- else if eq .Kind "term" -}}
   {{- $key := cond (eq .Data.Plural "categories") "category_title" "tag_title" -}}
-  {{- $t = printf "%s | %s" (i18n $key (dict "term" (.Data.Term | default .Title))) .Site.Title -}}
+  {{- $name = i18n $key (dict "term" (.Data.Term | default .Title)) -}}
 {{- end -}}
-{{- return $t -}}
+{{- with partial "pager.html" . }}{{ if gt .PageNumber 1 }}
+  {{- $name = printf "%s · %s" $name (i18n "page_n" (dict "n" .PageNumber)) -}}
+{{- end }}{{ end -}}
+{{- return printf "%s | %s" $name .Site.Title -}}
