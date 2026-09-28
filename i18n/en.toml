@@ -544,6 +544,10 @@ other = "The data for this page could not be loaded. Try reloading."
 [data_noscript]
 other = "This page is drawn with JavaScript. Its data is at <a href=\"{{ .url }}\">{{ .url }}</a>."
 
+# Guide PDF link (layouts/architecture/single.html)
+[arch_pdf]
+other = "Download PDF"
+
 # "Keep learning" on posts (partials/keep-learning.html)
 [kl_title]
 other = "Keep learning"

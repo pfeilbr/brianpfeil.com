@@ -546,6 +546,10 @@ other = "Die Daten dieser Seite konnten nicht geladen werden. Bitte neu laden."
 [data_noscript]
 other = "Diese Seite wird mit JavaScript gezeichnet. Die Daten liegen unter <a href=\"{{ .url }}\">{{ .url }}</a>."
 
+# Guide PDF link (layouts/architecture/single.html)
+[arch_pdf]
+other = "PDF herunterladen"
+
 # "Keep learning" on posts (partials/keep-learning.html)
 [kl_title]
 other = "Weiterlernen"

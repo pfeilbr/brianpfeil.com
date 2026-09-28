@@ -544,6 +544,10 @@ other = "このページのデータを読み込めませんでした。再読�
 [data_noscript]
 other = "このページは JavaScript で表示しています。データは <a href=\"{{ .url }}\">{{ .url }}</a> にあります。"
 
+# Guide PDF link (layouts/architecture/single.html)
+[arch_pdf]
+other = "PDF をダウンロード"
+
 # "Keep learning" on posts (partials/keep-learning.html)
 [kl_title]
 other = "さらに学ぶ"

@@ -23,7 +23,14 @@
       <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006") }}</time>
       <span class="mx-1.5 text-gray-300" aria-hidden="true">&middot;</span>
       <span>{{ i18n "min_read" .ReadingTime }}</span>
+      {{- /* PDFs are made by tools/guides-pdf (make guides-pdf). */ -}}
+      {{- $pdf := printf "architecture/%s.pdf" .Slug -}}
+      {{- if os.FileExists (printf "static/%s" $pdf) }}
+      <span class="mx-1.5 text-gray-300" aria-hidden="true">&middot;</span>
+      <a class="arch-pdf" href="/{{ $pdf }}" download>{{ i18n "arch_pdf" }}</a>
+      {{- end }}
     </div>
+    <p class="print-only">{{ .Permalink }}</p>
   </header>
 
   {{ if gt (len (findRE "<h2" .Content)) 2 }}

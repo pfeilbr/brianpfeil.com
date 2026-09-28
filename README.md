@@ -110,6 +110,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make images-optimize` | Shrink heavy PNGs in content/ and static/ in place (needs ImageMagick) |
 | `make images-rescue` | Rescue or retire remote images in posts that no longer load (live, needs network) |
 | `make images-selfhost` | Self-host the Evernote screenshots posts still hotlink, as WebP in `static/images/remote/` (needs network, ImageMagick) |
+| `make guides-pdf` | PDF of every architecture guide, for sharing and printing (needs Chrome) |
 | **Movies** | |
 | `make music-refresh` | Refresh `data/music.yaml` from YouTube: every public playlist on @pfeilbr, the saved ones in `tools/music/config.json`, track counts and top artists. Then press play on any new playlist on `/music/`; add the ones that won't play to `exclude` in the config |
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |

@@ -3395,3 +3395,19 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
 .kl-card:hover .kl-name { color: var(--brand); }
 .kl-blurb { font-size: 0.8125rem; line-height: 1.5; color: var(--text-muted); }
 @media print { .keep-learning { display: none; } }
+
+/* Printing (and the guide PDFs, tools/guides-pdf): the page, not the site
+   around it -- no nav, footer or sign-up boxes, always light. */
+.print-only { display: none; }
+@media print {
+  :root { color-scheme: light; }
+  body > nav, body > footer, .skip-link, .lang-switcher, .keep-learning,
+  .arch-pdf, .code-copy { display: none !important; }
+  .print-only { display: block; margin: 0 0 1rem; font-size: 0.75rem; color: #4b5563; }
+  main { padding-top: 0 !important; }
+  a { color: inherit; }
+  .prose li:has(> input[type="checkbox"]) { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+}
+.arch-pdf { color: var(--brand); font-weight: 600; text-decoration: none; }
+.arch-pdf:hover { text-decoration: underline; }

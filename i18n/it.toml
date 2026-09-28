@@ -544,6 +544,10 @@ other = "Impossibile caricare i dati di questa pagina. Prova a ricaricarla."
 [data_noscript]
 other = "Questa pagina è disegnata con JavaScript. I dati si trovano in <a href=\"{{ .url }}\">{{ .url }}</a>."
 
+# Guide PDF link (layouts/architecture/single.html)
+[arch_pdf]
+other = "Scarica il PDF"
+
 # "Keep learning" on posts (partials/keep-learning.html)
 [kl_title]
 other = "Continua a imparare"
