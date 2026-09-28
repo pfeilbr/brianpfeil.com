@@ -62,6 +62,25 @@ class UrlTest(unittest.TestCase):
         self.assertNotIn(KEY, a)
 
 
+class ExifDateTest(unittest.TestCase):
+    def test_date_taken_from_exif(self):
+        from PIL import Image
+        with TemporaryDirectory() as d:
+            path = Path(d) / "a.jpg"
+            exif = Image.Exif()
+            exif.get_ifd(0x8769)[36867] = "2023:01:16 07:20:14"
+            Image.new("RGB", (8, 8)).save(path, exif=exif)
+            self.assertEqual(gphotos.taken_from_exif(path), "2023-01-16T07:20:14")
+
+    def test_no_exif_is_none(self):
+        from PIL import Image
+        with TemporaryDirectory() as d:
+            path = Path(d) / "a.jpg"
+            Image.new("RGB", (8, 8)).save(path)
+            self.assertIsNone(gphotos.taken_from_exif(path))
+            self.assertIsNone(gphotos.taken_from_exif(Path(d) / "missing.jpg"))
+
+
 class CandidatesTest(unittest.TestCase):
     def rows(self):
         return [{"key": KEY, "label": "Photo - Portrait - Jan 30, 2026, 10:08:39 AM", "url": URL},

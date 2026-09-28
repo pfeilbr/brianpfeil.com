@@ -268,6 +268,16 @@ def cmd_picker(args, cfg) -> int:
     return 0
 
 
+def cmd_photos_publish(args, cfg) -> int:
+    """The picker's Publish, without the page: for scripts and agents."""
+    from igmedia import picker
+    p = picker.Picker(TOOL_DIR, REPO_ROOT, cfg)
+    p.publish(push=not args.no_push, data_only=args.data_only)
+    for line in p.publish_log:
+        print(line)
+    return 1 if any("FAILED" in line for line in p.publish_log) else 0
+
+
 def main() -> int:
     cfg = load_config()
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -308,6 +318,12 @@ def main() -> int:
 
     status = sub.add_parser("status", help="what is approved and what is live")
     status.set_defaults(func=cmd_status)
+
+    pp = sub.add_parser("photos-publish", help="publish the Google Photos picks (what the picker's Publish does)")
+    pp.add_argument("--data-only", action="store_true",
+                    help="rewrite data/photos.yaml without uploading; refused if a pick isn't on the CDN yet")
+    pp.add_argument("--no-push", action="store_true", help="write the data file but don't commit or push")
+    pp.set_defaults(func=cmd_photos_publish)
 
     pick = sub.add_parser("picker", help="the Google Photos picker: a local web app on 127.0.0.1")
     pick.add_argument("--port", type=int, default=8790)

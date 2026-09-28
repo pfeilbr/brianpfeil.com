@@ -84,6 +84,27 @@ def base_url(url: str) -> str:
     return re.sub(r"=[^/=]*$", "", url.split("?", 1)[0])
 
 
+def taken_from_exif(path: Path) -> str | None:
+    """When the photo was taken, from its EXIF, as an ISO timestamp.
+
+    Google's labels leave the date off some items; the images it serves
+    still carry DateTimeOriginal (DateTime as a fallback).
+    """
+    try:
+        from PIL import Image
+        with Image.open(path) as im:
+            exif = im.getexif()
+            raw = exif.get_ifd(0x8769).get(36867) or exif.get(306)
+    except Exception:
+        return None
+    if not raw:
+        return None
+    try:
+        return datetime.strptime(str(raw).strip()[:19], "%Y:%m:%d %H:%M:%S").isoformat(timespec="seconds")
+    except ValueError:
+        return None
+
+
 def item_id(key: str, taken: str | None) -> str:
     """Stable, short and not the Google key: date plus a hash of the key."""
     day = (taken or "")[:10].replace("-", "") or "undated"

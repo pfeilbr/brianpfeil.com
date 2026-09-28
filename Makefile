@@ -68,6 +68,9 @@ media-watch-status: ## Is the watcher loaded, and its last runs
 media-picker: ## Google Photos picker on http://127.0.0.1:8790 (suggest, pick, publish)
 	cd tools/instagram-media && .venv/bin/python pull.py picker
 
+media-photos-publish: ## Publish the Google Photos picks without the picker page (DATA_ONLY=1: no upload)
+	cd tools/instagram-media && .venv/bin/python pull.py photos-publish $(if $(DATA_ONLY),--data-only,)
+
 test-media: ## Python tests for the media tool
 	cd tools/instagram-media && .venv/bin/python -m unittest discover -s tests
 

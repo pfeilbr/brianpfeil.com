@@ -54,6 +54,24 @@ class Picker:
         for c in self.cands.items.values():
             if not c.get("screen"):
                 self.jobs.put(c["key"])
+        self.backfill_dates()
+
+    def backfill_dates(self) -> int:
+        """Dates from EXIF for items Google's label left undated. The id keeps
+        its "undated-" prefix — it names files already on the CDN."""
+        n = 0
+        with self.lock:
+            for c in self.cands.items.values():
+                if c.get("taken") or c["kind"] != "photo":
+                    continue
+                for path in (self.final(c["key"]), self.large(c["key"])):
+                    if path.exists() and (taken := gphotos.taken_from_exif(path)):
+                        c["taken"] = taken
+                        n += 1
+                        break
+            if n:
+                self.cands.save()
+        return n
 
     # --- paths -----------------------------------------------------------------
     def small(self, key: str) -> Path:
@@ -243,6 +261,7 @@ class Picker:
                 results = screen.run_vision(self.vision_bin, images)
             dur = None
         v = screen.verdict(results, c.get("tier", "me"), key in self.cands.excluded)
+        taken = None if c.get("taken") or c["kind"] != "photo" else gphotos.taken_from_exif(self.large(key))
         labels = {}
         for r in results:
             for k, p in (r.get("labels") or {}).items():
@@ -252,6 +271,8 @@ class Picker:
             live = self.cands.items.get(key)
             if live is not None:
                 live["screen"] = v
+                if taken:
+                    live["taken"] = taken
                 if dur:
                     live["duration"] = round(dur, 1)
                 self.cands.save()
@@ -317,7 +338,7 @@ class Picker:
     def log(self, line: str) -> None:
         self.publish_log.append(f"{time.strftime('%H:%M:%S')} {line}")
 
-    def publish(self, push: bool = True, dry: bool = False) -> None:
+    def publish(self, push: bool = True, dry: bool = False, data_only: bool = False) -> None:
         """Encode, upload, write data/photos.yaml, commit and push.
 
         dry: encode only, and write the data file to build/gphotos/preview/
@@ -328,7 +349,14 @@ class Picker:
         self.publish_log = []
         try:
             cfg, g = self.cfg, self.g
-            if not dry:
+            data_path = self.repo_root / g["data_file"]
+            if data_only:
+                # Rewrite the data file (dates, order, a removed pick) without
+                # touching S3 — only safe if every item's files are already up.
+                import yaml
+                live_ids = {e["id"] for e in (yaml.safe_load(data_path.read_text()) or {}).get("items", [])} \
+                    if data_path.exists() else set()
+            if not dry and not data_only:
                 self.log("checking AWS sign-in…")
                 publish.check_credentials(cfg["bucket"])
             lock = derive.Lock(self.tool_dir / g["lock_file"])
@@ -358,40 +386,47 @@ class Picker:
                                                          "reasons": ["refused at full resolution"]}
                     gphotos.save_picks(self.picks_path, self.picks)
                     self.cands.save()
-            if dry:
+            if data_only:
+                new = sorted({e["id"] for e in entries} - live_ids)
+                if new:
+                    raise RuntimeError(f"{len(new)} pick(s) are not on the CDN yet ({', '.join(new[:3])}…): "
+                                       "publish with an upload (aws sso login first)")
+                gphotos_publish.write(data_path, cfg["base_url"], cats, entries)
+                self.log(f"data only: wrote {g['data_file']} ({len(entries)} items); nothing uploaded")
+            elif dry:
                 preview = self.work / "preview-data" / "photos.yaml"
                 gphotos_publish.write(preview, f"http://127.0.0.1:{self.port}/web/", cats, entries)
                 self.log(f"dry run: {len(entries)} items encoded; data file at {preview}")
                 return
-            self.log(f"uploading to s3://{cfg['bucket']}/{g['s3_prefix']}/ …")
-            # Only what is published stays on the CDN: an un-picked item's
-            # folder is dropped here, and the sync deletes it from S3.
-            live = {e["id"] for e in entries}
-            web = self.work / "web"
-            for d in web.iterdir() if web.exists() else []:
-                if d.is_dir() and d.name not in live:
-                    shutil.rmtree(d)
-                    self.log(f"removing {d.name}: no longer picked")
-            # The uplink here is slow enough that S3 sometimes drops a
-            # connection mid-upload; sync is size-only, so a retry resumes.
-            for attempt in range(1, 5):
-                try:
-                    out = publish.sync(web, cfg["bucket"], g["s3_prefix"], prune=True)
-                    break
-                except RuntimeError as exc:
-                    if attempt == 4:
-                        raise
-                    self.log(f"upload interrupted ({str(exc)[:80]}…), resuming — try {attempt + 1}")
-            self.log(f"uploaded {sum(1 for l in out.splitlines() if l.startswith('upload:'))} files")
-            gone = publish.deleted_paths(out)
-            if gone:
-                # Cached for a year and immutable: deleting from S3 alone
-                # would leave the CDN serving them.
-                publish.invalidate(cfg["distribution_id"], gone)
-                self.log(f"deleted {len(gone)} files and evicted them from the CDN")
-            data_path = self.repo_root / g["data_file"]
-            gphotos_publish.write(data_path, cfg["base_url"], cats, entries)
-            self.log(f"wrote {g['data_file']} ({len(entries)} items)")
+            else:
+                self.log(f"uploading to s3://{cfg['bucket']}/{g['s3_prefix']}/ …")
+                # Only what is published stays on the CDN: an un-picked item's
+                # folder is dropped here, and the sync deletes it from S3.
+                live = {e["id"] for e in entries}
+                web = self.work / "web"
+                for d in web.iterdir() if web.exists() else []:
+                    if d.is_dir() and d.name not in live:
+                        shutil.rmtree(d)
+                        self.log(f"removing {d.name}: no longer picked")
+                # The uplink here is slow enough that S3 sometimes drops a
+                # connection mid-upload; sync is size-only, so a retry resumes.
+                for attempt in range(1, 5):
+                    try:
+                        out = publish.sync(web, cfg["bucket"], g["s3_prefix"], prune=True)
+                        break
+                    except RuntimeError as exc:
+                        if attempt == 4:
+                            raise
+                        self.log(f"upload interrupted ({str(exc)[:80]}…), resuming — try {attempt + 1}")
+                self.log(f"uploaded {sum(1 for l in out.splitlines() if l.startswith('upload:'))} files")
+                gone = publish.deleted_paths(out)
+                if gone:
+                    # Cached for a year and immutable: deleting from S3 alone
+                    # would leave the CDN serving them.
+                    publish.invalidate(cfg["distribution_id"], gone)
+                    self.log(f"deleted {len(gone)} files and evicted them from the CDN")
+                gphotos_publish.write(data_path, cfg["base_url"], cats, entries)
+                self.log(f"wrote {g['data_file']} ({len(entries)} items)")
             if push:
                 sha = release.commit_and_push(
                     self.repo_root, [data_path, self.picks_path],
