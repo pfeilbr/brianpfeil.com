@@ -314,7 +314,7 @@ npm start</pre>
 <span class="b">const</span> payload = JSON.parse(Buffer.from(token.split(<span class="g">'.'</span>)[<span class="b">1</span>], <span class="g">'base64url'</span>));
 <span class="c1">// → { sub: 42, role: 'user', email: 'you@example.com', ... }</span></pre>
     <div class="callout warn"><span class="h">⚠️ Direct consequences</span>
-      <strong>Never put secrets in a JWT</strong> (passwords, full PII, internal flags you don't want users seeing) — the payload is world-readable. And a JWT you receive is only trustworthy <em>after</em> you verify its signature; <code class="inl">jwt.decode()</code> (no verify) is for debugging only. <span class="cite">See <a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP JWT Cheat Sheet</a>.</span></div>
+      <strong>Never put secrets in a JWT</strong> (passwords, full PII, internal flags you don't want users seeing) — the payload is world-readable. And a JWT you receive is only trustworthy <em>after</em> you verify its signature; <code class="inl">jwt.decode()</code> (no verify) is for debugging only. <span class="cite">See <a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP JWT Cheat Sheet</a>.</span></div>
   </section>
 
   <section>

@@ -313,7 +313,7 @@ Authorization: Bearer <span class="y">eyJhbGciOiJIUzI1NiJ9</span>.<span class="g
                        └ header ┘ └──────── payload (readable!) ────────┘ └ signature ┘
 <span class="c1"># Server stores: NOTHING. It re-checks the signature with its secret key each time.</span></pre>
     <div class="callout warn"><span class="h">⚠️ The #1 token misconception</span>
-      A signed token is <strong>not encrypted</strong> — the payload is just base64, anyone can read it (paste one into <a href="https://jwt.io/" target="_blank" rel="noopener">jwt.io</a> and see). Signing proves it wasn't <em>tampered with</em>, not that it's <em>secret</em>. Never put anything private in a JWT payload. <span class="cite">See <a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP JWT Cheat Sheet</a>.</span></div>
+      A signed token is <strong>not encrypted</strong> — the payload is just base64, anyone can read it (paste one into <a href="https://jwt.io/" target="_blank" rel="noopener">jwt.io</a> and see). Signing proves it wasn't <em>tampered with</em>, not that it's <em>secret</em>. Never put anything private in a JWT payload. <span class="cite">See <a href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP JWT Cheat Sheet</a>.</span></div>
   </section>
 
   <section>

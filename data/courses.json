@@ -200,7 +200,7 @@
     "quantization",
     "lora"
    ],
-   "updated": "2026-06-22",
+   "updated": "2026-09-28",
    "lessons": [
     {
      "href": "/courses/mlx-lm/lessons/0001-your-mac-runs-an-llm.html",
@@ -281,7 +281,7 @@
         },
         {
          "title": "Python examples dir",
-         "url": "https://github.com/ml-explore/mlx-lm/tree/main/mlx_lm/examples"
+         "url": "https://github.com/ml-explore/mlx-lm/tree/main/examples"
         }
        ],
        "note": "the source of truth for CLI + Python API."
@@ -376,7 +376,7 @@
     "passkeys",
     "passwordless"
    ],
-   "updated": "2026-06-19",
+   "updated": "2026-09-28",
    "lessons": [
     {
      "href": "/courses/auth/lessons/0001-sessions-vs-tokens.html",
@@ -467,7 +467,7 @@
        "links": [
         {
          "title": "OWASP JWT Cheat Sheet",
-         "url": "https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html"
+         "url": "https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html"
         },
         {
          "title": "OWASP CSRF Prevention",
@@ -1279,7 +1279,7 @@
     "flakes",
     "derivations"
    ],
-   "updated": "2026-06-19",
+   "updated": "2026-09-28",
    "lessons": [
     {
      "href": "/courses/nix/lessons/0001-what-is-nix.html",
@@ -1391,8 +1391,8 @@
       {
        "links": [
         {
-         "title": "Eelco Dolstra's blog on flakes",
-         "url": "https://eelco.io/posts/flakes-the-next-generation-of-nix-modules/"
+         "title": "Eelco Dolstra's flakes series (Tweag)",
+         "url": "https://www.tweag.io/blog/2020-05-25-flakes/"
         }
        ],
        "note": "Understanding Nix flakes (modern approach)"
@@ -1400,8 +1400,8 @@
       {
        "links": [
         {
-         "title": "determinate.systems flakes guide",
-         "url": "https://determinate.systems/posts/nix-flakes/"
+         "title": "Zero to Nix: flakes (Determinate Systems)",
+         "url": "https://zero-to-nix.com/concepts/flakes/"
         }
        ],
        "note": "Practical flakes tutorial (created by Determinate Systems, Nix experts)"
@@ -2379,7 +2379,7 @@
     "checkout",
     "subscriptions"
    ],
-   "updated": "2026-06-19",
+   "updated": "2026-09-28",
    "lessons": [
     {
      "href": "/courses/stripe/lessons/0001-stripe-object-model.html",
@@ -2498,8 +2498,8 @@
       {
        "links": [
         {
-         "title": "Stripe Developers Discord / community",
-         "url": "https://stripe.com/community"
+         "title": "Stripe Developers hub: Discord and community",
+         "url": "https://stripe.dev/"
         }
        ],
        "note": "Official community channels. Use for: direct, current answers from Stripe devs and peers."
