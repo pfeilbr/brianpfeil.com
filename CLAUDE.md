@@ -286,6 +286,10 @@ touching a template:
   post that embeds an Evernote image fails `make test-image-rescue` until
   it's run.
 
+- **Keep learning** (`partials/keep-learning.html`): posts show up to two
+  guides and two courses whose tag lists in `data/keep_learning.yaml` match
+  the post's tags. A new guide or course needs an entry there to be found.
+
 ## Newsletter
 
 `partials/newsletter.html` sits on the home page, posts, guides, /courses/ and

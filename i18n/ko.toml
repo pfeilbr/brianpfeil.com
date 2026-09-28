@@ -544,6 +544,16 @@ other = "이 페이지의 데이터를 불러오지 못했습니다. 새로 고�
 [data_noscript]
 other = "이 페이지는 JavaScript로 그려집니다. 데이터는 <a href=\"{{ .url }}\">{{ .url }}</a>에 있습니다."
 
+# "Keep learning" on posts (partials/keep-learning.html)
+[kl_title]
+other = "계속 배우기"
+
+[kl_guide]
+other = "가이드"
+
+[kl_course]
+other = "강좌"
+
 # Dead remote image (render-image.html, data/image_rewrites.json)
 [image_gone]
 other = "더 이상 볼 수 없는 이미지"

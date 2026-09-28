@@ -1,0 +1,25 @@
+# "Keep learning" on posts (partials/keep-learning.html): which post tags
+# point at which architecture guide or course. A post shows up to two
+# guides and two courses, ranked by how many of its tags match. Tags are
+# compared lower-case. Structure only -- titles and blurbs come from the
+# guide pages and data/courses.json.
+guides:
+  architecture-review-checklist: [aws, architecture, architecture-review, well-architected, security, iam, cloudformation, azure, gcp]
+  compute-ladder: [serverless, lambda, containers, ecs, fargate, docker, kubernetes, ec2, heroku, elastic-beanstalk, app-runner]
+  architecture-anti-patterns: [serverless, lambda, sqs, sns, eventbridge, step-functions, api-gateway, event-driven, kinesis, dynamodb, s3]
+  guardrails-and-paved-roads: [iac, cdk, cloudformation, terraform, sam, organizations, iam, service-catalog, governance, pulumi]
+  diagrams-and-decision-records: [architecture, diagrams, documentation, adr]
+  prepare-for-an-architecture-review: [architecture, architecture-review]
+courses:
+  cpp-standard-library: [cpp, c++, stl]
+  mlx-lm: [mlx, llm, local-llm, apple-silicon, ollama]
+  auth: [auth, oauth, oauth2, jwt, oidc, cognito, authentication, passkeys, saml]
+  agentic-loop-engineering: [claude, claude-code, agents, ai, llm, anthropic]
+  ebpf: [ebpf, observability, tracing, linux]
+  macos-kernel-extensions: [macos, kernel, driverkit]
+  nix: [nix, nixos]
+  terraform: [terraform, iac, hcl]
+  v8-javascript-engine: [v8, javascript, nodejs, deno]
+  pytorch: [pytorch, machine-learning, deep-learning, ml, tensorflow]
+  playground: [playwright, puppeteer, selenium, testing, e2e, webdriverio]
+  stripe: [stripe, payments]

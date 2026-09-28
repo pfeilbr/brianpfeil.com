@@ -30,6 +30,7 @@
 </article>
 
 {{ if $isPost }}
+{{ if eq .Section "post" }}{{ partial "keep-learning.html" . }}{{ end }}
 {{ partial "newsletter.html" . }}
 {{ $related := first 4 (.Site.RegularPages.Related .) }}
 {{ if $related }}

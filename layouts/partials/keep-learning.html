@@ -1,0 +1,45 @@
+{{- /* "Keep learning": the architecture guides and courses that match a
+   post's tags (data/keep_learning.yaml), so a reader who arrived for one
+   old playground finds the structured material next to it. Nothing renders
+   when nothing matches. Guides and courses are English, like posts. */ -}}
+{{- $tags := slice -}}
+{{- range .Params.tags }}{{ $tags = $tags | append (lower .) }}{{ end -}}
+{{- $cfg := hugo.Data.keep_learning -}}
+{{- $picks := slice -}}
+{{- if and $tags $cfg -}}
+  {{- $guides := slice -}}
+  {{- range $slug, $keys := $cfg.guides -}}
+    {{- $n := len (intersect $tags $keys) -}}
+    {{- if gt $n 0 -}}
+      {{- with site.GetPage (printf "/architecture/%s" $slug) -}}
+        {{- $guides = $guides | append (dict "score" $n "weight" .Weight "kind" "guide" "title" .Title "blurb" .Description "url" .RelPermalink) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $courses := slice -}}
+  {{- range $c := hugo.Data.courses.courses -}}
+    {{- with index $cfg.courses $c.slug -}}
+      {{- $n := len (intersect $tags .) -}}
+      {{- if gt $n 0 -}}
+        {{- $courses = $courses | append (dict "score" $n "weight" 0 "kind" "course" "title" $c.title "blurb" $c.description "url" (printf "/courses/%s/" $c.slug) "lessons" (len $c.lessons)) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $picks = (first 2 (sort (sort $guides "weight") "score" "desc")) | append (first 2 (sort $courses "score" "desc")) -}}
+{{- end -}}
+{{- with $picks }}
+<section class="keep-learning" aria-labelledby="kl-title">
+  <h2 id="kl-title" class="kl-title">{{ i18n "kl_title" }}</h2>
+  <ul class="kl-list">
+    {{- range . }}
+    <li>
+      <a class="kl-card" href="{{ .url }}">
+        <span class="kl-kind">{{ if eq .kind "guide" }}{{ i18n "kl_guide" }}{{ else }}{{ i18n "kl_course" }} · {{ replace (i18n "courses_lessons" "{n}") "{n}" (string .lessons) }}{{ end }}</span>
+        <span class="kl-name">{{ .title }}</span>
+        <span class="kl-blurb">{{ .blurb | truncate 140 }}</span>
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{- end -}}

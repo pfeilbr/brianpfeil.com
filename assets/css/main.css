@@ -3365,3 +3365,33 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
 
 .ai-top-list { list-style: none; margin: 0.25rem 0 0; padding: 0; }
 .ai-top-list .ai-row { padding: 0.625rem 0; }
+/* "Keep learning" on posts (partials/keep-learning.html). */
+.keep-learning { margin-top: 2.5rem; }
+.kl-title {
+  margin: 0 0 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+.kl-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+@media (min-width: 640px) { .kl-list { grid-template-columns: 1fr 1fr; } }
+.kl-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1875rem;
+  height: 100%;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+.kl-card:hover { border-color: var(--brand); }
+.kl-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.kl-kind { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--brand); }
+.kl-name { font-size: 0.9375rem; font-weight: 600; line-height: 1.35; color: var(--text-strong); }
+.kl-card:hover .kl-name { color: var(--brand); }
+.kl-blurb { font-size: 0.8125rem; line-height: 1.5; color: var(--text-muted); }
+@media print { .keep-learning { display: none; } }

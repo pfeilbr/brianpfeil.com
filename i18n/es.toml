@@ -544,6 +544,16 @@ other = "No se pudieron cargar los datos de esta página. Prueba a recargarla."
 [data_noscript]
 other = "Esta página se dibuja con JavaScript. Sus datos están en <a href=\"{{ .url }}\">{{ .url }}</a>."
 
+# "Keep learning" on posts (partials/keep-learning.html)
+[kl_title]
+other = "Sigue aprendiendo"
+
+[kl_guide]
+other = "Guía"
+
+[kl_course]
+other = "Curso"
+
 # Dead remote image (render-image.html, data/image_rewrites.json)
 [image_gone]
 other = "La imagen ya no está disponible"
