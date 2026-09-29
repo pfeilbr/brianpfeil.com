@@ -1,0 +1,69 @@
+name: Music refresh
+
+# Rewrites data/music.yaml (the /music/ page) every Thursday and deploys it.
+# The refresher reads only public YouTube data, so no secret is needed. A new
+# public playlist on @pfeilbr is added only if its embed reports OK with this
+# site as the referer -- what a visitor's browser gets -- and one that stops
+# playing drops off. It refuses to write if more than a quarter of the listed
+# playlists vanish at once (a partial answer), and the run then fails.
+on:
+  schedule:
+    - cron: "17 10 * * 4"   # Thursdays 10:17 UTC, off the top of the hour
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: music-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Tests
+        run: python -m unittest discover -s tools/music -p 'test_*.py'
+      - name: Fetch
+        run: python tools/music/refresh.py
+      - name: Check the refreshed file
+        run: python -m unittest discover -s tools/music -p 'test_*.py'
+      # The page must still build with the new data before anything is
+      # pushed. Same Hugo pin as the deploy.
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.166.0"
+          extended: true
+      - name: Build
+        run: |
+          hugo --minify
+          python -c "import json; d = json.load(open('public/data/music.json')); assert len(d['mine']) > 5, d.keys()"
+      - name: Commit and push
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/music.yaml
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -q -m "Music refresh: $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git pull -q --rebase origin main && git push -q origin HEAD:main && break
+            sleep 5
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # Pushes made with GITHUB_TOKEN never trigger other workflows, so the
+      # deploy is dispatched explicitly (gh-pages.yml has workflow_dispatch).
+      - name: Deploy
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run gh-pages.yml --ref main
