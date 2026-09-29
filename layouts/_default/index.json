@@ -3,7 +3,19 @@
   {{- /* Generated posts open with an "alert" banner div linking the source repo.
          Its plain text is entity noise ("&amp;nbsp;"), so drop it before indexing. */ -}}
   {{- $body := replaceRE `(?s)<div class="alert.*?</div>` "" .Content -}}
-  {{- $contents := $body | plainify | htmlUnescape | replaceRE `\s+` " " | truncate 1200 -}}
+  {{- /* truncate re-escapes (' becomes &#39;), so unescape after it. */ -}}
+  {{- $contents := $body | plainify | htmlUnescape | replaceRE `\s+` " " | truncate 1200 | htmlUnescape -}}
+  {{- /* A /learn/ path page has no body; index its description and every
+         resource on it, so searching "kubernetes" or "Karpathy" finds it. */ -}}
+  {{- $pg := . -}}
+  {{- with .Params.learn_path -}}
+    {{- $key := . -}}
+    {{- $words := slice $pg.Description -}}
+    {{- range hugo.Data.learn.paths }}{{ if eq .key $key }}{{ range .items -}}
+      {{- $words = $words | append (delimit (slice (.name | default "") (.by | default "") (i18n (printf "learn_res_%s" .key))) " ") -}}
+    {{- end }}{{ end }}{{ end -}}
+    {{- $contents = delimit $words " · " | truncate 1500 | htmlUnescape -}}
+  {{- end -}}
   {{- $.Scratch.Add "index" (dict "title" .Title "tags" .Params.tags "categories" .Params.categories "contents" $contents "permalink" .RelPermalink "date" (.Date.Format "January 2, 2006")) -}}
 {{- end -}}
 {{- $.Scratch.Get "index" | jsonify -}}
