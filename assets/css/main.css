@@ -1056,10 +1056,10 @@ body.zoom-locked { overflow: hidden; }
 
 /* Channel cards ---------------------------------------------------------- */
 
-.ch-grid { display: grid; grid-template-columns: 1fr; gap: 0.25rem; }
+.ch-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
 
 @media (min-width: 640px) {
-  .ch-grid { grid-template-columns: 1fr 1fr; column-gap: 0.75rem; }
+  .ch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 0.75rem; }
   .ch-card.is-playing { grid-column: 1 / -1; }
 }
 
@@ -1293,10 +1293,17 @@ html[data-theme="dark"] .about-social [data-net="linkedin"] .about-social-icon {
   gap: 0.25rem;
   margin: 1.75rem 0 0.5rem;
   border-bottom: 1px solid var(--border);
+  /* A row wider than a phone scrolls inside itself instead of widening the
+     page (/subscriptions/ was 605px wide at 375px). */
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.ptabs::-webkit-scrollbar { display: none; }
 
 .ptab {
   font: inherit;
+  flex-shrink: 0;
+  white-space: nowrap;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -1327,6 +1334,10 @@ html[data-theme="dark"] .about-social [data-net="linkedin"] .about-social-icon {
   color: var(--text-muted); /* text-faint on bg-muted was 4.14:1 */
 }
 .ptab.is-on .ptab-count { background-color: var(--text-strong); color: var(--bg); }
+@media (max-width: 480px) {
+  .ptab .ic { display: none; }
+  .ptab { padding-left: 0.5rem; padding-right: 0.5rem; }
+}
 
 /* The first section inside a panel sits right under the tab strip. */
 .ptab-panel > .music-section:first-child { margin-top: 1.5rem; }
@@ -2363,7 +2374,7 @@ button.gh-legend:hover span:nth-child(2) { color: var(--brand); text-decoration:
 .gh-badge.is-play { color: #0d7a52; border-color: color-mix(in srgb, #0d7a52 45%, var(--border)); }
 html[data-theme="dark"] .gh-badge.is-play { color: #5fd3a3; border-color: color-mix(in srgb, #5fd3a3 40%, var(--border)); }
 .gh-badge.is-arch { color: #a15c07; border-color: color-mix(in srgb, #a15c07 45%, var(--border)); }
-.gh-repo-desc { margin-top: 0.25rem; font-size: 0.875rem; line-height: 1.55; color: var(--text-body); }
+.gh-repo-desc { margin-top: 0.25rem; font-size: 0.875rem; line-height: 1.55; color: var(--text-body); overflow-wrap: anywhere; }
 .gh-repo-parent { margin-top: 0.125rem; font-size: 0.75rem; color: var(--text-subtle); }
 .gh-list mark, .gh-line mark { background: color-mix(in srgb, #facc15 45%, transparent); color: inherit; border-radius: 0.15rem; padding: 0 0.05rem; }
 .gh-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
@@ -2486,8 +2497,6 @@ html[data-theme="dark"] .gh-step-n { color: color-mix(in srgb, var(--ic-c, var(-
 .hub-langbar { margin-top: 0.875rem; }
 /* Three tabs with chips overflow a phone; drop the chips there and let the
    strip scroll rather than clip the last label. */
-.gh .ptabs { overflow-x: auto; scrollbar-width: none; }
-@media (max-width: 480px) { .gh .ptab .ic { display: none; } .gh .ptab { padding-left: 0.5rem; padding-right: 0.5rem; } }
    Learn page (/learn/). Goal buttons filter the paths below them; each path
    is a grid of whole-card links. Shares .music-section / .music-h2 /
    .music-sub / .music-foot and .chip with the other data pages.
