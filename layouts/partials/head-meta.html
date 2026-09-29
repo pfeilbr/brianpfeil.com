@@ -21,6 +21,9 @@
   {{- $desc = $body | plainify | htmlUnescape | truncate 155 -}}
 {{- end -}}
 {{- $desc = trim (replaceRE `\s+` " " ($desc | plainify | htmlUnescape)) " " -}}
+{{- /* A post that opens with code has no prose to describe it; name it
+   rather than repeat the site-wide description on several pages. */ -}}
+{{- if and (eq $desc "") .IsPage (eq .Section "post") }}{{ $desc = i18n "post_desc_fallback" (dict "title" .Title) }}{{ end -}}
 {{- if eq $desc "" }}{{ $desc = $default }}{{ end -}}
 {{- $title := partial "page-title.html" . -}}
 {{- /* Posts, projects and guides are articles; data pages, courses and

@@ -1954,3 +1954,6 @@ other = "Beste Treffer (Suchbegriff eingeben)"
 
 [page_n]
 other = "Seite {{ .n }}"
+
+[post_desc_fallback]
+other = "{{ .title }}: Notizen und Beispielcode von Brian Pfeil."

@@ -1953,3 +1953,6 @@ other = "Best match (type a search)"
 
 [page_n]
 other = "Page {{ .n }}"
+
+[post_desc_fallback]
+other = "{{ .title }}: notes and example code by Brian Pfeil."

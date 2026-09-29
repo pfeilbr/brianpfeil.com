@@ -1952,3 +1952,6 @@ other = "관련도순 (검색어를 입력하세요)"
 
 [page_n]
 other = "{{ .n }}페이지"
+
+[post_desc_fallback]
+other = "{{ .title }}: Brian Pfeil의 노트와 예제 코드."

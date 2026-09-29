@@ -1952,3 +1952,6 @@ other = "関連度順（検索語を入力）"
 
 [page_n]
 other = "{{ .n }} ページ"
+
+[post_desc_fallback]
+other = "{{ .title }}：Brian Pfeil によるメモとサンプルコード。"

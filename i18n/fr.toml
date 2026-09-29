@@ -1953,3 +1953,6 @@ other = "Pertinence (saisissez une recherche)"
 
 [page_n]
 other = "Page {{ .n }}"
+
+[post_desc_fallback]
+other = "{{ .title }} : notes et exemples de code de Brian Pfeil."

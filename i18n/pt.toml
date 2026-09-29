@@ -1952,3 +1952,6 @@ other = "Mais relevantes (digite uma busca)"
 
 [page_n]
 other = "Página {{ .n }}"
+
+[post_desc_fallback]
+other = "{{ .title }}: notas e código de exemplo de Brian Pfeil."
