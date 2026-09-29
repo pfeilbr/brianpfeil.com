@@ -10,11 +10,15 @@
   {{- $key := cond (eq .Kind "taxonomy") "tags" (cond (eq .Section "post") "posts" .Section) -}}
   {{- $desc = i18n (printf "hub_%s_blurb" $key) -}}
 {{- end -}}
-{{- if eq (trim ($desc | plainify) " \n\t\r") "" }}{{ with .Summary }}{{ $desc = . | plainify | truncate 200 }}{{ end }}{{ end -}}
+{{- /* A generated description is prose only: code blocks (shell exports,
+   profile names) read as noise in a search result. 155 characters is about
+   where Google cuts one off. */ -}}
+{{- $noCode := `(?s)<pre\b.*?</pre>|<div class="highlight.*?</div>` -}}
+{{- if eq (trim ($desc | plainify) " \n\t\r") "" }}{{ with .Summary }}{{ $desc = replaceRE $noCode " " . | plainify | truncate 155 }}{{ end }}{{ end -}}
 {{- if and (eq (trim ($desc | plainify) " \n\t\r") "") .IsPage -}}
   {{- /* Generated posts open with an "alert" banner div linking the source repo; drop it. */ -}}
-  {{- $body := replaceRE `(?s)<div class="alert.*?</div>` "" .Content -}}
-  {{- $desc = $body | plainify | htmlUnescape | truncate 200 -}}
+  {{- $body := replaceRE `(?s)<div class="alert.*?</div>` "" .Content | replaceRE $noCode " " -}}
+  {{- $desc = $body | plainify | htmlUnescape | truncate 155 -}}
 {{- end -}}
 {{- $desc = trim (replaceRE `\s+` " " ($desc | plainify | htmlUnescape)) " " -}}
 {{- if eq $desc "" }}{{ $desc = $default }}{{ end -}}
