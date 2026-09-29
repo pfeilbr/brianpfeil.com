@@ -24,7 +24,7 @@ jobs:
     env:
       HUGO_ENVIRONMENT: production
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
@@ -40,7 +40,7 @@ jobs:
       # The manifest of the last batch IndexNow actually accepted. Saved by
       # the indexnow job only on success, so a refused batch is retried.
       - name: Restore last IndexNow submission
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: .indexnow/manifest.json
           key: indexnow-${{ github.run_id }}
@@ -57,7 +57,7 @@ jobs:
           cp public/indexnow-manifest.json new-manifest.json || true
 
       - name: Keep the changed-URL list for after the deploy
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: indexnow-changed
           path: |
@@ -67,7 +67,7 @@ jobs:
           retention-days: 7
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./public
 
@@ -80,7 +80,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   # Tell Bing and the other IndexNow engines what just changed, once the new
   # pages are actually live (they fetch the key file to verify us).
@@ -88,12 +88,12 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           sparse-checkout: tools/indexnow
 
       - name: Fetch the changed-URL list
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: indexnow-changed
         continue-on-error: true
@@ -116,7 +116,7 @@ jobs:
 
       - name: Save it for the next deploy
         if: steps.submit.outputs.accepted == '1'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: .indexnow/manifest.json
           key: indexnow-${{ github.run_id }}
