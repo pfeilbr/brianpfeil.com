@@ -11,8 +11,8 @@ weight = 3
 Fun and easy interactive vehicle app designed by parents for young children who enjoy the look and sound of vehicles. A terrific collection of real vehicle pictures and sounds that play with one easy tap. You'll also hear the name of the vehicle along with the sound. It will keep those little ones busy for quite a while! They'll get their fill of cars, trucks, and boats!
 
 <div>
-<img style="display: inline; width: 40%;" src="images/vf1.png" width="40%">
-<img style="display: inline; width: 40%;" src="images/vf2.png" width="40%">
+<img style="display: inline; width: 40%;" src="images/vf1.webp" width="40%">
+<img style="display: inline; width: 40%;" src="images/vf2.webp" width="40%">
 </div>
 
 

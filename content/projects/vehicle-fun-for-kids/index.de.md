@@ -9,8 +9,8 @@ weight = 3
 Eine unterhaltsame, einfach zu bedienende interaktive Fahrzeug-App, von Eltern für kleine Kinder gemacht, die Fahrzeuge gern ansehen und hören. Eine großartige Sammlung echter Fahrzeugbilder und -geräusche, die sich mit einem einzigen Tippen abspielen lassen. Zum Geräusch gibt es außerdem den Namen des Fahrzeugs zu hören. Das beschäftigt die Kleinen eine ganze Weile! Autos, Lastwagen und Boote, so viel sie wollen!
 
 <div>
-<img style="display: inline; width: 40%;" src="images/vf1.png" width="40%">
-<img style="display: inline; width: 40%;" src="images/vf2.png" width="40%">
+<img style="display: inline; width: 40%;" src="images/vf1.webp" width="40%">
+<img style="display: inline; width: 40%;" src="images/vf2.webp" width="40%">
 </div>
 
 

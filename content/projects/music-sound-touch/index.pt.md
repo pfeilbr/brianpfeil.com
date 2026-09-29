@@ -9,8 +9,8 @@ weight = 5
 App de música interativo, divertido e fácil, criado por pais para crianças pequenas que gostam de ver e ouvir instrumentos musicais. Uma ótima coleção de fotos e sons de instrumentos musicais de verdade, que tocam com um toque só. Junto com o som, você também ouve o nome do instrumento. Vai manter os pequenos ocupados por um bom tempo!
 
 <div>
-<img style="display: inline; width: 40%" src="images/mst1.png" width="40%">
-<img style="display: inline; width: 40%" src="images/mst2.png" width="40%">
+<img style="display: inline; width: 40%" src="images/mst1.webp" width="40%">
+<img style="display: inline; width: 40%" src="images/mst2.webp" width="40%">
 </div>
 
 

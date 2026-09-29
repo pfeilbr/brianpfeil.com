@@ -9,8 +9,8 @@ weight = 5
 Une application musicale interactive, amusante et facile, conçue par des parents pour les tout-petits qui aiment regarder et écouter les instruments de musique. Une superbe collection de photos et de sons de vrais instruments, qui se déclenchent d'une simple pression. Le nom de l'instrument est annoncé en même temps que le son. De quoi occuper les plus jeunes un bon moment !
 
 <div>
-<img style="display: inline; width: 40%" src="images/mst1.png" width="40%">
-<img style="display: inline; width: 40%" src="images/mst2.png" width="40%">
+<img style="display: inline; width: 40%" src="images/mst1.webp" width="40%">
+<img style="display: inline; width: 40%" src="images/mst2.webp" width="40%">
 </div>
 
 

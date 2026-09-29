@@ -11,8 +11,8 @@ weight = 5
 Fun and easy interactive music app designed by parents for young children who enjoy the look and sound of musical instruments. A terrific collection of real musical instrument pictures and sounds that play with one easy tap. You'll also hear the name of the instrument along with the sound. It will keep those little ones busy for quite a while!
 
 <div>
-<img style="display: inline; width: 40%" src="images/mst1.png" width="40%">
-<img style="display: inline; width: 40%" src="images/mst2.png" width="40%">
+<img style="display: inline; width: 40%" src="images/mst1.webp" width="40%">
+<img style="display: inline; width: 40%" src="images/mst2.webp" width="40%">
 </div>
 
 

@@ -9,8 +9,8 @@ weight = 5
 一款由父母设计、有趣又好上手的互动音乐应用，适合喜欢乐器模样和声音的幼儿。里面收集了大量真实乐器的图片和声音，轻轻一点就能播放。除了声音，还会念出乐器的名字。足够让小朋友玩上好一阵子！
 
 <div>
-<img style="display: inline; width: 40%" src="images/mst1.png" width="40%">
-<img style="display: inline; width: 40%" src="images/mst2.png" width="40%">
+<img style="display: inline; width: 40%" src="images/mst1.webp" width="40%">
+<img style="display: inline; width: 40%" src="images/mst2.webp" width="40%">
 </div>
 
 

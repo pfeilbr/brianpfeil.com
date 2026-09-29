@@ -9,8 +9,8 @@ weight = 3
 乗り物の見た目や音が好きな小さな子どものために、親の目線でつくった、楽しくて簡単なインタラクティブ乗り物アプリ。本物の乗り物の写真と音をたっぷり集めてあり、軽くタップするだけで鳴ります。音と一緒に乗り物の名前も読み上げます。小さなお子さんがしばらく夢中になってくれるはずです。車もトラックも船も、思う存分楽しめます。
 
 <div>
-<img style="display: inline; width: 40%;" src="images/vf1.png" width="40%">
-<img style="display: inline; width: 40%;" src="images/vf2.png" width="40%">
+<img style="display: inline; width: 40%;" src="images/vf1.webp" width="40%">
+<img style="display: inline; width: 40%;" src="images/vf2.webp" width="40%">
 </div>
 
 

@@ -9,8 +9,8 @@ weight = 5
 악기의 모습과 소리를 좋아하는 어린아이를 위해 부모가 직접 설계한, 쉽고 재미있는 인터랙티브 음악 앱입니다. 실제 악기 사진과 소리를 두루 모았고, 가볍게 한 번만 두드리면 재생됩니다. 소리와 함께 악기 이름도 들려줍니다. 아이들이 한참 동안 푹 빠져 있을 겁니다!
 
 <div>
-<img style="display: inline; width: 40%" src="images/mst1.png" width="40%">
-<img style="display: inline; width: 40%" src="images/mst2.png" width="40%">
+<img style="display: inline; width: 40%" src="images/mst1.webp" width="40%">
+<img style="display: inline; width: 40%" src="images/mst2.webp" width="40%">
 </div>
 
 

@@ -9,8 +9,8 @@ weight = 5
 楽器の見た目や音が好きな小さな子どものために、親の目線でつくった、楽しくて簡単なインタラクティブ音楽アプリ。本物の楽器の写真と音をたっぷり集めてあり、軽くタップするだけで鳴ります。音と一緒に楽器の名前も読み上げます。小さなお子さんがしばらく夢中になってくれるはずです。
 
 <div>
-<img style="display: inline; width: 40%" src="images/mst1.png" width="40%">
-<img style="display: inline; width: 40%" src="images/mst2.png" width="40%">
+<img style="display: inline; width: 40%" src="images/mst1.webp" width="40%">
+<img style="display: inline; width: 40%" src="images/mst2.webp" width="40%">
 </div>
 
 

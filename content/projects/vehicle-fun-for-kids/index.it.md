@@ -9,8 +9,8 @@ weight = 3
 Un'app sui veicoli interattiva, divertente e semplice, ideata da genitori per i bambini piccoli che si divertono a guardare e ascoltare i mezzi di trasporto. Un'ottima raccolta di foto e suoni di veicoli veri, che partono con un solo tocco. Insieme al suono si sente anche il nome del veicolo. Terrà occupati i più piccoli per un bel po'! Ne avranno a volontà di auto, camion e barche!
 
 <div>
-<img style="display: inline; width: 40%;" src="images/vf1.png" width="40%">
-<img style="display: inline; width: 40%;" src="images/vf2.png" width="40%">
+<img style="display: inline; width: 40%;" src="images/vf1.webp" width="40%">
+<img style="display: inline; width: 40%;" src="images/vf2.webp" width="40%">
 </div>
 
 
