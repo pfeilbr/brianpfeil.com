@@ -1,0 +1,37 @@
+name: Learn links
+
+# Every Monday, opens every link on /learn/ as an anonymous visitor
+# (tools/learn-links/check_learn_links.py). While any is broken, one issue
+# ("Learn: broken links") stays open with the list; the next clean run
+# closes it. Sites that refuse scripts (403/429) count as blocked, not
+# broken, since they open fine in a browser.
+on:
+  schedule:
+    - cron: "41 11 * * 1"   # Mondays 11:41 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Check every link
+        run: python tools/learn-links/check_learn_links.py --report report.md || true
+      - name: Broken-links issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Learn: broken links"
+          num="$(gh issue list --state open --search "\"$title\" in:title" --json number -q '.[0].number')"
+          if [ -s report.md ]; then
+            if [ -n "$num" ]; then gh issue edit "$num" --body-file report.md; else gh issue create --title "$title" --body-file report.md; fi
+          elif [ -n "$num" ]; then
+            gh issue close "$num" --comment "Every /learn/ link opens again."
+          fi

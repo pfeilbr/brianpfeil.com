@@ -9,6 +9,8 @@ has its i18n strings in English (tools/i18n-check covers the other eight).
 
     python3 tools/learn-links/check_learn_links.py            # report
     python3 tools/learn-links/check_learn_links.py --offline  # shape only
+    python3 tools/learn-links/check_learn_links.py --report out.md  # also write
+        # a Markdown summary of broken links (empty if none), for the weekly issue
 
 A redirect is reported but is not a failure; update the url when it lands
 somewhere permanent. A site that refuses scripts (401/403/429 -- Cloudflare's
@@ -129,6 +131,7 @@ def main(argv: list[str]) -> int:
     with ThreadPoolExecutor(max_workers=12) as pool:
         results = list(pool.map(lambda l: fetch(l[1]), links))
     broken = blocked = 0
+    rows = []
     for (key, url), (status, final) in zip(links, results):
         kind = classify(status)
         if kind == "ok":
@@ -139,10 +142,31 @@ def main(argv: list[str]) -> int:
             print(f"blocked {key}: {status} {url}")
         else:
             broken += 1
+            rows.append(f"| `{key}` | {status} | {url} |")
             print(f"BROKEN {key}: {status} {url}")
     print(f"{len(links)} links, {broken} broken, {blocked} blocked to scripts, "
           f"{len(errors)} shape problems")
+    if "--report" in argv:
+        write_report(Path(argv[argv.index("--report") + 1]), rows, errors, len(links))
     return 1 if broken or errors else 0
+
+
+def write_report(path: Path, rows: list[str], errors: list[str], total: int) -> None:
+    """Markdown for the weekly issue; an empty file when all is well, which
+    is how the workflow knows to close it."""
+    if not rows and not errors:
+        path.write_text("")
+        return
+    out = [f"The weekly check of the {total} links on https://brianpfeil.com/learn/ "
+           "found problems. A link here fails for a visitor who isn't signed in.", ""]
+    if rows:
+        out += ["| key | status | url |", "| --- | --- | --- |", *rows, ""]
+    if errors:
+        out += ["Data problems in `data/learn.json`:", "", *[f"- {e}" for e in errors], ""]
+    out += ["Fix: replace or remove each item in `data/learn.json` (and its `learn_res_<key>` "
+            "strings if removed), then `make check-learn-links`. This issue closes itself on "
+            "the next clean run."]
+    path.write_text("\n".join(out) + "\n")
 
 
 if __name__ == "__main__":

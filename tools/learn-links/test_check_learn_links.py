@@ -83,6 +83,29 @@ class FetchTest(unittest.TestCase):
         self.assertEqual((result[0], calls), (404, 1))
 
 
+class ReportTest(unittest.TestCase):
+    def test_empty_when_clean_and_a_table_when_not(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "r.md"
+            c.write_report(p, [], [], 90)
+            self.assertEqual(p.read_text(), "")
+            c.write_report(p, ["| `x` | 404 | https://e.com |"], ["y: bad"], 90)
+            body = p.read_text()
+            self.assertIn("| `x` | 404 | https://e.com |", body)
+            self.assertIn("- y: bad", body)
+            self.assertIn("closes itself", body)
+
+
+class PathPagesTest(unittest.TestCase):
+    """content/learn/<key>.<lang>.md match data/learn.json and the i18n strings."""
+
+    def test_pages_are_current(self):
+        import path_pages
+        self.assertEqual(path_pages.main(["--check"]), 0)
+
+
 class RealDataTest(unittest.TestCase):
     """The shipped data/learn.json must pass the offline checks."""
 

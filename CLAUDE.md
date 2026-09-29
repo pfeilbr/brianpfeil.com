@@ -212,6 +212,8 @@ touching a template:
   card), generated into `content/learn/<key>.<lang>.md` by `make learn-pages`;
   a new path or changed path string needs a re-run, and verify/CI fail while
   those files are stale. Old `/learn/#<key>` links redirect there.
+  Every Monday `.github/workflows/learn-links.yml` opens each link; while any
+  is broken, the issue "Learn: broken links" stays open (closes itself).
   `page` instead of `url` links one of this site's projects in the visitor's
   language. Learn took Archive's nav slot; Archive is still a home card.
 - **/ai/ refreshes itself.** `.github/workflows/ai-radar.yml` runs
