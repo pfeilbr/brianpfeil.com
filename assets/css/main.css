@@ -2510,6 +2510,9 @@ html[data-theme="dark"] .gh-step-n { color: color-mix(in srgb, var(--ic-c, var(-
 .learn-crumb a { color: var(--text-subtle); }
 .learn-crumb a:hover { color: var(--brand); }
 a.chip { text-decoration: none; }
+.share { margin: 2rem 0 1rem; }
+.share-h { font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin: 0 0 0.5rem; }
+.share-row { display: flex; flex-wrap: wrap; gap: 0.375rem; }
 
 /* Two across even on a phone, so the goals don't push every resource a
    full screen down. */

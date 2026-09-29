@@ -1,0 +1,33 @@
+{{- /* Share this page: plain links to each network's own composer, plus a
+   copy-link button. No script or request goes to a third party until the
+   visitor clicks. Links carry utm_source=<network>&utm_medium=share, so
+   Analytics can tell shares apart from the social kit's own posts. */ -}}
+{{- $url := partial "canonical-url.html" . -}}
+{{- $title := .Title -}}
+{{- $u := dict -}}
+{{- range slice "x" "bluesky" "linkedin" -}}
+  {{- $u = merge $u (dict . (printf "%s?utm_source=%s&utm_medium=share" $url .)) -}}
+{{- end -}}
+<aside class="share" aria-labelledby="share-h">
+  <h2 id="share-h" class="share-h">{{ i18n "share_title" }}</h2>
+  <div class="share-row">
+    <a class="chip" rel="noopener" target="_blank" href="https://x.com/intent/post?text={{ $title | urlquery }}&url={{ index $u "x" | urlquery }}" aria-label="{{ replace (i18n "share_on" "{site}") "{site}" "X" }}">X</a>
+    <a class="chip" rel="noopener" target="_blank" href="https://bsky.app/intent/compose?text={{ printf "%s %s" $title (index $u "bluesky") | urlquery }}" aria-label="{{ replace (i18n "share_on" "{site}") "{site}" "Bluesky" }}">Bluesky</a>
+    <a class="chip" rel="noopener" target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url={{ index $u "linkedin" | urlquery }}" aria-label="{{ replace (i18n "share_on" "{site}") "{site}" "LinkedIn" }}">LinkedIn</a>
+    <button type="button" class="chip share-copy" data-url="{{ $url }}" data-done="{{ i18n "share_copied" }}">{{ i18n "share_copy" }}</button>
+  </div>
+</aside>
+<script>
+(function () {
+  var b = document.querySelector(".share-copy");
+  if (!b || b.dataset.wired) return;
+  b.dataset.wired = "1";
+  var label = b.textContent;
+  b.addEventListener("click", function () {
+    (window.copyText ? window.copyText(b.dataset.url) : Promise.reject()).then(function () {
+      b.textContent = b.dataset.done;
+      setTimeout(function () { b.textContent = label; }, 1500);
+    }, function () { window.prompt("", b.dataset.url); });
+  });
+})();
+</script>
