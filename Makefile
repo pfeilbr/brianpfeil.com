@@ -4,11 +4,12 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-ai test-ai-page test-social ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-ai test-ai-page test-social test-movies ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
 	python3 tools/site-check/check_site.py --public public
 	python3 tools/github-repos/check_page.py --public public
+	python3 tools/movies/check_payload.py --public public
 
 generate-posts: ## Regenerate generated-*.md posts from GitHub
 	cd tools/generate-posts && go run . -user=pfeilbr -dest=../../content/post -debug
@@ -120,6 +121,9 @@ test-music: ## Tests for the music page's playlist refresher
 movies-refresh: ## Fill in and refresh data/movies.json (posters, scores, trailers, streaming)
 	python3 tools/movies/refresh.py
 
+test-movies: ## Tests for the per-language /data/movies.<lang>.json check
+	python3 -m unittest discover -s tools/movies -p 'test_*.py'
+
 # Every public repo of pfeilbr, classified into areas and learning paths
 # (tools/github-repos/config.json). Needs `gh auth login`.
 github-refresh: ## Refresh data/github.json from GitHub (repos, READMEs, areas, learning paths)
@@ -213,4 +217,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf
+.PHONY: test-movies learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf

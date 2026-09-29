@@ -144,6 +144,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-layout` | Build `/media/` from a fixture; check `/data/media.json` and the page in all nine languages |
 | `make test-link-check` | Tests for the repo-link checker |
 | `make test-music` | Tests for the music page's playlist refresher |
+| `make test-movies` | Tests for the check that `/data/movies.<lang>.json` matches `movies.json` (verify runs the check on the build) |
 | `make test-github` | Tests for the GitHub page's data refresher (Python) and its search (node) |
 | `make test-learn-links` | Tests for the /learn/ link checker, and its offline check of data/learn.json |
 | `make test-courses` | Tests for the course sync, and a privacy check of every published lesson |

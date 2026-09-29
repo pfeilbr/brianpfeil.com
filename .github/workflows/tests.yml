@@ -67,6 +67,8 @@ jobs:
         run: python -m unittest discover -s tools/image-rescue -p 'test_*.py' -v
       - name: social kit tests
         run: python -m unittest discover -s tools/social/tests -v
+      - name: movies payload check tests
+        run: python -m unittest discover -s tools/movies -p 'test_*.py' -v
       - name: docs check (every Makefile target documented)
         run: |
           python -m unittest discover -s tools/docs-check -p 'test_*.py' -v
@@ -96,6 +98,9 @@ jobs:
       # Every same-site link resolves; no tag/category casing clashes.
       - name: Internal link check
         run: python3 tools/site-check/check_site.py --public public
+      # /movies/ loads /data/movies.<lang>.json; it must match movies.json.
+      - name: Movies per-language payload check
+        run: python3 tools/movies/check_payload.py --public public
       - name: Media page render check
         run: python3 tools/instagram-media/tests/check_layout.py --build
       # Builds /ai/ from a fixture briefing and with no data; checks the page

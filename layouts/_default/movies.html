@@ -1,7 +1,7 @@
 {{ define "main" }}
-{{- /* /movies/ renders in the browser from /data/movies.json (published from
-   data/movies.json by partials/publish-data.html), so the JSON is the page's
-   only source. tools/movies/refresh.py fills it in from a list of IMDb ids.
+{{- /* /movies/ renders in the browser from /data/movies.<lang>.json (published
+   from data/movies.json by partials/publish-data.html, cut to this language
+   and English), so the JSON is the page's only source. tools/movies/refresh.py fills it in from a list of IMDb ids.
    Everything the script prints comes from here, already translated. */ -}}
 {{ $lang := .Site.Language.Lang }}
 {{ $strings := dict
@@ -240,7 +240,7 @@
     count.textContent = shown.length + " / " + movies.length;
   }
 
-  fetch("/data/movies.json")
+  fetch("/data/movies." + LANG + ".json")
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (doc) {
       movies = doc.movies;

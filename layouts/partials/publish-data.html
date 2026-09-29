@@ -14,4 +14,30 @@
   {{- with resources.FromString (printf "data/%s.json" $name) (jsonify $out) -}}
     {{- .Publish -}}
   {{- end -}}
+  {{- /* movies.json carries titles, genres and synopses in all nine
+     languages (544 KB); a visitor reads one. /movies/ loads
+     movies.<lang>.json instead: those maps cut to that language and the
+     English the page falls back to, everything else as is. */ -}}
+  {{- if eq $name "movies" -}}
+    {{- range hugo.Sites -}}
+      {{- $l := .Language.Lang -}}
+      {{- $movies := slice -}}
+      {{- range $d.movies -}}
+        {{- $m := dict -}}
+        {{- range $k, $v := . -}}
+          {{- if in (slice "titles" "genres" "synopsis") $k -}}
+            {{- $cut := dict -}}
+            {{- range $vl, $vv := $v }}{{ if in (slice "en" $l) $vl }}{{ $cut = merge $cut (dict $vl $vv) }}{{ end }}{{ end -}}
+            {{- $v = $cut -}}
+          {{- end -}}
+          {{- $m = merge $m (dict $k $v) -}}
+        {{- end -}}
+        {{- $movies = $movies | append $m -}}
+      {{- end -}}
+      {{- $slim := merge $d (dict "movies" $movies) -}}
+      {{- with resources.FromString (printf "data/movies.%s.json" $l) (jsonify $slim) -}}
+        {{- .Publish -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}

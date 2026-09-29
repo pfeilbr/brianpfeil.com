@@ -186,6 +186,10 @@ touching a template:
   output, since a year match can pick a same-year namesake. Synopses, titles
   and genres come back in all nine languages from JustWatch, so they are
   data, not i18n. Set `"mpa"` on an entry to override a wrong rating.
+  The page loads `/data/movies.<lang>.json` (those three maps cut to its
+  language + English, ~40–60 KB gzipped instead of 207 KB); the full
+  `movies.json` is still published for the raw link.
+  `tools/movies/check_payload.py` (in verify) keeps the two in step.
 - **/architecture/:** hand-written guides in `content/architecture/*.md`,
   English only, ordered by `weight`; the section index is translated. They
   are generic by design — drawn from B's review practice with every company,
