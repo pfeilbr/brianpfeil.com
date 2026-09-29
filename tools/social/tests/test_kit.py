@@ -25,6 +25,13 @@ class Kit(unittest.TestCase):
         # @handles are X-only
         self.assertNotIn("@simonw", first["posts"]["linkedin"])
 
+    def test_learn_paths_link_their_own_page(self):
+        for it in self.items:
+            if it["id"].startswith("learn:"):
+                key = it["id"].split(":", 1)[1]
+                self.assertEqual(it["path"], f"/learn/{key}/")
+                self.assertNotIn("#", it["posts"]["x"])
+
     def test_every_post_fits_its_channel(self):
         for it in self.items:
             p = it["posts"]

@@ -115,7 +115,7 @@ def learn_items(en):
             "kind": "learn",
             "title": t(en, f"learn_path_{p['key']}"),
             "blurb": t(en, f"learn_path_blurb_{p['key']}"),
-            "path": f"/learn/#{p['key']}",
+            "path": f"/learn/{p['key']}/",  # its own page: own title and share card
             "n": len(items),
             "names": [i.get("name") or i.get("key") for i in items],
             "picks": [label(i) for i in picks],
