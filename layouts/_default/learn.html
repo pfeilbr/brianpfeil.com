@@ -74,6 +74,19 @@
   <div id="learn-paths" aria-busy="true" aria-live="polite"></div>
   <p class="music-sub learn-none" id="learn-none" hidden></p>
 
+  {{- /* On a path whose items name an /ai/ radar source (the people path):
+     their newest posts, filled from /data/ai.json, which refreshes twice a
+     day. Stays hidden if that data can't load. */ -}}
+  {{ $radar := slice }}
+  {{ range $data.paths }}{{ if eq .key $cur }}{{ range .items }}{{ with .radar }}{{ $radar = $radar | append . }}{{ end }}{{ end }}{{ end }}{{ end }}
+  {{ with $radar }}
+  <section class="music-section learn-latest" id="learn-latest" aria-labelledby="learn-latest-h" data-sources="{{ delimit . " " }}" hidden>
+    <h2 id="learn-latest-h" class="music-h2">{{ i18n "learn_latest_title" }}</h2>
+    <p class="music-sub">{{ i18n "learn_latest_note" }}</p>
+    <ul class="learn-latest-list" id="learn-latest-list"></ul>
+  </section>
+  {{ end }}
+
   {{ if $cur }}{{ $goals }}{{ end }}
 
   {{ partial "share-links.html" . }}
@@ -216,7 +229,39 @@
     if (intro) intro.textContent = D.fill(T.intro, { count: n });
     out.setAttribute("aria-busy", "false");
     select(T.cur || "all");
+    latest();
   }).catch(function () { D.fail(out, T.error); });
+
+  /* "Latest from them": each person's two newest items, in the path's
+     (priority) order, ten at most. */
+  function latest() {
+    var box = document.getElementById("learn-latest");
+    if (!box) return;
+    var ids = box.dataset.sources.split(" ");
+    D.load("ai").then(function (ai) {
+      var name = {};
+      ai.sources.forEach(function (s) { name[s.id] = s.name; });
+      var fmt = new Intl.DateTimeFormat(document.documentElement.lang || "en", { month: "short", day: "numeric" });
+      var picks = [];
+      ids.forEach(function (id) {
+        ai.items.filter(function (i) { return i.source === id; })
+          .sort(function (a, b) { return a.published < b.published ? 1 : -1; })
+          .slice(0, 2).forEach(function (i) { picks.push(i); });
+      });
+      if (!picks.length) return;
+      var list = document.getElementById("learn-latest-list");
+      picks.slice(0, 10).forEach(function (i) {
+        var li = el("li", "learn-latest-item");
+        var a = D.link(i.url, "learn-latest-title");
+        a.textContent = i.title;
+        li.appendChild(a);
+        var d = new Date(i.published);
+        li.appendChild(el("span", "learn-latest-meta", (name[i.source] || i.source) + (isNaN(d) ? "" : " · " + fmt.format(d))));
+        list.appendChild(li);
+      });
+      box.hidden = false;
+    }).catch(function () {});
+  }
 })();
 </script>
 {{ end }}

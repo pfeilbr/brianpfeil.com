@@ -2508,6 +2508,11 @@ html[data-theme="dark"] .gh-step-n { color: color-mix(in srgb, var(--ic-c, var(-
 
 .learn-top { margin-top: 1.5rem; }
 .learn-crumb { font-size: 0.8125rem; margin-bottom: 0.25rem; }
+.learn-latest-list { list-style: none; margin: 0; padding: 0; }
+.learn-latest-item { display: flex; flex-direction: column; gap: 0.125rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.learn-latest-title { font-size: 0.875rem; font-weight: 600; color: var(--text-strong); text-decoration: none; }
+.learn-latest-title:hover { color: var(--brand); }
+.learn-latest-meta { font-size: 0.75rem; color: var(--text-subtle); }
 .learn-crumb a { color: var(--text-subtle); }
 .learn-crumb a:hover { color: var(--brand); }
 a.chip { text-decoration: none; }

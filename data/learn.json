@@ -1,19 +1,19 @@
 {
-  "_comment": "The /learn/ page (layouts/_default/learn.html). Structure and links only: each path's title and blurb are i18n keys learn_path_<key> / learn_path_blurb_<key>, each resource's blurb is learn_res_<key>, and a `group` is learn_group_<group>. `by` and `name` are brand names, so they are not translated. `page` points at a project on this site; its title and description come from that page, in each language. Every url must open for a visitor who isn't signed in -- make check-learn-links.",
+  "_comment": "The /learn/ page (layouts/_default/learn.html). Structure and links only: each path's title and blurb are i18n keys learn_path_<key> / learn_path_blurb_<key>, each resource's blurb is learn_res_<key>, and a `group` is learn_group_<group>. `by` and `name` are brand names, so they are not translated. `page` points at a project on this site; its title and description come from that page, in each language. `radar` is a source id in tools/ai-radar/config.json: that path's page then shows the person's newest posts from /data/ai.json. Every url must open for a visitor who isn't signed in -- make check-learn-links.",
   "paths": [
     {
       "key": "people",
       "icon": "i-pen",
       "grouped": true,
       "items": [
-        { "key": "simonw_blog", "name": "Simon Willison's Weblog", "by": "Simon Willison", "url": "https://simonwillison.net/", "pick": true },
+        { "key": "simonw_blog", "name": "Simon Willison's Weblog", "by": "Simon Willison", "url": "https://simonwillison.net/", "pick": true, "radar": "simonw" },
         { "key": "simonw_llm", "name": "LLM", "by": "Simon Willison", "url": "https://llm.datasette.io/" },
-        { "key": "lex_podcast", "name": "Lex Fridman Podcast", "by": "Lex Fridman", "url": "https://lexfridman.com/podcast/" },
+        { "key": "lex_podcast", "name": "Lex Fridman Podcast", "by": "Lex Fridman", "url": "https://lexfridman.com/podcast/", "radar": "lexfridman" },
         { "key": "huberman_podcast", "name": "Huberman Lab", "by": "Andrew Huberman", "url": "https://www.hubermanlab.com/podcast" },
         { "key": "patterns_dev", "name": "Patterns.dev", "by": "Addy Osmani", "url": "https://www.patterns.dev/", "pick": true },
-        { "key": "addy_blog", "name": "AddyOsmani.com", "by": "Addy Osmani", "url": "https://addyosmani.com/blog/" },
-        { "key": "mitchellh_writing", "name": "Writing", "by": "Mitchell Hashimoto", "url": "https://mitchellh.com/writing" },
-        { "key": "levels_blog", "name": "levels.io", "by": "Pieter Levels (@levelsio)", "url": "https://levels.io/" }
+        { "key": "addy_blog", "name": "AddyOsmani.com", "by": "Addy Osmani", "url": "https://addyosmani.com/blog/", "radar": "addyosmani" },
+        { "key": "mitchellh_writing", "name": "Writing", "by": "Mitchell Hashimoto", "url": "https://mitchellh.com/writing", "radar": "mitchellh" },
+        { "key": "levels_blog", "name": "levels.io", "by": "Pieter Levels (@levelsio)", "url": "https://levels.io/", "radar": "levelsio" }
       ]
     },
     {
