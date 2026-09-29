@@ -172,8 +172,8 @@ If you're in immediate danger, call 911 or go to the nearest emergency room.
 
 ---
 
-I don't have a neat ending. I'm still in treatment, still learning my patterns, still repairing relationships. But I'm here, I'm working, I'm present for my boys, and I'm done hiding this.
+I don't have a neat ending. I'm still in treatment, still learning my patterns, still repairing relationships. But I'm here, I'm present for my boys, and I'm done hiding this.
 
-If this post helped you, or if you're going through something similar and just want someone to hear it, reach out. I'll answer. I know how heavy a text can feel, so I'll go first.
+If this post helped you, or if you're going through something similar and just want someone to hear it, reach out. My LinkedIn and X are on the [about page](/about/). I know how heavy a message can feel, so consider this post me going first.
 
 *I'm not a medical professional. This is my experience, not medical advice. Please work with a qualified clinician on your own care.*
