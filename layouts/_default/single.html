@@ -56,13 +56,13 @@
   <div class="flex-1 min-w-0">
     {{ with .PrevInSection }}
     <span class="block text-xs text-gray-400 mb-0.5">&larr; {{ i18n "previous" }}</span>
-    <a href="{{ .RelPermalink }}" rel="prev" class="text-brand no-underline hover:underline">{{ .Title }}</a>
+    <a href="{{ .RelPermalink }}" rel="prev" class="text-brand no-underline hover:underline">{{ .Title | default (i18n "previous") }}</a>
     {{ end }}
   </div>
   <div class="flex-1 min-w-0 text-right">
     {{ with .NextInSection }}
     <span class="block text-xs text-gray-400 mb-0.5">{{ i18n "next" }} &rarr;</span>
-    <a href="{{ .RelPermalink }}" rel="next" class="text-brand no-underline hover:underline">{{ .Title }}</a>
+    <a href="{{ .RelPermalink }}" rel="next" class="text-brand no-underline hover:underline">{{ .Title | default (i18n "next") }}</a>
     {{ end }}
   </div>
 </nav>

@@ -12,6 +12,14 @@
    the end of Markdown images (RE2 has no lookahead to skip them). */ -}}
 {{- $c = replaceRE `<img\b` `<img loading="lazy" decoding="async"` $c -}}
 {{- $c = replace $c ` loading="lazy" decoding="async">` `>` -}}
+{{- /* A raw <img> with no alt at all has a screen reader spell out its file
+   name; alt="" has it skip the image instead. Nothing better is known about
+   these screenshots, and the prose around them already describes them. */ -}}
+{{- range uniq (findRE `<img\b[^>]*>` $c) -}}
+  {{- if not (findRE `\salt=` .) -}}
+    {{- $c = replace $c . (replace . "<img " `<img alt="" `) -}}
+  {{- end -}}
+{{- end -}}
 {{- /* Raw <img> tags pointing at dead remote images (see
    render-image.html): swap in the rescued copy, or replace the whole tag
    with the "no longer available" note. */ -}}
