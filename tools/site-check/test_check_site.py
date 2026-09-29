@@ -29,6 +29,18 @@ class SiteTest(unittest.TestCase):
         self.write("public/lesson.html", "<p>l</p>")
         self.assertEqual(set(c.broken_links(self.root / "public")), {"/gone/"})
 
+    def test_relative_links(self):
+        # A translated bundle page pointing at images/ next to itself, where
+        # Hugo never published them, is broken; the English copy is fine.
+        self.write("public/projects/app/index.html", '<img src="images/a.png"><a href="../">up</a>')
+        self.write("public/projects/app/images/a.png", "png")
+        self.write("public/projects/index.html", "<p>list</p>")
+        self.write("public/ja/projects/app/index.html",
+                   '<img src="images/a.png"><a href="mailto:x@y.z">m</a><a href="?q=1">q</a>'
+                   '<a href="C&#43;&#43;/">c</a><pre>href="nope/"</pre><code>src=gone.png</code>')
+        self.write("public/ja/projects/app/C++/index.html", "<p>c</p>")
+        self.assertEqual(set(c.broken_links(self.root / "public")), {"/ja/projects/app/images/a.png"})
+
     def test_dead_hosts(self):
         self.write("public/a/index.html", '<img src="http://static-content-01.s3-website-us-east-1.amazonaws.com/x.png">'
                    '<pre># http://note.io/abc</pre><a href="https://example.com/">ok</a>')

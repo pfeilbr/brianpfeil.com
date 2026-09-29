@@ -132,7 +132,7 @@ A set of ReactCDK components that has feature parity with all TS components from
 * mapping from react concepts of props, state, children, render props to typescript
 CDK constructors, params, hierarchical nesting (parent), etc.
 * code generated based on the jsii manifests of CDK modules
-[via]((https://twitter.com/emeshbi/status/1305017904027643906?s=20)) @eladb
+[via](https://twitter.com/emeshbi/status/1305017904027643906?s=20) @eladb
 * custom react renderer / reconciler where cloud (cfn) is it's render target getting there via CDK language layer.
 * ReactCDKBaseComponent (class or functional component/hooks friendly)
 * ReactCDKPatternComponent - pre-composed infra for common use cases.

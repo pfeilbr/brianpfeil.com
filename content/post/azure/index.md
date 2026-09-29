@@ -306,7 +306,7 @@ Example
 * Subscriptions - developers who need to consume the published APIs must include a valid subscription key in HTTP requests when they make calls to those APIs
 	* can be scoped to product, all APIs, or an individual API
 	* need to provide `ocp-apim-subscription-key` header when calling
-* [Policies]((https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-policies)) - allow the publisher to change the behavior of the API through configuration.
+* [Policies](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-policies) - allow the publisher to change the behavior of the API through configuration.
 	* specified in XML
 	* Allow for request and response transformations.  Rate limiting.  Similar to AWS APIG request/response mapping templates.
 * as of 2021-02-12 takes about 30 min to create API Management instance

@@ -3,8 +3,11 @@
 
     python3 tools/site-check/check_site.py --public public
 
-1. Every same-site link and asset (href/src starting with "/") resolves to a
-   file in the build -- a page's index.html, or the file itself. Links to
+1. Every same-site link and asset resolves to a file in the build -- a
+   page's index.html, or the file itself. That covers relative ones too
+   (src="images/a.png" against the page's own URL): translated bundle
+   pages once pointed 48 screenshots at a folder Hugo only publishes under
+   the English path. Links to
    pages that exist only on the live host (none today) can be listed in
    ALLOW.
 2. No page loads or links to a host that is gone for good and could be
@@ -19,6 +22,8 @@ Exit status 1 on any problem. Standard library only.
 """
 
 import argparse
+import html
+import posixpath
 import re
 import sys
 from collections import defaultdict
@@ -27,8 +32,26 @@ from urllib.parse import unquote
 
 REPO = Path(__file__).resolve().parents[2]
 ATTR = re.compile(r"""\b(?:href|src)=(?:"([^"]*)"|'([^']*)'|([^\s>"']+))""")
-SCRIPT = re.compile(r"<script\b.*?</script>", re.S | re.I)
-ALLOW: set[str] = set()
+# Scripts, and code samples that merely show an href= or src=.
+SCRIPT = re.compile(r"<script\b.*?</script>|<pre\b.*?</pre>|<code\b.*?</code>", re.S | re.I)
+# Posts generated from repos that are now private link to files in those
+# repos by relative path. Pointing them at GitHub would still 404 for a
+# visitor; what happens to these posts is B's open decision (see
+# `make check-repo-links`), so they are listed rather than rewritten.
+# Delete an entry once its post is dealt with.
+ALLOW: set[str] = {
+    "/post/drawio/aws-scratchpad-panel-export.xml",
+    "/post/mdx-deck/examples/example01/deck.mdx",
+    "/post/mdx-deck/examples/example01/package.json",
+    "/post/wordpress/assets/images/Port_Forwarding_Rules_and_vagrant-local_39d50a0a4d6_-_Network_and_Oracle_VM_VirtualBox_Manager.png",
+    "/post/wordpress/assets/images/admin-plugin-01.png",
+    "/post/wordpress/assets/images/custom-endpoint-response-json.png",
+    "/post/wordpress/assets/images/hosts_—_notes.png",
+    "/post/wordpress/wp-root/wp-content/plugins/myplugin.php",
+}
+# Not a path on this site: a scheme (https:, mailto:, data:, javascript:),
+# a fragment or query of the page itself, a template placeholder, or empty.
+RELATIVE_SKIP = re.compile(r"^(?:[a-zA-Z][a-zA-Z0-9+.-]*:|#|\?|\{|$)")
 sys.path.insert(0, str(REPO / "tools" / "image-rescue"))
 from rescue import DEAD_HOSTS  # noqa: E402
 REMOTE = re.compile(r"""\b(?:href|src|srcset)=(?:"(https?://[^"]*)"|'(https?://[^']*)'|(https?://[^\s>"']+))""", re.I)
@@ -60,9 +83,12 @@ def broken_links(public: Path) -> dict[str, set[str]]:
         text = SCRIPT.sub("", page.read_text(encoding="utf-8", errors="replace"))
         here = "/" + page.relative_to(public).as_posix()
         for m in ATTR.finditer(text):
-            url = next(g for g in m.groups() if g is not None)
-            if not url.startswith("/") or url.startswith("//"):
+            url = html.unescape(next(g for g in m.groups() if g is not None))
+            if url.startswith("//") or RELATIVE_SKIP.match(url):
                 continue
+            if not url.startswith("/"):
+                url = posixpath.normpath(posixpath.join(posixpath.dirname(here), url)) + (
+                    "/" if url.endswith("/") else "")
             path = unquote(url.split("#", 1)[0].split("?", 1)[0])
             if not path or path in ALLOW:
                 continue

@@ -285,7 +285,10 @@ touching a template:
   file is `static/<key>.txt`; the key is public by design.
 
 - **Site check** (`tools/site-check`, in verify and CI): every same-site
-  link in the build must resolve, and no tag/category may be used with two
+  link and image in the build must resolve, relative ones included (Hugo
+  publishes a bundle's files once, under the English path, so
+  `layouts/_default/single.html` points raw `src="images/…"` at each
+  resource's real URL), and no tag/category may be used with two
   casings — with `disablePathToLower`, "HTML" and "html" race for one URL
   and the build output changes from run to run.
 - **Contrast:** secondary text uses a colour token (`--text-subtle`), never

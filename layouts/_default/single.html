@@ -24,8 +24,16 @@
   </nav>
   {{ end }}
 
+  {{- /* Raw <img src="images/x.png"> in a bundle resolves against the page's
+     own URL, but Hugo publishes a bundle's files once, under the English
+     path, so on /ja/projects/x/ every such image was a 404. Point each one
+     at where its file is actually published. */ -}}
+  {{- $content := .Content -}}
+  {{- range .Resources -}}
+    {{- $content = replace $content (printf `src="%s"` .Name) (printf `src="%s"` .RelPermalink) -}}
+  {{- end }}
   <div class="prose">
-    {{ partial "content-a11y.html" .Content | safeHTML }}
+    {{ partial "content-a11y.html" $content | safeHTML }}
   </div>
 </article>
 

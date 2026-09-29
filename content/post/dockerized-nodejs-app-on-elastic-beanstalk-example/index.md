@@ -16,7 +16,7 @@ summary = "better your developer workflow with Docker + NodeJS"
 
 
 
-Example of developing and deploying a [dockerized]((https://www.docker.com/)) [Node.js](https://nodejs.org/) app to [Elastic Beanstalk](http://aws.amazon.com/elasticbeanstalk/)
+Example of developing and deploying a [dockerized](https://www.docker.com/) [Node.js](https://nodejs.org/) app to [Elastic Beanstalk](http://aws.amazon.com/elasticbeanstalk/)
 
 > source on Github at [pfeilbr/Elastic-Beanstalk-Docker-Node.js-Example](https://github.com/pfeilbr/Elastic-Beanstalk-Docker-Node.js-Example)
 
