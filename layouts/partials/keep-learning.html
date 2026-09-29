@@ -1,4 +1,4 @@
-{{- /* "Keep learning": the architecture guides and courses that match a
+{{- /* "Keep learning": the /learn/ path, architecture guides and courses that match a
    post's tags (data/keep_learning.yaml), so a reader who arrived for one
    old playground finds the structured material next to it. Nothing renders
    when nothing matches. Guides and courses are English, like posts. */ -}}
@@ -25,7 +25,24 @@
       {{- end -}}
     {{- end -}}
   {{- end -}}
+  {{- /* One learn path: the best tag overlap, ties to the first listed. */ -}}
+  {{- $path := dict -}}
+  {{- $best := 0 -}}
+  {{- range $i, $key := slice "models" "ai" "cloud" "code" "university" "papers" "kids" -}}
+    {{- with index $cfg.paths $key -}}
+      {{- $n := len (intersect $tags .) -}}
+      {{- if gt $n $best -}}
+        {{- with site.GetPage (printf "/learn/%s" $key) -}}
+          {{- $best = $n -}}
+          {{- $items := 0 -}}
+          {{- range hugo.Data.learn.paths }}{{ if eq .key $key }}{{ $items = len .items }}{{ end }}{{ end -}}
+          {{- $path = dict "kind" "path" "title" .Title "blurb" .Description "url" .RelPermalink "items" $items -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
   {{- $picks = (first 2 (sort (sort $guides "weight") "score" "desc")) | append (first 2 (sort $courses "score" "desc")) -}}
+  {{- with $path }}{{ $picks = slice . | append $picks }}{{ end -}}
 {{- end -}}
 {{- with $picks }}
 <section class="keep-learning" aria-labelledby="kl-title">
@@ -34,7 +51,7 @@
     {{- range . }}
     <li>
       <a class="kl-card" href="{{ .url }}">
-        <span class="kl-kind">{{ if eq .kind "guide" }}{{ i18n "kl_guide" }}{{ else }}{{ i18n "kl_course" }} · {{ replace (i18n "courses_lessons" "{n}") "{n}" (string .lessons) }}{{ end }}</span>
+        <span class="kl-kind">{{ if eq .kind "path" }}{{ replace (i18n "kl_path" "{n}") "{n}" (string .items) }}{{ else if eq .kind "guide" }}{{ i18n "kl_guide" }}{{ else }}{{ i18n "kl_course" }} · {{ replace (i18n "courses_lessons" "{n}") "{n}" (string .lessons) }}{{ end }}</span>
         <span class="kl-name">{{ .title }}</span>
         <span class="kl-blurb">{{ .blurb | truncate 140 }}</span>
       </a>

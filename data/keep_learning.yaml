@@ -1,6 +1,7 @@
 # "Keep learning" on posts (partials/keep-learning.html): which post tags
-# point at which architecture guide or course. A post shows up to two
-# guides and two courses, ranked by how many of its tags match. Tags are
+# point at which /learn/ path, architecture guide or course. A post shows the
+# one best-matching learn path, then up to two guides and two courses, ranked
+# by how many of its tags match (ties: the order listed here). Tags are
 # compared lower-case. Structure only -- titles and blurbs come from the
 # guide pages and data/courses.json.
 guides:
@@ -23,3 +24,11 @@ courses:
   pytorch: [pytorch, machine-learning, deep-learning, ml, tensorflow]
   playground: [playwright, puppeteer, selenium, testing, e2e, webdriverio]
   stripe: [stripe, payments]
+paths:
+  models: [llm, ai, claude, claude-code, anthropic, openai, gpt, ollama, bedrock, mlx, agents, prompt-engineering]
+  ai: [machine-learning, deep-learning, ml, pytorch, tensorflow, jupyter, neural-networks, data-science]
+  cloud: [aws, azure, gcp, salesforce, lambda, serverless, s3, iam, cloudformation, cdk, sam, terraform, heroku, docker, kubernetes, dynamodb, api-gateway, eventbridge, step-functions, cloudwatch, cognito, glue, emr, amplify, infrastructure-as-code]
+  code: [javascript, python, nodejs, golang, react, typescript, java, cpp, c++, bash, web, html, css, angular, git, cli, ios, swift, pwa, rust, testing]
+  university: [algorithms, data-structures, compsci, compilers, operating-systems]
+  papers: [paper, papers, distributed-systems]
+  kids: [game, kids, scratch, education]
