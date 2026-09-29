@@ -78,7 +78,7 @@ test-media: ## Python tests for the media tool
 test-layout: ## Build /media/ from a fixture; check /data/media.json and the page in all nine languages
 	python3 tools/instagram-media/tests/check_layout.py --build
 
-test-link-check: ## Tests for the repo-link checker
+test-link-check: ## Tests for the repo-link and post-link checkers
 	python3 -m unittest discover -s tools/link-check -p 'test_*.py'
 
 test-learn-links: ## Tests for the /learn/ link checker, its offline check of data/learn.json, and the path pages are current
@@ -169,6 +169,9 @@ ai-digest: ## Write today's AI briefing with Claude (needs ANTHROPIC_API_KEY and
 check-repo-links: ## List posts whose repo link 404s for a visitor (live, needs network)
 	python3 tools/link-check/check_repo_links.py
 
+check-post-links: ## Open every outbound link in posts, projects and guides (live, needs network, ~10 min)
+	@d=$$(mktemp -d) && hugo --quiet -d $$d && python3 tools/link-check/check_post_links.py --public $$d --json $$d/post-links.json; s=$$?; echo "results: $$d/post-links.json"; exit $$s
+
 check-learn-links: ## Open every /learn/ link as an anonymous visitor (live, needs network)
 	python3 tools/learn-links/check_learn_links.py
 
@@ -217,4 +220,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: test-movies learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf
+.PHONY: check-post-links test-movies learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf

@@ -104,6 +104,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | **Posts** | |
 | `make generate-posts` | Regenerate `generated-*.md` from GitHub |
 | `make check-repo-links` | List posts whose repo link 404s for a visitor (live, needs network) |
+| `make check-post-links` | Open every outbound link in posts, projects and guides; lists the gone ones (live, ~10 min) |
 | `make learn-pages` | Regenerate the per-path pages `content/learn/<path>.<lang>.md` from `data/learn.json` |
 | `make check-learn-links` | Open every /learn/ link as an anonymous visitor (live, needs network) |
 | `make courses-sync` | Publish the /teach courses from ~/projects/learn to /courses/ |
@@ -142,7 +143,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-tools` | Go tests for the post generator |
 | `make test-media` | Python tests for the media tool |
 | `make test-layout` | Build `/media/` from a fixture; check `/data/media.json` and the page in all nine languages |
-| `make test-link-check` | Tests for the repo-link checker |
+| `make test-link-check` | Tests for the repo-link and post-link checkers |
 | `make test-music` | Tests for the music page's playlist refresher |
 | `make test-movies` | Tests for the check that `/data/movies.<lang>.json` matches `movies.json` (verify runs the check on the build) |
 | `make test-github` | Tests for the GitHub page's data refresher (Python) and its search (node) |
