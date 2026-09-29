@@ -49,6 +49,40 @@ class ShapeTest(unittest.TestCase):
         self.assertIn("a: unknown group nope", c.check_shape(d, strings(*PATH_KEYS, "learn_res_a")))
 
 
+class FetchTest(unittest.TestCase):
+    def test_classify(self):
+        self.assertEqual(c.classify(200), "ok")
+        for code in (401, 403, 429):
+            self.assertEqual(c.classify(code), "blocked")
+        for status in (404, 410, 500, "URLError"):
+            self.assertEqual(c.classify(status), "broken")
+
+    def run_fetch(self, answers):
+        calls = []
+
+        def fake(url):
+            calls.append(url)
+            return answers[len(calls) - 1]
+        orig, sleep = c.fetch_once, c.time.sleep
+        c.fetch_once, c.time.sleep = fake, lambda _: None
+        try:
+            return c.fetch("https://a.example/"), len(calls)
+        finally:
+            c.fetch_once, c.time.sleep = orig, sleep
+
+    def test_network_error_is_retried(self):
+        result, calls = self.run_fetch([("URLError", "u"), (200, "https://a.example/")])
+        self.assertEqual((result[0], calls), (200, 2))
+
+    def test_network_error_twice_is_believed(self):
+        result, calls = self.run_fetch([("URLError", "u"), ("TimeoutError", "u")])
+        self.assertEqual((result[0], calls), ("TimeoutError", 2))
+
+    def test_http_status_is_not_retried(self):
+        result, calls = self.run_fetch([(404, "u")])
+        self.assertEqual((result[0], calls), (404, 1))
+
+
 class RealDataTest(unittest.TestCase):
     """The shipped data/learn.json must pass the offline checks."""
 

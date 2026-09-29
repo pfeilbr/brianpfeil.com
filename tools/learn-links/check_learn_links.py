@@ -11,8 +11,10 @@ has its i18n strings in English (tools/i18n-check covers the other eight).
     python3 tools/learn-links/check_learn_links.py --offline  # shape only
 
 A redirect is reported but is not a failure; update the url when it lands
-somewhere permanent. A site behind a bot wall (403 here and a challenge
-page in a browser) can't be confirmed, so it doesn't get listed.
+somewhere permanent. A site that refuses scripts (401/403/429 -- Cloudflare's
+own Learning Center does) is listed as "blocked" and doesn't fail the check:
+open it in a browser before listing it. A network error is retried once,
+since a single timeout or reset is usually the network, not the site.
 Exit status is 1 when anything is broken.
 Standard library only.
 """
@@ -23,6 +25,7 @@ import sys
 import tomllib
 import urllib.error
 import urllib.request
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -30,6 +33,7 @@ REPO = Path(__file__).resolve().parents[2]
 DATA = REPO / "data" / "learn.json"
 EN = REPO / "i18n" / "en.toml"
 GROUPS = {"neutral", "local", "made_here"}
+BLOCKED = {401, 403, 429}  # bot walls and rate limits, not dead pages
 
 # A browser's user agent: several course sites refuse the default urllib one.
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -72,8 +76,26 @@ def check_shape(data: dict, strings: dict) -> list[str]:
     return errors
 
 
-def fetch(url: str) -> tuple[int | str, str]:
-    """(status, final url). A status that is not an int is a network error."""
+def fetch(url: str, tries: int = 2) -> tuple[int | str, str]:
+    """(status, final url). A status that is not an int is a network error,
+    which is retried (tries in all) before it is believed."""
+    for attempt in range(tries):
+        status, final = fetch_once(url)
+        if isinstance(status, int):
+            break
+        if attempt + 1 < tries:
+            time.sleep(3)
+    return status, final
+
+
+def classify(status: int | str) -> str:
+    """"ok", "blocked" (refuses scripts, fine in a browser) or "broken"."""
+    if status == 200:
+        return "ok"
+    return "blocked" if status in BLOCKED else "broken"
+
+
+def fetch_once(url: str) -> tuple[int | str, str]:
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     # A cookie jar per fetch, as a browser would keep: some sites (Google's
     # docs) set a cookie and redirect to the same url, a loop without one.
@@ -105,15 +127,20 @@ def main(argv: list[str]) -> int:
     links = [(i["key"], i["url"]) for _, i in items(data) if i.get("url")]
     with ThreadPoolExecutor(max_workers=12) as pool:
         results = list(pool.map(lambda l: fetch(l[1]), links))
-    broken = 0
+    broken = blocked = 0
     for (key, url), (status, final) in zip(links, results):
-        if status == 200:
+        kind = classify(status)
+        if kind == "ok":
             if not same(final, url):
                 print(f"MOVED  {key}: {url} -> {final}")
+        elif kind == "blocked":
+            blocked += 1
+            print(f"blocked {key}: {status} {url}")
         else:
             broken += 1
             print(f"BROKEN {key}: {status} {url}")
-    print(f"{len(links)} links, {broken} broken, {len(errors)} shape problems")
+    print(f"{len(links)} links, {broken} broken, {blocked} blocked to scripts, "
+          f"{len(errors)} shape problems")
     return 1 if broken or errors else 0
 
 

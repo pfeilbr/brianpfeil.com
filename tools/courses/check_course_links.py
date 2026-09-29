@@ -10,7 +10,8 @@ user agent, cookies kept, redirects followed).
 
 Sites that refuse scripts (401/403/429 -- Stack Overflow, Medium, npm) are
 listed as "blocked" and don't count: they open fine in a browser. Only
-pages that are gone (404/410, DNS failure, 5xx) fail the check.
+pages that are gone (404/410, 5xx, or a network error twice running) fail
+the check.
 
 Exit status 1 when anything is broken. Standard library only.
 """
@@ -22,9 +23,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "tools" / "learn-links"))
-from check_learn_links import fetch  # noqa: E402
-
-BLOCKED = {401, 403, 429}  # bot walls and rate limits, not dead pages
+from check_learn_links import classify, fetch  # noqa: E402
 
 
 def links(data: dict) -> list[tuple[str, str]]:
@@ -47,9 +46,9 @@ def main() -> int:
         results = list(pool.map(lambda l: fetch(l[1]), todo))
     broken, blocked = [], []
     for (slug, url), (status, _) in zip(todo, results):
-        if status == 200:
-            continue
-        (blocked if status in BLOCKED else broken).append((slug, url, status))
+        kind = classify(status)
+        if kind != "ok":
+            (blocked if kind == "blocked" else broken).append((slug, url, status))
     for slug, url, status in blocked:
         print(f"blocked {slug}: {status} {url}")
     for slug, url, status in broken:
