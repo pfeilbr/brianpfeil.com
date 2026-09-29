@@ -30,6 +30,7 @@ Standard library only.
 
 import html
 import json
+import tomllib
 import re
 import shutil
 import subprocess
@@ -108,10 +109,35 @@ def deny_hits(text: str, patterns: list, allow: tuple = ()) -> list[str]:
 BODY = re.compile(r"<body[^>]*>", re.I)
 
 
-def site_bar(text: str, slug: str, course_title: str) -> str:
+def learn_paths(repo: Path) -> dict:
+    """course slug -> (learn path key, English title): the /learn/ path that
+    lists the course under "Made here" (data/learn.json)."""
+    try:
+        data = json.loads((repo / "data" / "learn.json").read_text(encoding="utf-8"))
+        en = tomllib.loads((repo / "i18n" / "en.toml").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    out = {}
+    for p in data.get("paths", []):
+        for item in p.get("items", []):
+            page = item.get("page", "")
+            if page.startswith("/courses/"):
+                title = (en.get(f"learn_path_{p['key']}") or {}).get("other", "")
+                if title:
+                    out.setdefault(page.strip("/").split("/")[-1], (p["key"], title))
+    return out
+
+
+def site_bar(text: str, slug: str, course_title: str, path: tuple | None = None) -> str:
     """A one-line way back to the course and the site, for a reader who lands
-    on a lesson from a search. Inline styles only: lessons carry their own
-    stylesheet and theme, and this has to sit on top of any of them."""
+    on a lesson from a search, and on to the free /learn/ path the course sits
+    in. Inline styles only: lessons carry their own stylesheet and theme, and
+    this has to sit on top of any of them."""
+    more = ""
+    if path:
+        more = ('<span style="opacity:.4">·</span>'
+                f'<a href="/learn/{html.escape(path[0])}/" style="color:inherit;text-decoration:none;opacity:.7">'
+                f'More free: {html.escape(path[1])}</a>')
     bar = (
         '<nav data-site-bar style="font:600 13px/1.4 system-ui,-apple-system,sans-serif;'
         'padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;'
@@ -121,6 +147,7 @@ def site_bar(text: str, slug: str, course_title: str) -> str:
         '<a href="/courses/" style="color:inherit;text-decoration:none;opacity:.7">Courses</a>'
         '<span style="opacity:.4">·</span>'
         '<a href="/" style="color:inherit;text-decoration:none;opacity:.7">Home</a>'
+        + more +
         '</nav>'
     )
     # The real <body>, after </head>: the lesson theme's CSS comments
@@ -267,6 +294,7 @@ def last_updated(course_dir: Path) -> str:
 def build_course(course_dir: Path, cfg: dict) -> tuple[dict, dict[str, str]]:
     """(entry for courses.json, {relative path: published html})."""
     slug = course_dir.name
+    paths = learn_paths(REPO)
     meta = json.loads((course_dir / "course.json").read_text(encoding="utf-8"))
     tags = meta.get("tags", [])
     if isinstance(tags, str):
@@ -286,7 +314,7 @@ def build_course(course_dir: Path, cfg: dict) -> tuple[dict, dict[str, str]]:
         here = rel.split("/")[0]
         text = redact(text, cfg["redact"])
         text = rewrite_links(text, slug, here, published)
-        text = site_bar(text, slug, title)
+        text = site_bar(text, slug, title, paths.get(slug))
         text = plain_title(text)
         problems += [f"{slug}/{rel}: {h}" for h in deny_hits(text, cfg["deny"])]
         entry = {"href": f"/courses/{slug}/{rel}", "title": page_title(text, here == "lessons")}

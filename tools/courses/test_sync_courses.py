@@ -79,6 +79,20 @@ class BuildTest(unittest.TestCase):
         self.assertIn('href="/courses/auth/"', page)
         self.assertIn("&larr; Web Auth", page)
 
+    def test_bar_links_the_learn_path_that_lists_the_course(self):
+        import sync_courses as sc
+        page = sc.site_bar("<html><head></head><body></body></html>", "terraform", "Terraform",
+                           ("cloud", "Learn the cloud"))
+        self.assertIn('href="/learn/cloud/"', page)
+        self.assertIn("More free: Learn the cloud", page)
+        self.assertNotIn("/learn/", sc.site_bar("<html><head></head><body></body></html>", "x", "X"))
+
+    def test_every_course_has_a_learn_path(self):
+        import sync_courses as sc
+        paths = sc.learn_paths(sc.REPO)
+        for c in json.loads((sc.REPO / "data" / "courses.json").read_text())["courses"]:
+            self.assertIn(c["slug"], paths, c["slug"])
+
     def test_lessons_get_canonical_and_description(self):
         _, files = self.build(lesson="<html><head><title>Lesson 2 · Cookies</title></head><body></body></html>")
         page = files["lessons/0002-cookies.html"]
