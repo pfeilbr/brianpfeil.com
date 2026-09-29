@@ -4,7 +4,7 @@
    that language's own 404 page (Hugo builds one per language) with
    document.write, which keeps the URL the visitor typed and runs its scripts. */ -}}
 {{- if eq .Site.Language.Lang hugo.Sites.Default.Language.Lang }}
-{{- $prefixes := slice }}{{ range site.Languages }}{{ if ne .Lang hugo.Sites.Default.Language.Lang }}{{ $prefixes = $prefixes | append .Lang }}{{ end }}{{ end }}
+{{- $prefixes := slice }}{{ range hugo.Sites }}{{ if ne .Language.Lang hugo.Sites.Default.Language.Lang }}{{ $prefixes = $prefixes | append .Language.Lang }}{{ end }}{{ end }}
 <script>
 (function () {
   var langs = {{ $prefixes | jsonify | safeJS }};
