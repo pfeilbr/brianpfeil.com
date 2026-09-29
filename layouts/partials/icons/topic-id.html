@@ -4,6 +4,7 @@
    above the general ones. "aws + lambda" reads as serverless rather than as a
    generic cloud post, which is the more useful signal when scanning a list. */ -}}
 {{- $rules := slice
+  (dict "id" "i-heart"     "match" (slice "personal" "mental-health"))
   (dict "id" "i-gamepad"   "match" (slice "game" "games" "gamedev" "unity" "godot" "chess"))
   (dict "id" "i-sparkles"  "match" (slice "ai" "llm" "llms" "machine-learning" "ml" "bedrock" "genai" "openai" "mcp" "agents" "embeddings" "nlp" "claude"))
   (dict "id" "i-shield"    "match" (slice "security" "iam" "auth" "authentication" "oauth" "cognito" "encryption" "certificates" "tls" "ssl" "secrets"))
