@@ -39,8 +39,17 @@ Top stories:
 
 ## Learning resources
 {{ with site.GetPage "/learn" }}
-- [{{ .Title }}]({{ .Permalink }}): {{ .Description }}
+[{{ .Title }}]({{ .Permalink }}): {{ .Description }} Every link opens without signing in. One page per goal:
 {{- end }}
+{{ range hugo.Data.learn.paths }}{{ with site.GetPage (printf "/learn/%s" .key) }}
+### [{{ .Title }}]({{ .Permalink }})
+{{ .Description }}
+{{ end }}{{ range .items }}{{ if .url }}
+- [{{ .name }}]({{ .url }}){{ with .by }}, by {{ . }}{{ end }}{{ with i18n (printf "learn_res_%s" .key) }}: {{ . }}{{ end }}
+{{- else }}{{ with site.GetPage .page }}
+- [{{ .Title }}]({{ .Permalink }}): {{ .Description | plainify | htmlUnescape }}
+{{- end }}{{ end }}{{ end }}
+{{ end }}
 
 ## Projects
 {{ range (where site.RegularPages "Section" "projects").ByDate.Reverse }}
