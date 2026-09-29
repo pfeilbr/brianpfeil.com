@@ -33,6 +33,23 @@
 {{ partial "search.html" . }}
 <div id="search-results"></div>
 
+{{- /* A lost visitor gets the free learning paths and the guides too, not
+   just old posts -- these are the pages most worth landing on. */ -}}
+<section class="mt-8" aria-labelledby="nf-learn">
+  <h2 id="nf-learn" class="text-sm font-semibold text-gray-900 mb-2">{{ i18n "not_found_learn" }}</h2>
+  <div class="share-row">
+    {{- range hugo.Data.learn.paths }}{{ with site.GetPage (printf "/learn/%s" .key) }}
+    <a class="chip" href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{- end }}{{ end }}
+    {{- with site.GetPage "/architecture" }}
+    <a class="chip" href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{- end }}
+    {{- with site.GetPage "/courses" }}
+    <a class="chip" href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{- end }}
+  </div>
+</section>
+
 <section class="mt-8">
   <h2 class="text-sm font-semibold text-gray-900 mb-2">{{ i18n "recent_posts" }}</h2>
   <div id="post-list">

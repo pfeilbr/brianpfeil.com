@@ -90,6 +90,9 @@ other = "Loading…"
 other = "{{ .loaded }} of {{ .total }} posts"
 
 # 404
+[not_found_learn]
+other = "Or start learning something, free"
+
 [not_found_title]
 other = "Page not found"
 

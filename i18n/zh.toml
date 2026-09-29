@@ -90,6 +90,9 @@ other = "加载中…"
 other = "已加载 {{ .loaded }} / {{ .total }} 篇文章"
 
 # 404
+[not_found_learn]
+other = "或者，免费开始学点什么"
+
 [not_found_title]
 other = "页面未找到"
 
