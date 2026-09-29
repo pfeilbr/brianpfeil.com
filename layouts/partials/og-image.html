@@ -29,6 +29,11 @@
       (images.Text $p.Site.Params.author.name (dict "font" $bold "size" 32 "color" "#f3f4f6" "x" 214 "y" 482))
       (images.Text "brianpfeil.com" (dict "font" $semi "size" 26 "color" "#9ca3af" "x" 214 "y" 526)) -}}
   {{- $name := printf "og/%s.jpg" (md5 (printf "%s|%s|%s" $label $title $p.Site.Params.author.name)) -}}
+  {{- /* A course's card also has a fixed name, og/course-<slug>.jpg: its
+     lessons are static files (tools/courses/sync_courses.py) that point at it. */ -}}
+  {{- if and (eq $p.Section "courses") $p.IsPage $p.File -}}
+    {{- $name = printf "og/course-%s.jpg" $p.File.ContentBaseName -}}
+  {{- end -}}
   {{- $url = ($img.Process "jpg q82" | resources.Copy $name).Permalink -}}
 {{- end -}}
 {{- return $url -}}

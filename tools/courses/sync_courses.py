@@ -136,7 +136,7 @@ CANONICAL = re.compile(r"<link\s+rel=[\"']canonical[\"']", re.I)
 OG = re.compile(r"<meta\s+property=[\"']og:", re.I)
 
 
-def seo_head(text: str, url: str, description: str, title: str = "") -> str:
+def seo_head(text: str, url: str, description: str, title: str = "", image: str = "") -> str:
     """Give a lesson the canonical URL, meta description and social-preview
     tags that Hugo's head partial adds to every other page -- lessons are
     static files, so it never sees them. Leaves a lesson's own tags alone
@@ -151,8 +151,16 @@ def seo_head(text: str, url: str, description: str, title: str = "") -> str:
         tags += (f'<meta property="og:type" content="article">\n'
                  f'<meta property="og:title" content="{t}">\n'
                  f'<meta property="og:description" content="{d}">\n'
-                 f'<meta property="og:url" content="{u}">\n'
-                 f'<meta name="twitter:card" content="summary">\n')
+                 f'<meta property="og:url" content="{u}">\n')
+        if image:
+            # The course's share card (partials/og-image.html names it
+            # og/course-<slug>.jpg), shown large like every other page's.
+            i = html.escape(image, quote=True)
+            tags += (f'<meta property="og:image" content="{i}">\n'
+                     f'<meta name="twitter:image" content="{i}">\n'
+                     f'<meta name="twitter:card" content="summary_large_image">\n')
+        else:
+            tags += '<meta name="twitter:card" content="summary">\n'
     m = HEAD_END.search(text)
     return text[:m.start()] + tags + text[m.start():] if (tags and m) else text
 
@@ -288,8 +296,9 @@ def build_course(course_dir: Path, cfg: dict) -> tuple[dict, dict[str, str]]:
             desc = lesson_description(entry["title"], len(bucket), n_lessons, title, about)
         else:
             desc = f"{entry['title']} — quick reference for the free {title} course. {about}"[:200]
-        files[rel] = seo_head(text, cfg.get("site", "").rstrip("/") + entry["href"], desc,
-                              f"{entry['title']} · {title}")
+        site = cfg.get("site", "").rstrip("/")
+        files[rel] = seo_head(text, site + entry["href"], desc, f"{entry['title']} · {title}",
+                              f"{site}/og/course-{slug}.jpg" if site else "")
 
     resources = []
     res_file = course_dir / "RESOURCES.md"

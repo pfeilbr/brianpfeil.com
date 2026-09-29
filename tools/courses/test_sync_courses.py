@@ -87,6 +87,9 @@ class BuildTest(unittest.TestCase):
         self.assertLess(page.index("canonical"), page.index("</head>"))
         self.assertIn('<meta property="og:title" content="Cookies · Web Auth">', page)
         self.assertIn('<meta property="og:url" content="https://brianpfeil.com/courses/auth/lessons/0002-cookies.html">', page)
+        self.assertIn('<meta property="og:image" content="https://brianpfeil.com/og/course-auth.jpg">', page)
+        self.assertIn('<meta name="twitter:card" content="summary_large_image">', page)
+        self.assertNotIn('content="summary">', page)
 
     def test_existing_description_is_kept(self):
         _, files = self.build(lesson='<html><head><meta name="description" content="Mine"></head><body></body></html>')
