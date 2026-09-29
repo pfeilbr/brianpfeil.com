@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Cross-post the architecture guides to dev.to as drafts, canonical to this site.
+"""Cross-post the architecture guides and /learn/ paths to dev.to as drafts, canonical to this site.
 
     python3 tools/social/devto.py                      # convert only: build/devto/*.md
     python3 tools/social/devto.py --push               # create/update drafts on dev.to
     python3 tools/social/devto.py --push --only compute-ladder
+    python3 tools/social/devto.py --push --kind learn      # just the learn paths
+
+Each /learn/ path becomes a list article ("Understand how AI works: 16 free
+resources"), canonical to /learn/<key>/, in its own series; slugs are
+learn-<key> (--only learn-ai).
 
 Every article goes up as a *draft* with canonical_url pointing back here,
 so Google keeps crediting brianpfeil.com and nothing is public until you
@@ -71,9 +76,9 @@ def canonical(fm, path):
     return f"{kit.SITE}/architecture/{fm.get('slug', path.stem)}/"
 
 
-def tracked(url):
+def tracked(url, campaign="guide"):
     return url + "?" + urllib.parse.urlencode({"utm_source": "devto", "utm_medium": "crosspost",
-                                               "utm_campaign": "guide"})
+                                               "utm_campaign": campaign})
 
 
 def convert(body, url):
@@ -146,6 +151,102 @@ def guides(only=None):
     return sorted(out, key=lambda g: g[1].get("weight", 0))
 
 
+# ---------------------------------------------------------------- learn paths
+
+LEARN_SERIES = "Free learning paths"
+LEARN_TAGS = {
+    "people": ["learning", "programming", "ai", "productivity"],
+    "ai": ["ai", "machinelearning", "beginners", "learning"],
+    "models": ["ai", "llm", "claude", "learning"],
+    "code": ["beginners", "programming", "webdev", "learning"],
+    "cloud": ["aws", "cloud", "devops", "learning"],
+    "university": ["computerscience", "learning", "beginners", "programming"],
+    "kids": ["beginners", "education", "programming", "learning"],
+    "papers": ["computerscience", "ai", "distributedsystems", "learning"],
+}
+
+
+def en_strings():
+    t = tomllib.loads((REPO / "i18n" / "en.toml").read_text())
+    return lambda k: (t.get(k) or {}).get("other", "")
+
+
+def site_page(page):
+    """(title, description, url) of one of this site's pages, from its front matter."""
+    rel = page.strip("/")
+    for f in (REPO / "content" / rel / "index.md", REPO / "content" / rel / "_index.md",
+              REPO / "content" / (rel + ".md")):
+        if f.exists():
+            fm, _ = read_guide(f)
+            return fm.get("title", rel), fm.get("description", ""), f"{kit.SITE}/{rel}/"
+    raise ValueError(f"no page at content/{rel}")
+
+
+def learn_article(path, s, cover=None, org=None):
+    key = path["key"]
+    title, blurb = s(f"learn_path_{key}"), s(f"learn_path_blurb_{key}")
+    url = f"{kit.SITE}/learn/{key}/"
+    n = len(path["items"])
+    lines = [blurb, "",
+             f"I keep a directory of free ways to learn at [brianpfeil.com/learn]({tracked(kit.SITE + '/learn/', 'learn')}), "
+             f"sorted by goal, and every link opens without signing in. This is one of its paths: {n} resources, "
+             "with the ones I'd start with marked ⭐."]
+    heading = None
+    for item in path["items"]:
+        if item.get("group"):
+            h = s(f"learn_group_{item['group']}") or item["group"]
+        elif path.get("grouped") and item.get("by"):
+            h = item["by"]
+        else:
+            h = ""
+        if h != heading:
+            heading = h
+            lines += ["", f"## {h}" if h else "", ""] if h else [""]
+        if item.get("page"):
+            name, desc, link = site_page(item["page"])
+            link = tracked(link, 'learn')
+        else:
+            name, desc, link = item["name"], s(f"learn_res_{item['key']}"), item["url"]
+        by = f", by {item['by']}" if item.get("by") and not path.get("grouped") else ""
+        star = " ⭐" if item.get("pick") else ""
+        lines.append(f"- **[{name}]({link})**{by}{star}: {desc}")
+    body = "\n".join(lines).replace("\n\n\n", "\n\n").strip()
+    body += (f"\n\n---\n\n*The up-to-date list, and the other paths (code, cloud, AI, kids and more), "
+             f"is at [brianpfeil.com/learn/{key}/]({tracked(url, 'learn')}).*\n")
+    a = {
+        "title": f"{title}: {n} free resources",
+        "body_markdown": body,
+        "published": False,
+        "canonical_url": url,
+        "description": blurb[:250],
+        "tags": LEARN_TAGS.get(key, ["learning", "programming"])[:4],
+        "series": LEARN_SERIES,
+    }
+    if cover:
+        a["main_image"] = cover
+    if org:
+        a["organization_id"] = int(org)
+    return a
+
+
+def entries(only=None, kinds=("guides", "learn")):
+    """Everything that can go to dev.to: (slug, canonical url, build(cover, org))."""
+    out = []
+    if "guides" in kinds:
+        for path, fm, body, slug in guides(only):
+            out.append((slug, canonical(fm, path),
+                        lambda cover, org, path=path, fm=fm, body=body: article(path, fm, body, cover, org)))
+    if "learn" in kinds:
+        s = en_strings()
+        for p in json.loads((REPO / "data" / "learn.json").read_text())["paths"]:
+            slug = f"learn-{p['key']}"
+            if only and slug not in only:
+                continue
+            out.append((slug, f"{kit.SITE}/learn/{p['key']}/",
+                        lambda cover, org, p=p: learn_article(p, s, cover, org)))
+    return out
+
+
 # ---------------------------------------------------------------- api
 
 def api(send, method, path, key, body=None):
@@ -187,10 +288,10 @@ def save_ledger(ledger, path=LEDGER):
 # ---------------------------------------------------------------- run
 
 def run(*, push, env, only=None, update_published=False, send=post.http, ledger_path=LEDGER,
-        out=OUT, log=print, pause=3):
-    items = guides(only)
+        out=OUT, log=print, pause=3, kinds=("guides", "learn")):
+    items = entries(only, kinds)
     if not items:
-        log("no guides matched")
+        log("nothing matched")
         return 1
     key = env.get("DEVTO_API_KEY")
     if push and not key:
@@ -200,14 +301,13 @@ def run(*, push, env, only=None, update_published=False, send=post.http, ledger_
     ledger = load_ledger(ledger_path)
     mine = my_articles(send, key) if push else {}
     failed = 0
-    for i, (path, fm, body, slug) in enumerate(items):
-        url = canonical(fm, path)
+    for i, (slug, url, build) in enumerate(items):
         meta = post.page_meta(send, url) if push else None
         if push and meta is None:
             log(f"{slug}: skipped, {url} doesn't load")
             failed += 1
             continue
-        a = article(path, fm, body, cover=(meta or {}).get("image") or None, org=env.get("DEVTO_ORG_ID"))
+        a = build((meta or {}).get("image") or None, env.get("DEVTO_ORG_ID"))
         (out / f"{slug}.md").write_text(f"# {a['title']}\n\n{a['body_markdown']}")
         if not push:
             log(f"{slug}: converted -> {out / (slug + '.md')} (tags: {', '.join(a['tags'])})")
@@ -249,8 +349,11 @@ def main(argv=None):
     ap.add_argument("--push", action="store_true", help="create/update drafts on dev.to (default: convert only)")
     ap.add_argument("--only", nargs="+", metavar="SLUG", help="just these guides")
     ap.add_argument("--update-published", action="store_true", help="also overwrite articles already published there")
+    ap.add_argument("--kind", choices=("guides", "learn"), action="append",
+                    help="guides and/or learn (default: both)")
     a = ap.parse_args(argv)
-    return run(push=a.push, env=os.environ, only=a.only, update_published=a.update_published)
+    return run(push=a.push, env=os.environ, only=a.only, update_published=a.update_published,
+               kinds=tuple(a.kind or ("guides", "learn")))
 
 
 if __name__ == "__main__":

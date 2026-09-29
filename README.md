@@ -181,7 +181,8 @@ card as a link card; Mastodon builds its own from the page. To re-post
 something, delete its entry from `posted.json`. To pause, disable the
 workflow in the Actions tab.
 
-**dev.to.** `tools/social/devto.py` turns the architecture guides into dev.to
+**dev.to.** `tools/social/devto.py` turns the architecture guides, and each
+/learn/ path as a list article ("Learn the cloud: 17 free resources"), into dev.to
 *drafts* with `canonical_url` back here (callouts → blockquotes, SVG
 diagrams → a described link to the original, share card as cover, one
 series). Re-running updates the same drafts (`tools/social/devto.json`, or

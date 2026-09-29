@@ -322,7 +322,8 @@ pinned in that order on /ai/) always goes first. The weekday
 `social-post.yml` Action posts the next item to Bluesky and Mastodon and
 commits `tools/social/posted.json` — never hand-commit a local copy of it.
 X, LinkedIn, Threads and Facebook stay manual (from the kit).
-The guides cross-post to dev.to as drafts, canonical to this site, via the
+The guides and the /learn/ paths (as list articles, slugs `learn-<key>`)
+cross-post to dev.to as drafts, canonical to this site, via the
 manual "dev.to cross-post" Action (`tools/social/devto.py`, ledger
 `tools/social/devto.json`); a new Hugo shortcode in the guides must get a
 conversion there, or the script refuses to convert.

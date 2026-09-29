@@ -64,6 +64,34 @@ class Convert(unittest.TestCase):
                          ["eventdriven", "aws", "ab", "x"])
 
 
+class Learn(unittest.TestCase):
+    def test_every_path_becomes_a_list_article(self):
+        es = devto.entries(kinds=("learn",))
+        self.assertGreaterEqual(len(es), 8)
+        slug, url, build = es[0]
+        self.assertEqual((slug, url), ("learn-people", "https://brianpfeil.com/learn/people/"))
+        a = build("https://brianpfeil.com/og/x.jpg", None)
+        self.assertRegex(a["title"], r"^Learn from the people I follow: \d+ free resources$")
+        self.assertEqual(a["canonical_url"], url)
+        self.assertIs(a["published"], False)
+        self.assertEqual(a["series"], devto.LEARN_SERIES)
+        self.assertLessEqual(len(a["tags"]), 4)
+        self.assertIn("## Simon Willison", a["body_markdown"])
+        self.assertIn("https://simonwillison.net/", a["body_markdown"])
+
+    def test_made_here_items_link_back_with_learn_campaign(self):
+        cloud = [e for e in devto.entries(kinds=("learn",)) if e[0] == "learn-cloud"][0]
+        md = cloud[2](None, None)["body_markdown"]
+        self.assertIn("## Made here", md)
+        self.assertIn("https://brianpfeil.com/architecture/compute-ladder/?utm_source=devto", md)
+        self.assertNotIn("utm_campaign=guide", md)
+        self.assertNotIn("{{", md)
+
+    def test_only_and_kinds_filter(self):
+        self.assertEqual([e[0] for e in devto.entries(only=["learn-ai"])], ["learn-ai"])
+        self.assertTrue(all(not e[0].startswith("learn-") for e in devto.entries(kinds=("guides",))))
+
+
 class Push(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -120,10 +148,10 @@ class Push(unittest.TestCase):
         self.assertEqual(self.go(net, only=["compute-ladder"]), 1)
         self.assertFalse(self.ledger.exists() and "compute-ladder" in json.loads(self.ledger.read_text()))
 
-    def test_all_six_guides_go_up(self):
+    def test_all_guides_and_learn_paths_go_up(self):
         net = FakeDevto()
         self.go(net)
-        self.assertGreaterEqual(len(net.writes()), 6)
+        self.assertGreaterEqual(len(net.writes()), 6 + 8)
 
 
 if __name__ == "__main__":
