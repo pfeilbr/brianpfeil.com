@@ -55,6 +55,7 @@ jobs:
         run: |
           python -m unittest discover -s tools/learn-links -p 'test_*.py' -v
           python tools/learn-links/check_learn_links.py --offline
+          python tools/learn-links/path_pages.py --check
       # Includes a privacy check of every published lesson page.
       - name: course sync tests
         run: python -m unittest discover -s tools/courses -p 'test_*.py' -v

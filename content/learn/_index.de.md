@@ -5,4 +5,5 @@ description = "Kostenlose Kurse, Tutorials und Dokus, um Programmieren, die Clou
 slug = "learn"
 title = "Lernen"
 layout = "learn"
+outputs = ["html"]
 +++

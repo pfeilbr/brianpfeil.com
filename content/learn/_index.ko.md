@@ -5,4 +5,5 @@ description = "코딩, 클라우드, AI를 배울 수 있는 무료 강좌, 튜�
 slug = "learn"
 title = "배우기"
 layout = "learn"
+outputs = ["html"]
 +++

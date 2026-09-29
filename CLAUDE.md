@@ -204,6 +204,10 @@ touching a template:
 - **/learn/:** add `{"key", "name", "by", "url"}` to a path in
   `data/learn.json`, its blurb as `learn_res_<key>` in all nine i18n files,
   then `make check-learn-links` — only list what opens without signing in.
+  Every path has its own page, `/learn/<key>/` (own title, description, share
+  card), generated into `content/learn/<key>.<lang>.md` by `make learn-pages`;
+  a new path or changed path string needs a re-run, and verify/CI fail while
+  those files are stale. Old `/learn/#<key>` links redirect there.
   `page` instead of `url` links one of this site's projects in the visitor's
   language. Learn took Archive's nav slot; Archive is still a home card.
 - **/ai/ refreshes itself.** `.github/workflows/ai-radar.yml` runs

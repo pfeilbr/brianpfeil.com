@@ -5,4 +5,5 @@ description = "Cursos, tutoriais e documentação gratuitos para aprender a prog
 slug = "learn"
 title = "Aprender"
 layout = "learn"
+outputs = ["html"]
 +++

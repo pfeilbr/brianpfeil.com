@@ -104,6 +104,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | **Posts** | |
 | `make generate-posts` | Regenerate `generated-*.md` from GitHub |
 | `make check-repo-links` | List posts whose repo link 404s for a visitor (live, needs network) |
+| `make learn-pages` | Regenerate the per-path pages `content/learn/<path>.<lang>.md` from `data/learn.json` |
 | `make check-learn-links` | Open every /learn/ link as an anonymous visitor (live, needs network) |
 | `make courses-sync` | Publish the /teach courses from ~/projects/learn to /courses/ |
 | `make check-course-links` | Open every course resource link as an anonymous visitor (live, needs network) |

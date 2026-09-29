@@ -5,4 +5,5 @@ description = "Free courses, tutorials and docs for learning to code, the cloud 
 slug = "learn"
 title = "Learn"
 layout = "learn"
+outputs = ["html"]
 +++

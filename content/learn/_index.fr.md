@@ -5,4 +5,5 @@ description = "Cours, tutoriels et docs gratuits pour apprendre à coder, le clo
 slug = "learn"
 title = "Apprendre"
 layout = "learn"
+outputs = ["html"]
 +++

@@ -5,4 +5,5 @@ description = "プログラミング、クラウド、AI を学べる無料の�
 slug = "learn"
 title = "学ぶ"
 layout = "learn"
+outputs = ["html"]
 +++

@@ -23,6 +23,8 @@
     {{ end }}
   {{ end }}
 {{ end }}
+{{ $urls := dict "all" (site.GetPage "/learn").RelPermalink }}
+{{ range $data.paths }}{{ with site.GetPage (printf "/learn/%s" .key) }}{{ $urls = merge $urls (dict .Params.learn_path .RelPermalink) }}{{ end }}{{ end }}
 {{ $groups := dict }}
 {{ range slice "neutral" "local" "made_here" }}
   {{ $groups = merge $groups (dict . (i18n (printf "learn_group_%s" .))) }}
@@ -37,48 +39,41 @@
   "res" $res
   "pages" $pages
   "groups" $groups
+  "cur" (.Params.learn_path | default "")
+  "urls" $urls
 }}
+{{ $cur := .Params.learn_path | default "" }}
+{{ $index := site.GetPage "/learn" }}
 <article class="learn">
   <header class="mb-6">
-    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    {{ if $cur }}<p class="learn-crumb"><a href="{{ $index.RelPermalink }}">{{ $index.Title }}</a></p>{{ end }}
+    <h1 class="text-2xl font-bold text-gray-900 mb-2" id="learn-h">{{ .Title }}</h1>
+    {{ if $cur }}
+    <p class="text-gray-600">{{ .Description }}</p>
+    {{ else }}
     <p class="text-gray-600" id="learn-intro">{{ replace (i18n "learn_intro" "{count}") "{count}" (string $total) }}</p>
+    {{ end }}
   </header>
 
+  {{ if not $cur }}
   <a class="learn-cta" href="{{ "courses/" | relLangURL }}" data-ic="i-doc">
     {{ partial "icons/chip.html" (dict "id" "i-doc" "size" "sm") }}
     <span>{{ i18n "learn_courses_cta" }}</span>
     <svg class="learn-cta-go" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
   </a>
-
   <div class="prose">{{ .Content }}</div>
+  {{ end }}
   <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/learn.json") | safeHTML }}</p></noscript>
 
-  {{/* ---------- Goals: one button per path, doubling as the filter ---------- */}}
-  <section class="music-section learn-top" aria-labelledby="learn-goals-h">
-    <h2 id="learn-goals-h" class="music-h2">{{ i18n "learn_goal_heading" }}</h2>
-    <div class="learn-goals" role="group" aria-labelledby="learn-goals-h" id="learn-goals">
-      {{ range $data.paths }}
-      <button type="button" class="learn-goal" data-path="{{ .key }}" data-ic="{{ .icon }}" aria-pressed="false">
-        {{ partial "icons/chip.html" (dict "id" .icon "size" "sm") }}
-        <span class="learn-goal-text">
-          <span class="learn-goal-name">{{ i18n (printf "learn_path_%s" .key) }}</span>
-          <span class="learn-goal-n">{{ replace (i18n "learn_count" "{n}") "{n}" (string (len .items)) }}</span>
-        </span>
-      </button>
-      {{ end }}
-    </div>
-    <div class="learn-tools">
-      <button type="button" class="chip is-on" id="learn-all" aria-pressed="true">{{ i18n "learn_all" }} <span class="chip-n">{{ $total }}</span></button>
-      <label class="learn-search">
-        <span class="sr-only">{{ i18n "learn_search_label" }}</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
-        <input type="search" id="learn-q" placeholder="{{ i18n "learn_search_placeholder" }}" autocomplete="off">
-      </label>
-    </div>
-  </section>
+  {{- /* Goals: one link per path, each to its own page (/learn/<key>/). On a
+     path page they come after the path, as "other goals". */ -}}
+  {{ $goals := partial "inline/learn-goals.html" (dict "data" $data "cur" $cur "index" $index "total" $total) }}
+  {{ if not $cur }}{{ $goals }}{{ end }}
 
   <div id="learn-paths" aria-busy="true" aria-live="polite"></div>
   <p class="music-sub learn-none" id="learn-none" hidden></p>
+
+  {{ if $cur }}{{ $goals }}{{ end }}
 
   {{ partial "newsletter.html" . }}
 
@@ -88,19 +83,18 @@
 {{- /* The resources as an ItemList, rendered at build time so a crawler that
    never runs the script still sees what the page links to. */ -}}
 {{ $list := slice }}
-{{ range $data.paths }}{{ range .items }}{{ with .url }}
+{{ $cur := .Params.learn_path | default "" }}
+{{ range $data.paths }}{{ if or (not $cur) (eq .key $cur) }}{{ range .items }}{{ with .url }}
   {{ $list = $list | append (dict "@type" "ListItem" "position" (add (len $list) 1) "url" .) }}
-{{ end }}{{ end }}{{ end }}
+{{ end }}{{ end }}{{ end }}{{ end }}
 <script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "ItemList" "name" .Title "description" .Description "numberOfItems" (len $list) "itemListElement" $list | jsonify | safeJS }}</script>
 
 {{ partial "data-render.html" . }}
 <script>
-/* Every path from learn.json becomes a section of link cards. Two cheap
-   behaviours on top:
-   1. Goal buttons show one path at a time (and set #<path>, so a goal can be
-      linked to); "Everything" shows them all.
-   2. The search box narrows whatever is showing by name, provider and blurb.
-   Both are show/hide only -- nothing is re-fetched. */
+/* Every path from learn.json becomes a section of link cards. /learn/ shows
+   them all; /learn/<key>/ (content/learn/<key>.md, generated) shows only its
+   own. The search box narrows whatever is showing by name, provider and
+   blurb -- show/hide only, nothing is re-fetched. */
 (function () {
   var D = window.DataPage, el = D.el.bind(D);
   var T = {{ $T | jsonify | safeJS }};
@@ -108,8 +102,6 @@
   var out = document.getElementById("learn-paths");
   var none = document.getElementById("learn-none");
   var q = document.getElementById("learn-q");
-  var all = document.getElementById("learn-all");
-  var goals = [].slice.call(document.querySelectorAll(".learn-goal"));
   var current = "all";
 
   function slug(item) { return item.page ? item.page.split("/").pop() : ""; }
@@ -154,8 +146,13 @@
     var h = el("h2", "learn-path-title", info.label || path.key);
     h.id = "learn-h-" + path.key;
     head.appendChild(h);
-    sec.appendChild(head);
-    sec.appendChild(el("p", "music-sub", info.blurb || ""));
+    /* On a path's own page the h1 and intro already say this. */
+    if (!T.cur) {
+      sec.appendChild(head);
+      sec.appendChild(el("p", "music-sub", info.blurb || ""));
+    } else {
+      sec.setAttribute("aria-labelledby", "learn-h");
+    }
 
     var block = null, last = null;
     path.items.forEach(function (item) {
@@ -197,37 +194,54 @@
     if (!shown) none.textContent = D.fill(T.none, { q: q.value.trim() });
   }
 
-  function select(key, push) {
+  /* Each path has its own page (/learn/<key>/), so the goal links simply
+     navigate. On a path page only that path shows; search narrows it. */
+  function select(key) {
     current = key;
-    all.classList.toggle("is-on", key === "all");
-    all.setAttribute("aria-pressed", String(key === "all"));
-    goals.forEach(function (b) {
-      var on = b.dataset.path === key;
-      b.classList.toggle("is-on", on);
-      b.setAttribute("aria-pressed", String(on));
-    });
-    if (push) history.replaceState(null, "", key === "all" ? location.pathname : "#" + key);
     apply();
   }
 
-  goals.forEach(function (b) {
-    b.addEventListener("click", function () {
-      select(current === b.dataset.path ? "all" : b.dataset.path, true);
-      var target = document.getElementById("learn-paths");
-      if (target.getBoundingClientRect().top < 0) target.scrollIntoView({ block: "start" });
-    });
-  });
-  all.addEventListener("click", function () { select("all", true); });
   q.addEventListener("input", apply);
+
+  /* Old links to /learn/#<path> go to that path's own page. */
+  var hash = location.hash.slice(1);
+  if (!T.cur && hash && T.urls[hash]) { location.replace(T.urls[hash]); return; }
 
   D.load("learn").then(function (data) {
     var n = 0;
     data.paths.forEach(function (p) { n += p.items.length; out.appendChild(section(p)); });
-    document.getElementById("learn-intro").textContent = D.fill(T.intro, { count: n });
+    var intro = document.getElementById("learn-intro");
+    if (intro) intro.textContent = D.fill(T.intro, { count: n });
     out.setAttribute("aria-busy", "false");
-    var hash = location.hash.slice(1);
-    select(goals.some(function (b) { return b.dataset.path === hash; }) ? hash : "all", false);
+    select(T.cur || "all");
   }).catch(function () { D.fail(out, T.error); });
 })();
 </script>
+{{ end }}
+
+{{ define "partials/inline/learn-goals.html" }}
+{{ $cur := .cur }}
+<section class="music-section learn-top" aria-labelledby="learn-goals-h">
+  <h2 id="learn-goals-h" class="music-h2">{{ i18n "learn_goal_heading" }}</h2>
+  <div class="learn-goals" id="learn-goals">
+    {{ range .data.paths }}
+    {{ $pg := site.GetPage (printf "/learn/%s" .key) }}
+    <a class="learn-goal{{ if eq .key $cur }} is-on{{ end }}" href="{{ with $pg }}{{ .RelPermalink }}{{ end }}" data-path="{{ .key }}" data-ic="{{ .icon }}"{{ if eq .key $cur }} aria-current="page"{{ end }}>
+      {{ partial "icons/chip.html" (dict "id" .icon "size" "sm") }}
+      <span class="learn-goal-text">
+        <span class="learn-goal-name">{{ i18n (printf "learn_path_%s" .key) }}</span>
+        <span class="learn-goal-n">{{ replace (i18n "learn_count" "{n}") "{n}" (string (len .items)) }}</span>
+      </span>
+    </a>
+    {{ end }}
+  </div>
+  <div class="learn-tools">
+    <a class="chip{{ if not $cur }} is-on{{ end }}" id="learn-all" href="{{ .index.RelPermalink }}"{{ if not $cur }} aria-current="page"{{ end }}>{{ i18n "learn_all" }} <span class="chip-n">{{ .total }}</span></a>
+    <label class="learn-search">
+      <span class="sr-only">{{ i18n "learn_search_label" }}</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+      <input type="search" id="learn-q" placeholder="{{ i18n "learn_search_placeholder" }}" autocomplete="off">
+    </label>
+  </div>
+</section>
 {{ end }}

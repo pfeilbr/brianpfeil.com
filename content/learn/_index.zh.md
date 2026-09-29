@@ -5,4 +5,5 @@ description = "学习编程、云计算和 AI 的免费课程、教程与文档�
 slug = "learn"
 title = "学习"
 layout = "learn"
+outputs = ["html"]
 +++

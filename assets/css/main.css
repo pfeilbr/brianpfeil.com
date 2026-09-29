@@ -2506,6 +2506,10 @@ html[data-theme="dark"] .gh-step-n { color: color-mix(in srgb, var(--ic-c, var(-
 
 
 .learn-top { margin-top: 1.5rem; }
+.learn-crumb { font-size: 0.8125rem; margin-bottom: 0.25rem; }
+.learn-crumb a { color: var(--text-subtle); }
+.learn-crumb a:hover { color: var(--brand); }
+a.chip { text-decoration: none; }
 
 /* Two across even on a phone, so the goals don't push every resource a
    full screen down. */
@@ -2520,6 +2524,7 @@ html[data-theme="dark"] .gh-step-n { color: color-mix(in srgb, var(--ic-c, var(-
 
 .learn-goal {
   font: inherit;
+  text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.625rem;

@@ -80,9 +80,13 @@ test-layout: ## Build /media/ from a fixture; check /data/media.json and the pag
 test-link-check: ## Tests for the repo-link checker
 	python3 -m unittest discover -s tools/link-check -p 'test_*.py'
 
-test-learn-links: ## Tests for the /learn/ link checker, and its offline check of data/learn.json
+test-learn-links: ## Tests for the /learn/ link checker, its offline check of data/learn.json, and the path pages are current
 	python3 -m unittest discover -s tools/learn-links -p 'test_*.py'
 	python3 tools/learn-links/check_learn_links.py --offline
+	python3 tools/learn-links/path_pages.py --check
+
+learn-pages: ## Regenerate content/learn/<path>.<lang>.md (one page per /learn/ path) from data/learn.json
+	python3 tools/learn-links/path_pages.py
 
 test-courses: ## Tests for the course sync, and a privacy check of every published lesson
 	python3 -m unittest discover -s tools/courses -p 'test_*.py'
@@ -209,4 +213,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf
+.PHONY: learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf
