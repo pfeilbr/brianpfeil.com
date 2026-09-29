@@ -12,11 +12,11 @@ Where the playlists come from:
          drops any that stopped being public.
 
 A playlist is listed only if a stranger can play it: its page loads without
-signing in and its first track allows embedding (YouTube's oEmbed answers
-401 for a video whose owner turned embedding off). That check misses a
-track blocked by a rights claim, which only shows once the embed is running
-on a real page -- so after a refresh, press play on each new playlist on
-/music/ and add any that show "Video unavailable" to "exclude".
+signing in, and the embed /music/ uses reports status OK when fetched with
+this site as the referer -- the same answer a visitor's browser gets. That
+catches a first track blocked by a rights claim ("Video unavailable"),
+which oEmbed and the player API both miss. "exclude" is for playlists that
+play but shouldn't be listed.
 
 Track lists come from YouTube Music's own API (the one music.youtube.com
 calls), which names artists properly -- "Drake, 21 Savage" rather than a
@@ -36,6 +36,7 @@ import collections
 import json
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -49,6 +50,10 @@ CONFIG = HERE / "config.json"
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 WEB = {"clientName": "WEB", "clientVersion": "2.20250101.00.00", "hl": "en", "gl": "US"}
 REMIX = {"clientName": "WEB_REMIX", "clientVersion": "1.20250101.01.00", "hl": "en", "gl": "US"}
+EMBED = "https://www.youtube.com/embed/videoseries?list="
+SITE = "https://brianpfeil.com/"  # the embed refuses to say anything without a referer (error 153)
+MAX_LOSS = 0.25  # refuse to drop more than this share of listed playlists in one run
+RETRIES = 4
 MAX_PAGES = 50  # 100 tracks a page; a runaway continuation stops here
 
 HEADER = """\
@@ -67,18 +72,36 @@ HEADER = """\
 
 # --- HTTP -----------------------------------------------------------------
 
-def get(url):
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "en-US,en"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return r.read().decode("utf-8")
+def fetch(req, read):
+    """urlopen with retries: YouTube stalls a read now and then. An HTTP
+    error status is an answer, not a stall, so it is raised at once."""
+    for attempt in range(RETRIES):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return read(r)
+        except urllib.error.HTTPError:
+            raise
+        except (TimeoutError, ConnectionError, urllib.error.URLError) as e:
+            if attempt == RETRIES - 1:
+                raise
+            wait = 2 ** attempt * 3
+            print(f"  retry  {req.full_url[:70]} in {wait}s ({e})", file=sys.stderr)
+            time.sleep(wait)
+
+
+def get(url, referer=None):
+    headers = {"User-Agent": UA, "Accept-Language": "en-US,en"}
+    if referer:
+        headers["Referer"] = referer
+    req = urllib.request.Request(url, headers=headers)
+    return fetch(req, lambda r: r.read().decode("utf-8"))
 
 
 def post(url, body, origin):
     req = urllib.request.Request(
         url, data=json.dumps(body).encode(), method="POST",
         headers={"User-Agent": UA, "Content-Type": "application/json", "Origin": origin})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.load(r)
+    return fetch(req, json.load)
 
 
 def web_browse(body):
@@ -91,17 +114,23 @@ def music_browse(body):
                 {"context": {"client": REMIX}, **body}, "https://music.youtube.com")
 
 
-def embeddable(video_id):
-    url = "https://www.youtube.com/oembed?format=json&url=" + urllib.parse.quote(
-        f"https://www.youtube.com/watch?v={video_id}", safe="")
+def embeds(pid):
+    """What the embedded player says when /music/ loads this playlist."""
     try:
-        get(url)
-        return True
+        html = get(EMBED + urllib.parse.quote(pid), referer=SITE)
     except urllib.error.HTTPError:
-        return False
+        return "HTTP_ERROR"
+    return embed_status(html)
 
 
 # --- parsing (pure; tested) -------------------------------------------------
+
+def embed_status(html):
+    """previewPlayabilityStatus of an embed page: "OK" if the first track
+    plays, "UNPLAYABLE" for a rights block or a removed video. The page
+    carries its player config as escaped JSON inside a script string."""
+    m = re.search(r'previewPlayabilityStatus\\*"\s*:\s*\{\\*"status\\*"\s*:\s*\\*"([A-Z_]+)', html)
+    return m.group(1) if m else "UNKNOWN"
 
 def initial_data(html):
     m = re.search(r"var ytInitialData = (\{.*?\});</script>", html, re.S)
@@ -211,6 +240,16 @@ def top_artists(track_lists, n):
     return total, [{"name": a, "count": c} for a, c in ranked[:n]]
 
 
+def listed_ids(yaml_text):
+    return set(re.findall(r'^\s+id: "([^"]+)"', yaml_text, re.M))
+
+
+def vanished(old, new):
+    """Share of the playlists listed in `old` that `new` no longer lists."""
+    before = listed_ids(old)
+    return len(before - listed_ids(new)) / len(before) if before else 0.0
+
+
 def q(s):
     return json.dumps(s, ensure_ascii=False)
 
@@ -263,12 +302,13 @@ def fetch_playlist(pid):
 
 
 def playable(p):
-    return bool(p and p["list"] and embeddable(p["list"][0][0]))
+    return bool(p and p["list"] and embeds(p["id"]) == "OK")
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--dry-run", action="store_true", help="print the result instead of writing it")
+    ap.add_argument("--force", action="store_true", help="write even if many listed playlists vanished")
     args = ap.parse_args()
     cfg = json.loads(CONFIG.read_text())
 
@@ -311,6 +351,10 @@ def main():
     if args.dry_run:
         return
     old = OUT.read_text() if OUT.exists() else ""
+    lost = vanished(old, out)
+    if lost > MAX_LOSS and not args.force:
+        sys.exit(f"{lost:.0%} of the listed playlists vanished -- likely a partial answer "
+                 "from YouTube, so nothing was written (--force if it is real)")
     if old == out:
         print("data/music.yaml unchanged")
         return

@@ -61,10 +61,56 @@ class Parsing(unittest.TestCase):
         self.assertEqual(refresh.header(data), ("Jazzhop Studies", "YouTube Music", 1089))
         self.assertEqual(refresh.header({}), (None, None, None))
 
+    def test_embed_status_reads_escaped_player_config(self):
+        ok = r'var x = "{\"previewPlayabilityStatus\":{\"status\":\"OK\",\"playableInEmbed\":true}}";'
+        bad = r'"{\\\"previewPlayabilityStatus\\\":{\\\"status\\\":\\\"UNPLAYABLE\\\",\\\"reason\\\":\\\"Video unavailable\\\"'
+        plain = '{"previewPlayabilityStatus": {"status": "ERROR"}}'
+        self.assertEqual(refresh.embed_status(ok), "OK")
+        self.assertEqual(refresh.embed_status(bad), "UNPLAYABLE")
+        self.assertEqual(refresh.embed_status(plain), "ERROR")
+        self.assertEqual(refresh.embed_status("<html></html>"), "UNKNOWN")
+
     def test_continuation_either_shape(self):
         self.assertEqual(refresh.continuation({"a": {"continuationCommand": {"token": "t1"}}}), "t1")
         self.assertEqual(refresh.continuation({"a": [{"nextContinuationData": {"continuation": "t2"}}]}), "t2")
         self.assertIsNone(refresh.continuation({}))
+
+
+class Retries(unittest.TestCase):
+    def setUp(self):
+        self._sleep, self._open = refresh.time.sleep, refresh.urllib.request.urlopen
+        refresh.time.sleep = lambda s: None
+
+    def tearDown(self):
+        refresh.time.sleep, refresh.urllib.request.urlopen = self._sleep, self._open
+
+    def test_a_stalled_read_is_retried(self):
+        calls = []
+
+        class Resp:
+            def __enter__(self): return self
+            def __exit__(self, *a): return False
+            def read(self): return b"ok"
+
+        def opener(req, timeout):
+            calls.append(1)
+            if len(calls) < 3:
+                raise TimeoutError("The read operation timed out")
+            return Resp()
+        refresh.urllib.request.urlopen = opener
+        self.assertEqual(refresh.get("https://example.test/"), "ok")
+        self.assertEqual(len(calls), 3)
+
+    def test_an_http_error_is_not_retried(self):
+        calls = []
+
+        def opener(req, timeout):
+            calls.append(1)
+            raise refresh.urllib.error.HTTPError(req.full_url, 404, "nope", {}, None)
+        refresh.urllib.request.urlopen = opener
+        with self.assertRaises(refresh.urllib.error.HTTPError):
+            refresh.get("https://example.test/")
+        self.assertEqual(len(calls), 1)
 
 
 class Output(unittest.TestCase):
@@ -92,6 +138,16 @@ class Output(unittest.TestCase):
         self.assertEqual(d["mine"][0]["title"], 'gym 💪 "x"')
         self.assertEqual(d["saved"][0]["by"], "YouTube Music")
         self.assertEqual(d["tracks_counted"], 3)
+
+    def test_vanished_share(self):
+        old = '  - title: "a"\n    id: "PL1"\n  - title: "b"\n    id: "PL2"\n'
+        self.assertEqual(refresh.vanished(old, old), 0.0)
+        self.assertEqual(refresh.vanished(old, '    id: "PL1"\n    id: "PL3"\n'), 0.5)
+        self.assertEqual(refresh.vanished("", old), 0.0)
+
+    def test_current_data_file_parses(self):
+        ids = refresh.listed_ids(refresh.OUT.read_text())
+        self.assertGreater(len(ids), 5)
 
     def test_config_notes_have_english_strings(self):
         cfg = json.loads(refresh.CONFIG.read_text())
