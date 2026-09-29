@@ -242,6 +242,14 @@ touching a template:
   Learners' ticked-off steps live in `localStorage` (`gh-learn-done`) only.
   On this page `.gh [hidden]` is forced to `display: none` -- a class that
   sets `display` otherwise beats the attribute (it kept "Show more" visible).
+- **/music/ refreshes itself** every Thursday (`.github/workflows/music-refresh.yml`,
+  `make music-refresh` by hand). Every public playlist on @pfeilbr is listed
+  if its embed plays; the check fetches `embed/videoseries?list=<id>` with
+  this site as the Referer and reads `previewPlayabilityStatus` — without a
+  referer every embed answers error 153, and oEmbed passes rights-blocked
+  tracks. Saved (other people's) playlists are ids in
+  `tools/music/config.json`, since the library needs B's sign-in. Losing
+  more than a quarter of the list in one run refuses to write (`--force`).
 - **Only publish what a stranger can actually open.** Private YouTube playlists
   403 and some public ones refuse to embed, so every embed was verified against
   `youtube.com/embed/videoseries?list=<id>` (or the IFrame Player API) before

@@ -113,7 +113,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make images-selfhost` | Self-host the Evernote screenshots posts still hotlink, as WebP in `static/images/remote/` (needs network, ImageMagick) |
 | `make guides-pdf` | PDF of every architecture guide, for sharing and printing (needs Chrome) |
 | **Movies** | |
-| `make music-refresh` | Refresh `data/music.yaml` from YouTube: every public playlist on @pfeilbr, the saved ones in `tools/music/config.json`, track counts and top artists. Then press play on any new playlist on `/music/`; add the ones that won't play to `exclude` in the config |
+| `make music-refresh` | Refresh `data/music.yaml` from YouTube: every public playlist on @pfeilbr whose embed actually plays, the saved ones in `tools/music/config.json`, track counts and top artists. Also runs every Thursday (`.github/workflows/music-refresh.yml`), committing only when something changed |
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
 | **GitHub** | |
 | `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/`. Also runs every Monday (`.github/workflows/github-refresh.yml`), committing only when something changed |
