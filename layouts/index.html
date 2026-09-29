@@ -66,7 +66,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
   </section>
 
-  {{- /* Learn: every goal on /learn/ as a link straight to that path. */ -}}
+  {{- /* Learn: every goal on /learn/ as a link straight to its own page. */ -}}
   {{ with hugo.Data.learn }}
   {{ $n := 0 }}{{ range .paths }}{{ $n = add $n (len .items) }}{{ end }}
   <section class="hub-card hub-wide" data-ic="i-cap" aria-labelledby="hub-learn">
@@ -80,7 +80,7 @@
     </div>
     <ul class="hub-goals">
       {{ range .paths }}
-      <li><a href="{{ $prefix }}learn/#{{ .key }}" data-ic="{{ .icon }}">
+      <li><a href="{{ $prefix }}learn/{{ .key }}/" data-ic="{{ .icon }}">
         {{ partial "icons/chip.html" (dict "id" .icon "size" "sm") }}
         <span>{{ i18n (printf "learn_path_%s" .key) }}</span>
       </a></li>

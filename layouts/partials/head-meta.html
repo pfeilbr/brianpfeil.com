@@ -79,7 +79,7 @@
 {{- end }}
 {{- /* Breadcrumbs (Home › Section › Page) for articles and course pages, so
    search results can show where a page sits. */ -}}
-{{- if and .IsPage (in (slice "post" "projects" "architecture" "courses") .Section) }}
+{{- if and .IsPage (in (slice "post" "projects" "architecture" "courses" "learn") .Section) }}
 {{- with .CurrentSection }}
 <script type="application/ld+json">
 {{ dict
