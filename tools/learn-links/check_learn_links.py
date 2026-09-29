@@ -68,7 +68,8 @@ def check_shape(data: dict, strings: dict) -> list[str]:
             errors.append(f"{key}: a url item needs a name")
         if item.get("url") and f"learn_res_{key}" not in strings:
             errors.append(f"{key}: no i18n key learn_res_{key}")
-        if item.get("page") and not (REPO / "content" / item["page"].strip("/")).is_dir():
+        page = REPO / "content" / item.get("page", "").strip("/")
+        if item.get("page") and not (page.is_dir() or page.with_suffix(".md").is_file()):
             errors.append(f"{key}: no page at content{item['page']}")
         group = item.get("group")
         if group and (group not in GROUPS or f"learn_group_{group}" not in strings):

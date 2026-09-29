@@ -25,7 +25,12 @@
         { "key": "odin", "name": "The Odin Project", "url": "https://www.theodinproject.com/" },
         { "key": "khan_computing", "name": "Computing", "by": "Khan Academy", "url": "https://www.khanacademy.org/computing" },
         { "key": "mdn_learn", "name": "Learn web development", "by": "MDN", "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development" },
-        { "key": "missing_semester", "name": "The Missing Semester", "by": "MIT", "url": "https://missing.csail.mit.edu/", "pick": true }
+        { "key": "missing_semester", "name": "The Missing Semester", "by": "MIT", "url": "https://missing.csail.mit.edu/", "pick": true },
+        { "key": "c_auth", "group": "made_here", "page": "/courses/auth" },
+        { "key": "c_v8", "group": "made_here", "page": "/courses/v8-javascript-engine" },
+        { "key": "c_cpp_stl", "group": "made_here", "page": "/courses/cpp-standard-library" },
+        { "key": "c_playwright", "group": "made_here", "page": "/courses/playground" },
+        { "key": "c_stripe", "group": "made_here", "page": "/courses/stripe" }
       ]
     },
     {
@@ -43,7 +48,10 @@
         { "key": "teach_yourself_cs", "name": "Teach Yourself Computer Science", "url": "https://teachyourselfcs.com/" },
         { "key": "cs_video_courses", "name": "CS video courses", "url": "https://github.com/Developer-Y/cs-video-courses" },
         { "key": "open_culture", "name": "Free online courses", "by": "Open Culture", "url": "https://www.openculture.com/freeonlinecourses" },
-        { "key": "neetcode", "name": "NeetCode", "url": "https://neetcode.io/" }
+        { "key": "neetcode", "name": "NeetCode", "url": "https://neetcode.io/" },
+        { "key": "c_ebpf", "group": "made_here", "page": "/courses/ebpf" },
+        { "key": "c_macos_kext", "group": "made_here", "page": "/courses/macos-kernel-extensions" },
+        { "key": "c_nix", "group": "made_here", "page": "/courses/nix" }
       ]
     },
     {
@@ -63,7 +71,11 @@
         { "key": "gcp_arch", "name": "Architecture Center", "by": "Google Cloud", "url": "https://docs.cloud.google.com/architecture" },
         { "key": "cf_learning", "name": "Learning Center", "by": "Cloudflare", "url": "https://www.cloudflare.com/learning/" },
         { "key": "system_design_primer", "name": "System Design Primer", "group": "neutral", "url": "https://github.com/donnemartin/system-design-primer" },
-        { "key": "microservices_io", "name": "microservices.io", "group": "neutral", "url": "https://microservices.io/" }
+        { "key": "microservices_io", "name": "microservices.io", "group": "neutral", "url": "https://microservices.io/" },
+        { "key": "g_compute_ladder", "group": "made_here", "page": "/architecture/compute-ladder" },
+        { "key": "g_review_checklist", "group": "made_here", "page": "/architecture/architecture-review-checklist" },
+        { "key": "g_anti_patterns", "group": "made_here", "page": "/architecture/architecture-anti-patterns" },
+        { "key": "c_terraform", "group": "made_here", "page": "/courses/terraform" }
       ]
     },
     {
@@ -83,7 +95,8 @@
         { "key": "islr", "name": "An Introduction to Statistical Learning", "url": "https://www.statlearning.com/" },
         { "key": "dl_book", "name": "Deep Learning", "by": "Goodfellow, Bengio & Courville", "url": "https://www.deeplearningbook.org/" },
         { "key": "sutton_barto", "name": "Reinforcement Learning: An Introduction", "by": "Sutton & Barto", "url": "http://incompleteideas.net/book/the-book-2nd.html" },
-        { "key": "ai_canon", "name": "AI Canon", "by": "a16z", "url": "https://a16z.com/ai-canon/" }
+        { "key": "ai_canon", "name": "AI Canon", "by": "a16z", "url": "https://a16z.com/ai-canon/" },
+        { "key": "c_pytorch", "group": "made_here", "page": "/courses/pytorch" }
       ]
     },
     {
@@ -107,7 +120,9 @@
         { "key": "mistral_docs", "name": "Mistral docs", "by": "Mistral AI", "url": "https://docs.mistral.ai/" },
         { "key": "ollama", "name": "Ollama", "group": "local", "url": "https://ollama.com/" },
         { "key": "mlx_lm", "name": "MLX LM", "group": "local", "url": "https://github.com/ml-explore/mlx-lm" },
-        { "key": "llama_cpp", "name": "llama.cpp", "group": "local", "url": "https://github.com/ggml-org/llama.cpp" }
+        { "key": "llama_cpp", "name": "llama.cpp", "group": "local", "url": "https://github.com/ggml-org/llama.cpp" },
+        { "key": "c_agentic_loop", "group": "made_here", "page": "/courses/agentic-loop-engineering" },
+        { "key": "c_mlx_lm", "group": "made_here", "page": "/courses/mlx-lm" }
       ]
     },
     {

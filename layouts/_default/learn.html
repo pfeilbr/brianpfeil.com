@@ -15,7 +15,8 @@
   {{ range .items }}
     {{ $total = add $total 1 }}
     {{ if .page }}
-      {{ with site.GetPage .page }}
+      {{- /* Guides and courses are English only: use the English page. */}}
+      {{ with or (site.GetPage .page) (hugo.Sites.Default.GetPage .page) }}
         {{ $pages = merge $pages (dict .File.ContentBaseName (dict "name" .Title "blurb" .Description "url" .RelPermalink)) }}
       {{ end }}
     {{ else }}

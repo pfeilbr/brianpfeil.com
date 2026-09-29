@@ -12,7 +12,8 @@
     {{- $key := . -}}
     {{- $words := slice $pg.Description -}}
     {{- range hugo.Data.learn.paths }}{{ if eq .key $key }}{{ range .items -}}
-      {{- $words = $words | append (delimit (slice (.name | default "") (.by | default "") (i18n (printf "learn_res_%s" .key))) " ") -}}
+      {{- if .page }}{{ with site.GetPage .page }}{{ $words = $words | append (printf "%s %s" .Title (.Description | plainify)) }}{{ end -}}
+      {{- else }}{{ $words = $words | append (delimit (slice (.name | default "") (.by | default "") (i18n (printf "learn_res_%s" .key))) " ") }}{{ end -}}
     {{- end }}{{ end }}{{ end -}}
     {{- $contents = delimit $words " · " | truncate 1500 | htmlUnescape -}}
   {{- end -}}
