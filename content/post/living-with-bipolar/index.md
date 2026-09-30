@@ -29,6 +29,14 @@ Eventually my mom divorced him. From the outside it might have looked as if she 
 
 Mental illness runs in my family. My father's diagnosis and mine aren't the same, but they're related: schizophrenia, schizoaffective disorder and bipolar disorder share much of their genetic risk, and having a parent with one raises a child's risk of the others. I knew that intellectually for a long time. What I didn't expect was to catch myself doing the things I remembered him doing.
 
+## My mom
+
+If my father is where some of this started, my mom is where so much of who I am comes from. My personality is hers. I learned what unconditional love is from her: first by receiving it, and then by watching her care for my father for as long as she possibly could.
+
+She is an angel and a saint. I have never known her to hurt anyone. She shaped the person I am, and whatever emotional intelligence I have, I learned from her.
+
+She's living with dementia and memory loss now. Whatever she forgets, what she taught me stays.
+
 ## The part that feels good
 
 Nobody warns you that the high is the part you'll miss.
