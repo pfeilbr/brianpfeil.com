@@ -21,9 +21,13 @@ If you are in crisis right now, skip to [the end](#if-youre-in-it-right-now). Th
 
 ## Where it starts: my father
 
-My father had bipolar disorder. I grew up with it in the house. I didn't have words for it as a kid, but I knew the weather could change without warning. Later I watched him decline, in and out of hospitals, sedated by medication, less and less himself.
+My father wasn't bipolar. He had schizophrenia, and was diagnosed with schizoaffective disorder, which is schizophrenia together with mood episodes: the highs and the depressions. I grew up with it in the house. I didn't have words for it as a kid, but I knew the weather could change without warning.
 
-Mental illness runs in my family. Bipolar disorder is one of the most heritable conditions in psychiatry: having a parent with it raises your own risk several times over. I knew that intellectually for a long time. What I didn't expect was to catch myself doing the things I remembered him doing.
+He was 302'd many times. In Pennsylvania, a "302" is an involuntary emergency psychiatric commitment, named for the section of the law that allows it. Each one was a crisis for him and for all of us, and our family dealt with it again and again. Later I watched him decline, in and out of hospitals, sedated by medication, less and less himself.
+
+Eventually my mom divorced him. From the outside it might have looked as if she left him high and dry. She didn't. She cared for him, and she stuck it out for the longest time before she finally had to.
+
+Mental illness runs in my family. My father's diagnosis and mine aren't the same, but they're related: schizophrenia, schizoaffective disorder and bipolar disorder share much of their genetic risk, and having a parent with one raises a child's risk of the others. I knew that intellectually for a long time. What I didn't expect was to catch myself doing the things I remembered him doing.
 
 ## The part that feels good
 
