@@ -3,7 +3,7 @@ title = "The Highs, the Lows, and Everything in Between: My Life With Bipolar"
 slug = "living-with-bipolar"
 author = "Brian Pfeil"
 date = "2026-09-29"
-lastmod = "2026-09-29"
+lastmod = "2026-09-30"
 draft = true
 categories = []
 tags = ["mental-health", "bipolar", "personal"]
@@ -58,6 +58,24 @@ This is the hardest section to write.
 **My boys** are the reason I kept going to appointments on days I didn't want to. They saw the loud, over-scheduled, too-intense version of their dad, and they saw the version that couldn't get off the couch. I think about my own childhood with my father, and I work very hard for my story to end differently for them. Kids notice everything. If you're a parent reading this: getting treatment is not selfish. It's one of the most important things you can do for them.
 
 **Friends** came and went with my moods. I'm not proud of how many relationships I let lapse. If you're one of them and you're reading this: it wasn't you.
+
+## My brother Jason
+
+One person didn't drift, and he needs his own section.
+
+My brother Jason has been the steadiest thing in my life through all of this. When my routine fell apart, I went through stretches where I texted him every day about what I'd done: what I ate, whether I got out of the house, what I got done and what I didn't. He read every one, and he kept me on track. He never treated it as a burden. Having someone to report to, someone who would notice if I went quiet, did more for me than most of what I tried.
+
+He helped me with my finances when I couldn't look at them. He helped me through my divorce. He didn't wait to be asked, and he didn't make me feel small for needing it.
+
+And it isn't only me. Jason goes above and beyond for the whole family. When our dad was dying, he figured it out: the hospital, the decisions, the paperwork, everything that lands on someone all at once. Our dad's mental illness, and everything that came with it, was the same story. Now our mom is dealing with dementia and memory loss, and again he's the one figuring it all out. When everything gets messed up, Jason works out what needs to happen and does it.
+
+He is selfless. He gives everything he has to his family.
+
+I lied to him. I did what I described above: the small untruths, the covering, the vanishing. He knew, and he stayed anyway. He kept supporting me without questions and without keeping score.
+
+Jason, this hasn't gone unrecognized. I see what you've done, and what you've carried for all of us, and I don't say it nearly enough. Thank you. I mean it.
+
+If you're reading this and struggling: find your Jason. If you already have one, tell them.
 
 ## Getting help, and how long it took
 
@@ -149,7 +167,7 @@ Sleep disruption is one of the most reliable early warning signs, and one of the
 
 ### Build a team, and let them in
 
-A psychiatrist to manage medication, a therapist to work through the rest, and one or two people in your life who know your warning signs and have permission to tell you when they see them. I spent years trying to manage this privately. It doesn't work.
+A psychiatrist to manage medication, a therapist to work through the rest, and one or two people in your life who know your warning signs and have permission to tell you when they see them. For me that person is my brother Jason, and a daily check-in text with him did more than any app. I spent years trying to manage this privately. It doesn't work.
 
 ### Repair where you can
 
