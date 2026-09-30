@@ -55,7 +55,13 @@ This is the hardest section to write.
 
 **My ex-wife** spent years as part of a team trying to get me well, driving to appointments, tracking medications, filling out forms and absorbing the fallout. Living with someone whose personality changes with the season is exhausting, and she carried more of it than anyone should have to. Our marriage ended, for many reasons and not just this one. But I won't pretend my illness wasn't one of them.
 
-**My boys** are the reason I kept going to appointments on days I didn't want to. They saw the loud, over-scheduled, too-intense version of their dad, and they saw the version that couldn't get off the couch. I think about my own childhood with my father, and I work very hard for my story to end differently for them. Kids notice everything. If you're a parent reading this: getting treatment is not selfish. It's one of the most important things you can do for them.
+**My boys** are the reason I kept going to appointments on days I didn't want to. They saw the loud, over-scheduled, too-intense version of their dad, and they saw the version that couldn't get off the couch. I think about my own childhood with my father, and I work very hard for my story to end differently for them.
+
+My older son has become my best friend. He went and researched all of this on his own, and he understands it deeply. We've had many conversations about it. He's always there. He is so caring and so loving, a young man now, and he shares his love of all things technology with me.
+
+My younger son is my best friend too, and my skiing buddy. He's quiet and sweet, and he knows everything that's going on. He was very young when all of this happened, and he was hurt a lot by it. He lived through much of the bad stuff, wondering why his dad was leaving. He knew about the divorce before I did. He could sense it coming, and he would say, "Dad, don't get divorced."
+
+Kids notice everything. If you're a parent reading this: getting treatment is not selfish. It's one of the most important things you can do for them.
 
 **Friends** came and went with my moods. I'm not proud of how many relationships I let lapse. If you're one of them and you're reading this: it wasn't you.
 
