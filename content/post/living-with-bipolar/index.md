@@ -59,6 +59,16 @@ This is the hardest section to write.
 
 **Friends** came and went with my moods. I'm not proud of how many relationships I let lapse. If you're one of them and you're reading this: it wasn't you.
 
+## L.
+
+Not everything in these years was loss, and one relationship deserves to be remembered for what it was.
+
+L. was my first relationship after my divorce, and it was wonderful. It was new in every way. I learned her culture. She cooked for me, one new food after another, dishes I'd never had and would never have found on my own. She was curious about my world too. She learned to mountain bike, to fish and to kayak, all things I love, and she did it because she wanted to share them with me. I felt seen, and after the divorce I needed that more than I knew.
+
+I also loved her daughters like my own. I grew very close to them, and they were so kind to me. They didn't have to be. They let me in, and I'm grateful for every minute of it.
+
+I'm including this because a post like this can make it sound like illness only takes things away. It also sits next to the good parts of a life, and this was one of them. L., if you read this: thank you for what you gave me and for how you were with me.
+
 ## My brother Jason
 
 One person didn't drift, and he needs his own section.
