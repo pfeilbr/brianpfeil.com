@@ -42,6 +42,16 @@ I've always seemed to have better relationships with women, because in my experi
 
 She's living with dementia and memory loss now. Whatever she forgets, what she taught me stays.
 
+## Looking back: the obsessions
+
+Looking back, there was a pattern long before any diagnosis. When something caught me, it caught me completely.
+
+As a kid it was skiing. I'd watch ski movies with the sound off so I could focus on the details: how the skis carved the snow, turn after turn. Later it was mountain biking, and I pored over every component and every kind of bike.
+
+It shows up with food and routines too. I went through a phase of drinking a twelve-pack of LaCroix a day, with a stockpile of it in the garage. Same with blueberries and yogurt. I go through stretches where I lock onto one food, one activity or one routine, and do it over and over.
+
+I don't know how much of that is the illness and how much is simply who I am. But I recognize the same all-in intensity in my highs, and it was there long before I had a word for any of it.
+
 ## The part that feels good
 
 Nobody warns you that the high is the part you'll miss.
