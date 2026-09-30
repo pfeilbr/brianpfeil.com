@@ -59,9 +59,19 @@ This is the hardest section to write.
 
 **Friends** came and went with my moods. I'm not proud of how many relationships I let lapse. If you're one of them and you're reading this: it wasn't you.
 
-## L.
+## Doc
 
-Not everything in these years was loss.
+Not everything in these years was loss, and some of the best of it came from people who didn't have to show up for me at all.
+
+Early on, before I understood much of what was happening to me, there was Doc. We met while I was still married, on a date at a coffee shop, and agreed we were better as friends. That turned out to be one of the best decisions either of us made.
+
+We went on many hikes. She had a saying for everything, and real wisdom behind every one of them. When my marriage ended, she helped me process the divorce. She gave me a playlist of songs about love and heartbreak, and I still play it, over and over, to this day. We played Scrabble.
+
+She did all of this with almost no time to spare. She was in school then, on her way to becoming an anesthesiologist, working night shifts as a nurse and raising two daughters. She knew I was hurting. She saw it, and she took it on herself to make time for me anyway, in a schedule that had none. She made herself a big part of my healing.
+
+Her smile and her passion for life are huge, and they're contagious. Doc, thank you.
+
+## L.
 
 L. was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and a dozen other things, because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
 
