@@ -1,19 +1,19 @@
 +++
-title = "The Highs, the Lows, and Everything in Between: My Life With Bipolar"
+title = "The People Who Held Me Together: My Life With Bipolar"
 slug = "living-with-bipolar"
 author = "Brian Pfeil"
 date = "2026-09-29"
-lastmod = "2026-09-29"
+lastmod = "2026-09-30"
 draft = true
 categories = []
 tags = ["mental-health", "bipolar", "personal"]
-summary = "My first personal post. What bipolar disorder has looked like from the inside — the highs, the depressions, the medications, the leaves from work, the people I hurt and lost — and what I wish someone had told me sooner."
+summary = "My first personal post. What bipolar disorder has looked like from the inside — the highs, the depressions, the medications, the leaves from work, the people I hurt and lost, and the people who held me together anyway — and what I wish someone had told me sooner."
 
 +++
 
 This site is mostly code: AWS experiments, architecture notes, side projects. This post is different. It's the first thing I've written here that's about me rather than about something I built.
 
-I've been dealing with what my doctors diagnosed as bipolar disorder. I've kept most of it private for years, and the privacy cost me more than it protected me. So I'm writing it down: partly for me, partly for the people I've hurt along the way, and mostly for anyone reading this at 2 a.m. who recognizes themselves in it.
+I've been dealing with what my doctors diagnosed as bipolar disorder. I've kept most of it private for years, and the privacy cost me more than it protected me. So I'm writing it down: partly for me, partly for the people I've hurt along the way, partly to thank the people who held me together anyway, and mostly for anyone reading this at 2 a.m. who recognizes themselves in it.
 
 If you are in crisis right now, skip to [the end](#if-youre-in-it-right-now). There are numbers there you can call or text tonight.
 
@@ -55,9 +55,73 @@ This is the hardest section to write.
 
 **My ex-wife** spent years as part of a team trying to get me well, driving to appointments, tracking medications, filling out forms and absorbing the fallout. Living with someone whose personality changes with the season is exhausting, and she carried more of it than anyone should have to. Our marriage ended, for many reasons and not just this one. But I won't pretend my illness wasn't one of them.
 
-**My boys** are the reason I kept going to appointments on days I didn't want to. They saw the loud, over-scheduled, too-intense version of their dad, and they saw the version that couldn't get off the couch. I think about my own childhood with my father, and I work very hard for my story to end differently for them. Kids notice everything. If you're a parent reading this: getting treatment is not selfish. It's one of the most important things you can do for them.
+**My boys** are the reason I kept going to appointments on days I didn't want to. They saw the loud, over-scheduled, too-intense version of their dad, and they saw the version that couldn't get off the couch. I think about my own childhood with my father, and I work very hard for my story to end differently for them.
+
+My older son has become my best friend. He went and researched all of this on his own, and he understands it deeply. We've had many conversations about it. He's always there. He is so caring and so loving, a young man now, and he shares his love of all things technology with me.
+
+My younger son is my best friend too, and my skiing buddy. He's quiet and sweet, and he knows everything that's going on. He was very young when all of this happened, and he was hurt a lot by it. He lived through much of the bad stuff, wondering why his dad was leaving. He knew about the divorce before I did. He could sense it coming, and he would say, "Dad, don't get divorced."
+
+Kids notice everything. If you're a parent reading this: getting treatment is not selfish. It's one of the most important things you can do for them.
 
 **Friends** came and went with my moods. I'm not proud of how many relationships I let lapse. If you're one of them and you're reading this: it wasn't you.
+
+## The people who held me together
+
+Not everything in these years was loss, and some of the best of it came from people who didn't have to show up for me at all.
+
+### Doc
+
+Early on, before I understood much of what was happening to me, there was Doc. We met while I was still married, on a date at a coffee shop, and agreed we were better as friends. That turned out to be one of the best decisions either of us made.
+
+We went on many hikes. She had a saying for everything, and real wisdom behind every one of them. When my marriage ended, she helped me process the divorce. She gave me a playlist of songs about love and heartbreak, and I still play it, over and over, to this day. We played Scrabble.
+
+She did all of this with almost no time to spare. She was in school then, on her way to becoming an anesthesiologist, working night shifts as a nurse and raising two daughters. She knew I was hurting. She saw it, and she took it on herself to make time for me anyway, in a schedule that had none. She made herself a big part of my healing.
+
+Her smile and her passion for life are huge, and they're contagious. Doc, thank you.
+
+### L.
+
+L. was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and a dozen other things, because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
+
+Her daughters became a big part of it. I loved them like my own, and I grew very close to them. They were so kind to me, and they didn't have to be.
+
+A post like this can make it sound as if illness only takes. This was one of the good things, and it was real. L., thank you.
+
+### Se Jin
+
+While I was seeing L., I also had a dear friend, Se Jin. We went hiking together. Every morning I texted her good morning, every night good night, and in between we told each other about our days. We kept that up for months, probably six of them.
+
+Then the depression came, and I ghosted her. There was no decision in it. I just went quiet, the way I described above, when answering a text feels like lifting a car. From her side, someone who had checked in every morning and every night for half a year simply disappeared.
+
+About a month ago we found each other again, and she picked it right back up as if we'd never stopped being friends. No hard feelings. Nothing.
+
+That kind of grace is rarer than it should be. She is a wonderful, wonderful person, and a wonderful mom to her three sons. I'm so thankful to have her in my life again, and her cute dog, Gracie, too.
+
+### E.
+
+E. trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway.
+
+She let me into her life. I got to know her son, and we had so much fun together.
+
+She also took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
+
+### My brother Jason
+
+If this story has a hero, it's my brother Jason.
+
+There were stretches when my routine fell apart, and through them I texted Jason every day with what I'd done. He read every one, and he kept me on track. It sounds small. It wasn't. Knowing someone would notice if I slipped, or went quiet, held me up on days when nothing else did.
+
+He helped me with my finances when I couldn't face them. He helped me through my divorce.
+
+And it isn't just me. Jason goes above and beyond for our whole family. When our dad was dying, Jason figured it out. Our dad's mental illness, and everything it brought with it: Jason figured it out. Now our mom is going through dementia and memory loss, and again Jason is the one figuring it out. Whenever everything gets messed up, he works out what has to happen, and then he does it.
+
+He is selfless. He gives everything he has to his family.
+
+He has also dealt with me lying to him. The lies I described earlier in this post, he was on the receiving end of some of them. And he has kept supporting me, without question, every time.
+
+Jason: none of this goes unrecognized. I see what you've done for me, for Dad, for Mom, for all of us, and I don't say it nearly often enough. Thank you.
+
+If you're struggling, find your Jason. If you already have one, tell them what they mean to you. This is me telling mine.
 
 ## Getting help, and how long it took
 
@@ -149,7 +213,7 @@ Sleep disruption is one of the most reliable early warning signs, and one of the
 
 ### Build a team, and let them in
 
-A psychiatrist to manage medication, a therapist to work through the rest, and one or two people in your life who know your warning signs and have permission to tell you when they see them. I spent years trying to manage this privately. It doesn't work.
+A psychiatrist to manage medication, a therapist to work through the rest, and one or two people in your life who know your warning signs and have permission to tell you when they see them. For me that person is my brother Jason; the daily texts to him kept me on track when nothing else did. I spent years trying to manage this privately. It doesn't work.
 
 ### Repair where you can
 
