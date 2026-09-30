@@ -69,6 +69,16 @@ I also loved her daughters like my own. I grew very close to them, and they were
 
 I'm including this because a post like this can make it sound like illness only takes things away. It also sits next to the good parts of a life, and this was one of them. L., if you read this: thank you for what you gave me and for how you were with me.
 
+## E.
+
+E. trusted me. That's the first thing I think of, because trust was the thing I'd spent so much of my illness burning through, and she gave it anyway.
+
+She let me into her life. I got to know her son, and the three of us had so much fun together. It felt like being part of something ordinary and good, which I hadn't felt in a long time.
+
+She also took a real interest in me, not just the version of me that was easy to be around. She wanted to get me on the right track: to stop drinking and stop the partying, and to look at what was underneath them. She was helping me, and I could feel it.
+
+E., thank you for trusting me, for making room for me, and for caring where I was headed.
+
 ## My brother Jason
 
 One person didn't drift, and he needs his own section.
