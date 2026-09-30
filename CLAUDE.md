@@ -103,6 +103,9 @@ unreliable here — see `infra/README.md`.
 
 - **Always commit and push immediately** after making changes — don't wait to be asked.
   The site deploys from `main`, and B wants to see changes live quickly.
+- **When a post's title changes, change its slug to match** (and rename the
+  bundle directory), and add the old URL to `aliases` so existing links
+  still land. B asked for this every time, without being asked again.
 - Commit only the files related to the current task; leave unrelated
   work-in-progress changes uncommitted.
 - After pushing, poll the live site until the change appears — the deploy takes

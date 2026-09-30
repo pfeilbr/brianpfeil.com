@@ -1,6 +1,7 @@
 +++
 title = "The People Who Held Me Together: My Life With Bipolar"
-slug = "living-with-bipolar"
+slug = "the-people-who-held-me-together"
+aliases = ["/post/living-with-bipolar/"]
 author = "Brian Pfeil"
 date = "2026-09-29"
 lastmod = "2026-09-30"
@@ -34,6 +35,10 @@ Mental illness runs in my family. My father's diagnosis and mine aren't the same
 If my father is where some of this started, my mom is where so much of who I am comes from. My personality is hers. I learned what unconditional love is from her: first by receiving it, and then by watching her care for my father for as long as she possibly could.
 
 She is an angel and a saint. I have never known her to hurt anyone. She shaped the person I am, and whatever emotional intelligence I have, I learned from her.
+
+I spent so much time with her. She taught me to garden and to cross-stitch. We had tea together. I helped her bake cookies, and I got to lick the batter off the spoon.
+
+I've always seemed to have better relationships with women, because in my experience they're more emotionally intelligent. I think that's her influence too.
 
 She's living with dementia and memory loss now. Whatever she forgets, what she taught me stays.
 
