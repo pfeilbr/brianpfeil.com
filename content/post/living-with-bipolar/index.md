@@ -69,6 +69,18 @@ I also loved her daughters like my own. I grew very close to them, and they were
 
 I'm including this because a post like this can make it sound like illness only takes things away. It also sits next to the good parts of a life, and this was one of them. L., if you read this: thank you for what you gave me and for how you were with me.
 
+## Se Jin
+
+While I was seeing L., I had a dear friend named Se Jin. We went on hikes together. Every morning I texted her "good morning," and every night, "good night," and in between we shared our days. We did that for months, probably six of them. She was a really dear friend.
+
+Then I got depressed, and I ghosted her. I didn't decide to. I just stopped answering, the way I described above, when answering a text felt like lifting a car. She got silence from someone who had checked in with her every day for half a year.
+
+About a month ago we were reunited, and she picked it right back up as if we were still friends. No hard feelings, nothing. No lecture and no making me explain myself. I don't take that for granted.
+
+She is a wonderful, wonderful person, and a wonderful mom to three sons. I'm so thankful to have her in my life, and her cute dog, Gracie, too.
+
+Se Jin, thank you for making it so easy to come back.
+
 ## E.
 
 E. trusted me. That's the first thing I think of, because trust was the thing I'd spent so much of my illness burning through, and she gave it anyway.
