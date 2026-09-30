@@ -157,7 +157,7 @@ She let me into her life. I got to know her son, and we had so much fun together
 
 She also took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
 
-### My brother Jason
+### Jason and Michelle
 
 {{< mood src="images/jason.webp" alt="A lighthouse on a headland at sunset" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/5967533/lighthouse-sunset" >}}
 
@@ -171,9 +171,11 @@ And it isn't just me. Jason goes above and beyond for our whole family. When our
 
 He is selfless. He gives everything he has to his family.
 
+And he doesn't do it alone. His wife, Michelle, my sister, is right beside him. She supports him in everything, and together they are a perfect team. The two of them just get things done. They've done it for me, for Mom, for Dad, for everyone.
+
 He has also dealt with me lying to him. The lies I described earlier in this post, he was on the receiving end of some of them. And he has kept supporting me, without question, every time.
 
-Jason: none of this goes unrecognized. I see what you've done for me, for Dad, for Mom, for all of us, and I don't say it nearly often enough. Thank you.
+Jason and Michelle: none of this goes unrecognized. I see what you've done for me, for Dad, for Mom, for all of us, and I don't say it nearly often enough. Thank you, both of you.
 
 If you're struggling, find your Jason. If you already have one, tell them what they mean to you. This is me telling mine.
 
