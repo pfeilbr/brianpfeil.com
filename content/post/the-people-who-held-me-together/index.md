@@ -8,6 +8,11 @@ lastmod = "2026-09-30"
 draft = true
 categories = []
 tags = ["mental-health", "bipolar", "personal"]
+story = true
+hero = "images/hero.webp"
+hero_alt = "Layers of mountain ridges in morning haze, light breaking through from one side"
+hero_credit = "Photo: Alexandre Godreau / StockSnap · CC0"
+hero_href = "https://stocksnap.io/photo/mountain-highland-L4MIQU9O0N"
 summary = "My first personal post. What bipolar disorder has looked like from the inside — the highs, the depressions, the medications, the leaves from work, the people I hurt and lost, and the people who held me together anyway — and what I wish someone had told me sooner."
 
 +++
@@ -22,6 +27,8 @@ If you are in crisis right now, skip to [the end](#if-youre-in-it-right-now). Th
 
 ## Where it starts: my father
 
+{{< mood src="images/father.webp" alt="Rain running down a window, the world outside blurred" credit="Photo: Markus Spiske / StockSnap · CC0" href="https://stocksnap.io/photo/rain-raining-1AGVMUXMYI" >}}
+
 My father wasn't bipolar. He had schizophrenia, and was diagnosed with schizoaffective disorder, which is schizophrenia together with mood episodes: the highs and the depressions. I grew up with it in the house. I didn't have words for it as a kid, but I knew the weather could change without warning.
 
 He was 302'd many times. In Pennsylvania, a "302" is an involuntary emergency psychiatric commitment, named for the section of the law that allows it. Each one was a crisis for him and for all of us, and our family dealt with it again and again. Later I watched him decline, in and out of hospitals, sedated by medication, less and less himself.
@@ -31,6 +38,8 @@ Eventually my mom divorced him. From the outside it might have looked as if she 
 Mental illness runs in my family. My father's diagnosis and mine aren't the same, but they're related: schizophrenia, schizoaffective disorder and bipolar disorder share much of their genetic risk, and having a parent with one raises a child's risk of the others. I knew that intellectually for a long time. What I didn't expect was to catch myself doing the things I remembered him doing.
 
 ## My mom
+
+{{< mood src="images/mom.webp" alt="Pink peonies in bloom in a quiet garden" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/5967118/blossoms-garden-flower" >}}
 
 If my father is where some of this started, my mom is where so much of who I am comes from. My personality is hers. I learned what unconditional love is from her: first by receiving it, and then by watching her care for my father for as long as she possibly could.
 
@@ -44,6 +53,8 @@ She's living with dementia and memory loss now. Whatever she forgets, what she t
 
 ## Looking back: the obsessions
 
+{{< mood src="images/obsess.webp" alt="Skis bursting through deep powder snow against a blue sky" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/5915922/image-public-domain-nature-woman" >}}
+
 Looking back, there was a pattern long before any diagnosis. When something caught me, it caught me completely.
 
 As a kid it was skiing. I'd watch ski movies with the sound off so I could focus on the details: how the skis carved the snow, turn after turn. Later it was mountain biking, and I pored over every component and every kind of bike.
@@ -54,7 +65,9 @@ I don't know how much of that is the illness and how much is simply who I am. Bu
 
 ## The part that feels good
 
-Nobody warns you that the high is the part you'll miss.
+{{< mood src="images/high.webp" alt="City lights at night, blurred into soft glowing circles" credit="Photo: Thong Vo / StockSnap · CC0" href="https://stocksnap.io/photo/blurry-lights-5607D011AC" >}}
+
+{{< standout >}}Nobody warns you that the high is the part you'll miss.{{< /standout >}}
 
 When I was up, the world was easy. I felt like I was floating through it. Problems that normally took real effort just dissolved. I needed very little sleep and didn't feel tired. I had ideas faster than I could write them down, and every one of them felt obviously right.
 
@@ -67,6 +80,8 @@ My body became something to spend:
 From the inside it doesn't feel like an illness. It feels like finally becoming the person you were supposed to be. That's exactly what makes it dangerous.
 
 ## The part that doesn't
+
+{{< mood src="images/low.webp" alt="Dark storm clouds over an empty road" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/3372029/free-photo-image-asphalt-cc0-cloud" >}}
 
 The same energy has another edge.
 
@@ -81,6 +96,8 @@ Then there's the crash. Every high I've had has been followed by a low, and the 
 This is the hardest section to write.
 
 **My ex-wife** spent years as part of a team trying to get me well, driving to appointments, tracking medications, filling out forms and absorbing the fallout. Living with someone whose personality changes with the season is exhausting, and she carried more of it than anyone should have to. Our marriage ended, for many reasons and not just this one. But I won't pretend my illness wasn't one of them.
+
+{{< mood src="images/boys.webp" alt="A chairlift rising above a sea of clouds at sunset" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/3337941/free-photo-image-adventure-cable-car-cc0" >}}
 
 **My boys** are the reason I kept going to appointments on days I didn't want to. They saw the loud, over-scheduled, too-intense version of their dad, and they saw the version that couldn't get off the couch. I think about my own childhood with my father, and I work very hard for my story to end differently for them.
 
@@ -98,6 +115,8 @@ Not everything in these years was loss, and some of the best of it came from peo
 
 ### Doc
 
+{{< mood src="images/doc.webp" alt="A dirt trail through a green spring forest" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/5939666/forest-trail" >}}
+
 Early on, before I understood much of what was happening to me, there was Doc. We met while I was still married, on a date at a coffee shop, and agreed we were better as friends. That turned out to be one of the best decisions either of us made.
 
 We went on many hikes. She had a saying for everything, and real wisdom behind every one of them. When my marriage ended, she helped me process the divorce. She gave me a playlist of songs about love and heartbreak, and I still play it, over and over, to this day. We played Scrabble.
@@ -108,6 +127,8 @@ Her smile and her passion for life are huge, and they're contagious. Doc, thank 
 
 ### L.
 
+{{< mood src="images/l.webp" alt="Two people in kayaks on a calm lake, paddling side by side" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/3303527/free-photo-image-landscape-lake-people-abies-adventure" >}}
+
 L. was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and a dozen other things, because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
 
 Her daughters became a big part of it. I loved them like my own, and I grew very close to them. They were so kind to me, and they didn't have to be.
@@ -115,6 +136,8 @@ Her daughters became a big part of it. I loved them like my own, and I grew very
 A post like this can make it sound as if illness only takes. This was one of the good things, and it was real. L., thank you.
 
 ### Se Jin
+
+{{< mood src="images/sejin.webp" alt="The sun rising over a snowy mountain ridge under a starry sky" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/6043118/photo-image-moon-public-domain-mountain" >}}
 
 While I was seeing L., I also had a dear friend, Se Jin. We went hiking together. Every morning I texted her good morning, every night good night, and in between we told each other about our days. We kept that up for months, probably six of them.
 
@@ -126,6 +149,8 @@ That kind of grace is rarer than it should be. She is a wonderful, wonderful per
 
 ### E.
 
+{{< mood src="images/e.webp" alt="Hands holding an enamel mug of tea by a campfire kettle" credit="Photo: Anggoro Sakti / StockSnap · CC0" href="https://stocksnap.io/photo/man-campfire-HRLU7ZESP0" >}}
+
 E. trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway.
 
 She let me into her life. I got to know her son, and we had so much fun together.
@@ -134,7 +159,9 @@ She also took a real interest in me, beyond the fun. She wanted to get me on the
 
 ### My brother Jason
 
-If this story has a hero, it's my brother Jason.
+{{< mood src="images/jason.webp" alt="A lighthouse on a headland at sunset" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/5967533/lighthouse-sunset" >}}
+
+{{< standout >}}If this story has a hero, it's my brother Jason.{{< /standout >}}
 
 There were stretches when my routine fell apart, and through them I texted Jason every day with what I'd done. He read every one, and he kept me on track. It sounds small. It wasn't. Knowing someone would notice if I slipped, or went quiet, held me up on days when nothing else did.
 
@@ -151,6 +178,8 @@ Jason: none of this goes unrecognized. I see what you've done for me, for Dad, f
 If you're struggling, find your Jason. If you already have one, tell them what they mean to you. This is me telling mine.
 
 ## Getting help, and how long it took
+
+{{< mood src="images/help.webp" alt="A person sitting alone in a quiet room beside a closed door" credit="Photo: Anthony Tran / StockSnap · CC0" href="https://stocksnap.io/photo/chill-chillout-Q6XLNSOUUO" >}}
 
 For years I treated the symptoms I could name. In early 2022 I did several months of weekly therapy for generalized anxiety and was on a low-dose SSRI (citalopram). It helped the anxiety. It didn't touch the bigger pattern.
 
@@ -173,6 +202,8 @@ Finding treatment that works is rarely one prescription. For me it has been a lo
 None of these was a magic switch. Some helped for a while. Some had side effects I had to weigh against the benefit. Every change meant weeks of waiting to see whether it was working. The most important thing I've learned is that **"this medication didn't work" is information, not failure.** It narrows the search. Keep going back.
 
 ## Work, brain fog, and leaves of absence
+
+{{< mood src="images/fog.webp" alt="A road disappearing into thick fog between autumn trees" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/3283961/free-photo-image-tree-autumn-cc0" >}}
 
 I've been a software engineer and architect for decades. My identity is wrapped up in being the person who can hold a whole system in his head. Depression takes that away first.
 
@@ -198,9 +229,11 @@ I'm writing this post anyway, and I kept "bipolar" in the title, for a few reaso
 - **The experiences were real.** The sleepless highs, the gym twice a day, the clubs, the aggression, the lying, the friends gained and lost, the crashes, the fog, the leaves from work. Whatever the name, I lived it, and so did the people around me.
 - **I have a family history that makes me take it seriously.** I'd rather be vigilant and wrong than dismissive and wrong.
 
-What I've learned is to hold the label loosely and the treatment tightly.
+{{< standout >}}What I've learned is to hold the label loosely and the treatment tightly.{{< /standout >}}
 
 ## What I wish someone had told me
+
+{{< mood src="images/wish.webp" alt="Someone writing in a notebook beside a cup of coffee" credit="Photo: Cathryn Lavery / StockSnap · CC0" href="https://stocksnap.io/photo/journal-notepad-DPKNIIN5X3" >}}
 
 For anyone who recognizes themselves, or someone they love, in this:
 
@@ -261,7 +294,7 @@ It took me years and many adjustments to get here, and I'm still adjusting. If t
 
 If you're in immediate danger, call 911 or go to the nearest emergency room.
 
----
+{{< mood src="images/end.webp" alt="Soft sunrise over the sea, waves washing onto the sand" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/3282991/free-photo-image-beach-ocean-sunset" >}}
 
 I don't have a neat ending. I'm still in treatment, still learning my patterns, still repairing relationships. But I'm here, I'm present for my boys, and I'm done hiding this.
 

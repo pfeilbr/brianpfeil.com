@@ -1,0 +1,15 @@
+{{- /* A wide, mood-setting photo for story posts (story = true).
+   {{< mood src="images/x.webp" alt="…" credit="Name / Source · CC0" href="…" >}}
+   Breaks out of the text column, fades in as it scrolls into view
+   (partials/story.html), and credits the photographer underneath. The file
+   must live in the post's bundle so its size is known and the page never
+   jumps while it loads. */ -}}
+{{- $src := .Get "src" -}}
+{{- $img := .Page.Resources.Get $src -}}
+{{- if not $img }}{{ errorf "mood: %s not found in %s" $src .Page.File.Path }}{{ end -}}
+<figure class="mood">
+  <div class="mood-frame"><img class="mood-img" src="{{ $img.RelPermalink }}" alt="{{ .Get "alt" }}" width="{{ $img.Width }}" height="{{ $img.Height }}" loading="lazy" decoding="async"></div>
+  {{- with .Get "credit" }}
+  <figcaption class="mood-credit">{{ with $.Get "href" }}<a href="{{ . }}" rel="noopener">{{ end }}{{ . }}{{ with $.Get "href" }}</a>{{ end }}</figcaption>
+  {{- end }}
+</figure>

@@ -1,6 +1,16 @@
 {{ define "main" }}
 {{ $isPost := ne .Params.layout "page" }}
-<article>
+{{ $story := .Params.story }}
+{{ if $story }}{{ partial "story.html" . }}{{ end }}
+<article{{ if $story }} class="story"{{ end }}>
+  {{- /* A story post opens on its hero photo (front matter hero, hero_alt,
+     hero_credit, hero_href); see partials/story.html. */ -}}
+  {{ if $story }}{{ with .Resources.Get .Params.hero }}
+  <figure class="story-hero">
+    <div class="story-hero-frame"><img src="{{ .RelPermalink }}" alt="{{ $.Params.hero_alt }}" width="{{ .Width }}" height="{{ .Height }}" fetchpriority="high" decoding="async"></div>
+    {{ with $.Params.hero_credit }}<figcaption class="mood-credit">{{ with $.Params.hero_href }}<a href="{{ . }}" rel="noopener">{{ end }}{{ . }}{{ with $.Params.hero_href }}</a>{{ end }}</figcaption>{{ end }}
+  </figure>
+  {{ end }}{{ end }}
   <header class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
     {{ if $isPost }}

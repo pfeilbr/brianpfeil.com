@@ -52,7 +52,7 @@
 
   images.forEach(function(img) {
     /* Skip the decorative about-page portrait and anything already linked. */
-    if (img.classList.contains("about-photo") || img.closest("a")) return;
+    if (img.classList.contains("about-photo") || img.classList.contains("mood-img") || img.closest("a")) return;
     img.classList.add("is-zoomable");
     img.setAttribute("tabindex", "0");
     img.setAttribute("role", "button");

@@ -1,0 +1,40 @@
+{{- /* Story-post styles and motion; see assets/css/story.css. Emitted by
+   single.html before the article so the reveal class is on <html> before
+   any photo is drawn -- nothing flashes in and then out. */ -}}
+{{- $css := resources.Get "css/story.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+<div class="story-progress" aria-hidden="true"><span></span></div>
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var root = document.documentElement;
+  if (!reduce && "IntersectionObserver" in window) root.classList.add("story-js");
+
+  document.addEventListener("DOMContentLoaded", function () {
+    if (root.classList.contains("story-js")) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+        });
+      }, { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
+      document.querySelectorAll(".story .mood, .story .standout").forEach(function (el) { io.observe(el); });
+    }
+
+    var bar = document.querySelector(".story-progress span");
+    var article = document.querySelector("article.story");
+    if (!bar || !article) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var r = article.getBoundingClientRect();
+      var total = r.height - window.innerHeight;
+      var p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 1;
+      bar.style.transform = "scaleX(" + p + ")";
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  });
+})();
+</script>

@@ -1,0 +1,4 @@
+{{- /* One line of a story post set large, between rules, as a pause.
+   {{< standout >}}The line itself, in Markdown.{{< /standout >}}
+   It is the text, not a copy of it, so screen readers read it once. */ -}}
+<p class="standout">{{ .Inner | .Page.RenderString }}</p>

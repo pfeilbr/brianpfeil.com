@@ -312,6 +312,13 @@ touching a template:
   post that embeds an Evernote image fails `make test-image-rescue` until
   it's run.
 
+- **Story posts:** `story = true` plus `hero` / `hero_alt` / `hero_credit` /
+  `hero_href` in a post's front matter turns it into a long-form feature
+  (serif text, hero photo, progress bar; `assets/css/story.css`,
+  `partials/story.html`). `{{< mood src="images/x.webp" alt credit href >}}`
+  is a wide photo that fades in, `{{< standout >}}` sets one line large.
+  Photos live in the bundle as WebP and are CC0/public domain with a credit
+  line. Motion is off with reduced motion or no JS; everything stays visible.
 - **Keep learning** (`partials/keep-learning.html`): posts show up to two
   guides and two courses whose tag lists in `data/keep_learning.yaml` match
   the post's tags. A new guide or course needs an entry there to be found.

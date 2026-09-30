@@ -1,0 +1,158 @@
+/* Story posts: a post with `story = true` in its front matter reads like a
+   long-form feature. Serif text, a hero photo, wide mood photos between
+   sections ({{< mood >}}), a few lines set large ({{< standout >}}) and a
+   reading-progress bar. Loaded only on those pages (layouts/_default/single.html).
+
+   Motion is progressive: with no JavaScript, no IntersectionObserver or
+   prefers-reduced-motion, everything is simply visible. The scroll-linked
+   drift inside each photo uses CSS scroll timelines where the browser has
+   them and is skipped elsewhere. */
+
+.story {
+  --story-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, "Iowan Old Style", Georgia, serif;
+}
+
+/* ---- Type ---- */
+.story header h1 {
+  font-family: var(--story-serif);
+  font-size: clamp(2rem, 1.2rem + 3.2vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+.story .prose p,
+.story .prose li {
+  font-family: var(--story-serif);
+  font-size: 1.1875rem;
+  line-height: 1.75;
+}
+.story .prose h2 {
+  font-family: var(--story-serif);
+  font-size: 1.625rem;
+  line-height: 1.25;
+  margin-top: 3.5rem;
+}
+.story .prose h3 {
+  font-family: var(--story-serif);
+  font-size: 1.3125rem;
+  margin-top: 2.5rem;
+}
+.story .prose > p:first-child::first-letter {
+  float: left;
+  font-size: 3.7em;
+  line-height: 0.82;
+  padding: 0.1em 0.1em 0 0;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+/* ---- Photos wider than the text column ---- */
+.story-hero,
+.story .mood {
+  --story-w: min(64rem, calc(100vw - 2.5rem));
+  width: var(--story-w);
+  max-width: none;
+  margin-left: calc((100% - var(--story-w)) / 2);
+}
+.story-hero { margin-top: -0.5rem; margin-bottom: 2rem; }
+.story .mood { margin-top: 2.5rem; margin-bottom: 2.25rem; }
+
+.story-hero-frame,
+.mood-frame {
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background: var(--bg-muted);
+}
+.story-hero-frame { aspect-ratio: 3 / 2; }
+@media (min-width: 48rem) { .story-hero-frame { aspect-ratio: 16 / 9; max-height: 64vh; width: 100%; } }
+
+.story-hero img,
+.story .prose .mood-img {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  max-width: none;
+}
+.story-hero img { height: 100%; object-fit: cover; }
+/* A tall photo on a short screen is cropped, not allowed to fill it. */
+.story .prose .mood-img { height: auto; max-height: 78vh; object-fit: cover; }
+html[data-theme="dark"] .story-hero img,
+html[data-theme="dark"] .story .prose .mood-img { filter: brightness(0.86); }
+
+.mood-credit {
+  margin-top: 0.4rem;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text-subtle);
+  text-align: right;
+}
+.story .mood-credit a { color: var(--text-subtle); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---- A line set large ---- */
+.story .prose p.standout {
+  margin: 2.75rem 0;
+  padding: 1.5rem 0.5rem;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  font-size: clamp(1.4rem, 1.1rem + 1.4vw, 1.875rem);
+  line-height: 1.35;
+  font-style: italic;
+  text-align: center;
+  color: var(--text-strong);
+}
+
+/* ---- Reading progress ---- */
+.story-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 60;
+  pointer-events: none;
+}
+.story-progress span {
+  display: block;
+  height: 100%;
+  background: var(--brand);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+/* ---- Motion ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .story-hero img { animation: story-settle 14s cubic-bezier(0.2, 0.6, 0.2, 1) both; }
+  .story header { animation: story-rise 1.1s 0.25s ease-out both; }
+
+  /* story-js is set by partials/story.html only when the observer exists,
+     so nothing is ever hidden that can't be revealed. */
+  .story-js .story .mood,
+  .story-js .story .prose p.standout {
+    opacity: 0;
+    transform: translateY(1.75rem);
+    transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .story-js .story .mood.is-in,
+  .story-js .story .prose p.standout.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* The photo drifts slowly inside its frame while it crosses the screen. */
+  @supports (animation-timeline: view()) {
+    .story .prose .mood-img {
+      animation: story-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes story-settle { from { transform: scale(1.1); } to { transform: scale(1); } }
+@keyframes story-rise { from { opacity: 0; transform: translateY(0.75rem); } to { opacity: 1; transform: none; } }
+@keyframes story-drift {
+  from { transform: scale(1.1) translateY(-3.5%); }
+  to { transform: scale(1.1) translateY(3.5%); }
+}
