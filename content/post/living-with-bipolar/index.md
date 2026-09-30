@@ -1,5 +1,5 @@
 +++
-title = "The Highs, the Lows, and Everything in Between: My Life With Bipolar"
+title = "The People Who Held Me Together: My Life With Bipolar"
 slug = "living-with-bipolar"
 author = "Brian Pfeil"
 date = "2026-09-29"
@@ -7,13 +7,13 @@ lastmod = "2026-09-30"
 draft = true
 categories = []
 tags = ["mental-health", "bipolar", "personal"]
-summary = "My first personal post. What bipolar disorder has looked like from the inside — the highs, the depressions, the medications, the leaves from work, the people I hurt and lost — and what I wish someone had told me sooner."
+summary = "My first personal post. What bipolar disorder has looked like from the inside — the highs, the depressions, the medications, the leaves from work, the people I hurt and lost, and the people who held me together anyway — and what I wish someone had told me sooner."
 
 +++
 
 This site is mostly code: AWS experiments, architecture notes, side projects. This post is different. It's the first thing I've written here that's about me rather than about something I built.
 
-I've been dealing with what my doctors diagnosed as bipolar disorder. I've kept most of it private for years, and the privacy cost me more than it protected me. So I'm writing it down: partly for me, partly for the people I've hurt along the way, and mostly for anyone reading this at 2 a.m. who recognizes themselves in it.
+I've been dealing with what my doctors diagnosed as bipolar disorder. I've kept most of it private for years, and the privacy cost me more than it protected me. So I'm writing it down: partly for me, partly for the people I've hurt along the way, partly to thank the people who held me together anyway, and mostly for anyone reading this at 2 a.m. who recognizes themselves in it.
 
 If you are in crisis right now, skip to [the end](#if-youre-in-it-right-now). There are numbers there you can call or text tonight.
 
@@ -65,9 +65,11 @@ Kids notice everything. If you're a parent reading this: getting treatment is no
 
 **Friends** came and went with my moods. I'm not proud of how many relationships I let lapse. If you're one of them and you're reading this: it wasn't you.
 
-## Doc
+## The people who held me together
 
 Not everything in these years was loss, and some of the best of it came from people who didn't have to show up for me at all.
+
+### Doc
 
 Early on, before I understood much of what was happening to me, there was Doc. We met while I was still married, on a date at a coffee shop, and agreed we were better as friends. That turned out to be one of the best decisions either of us made.
 
@@ -77,7 +79,7 @@ She did all of this with almost no time to spare. She was in school then, on her
 
 Her smile and her passion for life are huge, and they're contagious. Doc, thank you.
 
-## L.
+### L.
 
 L. was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and a dozen other things, because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
 
@@ -85,7 +87,7 @@ Her daughters became a big part of it. I loved them like my own, and I grew very
 
 A post like this can make it sound as if illness only takes. This was one of the good things, and it was real. L., thank you.
 
-## Se Jin
+### Se Jin
 
 While I was seeing L., I also had a dear friend, Se Jin. We went hiking together. Every morning I texted her good morning, every night good night, and in between we told each other about our days. We kept that up for months, probably six of them.
 
@@ -95,7 +97,7 @@ About a month ago we found each other again, and she picked it right back up as 
 
 That kind of grace is rarer than it should be. She is a wonderful, wonderful person, and a wonderful mom to her three sons. I'm so thankful to have her in my life again, and her cute dog, Gracie, too.
 
-## E.
+### E.
 
 E. trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway.
 
@@ -103,7 +105,7 @@ She let me into her life. I got to know her son, and we had so much fun together
 
 She also took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
 
-## My brother Jason
+### My brother Jason
 
 If this story has a hero, it's my brother Jason.
 
