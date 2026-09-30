@@ -61,53 +61,49 @@ This is the hardest section to write.
 
 ## L.
 
-Not everything in these years was loss, and one relationship deserves to be remembered for what it was.
+Not everything in these years was loss.
 
-L. was my first relationship after my divorce, and it was wonderful. It was new in every way. I learned her culture. She cooked for me, one new food after another, dishes I'd never had and would never have found on my own. She was curious about my world too. She learned to mountain bike, to fish and to kayak, all things I love, and she did it because she wanted to share them with me. I felt seen, and after the divorce I needed that more than I knew.
+L. was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and a dozen other things, because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
 
-I also loved her daughters like my own. I grew very close to them, and they were so kind to me. They didn't have to be. They let me in, and I'm grateful for every minute of it.
+Her daughters became a big part of it. I loved them like my own, and I grew very close to them. They were so kind to me, and they didn't have to be.
 
-I'm including this because a post like this can make it sound like illness only takes things away. It also sits next to the good parts of a life, and this was one of them. L., if you read this: thank you for what you gave me and for how you were with me.
+A post like this can make it sound as if illness only takes. This was one of the good things, and it was real. L., thank you.
 
 ## Se Jin
 
-While I was seeing L., I had a dear friend named Se Jin. We went on hikes together. Every morning I texted her "good morning," and every night, "good night," and in between we shared our days. We did that for months, probably six of them. She was a really dear friend.
+While I was seeing L., I also had a dear friend, Se Jin. We went hiking together. Every morning I texted her good morning, every night good night, and in between we told each other about our days. We kept that up for months, probably six of them.
 
-Then I got depressed, and I ghosted her. I didn't decide to. I just stopped answering, the way I described above, when answering a text felt like lifting a car. She got silence from someone who had checked in with her every day for half a year.
+Then the depression came, and I ghosted her. There was no decision in it. I just went quiet, the way I described above, when answering a text feels like lifting a car. From her side, someone who had checked in every morning and every night for half a year simply disappeared.
 
-About a month ago we were reunited, and she picked it right back up as if we were still friends. No hard feelings, nothing. No lecture and no making me explain myself. I don't take that for granted.
+About a month ago we found each other again, and she picked it right back up as if we'd never stopped being friends. No hard feelings. Nothing.
 
-She is a wonderful, wonderful person, and a wonderful mom to three sons. I'm so thankful to have her in my life, and her cute dog, Gracie, too.
-
-Se Jin, thank you for making it so easy to come back.
+That kind of grace is rarer than it should be. She is a wonderful, wonderful person, and a wonderful mom to her three sons. I'm so thankful to have her in my life again, and her cute dog, Gracie, too.
 
 ## E.
 
-E. trusted me. That's the first thing I think of, because trust was the thing I'd spent so much of my illness burning through, and she gave it anyway.
+E. trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway.
 
-She let me into her life. I got to know her son, and the three of us had so much fun together. It felt like being part of something ordinary and good, which I hadn't felt in a long time.
+She let me into her life. I got to know her son, and we had so much fun together.
 
-She also took a real interest in me, not just the version of me that was easy to be around. She wanted to get me on the right track: to stop drinking and stop the partying, and to look at what was underneath them. She was helping me, and I could feel it.
-
-E., thank you for trusting me, for making room for me, and for caring where I was headed.
+She also took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
 
 ## My brother Jason
 
-One person didn't drift, and he needs his own section.
+If this story has a hero, it's my brother Jason.
 
-My brother Jason has been the steadiest thing in my life through all of this. When my routine fell apart, I went through stretches where I texted him every day about what I'd done: what I ate, whether I got out of the house, what I got done and what I didn't. He read every one, and he kept me on track. He never treated it as a burden. Having someone to report to, someone who would notice if I went quiet, did more for me than most of what I tried.
+There were stretches when my routine fell apart, and through them I texted Jason every day with what I'd done. He read every one, and he kept me on track. It sounds small. It wasn't. Knowing someone would notice if I slipped, or went quiet, held me up on days when nothing else did.
 
-He helped me with my finances when I couldn't look at them. He helped me through my divorce. He didn't wait to be asked, and he didn't make me feel small for needing it.
+He helped me with my finances when I couldn't face them. He helped me through my divorce.
 
-And it isn't only me. Jason goes above and beyond for the whole family. When our dad was dying, he figured it out: the hospital, the decisions, the paperwork, everything that lands on someone all at once. Our dad's mental illness, and everything that came with it, was the same story. Now our mom is dealing with dementia and memory loss, and again he's the one figuring it all out. When everything gets messed up, Jason works out what needs to happen and does it.
+And it isn't just me. Jason goes above and beyond for our whole family. When our dad was dying, Jason figured it out. Our dad's mental illness, and everything it brought with it: Jason figured it out. Now our mom is going through dementia and memory loss, and again Jason is the one figuring it out. Whenever everything gets messed up, he works out what has to happen, and then he does it.
 
 He is selfless. He gives everything he has to his family.
 
-I lied to him. I did what I described above: the small untruths, the covering, the vanishing. He knew, and he stayed anyway. He kept supporting me without questions and without keeping score.
+He has also dealt with me lying to him. The lies I described earlier in this post, he was on the receiving end of some of them. And he has kept supporting me, without question, every time.
 
-Jason, this hasn't gone unrecognized. I see what you've done, and what you've carried for all of us, and I don't say it nearly enough. Thank you. I mean it.
+Jason: none of this goes unrecognized. I see what you've done for me, for Dad, for Mom, for all of us, and I don't say it nearly often enough. Thank you.
 
-If you're reading this and struggling: find your Jason. If you already have one, tell them.
+If you're struggling, find your Jason. If you already have one, tell them what they mean to you. This is me telling mine.
 
 ## Getting help, and how long it took
 
@@ -199,7 +195,7 @@ Sleep disruption is one of the most reliable early warning signs, and one of the
 
 ### Build a team, and let them in
 
-A psychiatrist to manage medication, a therapist to work through the rest, and one or two people in your life who know your warning signs and have permission to tell you when they see them. For me that person is my brother Jason, and a daily check-in text with him did more than any app. I spent years trying to manage this privately. It doesn't work.
+A psychiatrist to manage medication, a therapist to work through the rest, and one or two people in your life who know your warning signs and have permission to tell you when they see them. For me that person is my brother Jason; the daily texts to him kept me on track when nothing else did. I spent years trying to manage this privately. It doesn't work.
 
 ### Repair where you can
 
