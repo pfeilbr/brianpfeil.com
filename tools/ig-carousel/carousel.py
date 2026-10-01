@@ -27,7 +27,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
-POST = REPO / "content/post/living-with-bipolar/index.md"
+POST = REPO / "content/post/the-people-who-held-me-together/index.md"
 CONDENSED = HERE / "condensed.md"
 CAPTIONS = HERE / "captions.md"
 OUT = HERE / "build"
@@ -35,17 +35,18 @@ OUT = HERE / "build"
 W, H = 1080, 1350
 MAX_SLIDES = 20
 CAPTION_LIMIT = 2200
-TITLE = "The highs, the lows, and everything in between"
+TITLE = "The people who held me together"
 SUBTITLE = "My life with bipolar"
 HANDLE = "brianpfeil.com"
 
 # Sections of the post (by "## " heading) that make up each part of the series.
 PARTS = [
-    ["", "Where it starts: my father", "The part that feels good", "The part that doesn't"],
-    ["The people around me", "Getting help, and how long it took",
-     "Medications: trial, error, and patience"],
-    ["Work, brain fog, and leaves of absence", "The label, and whether it's right"],
-    ["What I wish someone had told me", "If you're in it right now", "~closing"],
+    ["", "Where it starts: my father", "My mom", "Looking back: the obsessions"],
+    ["The part that feels good", "The part that doesn't", "The people around me"],
+    ["The people who held me together"],
+    ["Getting help, and how long it took", "Medications: trial, error, and patience",
+     "Work, brain fog, and leaves of absence", "The label, and whether it's right"],
+    ["What I wish someone had told me", "If you're in it right now"],
 ]
 
 # Lines of the post that point at the web page; on a carousel they need other words.
@@ -53,7 +54,7 @@ REWRITES = {
     "If you are in crisis right now, skip to [the end](#if-youre-in-it-right-now). "
     "There are numbers there you can call or text tonight.":
         "If you are in crisis right now, call or text **988** (U.S.) tonight. "
-        "More numbers are in Part 4.",
+        "More numbers are in Part 5.",
     "This site is mostly code: AWS experiments, architecture notes, side projects. "
     "This post is different. It's the first thing I've written here that's about me "
     "rather than about something I built.":
@@ -62,6 +63,8 @@ REWRITES = {
         "rather than about something I built.",
     "reach out. My LinkedIn and X are on the [about page](/about/).":
         "message me here.",
+    "I just went quiet, the way I described above,":
+        "I just went quiet, the way I described in Part 2,",
 }
 
 CRISIS = "In crisis? Call or text 988 (U.S.) · findahelpline.com"
@@ -101,6 +104,14 @@ def to_html(md: str) -> str:
         line = raw.strip()
         if not line or line == "---" or line.startswith("<!--"):
             flush()
+        elif m := re.match(r'\{\{< mood (.*?) >\}\}$', line):
+            flush()
+            attrs = dict(re.findall(r'(\w+)="([^"]*)"', m[1]))
+            src = (POST.parent / attrs["src"]).as_uri()
+            out.append(f'<figure class="mood"><img src="{src}" alt="{html.escape(attrs.get("alt", ""))}"></figure>')
+        elif m := re.match(r"\{\{< standout >\}\}(.*)\{\{< /standout >\}\}$", line):
+            flush()
+            out.append(f'<p class="standout">{inline(m[1])}</p>')
         elif m := re.match(r"(#{1,3}) (.*)", line):
             flush()
             out.append(f"<h{len(m[1])}>{inline(m[2])}</h{len(m[1])}>")
@@ -127,8 +138,7 @@ def post_body(path: Path = POST) -> str:
 
 
 def sections(body: str) -> dict[str, str]:
-    """Heading -> markdown. "" is the intro, "~closing" what follows the last "---"."""
-    body, _, closing = body.rpartition("\n---\n")
+    """Heading -> markdown, for every "## " section; "" is the intro."""
     found, name, buf = {}, "", []
     for line in body.splitlines():
         if line.startswith("## "):
@@ -137,7 +147,6 @@ def sections(body: str) -> dict[str, str]:
         else:
             buf.append(line)
     found[name] = "\n".join(buf)
-    found["~closing"] = closing
     return found
 
 
@@ -203,6 +212,16 @@ h3 {{ font-weight: 700; font-size: 1.08em; margin: 1.1em 0 0.4em; color: #b0573a
                margin: 0 0 48px; font-weight: 600; }}
 .cover .by, .cover .swipe {{ position: absolute; bottom: 90px; font-size: 28px; color: #9fb0bd; }}
 .cover .by {{ left: 110px; }} .cover .swipe {{ right: 110px; }}
+figure.mood {{ margin: 0 0 0.8em; }}
+figure.mood img {{ display: block; width: 100%; height: 420px; object-fit: cover; border-radius: 18px; }}
+figure.mood.open {{ margin: -120px -96px 56px; }}
+figure.mood.open img {{ height: 560px; border-radius: 0; }}
+.standout {{ font-family: "Source Serif 4", Georgia, serif; font-weight: 700; font-size: 1.3em;
+            line-height: 1.25; color: #1b1814; border-left: 6px solid #b0573a; padding-left: 0.7em;
+            margin: 0.2em 0 0.9em; }}
+.cover .hero {{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.35; }}
+.cover > :not(.hero) {{ position: relative; }}
+.cover .by, .cover .swipe {{ position: absolute; }}
 .end .body {{ display: flex; flex-direction: column; justify-content: center; padding-bottom: 60px; }}
 .end .big {{ font-family: "Source Serif 4", Georgia, serif; font-size: 64px; line-height: 1.1;
             font-weight: 700; margin: 0 0 36px; }}
@@ -237,8 +256,8 @@ PAGINATE = """
   const fits = b => b.scrollHeight <= b.clientHeight;
   // Split between sentences: end punctuation, whitespace, then a capital. "U.S., know" stays whole.
   const sentences = html => html.split(/(?<=[.!?]['"”’)]?)\\s+(?=["“(<]?[A-Z])/).map((t, i, a) => i < a.length - 1 ? t + ' ' : t);
-  // Headings, and a line introducing a list ("…to spend:"), stay with what follows.
-  const isHead = el => /^H[1-6]$/.test(el.tagName) || (el.tagName === 'P' && /:\\s*$/.test(el.textContent));
+  // Headings, a section's opening photo, and a line introducing a list ("…to spend:") stay with what follows.
+  const isHead = el => /^H[1-6]$/.test(el.tagName) || (el.tagName === 'P' && /:\\s*$/.test(el.textContent)) || el.matches('figure.open');
 
   const layout = (chunk, fs) => {
     const made = [];
@@ -270,6 +289,8 @@ PAGINATE = """
       const carry = [];
       let h = body.children.length;
       while (h > 0 && isHead(body.children[h - 1])) h--;
+      // All headings: keep the section opener (photo, title) here, move the sub-heading on.
+      if (h === 0) h = [...body.children].findLastIndex(el => el.matches('h2, figure.open')) + 1;
       if (h > 0) while (body.children.length > h) carry.unshift(body.removeChild(body.lastElementChild));
       body = fresh();
       carry.forEach(h => body.appendChild(h));
@@ -321,7 +342,9 @@ def page(chunks: str, font_px: int) -> str:
 
 def cover(kicker: str = "") -> str:
     kick = f'<p class="part">{html.escape(kicker)}</p>' if kicker else ""
-    return (f'<section class="cover">{kick}<h1>{html.escape(TITLE)}</h1>'
+    hero = (POST.parent / "images/hero.webp")
+    img = f'<img class="hero" src="{hero.as_uri()}" alt="">' if hero.exists() else ""
+    return (f'<section class="cover">{img}{kick}<h1>{html.escape(TITLE)}</h1>'
             f'<p class="sub">{html.escape(SUBTITLE)}</p>'
             f'<span class="by">Brian Pfeil</span><span class="swipe">Swipe &rarr;</span></section>')
 
@@ -331,11 +354,20 @@ def end(big: str, line: str) -> str:
             f'<p class="crisis">{html.escape(CRISIS)}</p></div>')
 
 
+def section_html(md: str) -> str:
+    """A photo right under the section heading opens the slide, edge to edge, above it."""
+    out = to_html(md)
+    m = re.match(r'(<h2>.*?</h2>)\n<figure class="mood">(.*?</figure>)', out)
+    if m:
+        out = f'<figure class="mood open">{m[2]}\n{m[1]}' + out[m.end():]
+    return out
+
+
 def series_html(part_md: str, n: int, total: int) -> str:
     chunks = [c for c in re.split(r"(?m)^(?=## )", part_md) if c.strip()]
-    flow = "".join(f"<div>{to_html(c)}</div>" for c in chunks)
+    flow = "".join(f"<div>{section_html(c)}</div>" for c in chunks)
     last = (end(f"Continued in Part {n + 1}.", "Follow along, or message me if any of this sounds familiar.")
-            if n < total else end("Thank you for reading.", "All four parts are on my profile."))
+            if n < total else end("Thank you for reading.", f"All {total} parts are on my profile."))
     return cover(f"Part {n} of {total}") + flow + last
 
 

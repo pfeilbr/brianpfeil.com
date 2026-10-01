@@ -27,7 +27,7 @@ class Post(unittest.TestCase):
         self.assertEqual(len(parts), len(c.PARTS))
         joined = "\n".join(parts)
         for heading in c.sections(c.post_body()):
-            if heading not in ("", "~closing"):
+            if heading:
                 self.assertEqual(joined.count(f"## {heading}\n"), 1, heading)
 
     def test_rewrites_leave_no_in_page_links(self):
@@ -49,6 +49,7 @@ class Captions(unittest.TestCase):
         slides = c.condensed_slides()
         self.assertTrue(slides[0].startswith("# "))
         self.assertLessEqual(len(slides), c.MAX_SLIDES)
+        self.assertNotIn("father had bipolar", c.CONDENSED.read_text())
 
 
 if __name__ == "__main__":
