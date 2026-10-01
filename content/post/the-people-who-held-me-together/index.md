@@ -159,6 +159,8 @@ That kind of grace is rarer than it should be. She is a wonderful, wonderful per
 
 Yu trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway. I was the first person she had opened her heart to since her ex.
 
+One day she gave me a key to her apartment. It was a small thing to hold in my hand, and an enormous thing to be given. After everything that came before me, she decided I was someone she could let all the way in. I was deeply moved by it then, more than I knew how to say, and I still am.
+
 Our time together was short, but it changed me, and I'm grateful for every part of it. She let me into her world, and into her son John's.
 
 John came into my life at a moment when it felt like my years of being a dad were ending. My older son was off at college, and my younger son had grown so independent that he didn't really need his dad around anymore. And then there was John. I got to teach him things, to be part of his days, to share in his life. It was a truly happy time, and it gave me back a part of myself I thought I was done with.
@@ -167,7 +169,7 @@ The three of us had so much fun together. She took a real interest in me, beyond
 
 She had everything: a kind heart, a sharp mind, and a way of caring that was steady and real. And I was the one who broke it.
 
-I know I hurt her, and I know I hurt her badly. She had been brave enough to trust again, and I didn't take care of that trust. Yu, I am so deeply sorry.
+I know I hurt her, and I know I hurt her badly. She had been brave enough to trust again. She handed me that trust, and a key to go with it, and I didn't take care of either. Yu, I am so deeply sorry.
 
 If she were ever open to a friendship, it would be one of the most wonderful things I could hope for. She is one of the kindest, most caring and most thoughtful people I have known, and a wonderful mother.
 
