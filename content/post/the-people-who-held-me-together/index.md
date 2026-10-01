@@ -13,11 +13,15 @@ hero = "images/hero.webp"
 hero_alt = "Layers of mountain ridges in morning haze, light breaking through from one side"
 hero_credit = "Photo: Alexandre Godreau / StockSnap · CC0"
 hero_href = "https://stocksnap.io/photo/mountain-highland-L4MIQU9O0N"
-summary = "My first personal post. What bipolar disorder has looked like from the inside — the highs, the depressions, the medications, the leaves from work, the people I hurt and lost, and the people who held me together anyway — and what I wish someone had told me sooner."
+summary = "A letter to the people I care about: the whole story of the highs, the depressions and the years in between, an apology to the people I hurt, and a thank-you to the people who held me together."
 
 +++
 
-I've been dealing with what my doctors diagnosed as bipolar disorder. I've kept most of it private for years, and the privacy cost me more than it protected me. So I'm writing it down, for the people I care about: to give you the whole picture of what was happening, to apologize to the people I hurt along the way, and to thank the people who held me together anyway.
+This is for the people I care about.
+
+For years I kept what was happening inside me to myself: living with what my doctors diagnosed as bipolar disorder, and everything that came with it. I know that left many of you with only pieces of the story. Moments that didn't make sense, silences you couldn't explain, hurt you never deserved. This is my attempt to give you the whole picture: where it started, what it looked like from the inside, and where you fit into it.
+
+It is, first of all, an apology to the people I hurt along the way. It is a thank-you to the people who held me together anyway. And I hope it brings you some understanding, and with it some peace, so that whatever you have been carrying from our time together, you can finally set it down.
 
 ---
 
@@ -255,6 +259,6 @@ I'm writing this post anyway, and I kept "bipolar" in the title, for a few reaso
 
 {{< mood src="images/end.webp" alt="Soft sunrise over the sea, waves washing onto the sand" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/3282991/free-photo-image-beach-ocean-sunset" >}}
 
-I don't have a neat ending. I'm still in treatment, still learning my patterns, still repairing relationships. But I'm here, I'm present for my boys, and I'm done hiding this.
+I don't have a neat ending. I'm still in treatment, still learning my patterns, still repairing relationships. But I'm here, I'm present for my boys, and I don't want to hide any of this from the people who matter to me anymore.
 
 To everyone named in this post, and to the many who aren't: thank you for the part you played. Whether you're still in my life or not, you are part of how I got here, and I'm grateful for every one of you.
