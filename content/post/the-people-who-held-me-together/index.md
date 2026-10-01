@@ -165,7 +165,11 @@ That kind of grace is rarer than it should be. She is a wonderful, wonderful per
 
 Yu trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway. I was the first person she had opened her heart to since her ex.
 
-Our time together was short, but it changed me, and I'm grateful for every part of it. She let me into her world. I got to know her son, and the three of us had so much fun together. She took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
+Our time together was short, but it changed me, and I'm grateful for every part of it. She let me into her world, and into her son John's.
+
+John came into my life at a moment when it felt like my years of being a dad were ending. My older son was off at college, and my younger son had grown so independent that he didn't really need his dad around anymore. And then there was John. I got to teach him things, to be part of his days, to share in his life. It was a truly happy time, and it gave me back a part of myself I thought I was done with.
+
+The three of us had so much fun together. She took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
 
 She had everything: a kind heart, a sharp mind, and a way of caring that was steady and real. And I was the one who broke it.
 
