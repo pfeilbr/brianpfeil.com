@@ -113,27 +113,27 @@ Kids notice everything. If you're a parent reading this: getting treatment is no
 
 Not everything in these years was loss, and some of the best of it came from people who didn't have to show up for me at all.
 
-### Doc
+### Shirley (Doc)
 
 {{< mood src="images/doc.webp" alt="A dirt trail through a green spring forest" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/5939666/forest-trail" >}}
 
-Early on, before I understood much of what was happening to me, there was Doc. We met while I was still married, on a date at a coffee shop, and agreed we were better as friends. That turned out to be one of the best decisions either of us made.
+Early on, before I understood much of what was happening to me, there was Shirley, who I've always called Doc. We met while I was still married, on a date at a coffee shop, and agreed we were better as friends. That turned out to be one of the best decisions either of us made.
 
 We went on many hikes. She had a saying for everything, and real wisdom behind every one of them. When my marriage ended, she helped me process the divorce. She gave me a playlist of songs about love and heartbreak, and I still play it, over and over, to this day. We played Scrabble.
 
 She did all of this with almost no time to spare. She was in school then, on her way to becoming an anesthesiologist, working night shifts as a nurse and raising two daughters. She knew I was hurting. She saw it, and she took it on herself to make time for me anyway, in a schedule that had none. She made herself a big part of my healing.
 
-Her smile and her passion for life are huge, and they're contagious. Doc, thank you.
+Her smile and her passion for life are huge, and they're contagious. Shirley, thank you.
 
-### L.
+### Lindsay
 
 {{< mood src="images/l.webp" alt="Two people in kayaks on a calm lake, paddling side by side" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/3303527/free-photo-image-landscape-lake-people-abies-adventure" >}}
 
-L. was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and a dozen other things, because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
+Lindsay was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and a dozen other things, because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
 
 Her girls, Jojo and Jaja, became a big part of it. I loved them like my own, and I grew very close to them. They were so kind to me, and they never had to be. I think of them often, and I wonder how they're doing, what they're learning, who they're becoming. Of everything I lost in these years, losing them is one of the hardest. For a while I had two daughters, and then I didn't.
 
-L., I owe you an apology, and it comes without excuses. I hurt you. It came from me, not from anything you did, and I know how confusing it must have been to live through. I truly meant to marry you. You waited a long, long time for that, and I know how hard the waiting was. I'm so sorry.
+Lindsay, I owe you an apology, and it comes without excuses. I hurt you. It came from me, not from anything you did, and I know how confusing it must have been to live through. I truly meant to marry you. You waited a long, long time for that, and I know how hard the waiting was. I'm so sorry.
 
 A post like this can make it sound as if illness only takes. What we had was one of the good things, and it was real. Thank you.
 
@@ -141,7 +141,7 @@ A post like this can make it sound as if illness only takes. What we had was one
 
 {{< mood src="images/sejin.webp" alt="The sun rising over a snowy mountain ridge under a starry sky" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/6043118/photo-image-moon-public-domain-mountain" >}}
 
-While I was seeing L., I also had a dear friend, Se Jin. We went hiking together. Every morning I texted her good morning, every night good night, and in between we told each other about our days. We kept that up for months, probably six of them.
+While I was seeing Lindsay, I also had a dear friend, Se Jin. We went hiking together. Every morning I texted her good morning, every night good night, and in between we told each other about our days. We kept that up for months, probably six of them.
 
 Then the depression came, and I ghosted her. There was no decision in it. I just went quiet, the way I described above, when answering a text feels like lifting a car. From her side, someone who had checked in every morning and every night for half a year simply disappeared.
 
@@ -149,11 +149,11 @@ About a month ago we found each other again, and she picked it right back up as 
 
 That kind of grace is rarer than it should be. She is a wonderful, wonderful person, and a wonderful mom to her three sons. I'm so thankful to have her in my life again, and her cute dog, Gracie, too.
 
-### E.
+### Yu
 
 {{< mood src="images/e.webp" alt="Hands holding an enamel mug of tea by a campfire kettle" credit="Photo: Anggoro Sakti / StockSnap · CC0" href="https://stocksnap.io/photo/man-campfire-HRLU7ZESP0" >}}
 
-E. trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway. I was the first person she had let into her life since her ex.
+Yu trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway. I was the first person she had let into her life since her ex.
 
 Our time together was short, but it changed me, and I'm grateful for every part of it. She had everything: a kind heart, a sharp mind, warmth that made people feel at home, and a way of caring that was steady and real. I was the one who broke it.
 
@@ -163,7 +163,7 @@ And I hurt her. I know I hurt her badly. She had trusted me with something she h
 
 If she were ever open to a friendship, it would be one of the most wonderful things I could hope for. She is one of the kindest, most caring and most thoughtful people I have known, and a wonderful mother.
 
-E., thank you. For your trust, for your time, and for caring where I was headed.
+Yu, thank you. For your trust, for your time, and for caring where I was headed.
 
 ### Jason and Michelle
 
