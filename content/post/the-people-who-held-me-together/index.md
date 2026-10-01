@@ -169,7 +169,9 @@ The three of us had so much fun together. She took a real interest in me, beyond
 
 She had everything: a kind heart, a sharp mind, and a way of caring that was steady and real. And I was the one who broke it.
 
-I know I hurt her, and I know I hurt her badly. She had been brave enough to trust again. She handed me that trust, and a key to go with it, and I didn't take care of either. Yu, I am so deeply sorry.
+I know I hurt her, and I know I hurt her badly. She had been brave enough to trust again. She handed me that trust, and a key to go with it, and I didn't take care of either.
+
+Yu, I know what those nights were like for you. I would leave at ten or eleven and not come home until ten the next morning. No one should ever have to live with that. It wasn't the steady, dependable partner you deserved, and it wasn't the example John deserved to see. It should never have been yours to carry. I am so deeply sorry.
 
 If she were ever open to a friendship, it would be one of the most wonderful things I could hope for. She is one of the kindest, most caring and most thoughtful people I have known, and a wonderful mother.
 
