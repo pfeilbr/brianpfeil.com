@@ -131,9 +131,11 @@ Her smile and her passion for life are huge, and they're contagious. Doc, thank 
 
 L. was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and a dozen other things, because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
 
-Her daughters became a big part of it. I loved them like my own, and I grew very close to them. They were so kind to me, and they didn't have to be.
+Her girls, Jojo and Jaja, became a big part of it. I loved them like my own, and I grew very close to them. They were so kind to me, and they never had to be. I think of them often, and I wonder how they're doing, what they're learning, who they're becoming. Of everything I lost in these years, losing them is one of the hardest. For a while I had two daughters, and then I didn't.
 
-A post like this can make it sound as if illness only takes. This was one of the good things, and it was real. L., thank you.
+L., I owe you an apology, and it comes without excuses. I hurt you. It came from me, not from anything you did, and I know how confusing it must have been to live through. I truly meant to marry you. You waited a long, long time for that, and I know how hard the waiting was. I'm so sorry.
+
+A post like this can make it sound as if illness only takes. What we had was one of the good things, and it was real. Thank you.
 
 ### Se Jin
 
@@ -151,11 +153,17 @@ That kind of grace is rarer than it should be. She is a wonderful, wonderful per
 
 {{< mood src="images/e.webp" alt="Hands holding an enamel mug of tea by a campfire kettle" credit="Photo: Anggoro Sakti / StockSnap · CC0" href="https://stocksnap.io/photo/man-campfire-HRLU7ZESP0" >}}
 
-E. trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway.
+E. trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway. I was the first person she had let into her life since her ex.
 
-She let me into her life. I got to know her son, and we had so much fun together.
+Our time together was short, but it changed me, and I'm grateful for every part of it. She had everything: a kind heart, a sharp mind, warmth that made people feel at home, and a way of caring that was steady and real. I was the one who broke it.
 
-She also took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
+She let me into her world. I got to know her son, and the three of us had so much fun together. She took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
+
+And I hurt her. I know I hurt her badly. She had trusted me with something she hadn't offered anyone since her ex, and I didn't take care of it. I am so deeply sorry.
+
+If she were ever open to a friendship, it would be one of the most wonderful things I could hope for. She is one of the kindest, most caring and most thoughtful people I have known, and a wonderful mother.
+
+E., thank you. For your trust, for your time, and for caring where I was headed.
 
 ### Jason and Michelle
 
