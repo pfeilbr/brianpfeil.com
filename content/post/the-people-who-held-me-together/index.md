@@ -4,7 +4,7 @@ slug = "the-people-who-held-me-together"
 aliases = ["/post/living-with-bipolar/"]
 author = "Brian Pfeil"
 date = "2026-09-29"
-lastmod = "2026-09-30"
+lastmod = "2026-10-01"
 draft = true
 categories = []
 tags = ["mental-health", "bipolar", "personal"]
@@ -47,7 +47,7 @@ She is an angel and a saint. I have never known her to hurt anyone. She shaped t
 
 I spent so much time with her. She taught me to garden and to cross-stitch. We had tea together. I helped her bake cookies, and I got to lick the batter off the spoon.
 
-I've always seemed to have better relationships with women, because in my experience they're more emotionally intelligent. I think that's her influence too.
+I've always found it easier to connect with women. In my experience they meet me at that emotional level, the one she taught me to live at. I think that's her influence too, and you'll see it later in this post, in the people who held me together.
 
 She's living with dementia and memory loss now. Whatever she forgets, what she taught me stays.
 
@@ -91,6 +91,12 @@ I **lied**. Not grand schemes, but a steady stream of small untruths to cover wh
 
 Then there's the crash. Every high I've had has been followed by a low, and the lows are not sadness. Depression is an absence. The ideas stop. The energy is gone. The friends I collected so fast drifted away just as fast, partly because I stopped reaching out. I went quiet for weeks or months and fell out of touch with nearly everyone. From the outside that looks like you stopped caring. From the inside, answering a text feels like lifting a car.
 
+And here is the part I still find hardest to explain. I have made more friends in these years than at any other time in my life: a full calendar, a phone full of names, a room full of people who were glad to see me. And I have never been lonelier.
+
+{{< standout >}}I have never had more friends, and I have never felt more alone.{{< /standout >}}
+
+The highs made me easy to like and hard to know. Most of those friends only ever met the person I was on the way up. Very few saw the person I became on the way down, because by then I had stopped answering.
+
 ## The people around me
 
 This is the hardest section to write.
@@ -111,7 +117,9 @@ Kids notice everything. If you're a parent reading this: getting treatment is no
 
 ## The people who held me together
 
-Not everything in these years was loss, and some of the best of it came from people who didn't have to show up for me at all.
+Not everything in these years was loss. Some of the best of it came from people who didn't have to show up for me at all.
+
+Not all of these stories have happy endings, and where they don't, much of that is on me. But the way a chapter ends doesn't erase what it gave. If you find yourself in this section, I want you to know that you mattered, that you still do, and that I carry what you gave me. This is my thank-you, and where I owe one, my apology.
 
 ### Shirley (Doc)
 
@@ -123,19 +131,19 @@ We went on many hikes. She had a saying for everything, and real wisdom behind e
 
 She did all of this with almost no time to spare. She was in school then, on her way to becoming an anesthesiologist, working night shifts as a nurse and raising two daughters. She knew I was hurting. She saw it, and she took it on herself to make time for me anyway, in a schedule that had none. She made herself a big part of my healing.
 
-Her smile and her passion for life are huge, and they're contagious. Shirley, thank you.
+Her smile and her passion for life are huge, and they're contagious. Shirley, thank you. You were there at the very beginning of this, before I even knew what it was, and you made sure I wasn't facing it alone.
 
 ### Lindsay
 
 {{< mood src="images/l.webp" alt="Two people in kayaks on a calm lake, paddling side by side" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/3303527/free-photo-image-landscape-lake-people-abies-adventure" >}}
 
-Lindsay was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and a dozen other things, because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
+Lindsay was my first relationship after my divorce, and it was wonderful. Everything about it was new. She shared her culture with me, and I got to learn it from the inside. She cooked for me all the time, one dish after another that I'd never tasted and would never have found on my own. And she stepped into my world just as fully: she learned to mountain bike, to fish, to kayak, and all sorts of other things, simply because they mattered to me. Coming out of a divorce, I hadn't realized how much I needed someone to be curious about my life.
 
 Her girls, Jojo and Jaja, became a big part of it. I loved them like my own, and I grew very close to them. They were so kind to me, and they never had to be. I think of them often, and I wonder how they're doing, what they're learning, who they're becoming. Of everything I lost in these years, losing them is one of the hardest. For a while I had two daughters, and then I didn't.
 
 Lindsay, I owe you an apology, and it comes without excuses. I hurt you. It came from me, not from anything you did, and I know how confusing it must have been to live through. I truly meant to marry you. You waited a long, long time for that, and I know how hard the waiting was. I'm so sorry.
 
-A post like this can make it sound as if illness only takes. What we had was one of the good things, and it was real. Thank you.
+A post like this can make it sound as if illness only takes. What we had was one of the good things, and it was real. Lindsay, thank you for opening your home, your table and your family to me. I carry all of it with me.
 
 ### Se Jin
 
@@ -147,19 +155,21 @@ Then the depression came, and I ghosted her. There was no decision in it. I just
 
 About a month ago we found each other again, and she picked it right back up as if we'd never stopped being friends. No hard feelings. Nothing.
 
+Se Jin, I'm sorry for the silence. You deserved so much better than someone who simply vanished, and you forgave it before I had even found the words to ask.
+
 That kind of grace is rarer than it should be. She is a wonderful, wonderful person, and a wonderful mom to her three sons. I'm so thankful to have her in my life again, and her cute dog, Gracie, too.
 
 ### Yu
 
 {{< mood src="images/e.webp" alt="Hands holding an enamel mug of tea by a campfire kettle" credit="Photo: Anggoro Sakti / StockSnap · CC0" href="https://stocksnap.io/photo/man-campfire-HRLU7ZESP0" >}}
 
-Yu trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway. I was the first person she had let into her life since her ex.
+Yu trusted me. I think of that first, because trust was exactly what I'd been burning through, and she gave it to me anyway. I was the first person she had opened her heart to since her ex.
 
-Our time together was short, but it changed me, and I'm grateful for every part of it. She had everything: a kind heart, a sharp mind, warmth that made people feel at home, and a way of caring that was steady and real. I was the one who broke it.
+Our time together was short, but it changed me, and I'm grateful for every part of it. She let me into her world. I got to know her son, and the three of us had so much fun together. She took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
 
-She let me into her world. I got to know her son, and the three of us had so much fun together. She took a real interest in me, beyond the fun. She wanted to get me on the right track, and for me that meant stopping the drinking and stopping the partying. She cared where I was headed, and she helped me get there.
+She had everything: a kind heart, a sharp mind, and a way of caring that was steady and real. And I was the one who broke it.
 
-And I hurt her. I know I hurt her badly. She had trusted me with something she hadn't offered anyone since her ex, and I didn't take care of it. I am so deeply sorry.
+I know I hurt her, and I know I hurt her badly. She had been brave enough to trust again, and I didn't take care of that trust. Yu, I am so deeply sorry.
 
 If she were ever open to a friendship, it would be one of the most wonderful things I could hope for. She is one of the kindest, most caring and most thoughtful people I have known, and a wonderful mother.
 
@@ -181,7 +191,7 @@ He is selfless. He gives everything he has to his family.
 
 And he doesn't do it alone. His wife, Michelle, my sister, is right beside him. She supports him in everything, and together they are a perfect team. The two of them just get things done. They've done it for me, for Mom, for Dad, for everyone.
 
-He has also dealt with me lying to him. The lies I described earlier in this post, he was on the receiving end of some of them. And he has kept supporting me, without question, every time.
+He has also dealt with me lying to him. He was on the receiving end of some of the lies I described earlier. And he has kept supporting me, without question, every time.
 
 Jason and Michelle: none of this goes unrecognized. I see what you've done for me, for Dad, for Mom, for all of us, and I don't say it nearly often enough. Thank you, both of you.
 
@@ -283,7 +293,7 @@ Sleep disruption is one of the most reliable early warning signs, and one of the
 
 ### Build a team, and let them in
 
-A psychiatrist to manage medication, a therapist to work through the rest, and one or two people in your life who know your warning signs and have permission to tell you when they see them. For me that person is my brother Jason; the daily texts to him kept me on track when nothing else did. I spent years trying to manage this privately. It doesn't work.
+A psychiatrist to manage medication, a therapist to work through the rest, and one or two people in your life who know your warning signs and have permission to tell you when they see them. For me those people are my brother Jason and his wife Michelle; the daily texts to Jason kept me on track when nothing else did. I spent years trying to manage this privately. It doesn't work.
 
 ### Repair where you can
 
@@ -307,6 +317,8 @@ If you're in immediate danger, call 911 or go to the nearest emergency room.
 {{< mood src="images/end.webp" alt="Soft sunrise over the sea, waves washing onto the sand" credit="Photo: rawpixel · CC0" href="https://www.rawpixel.com/image/3282991/free-photo-image-beach-ocean-sunset" >}}
 
 I don't have a neat ending. I'm still in treatment, still learning my patterns, still repairing relationships. But I'm here, I'm present for my boys, and I'm done hiding this.
+
+To everyone named in this post, and to the many who aren't: thank you for the part you played. Whether you're still in my life or not, you are part of how I got here, and I'm grateful for every one of you.
 
 If this post helped you, or if you're going through something similar and just want someone to hear it, reach out. My LinkedIn and X are on the [about page](/about/). I know how heavy a message can feel, so consider this post me going first.
 
