@@ -156,8 +156,8 @@ social-post: ## Dry run: show what the weekday Action would post next to Bluesky
 test-social: ## Unit tests for the social kit, poster and dev.to cross-poster
 	python3 -m unittest discover -s tools/social/tests
 
-ig-carousel: ## Instagram text carousels of the bipolar post (tools/ig-carousel/build/review.html; needs Chrome, poppler)
-	python3 tools/ig-carousel/carousel.py
+ig-carousel: ## Instagram text carousels of the bipolar post (tools/ig-carousel/build/review.html; ICLOUD=1 also copies them to iCloud Drive; needs Chrome, poppler)
+	python3 tools/ig-carousel/carousel.py $(if $(ICLOUD),--icloud)
 
 test-ig-carousel: ## Unit tests for the Instagram carousel builder
 	python3 -m unittest discover -s tools/ig-carousel -p 'test_*.py'

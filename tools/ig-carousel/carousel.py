@@ -475,13 +475,32 @@ def build() -> list[tuple[str, list[Path], str]]:
     return groups
 
 
-def main() -> int:
-    for name, pngs, caption in build():
+ICLOUD = Path.home() / "Library/Mobile Documents/com~apple~CloudDocs/Instagram carousels"
+
+
+def to_icloud(groups: list[tuple[str, list[Path], str]]) -> Path:
+    """Each carousel's slides and caption into iCloud Drive, for the Files app on a phone."""
+    if ICLOUD.exists():
+        shutil.rmtree(ICLOUD)
+    for name, pngs, caption in groups:
+        folder = ICLOUD / pngs[0].parent.relative_to(OUT).as_posix().replace("/", " ").replace("series ", "")
+        folder.mkdir(parents=True)
+        for png in pngs:
+            shutil.copy2(png, folder / png.name)
+        (folder / "caption.txt").write_text(caption + "\n")
+    return ICLOUD
+
+
+def main(argv: list[str]) -> int:
+    groups = build()
+    for name, pngs, caption in groups:
         print(f"{name}: {len(pngs)} slides, caption {len(caption)} chars  ->  "
               f"{pngs[0].parent.relative_to(REPO)}/")
     print(f"review: {(OUT / 'review.html').relative_to(REPO)}")
+    if "--icloud" in argv:
+        print(f"copied to iCloud Drive: {to_icloud(groups)}")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))
