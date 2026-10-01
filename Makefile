@@ -4,7 +4,7 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-ai test-ai-page test-social test-movies ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-ai test-ai-page test-social test-ig-carousel test-movies ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
 	python3 tools/site-check/check_site.py --public public
@@ -155,6 +155,12 @@ social-post: ## Dry run: show what the weekday Action would post next to Bluesky
 
 test-social: ## Unit tests for the social kit, poster and dev.to cross-poster
 	python3 -m unittest discover -s tools/social/tests
+
+ig-carousel: ## Instagram text carousels of the bipolar post (tools/ig-carousel/build/review.html; needs Chrome, poppler)
+	python3 tools/ig-carousel/carousel.py
+
+test-ig-carousel: ## Unit tests for the Instagram carousel builder
+	python3 -m unittest discover -s tools/ig-carousel -p 'test_*.py'
 
 test-ai: ## Unit tests for the AI radar, and a check that its i18n block is current
 	python3 -m unittest discover -s tools/ai-radar/tests

@@ -157,6 +157,8 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-ai` | Unit tests for the AI radar, and its i18n block is current |
 | `make test-ai-page` | Build `/ai/` from a fixture and with no data; check page, briefing, feed and home card in all nine languages |
 | `make test-social` | Unit tests for the social kit, the Bluesky/Mastodon poster and the dev.to cross-poster |
+| `make ig-carousel` | Instagram text carousels of the bipolar post (condensed + four-part series), with captions, in `tools/ig-carousel/build/review.html` |
+| `make test-ig-carousel` | Unit tests for the Instagram carousel builder |
 | **Infrastructure** | |
 | `make tf-init` / `tf-plan` / `tf-validate` | Terraform, both stacks, S3 backend |
 
