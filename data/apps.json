@@ -1,0 +1,27 @@
+{
+  "apps": [
+    {
+      "key": "mandarin",
+      "name": "Say It In Mandarin",
+      "url": "https://pfeilbr.github.io/chinese-mandarin-language-app/",
+      "repo": "pfeilbr/chinese-mandarin-language-app",
+      "icon": "/images/apps/mandarin.webp",
+      "offline": true
+    },
+    {
+      "key": "burmese",
+      "name": "Say It In Burmese",
+      "url": "https://pfeilbr.github.io/burmese--language/",
+      "repo": "pfeilbr/burmese--language",
+      "icon": "/images/apps/burmese.webp",
+      "offline": true
+    },
+    {
+      "key": "money-trees",
+      "name": "Money Trees",
+      "url": "https://d22hyznskrpudb.cloudfront.net/",
+      "icon": "/images/apps/money-trees.webp",
+      "sign_in": true
+    }
+  ]
+}

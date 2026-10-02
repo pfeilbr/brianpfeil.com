@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{- /* Publishes every data/ file as /data/<name>.json for the data-driven
    pages; once, from the English home page. */ -}}
-{{- if eq .Site.Language.Lang "en" }}{{ partial "publish-data.html" . }}{{ end }}
+{{- if eq .Site.Language.Lang "en" }}{{ partial "publish-data.html" . }}{{ partial "apps-links.html" . }}{{ end }}
 {{- /* The home page is a table of contents: who I am up top, then a card for
    every section of the site. The post list that used to live here is at
    /post/ (layouts/post/list.html).
@@ -217,6 +217,8 @@
     {{ with hugo.Sites.Default.GetPage "/architecture" }}{{ $count = i18n "hub_architecture_count" (dict "count" (len .Pages)) }}{{ end }}
   {{ else if eq .key "courses" }}
     {{ with hugo.Data.courses }}{{ $count = i18n "hub_courses_count" (dict "count" (len .courses)) }}{{ end }}
+  {{ else if eq .key "apps" }}
+    {{ with hugo.Data.apps }}{{ $count = i18n "hub_apps_count" (dict "count" (len .apps)) }}{{ end }}
   {{ else if eq .key "music" }}
     {{ with hugo.Data.music }}{{ $count = i18n "hub_music_count" (dict "count" (add (len .mine) (len .saved))) }}{{ end }}
   {{ else if eq .key "subscriptions" }}

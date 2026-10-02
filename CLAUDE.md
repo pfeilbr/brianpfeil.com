@@ -173,6 +173,7 @@ touching a template:
 | `/ai/` | `data/ai.json` (daily Action, `make ai-refresh`) | `layouts/_default/ai.html` |
 | `/` (home) | `data/home.yaml` | `layouts/index.html` |
 | `/github/` | `data/github.json` (`make github-refresh`) | `layouts/_default/github.html` |
+| `/apps/` | `data/apps.json` (hand-edited) | `layouts/_default/apps.html` |
 
 - **Every data-driven page is drawn in the browser from `/data/<name>.json`.**
   `partials/publish-data.html` publishes each `data/` file there (media gets
@@ -184,6 +185,14 @@ touching a template:
   (`cat_label_*`, `pl_note_*`, …) are still i18n, looked up per key in the
   layout. With JavaScript off these pages show a `<noscript>` link to their
   JSON instead of content — that was B's call.
+- **/apps/:** B's own apps, each with a short link `/apps/<key>/` (all
+  lowercase) that redirects to it — `partials/apps-links.html` publishes those
+  from the English home page, carrying `?query` and `#hash` along. To add one:
+  `{"key", "name", "url", "icon"}` (+ `repo` if public, `offline`,
+  `sign_in`) in `data/apps.json`, `apps_blurb_<key>` in all nine i18n files,
+  then `make apps-icon KEY=… FROM=<its icon png>` (or `EMOJI=…`). The home
+  card counts them; `tools/apps/check_page.py` (in verify and CI) checks the
+  data, the page in every language and every redirect.
 - **/movies/:** append `{"title", "year"}` (or `"imdb"`) to
   `data/movies.json` and run `make movies-refresh`; check the new title in its
   output, since a year match can pick a same-year namesake. Synopses, titles

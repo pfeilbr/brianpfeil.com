@@ -1,0 +1,104 @@
+{{ define "main" }}
+{{- /* Drawn in the browser from /data/apps.json (data/apps.json). The
+   template supplies the shell and the translated strings; each app's blurb
+   is i18n apps_blurb_<key>, looked up here per key. Every app also gets a
+   short link, /apps/<key>/, published by partials/apps-links.html. */ -}}
+{{ $blurbs := dict }}
+{{ range hugo.Data.apps.apps }}
+  {{ $blurbs = merge $blurbs (dict .key (i18n (printf "apps_blurb_%s" .key))) }}
+{{ end }}
+{{ $T := dict
+  "open" (i18n "apps_open")
+  "source" (i18n "apps_source")
+  "copy" (i18n "apps_copy")
+  "copied" (i18n "apps_copied")
+  "signIn" (i18n "apps_sign_in")
+  "offline" (i18n "apps_offline")
+  "error" (i18n "data_load_error")
+  "blurbs" $blurbs
+}}
+<article class="apps">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600">{{ i18n "apps_intro" }}</p>
+  </header>
+
+  <div class="prose">{{ .Content }}</div>
+  <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/apps.json") | safeHTML }}</p></noscript>
+
+  <div class="app-grid" id="app-grid" aria-busy="true"></div>
+</article>
+
+{{ partial "data-render.html" . }}
+<script>
+/* One card per app: icon, name, blurb, what to expect (works offline / needs
+   an invite), then Open, Source and the short link with a copy button. */
+(function () {
+  var D = window.DataPage, el = D.el.bind(D);
+  var T = {{ $T | jsonify | safeJS }};
+  var grid = document.getElementById("app-grid");
+
+  function copyButton(url) {
+    var b = el("button", "app-copy", T.copy);
+    b.type = "button";
+    b.addEventListener("click", function () {
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(url).then(function () {
+        b.textContent = T.copied;
+        setTimeout(function () { b.textContent = T.copy; }, 1600);
+      });
+    });
+    return b;
+  }
+
+  function card(a) {
+    var c = el("section", "app-card");
+    c.id = a.key;
+    var short = location.origin + "/apps/" + a.key + "/";
+
+    var head = el("div", "app-head");
+    var icon = el("img", "app-icon");
+    icon.src = a.icon;
+    icon.alt = "";
+    icon.width = 56;
+    icon.height = 56;
+    icon.decoding = "async";
+    head.appendChild(icon);
+    var text = el("div", "app-text");
+    var h = el("h2", "app-name");
+    h.appendChild(D.link(a.url, null, a.name));
+    text.appendChild(h);
+    if (T.blurbs[a.key]) text.appendChild(el("p", "app-blurb", T.blurbs[a.key]));
+    head.appendChild(text);
+    c.appendChild(head);
+
+    var tags = [];
+    if (a.offline) tags.push(T.offline);
+    if (a.sign_in) tags.push(T.signIn);
+    if (tags.length) c.appendChild(el("p", "app-tags", tags.join(" · ")));
+
+    var actions = el("div", "app-actions");
+    actions.appendChild(D.link(a.url, "app-open", T.open + " →"));
+    if (a.repo) actions.appendChild(D.link("https://github.com/" + a.repo, "app-source", T.source));
+    c.appendChild(actions);
+
+    var link = el("div", "app-short");
+    var shortA = el("a", "app-short-url", short.replace(/^https?:\/\//, "").replace(/\/$/, ""));
+    shortA.href = short;
+    link.appendChild(shortA);
+    link.appendChild(copyButton(short));
+    c.appendChild(link);
+    return c;
+  }
+
+  D.load("apps").then(function (d) {
+    (d.apps || []).forEach(function (a) { grid.appendChild(card(a)); });
+    grid.setAttribute("aria-busy", "false");
+    if (location.hash) {
+      var target = document.getElementById(location.hash.slice(1));
+      if (target) target.scrollIntoView();
+    }
+  }).catch(function () { D.fail(grid, T.error); });
+})();
+</script>
+{{ end }}

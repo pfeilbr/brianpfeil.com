@@ -1965,3 +1965,44 @@ other = "Page {{ .n }}"
 
 [post_desc_fallback]
 other = "{{ .title }}: notes and example code by Brian Pfeil."
+
+# /apps/ (data/apps.json) and its home card. Blurbs are apps_blurb_<key>.
+
+[hub_apps_title]
+other = "Apps"
+
+[hub_apps_blurb]
+other = "Little apps I've built and use, each with a short link"
+
+[hub_apps_count]
+other = "{{ .count }} apps"
+
+[apps_intro]
+other = "Small apps I've built for my own life and use every day. Each one has a short link that's easy to share."
+
+[apps_open]
+other = "Open app"
+
+[apps_source]
+other = "Source"
+
+[apps_copy]
+other = "Copy link"
+
+[apps_copied]
+other = "Copied"
+
+[apps_sign_in]
+other = "Invite only · sign-in required"
+
+[apps_offline]
+other = "Installs to your Home Screen · works offline"
+
+[apps_blurb_mandarin]
+other = "An in-ear phrase prompter: pick an English phrase, hear it in Mandarin at any speed, then say it back."
+
+[apps_blurb_burmese]
+other = "The same in-ear phrase prompter, for Burmese: hear a phrase at any speed, then say it back."
+
+[apps_blurb_money-trees]
+other = "A platform for growing money across prediction markets, stocks and crypto, where every strategy earns its way from paper trading to automation."

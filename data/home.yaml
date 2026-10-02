@@ -7,6 +7,9 @@
 # language's root; `icon` is a glyph id in partials/icons/sprite-topics.html.
 
 sections:
+  - key: apps
+    path: apps
+    icon: i-device
   - key: projects
     path: projects
     icon: i-rocket

@@ -1964,3 +1964,44 @@ other = "第 {{ .n }} 页"
 
 [post_desc_fallback]
 other = "{{ .title }}：Brian Pfeil 的笔记与示例代码。"
+
+# /apps/ (data/apps.json) and its home card. Blurbs are apps_blurb_<key>.
+
+[hub_apps_title]
+other = "应用"
+
+[hub_apps_blurb]
+other = "我自己做、自己用的小应用，每个都有短链接"
+
+[hub_apps_count]
+other = "{{ .count }} 个应用"
+
+[apps_intro]
+other = "我为自己的生活做的小应用，每天都在用。每个都有一个便于分享的短链接。"
+
+[apps_open]
+other = "打开应用"
+
+[apps_source]
+other = "源代码"
+
+[apps_copy]
+other = "复制链接"
+
+[apps_copied]
+other = "已复制"
+
+[apps_sign_in]
+other = "仅限受邀用户 · 需要登录"
+
+[apps_offline]
+other = "可添加到主屏幕 · 离线可用"
+
+[apps_blurb_mandarin]
+other = "戴着耳机用的短句提示器：选一句英文，以任意语速听普通话，然后跟着说。"
+
+[apps_blurb_burmese]
+other = "同一款耳机短句提示器，用于缅甸语：以任意语速听一句话，然后跟着说。"
+
+[apps_blurb_money-trees]
+other = "让资金在预测市场、股票和加密货币中增长的平台，每个策略都要凭实绩从模拟交易一步步走向自动化。"

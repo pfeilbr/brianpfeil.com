@@ -1964,3 +1964,44 @@ other = "{{ .n }}페이지"
 
 [post_desc_fallback]
 other = "{{ .title }}: Brian Pfeil의 노트와 예제 코드."
+
+# /apps/ (data/apps.json) and its home card. Blurbs are apps_blurb_<key>.
+
+[hub_apps_title]
+other = "앱"
+
+[hub_apps_blurb]
+other = "직접 만들어 쓰는 작은 앱들, 모두 짧은 링크 제공"
+
+[hub_apps_count]
+other = "앱 {{ .count }}개"
+
+[apps_intro]
+other = "제 생활을 위해 직접 만들고 매일 쓰는 작은 앱들입니다. 모두 공유하기 쉬운 짧은 링크가 있습니다."
+
+[apps_open]
+other = "앱 열기"
+
+[apps_source]
+other = "소스 코드"
+
+[apps_copy]
+other = "링크 복사"
+
+[apps_copied]
+other = "복사됨"
+
+[apps_sign_in]
+other = "초대 전용 · 로그인 필요"
+
+[apps_offline]
+other = "홈 화면에 설치 · 오프라인에서 작동"
+
+[apps_blurb_mandarin]
+other = "이어폰으로 쓰는 문장 프롬프터: 영어 문장을 고르고, 원하는 속도로 중국어를 듣고, 따라 말해 보세요."
+
+[apps_blurb_burmese]
+other = "같은 문장 프롬프터의 버마어판: 원하는 속도로 문장을 듣고 따라 말해 보세요."
+
+[apps_blurb_money-trees]
+other = "예측 시장, 주식, 암호화폐에서 돈을 키우는 플랫폼. 모든 전략은 모의 거래에서 자동화까지 성과로 단계를 밟아 올라갑니다."

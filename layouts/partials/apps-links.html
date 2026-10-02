@@ -1,0 +1,26 @@
+{{- /* Short links: /apps/<key>/ redirects to that app, for every entry in
+   data/apps.json. Static pages, so GitHub Pages can serve them: an instant
+   meta refresh, plus a script that carries the query and hash along
+   (/apps/mandarin/?p=kiss-me-cute opens that phrase). noindex, and the
+   canonical is the app, so search engines file the app, not the redirect.
+   Called once, from the English home page, next to publish-data. */ -}}
+{{- range hugo.Data.apps.apps -}}
+  {{- $url := .url | htmlEscape -}}
+  {{- $name := .name | htmlEscape -}}
+  {{- $html := printf `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>%s</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="%s">
+<meta http-equiv="refresh" content="0; url=%s">
+<script>location.replace(%s + location.search + location.hash)</script>
+</head>
+<body><p><a href="%s">%s</a></p></body>
+</html>
+` $name $url $url (jsonify .url) $url $name -}}
+  {{- with resources.FromString (printf "apps/%s/index.html" .key) $html -}}
+    {{- .Publish -}}
+  {{- end -}}
+{{- end -}}

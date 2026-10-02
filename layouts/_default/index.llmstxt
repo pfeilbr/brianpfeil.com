@@ -51,6 +51,11 @@ Top stories:
 {{- end }}{{ end }}{{ end }}
 {{ end }}
 
+## Apps
+{{ with hugo.Data.apps }}{{ range .apps }}
+- [{{ .name }}]({{ absURL (printf "apps/%s/" .key) }}): {{ i18n (printf "apps_blurb_%s" .key) }}
+{{- end }}{{ end }}
+
 ## Projects
 {{ range (where site.RegularPages "Section" "projects").ByDate.Reverse }}
 - [{{ .Title }}]({{ .Permalink }}): {{ .Description | plainify | htmlUnescape }}

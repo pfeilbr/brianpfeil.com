@@ -1964,3 +1964,44 @@ other = "{{ .n }} ページ"
 
 [post_desc_fallback]
 other = "{{ .title }}：Brian Pfeil によるメモとサンプルコード。"
+
+# /apps/ (data/apps.json) and its home card. Blurbs are apps_blurb_<key>.
+
+[hub_apps_title]
+other = "アプリ"
+
+[hub_apps_blurb]
+other = "自分で作って使っている小さなアプリ。どれも短いリンク付き"
+
+[hub_apps_count]
+other = "{{ .count }} 個のアプリ"
+
+[apps_intro]
+other = "自分の生活のために作り、毎日使っている小さなアプリです。どれにも共有しやすい短いリンクがあります。"
+
+[apps_open]
+other = "アプリを開く"
+
+[apps_source]
+other = "ソースコード"
+
+[apps_copy]
+other = "リンクをコピー"
+
+[apps_copied]
+other = "コピーしました"
+
+[apps_sign_in]
+other = "招待制 · ログインが必要"
+
+[apps_offline]
+other = "ホーム画面に追加 · オフラインで使える"
+
+[apps_blurb_mandarin]
+other = "イヤホンで使うフレーズ・プロンプター。英語のフレーズを選び、好きな速さで中国語を聞いて、声に出して言ってみる。"
+
+[apps_blurb_burmese]
+other = "同じフレーズ・プロンプターのビルマ語版。好きな速さでフレーズを聞いて、声に出して言ってみる。"
+
+[apps_blurb_money-trees]
+other = "予測市場・株・暗号資産でお金を育てるプラットフォーム。どの戦略も、ペーパートレードから自動売買まで実績で段階を上がっていく。"

@@ -115,6 +115,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make guides-pdf` | PDF of every architecture guide, for sharing and printing (needs Chrome) |
 | **Movies** | |
 | `make music-refresh` | Refresh `data/music.yaml` from YouTube: every public playlist on @pfeilbr whose embed actually plays, the saved ones in `tools/music/config.json`, track counts and top artists. Also runs every Thursday (`.github/workflows/music-refresh.yml`), committing only when something changed |
+| `make apps-icon` | Write an app's tile for `/apps/` to `static/images/apps/<KEY>.webp`, from its own icon (`FROM=`) or an emoji (`EMOJI=`) |
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
 | **GitHub** | |
 | `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/`. Also runs every Monday (`.github/workflows/github-refresh.yml`), committing only when something changed |
@@ -145,6 +146,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-layout` | Build `/media/` from a fixture; check `/data/media.json` and the page in all nine languages |
 | `make test-link-check` | Tests for the repo-link and post-link checkers |
 | `make test-music` | Tests for the music page's playlist refresher |
+| `make test-apps` | Tests for the `/apps/` check, and a check of `data/apps.json` (verify also checks the built page and the `/apps/<key>/` short links) |
 | `make test-movies` | Tests for the check that `/data/movies.<lang>.json` matches `movies.json` (verify runs the check on the build) |
 | `make test-github` | Tests for the GitHub page's data refresher (Python) and its search (node) |
 | `make test-learn-links` | Tests for the /learn/ link checker, and its offline check of data/learn.json |

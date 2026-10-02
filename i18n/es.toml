@@ -1964,3 +1964,44 @@ other = "Página {{ .n }}"
 
 [post_desc_fallback]
 other = "{{ .title }}: notas y código de ejemplo de Brian Pfeil."
+
+# /apps/ (data/apps.json) and its home card. Blurbs are apps_blurb_<key>.
+
+[hub_apps_title]
+other = "Apps"
+
+[hub_apps_blurb]
+other = "Pequeñas apps que he creado y uso, cada una con un enlace corto"
+
+[hub_apps_count]
+other = "{{ .count }} apps"
+
+[apps_intro]
+other = "Pequeñas apps que he creado para mi propia vida y que uso a diario. Cada una tiene un enlace corto fácil de compartir."
+
+[apps_open]
+other = "Abrir la app"
+
+[apps_source]
+other = "Código"
+
+[apps_copy]
+other = "Copiar enlace"
+
+[apps_copied]
+other = "Copiado"
+
+[apps_sign_in]
+other = "Solo por invitación · requiere iniciar sesión"
+
+[apps_offline]
+other = "Se instala en la pantalla de inicio · funciona sin conexión"
+
+[apps_blurb_mandarin]
+other = "Un apuntador de frases para el oído: elige una frase en inglés, escúchala en mandarín a cualquier velocidad y repítela."
+
+[apps_blurb_burmese]
+other = "El mismo apuntador de frases, para el birmano: escucha una frase a cualquier velocidad y repítela."
+
+[apps_blurb_money-trees]
+other = "Una plataforma para hacer crecer el dinero en mercados de predicción, acciones y criptomonedas, donde cada estrategia se gana el paso de la simulación a la automatización."
