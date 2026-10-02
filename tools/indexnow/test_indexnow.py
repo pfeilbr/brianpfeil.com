@@ -41,6 +41,8 @@ class ManifestTest(unittest.TestCase):
             "404.html": page(title="Not found"),
             "old/index.html": '<html><head><meta http-equiv="refresh" content="0; url=/new/"></head></html>',
             "data/x.json": "{}",
+            "p/secret/index.html": '<html><head><meta name="robots" content="noindex, nofollow"></head><main>x</main></html>',
+            "p/secret2/index.html": "<html><head><meta name=robots content=noindex></head><main>x</main></html>",
         }
         for rel, text in files.items():
             (self.pub / rel).parent.mkdir(parents=True, exist_ok=True)
