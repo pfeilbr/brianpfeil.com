@@ -179,6 +179,16 @@ class PlainTitleTest(unittest.TestCase):
         self.assertEqual(s.plain_title(page), page)
 
 
+def hugo_page(target: str) -> bool:
+    """True if Hugo builds a page at this /path/ (home, a section, or a page)."""
+    if target == "/":
+        return True
+    if not target.endswith("/"):
+        return False
+    content = s.REPO / "content" / target.strip("/")
+    return any(p.exists() for p in (content.with_suffix(".md"), content / "index.md", content / "_index.md"))
+
+
 class RealDataTest(unittest.TestCase):
     """What is committed must be what the sync would write, and pass the gate."""
 
@@ -192,7 +202,9 @@ class RealDataTest(unittest.TestCase):
             self.assertTrue(m and not s.TAG.search(m.group(1)), page)
 
     def test_relative_links_resolve(self):
-        """Every same-site link in a published page lands on something."""
+        """Every same-site link in a published page lands on something: a file
+        in static/, or a page Hugo builds (the course page, the /learn/ path
+        the site bar links on to)."""
         from posixpath import normpath
         for page in s.STATIC.rglob("*.html"):
             rel = "/" + page.relative_to(s.REPO / "static").as_posix()
@@ -200,9 +212,16 @@ class RealDataTest(unittest.TestCase):
                 if re.match(r"^(?:[a-z][a-z0-9+.-]*:|\{)", url, re.I):
                     continue
                 target = url if url.startswith("/") else normpath(rel.rsplit("/", 1)[0] + "/" + url)
-                if target in ("/", "/courses/") or re.fullmatch(r"/courses/[^/]+/", target):
+                if hugo_page(target):
                     continue
                 self.assertTrue((s.REPO / "static" / target.lstrip("/")).exists(), f"{rel}: {url}")
+
+    def test_hugo_page_needs_its_content_file(self):
+        self.assertTrue(hugo_page("/"))
+        self.assertTrue(hugo_page("/courses/"))
+        self.assertTrue(hugo_page("/learn/models/"))
+        self.assertFalse(hugo_page("/learn/no-such-path/"))
+        self.assertFalse(hugo_page("/learn/models"))  # Hugo pages end in a slash
 
     def test_every_listed_page_exists(self):
         data = json.loads(s.DATA.read_text(encoding="utf-8"))

@@ -21,7 +21,7 @@ I'm not a medical professional. This is my experience, not medical advice.
 
 ## part-1
 
-Part 1 of 5: Where it starts.
+Part 1 of 4: Where it starts.
 
 This is the first personal thing I've ever shared about myself rather than something I built. I've been dealing with what my doctors diagnosed as bipolar disorder, and I've kept it private for years.
 
@@ -35,7 +35,7 @@ Next: the highs, the lows, and the people around me. Then the people who held me
 
 ## part-2
 
-Part 2 of 5: The highs, the lows, and the people around me.
+Part 2 of 4: The highs, the lows, and the people around me.
 
 Nobody warns you that the high is the part you'll miss. The gym twice a day, clubs, a flood of new friends. Then the other edge: the aggression, the lying, and the crash, when answering a text feels like lifting a car.
 
@@ -49,7 +49,7 @@ Start with Part 1 if you missed it.
 
 ## part-3
 
-Part 3 of 5: The people who held me together.
+Part 3 of 4: The people who held me together.
 
 Not everything in these years was loss. Some of the best of it came from people who didn't have to show up for me at all.
 
@@ -65,7 +65,7 @@ If you're struggling, find your Jason. If you already have one, tell them what t
 
 ## part-4
 
-Part 4 of 5: Getting help, and the honest version of what came next.
+Part 4 of 4: Getting help, and the honest version of what came next.
 
 A diagnosis in December 2022. Then a long run of medications, ketamine and TMS, and what I learned: "this medication didn't work" is information, not failure.
 
@@ -78,21 +78,3 @@ And the complicated part: in late 2024 my doctors told me they no longer believe
 Not medical advice. Please work with a qualified clinician on your own care.
 
 #bipolar #mentalhealth #depression #mentalhealthatwork #mentalhealthrecovery
-
-## part-5
-
-Part 5 of 5: What I wish someone had told me.
-
-The signs of mania and depression, in yourself and in people you love. Tell your doctor about the highs, not just the lows. Track your mood. Protect sleep like it's medication. Build a team and let them in. Repair where you can. Be patient with treatment.
-
-And where to get help tonight, if you're in it right now.
-
-I don't have a neat ending. I'm still in treatment, still learning my patterns, still repairing relationships. But I'm here, I'm present for my boys, and I'm done hiding this.
-
-If you're going through something similar and just want someone to hear it, DM me. I know how heavy a message can feel, so consider this me going first.
-
-🆘 Call or text 988 (U.S.) · text HOME to 741741 · NAMI 1-800-950-6264 · findahelpline.com
-
-I'm not a medical professional. This is my experience, not medical advice.
-
-#bipolar #mentalhealth #mentalhealthawareness #988lifeline #youarenotalone

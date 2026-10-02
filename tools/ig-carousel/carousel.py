@@ -46,23 +46,10 @@ PARTS = [
     ["The people who held me together"],
     ["Getting help, and how long it took", "Medications: trial, error, and patience",
      "Work, brain fog, and leaves of absence", "The label, and whether it's right"],
-    ["What I wish someone had told me", "If you're in it right now"],
 ]
 
 # Lines of the post that point at the web page; on a carousel they need other words.
 REWRITES = {
-    "If you are in crisis right now, skip to [the end](#if-youre-in-it-right-now). "
-    "There are numbers there you can call or text tonight.":
-        "If you are in crisis right now, call or text **988** (U.S.) tonight. "
-        "More numbers are in Part 5.",
-    "This site is mostly code: AWS experiments, architecture notes, side projects. "
-    "This post is different. It's the first thing I've written here that's about me "
-    "rather than about something I built.":
-        "Most of what I share is code: AWS experiments, architecture notes, side projects. "
-        "This is different. It's the first thing I've written that's about me "
-        "rather than about something I built.",
-    "reach out. My LinkedIn and X are on the [about page](/about/).":
-        "message me here.",
     "I just went quiet, the way I described above,":
         "I just went quiet, the way I described in Part 2,",
 }
