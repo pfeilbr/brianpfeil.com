@@ -43,6 +43,7 @@ class ManifestTest(unittest.TestCase):
             "data/x.json": "{}",
             "p/secret/index.html": '<html><head><meta name="robots" content="noindex, nofollow"></head><main>x</main></html>',
             "p/secret2/index.html": "<html><head><meta name=robots content=noindex></head><main>x</main></html>",
+            "p/secret3/index.html": '<html><head><meta content="noindex, nofollow" name="robots"/></head><main>x</main></html>',
         }
         for rel, text in files.items():
             (self.pub / rel).parent.mkdir(parents=True, exist_ok=True)

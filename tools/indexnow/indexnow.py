@@ -54,7 +54,7 @@ MAIN = re.compile(r"<main\b.*?</main>", re.S | re.I)
 REFRESH = re.compile(r"http-equiv=[\"']?refresh", re.I)
 # A page that asks not to be indexed is also kept out of the public manifest,
 # which would otherwise list its (unlisted) URL for anyone to read.
-NOINDEX = re.compile(r"<meta\s+name=[\"']?robots[\"']?\s+content=[\"']?[^>]*noindex", re.I)
+NOINDEX = re.compile(r"<meta\b(?=[^>]*\bname=[\"']?robots\b)(?=[^>]*\bcontent=[\"']?[^>]*\bnoindex)[^>]*>", re.I)
 UA = "brianpfeil.com-indexnow/1.0"
 
 
