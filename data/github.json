@@ -1,7 +1,7 @@
 {
  "user": "pfeilbr",
- "updated": "2026-09-28",
- "count": 412,
+ "updated": "2026-10-05",
+ "count": 413,
  "areas": [
   {
    "key": "games",
@@ -283,6 +283,7 @@
     "youtube-scraping-puppeteer",
     "jest-testing-framework-playground",
     "aws-custom-nodejs-oidc-provider-server-on-heroku",
+    "travel",
     "node-salesforce-bulk-with-request",
     "Elastic-Beanstalk-Docker-Node.js-Example",
     "travis-ci-node-example",
@@ -461,6 +462,7 @@
   "ActionScript": "#882B0F",
   "Apex": "#1797c0",
   "Assembly": "#6E4C13",
+  "Astro": "#ff5a03",
   "Batchfile": "#C1F12E",
   "C": "#555555",
   "C#": "#7355dd",
@@ -486,6 +488,7 @@
   "Objective-C": "#438eff",
   "Objective-C++": "#6866fb",
   "PHP": "#4F5D95",
+  "PLpgSQL": "#336790",
   "PowerShell": "#012456",
   "Python": "#3572A5",
   "Ruby": "#701516",
@@ -4161,11 +4164,11 @@
    "langs": [
     [
      "HTML",
-     86
+     87
     ],
     [
      "Python",
-     10
+     9
     ],
     [
      "CSS",
@@ -4173,10 +4176,6 @@
     ],
     [
      "Go",
-     1
-    ],
-    [
-     "JavaScript",
      1
     ]
    ],
@@ -4187,7 +4186,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-02-16",
-   "pushed": "2026-09-28",
+   "pushed": "2026-10-05",
    "readme": "Personal site built with Hugo, in nine languages: English at the root, and zh es pt fr de it ja ko under //. Posts are English-only; pages, layouts and UI strings are translated. For working on it with an AI agent, CLAUDE.md holds the conventions and the gotchas that have bitten before, and opens with where current work stands. Hugo Extended 0.166.0 — the version CI is pinned to. A different local version can build fine and still fail to deploy. Go 1.25+ — only for generating posts from GitHub repos Python 3.11+ and ffmpeg — only for the media page Terraform 1.10+ and the AWS CLI — only for…",
    "post": false,
    "homepage": "https://brianpfeil.com/"
@@ -4264,15 +4263,15 @@
    "langs": [
     [
      "JavaScript",
-     46
+     44
     ],
     [
      "Python",
-     22
+     26
     ],
     [
      "CSS",
-     21
+     17
     ],
     [
      "HTML",
@@ -4287,7 +4286,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-09-20",
-   "pushed": "2026-09-28",
+   "pushed": "2026-09-29",
    "readme": "An in-ear phrase prompter for speaking Burmese to someone you actually live with. Pick an English phrase, hear it spoken in Burmese at whatever speed you need, say it back. Built for the case where you have AirPods in, your phone is in your pocket, and your partner is in the next room. Live app: https://pfeilbr.github.io/burmese--language/ It is a direct sibling of [Say It In Mandarin][mandarin] — same shape, same interaction model, same build pipeline — retargeted at a language that works very differently, which is where all the interesting differences are. Open the link in Safari on iPhone…",
    "post": false
   },
@@ -4352,18 +4351,18 @@
    "langs": [
     [
      "JavaScript",
-     50
+     49
     ],
     [
      "CSS",
-     24
-    ],
-    [
-     "HTML",
-     14
+     28
     ],
     [
      "Python",
+     12
+    ],
+    [
+     "HTML",
      12
     ]
    ],
@@ -4380,7 +4379,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-07-26",
-   "pushed": "2026-07-26",
+   "pushed": "2026-10-03",
    "readme": "An in-ear phrase prompter for speaking Mandarin to someone you actually live with. Pick an English phrase, hear it spoken in Mandarin at whatever speed you need, say it back. Built for the case where you have AirPods in, your phone is in your pocket, and your partner is in the next room. Live app: https://pfeilbr.github.io/chinese-mandarin-language-app/ Open the link in Safari on iPhone, tap the Share button, and choose Add to Home Screen. It then launches full screen with no browser chrome. Open the ☰ menu → Offline audio → Save all audio once, and it works with no signal at all. (On Android…",
    "post": true
   },
@@ -10558,6 +10557,36 @@
    "pushed": "2026-09-03",
    "readme": "A single-page, fully client-side web app — pick a city from the dropdown, get things to do in one sortable, searchable table. Ships with twenty-four guides: Philly (Willow Grove) · Forest Hills · NYC · Brooklyn · Queens · Flushing · Ithaca (Cornell) · Atlantic City · Baltimore · Washington DC · Pittsburgh · Richmond · Boston · Virginia Beach · Buffalo · Cleveland · Raleigh-Durham · Chicago · Toronto · Nashville · Los Angeles · San Francisco · Seattle · San Diego. Live site: https://pfeilbr.github.io/things-to-do/ City switcher — a region-grouped dropdown in the app bar swaps the whole guide…",
    "post": true
+  },
+  {
+   "name": "travel",
+   "desc": "Everything travel — trips, guides, gear, tools — published to GitHub Pages",
+   "lang": "TypeScript",
+   "langs": [
+    [
+     "TypeScript",
+     84
+    ],
+    [
+     "Astro",
+     12
+    ],
+    [
+     "Python",
+     3
+    ]
+   ],
+   "areas": [
+    "web"
+   ],
+   "tags": [],
+   "kind": "project",
+   "stars": 0,
+   "created": "2026-10-01",
+   "pushed": "2026-10-03",
+   "readme": "Everything travel and the things that go with it: trips and live availability checks, places with photos and real ratings, wishlists, reviews and trip plans. It's a static web app on GitHub Pages with Supabase for user accounts and data. Live: https://pfeilbr.github.io/travel/ Landing page: hero search (where / stay / drive), the latest live-checked trip, top picks, and browse-by-vibe tiles. Explore and trip pages: an Airbnb-style browse view. Photo-carousel cards, filter chips (roof, cabin, glamping, biking, fishing, waterfalls…), sorting, and a split list + map view with price pins. Filters…",
+   "post": false,
+   "homepage": "https://pfeilbr.github.io/travel/"
   },
   {
    "name": "travis-ci-node-example",
