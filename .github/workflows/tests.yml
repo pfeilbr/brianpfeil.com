@@ -10,7 +10,7 @@ on:
 jobs:
   post-generator:
     name: generate-posts (Go)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-go@v7
@@ -22,7 +22,7 @@ jobs:
 
   media-tool:
     name: instagram-media (Python)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -78,7 +78,7 @@ jobs:
 
   site:
     name: hugo build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: peaceiris/actions-hugo@v3
@@ -115,7 +115,7 @@ jobs:
 
   terraform:
     name: terraform fmt + validate
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: hashicorp/setup-terraform@v4
