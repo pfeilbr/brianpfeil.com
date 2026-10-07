@@ -306,18 +306,10 @@ def peak_db(path: Path) -> float | None:
     return float("-inf") if m.group(1) == "-inf" else float(m.group(1))
 
 
-_LIBRARY: dict[str, dict] = {}
-
-
-def music_library(directory: Path) -> dict:
-    """The rendered tracks, rendered once per run. Imported lazily so the
-    photo path doesn't need numpy."""
-    key = str(directory)
-    if key not in _LIBRARY:
-        from . import music
-        paths = music.ensure_library(directory)
-        _LIBRARY[key] = {"paths": paths, "seconds": {k: music.duration(v) for k, v in paths.items()}}
-    return _LIBRARY[key]
+def music_track(directory: Path, track) -> Path:
+    """One video's song, rendered once (each is used by exactly one clip)."""
+    from . import music
+    return music.ensure_track(directory, track)
 
 
 def _mix_music(video: Path, track_wav: Path, offset: float, seconds: float, dest: Path) -> None:
@@ -354,11 +346,13 @@ def _ensure_sound(record: dict, dest_dir: Path, stem: str, key: str, music_dir: 
         record["sound"] = "original"
         return True
 
+    # Every video gets its own song, recorded in the shared music index.
     from . import music
-    library = music_library(music_dir)
-    track, offset = music.choose(key, library["seconds"])
+    track = music.assign(f"brianpfeil.com/media/{key}/{stem}")
+    wav = music_track(music_dir, track)
+    offset = music.offset_for(f"{key}/{stem}", music.duration(wav))
     name = f"{stem}-m{track.id}v{music.TRACK_VERSION}.mp4"
-    _mix_music(current, library["paths"][track.id], offset, float(record.get("duration") or 0)
+    _mix_music(current, wav, offset, float(record.get("duration") or 0)
                or ffprobe_video(current)[2], dest_dir / name)
     if name != record["name"]:
         current.unlink(missing_ok=True)  # the silent file; --prune drops it from the CDN

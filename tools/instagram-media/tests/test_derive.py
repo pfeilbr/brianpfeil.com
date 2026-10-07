@@ -202,7 +202,7 @@ class RemuxDecisionTest(unittest.TestCase):
         self.assertFalse(derive.can_remux(self.info(audio="opus")))
 
 
-def fake_library(root: Path) -> dict:
+def fake_library(root: Path) -> Path:
     """One 6-second stereo tone standing in for every track, so video tests
     don't render the real library."""
     import math
@@ -217,9 +217,7 @@ def fake_library(root: Path) -> dict:
             struct.pack("<hh", *(int(8000 * math.sin(2 * math.pi * 330 * n / 44100)),) * 2)
             for n in range(44100 * 6))
         w.writeframes(frames)
-    from igmedia import music
-    return {"paths": {t.id: path for t in music.TRACKS},
-            "seconds": {t.id: 6.0 for t in music.TRACKS}}
+    return path
 
 
 @unittest.skipUnless(HAS_FFMPEG, "ffmpeg not installed")
@@ -229,9 +227,13 @@ class VideoTest(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
         self.lock = derive.Lock(self.root / "lock.json")
-        patcher = mock.patch.object(derive, "music_library", return_value=fake_library(self.root))
+        patcher = mock.patch.object(derive, "music_track", return_value=fake_library(self.root))
         patcher.start()
         self.addCleanup(patcher.stop)
+        from igmedia import music
+        ledger = mock.patch.object(music, "LEDGER", str(self.root / "ledger.jsonl"))
+        ledger.start()
+        self.addCleanup(ledger.stop)
 
     def derive_video(self, src: Path, name="vid"):
         d = derive.derive(Media(src, "video", name.ljust(64, "0")), name, self.root / "out",
