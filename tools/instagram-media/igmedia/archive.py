@@ -11,8 +11,9 @@ It is a better source than an Instagram export: complete (the index reports
 every item on the profile), already downloaded, keyed by shortcode, and it
 carries what Instagram shows beside a post — see details().
 
-Only feed posts and reels are read. Stories, highlights and the _oversized
-copies (higher-bitrate duplicates of reels that are also in reels/) are not.
+Only feed posts and reels are read. Stories and highlights are not, and
+_oversized/ is read only through an item's <file>.oversized.json pointer --
+when a reel's only copy was too large for GitHub and was parked there.
 Only what Instagram itself displays leaves this module: the place *name*
 but never the GPS coordinates stored with it, tagged usernames but not their
 on-photo positions, and none of the raw API object.
@@ -82,6 +83,25 @@ def details(meta: dict) -> dict:
     return out
 
 
+def _parked(directory: Path, path: Path) -> Path | None:
+    """A file too large for GitHub is kept outside git under _oversized/,
+    with a <file>.oversized.json pointer in its place. Follow the pointer
+    when the parked bytes are on this machine and match its checksum."""
+    pointer = path.with_name(path.name + ".oversized.json")
+    if not pointer.is_file():
+        return None
+    info = json.loads(pointer.read_text(encoding="utf-8"))
+    project = directory.parents[3]  # <project>/archive/<section>/<year>/<item>
+    parked = project / str(info.get("parked_at") or "")
+    if not info.get("parked_at") or not parked.is_file():
+        return None
+    if info.get("bytes") and parked.stat().st_size != info["bytes"]:
+        return None
+    if info.get("sha256") and sha256_file(parked) != info["sha256"]:
+        return None
+    return parked
+
+
 def _item(directory: Path) -> Item | None:
     meta_path = directory / "metadata.json"
     if not meta_path.is_file():
@@ -97,7 +117,9 @@ def _item(directory: Path) -> Item | None:
     media = []
     for entry in sorted(meta.get("media") or [], key=lambda m: m.get("index", 0)):
         path = directory / str(entry.get("file") or "")
-        if not entry.get("file") or not path.is_file():
+        if entry.get("file") and not path.is_file():
+            path = _parked(directory, path)
+        if not entry.get("file") or path is None or not path.is_file():
             continue
         kind = "video" if entry.get("type") == "video" else "photo"
         media.append(Media(path=path, kind=kind, sha256=sha256_file(path), taken_at=taken_at))

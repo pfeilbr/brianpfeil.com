@@ -12,8 +12,9 @@ also the only way to get this media without breaking Instagram's terms.
 **The instagram-archive project (default).** `~/projects/instagram/archive`,
 set as `archive_dir` in `config.yaml`, keeps every feed item as a directory of
 `metadata.json` + `media/`. `igmedia/archive.py` reads `posts/` and `reels/`
-only — not stories, highlights, or `_oversized/` (higher-bitrate duplicates
-of reels already in `reels/`). Location, tagged users and the raw API object
+only — not stories or highlights. `_oversized/` is read only through an
+item's `<file>.oversized.json` pointer, when a reel's only copy was too large
+for GitHub and was parked there (checked against the pointer's sha256). Location, tagged users and the raw API object
 never leave that module. Ids are the local date plus Instagram's shortcode.
 
     make media-sync     # stage, approve everything, release; a no-op when nothing is new

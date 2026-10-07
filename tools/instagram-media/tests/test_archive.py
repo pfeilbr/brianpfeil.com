@@ -144,6 +144,33 @@ class ArchiveTest(unittest.TestCase):
                       [{"index": 1, "type": "image", "file": "media/01.jpg"}]), {})
         self.assertNotIn("20240505-GONE", {i.id for i in self.items()})
 
+    def _parked_reel(self, content=b"huge", **pointer):
+        import hashlib
+        add_item(self.root, "reels", "2026-09-23__PARKED",
+                 meta("PARKED", "reel", "2026-09-23T16:00:00Z", "2026-09-23T12:00:00-04:00",
+                      [{"index": 1, "type": "video", "file": "media/01.mp4"}]),
+                 {"media/01.thumb.jpg": b"t"})
+        rel = "archive/_oversized/reels/2026/2026-09-23__PARKED/media/01.mp4"
+        parked = self.root.parent / rel
+        parked.parent.mkdir(parents=True)
+        parked.write_bytes(content)
+        info = {"item": "PARKED", "file": "media/01.mp4", "bytes": len(content),
+                "sha256": hashlib.sha256(content).hexdigest(), "parked_at": rel, **pointer}
+        (self.root / "reels/2026/2026-09-23__PARKED/media/01.mp4.oversized.json").write_text(json.dumps(info))
+        return parked
+
+    def test_reel_whose_only_copy_is_parked_is_published(self):
+        """Too big for GitHub, so the archive parks it under _oversized/ and
+        leaves a pointer; the reel still belongs on the page."""
+        parked = self._parked_reel()
+        reel = next(i for i in self.items() if i.id == "20260923-PARKED")
+        self.assertEqual([m.path for m in reel.media], [parked])
+        self.assertEqual(reel.media[0].kind, "video")
+
+    def test_parked_file_that_does_not_match_its_pointer_is_skipped(self):
+        self._parked_reel(sha256="0" * 64)
+        self.assertNotIn("20260923-PARKED", {i.id for i in self.items()})
+
     def test_not_an_archive(self):
         with self.assertRaises(ValueError):
             archive.read_archive(Path(self.tmp.name) / "nothing-here")
