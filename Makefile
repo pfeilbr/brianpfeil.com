@@ -124,7 +124,10 @@ test-music: ## Tests for the music page's playlist refresher
 subscriptions-refresh: ## Refresh data/subscriptions.yaml (YouTube tab): subscriber counts, new channels
 	python3 tools/subscriptions/youtube.py --ids $(IDS)
 
-test-subscriptions: ## Tests for the YouTube subscriptions refresher
+twitch-refresh: ## Refresh follower counts in data/twitch.yaml (public; the lists need sign-in)
+	python3 tools/subscriptions/twitch.py
+
+test-subscriptions: ## Tests for the YouTube and Twitch subscription refreshers
 	python3 -m unittest discover -s tools/subscriptions -p 'test_*.py'
 
 movies-refresh: ## Fill in and refresh data/movies.json (posters, scores, trailers, streaming)
