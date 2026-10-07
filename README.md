@@ -147,7 +147,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-link-check` | Tests for the repo-link and post-link checkers |
 | `make test-music` | Tests for the music page's playlist refresher |
 | `make test-apps` | Tests for the `/apps/` check, and a check of `data/apps.json` (verify also checks the built page and the `/apps/<key>/` short links) |
-| `make test-profiles` | Tests for the social-profile check (`tools/profiles/`) and the TikTok handle switch (`tiktok_handle.py`, run weekly by `tiktok-handle.yml`); verify also checks every profile is linked on `/about/`, the home hero, the `sameAs` and the footer in all nine languages |
+| `make test-profiles` | Tests for the social-profile check (`tools/profiles/`) and the TikTok handle switch (`tiktok_handle.py`, run daily by `tiktok-handle.yml`); verify also checks every profile is linked on `/about/`, the home hero, the `sameAs` and the footer in all nine languages |
 | `make test-movies` | Tests for the check that `/data/movies.<lang>.json` matches `movies.json` (verify runs the check on the build) |
 | `make test-github` | Tests for the GitHub page's data refresher (Python) and its search (node) |
 | `make test-learn-links` | Tests for the /learn/ link checker, and its offline check of data/learn.json |

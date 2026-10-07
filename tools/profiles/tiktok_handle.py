@@ -80,7 +80,7 @@ def main() -> int:
         print(f"could not check @{WANTED}: {e}")
         return 0
     if switched:
-        # B renamed the account on 2026-10-07 and the site links @pfeilbr.
+        # The site links @pfeilbr (switched by --apply below).
         # Fail (so the weekly run shows red) if that stops being B's.
         if who == ACCOUNT_ID:
             print(f"ok: the site links @{WANTED}, and it is B's account")
