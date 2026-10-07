@@ -314,6 +314,16 @@ class VideoTest(unittest.TestCase):
             third, _ = self.derive_video(src, "old")
         self.assertEqual(third.key, again.key)
 
+    def test_label_follows_the_title_in_the_ledger(self):
+        src = make_video(self.root / "label.mp4", "720x900", audio=False)
+        first, _ = self.derive_video(src, "label")
+        record = self.lock.get("label".ljust(64, "0"))
+        record["music"] = "Sunlit"
+        self.lock.put("label".ljust(64, "0"), record)
+        with mock.patch.object(derive, "_mix_music", side_effect=AssertionError("mixed again")):
+            again, _ = self.derive_video(src, "label")
+        self.assertEqual(again.music, first.music)
+
     def test_music_is_mixed_once_and_reused(self):
         src = make_video(self.root / "once.mp4", "720x900", audio=False)
         first, _ = self.derive_video(src, "once")

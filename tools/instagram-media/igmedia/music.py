@@ -246,19 +246,30 @@ PROGRESSIONS = tuple(t.progression for t in TRACKS) + (
     ((0, "maj7"), (2, "min7"), (4, "min7"), (5, "maj7")),
 )
 _WORDS_A = ("Amber", "Quiet", "Golden", "Silver", "Low", "Bright", "Late", "Early", "Long",
-            "Still", "Easy", "Blue", "Warm", "Clear", "Soft", "High")
+            "Still", "Easy", "Blue", "Warm", "Clear", "Soft", "High", "Green", "Slow", "Open",
+            "Hidden", "Little", "Wide", "Far", "Cool")
 _WORDS_B = ("Tide", "Trail", "Light", "Current", "Ridge", "Harbor", "Street", "Field",
-            "Hour", "Air", "Line", "Shore", "Pines", "Water", "Season", "Signal")
+            "Hour", "Air", "Line", "Shore", "Pines", "Water", "Season", "Signal", "Valley",
+            "Morning", "Bridge", "Garden", "Lake", "Road", "Sky", "Path")
 
 
-def track_from_seed(seed: int) -> Track:
-    """A whole song from one number: key, chords, tempo, arpeggio and tone."""
+def _title_candidates(seed: int):
+    """Every title this song could take, in an order fixed by its seed."""
+    order = np.random.default_rng([seed, 1]).permutation(len(_WORDS_A) * len(_WORDS_B))
+    for n in order:
+        yield f"{_WORDS_A[n // len(_WORDS_B)]} {_WORDS_B[n % len(_WORDS_B)]}"
+
+
+def track_from_seed(seed: int, title: str | None = None) -> Track:
+    """A whole song from one number: key, chords, tempo, arpeggio and tone.
+    `title` is the name recorded in the ledger (unique across the site)."""
     rng = np.random.default_rng(seed)
     key = int(rng.integers(len(ROOTS)))
     prog = int(rng.integers(len(PROGRESSIONS)))
+    rng.integers(16), rng.integers(16)  # two draws once spent on the title; kept so songs don't change
     return Track(
         id=f"t{seed:08x}",
-        title=f"{_WORDS_A[int(rng.integers(len(_WORDS_A)))]} {_WORDS_B[int(rng.integers(len(_WORDS_B)))]}",
+        title=title or next(_title_candidates(seed)),
         root=ROOTS[key],
         progression=PROGRESSIONS[prog],
         bpm=int(rng.integers(76, 112)),
@@ -332,18 +343,47 @@ def _save(path, raw: str, tag: str | None) -> bool:
     return True
 
 
+_CACHE: dict[str, list[dict]] = {}
+
+
+def _site_rows(rows: list[dict]) -> list[dict]:
+    return [r for r in rows if r.get("style") == STYLE]
+
+
+def _unused_title(seed: int, rows: list[dict]) -> str:
+    used = {r.get("title") for r in _site_rows(rows)}
+    for title in _title_candidates(seed):
+        if title not in used:
+            return title
+    return next(_title_candidates(seed))
+
+
+def recorded(video: str, path=None) -> Track | None:
+    """The song already recorded for `video`, or None. Reads the ledger once
+    per run; rows are never rewritten in a way that changes a song."""
+    path = str(path or LEDGER)
+    if path not in _CACHE:
+        _CACHE[path] = _load(path)[0]
+    for r in _site_rows(_CACHE[path]):
+        if r.get("video") == video:
+            return track_from_seed(int(r["seed"]), r.get("title"))
+    return None
+
+
 def assign(video: str, path=None) -> Track:
     """The song for one video (a stable name). A video keeps its song; a new
     one gets a seed whose key + progression no other site clip has used (once
-    all are used, at least a seed nobody has, so melody and groove are new)."""
+    all are used, at least a seed nobody has, so melody and groove are new),
+    and a title no other site clip has."""
     path = path or LEDGER
     for _ in range(8):
         rows, tag, raw = _load(path)
-        for r in rows:
-            if r.get("video") == video and r.get("style") == STYLE:
-                return track_from_seed(int(r["seed"]))
-        used_sigs = {(r.get("key"), r.get("prog")) for r in rows if r.get("style") == STYLE}
-        used_seeds = {r.get("seed") for r in rows if r.get("style") == STYLE}
+        _CACHE[str(path)] = rows
+        for r in _site_rows(rows):
+            if r.get("video") == video:
+                return track_from_seed(int(r["seed"]), r.get("title"))
+        used_sigs = {(r.get("key"), r.get("prog")) for r in _site_rows(rows)}
+        used_seeds = {r.get("seed") for r in _site_rows(rows)}
         start = int(hashlib.sha256(f"{STYLE}:{video}".encode()).hexdigest()[:8], 16)
         seed = fallback = None
         for i in range(5000):
@@ -356,12 +396,39 @@ def assign(video: str, path=None) -> Track:
                 break
         seed = fallback if seed is None else seed
         key, prog = signature(seed)
+        title = _unused_title(seed, rows)
         import datetime as dt
         row = {"at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "key": key,
-               "prog": prog, "seed": seed, "style": STYLE, "video": video}
+               "prog": prog, "seed": seed, "style": STYLE, "title": title, "video": video}
         text = raw if not raw or raw.endswith("\n") else raw + "\n"
         if _save(path, text + json.dumps(row) + "\n", tag):
-            return track_from_seed(seed)
+            _CACHE[str(path)] = rows + [row]
+            return track_from_seed(seed, title)
+    raise RuntimeError(f"music ledger {path}: too many concurrent writers")
+
+
+def backfill_titles(path=None) -> int:
+    """Give every site row without a recorded title a unique one, in ledger
+    order. Other projects' lines are kept byte for byte. Returns how many."""
+    path = path or LEDGER
+    for _ in range(8):
+        rows, tag, raw = _load(path)
+        used = {r.get("title") for r in _site_rows(rows) if r.get("title")}
+        out, n = [], 0
+        for line in raw.splitlines(keepends=True):
+            r = json.loads(line) if line.strip() else None
+            if r and r.get("style") == STYLE and not r.get("title"):
+                title = next(t for t in _title_candidates(int(r["seed"])) if t not in used)
+                used.add(title)
+                r["title"] = title
+                line = json.dumps(dict(sorted(r.items()))) + "\n"
+                n += 1
+            out.append(line)
+        if not n:
+            return 0
+        if _save(path, "".join(out), tag):
+            _CACHE.pop(str(path), None)
+            return n
     raise RuntimeError(f"music ledger {path}: too many concurrent writers")
 
 

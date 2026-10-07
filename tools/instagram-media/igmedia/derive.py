@@ -345,7 +345,15 @@ def _ensure_sound(record: dict, dest_dir: Path, stem: str, key: str, music_dir: 
     # Scored before every video got its own song: re-score it. Its picture is
     # copied from the scored file; only the audio is replaced.
     rescore = record.get("sound") == "music" and bool(SHARED_TRACK.search(record["name"]))
-    if record.get("sound") in ("original", "music") and current.exists() and not rescore:
+    if record.get("sound") == "music" and current.exists() and not rescore:
+        # Keep the label in step with the title recorded in the ledger.
+        from . import music
+        song = music.recorded(f"brianpfeil.com/media/{key}/{stem}")
+        if song and record.get("music") != song.title:
+            record["music"] = song.title
+            return True
+        return False
+    if record.get("sound") == "original" and current.exists():
         return False
 
     if not rescore:

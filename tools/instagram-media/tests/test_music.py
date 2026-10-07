@@ -57,6 +57,7 @@ class AssignTest(unittest.TestCase):
         self.tmp = TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.ledger = Path(self.tmp.name) / "ledger.jsonl"
+        music._CACHE.clear()
 
     def test_a_video_keeps_its_song(self):
         a = music.assign("brianpfeil.com/media/x/abc", self.ledger)
@@ -97,6 +98,33 @@ class AssignTest(unittest.TestCase):
             music.assign("brianpfeil.com/media/x/abc", self.ledger)
         videos = [json.loads(l)["video"] for l in self.ledger.read_text().splitlines()]
         self.assertEqual(videos, ["w", "brianpfeil.com/media/x/abc"])
+
+    def test_titles_are_unique_across_the_site(self):
+        music._CACHE.clear()
+        titles = [music.assign(f"brianpfeil.com/media/x/{n}", self.ledger).title for n in range(150)]
+        self.assertEqual(len(titles), len(set(titles)))
+
+    def test_recorded_returns_the_stored_title(self):
+        music._CACHE.clear()
+        t = music.assign("brianpfeil.com/media/x/abc", self.ledger)
+        music._CACHE.clear()
+        self.assertEqual(music.recorded("brianpfeil.com/media/x/abc", self.ledger), t)
+        self.assertIsNone(music.recorded("brianpfeil.com/media/x/none", self.ledger))
+
+    def test_backfill_gives_untitled_rows_unique_titles_and_keeps_other_lines(self):
+        other = '{"at": "x", "key": 1, "prog": 2, "seed": 5, "style": "drive", "video": "v"}\n'
+        rows = [json.dumps({"key": 0, "prog": 0, "seed": n, "style": music.STYLE, "video": f"s{n}"})
+                for n in range(60)]
+        self.ledger.write_text(other + "\n".join(rows) + "\n")
+        self.assertEqual(music.backfill_titles(self.ledger), 60)
+        lines = self.ledger.read_text().splitlines(keepends=True)
+        self.assertEqual(lines[0], other)
+        titles = [json.loads(l)["title"] for l in lines[1:]]
+        self.assertEqual(len(set(titles)), 60)
+        self.assertEqual(music.backfill_titles(self.ledger), 0)
+        # a song's sound doesn't depend on its title
+        a, b = music.track_from_seed(7), music.track_from_seed(7, "Other Name")
+        self.assertEqual((a.root, a.progression, a.bpm, a.arp), (b.root, b.progression, b.bpm, b.arp))
 
     def test_seeded_track_is_a_valid_song(self):
         t = music.track_from_seed(123456)
