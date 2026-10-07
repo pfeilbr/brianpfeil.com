@@ -1,6 +1,6 @@
 {
  "user": "pfeilbr",
- "updated": "2026-10-05",
+ "updated": "2026-10-07",
  "count": 413,
  "areas": [
   {
@@ -71,14 +71,14 @@
    "repos": [
     "aws-chalice-playground",
     "serverless-flask-playground",
+    "aws-api-gateway-websockets-serverless-playground",
+    "serverless-lambda-java-playground",
+    "serverless-lambda-layers-playground",
     "aws-sam-step-functions-playground",
     "plotly-dash-api-gateway-lambda-playground",
     "aws-sam-playground",
-    "serverless-lambda-layers-playground",
-    "aws-api-gateway-websockets-serverless-playground",
     "api-gateway-service-integrations-for-http-apis-playground",
     "azure-functions-playground",
-    "serverless-lambda-java-playground",
     "sam-lambda-layers-playground",
     "aws-appconfig-playground",
     "aws-appsync-playground",
@@ -87,13 +87,13 @@
     "aws-eventbridge-playground",
     "serverless-python-playground",
     "apex-lambda-playground",
+    "serverless-plugin-cloudfront-lambda-edge-playground",
     "next-amplify-gen2-playground",
     "amazon-eventbridge-scheduler-playground",
     "aws-alb-to-lambda-playground",
     "lambda-function-urls-playground",
     "aws-step-functions-aws-sdk-integration-playground",
     "aws-api-gateway-to-s3-static-site-playground",
-    "serverless-plugin-cloudfront-lambda-edge-playground",
     "aws-cdk-step-functions-playground",
     "api-gateway-private-endpoints-playground",
     "aws-appflow-salesforce-eventbridge-playground",
@@ -106,10 +106,10 @@
     "azure-serverless-framework-playground",
     "aws-amplify-js-app-playground",
     "serverless-typescript-webpack-playground",
-    "amazon-eventbridge-pipes-playground",
-    "serverless-finance",
     "aws-amplify-console-playground",
     "chrome-aws-lambda-playground",
+    "serverless-finance",
+    "amazon-eventbridge-pipes-playground",
     "build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito",
     "lambda-glue-mysql-terraform",
     "serverless-finances"
@@ -122,10 +122,10 @@
     "terraform-playground",
     "cdktf-playground",
     "sceptre-playground",
+    "aws-cdk-playground",
     "aws-sam-step-functions-playground",
     "aws-sam-playground",
     "aws-cloudformation-playground",
-    "aws-cdk-playground",
     "cfn-diagram-playground",
     "stackery-playground",
     "aws-cdk-step-functions-playground",
@@ -159,8 +159,8 @@
     "azure-kubernetes-service-aks-playground",
     "aws-ecr-playground",
     "docker-hub-automated-build-playground",
-    "aws-vscode-dev-container",
     "remote-development",
+    "aws-vscode-dev-container",
     "jupyter-javascript-docker",
     "Elastic-Beanstalk-Docker-Node.js-Example",
     "aws-test-project-01"
@@ -195,10 +195,11 @@
     "antd-react-playground",
     "nextjs-playground",
     "flexbox-playground",
+    "react-bootstrap-playground",
+    "tailwindcss-playground",
     "cloudscape-design-system-playground",
     "streamlit-playground",
     "surveyjs-react-playground",
-    "tailwindcss-playground",
     "cfn-diagram-playground",
     "aws-copilot-playground",
     "azure-pipelines-playground",
@@ -212,20 +213,19 @@
     "react-redux-playground",
     "angular2-playground",
     "kendo-ui-playground",
-    "react-async-playground",
-    "react-bootstrap-playground",
-    "react-hooks-playground",
     "gatsbyjs-playground",
+    "react-async-playground",
+    "react-hooks-playground",
     "heroku-node-worker-playground",
     "cognito-federated-to-salesforce-and-s3-presigned-url-playground",
     "serverless-typescript-webpack-playground",
     "react-router-4-playground",
     "angular-cli-app-playground",
     "html-video-embed-playground",
-    "aim-trainer",
-    "aws-guidance",
     "aws-amplify-console-playground",
     "serverless-plugin-cloudfront-lambda-edge-playground",
+    "aim-trainer",
+    "aws-guidance",
     "http-live-streaming-hls-playground",
     "ng-material-boilerplate",
     "build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito",
@@ -250,11 +250,11 @@
     "lerna-playground",
     "typescript-node-playground",
     "node-coveralls-playground",
+    "aws-delivlib-playground",
+    "youtube-api-playground",
     "openai-nodejs-playground",
     "promise-pool-playground",
     "cdktf-playground",
-    "aws-delivlib-playground",
-    "youtube-api-playground",
     "graphql-playground",
     "json-schema-playground",
     "scribbletune-playground",
@@ -263,8 +263,8 @@
     "angular2-playground",
     "beefy-playground",
     "nwjs-playground",
-    "next-amplify-gen2-playground",
     "react-hooks-playground",
+    "next-amplify-gen2-playground",
     "aws-cdk-step-functions-playground",
     "aws-cloudformation-custom-resource-type-playground",
     "aws-cdk-pipeline-playground",
@@ -279,8 +279,8 @@
     "angular-cli-app-playground",
     "webdriverio-playground",
     "remote-development",
-    "dynamic-nodejs-code-execution-playground",
     "youtube-scraping-puppeteer",
+    "dynamic-nodejs-code-execution-playground",
     "jest-testing-framework-playground",
     "aws-custom-nodejs-oidc-provider-server-on-heroku",
     "travel",
@@ -294,15 +294,16 @@
    "key": "python",
    "icon": "i-beaker",
    "repos": [
+    "flask-playground",
     "instructor-playground",
     "aws-boto3-playground",
     "streamlit-playground",
     "langchain-python-playground",
-    "flask-playground",
     "boto3-playground",
     "serverless-flask-playground",
     "imagenet-playground",
     "opencv-python-playground",
+    "pipenv-playground",
     "amazon-bedrock-playground",
     "vectordb-playground",
     "hugging-face-playground",
@@ -311,7 +312,6 @@
     "aws-efs-playground",
     "pre-commit-playground",
     "python-playground",
-    "pipenv-playground",
     "aws-chalice-playground",
     "click-cli-playground",
     "aws-kendra-playground",
@@ -320,12 +320,12 @@
     "deep-and-machine-learning-playground",
     "jupyter-playground",
     "spark-playground",
+    "aws-glue-playground",
+    "python-async-await-playground",
     "mojo-playground",
     "pytorch-playground",
     "diagrams-as-code-playground",
-    "aws-glue-playground",
     "aws-app-runner-playground",
-    "python-async-await-playground",
     "aws-glue-pyspark-fetch-databases-and-tables-metadata-playground",
     "python3-jupyter-notebooks",
     "sam-lambda-layers-playground",
@@ -357,9 +357,9 @@
     "dynogels-playground",
     "spark-playground",
     "go-postgres-playground",
+    "aws-glue-playground",
     "apache-kafka-playground",
     "amazon-opensearch-serverless-playground",
-    "aws-glue-playground",
     "aws-emr-playground",
     "serverless-typescript-webpack-playground",
     "aws-kinesis-playground",
@@ -1460,7 +1460,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-09-09",
-   "pushed": "2021-05-10",
+   "pushed": "2026-10-06",
    "readme": "learn AWS Amplify Console AWS Amplify Console is a continuous delivery and hosting service for modern web applications. The AWS Amplify Console simplifies the deployment of your application front end and backend. Connect to your code repository and your front end and backend are deployed in a single workflow, on every code commit. Flow You specify a source (github, bitbucket, gitlab, S3, zip file upload). On code change (commit), it checks out the code to a CodeBuild project. Runs your build, test, [backend] deploy, etc. Deploys static web assets (.html, .js, .css, images) to S3 to be served…",
    "post": true
   },
@@ -1586,7 +1586,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-01-08",
-   "pushed": "2021-05-08",
+   "pushed": "2026-10-06",
    "readme": "update 2019-10-03: websocket events are now \"natively supported in serverless framework\" no longer need to use serverless-websockets-plugin. see below uses serverless-websockets-plugin learn AWS API Gateway Websockets with serverless framework Using API Gateway WebSockets with the Serverless Framework serverless-websockets-plugin/example Control Access to a WebSocket API in API Gateway API Gateway Limits for Configuring and Running a WebSocket API",
    "post": true
   },
@@ -1944,11 +1944,11 @@
    "langs": [
     [
      "JavaScript",
-     77
+     74
     ],
     [
      "TypeScript",
-     23
+     25
     ],
     [
      "HTML",
@@ -1967,7 +1967,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-07-11",
-   "pushed": "2021-10-15",
+   "pushed": "2026-10-06",
    "readme": "learn AWS Cloud Development Kit (CDK) see kitchen-sink/README.md express resources using general purpose programming languages (ts/js/python/java/C#) constructs - construct levels 1, 2, 3. cfn (L1), CDK (L2), pattern/solution (L3) synth to cfn cloud assemblies - cfn + source code, docker images, assets (s3) aspects - ability to visit each node/resource in stack and apply changes Application -> Stacks -> Constructs Parameters - cfn parameters. can pass in via cdk synth. Runtime context - key-value pairs that can be associated with a stack or construct. Can only be string values (kind of like…",
    "post": true,
    "license": "MIT"
@@ -2362,7 +2362,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2018-12-20",
-   "pushed": "2021-05-09",
+   "pushed": "2026-10-06",
    "readme": "learn AWS CodePipeline CodeBuild gives you a amz linux server and you can run whatever you want. This is an example using it for the \"deployment\" phase. During the \"build\" phase in buildspec.yml, the postbuild command runs mv deploy-buildspec.yml buildspec.yml. The newly renamed buildspec.yml is what gets used in the \"deploy\" phase. via CodePipeline.getPipeline method",
    "post": true
   },
@@ -2523,7 +2523,7 @@
    "langs": [
     [
      "TypeScript",
-     62
+     72
     ],
     [
      "Shell",
@@ -2531,7 +2531,7 @@
     ],
     [
      "JavaScript",
-     15
+     5
     ],
     [
      "PowerShell",
@@ -2549,7 +2549,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-09-03",
-   "pushed": "2021-05-11",
+   "pushed": "2026-10-06",
    "readme": "learn aws-delivlib, which is a library that leverages AWS Cloud Development Kit (CDK) for defining continuous pipelines for building, testing and publishing code libraries through AWS CodeBuild and AWS CodePipeline. pipeline source github repo must exist. (e.g. pfeilbr/aws-delivlib-playground) github personal access token must be stored in SSM Parameter named /com/brianpfeil/aws-delivlib-playground/github-personal-access-token src/pipeline-hello-world is an example code pipeline where the source is this github repo (pfeilbr/aws-delivlib-playground). The source nodejs app is src/hello-world…",
    "post": true
   },
@@ -2730,7 +2730,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-07-09",
-   "pushed": "2022-02-02",
+   "pushed": "2026-10-06",
    "readme": "learn and experiment with aws glue see scripts/example-notebook-script-01.py upload data.csv to S3 create glue crawler for data.csv which results in a table in glue database being created create aws glue Dev Endpoint create SageMaker notebook open SageMaker notebook and past in code from scripts/example-notebook-script-01.py",
    "post": true,
    "license": "MIT"
@@ -3058,7 +3058,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-07-08",
-   "pushed": "2020-09-12",
+   "pushed": "2026-10-06",
    "readme": "learn AWS Rekognition see src/examples.js AWS default credentials available to call Rekognition API install imagemagick, graphicsmagick, and ghostscript (for fonts) for labelling image Source Labelled Source Labelled",
    "post": true,
    "license": "MIT"
@@ -3451,7 +3451,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-07-30",
-   "pushed": "2021-05-10",
+   "pushed": "2026-10-06",
    "readme": "learn aws transcribe speech to text service see src/index.js and example output in data/",
    "post": true,
    "license": "MIT"
@@ -3596,7 +3596,7 @@
    "kind": "playground",
    "stars": 1,
    "created": "2019-08-13",
-   "pushed": "2021-05-10",
+   "pushed": "2026-10-06",
    "readme": "learn AWS X-Ray see index.js aws/aws-xray-sdk-node aws/aws-xray-sdk-node/blob/master/packages/core/README.md",
    "post": true
   },
@@ -4186,7 +4186,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-02-16",
-   "pushed": "2026-10-05",
+   "pushed": "2026-10-07",
    "readme": "Personal site built with Hugo, in nine languages: English at the root, and zh es pt fr de it ja ko under //. Posts are English-only; pages, layouts and UI strings are translated. For working on it with an AI agent, CLAUDE.md holds the conventions and the gotchas that have bitten before, and opens with where current work stands. Hugo Extended 0.166.0 — the version CI is pinned to. A different local version can build fine and still fail to deploy. Go 1.25+ — only for generating posts from GitHub repos Python 3.11+ and ffmpeg — only for the media page Terraform 1.10+ and the AWS CLI — only for…",
    "post": false,
    "homepage": "https://brianpfeil.com/"
@@ -4431,7 +4431,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-07-24",
-   "pushed": "2020-04-16",
+   "pushed": "2026-10-06",
    "readme": "learn the chrome-aws-lambda package for use with aws lambda via serverless framework return screenshot of page from provided url example with",
    "post": true,
    "license": "MIT"
@@ -5526,7 +5526,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2020-02-15",
-   "pushed": "2021-03-20",
+   "pushed": "2026-10-06",
    "readme": "learn flask, the python web application framework server.py - flask server client.py - http client. uses requests to POST the image.jpeg image file load-test.sh - load test via parallel requests pipenv for python environment/packages",
    "post": true
   },
@@ -5666,7 +5666,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-03-09",
-   "pushed": "2021-05-10",
+   "pushed": "2026-10-06",
    "readme": "learn Gatsby custom plugin at plugins/gatsby-source-random original README.md from starter below Gatsby's default starter Kick off your project with this default boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React. Have another more specific idea? You may want to check out our vibrant collection of official and community-created starters. Create a Gatsby site. Start developing. Open the source code and start editing! A quick look at the top-level files and directories you'll…",
    "post": true,
    "license": "MIT"
@@ -5907,7 +5907,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-02-20",
-   "pushed": "2021-05-09",
+   "pushed": "2026-10-06",
    "readme": "Develop Glitch apps locally. Based on noise-machines/git-glitched. The default Glitch development experience is to use the browser based editor. This allows you to use your favorite local editor. Possible to code locally and push to glitch with git? Code locally, push to glitch via git? Changing a remote's URL. Get the writable git repo location from the Glitch UI via Tools | Git Import, Import, Export Get the URL + User Name. The User Name acts as the username+password. It is a GUID. e.g. a63dde92-f3db-411b-a4cf-e2834ed707e4 Clone glitch repo locally Example Clone (this doesn't work.…",
    "post": true
   },
@@ -6921,7 +6921,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-02-23",
-   "pushed": "2021-05-09",
+   "pushed": "2026-10-06",
    "readme": "",
    "post": true,
    "license": "MIT"
@@ -8551,7 +8551,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-08-07",
-   "pushed": "2021-04-30",
+   "pushed": "2026-10-06",
    "readme": "learn pipenv Pipenv is a tool that aims to bring the best of all packaging worlds (bundler, composer, npm, cargo, yarn, etc.) to the Python world. Windows is a first-class citizen, in our world. It automatically creates and manages a virtualenv for your projects, as well as adds/removes packages from your Pipfile as you install/uninstall packages. It also generates the ever-important Pipfile.lock, which is used to produce deterministic builds. based on",
    "post": true
   },
@@ -8941,7 +8941,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2020-02-05",
-   "pushed": "2021-02-26",
+   "pushed": "2026-10-06",
    "readme": "learn python async await Pipenv git clone pipenv install pipenv run python main.py",
    "post": true
   },
@@ -9136,7 +9136,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2020-03-19",
-   "pushed": "2021-05-11",
+   "pushed": "2026-10-06",
    "readme": "learn React Async, a React component and hook for declarative promise resolution and data fetching see src/App.js This project was bootstrapped with Create React App. In the project directory, you can run: Runs the app in the development mode. Open http://localhost:3000 to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console. Launches the test runner in the interactive watch mode. See the section about running tests for more information. Builds the app for production to the build folder. It correctly bundles React in production mode…",
    "post": true
   },
@@ -9167,7 +9167,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-12-29",
-   "pushed": "2021-05-11",
+   "pushed": "2026-10-06",
    "readme": "This project was bootstrapped with Create React App. In the project directory, you can run: Runs the app in the development mode. Open http://localhost:3000 to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console. Launches the test runner in the interactive watch mode. See the section about running tests for more information. Builds the app for production to the build folder. It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes. Your…",
    "post": true
   },
@@ -9198,7 +9198,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-02-11",
-   "pushed": "2021-05-11",
+   "pushed": "2026-10-06",
    "readme": "learn React Hooks introduced in React 16.8 see src/App.tsx",
    "post": true
   },
@@ -9305,7 +9305,7 @@
    "langs": [
     [
      "TypeScript",
-     53
+     54
     ],
     [
      "Python",
@@ -9314,10 +9314,6 @@
     [
      "JavaScript",
      18
-    ],
-    [
-     "Shell",
-     1
     ]
    ],
    "areas": [
@@ -9332,7 +9328,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2021-06-12",
-   "pushed": "2021-09-18",
+   "pushed": "2026-10-06",
    "readme": "project to facilitate remote development environment projen stashed changes for ApigatewayToLambda solution construct",
    "post": true,
    "license": "Apache-2.0"
@@ -9743,7 +9739,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2020-01-19",
-   "pushed": "2021-05-11",
+   "pushed": "2026-10-06",
    "readme": "send balance in google sheets to SMS notification phone numbers. runs daily. SMS numbers stored in SSM parameter store. access to google sheets doc is via Google APIs Node.js Client. OAuth is used to authenticate and the first time requires user interaction. credentials.json contains the OAuth details and token.json contains accesstoken, refreshtoken, etc. you must generate credentials.json and save in the root token.json is created on first run and required manual interaction To update functon with token.json, run locally which will generate token.json, then deploy. store and maintain…",
    "post": true
   },
@@ -9866,7 +9862,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-10-27",
-   "pushed": "2021-01-21",
+   "pushed": "2026-10-06",
    "readme": "serverless framework + lambda java How to create a REST API in Java using DynamoDB and Serverless",
    "post": true
   },
@@ -9891,7 +9887,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-09-18",
-   "pushed": "2021-05-10",
+   "pushed": "2026-10-06",
    "readme": "learn lambda layers with serverless framework see serverless.yml and index.js layers are applied in order, meaning last layer in array is applied last and will overwrite any common files in other layers. serverless docs | AWS - Layers Part 2 — Create Lambda Layers with Serverless Framework and Offline support",
    "post": true
   },
@@ -9953,7 +9949,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-09-10",
-   "pushed": "2021-05-10",
+   "pushed": "2026-10-06",
    "readme": "learn silvermine/serverless-plugin-cloudfront-lambda-edge visit and login with user01/password01 Basic Auth Challenge users are stored in aws secrets manager and sourced from users.json Update CloudFront Behavior to remove \"Viewer Request\" \"Lambda Function Association\", then invalidate cache on all \"\". logging takes place in the region of the edge (PoP) location. This will vary based on the client location. Visit CloudFront | Monitoring | Lambda@Edge Functions | YOUR FUNCTION, then click [View Function Metrics] button see Determining the Lambda@Edge Region for more details add origin access…",
    "post": true
   },
@@ -10452,7 +10448,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2020-01-16",
-   "pushed": "2021-05-11",
+   "pushed": "2026-10-06",
    "readme": "learn tailwindcss create-react-app README.md below This project was bootstrapped with Create React App. In the project directory, you can run: Runs the app in the development mode. Open http://localhost:3000 to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console. Launches the test runner in the interactive watch mode. See the section about running tests for more information. Builds the app for production to the build folder. It correctly bundles React in production mode and optimizes the build for the best performance. The build is…",
    "post": true
   },
@@ -10569,7 +10565,7 @@
     ],
     [
      "Astro",
-     12
+     13
     ],
     [
      "Python",
@@ -10583,7 +10579,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-10-01",
-   "pushed": "2026-10-03",
+   "pushed": "2026-10-07",
    "readme": "Everything travel and the things that go with it: trips and live availability checks, places with photos and real ratings, wishlists, reviews and trip plans. It's a static web app on GitHub Pages with Supabase for user accounts and data. Live: https://pfeilbr.github.io/travel/ Landing page: hero search (where / stay / drive), the latest live-checked trip, top picks, and browse-by-vibe tiles. Explore and trip pages: an Airbnb-style browse view. Photo-carousel cards, filter chips (roof, cabin, glamping, biking, fishing, waterfalls…), sorting, and a split list + map view with price pins. Filters…",
    "post": false,
    "homepage": "https://pfeilbr.github.io/travel/"
@@ -11204,7 +11200,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-07-22",
-   "pushed": "2020-09-12",
+   "pushed": "2026-10-06",
    "readme": "learn youtube api using node.js see src/index.js",
    "post": true,
    "license": "MIT"
@@ -11231,7 +11227,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2019-07-22",
-   "pushed": "2020-04-16",
+   "pushed": "2026-10-06",
    "readme": "example of using Puppeteer Chrome browser automation to scrape youtube content see src/index.js",
    "post": true,
    "license": "MIT"
@@ -11261,7 +11257,7 @@
    "kind": "playground",
    "stars": 0,
    "created": "2019-08-21",
-   "pushed": "2021-05-10",
+   "pushed": "2026-10-06",
    "readme": "learn zipkin the distributed tracing system docker running zipkin server and viewing web ui running a web app with frontend and backend the sends traces to zipkin server. see frontend.js for how code is instrumented to send traces to zipkin server. view JSON trace data by clickint the [JSON] button",
    "post": true
   }
