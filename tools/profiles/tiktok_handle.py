@@ -11,8 +11,10 @@ handle. It never switches to an @pfeilbr that belongs to someone else.
     python3 tools/profiles/tiktok_handle.py           # report only
     python3 tools/profiles/tiktok_handle.py --apply   # rewrite the files
 
-Exit status 0 whether or not anything changed (the weekly Action commits
-only when files did); 1 only on a bad argument. Standard library only.
+Once the site links @pfeilbr, it instead confirms @pfeilbr is still B's
+account and exits 1 if not, so the weekly Action shows red. Otherwise exit
+status 0 whether or not anything changed (the Action commits only when
+files did). Standard library only.
 """
 
 import argparse
@@ -71,14 +73,20 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--apply", action="store_true", help="rewrite the files when @pfeilbr is B's")
     args = ap.parse_args()
-    if f'tiktok: "{CURRENT}"' not in (REPO / "config.yaml").read_text():
-        print("already switched: config.yaml no longer names the generated handle")
-        return 0
+    switched = f'tiktok: "{CURRENT}"' not in (REPO / "config.yaml").read_text()
     try:
         who = owner(fetch(WANTED))
     except OSError as e:
         print(f"could not check @{WANTED}: {e}")
         return 0
+    if switched:
+        # B renamed the account on 2026-10-07 and the site links @pfeilbr.
+        # Fail (so the weekly run shows red) if that stops being B's.
+        if who == ACCOUNT_ID:
+            print(f"ok: the site links @{WANTED}, and it is B's account")
+            return 0
+        print(f"error: the site links @{WANTED}, but it is {'someone else' if who else 'not found'}")
+        return 1
     if who != ACCOUNT_ID:
         print(f"@{WANTED} is {'someone else' if who else 'not taken'}; keeping @{CURRENT}")
         return 0

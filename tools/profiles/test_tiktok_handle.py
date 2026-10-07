@@ -45,5 +45,29 @@ class Rewrite(unittest.TestCase):
             self.assertIn(th.CURRENT, (th.REPO / name).read_text(), name)
 
 
+class Main(unittest.TestCase):
+    def run_main(self, config, who):
+        root = Path(tempfile.mkdtemp())
+        (root / "config.yaml").write_text(config)
+        th_repo, th_fetch, argv = th.REPO, th.fetch, sys.argv
+        th.REPO, th.fetch, sys.argv = root, (lambda h: page(who)), ["tiktok_handle.py"]
+        try:
+            return th.main()
+        finally:
+            th.REPO, th.fetch, sys.argv = th_repo, th_fetch, argv
+
+    def test_switched_and_still_bs(self):
+        self.assertEqual(self.run_main('tiktok: "pfeilbr"', th.ACCOUNT_ID), 0)
+
+    def test_switched_but_not_found_fails(self):
+        self.assertEqual(self.run_main('tiktok: "pfeilbr"', None), 1)
+
+    def test_switched_but_someone_else_fails(self):
+        self.assertEqual(self.run_main('tiktok: "pfeilbr"', "123"), 1)
+
+    def test_not_switched_and_unclaimed_is_quiet(self):
+        self.assertEqual(self.run_main(f'tiktok: "{th.CURRENT}"', None), 0)
+
+
 if __name__ == "__main__":
     unittest.main()

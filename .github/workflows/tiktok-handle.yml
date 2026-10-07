@@ -1,10 +1,10 @@
 name: TikTok handle
 
-# B's TikTok shows "pfeilbr" as its name but its username is still the one
-# TikTok generated, so the site links that. Every Monday this checks whether
-# @pfeilbr now belongs to the same account (same user id) and, if it does,
-# switches every link on the site to it and deploys. It never switches to an
-# @pfeilbr owned by someone else. Once switched, it finds nothing to do.
+# B renamed their TikTok from the generated user8768514322831 to @pfeilbr on
+# 2026-10-07 and the site links @pfeilbr. Every Monday this checks that
+# @pfeilbr is still that account (same user id) and fails if not. While the
+# site still linked the old handle, it switched the links itself once
+# @pfeilbr resolved to the account; that path is kept for the record.
 on:
   schedule:
     - cron: "41 9 * * 1"   # Mondays 09:41 UTC
