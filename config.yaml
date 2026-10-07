@@ -79,10 +79,10 @@ params:
     youtube: "@pfeilbr"
     pinterest: "pfeilbr"
     snapchat: "pfeilbr"
-    # TikTok username (the URL part). The display name is "pfeilbr" but the
-    # username is still TikTok's generated one; tools/profiles/tiktok_handle.py
-    # (daily Action) switches every link once @pfeilbr resolves to this account.
-    tiktok: "user8768514322831"
+    # TikTok username (the URL part). B renamed it from TikTok's generated
+    # user8768514322831 on 2026-10-07; tools/profiles/tiktok_handle.py (daily
+    # Action) confirms @pfeilbr is still the same account.
+    tiktok: "pfeilbr"
     # Handle only. A Discord profile URL needs the numeric user id, not the
     # @handle, so the footer offers this to copy rather than linking to it.
     discord: "pfeilbr"

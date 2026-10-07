@@ -33,7 +33,7 @@ PROFILES = {
     "youtube": "https://www.youtube.com/@pfeilbr",
     "pinterest": "https://www.pinterest.com/pfeilbr/",
     "snapchat": "https://www.snapchat.com/@pfeilbr",
-    "tiktok": "https://www.tiktok.com/@user8768514322831",
+    "tiktok": "https://www.tiktok.com/@pfeilbr",
     "stackoverflow": "stackoverflow.com/users/29148/pfeilbr",
 }
 # The JSON-LD spells X as x.com; the links still use twitter.com.
