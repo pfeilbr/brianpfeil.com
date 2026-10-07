@@ -1,7 +1,7 @@
 <footer class="border-t border-gray-200 mt-12">
   <div class="max-w-2xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500">
     <span>&copy; {{ now.Format "2006" }} {{ .Site.Params.author.name }}</span>
-    <div class="flex items-center gap-4">
+    <div class="flex flex-wrap items-center justify-center gap-4">
       {{ with .Site.Params.author.twitter }}
       <a href="https://twitter.com/{{ . }}" class="hover:text-brand no-underline" title="Twitter" target="_blank" rel="noopener noreferrer">Twitter</a>
       {{ end }}
@@ -10,6 +10,15 @@
       {{ end }}
       {{ with .Site.Params.author.stackoverflow }}
       <a href="https://stackoverflow.com/{{ . }}" class="hover:text-brand no-underline" title="Stack Overflow" target="_blank" rel="noopener noreferrer">Stack Overflow</a>
+      {{ end }}
+      {{ with .Site.Params.author.youtube }}
+      <a href="https://www.youtube.com/{{ . }}" class="hover:text-brand no-underline" title="YouTube" target="_blank" rel="noopener noreferrer">YouTube</a>
+      {{ end }}
+      {{ with .Site.Params.author.pinterest }}
+      <a href="https://www.pinterest.com/{{ . }}/" class="hover:text-brand no-underline" title="Pinterest" target="_blank" rel="noopener noreferrer">Pinterest</a>
+      {{ end }}
+      {{ with .Site.Params.author.snapchat }}
+      <a href="https://www.snapchat.com/@{{ . }}" class="hover:text-brand no-underline" title="Snapchat" target="_blank" rel="noopener noreferrer">Snapchat</a>
       {{ end }}
       {{ with .Site.Params.author.discord }}
       {{- /* Not a link: Discord profile URLs key off a numeric user id, not the

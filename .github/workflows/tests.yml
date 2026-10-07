@@ -63,6 +63,8 @@ jobs:
         run: python -m unittest discover -s tools/indexnow -p 'test_*.py' -v
       - name: site-check tests
         run: python -m unittest discover -s tools/site-check -p 'test_*.py' -v
+      - name: Social profiles check tests
+        run: python -m unittest discover -s tools/profiles -p 'test_*.py' -v
       - name: image-rescue tests
         run: python -m unittest discover -s tools/image-rescue -p 'test_*.py' -v
       - name: social kit tests
@@ -106,6 +108,9 @@ jobs:
       # /apps/ in every language, and a redirect at /apps/<key>/ for each app.
       - name: Apps page and short links check
         run: python3 tools/apps/check_page.py --public public
+      # Every social profile on /about/, the home hero, sameAs and the footer.
+      - name: Social profiles check
+        run: python3 tools/profiles/check_profiles.py --public public
       - name: Media page render check
         run: python3 tools/instagram-media/tests/check_layout.py --build
       # Builds /ai/ from a fixture briefing and with no data; checks the page

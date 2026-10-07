@@ -120,6 +120,9 @@
         (printf "https://x.com/%s" .Site.Params.author.twitter)
         "https://www.linkedin.com/in/brian-pfeil-175a011/"
         "https://www.instagram.com/pfeilbr/"
+        (printf "https://www.youtube.com/%s" .Site.Params.author.youtube)
+        (printf "https://www.pinterest.com/%s/" .Site.Params.author.pinterest)
+        (printf "https://www.snapchat.com/@%s" .Site.Params.author.snapchat)
         (printf "https://stackoverflow.com/%s" .Site.Params.author.stackoverflow)))
     (dict
       "@type" "WebSite"
