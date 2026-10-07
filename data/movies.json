@@ -92,14 +92,6 @@
       "offers": [
         {
           "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV000403320000?irmp=1206980&irad=599309",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "MGM Plus Roku Premium Channel",
           "icon": "/movies/services/rokuchannelepix.webp",
           "url": "https://therokuchannel.roku.com/details/f1afea9cbac9535f8c7723a30b2a4d5c/the-shawshank-redemption?source=bing",
@@ -108,17 +100,25 @@
         },
         {
           "type": "stream",
-          "service": "MGM+ Amazon Channel",
-          "icon": "/movies/services/amazonepix.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.20b4c3cf-b703-aebb-41bd-0dc683f8c0c8",
+          "service": "TBS",
+          "icon": "/movies/services/tbs.webp",
+          "url": "https://www.tbs.com/movies/the-shawshank-redemption-theatrical",
           "price": null,
           "quality": "HD"
         },
         {
           "type": "stream",
-          "service": "Philo",
-          "icon": "/movies/services/philo.webp",
-          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDIyNzE",
+          "service": "TNT",
+          "icon": "/movies/services/tnt.webp",
+          "url": "https://www.tntdrama.com/movies/the-shawshank-redemption-theatrical",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "tru TV",
+          "icon": "/movies/services/trutv.webp",
+          "url": "https://www.trutv.com/movies/the-shawshank-redemption-theatrical",
           "price": null,
           "quality": "HD"
         },
@@ -148,6 +148,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-shawshank-redemption?utm_content=5d7768248a7581001f12bc77&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$2.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/15987/the-shawshank-redemption/",
@@ -158,9 +166,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B003ZHR6RK?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$7.99",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B0C2WL7QMW?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$13.90",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -175,7 +183,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-shawshank-redemption/umc.cmc.459n4f98t82t8ommdoa7ebnny?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A282875479",
-          "price": "$14.99",
+          "price": "$7.99",
           "quality": "4K"
         },
         {
@@ -183,7 +191,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-the-shawshank-redemption-the-green-mile-the-shawshank-redemption-the-green-mile-2-discs/30988699",
-          "price": "$5.99",
+          "price": "$5.00",
           "quality": "DVD"
         },
         {
@@ -322,9 +330,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B002M2T1RM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$17.20",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B00003W8NM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$17.95",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -339,7 +347,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/fight-club/umc.cmc.70dbl3043tb6ealg0u12k1pih?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A290531770",
-          "price": "$19.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -347,7 +355,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-fight-club-david-fincher/3622321",
-          "price": "$7.49",
+          "price": "$10.49",
           "quality": "DVD"
         },
         {
@@ -355,7 +363,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Fight-Club/7955",
-          "price": "$19.99",
+          "price": "$5.00",
           "quality": "4K"
         }
       ]
@@ -459,22 +467,6 @@
         },
         {
           "type": "stream",
-          "service": "Peacock Premium",
-          "icon": "/movies/services/peacocktv.webp",
-          "url": "https://www.peacocktv.com/watch/asset/movies/the-breakfast-club/1ad39f42-f748-3392-af15-efc443a53d6c",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Peacock Premium Plus",
-          "icon": "/movies/services/peacocktvpremium.webp",
-          "url": "https://www.peacocktv.com/watch/asset/movies/the-breakfast-club/1ad39f42-f748-3392-af15-efc443a53d6c",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "YouTube TV",
           "icon": "/movies/services/youtubetv.webp",
           "url": "https://tv.youtube.com/browse/UCswtRz-DLn8zuXLGIA-L2FQ",
@@ -517,8 +509,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00TF7KZ90?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$5.00",
+          "url": "https://www.amazon.com/dp/B01FUYRK7G?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.99",
           "quality": "BLURAY"
         },
         {
@@ -526,7 +518,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.0dae0bfe-939f-4572-bda4-b0a876bd5707",
-          "price": "$12.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -534,7 +526,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-breakfast-club/umc.cmc.1gjwhsujjtm7lpbghuwru7l6m?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A280360440",
-          "price": "$12.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -654,14 +646,6 @@
       "trailer": "YoHD9XEInc0",
       "offers": [
         {
-          "type": "stream",
-          "service": "ViX Premium Amazon Channel",
-          "icon": "/movies/services/amazonvixplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.13ef77eb-e272-48e9-9091-e4cafeef22e1",
-          "price": null,
-          "quality": "HD"
-        },
-        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -687,6 +671,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/inception?utm_content=5d77685333f255001e852e11&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$2.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/7825626/inception/",
@@ -697,8 +689,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B004IAA5AI?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.47",
+          "url": "https://www.amazon.com/dp/B00503EHGK?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$14.82",
           "quality": "DVD"
         },
         {
@@ -722,7 +714,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-inception-christopher-nolan/16845289",
-          "price": "$4.19",
+          "price": "$5.00",
           "quality": "DVD"
         },
         {
@@ -738,7 +730,7 @@
           "service": "GRUV",
           "icon": "/movies/services/gruv.webp",
           "url": "https://gruv.com/products/inception-dvd-_1000119659",
-          "price": "$8.67",
+          "price": "$8.18",
           "quality": "DVD"
         }
       ]
@@ -833,10 +825,18 @@
       "trailer": "P5ieIbInFpg",
       "offers": [
         {
-          "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV000833410000?irmp=1206980&irad=599309",
+          "type": "free",
+          "service": "Hoopla",
+          "icon": "/movies/services/hoopla.webp",
+          "url": "https://www.hoopladigital.com/title/18153333?utm_source=justwatch",
+          "price": null,
+          "quality": "SD"
+        },
+        {
+          "type": "free",
+          "service": "Kanopy",
+          "icon": "/movies/services/kanopy.webp",
+          "url": "https://www.kanopy.com/product/justwatch-15049372",
           "price": null,
           "quality": "HD"
         },
@@ -914,6 +914,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/gladiator?utm_content=5d7768257228e5001f1dcccb&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/24674/gladiator/",
@@ -924,8 +932,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B007KITQNW?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$13.51",
+          "url": "https://www.amazon.com/dp/B01M7SPZGG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.59",
           "quality": "BLURAY"
         },
         {
@@ -933,7 +941,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.ddc039e3-a01f-4530-b91e-014a7846926b",
-          "price": "$4.99",
+          "price": "$16.99",
           "quality": "4K"
         },
         {
@@ -941,7 +949,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/gladiator/umc.cmc.50lk1pxm803ym8vizumxitxd2?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A397380075",
-          "price": "$4.99",
+          "price": "$16.99",
           "quality": "4K"
         },
         {
@@ -976,7 +984,7 @@
       "imdb": "tt0120737",
       "justwatch_id": "tm44313",
       "poster": "/movies/posters/the-lord-of-the-rings-the-fellowship-of-the-ring-2001.webp",
-      "runtime": 178,
+      "runtime": 179,
       "rating": "PG-13",
       "genres": {
         "en": [
@@ -1118,6 +1126,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-lord-of-the-rings-the-fellowship-of-the-ring?utm_content=5d7768248a7581001f12bc70&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$2.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/28828/the-lord-of-the-rings-the-fellowship-of-the-ring/",
@@ -1129,7 +1145,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B003VD2QAU?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$9.99",
+          "price": "$9.98",
           "quality": "BLURAY"
         },
         {
@@ -1161,7 +1177,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Lord-of-the-Rings-The-Fellowship-of-the-Ring/26084",
-          "price": "$9.99",
+          "price": "$14.99",
           "quality": "4K"
         }
       ]
@@ -1172,7 +1188,7 @@
       "imdb": "tt0167261",
       "justwatch_id": "tm115982",
       "poster": "/movies/posters/the-lord-of-the-rings-the-two-towers-2002.webp",
-      "runtime": 180,
+      "runtime": 179,
       "rating": "PG-13",
       "genres": {
         "en": [
@@ -1270,7 +1286,7 @@
           "icon": "/movies/services/max.webp",
           "url": "https://play.hbomax.com/show/1b73bd19-1229-4e5f-986a-ae38ac0f5476?utm_source=universal_search",
           "price": null,
-          "quality": "4K"
+          "quality": "HD"
         },
         {
           "type": "stream",
@@ -1313,12 +1329,20 @@
           "quality": "4K"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-lord-of-the-rings-the-two-towers?utm_content=5d776824f59e580021897860&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$2.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00LTQPAVI?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.99",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B003VD2QB4?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$12.05",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -1341,7 +1365,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-the-lord-of-the-rings-the-two-towers-jackson/6876646",
-          "price": "$52.99",
+          "price": "$48.99",
           "quality": "DVD"
         },
         {
@@ -1349,7 +1373,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Lord-of-the-Rings-The-Two-Towers-Extended-Edition-/201681",
-          "price": "$9.99",
+          "price": "$14.99",
           "quality": "4K"
         }
       ]
@@ -1502,6 +1526,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-lord-of-the-rings-the-return-of-the-king?utm_content=5d7768248a7581001f12bc73&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$2.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/33156/the-lord-of-the-rings-the-return-of-the-king/",
@@ -1537,7 +1569,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Lord-of-the-Rings-The-Return-of-the-King-Extended-Edition-/201683",
-          "price": "$9.99",
+          "price": "$14.99",
           "quality": "4K"
         }
       ]
@@ -1737,6 +1769,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/titanic-1997?utm_content=5d776d10ad5437001f7cc065&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/20056/titanic/",
@@ -1747,16 +1787,16 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B006DZZLC8?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$12.99",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B0GTK7CDTC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$24.81",
+          "quality": "DVD"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.e6bc3d22-a2f1-4d76-ade2-7f5a15867d20",
-          "price": "$6.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -1764,7 +1804,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/titanic/umc.cmc.2xfg89gkgo2469x0985e0eqq7?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A545892907",
-          "price": "$6.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -1780,7 +1820,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Titanic/14430",
-          "price": "$6.99",
+          "price": "$5.00",
           "quality": "4K"
         }
       ]
@@ -1866,7 +1906,7 @@
         "es": "Forrest Gump es un chico con deficiencias mentales no muy profundas y con alguna incapacidad motora que, a pesar de todo, llegará a convertirse, entre otras cosas, en un héroe durante la Guerra del Vietnam. Su persistencia y bondad le llevarán a conseguir una gran fortuna, ser objeto del clamor popular y a codearse con las más altas esferas sociales y políticas del país. Siempre sin olvidar a Jenny, su gran amor desde que era niño.",
         "pt": "Através de três turbulentas décadas, Forrest cavalga numa cadeia de eventos que o levam da incapacidade física até ao estrelato no futebol, de herói do Vietnam a empresário de pesca de camarão, de honras na Casa Branca aos braços do seu verdadeiro amor. Forrest é o símbolo de uma era, um inocente à solta numa América que está a perder a sua inocência. O seu coração sabe o que o seu limitado QI não consegue saber. O seu compasso moral nunca balança. Os seus triunfos tornam-se numa inspiração para todos. Forrest Gump, é a história de uma vida.",
         "fr": "À Savannah, État de Géorgie, Forrest Gump, assis sur un banc public, livre à qui veut l’entendre, l’étrange récit de sa vie mouvementée sur trois décennies. Il naît dans un bourg de l’Alabama, affecté d’un quotient intellectuel inférieur à la moyenne et d’une paralysie partielle des jambes. Souvent raillé à l’école, le jeune Forrest se lie d’amitié avec Jenny. Propulsé de l'état d'handicapé physique à celui de vedette du football, de héros du Vietnam au roi de la crevette, des honneurs de la Maison Blanche au bonheur d'une histoire d'amour, Forrest est le symbole d'une époque, un candide dans une Amérique qui a perdu son innocence.",
-        "de": "Von seiner Mutter rückhaltlos unterstützt, macht sich der geistig ein wenig zurückgebliebene Forrest Gump in die Welt auf. Er bringt Elvis seinen Tanzstil bei, findet in der jungen Jenny eine echte Freundin, wird aufgrund seines Laufvermögens ein Football-Star, steht im Vietnamkrieg seinen Mann, rettet seinen Vorgesetzten Dan Taylor vor dem sicheren Tod und wird schließlich im Shrimps-Business zum Millionär. Doch all die Zeit kann er seine große Liebe Jenny nicht vergessen.",
+        "de": "Ein gutmütiger Mann durchlebt eine Reihe wichtiger historischer Ereignisse und inspiriert die Menschen in seinem Umfeld mit seinem unerschütterlichen Optimismus.",
         "it": "Forrest Gump - un ragazzo non proprio idiota, ma dal basso coefficiente d'intelligenza - racconta la sua storia a coloro che, uno dopo l'altro, si siedono vicino a lui in attesa dell'autobus. È stato in Vietnam, ha stretto la mano a tre presidenti, ha incontrato Elvis, ha assistito ai movimenti studenteschi, ha casualmente fatto esplodere il Watergate, ha suggerito le parole di \"Imagine\" a John Lennon e per tutta la vita è stato innamorato di una ragazza conosciuta fin da bambino.",
         "ja": "1940年代、アラバマ州で生まれたフォレスト・ガンプは、知能指数こそ人に劣るが、母親にたっぷりの愛情を注がれて育ち、優しいハートと走る能力は誰にも負けない男性に成長していく。そんなフォレストは、ただひとり彼に理解を示してくれた幼なじみの女性ジェニーの愛を信じる一方、ベトナムの戦場に出征するなど、1950年代に始まるアメリカの歴史の大きな動きの中で、図らずも波瀾万丈の半生を送ることになる。",
         "ko": "불편한 다리, 남들보다 조금 떨어지는 지능을 가진 포레스트 검프는 헌신적인 어머니의 보살핌과 첫사랑 제니와의 만남으로 편견과 괴롭힘 속에서도 따뜻한 마음을 지니고 성장한다. 또래들의 괴롭힘을 피해 도망치던 포레스트는 누구보다 빠르게 달릴 수 있는 자신의 재능을 깨닫는다. 그의 재능을 알아 본 대학에서 그를 미식축구 선수로 발탁하고, 졸업 후에도 뛰어난 신체능력으로 군에 들어가 무공훈장을 수여받는 등 탄탄한 인생 가도에 오르게 된 포레스트. 하지만 어머니가 병에 걸려 죽음을 맞이하고, 첫사랑 제니 역시 그의 곁을 떠나가며 다시 한 번 인생의 전환점을 맞이하게 되는데..."
@@ -1888,6 +1928,22 @@
           "service": "Kanopy",
           "icon": "/movies/services/kanopy.webp",
           "url": "https://www.kanopy.com/product/justwatch-15187571",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
+          "service": "YouTube Free",
+          "icon": "/movies/services/youtubefree.webp",
+          "url": "https://www.youtube.com/watch?v=22W83FgIX54",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "fuboTV",
+          "icon": "/movies/services/fubotv.webp",
+          "url": "https://www.fubo.tv/welcome/program/MV000398520000?irmp=1206980&irad=599309",
           "price": null,
           "quality": "HD"
         },
@@ -1957,6 +2013,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/forrest-gump?utm_content=5d7768294de0ee001fcc9261&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/15829/forrest-gump/",
@@ -1984,14 +2048,14 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/forrest-gump/umc.cmc.5ov9f55aw8qvmd5pumhgnwu3e?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A314029341",
-          "price": "$6.99",
+          "price": "$16.99",
           "quality": "4K"
         },
         {
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-forrest-gump-robert-zemeckis/3634090",
+          "url": "https://www.barnesandnoble.com/w/dvd-forrest-gump-25th-anniversary-robert-zemeckis/3634090",
           "price": "$9.59",
           "quality": "DVD"
         },
@@ -2000,7 +2064,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Forrest-Gump/22436",
-          "price": "$6.99",
+          "price": "$16.99",
           "quality": "4K"
         },
         {
@@ -2103,14 +2167,6 @@
       "trailer": "HGLtBJupFFM",
       "offers": [
         {
-          "type": "free",
-          "service": "YouTube Free",
-          "icon": "/movies/services/youtubefree.webp",
-          "url": "https://www.youtube.com/watch?v=8B1farnlE_k",
-          "price": null,
-          "quality": "HD"
-        },
-        {
           "type": "stream",
           "service": "Hulu",
           "icon": "/movies/services/hulu.webp",
@@ -2154,8 +2210,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0027G7PYY?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$13.99",
+          "url": "https://www.amazon.com/dp/B001AEF6BS?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$5.99",
           "quality": "DVD"
         },
         {
@@ -2206,51 +2262,60 @@
       "imdb": "tt0090305",
       "justwatch_id": "tm122438",
       "poster": "/movies/posters/weird-science-1985.webp",
-      "runtime": 94,
+      "runtime": 93,
       "rating": "PG-13",
       "genres": {
         "en": [
           "Comedy",
+          "Fantasy",
           "Romance",
           "Science-Fiction"
         ],
         "zh": [
           "Comedy",
+          "Fantasy",
           "Romance",
           "Science-Fiction"
         ],
         "es": [
           "Comedia",
+          "Fantasía",
           "Romance",
           "Ciencia ficción"
         ],
         "pt": [
           "Comédia",
+          "Fantasia",
           "Romance",
           "Ficção Científica"
         ],
         "fr": [
           "Comédie",
+          "Fantastique",
           "Comédie Romantique",
           "Science-Fiction"
         ],
         "de": [
           "Komödien",
+          "Fantasy",
           "Romantik",
           "Science-Fiction"
         ],
         "it": [
           "Commedia",
+          "Fantasy",
           "Romantico",
           "Fantascienza"
         ],
         "ja": [
           "コメディ",
+          "ファンタジー",
           "ロマンス",
           "サイエンスフィクション"
         ],
         "ko": [
           "코미디",
+          "판타지",
           "로맨스",
           "SF"
         ]
@@ -2299,14 +2364,6 @@
       "trailer": "WI3-mDqyfuQ",
       "offers": [
         {
-          "type": "free",
-          "service": "YouTube Free",
-          "icon": "/movies/services/youtubefree.webp",
-          "url": "https://www.youtube.com/watch?v=RuMRYLMv0WE",
-          "price": null,
-          "quality": "HD"
-        },
-        {
           "type": "stream",
           "service": "YouTube TV",
           "icon": "/movies/services/youtubetv.webp",
@@ -2342,8 +2399,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0G3CTPHNJ?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$24.99",
+          "url": "https://www.amazon.com/dp/B00E5WQVAM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$19.32",
           "quality": "BLURAY"
         },
         {
@@ -2504,6 +2561,14 @@
         },
         {
           "type": "stream",
+          "service": "Philo",
+          "icon": "/movies/services/philo.webp",
+          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDY3Njg",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "Sony Pictures Core Amazon Channel",
           "icon": "/movies/services/amazonspcore.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.aca9f7b3-9019-0cea-c253-77194c243200",
@@ -2541,6 +2606,14 @@
           "url": "https://athome.fandango.com/content/browse/details/Real-Genius/26354",
           "price": "$3.99",
           "quality": "4K"
+        },
+        {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/real-genius?utm_content=5d77683b4de0ee001fcccc05&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
         },
         {
           "type": "buy",
@@ -2675,33 +2748,25 @@
       "offers": [
         {
           "type": "stream",
-          "service": "Cinemax Amazon Channel",
-          "icon": "/movies/services/amazoncinemax.webp",
+          "service": "AMC Plus Apple TV channel",
+          "icon": "/movies/services/appletvamcplus.webp",
+          "url": "https://tv.apple.com/us/movie/road-house/umc.cmc.2ha4cqzcxv4s5ovlbfamqfy33?at=1000l3V2&ct=app_tvplus&itscg=30200&itsct=justwatch_tv",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "AMC+ Amazon Channel",
+          "icon": "/movies/services/amazonamcplus.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.3cb9526e-e7d2-4780-b981-384e3904d3a5",
           "price": null,
           "quality": "HD"
         },
         {
           "type": "stream",
-          "service": "Cinemax Apple TV channel",
-          "icon": "/movies/services/appletvcinemax.webp",
-          "url": "https://tv.apple.com/us",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "HBO Max",
-          "icon": "/movies/services/max.webp",
-          "url": "https://play.hbomax.com/show/a93af03d-6423-4915-bc20-546abdd63f74?utm_source=universal_search",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "HBO Max Amazon Channel",
-          "icon": "/movies/services/amazonhbomax.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.3cb9526e-e7d2-4780-b981-384e3904d3a5",
+          "service": "Philo",
+          "icon": "/movies/services/philo.webp",
+          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDM3OTY",
           "price": null,
           "quality": "HD"
         },
@@ -2730,12 +2795,20 @@
           "quality": "HD"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/road-house?utm_content=5d776d17f617c90020185e57&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B08R5VF11W?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$67.98",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B001CC7PRG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$26.99",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -2893,11 +2966,19 @@
           "quality": "HD"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-notebook?utm_content=5d776836999c64001ec2f707&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$2.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0053C8KT8?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$20.58",
+          "url": "https://www.amazon.com/dp/B000683VI4?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$4.19",
           "quality": "DVD"
         },
         {
@@ -2921,7 +3002,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-the-notebook-nick-cassavetes/8097564",
-          "price": "$4.19",
+          "price": "$5.00",
           "quality": "DVD"
         },
         {
@@ -3015,6 +3096,14 @@
       "trailer": "OsIolBViUmc",
       "offers": [
         {
+          "type": "stream",
+          "service": "Sony Pictures Core Amazon Channel",
+          "icon": "/movies/services/amazonspcore.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.06a9f7a8-a9f8-bbcd-7760-9c6038fae783",
+          "price": null,
+          "quality": "HD"
+        },
+        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -3040,6 +3129,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/a-river-runs-through-it?utm_content=5d776824f54112001f5bbdda&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/14236/a-river-runs-through-it/",
@@ -3050,8 +3147,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/0767836359?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.06",
+          "url": "https://www.amazon.com/dp/B0H1J258HG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$24.99",
           "quality": "DVD"
         },
         {
@@ -3245,16 +3342,16 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0011E5D2Y?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$4.58",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B000BKVQS4?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$4.99",
+          "quality": "DVD"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.e8bba804-9b1f-a594-3837-efc72a2d3f6b",
-          "price": "$4.99",
+          "price": "$9.99",
           "quality": "HD"
         },
         {
@@ -3262,7 +3359,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/wedding-crashers/umc.cmc.69g7i6dxazqm3ylp1uhtpam87?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A289329072",
-          "price": "$4.99",
+          "price": "$9.99",
           "quality": "HD"
         },
         {
@@ -3278,7 +3375,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Wedding-Crashers-Uncorked-Edition-/160765",
-          "price": "$9.99",
+          "price": "$14.99",
           "quality": "HD"
         }
       ]
@@ -3414,14 +3511,6 @@
           "quality": "SD"
         },
         {
-          "type": "stream",
-          "service": "Philo",
-          "icon": "/movies/services/philo.webp",
-          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0Mzk5MzQ",
-          "price": null,
-          "quality": "HD"
-        },
-        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -3449,9 +3538,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B07JHJTQ8M?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$16.09",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B00C1BJFIE?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.99",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -3474,7 +3563,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-evil-dead-2-film-collection-evil-dead-2-film-collection-dvd/1150306545",
-          "price": "$33.99",
+          "price": "$27.19",
           "quality": "DVD"
         },
         {
@@ -3482,7 +3571,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Evil-Dead-2-Dead-by-Dawn/13093",
-          "price": "$14.99",
+          "price": "$5.00",
           "quality": "4K"
         }
       ]
@@ -3589,7 +3678,7 @@
           "type": "free",
           "service": "Amazon MX Player",
           "icon": "/movies/services/amazonminitv.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d4a00aca-2a31-4e0e-8f7d-fa6490643eef",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.76d806ef-25d0-4a62-8348-8d5fa45778bb",
           "price": null,
           "quality": "HD"
         },
@@ -3597,7 +3686,15 @@
           "type": "free",
           "service": "Amazon Prime Video Free with Ads",
           "icon": "/movies/services/amazonimdbtv.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d4a00aca-2a31-4e0e-8f7d-fa6490643eef",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.76d806ef-25d0-4a62-8348-8d5fa45778bb",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
+          "service": "Fawesome",
+          "icon": "/movies/services/fawesometv.webp",
+          "url": "https://fawesome.tv/movies/10849887/teen-wolf?utm_source=justwatch&utm_medium=feed",
           "price": null,
           "quality": "HD"
         },
@@ -3608,6 +3705,14 @@
           "url": "https://www.hoopladigital.com/title/11805835?utm_source=justwatch",
           "price": null,
           "quality": "SD"
+        },
+        {
+          "type": "free",
+          "service": "Kanopy",
+          "icon": "/movies/services/kanopy.webp",
+          "url": "https://www.kanopy.com/product/justwatch-11553215",
+          "price": null,
+          "quality": "HD"
         },
         {
           "type": "free",
@@ -3637,7 +3742,7 @@
           "type": "stream",
           "service": "Amazon Prime Video",
           "icon": "/movies/services/amazonprime.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d4a00aca-2a31-4e0e-8f7d-fa6490643eef",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.76d806ef-25d0-4a62-8348-8d5fa45778bb",
           "price": null,
           "quality": "HD"
         },
@@ -3645,7 +3750,15 @@
           "type": "stream",
           "service": "Amazon Prime Video with Ads",
           "icon": "/movies/services/amazonprimevideowithads.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d4a00aca-2a31-4e0e-8f7d-fa6490643eef",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.76d806ef-25d0-4a62-8348-8d5fa45778bb",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "MGM Plus",
+          "icon": "/movies/services/epix.webp",
+          "url": "https://www.mgmplus.com/movie/teen-wolf-1985",
           "price": null,
           "quality": "HD"
         },
@@ -3661,7 +3774,7 @@
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d4a00aca-2a31-4e0e-8f7d-fa6490643eef",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.76d806ef-25d0-4a62-8348-8d5fa45778bb",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -3682,11 +3795,19 @@
           "quality": "HD"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/teen-wolf?utm_content=5d776837961905001eb949b4&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00OLZ4E8O?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$46.01",
+          "url": "https://www.amazon.com/dp/B0CC2CYSYC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$28.04",
           "quality": "BLURAY"
         },
         {
@@ -3709,7 +3830,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-teen-wolf-daniel/3943869",
+          "url": "https://www.barnesandnoble.com/w/dvd-teen-wolf-rod-daniel/3943869",
           "price": "$11.99",
           "quality": "DVD"
         },
@@ -3855,14 +3976,6 @@
         },
         {
           "type": "stream",
-          "service": "Apple TV Amazon Channel",
-          "icon": "/movies/services/amazonappletvplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.1a9b903a-6665-4d2a-89bc-2bcfd4d96e69",
-          "price": null,
-          "quality": "4K"
-        },
-        {
-          "type": "stream",
           "service": "Paramount Plus Essential",
           "icon": "/movies/services/paramountplusessential.webp",
           "url": "https://www.paramountplus.com/movies/wolf-of-wall-street/r_f3sYrm5VnjVJz1fQfYN3D_rxus_4y4?searchReferral=publisher&source=search-feeds",
@@ -3926,19 +4039,27 @@
           "quality": "4K"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-wolf-of-wall-street?utm_content=5d77691c9ab54400214efcc8&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00K12KBDI?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$22.94",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B00DGWRX90?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$15.96",
+          "quality": "DVD"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.1a9b903a-6665-4d2a-89bc-2bcfd4d96e69",
-          "price": "$6.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -3946,7 +4067,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-wolf-of-wall-street/umc.cmc.2tmr7hr6xnw1buspmujtvb9ep?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A774084884",
-          "price": "$6.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -3962,7 +4083,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Wolf-of-Wall-Street/488007",
-          "price": "$6.99",
+          "price": "$16.99",
           "quality": "4K"
         }
       ]
@@ -3978,47 +4099,38 @@
       "genres": {
         "en": [
           "Drama",
-          "History",
           "Sport"
         ],
         "zh": [
           "Drama",
-          "History",
           "Sport"
         ],
         "es": [
           "Drama",
-          "Historia",
           "Deporte"
         ],
         "pt": [
           "Drama",
-          "História",
           "Esporte & Fitness"
         ],
         "fr": [
           "Drame",
-          "Histoire",
           "Sport & Fitness"
         ],
         "de": [
           "Drama",
-          "Historisch",
           "Sport"
         ],
         "it": [
           "Drammatico",
-          "Storia",
           "Sport e Fitness"
         ],
         "ja": [
           "ドラマ",
-          "歴史",
           "スポーツ"
         ],
         "ko": [
           "드라마",
-          "역사",
           "스포츠"
         ]
       },
@@ -4238,9 +4350,17 @@
       "offers": [
         {
           "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV000120060000?irmp=1206980&irad=599309",
+          "service": "Amazon Prime Video",
+          "icon": "/movies/services/amazonprime.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.468f8466-d958-4e43-82bd-4375149d48a8",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Amazon Prime Video with Ads",
+          "icon": "/movies/services/amazonprimevideowithads.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.468f8466-d958-4e43-82bd-4375149d48a8",
           "price": null,
           "quality": "HD"
         },
@@ -4259,14 +4379,6 @@
           "url": "https://therokuchannel.roku.com/details/b1a61ac5b7855083b5cd2ba6d13a7180/the-godfather?source=bing",
           "price": null,
           "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "MGM+ Amazon Channel",
-          "icon": "/movies/services/amazonepix.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.468f8466-d958-4e43-82bd-4375149d48a8",
-          "price": null,
-          "quality": "4K"
         },
         {
           "type": "stream",
@@ -4297,14 +4409,6 @@
           "service": "Paramount+ Roku Premium Channel",
           "icon": "/movies/services/rokuchannelparamountplus.webp",
           "url": "https://therokuchannel.roku.com/details/975178e1c7200c0c209a1015a0dac16f/the-godfather-remastered?source=bing",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Philo",
-          "icon": "/movies/services/philo.webp",
-          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NTM3ODA",
           "price": null,
           "quality": "HD"
         },
@@ -4361,7 +4465,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B0001NBNB6?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.05",
+          "price": "$11.45",
           "quality": "DVD"
         },
         {
@@ -4384,8 +4488,8 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-the-godfather-part-ii-francis-ford-coppola/3633914",
-          "price": "$9.99",
+          "url": "https://www.barnesandnoble.com/w/dvd-godfather-ii-francis-ford-coppola/3633914",
+          "price": "$19.59",
           "quality": "DVD"
         },
         {
@@ -4603,6 +4707,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/pulp-fiction?utm_content=5d776827103a2d001f564488&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/15684/pulp-fiction/",
@@ -4622,7 +4734,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.83b01a0c-8705-4747-9d71-8a8d633366a3",
-          "price": "$16.99",
+          "price": "$9.99",
           "quality": "HD"
         },
         {
@@ -4743,25 +4855,9 @@
       "offers": [
         {
           "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV000722830000?irmp=1206980&irad=599309",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "VIX ",
           "icon": "/movies/services/vixtv.webp",
           "url": "https://vix.com/es-es/detail/video-4943382",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "ViX Premium Amazon Channel",
-          "icon": "/movies/services/amazonvixplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.dea9f6b7-e0a0-38c9-7467-d6079c6fb4f0",
           "price": null,
           "quality": "HD"
         },
@@ -4796,6 +4892,14 @@
           "url": "https://athome.fandango.com/content/browse/details/The-Matrix/9254",
           "price": "$4.99",
           "quality": "4K"
+        },
+        {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-matrix?utm_content=5d776827880197001ec90904&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$2.99",
+          "quality": "HD"
         },
         {
           "type": "rent",
@@ -4997,9 +5101,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0G6BTD8X1?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$25.98",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B001BPQT8A?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.99",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -5021,7 +5125,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-se7en-fincher/8295212",
+          "url": "https://www.barnesandnoble.com/w/dvd-seven-fincher/8295212",
           "price": "$6.99",
           "quality": "DVD"
         },
@@ -5111,11 +5215,11 @@
       },
       "synopsis": {
         "en": "The true story of Henry Hill, a half-Irish, half-Sicilian Brooklyn kid who is adopted by neighbourhood gangsters at an early age and climbs the ranks of a Mafia family under the guidance of Jimmy Conway.",
-        "zh": "前匪徒亨利·希尔回顾他在纽约犯罪家族中多彩而暴力的起落兴衰：开始好似一场奢靡的美梦，随后演变成了一场偏执的噩梦。",
+        "zh": "本片根据真实故事改编，讲述了纽约黑手党血腥的江湖恩怨，把所谓的“江湖道义”还原为人性的丑陋与贪婪。\n 亨利•希尔（雷•李欧塔 饰）从小不学无术，跟着老大保利，靠收取保护费、走私、抢劫，他娶了美丽的妻子凯伦，有可爱的女儿，迷人的情妇，名车豪宅，生活优渥。\n 吉米•康维（罗伯特•德尼罗 饰）和汤米（乔•佩西 饰）是亨利的好朋友，三人一起经历和很多事情：杀死羞辱汤米的意大利黑手党头领比利•贝兹；策划德航劫案，并干掉同伙，私吞赃款；甚至背着老大保利贩毒。\n 当然，他们的生活，除了享受金钱带来的权势之外，更多的，是朝不保夕的动荡：汤米因为比利•贝兹的死，被人枪杀；亨利自己因为贩毒被警方逮捕，其他人也受到牵连。\n 凯伦想尽办法将亨利保释出来，此时他们已经一无所有，被人孤立，危机四伏。他们要想尽办法活下去，无论以怎样的方式，付出怎样的代价……",
         "es": "Henry, un niño de trece años de Brooklyn, vive fascinado con el mundo de los gángsters. Su sueño se hace realidad cuando entra a formar parte de la familia Pauline, dueña absoluta de la zona, que lo educan como un miembro más de la banda convirtiéndole en un destacado mafioso.",
         "pt": "A história verídica da vida do gangster Henry Hill, desde os tempos da sua adolescência nas ruas de Nova Iorque até à sua terrível ascensão ao poder e consequente queda nos anos setenta.",
         "fr": "Brooklyn, dans les années 50. Depuis l'enfance, le jeune Henry Hill rêve de devenir gangster. À 16 ans, il se met en selle auprès de Paul Cicero, un caïd local, et commet ses premiers délits. Arrêté et interrogé, il refuse de parler et gagne ainsi le respect du milieu. À sa sortie de prison, il fait la connaissance de James Conway et de Tommy DeVito, deux truands d'une extrême violence, et se lance avec eux dans des trafics de grande envergure. Karen, une jeune bourgeoise qu'il courtise et finit par épouser, ne devine sa profession qu'après être passée devant l'officier d'état-civil. Grisé par le succès, Henry multiplie les coups les plus audacieux…",
-        "de": "Das ergreifende Mafia-Opus begleitet den Gangster Henry Hill, der davon träumte, es in der Familie weit zu bringen, und stattdessen im Zeugenschutzprogramm landete.",
+        "de": "Jimmy und Tommy können machen, was sie wollen. Sie sind Mitglieder der New Yorker Quartier-Mafia, brauchen auf niemanden Rücksicht zu nehmen und verdienen eine Menge Geld. Henry Hill ist von diesem Leben fasziniert und arbeitet daran, es ebenfalls führen zu können. Er wird in die Mafia aufgenommen und macht Karriere - schon bald organisiert er selbst Banküberfälle. Wer dabei im Weg steht, wird \"weggeräumt\", umgebracht. Dabei sind Jimmy und vor allem Tommy nicht zimperlich. Sie verstehen ihr Handwerk, einschließlich Mord, und kennen weder Pardon noch Gewissen...",
         "it": "Henry Hill, figlio di emigranti italo-irlandesi, fin da giovane entra a far parte della piccola mafia dei quartieri poveri di New York. Ma ben presto scopre la ferocia dei boss locali che usano chiamarsi fra di loro \"bravi ragazzi\"...",
         "ja": "ヘンリー・ヒル、1943年ブルックリン生まれ。大物ギャング、ポーリーのアジトで育った彼は、物心ついた頃からマフィアに憧れていた。やがて念願の\"グッドフェローズ\"の仲間となり、\"強奪\"専門のジミー、野心旺盛なチンピラ、トミーと共に犯罪に犯罪を重ねていく。が、麻薬に手を出したことから育ての親、ポーリーに見放され、さらにジミーたちが起こした600万ドル強奪事件を追うCIAの捜査の手もヘンリーに迫る。",
         "ko": "아일랜드계 이탈리아인 헨리 힐와 토미는 13살에 마피아에 입문해 지미와 함께 트럭이나 공항 화물을 훔치는 일을 한다. 결혼 후에도 마피아 생활을 계속하는 헨리는 이제 조직에서도 안정된 위치와 경제적 여유를 갖는다.  어느 날 헨리와 지미는 공항터미널 사건을 모의해 현금 6백만 달러라는 엄청한 돈을 훔친다. 이 사건을 은폐하기 위해 혈안이 된 지미는 모의에 참여했던 사람들을 죽이고, 토미는 마피아 조직에 가담했다가 살해당한다. 엎친데 덮친격으로 헨리마저 마약거래로 경찰서에 잡혀 들어가는데..."
@@ -5132,6 +5236,14 @@
       },
       "trailer": "2ilzidi_J8Q",
       "offers": [
+        {
+          "type": "stream",
+          "service": "Howdy Amazon Channel",
+          "icon": "/movies/services/amazonhowdy.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.22b54975-4ebc-89e2-1119-043fa3406660",
+          "price": null,
+          "quality": "HD"
+        },
         {
           "type": "rent",
           "service": "Amazon Video",
@@ -5185,7 +5297,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-goodfellas-martin-scorsese/3620016",
-          "price": "$5.99",
+          "price": "$5.00",
           "quality": "DVD"
         }
       ]
@@ -5301,7 +5413,7 @@
           "type": "free",
           "service": "Amazon MX Player",
           "icon": "/movies/services/amazonminitv.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.42d5f63d-ceb0-4a3d-b9c2-17c9914e3cae",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.ef8bd53f-11a4-4ff8-9b17-e53c0e678746",
           "price": null,
           "quality": "HD"
         },
@@ -5309,15 +5421,47 @@
           "type": "free",
           "service": "Amazon Prime Video Free with Ads",
           "icon": "/movies/services/amazonimdbtv.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.42d5f63d-ceb0-4a3d-b9c2-17c9914e3cae",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.ef8bd53f-11a4-4ff8-9b17-e53c0e678746",
           "price": null,
           "quality": "HD"
+        },
+        {
+          "type": "free",
+          "service": "Fawesome",
+          "icon": "/movies/services/fawesometv.webp",
+          "url": "https://fawesome.tv/movies/10855983/el-silencio-de-los-inocentes?utm_source=justwatch&utm_medium=feed",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
+          "service": "Hoopla",
+          "icon": "/movies/services/hoopla.webp",
+          "url": "https://www.hoopladigital.com/title/11805922?utm_source=justwatch",
+          "price": null,
+          "quality": "SD"
+        },
+        {
+          "type": "free",
+          "service": "Kanopy",
+          "icon": "/movies/services/kanopy.webp",
+          "url": "https://www.kanopy.com/product/justwatch-11648260",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
+          "service": "Tubi TV",
+          "icon": "/movies/services/tubitv.webp",
+          "url": "https://tubitv.com/movies/334160",
+          "price": null,
+          "quality": "SD"
         },
         {
           "type": "stream",
           "service": "Amazon Prime Video",
           "icon": "/movies/services/amazonprime.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.42d5f63d-ceb0-4a3d-b9c2-17c9914e3cae",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.ef8bd53f-11a4-4ff8-9b17-e53c0e678746",
           "price": null,
           "quality": "HD"
         },
@@ -5325,15 +5469,31 @@
           "type": "stream",
           "service": "Amazon Prime Video with Ads",
           "icon": "/movies/services/amazonprimevideowithads.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.42d5f63d-ceb0-4a3d-b9c2-17c9914e3cae",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.ef8bd53f-11a4-4ff8-9b17-e53c0e678746",
           "price": null,
           "quality": "HD"
         },
         {
           "type": "stream",
-          "service": "Criterion Channel",
-          "icon": "/movies/services/criterionchannel.webp",
-          "url": "https://www.criterionchannel.com/videos/the-silence-of-the-lambs",
+          "service": "MGM Plus",
+          "icon": "/movies/services/epix.webp",
+          "url": "https://www.mgmplus.com/movie/the-silence-of-the-lambs-1991",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Peacock Premium",
+          "icon": "/movies/services/peacocktv.webp",
+          "url": "https://www.peacocktv.com/watch/asset/movies/the-silence-of-the-lambs/2d81f034-c6bc-3cb4-8bfc-0ad245bf69b2",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Peacock Premium Plus",
+          "icon": "/movies/services/peacocktvpremium.webp",
+          "url": "https://www.peacocktv.com/watch/asset/movies/the-silence-of-the-lambs/2d81f034-c6bc-3cb4-8bfc-0ad245bf69b2",
           "price": null,
           "quality": "HD"
         },
@@ -5341,7 +5501,7 @@
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.42d5f63d-ceb0-4a3d-b9c2-17c9914e3cae",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.ef8bd53f-11a4-4ff8-9b17-e53c0e678746",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -5362,19 +5522,27 @@
           "quality": "4K"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-silence-of-the-lambs?utm_content=5d7768253c3c2a001fbcab73&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B007EHBFWO?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$11.80",
+          "url": "https://www.amazon.com/dp/B0HHTNPJ8Y?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$24.71",
           "quality": "DVD"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.42d5f63d-ceb0-4a3d-b9c2-17c9914e3cae",
-          "price": "$6.99",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.ef8bd53f-11a4-4ff8-9b17-e53c0e678746",
+          "price": "$14.99",
           "quality": "HD"
         },
         {
@@ -5389,7 +5557,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-the-silence-of-the-lambs-demme/3620929",
+          "url": "https://www.barnesandnoble.com/w/dvd-silence-of-the-lambs-jonathan-demme/3620929",
           "price": "$39.99",
           "quality": "DVD"
         },
@@ -5502,6 +5670,14 @@
       "trailer": "Ki4haFrqSrw",
       "offers": [
         {
+          "type": "free",
+          "service": "Tubi TV",
+          "icon": "/movies/services/tubitv.webp",
+          "url": "https://tubitv.com/movies/599600",
+          "price": null,
+          "quality": "SD"
+        },
+        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -5537,8 +5713,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00LTQPBAS?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.99",
+          "url": "https://www.amazon.com/dp/B002T86T06?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$23.90",
           "quality": "BLURAY"
         },
         {
@@ -5562,7 +5738,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-the-green-mile-frank-darabont/3981460",
-          "price": "$4.19",
+          "price": "$5.00",
           "quality": "DVD"
         },
         {
@@ -5702,7 +5878,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B019OI2APG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$7.99",
+          "price": "$7.49",
           "quality": "DVD"
         },
         {
@@ -5734,7 +5910,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Back-to-the-Future/72268",
-          "price": "$7.99",
+          "price": "$14.99",
           "quality": "4K"
         },
         {
@@ -5742,7 +5918,7 @@
           "service": "GRUV",
           "icon": "/movies/services/gruv.webp",
           "url": "https://gruv.com/products/back-to-the-future-dvd-_61176072",
-          "price": "$7.99",
+          "price": "$7.49",
           "quality": "DVD"
         }
       ]
@@ -5846,26 +6022,10 @@
       "trailer": "0fUCuvNlOCg",
       "offers": [
         {
-          "type": "free",
-          "service": "Fawesome",
-          "icon": "/movies/services/fawesometv.webp",
-          "url": "https://fawesome.tv/movies/10542964/django-unchained?utm_source=justwatch&utm_medium=feed",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "free",
-          "service": "Tubi TV",
-          "icon": "/movies/services/tubitv.webp",
-          "url": "https://tubitv.com/movies/620308",
-          "price": null,
-          "quality": "SD"
-        },
-        {
           "type": "stream",
           "service": "AMC Plus Apple TV channel",
           "icon": "/movies/services/appletvamcplus.webp",
-          "url": "https://tv.apple.com",
+          "url": "https://tv.apple.com/us/movie/django-unchained/umc.cmc.1k5z2t463bta6u5dyvu9xsp4g?at=1000l3V2&ct=app_tvplus&itscg=30200&itsct=justwatch_tv",
           "price": null,
           "quality": "HD"
         },
@@ -5879,14 +6039,6 @@
         },
         {
           "type": "stream",
-          "service": "AMC+ Amazon Channel",
-          "icon": "/movies/services/amazonamcplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.59983d09-9b7b-481b-b29d-c0ebe1f197b4",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "AMC+ Roku Premium Channel",
           "icon": "/movies/services/rokuchannelamcplus.webp",
           "url": "https://therokuchannel.roku.com/details/330c65ce43af577293f2a85fff24ecbb/django-unchained?source=bing",
@@ -5895,17 +6047,17 @@
         },
         {
           "type": "stream",
-          "service": "MovieSphere+ Amazon Channel",
-          "icon": "/movies/services/amazontribecashortlist.webp",
+          "service": "Howdy Amazon Channel",
+          "icon": "/movies/services/amazonhowdy.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.59983d09-9b7b-481b-b29d-c0ebe1f197b4",
           "price": null,
           "quality": "HD"
         },
         {
           "type": "stream",
-          "service": "Philo",
-          "icon": "/movies/services/philo.webp",
-          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NTE2MTE",
+          "service": "MovieSphere+ Amazon Channel",
+          "icon": "/movies/services/amazontribecashortlist.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.59983d09-9b7b-481b-b29d-c0ebe1f197b4",
           "price": null,
           "quality": "HD"
         },
@@ -5951,6 +6103,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/django-unchained?utm_content=5d7768adebdf2200209c5d46&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/9287010/django-unchained/",
@@ -5970,7 +6130,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.59983d09-9b7b-481b-b29d-c0ebe1f197b4",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -6114,6 +6274,14 @@
         },
         {
           "type": "free",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/memento-2000?autoplay=1&utm_content=5d776d1796b655001fe3f324&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
           "service": "Plex Channel",
           "icon": "/movies/services/justwatchplexchannel.webp",
           "url": "https://www.justwatch.com/us/movie/memento?package=plc",
@@ -6164,7 +6332,7 @@
           "type": "stream",
           "service": "Amazon Prime Video",
           "icon": "/movies/services/amazonprime.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.a1693a92-7832-4b07-9ee1-5c6d9bc2a1f9",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.64b0a7ac-f011-4539-9f28-da24cbd9fd81",
           "price": null,
           "quality": "HD"
         },
@@ -6172,7 +6340,7 @@
           "type": "stream",
           "service": "Amazon Prime Video with Ads",
           "icon": "/movies/services/amazonprimevideowithads.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.a1693a92-7832-4b07-9ee1-5c6d9bc2a1f9",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.64b0a7ac-f011-4539-9f28-da24cbd9fd81",
           "price": null,
           "quality": "HD"
         },
@@ -6228,7 +6396,7 @@
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.a1693a92-7832-4b07-9ee1-5c6d9bc2a1f9",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.64b0a7ac-f011-4539-9f28-da24cbd9fd81",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -6252,8 +6420,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B001THMIGC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$17.00",
+          "url": "https://www.amazon.com/dp/B0000640SA?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$40.99",
           "quality": "DVD"
         },
         {
@@ -6353,7 +6521,7 @@
         "es": "Año 1936, Indiana Jones es un profesor de arqueología, dispuesto a correr peligrosas aventuras con tal de conseguir valiosas reliquias históricas. Después de una infructuosa misión en Sudamérica, el gobierno estadounidense le encarga la búsqueda del Arca de la Alianza, donde se conservan las Tablas de la Ley que Dios entregó a Moisés. Según la leyenda, quien las posea tendrá un poder absoluto, razón por la cual también la buscan los nazis.",
         "pt": "O arqueólogo e aventureiro Indiana Jones parte em busca da mítica Arca da Aliança, o objecto mais sagrado dos judeus, onde se terão guardado as tábuas originais dos Dez Mandamentos. Mas a busca pelo objecto sagrado, alegadamente dotado de poderes divinos, torna-se numa corrida contra os nazis, que querem usar o artefacto como arma de guerra.",
         "fr": "L'Arche d'Alliance contenant les tables de la Loi brisées par Moïse, voici 3.000 ans, est l'objet de la convoitise des nazis. L'archéologue aventurier Indiana Jones se lance à sa recherche, poursuivi par son ennemi Belloq.",
-        "de": "Der Archäologe Dr. Henry Jones wird, nachdem er von seinem französischen Kollegen Belloq nach einer Bergung aus einem Aztekengrab hereingelegt wurde, von Regierungsagenten auf die Bundeslade angesetzt, das Behältnis, in dem Moses Gesetzestafeln aufbewahrt wurden. Laut Geheiminformationen suchen die Nazis nach der Lade, da sie den Besitzer unbesiegbar machen soll. Jones, genannt Indiana Jones, reist daraufhin nach Nepal, wo er einen alten Kollegen aufspüren will, jedoch nur dessen Tochter findet, die sich an ihn anhängt. Ein altes Schmuckstück führt sie nach Ägypten, wo die Nazis mit Belloqs Hilfe bereits Ausgrabungen vornehmen. So kommt es zum Wettlauf um die Auffindung der Quelle der Seelen, wo die Lade stehen soll. Doch auch nachdem die Lade aus der schlangenverseuchten Quelle geborgen ist, ist das Spiel noch lange nicht vorbei …",
+        "de": "Der Archäologe Dr. Henry Jones wird von Regierungsagenten auf die Bundeslade angesetzt, das Behältnis, in dem Moses Gesetzestafeln aufbewahrt wurden. Laut Geheiminformationen suchen auch die Nazis nach der Lade, da sie den Besitzer unbesiegbar machen soll. Jones, genannt Indiana Jones, reist daraufhin nach Nepal, wo er einen alten Kollegen aufspüren will, jedoch nur dessen Tochter findet, die sich ihm anschließt. Ein altes Schmuckstück führt sie nach Ägypten, wo die Nazis mit Belloqs Hilfe bereits Ausgrabungen vornehmen. So kommt es zum Wettlauf um die Auffindung der Quelle der Seelen…",
         "it": "Dopo essere stato derubato di un prezioso idolo, Indiana Jones ritorna all'università da insegnante. Qui i servizi segreti gli offriranno il compito di trovare l'arca dell'alleanza e cercare così di non farla cadere nelle mani dei tedeschi. Giunto nel Nepal, incontrerà Marion, una sua vecchia conoscenza, con la quale giungerà dall'amico Sallah, trovando ospitalità e svolgendo da lì la definitiva ricerca dell'arca.",
         "ja": "舞台は1936年。プリンストン大学で教鞭を執る高名な考古学者インディアナ・ジョーンズ教授（インディ）には、世界中の宝物を探し発見するというトレジャーハンターとしての顔があった。ある日、陸軍諜報部よりインディの下にナチス・ドイツがタニスの遺跡を発見して聖櫃（アーク）の発掘に着手したという情報が舞い込む。また情報部が傍受したドイツ軍の電報によれば、聖櫃の在り処を示す重大な手がかりラーの杖飾りはインディの恩師であるアブナー・レイヴンウッド教授の手にあるという。何としてでもナチスより先に聖櫃を手に入れろとの依頼を受け、インディは聖櫃の争奪戦に臨む。",
         "ko": "1936년 남아메리카. 인디아나 존스 박사는 험난한 밀림 지대를 헤치고 독거미와 온갖 부비트랩을 뚫고서 고대 문명의 동굴에 보관된 보물을 손에 넣는데 성공하지만, 마지막 순간 악덕 고고학자 벨로크에게 빼앗기고 만다.  대학으로 돌아온 인디에게 정보국 사람들이 찾아온다. 정부로부터 성서에 나오는 성궤를 찾으라는 명령을 받는은 인디는 단서를 하나하나 찾아가며 성궤의 행방을 추적해 나간다. 그런데 나치군들도 역시 전쟁에 가지고 나가기만 하면 모든 전쟁에서 승리를 거둘 수 있는 무서운 힘을 지닌 성궤를 찾아나서는데..."
@@ -6372,11 +6540,19 @@
       "offers": [
         {
           "type": "stream",
-          "service": "Disney Plus",
-          "icon": "/movies/services/disneyplus.webp",
-          "url": "https://www.disneyplus.com/browse/entity-f6626d17-c6e2-42e4-830b-c62c1ff7846a",
+          "service": "Amazon Prime Video",
+          "icon": "/movies/services/amazonprime.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.b90a5388-7ab4-44b4-a92d-c533d9039a88",
           "price": null,
-          "quality": "4K"
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Amazon Prime Video with Ads",
+          "icon": "/movies/services/amazonprimevideowithads.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.b90a5388-7ab4-44b4-a92d-c533d9039a88",
+          "price": null,
+          "quality": "HD"
         },
         {
           "type": "stream",
@@ -6468,6 +6644,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/raiders-of-the-lost-ark?utm_content=5d776824eb5d26001f1dd001&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/7719/raiders-of-the-lost-ark/",
@@ -6478,16 +6662,16 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0FHC3WNY1?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$3.99",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B0142WIUO4?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$5.99",
+          "quality": "DVD"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.b90a5388-7ab4-44b4-a92d-c533d9039a88",
-          "price": "$6.99",
+          "price": "$7.99",
           "quality": "4K"
         },
         {
@@ -6495,14 +6679,14 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/indiana-jones-and-the-raiders-of-the-lost-ark/umc.cmc.askk2uyh039pu6ik4h8kv4dn?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A548593580",
-          "price": "$6.99",
+          "price": "$16.99",
           "quality": "4K"
         },
         {
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-indiana-jones-and-the-raiders-of-the-lost-ark-steven-spielberg/3633639",
+          "url": "https://www.barnesandnoble.com/w/dvd-indiana-jones-and-the-raiders-of-the-lost-ark-spielberg/3633639",
           "price": "$20.29",
           "quality": "DVD"
         },
@@ -6511,7 +6695,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Indiana-Jones-and-the-Raiders-of-the-Lost-Ark/92436",
-          "price": "$6.99",
+          "price": "$16.99",
           "quality": "4K"
         },
         {
@@ -6624,22 +6808,6 @@
       "offers": [
         {
           "type": "stream",
-          "service": "Amazon Prime Video",
-          "icon": "/movies/services/amazonprime.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.26a9f717-f71e-b58b-6a4a-7a62543eab90",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Amazon Prime Video with Ads",
-          "icon": "/movies/services/amazonprimevideowithads.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.26a9f717-f71e-b58b-6a4a-7a62543eab90",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "YouTube TV",
           "icon": "/movies/services/youtubetv.webp",
           "url": "https://tv.youtube.com/browse/UCeaBfZ1YwhjVi1SHRjpofHw",
@@ -6674,9 +6842,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B015Q04ET6?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$12.56",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B015TDQN2Q?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$36.22",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -6698,7 +6866,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-the-martian-ridley-scott/27708569",
+          "url": "https://www.barnesandnoble.com/w/dvd-the-martian-aditya-sood/27708569",
           "price": "$26.99",
           "quality": "DVD"
         },
@@ -6707,7 +6875,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Martian-Extended-Edition-/771391",
-          "price": "$5.00",
+          "price": "$14.99",
           "quality": "4K"
         }
       ]
@@ -6811,18 +6979,18 @@
       "trailer": "KnrRy6kSFF0",
       "offers": [
         {
-          "type": "free",
-          "service": "Fawesome",
-          "icon": "/movies/services/fawesometv.webp",
-          "url": "https://fawesome.tv/movies/10834008/inglourious-basterds?utm_source=justwatch&utm_medium=feed",
+          "type": "stream",
+          "service": "Hulu",
+          "icon": "/movies/services/hulu.webp",
+          "url": "https://www.hulu.com/watch/54da4af5-9c47-48d1-91bf-d05e27024b94",
           "price": null,
           "quality": "HD"
         },
         {
           "type": "stream",
-          "service": "Hulu",
-          "icon": "/movies/services/hulu.webp",
-          "url": "https://www.hulu.com/watch/54da4af5-9c47-48d1-91bf-d05e27024b94",
+          "service": "MovieSphere+ Amazon Channel",
+          "icon": "/movies/services/amazontribecashortlist.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.f910e65e-848d-4c57-922d-e2260146113a",
           "price": null,
           "quality": "HD"
         },
@@ -6851,18 +7019,26 @@
           "quality": "HD"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/inglourious-basterds?utm_content=5d77683f880197001ec9598e&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B006HXQ5XA?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.03",
+          "url": "https://www.amazon.com/dp/B00J0VW4RC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$12.84",
           "quality": "DVD"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.8c380b1d-2baf-4bee-92ca-9bcc3b587cb8",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.f910e65e-848d-4c57-922d-e2260146113a",
           "price": "$14.99",
           "quality": "4K"
         },
@@ -7006,10 +7182,42 @@
       "trailer": "ReIJ1lbL-Q8",
       "offers": [
         {
+          "type": "free",
+          "service": "Hoopla",
+          "icon": "/movies/services/hoopla.webp",
+          "url": "https://www.hoopladigital.com/title/12183297?utm_source=justwatch",
+          "price": null,
+          "quality": "SD"
+        },
+        {
+          "type": "free",
+          "service": "Kanopy",
+          "icon": "/movies/services/kanopy.webp",
+          "url": "https://www.kanopy.com/product/justwatch-13018320",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
+          "service": "YouTube Free",
+          "icon": "/movies/services/youtubefree.webp",
+          "url": "https://www.youtube.com/watch?v=awntSwTtgco",
+          "price": null,
+          "quality": "HD"
+        },
+        {
           "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV000536670000?irmp=1206980&irad=599309",
+          "service": "Apple TV",
+          "icon": "/movies/services/appletvplus.webp",
+          "url": "https://tv.apple.com/us/movie/good-will-hunting/umc.cmc.ljmzio5szpnhca4ydns8f99q?at=1000l3V2&ct=app_tvplus&itscg=30200&itsct=justwatch_tv",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Apple TV Amazon Channel",
+          "icon": "/movies/services/amazonappletvplus.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.412fa607-dde3-4bd7-91c2-c3fe10af9de4",
           "price": null,
           "quality": "HD"
         },
@@ -7018,14 +7226,6 @@
           "service": "MGM Plus",
           "icon": "/movies/services/epix.webp",
           "url": "https://www.mgmplus.com/movie/good-will-hunting-1997",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "MGM+ Amazon Channel",
-          "icon": "/movies/services/amazonepix.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.412fa607-dde3-4bd7-91c2-c3fe10af9de4",
           "price": null,
           "quality": "HD"
         },
@@ -7058,14 +7258,6 @@
           "service": "Paramount+ Roku Premium Channel",
           "icon": "/movies/services/rokuchannelparamountplus.webp",
           "url": "https://therokuchannel.roku.com/details/c7a4a35863f45a959d44f512f34ae666/good-will-hunting?source=bing",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Philo",
-          "icon": "/movies/services/philo.webp",
-          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0Mzk4Mzc",
           "price": null,
           "quality": "HD"
         },
@@ -7121,16 +7313,16 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B08F6JZ6FG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$9.59",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B08F6CG8MM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.09",
+          "quality": "DVD"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.412fa607-dde3-4bd7-91c2-c3fe10af9de4",
-          "price": "$6.99",
+          "price": "$7.99",
           "quality": "HD"
         },
         {
@@ -7138,7 +7330,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/good-will-hunting/umc.cmc.ljmzio5szpnhca4ydns8f99q?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A1520266716",
-          "price": "$6.99",
+          "price": "$16.99",
           "quality": "HD"
         },
         {
@@ -7154,7 +7346,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Good-Will-Hunting/13550",
-          "price": "$6.99",
+          "price": "$14.99",
           "quality": "HD"
         }
       ]
@@ -7169,55 +7361,46 @@
       "rating": "R",
       "genres": {
         "en": [
-          "Action & Adventure",
           "Drama",
           "History",
           "War & Military"
         ],
         "zh": [
-          "Action & Adventure",
           "Drama",
           "History",
           "War & Military"
         ],
         "es": [
-          "Acción & Aventura",
           "Drama",
           "Historia",
           "Guerra"
         ],
         "pt": [
-          "Ação & Aventura",
           "Drama",
           "História",
           "Guerra & Militar"
         ],
         "fr": [
-          "Action & Aventure",
           "Drame",
           "Histoire",
           "Film de guerre"
         ],
         "de": [
-          "Action & Abenteuer",
           "Drama",
           "Historisch",
           "Krieg & Militär"
         ],
         "it": [
-          "Azione e Avventura",
           "Drammatico",
           "Storia",
           "Guerra"
         ],
         "ja": [
-          "アクション",
           "ドラマ",
           "歴史",
           "戦争"
         ],
         "ko": [
-          "액션",
           "드라마",
           "역사",
           "전쟁"
@@ -7279,6 +7462,14 @@
           "service": "Kanopy",
           "icon": "/movies/services/kanopy.webp",
           "url": "https://www.kanopy.com/product/justwatch-15137482",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
+          "service": "YouTube Free",
+          "icon": "/movies/services/youtubefree.webp",
+          "url": "https://www.youtube.com/watch?v=IgyUG8l4WuQ",
           "price": null,
           "quality": "HD"
         },
@@ -7351,7 +7542,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B00003CX95?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.56",
+          "price": "$9.52",
           "quality": "DVD"
         },
         {
@@ -7359,7 +7550,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.08dd9d64-9644-4d4a-8ece-7e453ab9fc8d",
-          "price": "$6.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -7367,7 +7558,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/braveheart/umc.cmc.6lkfj9wyv04km68kr34nv7t0k?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A270007336",
-          "price": "$6.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -7383,7 +7574,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Braveheart/16337",
-          "price": "$6.99",
+          "price": "$5.00",
           "quality": "4K"
         }
       ],
@@ -7399,30 +7590,39 @@
       "rating": "R",
       "genres": {
         "en": [
+          "Crime",
           "Drama"
         ],
         "zh": [
+          "Crime",
           "Drama"
         ],
         "es": [
+          "Crimen",
           "Drama"
         ],
         "pt": [
+          "Crime",
           "Drama"
         ],
         "fr": [
+          "Crime & Thriller",
           "Drame"
         ],
         "de": [
+          "Krimi",
           "Drama"
         ],
         "it": [
+          "Giallo",
           "Drammatico"
         ],
         "ja": [
+          "犯罪",
           "ドラマ"
         ],
         "ko": [
+          "범죄",
           "드라마"
         ]
       },
@@ -7495,6 +7695,14 @@
         },
         {
           "type": "free",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/requiem-for-a-dream?autoplay=1&utm_content=5d776827103a2d001f56448a&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
           "service": "Plex Channel",
           "icon": "/movies/services/justwatchplexchannel.webp",
           "url": "https://www.justwatch.com/us/movie/requiem-for-a-dream?package=plc",
@@ -7519,15 +7727,7 @@
         },
         {
           "type": "stream",
-          "service": "Howdy Amazon Channel",
-          "icon": "/movies/services/amazonhowdy.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.405eb38a-1a1a-41eb-97f4-c5bb26ba3063",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Lionsgate+ Amazon Channels",
+          "service": "Lionsgate+ Amazon Channel",
           "icon": "/movies/services/amazonlionsgateplus.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.405eb38a-1a1a-41eb-97f4-c5bb26ba3063",
           "price": null,
@@ -7546,14 +7746,6 @@
           "service": "Peacock Premium Plus",
           "icon": "/movies/services/peacocktvpremium.webp",
           "url": "https://www.peacocktv.com/watch/asset/movies/requiem-for-a-dream/349096a1-b62c-377a-8572-ed6df0203309",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Philo",
-          "icon": "/movies/services/philo.webp",
-          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0ODMyMjg",
           "price": null,
           "quality": "HD"
         },
@@ -7637,7 +7829,7 @@
       "imdb": "tt0105236",
       "justwatch_id": "tm123099",
       "poster": "/movies/posters/reservoir-dogs-1992.webp",
-      "runtime": 99,
+      "runtime": 105,
       "rating": "R",
       "genres": {
         "en": [
@@ -7721,26 +7913,10 @@
       "trailer": "vayksn4Y93A",
       "offers": [
         {
-          "type": "free",
-          "service": "Amazon MX Player",
-          "icon": "/movies/services/amazonminitv.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.debb6b89-c99a-8b61-320d-95fb5075d48f",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "free",
-          "service": "Amazon Prime Video Free with Ads",
-          "icon": "/movies/services/amazonimdbtv.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.debb6b89-c99a-8b61-320d-95fb5075d48f",
-          "price": null,
-          "quality": "HD"
-        },
-        {
           "type": "stream",
           "service": "Amazon Prime Video",
           "icon": "/movies/services/amazonprime.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.debb6b89-c99a-8b61-320d-95fb5075d48f",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.aea9f6e2-15a5-2d18-6ef1-15b4e69cf089",
           "price": null,
           "quality": "HD"
         },
@@ -7748,7 +7924,15 @@
           "type": "stream",
           "service": "Amazon Prime Video with Ads",
           "icon": "/movies/services/amazonprimevideowithads.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.debb6b89-c99a-8b61-320d-95fb5075d48f",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.aea9f6e2-15a5-2d18-6ef1-15b4e69cf089",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "MovieSphere+ Amazon Channel",
+          "icon": "/movies/services/amazontribecashortlist.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.aea9f6e2-15a5-2d18-6ef1-15b4e69cf089",
           "price": null,
           "quality": "HD"
         },
@@ -7757,7 +7941,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.aea9f6e2-15a5-2d18-6ef1-15b4e69cf089",
-          "price": "$3.99",
+          "price": "$5.66",
           "quality": "4K"
         },
         {
@@ -7796,9 +7980,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B002IVTV4U?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$12.61",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B0B91VP2V4?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$10.49",
+          "quality": "BLURAY_4K"
         },
         {
           "type": "buy",
@@ -7813,7 +7997,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/reservoir-dogs/umc.cmc.7iuglffk5zzbfzcki63wclmdo?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A214582909",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -7829,7 +8013,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Reservoir-Dogs/6923",
-          "price": "$14.99",
+          "price": "$5.00",
           "quality": "4K"
         }
       ]
@@ -7844,54 +8028,63 @@
       "rating": "PG",
       "genres": {
         "en": [
+          "Action & Adventure",
           "Animation",
           "Comedy",
           "Drama",
           "Kids & Family"
         ],
         "zh": [
+          "Action & Adventure",
           "Animation",
           "Comedy",
           "Drama",
           "Kids & Family"
         ],
         "es": [
+          "Acción & Aventura",
           "Animación",
           "Comedia",
           "Drama",
           "Familia"
         ],
         "pt": [
+          "Ação & Aventura",
           "Animação",
           "Comédia",
           "Drama",
           "Família"
         ],
         "fr": [
+          "Action & Aventure",
           "Animation",
           "Comédie",
           "Drame",
           "Pour enfants"
         ],
         "de": [
+          "Action & Abenteuer",
           "Animation",
           "Komödien",
           "Drama",
           "Kinder & Familie"
         ],
         "it": [
+          "Azione e Avventura",
           "Animazione",
           "Commedia",
           "Drammatico",
           "Famiglia"
         ],
         "ja": [
+          "アクション",
           "アニメーション",
           "コメディ",
           "ドラマ",
           "ファミリー"
         ],
         "ko": [
+          "액션",
           "애니메이션",
           "코미디",
           "드라마",
@@ -7970,7 +8163,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Up/169679",
-          "price": "$3.99",
+          "price": "$5.99",
           "quality": "4K"
         },
         {
@@ -7978,7 +8171,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B002LK3DUQ?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$29.00",
+          "price": "$11.98",
           "quality": "DVD"
         },
         {
@@ -7986,7 +8179,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.5aa9f738-a7d8-4eb8-1c76-2ac08130e097",
-          "price": "$9.99",
+          "price": "$19.99",
           "quality": "4K"
         },
         {
@@ -8010,7 +8203,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Up/169679",
-          "price": "$19.99",
+          "price": "$9.99",
           "quality": "4K"
         }
       ]
@@ -8145,6 +8338,14 @@
           "quality": "4K"
         },
         {
+          "type": "stream",
+          "service": "MGM Plus",
+          "icon": "/movies/services/epix.webp",
+          "url": "https://www.mgmplus.com/movie/full-metal-jacket-1987",
+          "price": null,
+          "quality": "HD"
+        },
+        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -8170,6 +8371,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/full-metal-jacket?utm_content=5d776826880197001ec90902&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$2.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/10114/full-metal-jacket/",
@@ -8180,9 +8389,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B084WKXP77?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$23.98",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B00000J2KT?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$16.95",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -8204,8 +8413,8 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-full-metal-jacket-stanley-kubrick/3619985",
-          "price": "$4.19",
+          "url": "https://www.barnesandnoble.com/w/dvd-full-metal-jacket-kubrick/3619985",
+          "price": "$5.00",
           "quality": "DVD"
         },
         {
@@ -8328,6 +8537,22 @@
           "service": "Amazon Prime Video with Ads",
           "icon": "/movies/services/amazonprimevideowithads.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.ef8da769-a011-4036-841c-22fd8ef41a06",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "fuboTV",
+          "icon": "/movies/services/fubotv.webp",
+          "url": "https://www.fubo.tv/welcome/program/MV000542300000?irmp=1206980&irad=599309",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Hulu",
+          "icon": "/movies/services/hulu.webp",
+          "url": "https://www.hulu.com/watch/efc8250c-aeed-4ab7-a492-07064c826bc1",
           "price": null,
           "quality": "HD"
         },
@@ -8527,14 +8752,6 @@
           "quality": "4K"
         },
         {
-          "type": "stream",
-          "service": "TCM",
-          "icon": "/movies/services/tcm.webp",
-          "url": "https://www.tcm.com/watchtcm/titles/71092",
-          "price": null,
-          "quality": "HD"
-        },
-        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -8614,34 +8831,43 @@
       "imdb": "tt0107290",
       "justwatch_id": "tm184504",
       "poster": "/movies/posters/jurassic-park-1993.webp",
-      "runtime": 126,
+      "runtime": 127,
       "rating": "PG-13",
       "genres": {
         "en": [
+          "Action & Adventure",
           "Science-Fiction"
         ],
         "zh": [
+          "Action & Adventure",
           "Science-Fiction"
         ],
         "es": [
+          "Acción & Aventura",
           "Ciencia ficción"
         ],
         "pt": [
+          "Ação & Aventura",
           "Ficção Científica"
         ],
         "fr": [
+          "Action & Aventure",
           "Science-Fiction"
         ],
         "de": [
+          "Action & Abenteuer",
           "Science-Fiction"
         ],
         "it": [
+          "Azione e Avventura",
           "Fantascienza"
         ],
         "ja": [
+          "アクション",
           "サイエンスフィクション"
         ],
         "ko": [
+          "액션",
           "SF"
         ]
       },
@@ -8690,25 +8916,41 @@
       "offers": [
         {
           "type": "stream",
-          "service": "AMC Plus Apple TV channel",
-          "icon": "/movies/services/appletvamcplus.webp",
-          "url": "https://tv.apple.com/us/movie/jurassic-park/umc.cmc.3bp8rj8ab9otj4ug279xhib2f?at=1000l3V2&ct=app_tvplus&itscg=30200&itsct=justwatch_tv",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Disney Plus",
-          "icon": "/movies/services/disneyplus.webp",
-          "url": "https://www.disneyplus.com/browse/entity-225d12ff-a04b-4bb6-b88b-6abb9d66dcb9",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "Hulu",
           "icon": "/movies/services/hulu.webp",
           "url": "https://www.hulu.com/watch/225d12ff-a04b-4bb6-b88b-6abb9d66dcb9",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Philo",
+          "icon": "/movies/services/philo.webp",
+          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDIxMTY",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Starz",
+          "icon": "/movies/services/starz.webp",
+          "url": "https://www.starz.com/us/en/movies/43795",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Starz Amazon Channel",
+          "icon": "/movies/services/amazonstarz.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.10bd8e93-8e03-4582-a89d-20338c9f0788",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Starz Apple TV channel",
+          "icon": "/movies/services/appletvstarz.webp",
+          "url": "https://tv.apple.com",
           "price": null,
           "quality": "HD"
         },
@@ -8749,7 +8991,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B00IIJ9F5Q?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.99",
+          "price": "$14.97",
           "quality": "BLURAY"
         },
         {
@@ -8773,7 +9015,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-jurassic-park-jurassic-park/1148811855",
-          "price": "$34.99",
+          "price": "$29.74",
           "quality": "DVD"
         },
         {
@@ -8781,15 +9023,15 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Jurassic-Park/5052",
-          "price": "$7.99",
+          "price": "$14.99",
           "quality": "4K"
         },
         {
           "type": "buy",
           "service": "GRUV",
           "icon": "/movies/services/gruv.webp",
-          "url": "https://gruv.com/products/jurassic-park-dvd-_61194847",
-          "price": "$7.99",
+          "url": "https://gruv.com/products/jurassic-park-2012-dvd-digital-copy-dvd-_61120931",
+          "price": "$13.99",
           "quality": "DVD"
         }
       ]
@@ -8909,17 +9151,33 @@
         },
         {
           "type": "stream",
-          "service": "Peacock Premium",
-          "icon": "/movies/services/peacocktv.webp",
-          "url": "https://www.peacocktv.com/watch/asset/movies/the-sixth-sense/2dd9fb4c-4a66-3a50-84c6-191dfb262913",
+          "service": "fuboTV",
+          "icon": "/movies/services/fubotv.webp",
+          "url": "https://www.fubo.tv/welcome/program/MV000781480000?irmp=1206980&irad=599309",
           "price": null,
           "quality": "HD"
         },
         {
           "type": "stream",
-          "service": "Peacock Premium Plus",
-          "icon": "/movies/services/peacocktvpremium.webp",
-          "url": "https://www.peacocktv.com/watch/asset/movies/the-sixth-sense/2dd9fb4c-4a66-3a50-84c6-191dfb262913",
+          "service": "Hulu",
+          "icon": "/movies/services/hulu.webp",
+          "url": "https://www.hulu.com/watch/219a5dfc-1b65-4644-9415-044c7d3a425d",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Netflix",
+          "icon": "/movies/services/netflix.webp",
+          "url": "https://www.netflix.com/title/26797528",
+          "price": null,
+          "quality": "4K"
+        },
+        {
+          "type": "stream",
+          "service": "Netflix Standard with Ads",
+          "icon": "/movies/services/netflixbasicwithads.webp",
+          "url": "https://www.netflix.com/title/26797528",
           "price": null,
           "quality": "HD"
         },
@@ -8976,7 +9234,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-sixth-sense/umc.cmc.2j3fje2s0rh78ius1k1kil5tr?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A792925493",
-          "price": "$17.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -8992,7 +9250,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Sixth-Sense/15533",
-          "price": "$17.99",
+          "price": "$5.00",
           "quality": "4K"
         }
       ]
@@ -9088,17 +9346,25 @@
       "offers": [
         {
           "type": "free",
-          "service": "Tubi TV",
-          "icon": "/movies/services/tubitv.webp",
-          "url": "https://tubitv.com/movies/100003987",
-          "price": null,
-          "quality": "SD"
-        },
-        {
-          "type": "free",
           "service": "YouTube Free",
           "icon": "/movies/services/youtubefree.webp",
           "url": "https://www.youtube.com/watch?v=9u_q1CP8x3Y",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Amazon Prime Video",
+          "icon": "/movies/services/amazonprime.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.04a9f72f-97cd-4ff6-76c5-8643fc78ee2a",
+          "price": null,
+          "quality": "4K"
+        },
+        {
+          "type": "stream",
+          "service": "Amazon Prime Video with Ads",
+          "icon": "/movies/services/amazonprimevideowithads.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.04a9f72f-97cd-4ff6-76c5-8643fc78ee2a",
           "price": null,
           "quality": "HD"
         },
@@ -9115,7 +9381,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.04a9f72f-97cd-4ff6-76c5-8643fc78ee2a",
-          "price": "$5.66",
+          "price": "$3.99",
           "quality": "4K"
         },
         {
@@ -9139,7 +9405,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/0783225792?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$9.88",
+          "price": "$7.76",
           "quality": "DVD"
         },
         {
@@ -9155,14 +9421,14 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/casino/umc.cmc.380lsgqwg7rir3c5pjon7hzl8?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A279832976",
-          "price": "$12.99",
+          "price": "$9.99",
           "quality": "4K"
         },
         {
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-casino-martin-scorsese/3622350",
+          "url": "https://www.barnesandnoble.com/w/dvd-casino-30th-anniversary-edition-martin-scorsese/3622350",
           "price": "$8.99",
           "quality": "DVD"
         },
@@ -9190,7 +9456,7 @@
       "imdb": "tt0268978",
       "justwatch_id": "tm46003",
       "poster": "/movies/posters/a-beautiful-mind-2001.webp",
-      "runtime": 130,
+      "runtime": 135,
       "rating": "PG-13",
       "genres": {
         "en": [
@@ -9316,16 +9582,16 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B000FVQLQQ?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$5.99",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B0G6385XYZ?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$19.99",
+          "quality": "BLURAY_4K"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.92a9f7c4-681c-4519-f9b8-f8e325ae46e0",
-          "price": "$14.99",
+          "price": "$7.99",
           "quality": "4K"
         },
         {
@@ -9333,15 +9599,15 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/a-beautiful-mind/umc.cmc.2iqk0c0jh9ocfk2jtv2yda0k1?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A324270794",
-          "price": "$14.99",
+          "price": "$7.99",
           "quality": "4K"
         },
         {
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-a-beautiful-mind-ron-howard/6052924",
-          "price": "$8.99",
+          "url": "https://www.barnesandnoble.com/w/dvd-a-beautiful-mind-25th-anniversary-ron-howard/6052924",
+          "price": "$27.19",
           "quality": "DVD"
         },
         {
@@ -9453,14 +9719,6 @@
       "offers": [
         {
           "type": "free",
-          "service": "Hoopla",
-          "icon": "/movies/services/hoopla.webp",
-          "url": "https://www.hoopladigital.com/title/18153321?utm_source=justwatch",
-          "price": null,
-          "quality": "SD"
-        },
-        {
-          "type": "free",
           "service": "Kanopy",
           "icon": "/movies/services/kanopy.webp",
           "url": "https://www.kanopy.com/product/justwatch-16059305",
@@ -9487,7 +9745,7 @@
           "type": "stream",
           "service": "Paramount+ Amazon Channel",
           "icon": "/movies/services/amazonparamountplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.81754752-5742-466a-8389-118af753d3fc",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.22ff5bc0-0939-4dfa-9692-c170749324d8",
           "price": null,
           "quality": "4K"
         },
@@ -9500,10 +9758,26 @@
           "quality": "HD"
         },
         {
+          "type": "stream",
+          "service": "Peacock Premium",
+          "icon": "/movies/services/peacocktv.webp",
+          "url": "https://www.peacocktv.com/watch/asset/movies/catch-me-if-you-can/b5140798-7190-30b1-b74b-3d2d6e679a71",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Peacock Premium Plus",
+          "icon": "/movies/services/peacocktvpremium.webp",
+          "url": "https://www.peacocktv.com/watch/asset/movies/catch-me-if-you-can/b5140798-7190-30b1-b74b-3d2d6e679a71",
+          "price": null,
+          "quality": "HD"
+        },
+        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.81754752-5742-466a-8389-118af753d3fc",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.22ff5bc0-0939-4dfa-9692-c170749324d8",
           "price": "$4.99",
           "quality": "HD"
         },
@@ -9551,8 +9825,8 @@
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.81754752-5742-466a-8389-118af753d3fc",
-          "price": "$6.99",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.22ff5bc0-0939-4dfa-9692-c170749324d8",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -9560,15 +9834,15 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/catch-me-if-you-can/umc.cmc.4p199eelws0o5vx6uwrsendqv?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A315299220",
-          "price": "$6.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-catch-me-if-you-can-steven-spielberg/5794418",
-          "price": "$40.99",
+          "url": "https://www.barnesandnoble.com/w/dvd-catch-me-if-you-can-leonardo-dicaprio/5794418",
+          "price": "$30.99",
           "quality": "DVD"
         },
         {
@@ -9576,7 +9850,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Catch-Me-if-You-Can/32708",
-          "price": "$6.99",
+          "price": "$5.00",
           "quality": "4K"
         },
         {
@@ -9703,6 +9977,14 @@
           "quality": "4K"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/trainspotting?utm_content=5d7768276f4521001ea98f74&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
@@ -9731,7 +10013,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-trainspotting-danny-boyle/3637216",
-          "price": "$34.99",
+          "price": "$49.99",
           "quality": "DVD"
         },
         {
@@ -9750,7 +10032,7 @@
       "imdb": "tt2119532",
       "justwatch_id": "tm196552",
       "poster": "/movies/posters/hacksaw-ridge-2016.webp",
-      "runtime": 131,
+      "runtime": 139,
       "rating": "R",
       "genres": {
         "en": [
@@ -9852,7 +10134,7 @@
         },
         {
           "type": "stream",
-          "service": "Lionsgate+ Amazon Channels",
+          "service": "Lionsgate+ Amazon Channel",
           "icon": "/movies/services/amazonlionsgateplus.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.e23999c8-ec8b-4598-8c4c-578b526970a6",
           "price": null,
@@ -9894,16 +10176,16 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B01LTHZVT2?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$13.99",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B01MTC0Z2D?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$10.90",
+          "quality": "DVD"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.e23999c8-ec8b-4598-8c4c-578b526970a6",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -9911,7 +10193,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/hacksaw-ridge/umc.cmc.62aqgczvqwoqyzv1vwv8er5wr?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A1168450249",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -10016,7 +10298,7 @@
         "ko": "파고"
       },
       "synopsis": {
-        "en": "Jerry, a small-town Minnesota car salesman is bursting at the seams with debt... but he's got a plan. He's going to hire two thugs to kidnap his wife in a scheme to collect a hefty ransom from his wealthy father-in-law. It's going to be a snap and nobody's going to get hurt... until people start dying. Enter Police Chief Marge, a coffee-drinking, parka-wearing - and extremely pregnant - investigator who'll stop at nothing to get her man. And if you think her small-time investigative skills will give the crooks a run for their ransom... you betcha!",
+        "en": "Jerry Lundegaard is a small-town Minnesota car salesman deeply in debt and willing to do almost anything to get out. Police chief Marge Gunderson discovers a string of violent crimes as Jerry's schemes spiral out of control.",
         "zh": "明尼阿波里斯市的汽车销售员杰里·隆高德深陷债务泥潭。急于获取现金的他，雇佣了两名蹩脚的歹徒绑架自己的妻子，企图让妻子富有的父亲支付赎金，以此获取足够的钱来偿还同伙并摆脱债务。",
         "es": "Un hombre apocado y tímido, casado con la hija de un millonario que le impide disfrutar de su fortuna, decide contratar a dos delincuentes para que secuestren a su mujer con el fin de montar un negocio propio con el dinero del rescate. Pero, por una serie de azarosas circunstancias, al secuestro se suman tres brutales asesinatos, lo que obliga a la policía a intervenir.",
         "pt": "Jerry, um vendedor de carros que está cheio de dívidas, vai até Fargo para contratar dois homens para raptarem a sua mulher. O esquema, rápido e sem problemas, consiste em pedir um resgate chorudo, a pagar pelo seu sogro rico. Mas logo depois do rapto, os dois homens são mandados parar por um polícia e matam-no. Jerry, por sua vez, começa a ser alvo de suspeitas quando fala do resgate ao sogro, que pretende ser ele próprio a entregar o dinheiro. O caso está a ser acompanhado pela chefe da polícia, uma viciada em café e em estado avançado de gravidez, que não vai desistir até apanhar os criminosos e salvar a mulher de Jerry.",
@@ -10040,41 +10322,25 @@
       "offers": [
         {
           "type": "free",
-          "service": "Amazon MX Player",
-          "icon": "/movies/services/amazonminitv.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.93d03433-f64e-425e-98a2-7d341140b4ff",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "free",
-          "service": "Amazon Prime Video Free with Ads",
-          "icon": "/movies/services/amazonimdbtv.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.93d03433-f64e-425e-98a2-7d341140b4ff",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "free",
-          "service": "Tubi TV",
-          "icon": "/movies/services/tubitv.webp",
-          "url": "https://tubitv.com/movies/306931",
+          "service": "Hoopla",
+          "icon": "/movies/services/hoopla.webp",
+          "url": "https://www.hoopladigital.com/title/14093852?utm_source=justwatch",
           "price": null,
           "quality": "SD"
         },
         {
-          "type": "stream",
-          "service": "Amazon Prime Video",
-          "icon": "/movies/services/amazonprime.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.93d03433-f64e-425e-98a2-7d341140b4ff",
+          "type": "free",
+          "service": "Kanopy",
+          "icon": "/movies/services/kanopy.webp",
+          "url": "https://www.kanopy.com/product/justwatch-11553133",
           "price": null,
           "quality": "HD"
         },
         {
           "type": "stream",
-          "service": "Amazon Prime Video with Ads",
-          "icon": "/movies/services/amazonprimevideowithads.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.93d03433-f64e-425e-98a2-7d341140b4ff",
+          "service": "fuboTV",
+          "icon": "/movies/services/fubotv.webp",
+          "url": "https://www.fubo.tv/welcome/program/MV000447980000?irmp=1206980&irad=599309",
           "price": null,
           "quality": "HD"
         },
@@ -10104,17 +10370,17 @@
         },
         {
           "type": "stream",
-          "service": "Netflix",
-          "icon": "/movies/services/netflix.webp",
-          "url": "https://www.netflix.com/title/493387",
+          "service": "MGM+ Amazon Channel",
+          "icon": "/movies/services/amazonepix.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.f981601c-55eb-49d0-a61a-36c9fa8ee4f5",
           "price": null,
-          "quality": "4K"
+          "quality": "HD"
         },
         {
           "type": "stream",
-          "service": "Netflix Standard with Ads",
-          "icon": "/movies/services/netflixbasicwithads.webp",
-          "url": "https://www.netflix.com/title/493387",
+          "service": "Philo",
+          "icon": "/movies/services/philo.webp",
+          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDg1OTg",
           "price": null,
           "quality": "HD"
         },
@@ -10122,7 +10388,7 @@
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.93d03433-f64e-425e-98a2-7d341140b4ff",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.f981601c-55eb-49d0-a61a-36c9fa8ee4f5",
           "price": "$3.99",
           "quality": "4K"
         },
@@ -10143,18 +10409,26 @@
           "quality": "4K"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/fargo?utm_content=5d7768246f4521001ea988b9&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/0792846427?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.56",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B001U6YI8I?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.90",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.93d03433-f64e-425e-98a2-7d341140b4ff",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.f981601c-55eb-49d0-a61a-36c9fa8ee4f5",
           "price": "$14.99",
           "quality": "4K"
         },
@@ -10170,7 +10444,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-fargo-coen/3624231",
+          "url": "https://www.barnesandnoble.com/w/dvd-fargo-joel-coen/3624231",
           "price": "$25.89",
           "quality": "DVD"
         },
@@ -10341,9 +10615,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B000IMVMGG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$10.99",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B01M5INAEN?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$16.56",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -10366,7 +10640,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-million-dollar-baby-clint-eastwood/8652699",
-          "price": "$8.99",
+          "price": "$22.49",
           "quality": "DVD"
         },
         {
@@ -10376,6 +10650,14 @@
           "url": "https://athome.fandango.com/content/browse/details/Million-Dollar-Baby/10972",
           "price": "$12.99",
           "quality": "HD"
+        },
+        {
+          "type": "buy",
+          "service": "GRUV",
+          "icon": "/movies/services/gruv.webp",
+          "url": "https://gruv.com/products/million-dollar-baby-dvd-widescreen-dvd-_1000149835",
+          "price": "$7.99",
+          "quality": "DVD"
         }
       ]
     },
@@ -10385,7 +10667,7 @@
       "imdb": "tt2267998",
       "justwatch_id": "tm157735",
       "poster": "/movies/posters/gone-girl-2014.webp",
-      "runtime": 149,
+      "runtime": 145,
       "rating": "R",
       "genres": {
         "en": [
@@ -10469,22 +10751,6 @@
       "trailer": "2-_-1nJf8Vg",
       "offers": [
         {
-          "type": "stream",
-          "service": "Netflix",
-          "icon": "/movies/services/netflix.webp",
-          "url": "https://www.netflix.com/title/70305893",
-          "price": null,
-          "quality": "4K"
-        },
-        {
-          "type": "stream",
-          "service": "Netflix Standard with Ads",
-          "icon": "/movies/services/netflixbasicwithads.webp",
-          "url": "https://www.netflix.com/title/70305893",
-          "price": null,
-          "quality": "HD"
-        },
-        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -10512,16 +10778,16 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B01BE583LM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$11.42",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B07FDPF4FK?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$11.64",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.7ab0f623-cfe3-4214-ae7f-2eaffa38f89f",
-          "price": "$5.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -10529,7 +10795,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/gone-girl/umc.cmc.60iqscr23rfe93khaawil8edc?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A917874539",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -10545,7 +10811,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Gone-Girl/585524",
-          "price": "$14.99",
+          "price": "$5.00",
           "quality": "4K"
         },
         {
@@ -10568,46 +10834,55 @@
       "rating": "PG",
       "genres": {
         "en": [
+          "Action & Adventure",
           "Drama",
           "Horror",
           "Mystery & Thriller"
         ],
         "zh": [
+          "Action & Adventure",
           "Drama",
           "Horror",
           "Mystery & Thriller"
         ],
         "es": [
+          "Acción & Aventura",
           "Drama",
           "Terror",
           "Misterio & Suspense"
         ],
         "pt": [
+          "Ação & Aventura",
           "Drama",
           "Terror",
           "Mistério & Thriller"
         ],
         "fr": [
+          "Action & Aventure",
           "Drame",
           "Horreur",
           "Mystère & Thriller"
         ],
         "de": [
+          "Action & Abenteuer",
           "Drama",
           "Horror",
           "Mystery & Thriller"
         ],
         "it": [
+          "Azione e Avventura",
           "Drammatico",
           "Orrore",
           "Thriller e Mistero"
         ],
         "ja": [
+          "アクション",
           "ドラマ",
           "ホラー",
           "スリラー"
         ],
         "ko": [
+          "액션",
           "드라마",
           "공포",
           "스릴러"
@@ -10709,7 +10984,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B0F4D4P79Y?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$23.79",
+          "price": "$20.39",
           "quality": "BLURAY_4K"
         },
         {
@@ -10725,7 +11000,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/jaws/umc.cmc.2bz6csnv519zyivpg4qb9cgbn?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A526768967",
-          "price": "$4.99",
+          "price": "$14.99",
           "quality": "4K"
         },
         {
@@ -10733,7 +11008,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-jaws-steven-spielberg/3633163",
-          "price": "$23.79",
+          "price": "$20.39",
           "quality": "DVD"
         },
         {
@@ -10813,7 +11088,7 @@
         "en": "Rocky",
         "zh": "洛奇",
         "es": "Rocky",
-        "pt": "Rocky: Um Lutador",
+        "pt": "Rocky, um Lutador",
         "fr": "Rocky",
         "de": "Rocky",
         "it": "Rocky",
@@ -10845,6 +11120,22 @@
       "offers": [
         {
           "type": "stream",
+          "service": "Amazon Prime Video",
+          "icon": "/movies/services/amazonprime.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.b051ef6a-6336-4a7a-a2aa-39e4ed092974",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Amazon Prime Video with Ads",
+          "icon": "/movies/services/amazonprimevideowithads.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.b051ef6a-6336-4a7a-a2aa-39e4ed092974",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "AMC",
           "icon": "/movies/services/amc.webp",
           "url": "https://www.amc.com/movies/rocky--1054031",
@@ -10869,35 +11160,11 @@
         },
         {
           "type": "stream",
-          "service": "AMC+ Amazon Channel",
-          "icon": "/movies/services/amazonamcplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.7bd6f3fc-2540-446e-8643-0c1bf28fd35f",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV000090190000?irmp=1206980&irad=599309",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "MGM Plus",
           "icon": "/movies/services/epix.webp",
           "url": "https://www.mgmplus.com/movie/rocky-1976",
           "price": null,
           "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "MGM+ Amazon Channel",
-          "icon": "/movies/services/amazonepix.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.7bd6f3fc-2540-446e-8643-0c1bf28fd35f",
-          "price": null,
-          "quality": "4K"
         },
         {
           "type": "stream",
@@ -10919,7 +11186,7 @@
           "type": "stream",
           "service": "Paramount+ Amazon Channel",
           "icon": "/movies/services/amazonparamountplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.7bd6f3fc-2540-446e-8643-0c1bf28fd35f",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.b051ef6a-6336-4a7a-a2aa-39e4ed092974",
           "price": null,
           "quality": "HD"
         },
@@ -10928,14 +11195,6 @@
           "service": "Paramount+ Roku Premium Channel",
           "icon": "/movies/services/rokuchannelparamountplus.webp",
           "url": "https://therokuchannel.roku.com/details/e04fbb4fc17c5dcc8c96023ac42e31df/rocky?source=bing",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Philo",
-          "icon": "/movies/services/philo.webp",
-          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDI4MTk",
           "price": null,
           "quality": "HD"
         },
@@ -10972,19 +11231,27 @@
           "quality": "4K"
         },
         {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/rocky?utm_content=5d7768292e80df001ebdd261&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B013HOZGTK?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$14.43",
+          "url": "https://www.amazon.com/dp/B004TEPLYS?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$6.84",
           "quality": "BLURAY"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.7bd6f3fc-2540-446e-8643-0c1bf28fd35f",
-          "price": "$14.99",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.b051ef6a-6336-4a7a-a2aa-39e4ed092974",
+          "price": "$6.99",
           "quality": "HD"
         },
         {
@@ -10999,7 +11266,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-rocky-avildsen/3623957",
+          "url": "https://www.barnesandnoble.com/w/dvd-rocky-john-g-avildsen/3623957",
           "price": "$14.99",
           "quality": "DVD"
         },
@@ -11019,7 +11286,7 @@
       "imdb": "tt0088247",
       "justwatch_id": "tm163236",
       "poster": "/movies/posters/the-terminator-1984.webp",
-      "runtime": 108,
+      "runtime": 107,
       "rating": "R",
       "genres": {
         "en": [
@@ -11112,6 +11379,54 @@
       "trailer": "nGrW-OR2uDk",
       "offers": [
         {
+          "type": "free",
+          "service": "Fawesome",
+          "icon": "/movies/services/fawesometv.webp",
+          "url": "https://fawesome.tv/movies/10855986/terminator-el-exterminador?utm_source=justwatch&utm_medium=feed",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
+          "service": "The Roku Channel",
+          "icon": "/movies/services/rokuchannel.webp",
+          "url": "https://therokuchannel.roku.com/details/1ca4ff63d6b65ca59b6607c4fd152f3c/the-terminator?source=bing",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "free",
+          "service": "Tubi TV",
+          "icon": "/movies/services/tubitv.webp",
+          "url": "https://tubitv.com/movies/301815",
+          "price": null,
+          "quality": "SD"
+        },
+        {
+          "type": "free",
+          "service": "YouTube Free",
+          "icon": "/movies/services/youtubefree.webp",
+          "url": "https://www.youtube.com/watch?v=vrHeuwO5agw",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Amazon Prime Video",
+          "icon": "/movies/services/amazonprime.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.28a714d9-9c98-4a7b-ab30-9613fee0e89f",
+          "price": null,
+          "quality": "4K"
+        },
+        {
+          "type": "stream",
+          "service": "Amazon Prime Video with Ads",
+          "icon": "/movies/services/amazonprimevideowithads.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.28a714d9-9c98-4a7b-ab30-9613fee0e89f",
+          "price": null,
+          "quality": "HD"
+        },
+        {
           "type": "stream",
           "service": "AMC",
           "icon": "/movies/services/amc.webp",
@@ -11123,7 +11438,7 @@
           "type": "stream",
           "service": "AMC Plus Apple TV channel",
           "icon": "/movies/services/appletvamcplus.webp",
-          "url": "https://tv.apple.com",
+          "url": "https://tv.apple.com/us/movie/the-terminator/umc.cmc.14nmbhqhdyj6b4dfol85fpoou?at=1000l3V2&ct=app_tvplus&itscg=30200&itsct=justwatch_tv",
           "price": null,
           "quality": "HD"
         },
@@ -11132,14 +11447,6 @@
           "service": "AMC+",
           "icon": "/movies/services/amcplus.webp",
           "url": "https://www.amcplus.com/movies/the-terminator--1054481",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "AMC+ Amazon Channel",
-          "icon": "/movies/services/amazonamcplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.28a714d9-9c98-4a7b-ab30-9613fee0e89f",
           "price": null,
           "quality": "HD"
         },
@@ -11177,6 +11484,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-terminator?utm_content=5d776824151a60001f24a29e&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/7764/the-terminator/",
@@ -11185,18 +11500,10 @@
         },
         {
           "type": "buy",
-          "service": "Amazon DVD / Blu-ray",
-          "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0FQ61XZDG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$21.88",
-          "quality": "DVD"
-        },
-        {
-          "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.ba010cb3-ea27-4c85-888b-f843380d9b55",
-          "price": "$14.99",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.28a714d9-9c98-4a7b-ab30-9613fee0e89f",
+          "price": "$6.99",
           "quality": "4K"
         },
         {
@@ -11211,7 +11518,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-terminator-cameron/3619569",
+          "url": "https://www.barnesandnoble.com/w/dvd-terminator-james-cameron/3619569",
           "price": "$23.79",
           "quality": "DVD"
         },
@@ -11360,7 +11667,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-big-lebowski/umc.cmc.3ev2yyf8c4chboxiibx165ysv?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A280338635",
-          "price": "$7.99",
+          "price": "$14.99",
           "quality": "4K"
         },
         {
@@ -11376,7 +11683,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Big-Lebowski/5738",
-          "price": "$7.99",
+          "price": "$14.99",
           "quality": "4K"
         }
       ]
@@ -11391,38 +11698,47 @@
       "rating": "R",
       "genres": {
         "en": [
+          "Action & Adventure",
           "Drama",
           "War & Military"
         ],
         "zh": [
+          "Action & Adventure",
           "Drama",
           "War & Military"
         ],
         "es": [
+          "Acción & Aventura",
           "Drama",
           "Guerra"
         ],
         "pt": [
+          "Ação & Aventura",
           "Drama",
           "Guerra & Militar"
         ],
         "fr": [
+          "Action & Aventure",
           "Drame",
           "Film de guerre"
         ],
         "de": [
+          "Action & Abenteuer",
           "Drama",
           "Krieg & Militär"
         ],
         "it": [
+          "Azione e Avventura",
           "Drammatico",
           "Guerra"
         ],
         "ja": [
+          "アクション",
           "ドラマ",
           "戦争"
         ],
         "ko": [
+          "액션",
           "드라마",
           "전쟁"
         ]
@@ -11448,7 +11764,7 @@
         "ko": "Platoon"
       },
       "synopsis": {
-        "en": "Chris Taylor is a young, naive American who gives up college and volunteers for combat in Vietnam. Upon arrival, he quickly discovers that his presence is quite nonessential, and is considered insignificant to the other soldiers, as he has not fought for as long as the rest of them and felt the effects of combat. Chris has two non-commissioned officers, the ill-tempered and indestructible Staff Sergeant Robert Barnes and the more pleasant and cooperative Sergeant Elias Grodin. A line is drawn between the two NCOs and a number of men in the platoon when an illegal killing occurs during a village raid. As the war continues, Chris himself draws towards psychological meltdown. And as he struggles for survival, he soon realizes he is fighting two battles, the conflict with the enemy and the conflict between the men within his platoon.",
+        "en": "Chris Taylor, a naive American, volunteers for Vietnam combat. He feels insignificant among experienced soldiers. Two sergeants, harsh Barnes and cooperative Elias, clash over an illegal killing during a raid. Chris faces meltdown.",
         "zh": "一名年轻士兵在越南战场上直面战争的恐怖与人性的双重性，陷入道德危机。",
         "es": "Chris Taylor es un ingenuo joven estadounidense que, a su llegada a Vietnam, descubre que no sólo debe combatir contra los soldados vietnamitas sino también contra el miedo que le atormenta, el cansancio y la rabia que le invade. Mientras sus dos oficiales al mando libran su propia batalla personal, el conflicto, el caos y el odio hacen mella en Taylor, confundiendo su realidad e insensibilizándole ante el valor más preciado del ser humano... la vida.",
         "pt": "Chris Taylor é um jovem e ingénuo americano que decide alistar-se como voluntário para combater na guerra do Vietnam. Chris pertence a um pelotão comandado pelo sargento Grodin, um homem conhecedor e humanitário, e pelo arrogante e sanguinário sargento Barnes. Durante um ataque a uma aldeia, o sargento Barnes dá ordens para atirar sobre mulheres e crianças, dando origem a um choque entre as duas patentes e pondo em risco a unidade do grupo. A guerra continua e Chris, afetado pelo caos e pelo ódio, percebe que terá de sobreviver não só ao conflito com o inimigo mas também à luta entre os homens do seu pelotão.",
@@ -11480,11 +11796,11 @@
         },
         {
           "type": "free",
-          "service": "Hoopla",
-          "icon": "/movies/services/hoopla.webp",
-          "url": "https://www.hoopladigital.com/title/12027200?utm_source=justwatch",
+          "service": "Kanopy",
+          "icon": "/movies/services/kanopy.webp",
+          "url": "https://www.kanopy.com/product/justwatch-11553211",
           "price": null,
-          "quality": "SD"
+          "quality": "HD"
         },
         {
           "type": "free",
@@ -11493,14 +11809,6 @@
           "url": "https://therokuchannel.roku.com/details/27b6b97ee02e5cd9b6b31f682f6ca3f1/platoon?source=bing",
           "price": null,
           "quality": "HD"
-        },
-        {
-          "type": "free",
-          "service": "Tubi TV",
-          "icon": "/movies/services/tubitv.webp",
-          "url": "https://tubitv.com/movies/310145",
-          "price": null,
-          "quality": "SD"
         },
         {
           "type": "free",
@@ -11538,7 +11846,7 @@
           "type": "stream",
           "service": "MGM+ Amazon Channel",
           "icon": "/movies/services/amazonepix.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.6bdbb7d2-b879-4f0f-b04a-64bfd8f522ce",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.2d1eafbf-daab-41d8-8197-f56aa62be253",
           "price": null,
           "quality": "4K"
         },
@@ -11573,6 +11881,14 @@
           "url": "https://athome.fandango.com/content/browse/details/Platoon/140297",
           "price": "$3.99",
           "quality": "4K"
+        },
+        {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/platoon?utm_content=5d7768275af944001f1f6dc6&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
         },
         {
           "type": "rent",
@@ -11715,33 +12031,9 @@
       "offers": [
         {
           "type": "stream",
-          "service": "Cinemax Amazon Channel",
-          "icon": "/movies/services/amazoncinemax.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.596ecfbd-591b-4e11-8a87-e128eb529596",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Cinemax Apple TV channel",
-          "icon": "/movies/services/appletvcinemax.webp",
-          "url": "https://tv.apple.com/us",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "HBO Max",
-          "icon": "/movies/services/max.webp",
-          "url": "https://play.hbomax.com/show/49195f66-45cd-4e30-bccb-bebdcf0d4a88?utm_source=universal_search",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "HBO Max Amazon Channel",
-          "icon": "/movies/services/amazonhbomax.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.596ecfbd-591b-4e11-8a87-e128eb529596",
+          "service": "Philo",
+          "icon": "/movies/services/philo.webp",
+          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDMzNTA",
           "price": null,
           "quality": "HD"
         },
@@ -11766,6 +12058,14 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Stand-by-Me/12466",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/stand-by-me?utm_content=5d7768242ec6b5001f6ba12a&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -11951,6 +12251,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-wizard-of-oz?utm_content=5d7768273c3c2a001fbcb130&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$2.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/5095/the-wizard-of-oz/",
@@ -11961,8 +12269,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00000JS62?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.49",
+          "url": "https://www.amazon.com/dp/B00DJ44MA8?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.99",
           "quality": "DVD"
         },
         {
@@ -12097,18 +12405,18 @@
       "trailer": "dlnmQbPGuls",
       "offers": [
         {
-          "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV000585910000?irmp=1206980&irad=599309",
+          "type": "free",
+          "service": "Hoopla",
+          "icon": "/movies/services/hoopla.webp",
+          "url": "https://www.hoopladigital.com/title/13797464?utm_source=justwatch",
           "price": null,
-          "quality": "HD"
+          "quality": "SD"
         },
         {
-          "type": "stream",
-          "service": "Philo",
-          "icon": "/movies/services/philo.webp",
-          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NjkyMzc",
+          "type": "free",
+          "service": "Kanopy",
+          "icon": "/movies/services/kanopy.webp",
+          "url": "https://www.kanopy.com/product/justwatch-13092748",
           "price": null,
           "quality": "HD"
         },
@@ -12146,6 +12454,14 @@
         },
         {
           "type": "rent",
+          "service": "Plex",
+          "icon": "/movies/services/plex.webp",
+          "url": "https://watch.plex.tv/movie/the-truman-show?utm_content=5d77686a0ab244002006d526&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/20974/the-truman-show/",
@@ -12157,7 +12473,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B000LW7MCG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$19.99",
+          "price": "$10.78",
           "quality": "DVD"
         },
         {
@@ -12165,7 +12481,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.4fef4b7d-9ad9-4cbb-a79e-1ef700edc0f6",
-          "price": "$6.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -12173,7 +12489,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-truman-show/umc.cmc.3thpf98o5diknnctdycef69fu?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A311726400",
-          "price": "$6.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -12189,11 +12505,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Truman-Show/13653",
-          "price": "$6.99",
+          "price": "$5.00",
           "quality": "4K"
         }
       ]
     }
   ],
-  "updated": "2026-09-25"
+  "updated": "2026-10-07"
 }
