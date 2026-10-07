@@ -50,37 +50,6 @@ class RenderTest(unittest.TestCase):
             self.assertLessEqual(seam, ordinary, track.title)
 
 
-class ChooseTest(unittest.TestCase):
-    SECONDS = {t.id: 120.0 for t in music.TRACKS}
-
-    def test_same_key_same_track_and_offset(self):
-        self.assertEqual(music.choose("20250314-DHLzXu1uX9f", self.SECONDS),
-                         music.choose("20250314-DHLzXu1uX9f", self.SECONDS))
-
-    def test_offset_stays_inside_the_track(self):
-        for n in range(200):
-            track, offset = music.choose(f"post-{n}", self.SECONDS)
-            self.assertTrue(0 <= offset <= self.SECONDS[track.id] - 8)
-
-    def test_every_track_gets_used(self):
-        used = {music.choose(f"post-{n}", self.SECONDS)[0].id for n in range(200)}
-        self.assertEqual(used, {t.id for t in music.TRACKS})
-
-
-class LibraryTest(unittest.TestCase):
-    def test_rendered_once_then_reused(self):
-        with TemporaryDirectory() as tmp, mock.patch.object(music, "SECTIONS", SHORT):
-            first = music.ensure_library(Path(tmp))
-            with mock.patch.object(music, "render", side_effect=AssertionError("re-rendered")):
-                again = music.ensure_library(Path(tmp))
-            self.assertEqual(first, again)
-            self.assertTrue(all(p.exists() for p in first.values()))
-
-
-if __name__ == "__main__":
-    unittest.main()
-
-
 class AssignTest(unittest.TestCase):
     """One song per video, recorded in the shared index (B, 2026-10-06)."""
 

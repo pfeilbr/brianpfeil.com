@@ -120,9 +120,9 @@ Every published video has sound. A clip with no audio track — or one whose
 loudest moment is below -45 dBFS — gets music from `igmedia/music.py`: six
 original tracks synthesised with numpy (pad, arpeggio, bass, light drums,
 reverb), deterministic, seamless when looped, and royalty-free because they
-are composed here rather than downloaded. The 102 clips published before
-2026-10-07 share six seeded tracks; every clip given music since gets its
-own song (`music.assign`): a seed whose key and chord progression no other
+are composed here rather than downloaded. Every scored clip has its own
+song (`music.assign`; the 102 clips that once shared six tracks were
+re-scored on 2026-10-07, picture untouched): a seed whose key and chord progression no other
 site clip has used, recorded in the music index every project shares,
 `s3://com.brianpfeil.media/music/ledger.jsonl` (style `site-media`), with a
 conditional write so parallel runs can't pick the same one. The picture is

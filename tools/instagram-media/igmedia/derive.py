@@ -328,6 +328,10 @@ def _mix_music(video: Path, track_wav: Path, offset: float, seconds: float, dest
     ])
 
 
+# Clips scored with one of the six tracks every clip once shared ("-mt3v2.mp4").
+SHARED_TRACK = re.compile(r"-mt[1-6]v\d+\.mp4$")
+
+
 def _ensure_sound(record: dict, dest_dir: Path, stem: str, key: str, music_dir: Path) -> bool:
     """Give a silent video music. True if the record changed.
 
@@ -338,13 +342,17 @@ def _ensure_sound(record: dict, dest_dir: Path, stem: str, key: str, music_dir: 
     if record["kind"] != "video":
         return False
     current = dest_dir / record["name"]
-    if record.get("sound") in ("original", "music") and current.exists():
+    # Scored before every video got its own song: re-score it. Its picture is
+    # copied from the scored file; only the audio is replaced.
+    rescore = record.get("sound") == "music" and bool(SHARED_TRACK.search(record["name"]))
+    if record.get("sound") in ("original", "music") and current.exists() and not rescore:
         return False
 
-    peak = peak_db(current)
-    if peak is not None and peak >= SILENT_BELOW_DB:
-        record["sound"] = "original"
-        return True
+    if not rescore:
+        peak = peak_db(current)
+        if peak is not None and peak >= SILENT_BELOW_DB:
+            record["sound"] = "original"
+            return True
 
     # Every video gets its own song, recorded in the shared music index.
     from . import music
@@ -355,7 +363,7 @@ def _ensure_sound(record: dict, dest_dir: Path, stem: str, key: str, music_dir: 
     _mix_music(current, wav, offset, float(record.get("duration") or 0)
                or ffprobe_video(current)[2], dest_dir / name)
     if name != record["name"]:
-        current.unlink(missing_ok=True)  # the silent file; --prune drops it from the CDN
+        current.unlink(missing_ok=True)  # silent or shared-track file; --prune drops it from the CDN
     record["files"] = [name if f == record["name"] else f for f in record["files"]]
     record["name"] = name
     record["sound"] = "music"

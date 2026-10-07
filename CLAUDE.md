@@ -39,8 +39,8 @@ something down: `pull.py approve --id …` to unapprove, then
 
 **Every video has sound.** 102 of 234 had none; they get original music
 composed by `igmedia/music.py` (royalty-free because they are generated
-here, never downloaded). The first 102 share six seeded tracks; every clip
-since gets its own song, recorded in the shared music ledger. "Silent" includes an audio track that
+here, never downloaded). Every clip has its own song, recorded in the
+shared music ledger. "Silent" includes an audio track that
 never gets louder than -45 dBFS. The viewer labels it "♪ Sunlit · music
 added" so nobody mistakes it for recorded sound.
 

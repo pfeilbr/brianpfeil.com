@@ -293,6 +293,27 @@ class VideoTest(unittest.TestCase):
         self.assertIsNotNone(d.music)
         self.assertGreater(derive.peak_db(out), derive.SILENT_BELOW_DB)
 
+    def test_clip_on_a_shared_track_is_rescored_with_its_own_song(self):
+        """Clips scored before the one-song-per-video rule get their own song;
+        the picture is copied, only the audio changes, and it happens once."""
+        src = make_video(self.root / "old.mp4", "720x900", audio=False)
+        first, out = self.derive_video(src, "old")
+        record = self.lock.get("old".ljust(64, "0"))
+        shared = out.with_name(out.name.split("-m")[0] + "-mt3v2.mp4")
+        out.rename(shared)
+        record["files"] = [shared.name if f == record["name"] else f for f in record["files"]]
+        record.update(name=shared.name, music="Harbor")
+        self.lock.put("old".ljust(64, "0"), record)
+
+        again, new = self.derive_video(src, "old")
+        self.assertNotEqual(new.name, shared.name)
+        self.assertFalse(shared.exists())
+        self.assertNotEqual(again.music, "Harbor")
+        self.assertEqual(derive.probe_streams(new)["audio"], "aac")
+        with mock.patch.object(derive, "_mix_music", side_effect=AssertionError("mixed again")):
+            third, _ = self.derive_video(src, "old")
+        self.assertEqual(third.key, again.key)
+
     def test_music_is_mixed_once_and_reused(self):
         src = make_video(self.root / "once.mp4", "720x900", audio=False)
         first, _ = self.derive_video(src, "once")

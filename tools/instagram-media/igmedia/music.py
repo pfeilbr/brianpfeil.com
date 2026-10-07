@@ -4,10 +4,10 @@ Every track here is composed by this code — chords, arpeggios, bass, drums
 and reverb synthesised from sine waves and seeded noise — so it is owned
 outright: royalty-free, no licence to track, no attribution, nothing
 downloaded. Rendering is deterministic: the same TRACK_VERSION produces the
-same WAV bytes, and the same clip always gets the same track at the same
+same WAV bytes, and the same clip always gets the same song at the same
 offset.
 
-    python3 -m igmedia.music build/music     # render the library
+    python3 -m igmedia.music build/music     # render the six original tracks
 """
 
 import hashlib
@@ -37,7 +37,8 @@ class Track:
     seed: int
 
 
-# Six moods, so a page of clips doesn't all share one tune.
+# The six tracks clips shared before every video got its own song; their
+# chord progressions seed the per-video songs below.
 TRACKS = (
     Track("t1", "Sunlit", 60, ((0, "maj"), (7, "maj"), (9, "min"), (5, "maj")), 96, True, "up", 0.55, 11),
     Track("t2", "Drift", 57, ((0, "min7"), (8, "maj7"), (3, "maj"), (10, "maj")), 80, False, "updown", 0.35, 23),
@@ -221,33 +222,9 @@ def track_path(directory: Path, track: Track) -> Path:
     return Path(directory) / f"{track.id}-v{TRACK_VERSION}.wav"
 
 
-def ensure_library(directory: Path) -> dict[str, Path]:
-    """Render any track not already on disk; return id -> path."""
-    paths = {}
-    for track in TRACKS:
-        path = track_path(directory, track)
-        if not path.exists():
-            write_wav(path, render(track))
-        paths[track.id] = path
-    return paths
-
-
 def duration(path: Path) -> float:
     with wave.open(str(path), "rb") as w:
         return w.getnframes() / w.getframerate()
-
-
-def choose(key: str, track_seconds: dict[str, float]) -> tuple[Track, float]:
-    """The same key always gets the same track, starting at the same point.
-
-    Keyed on the post, so every silent clip in one album shares a tune; the
-    offset spreads clips across the track so they don't all start on the intro.
-    """
-    h = int(hashlib.sha256(key.encode()).hexdigest(), 16)
-    track = TRACKS[h % len(TRACKS)]
-    span = max(track_seconds[track.id] - 8.0, 1.0)
-    offset = round((h // len(TRACKS)) % int(span * 10) / 10, 1)
-    return track, offset
 
 
 # --- one song per video -------------------------------------------------------
@@ -405,5 +382,6 @@ def offset_for(key: str, seconds: float) -> float:
 if __name__ == "__main__":
     import sys
     out = Path(sys.argv[1] if len(sys.argv) > 1 else "build/music")
-    for tid, p in ensure_library(out).items():
-        print(f"{tid}: {p} ({duration(p):.0f}s)")
+    for t in TRACKS:
+        p = ensure_track(out, t)
+        print(f"{t.id}: {p} ({duration(p):.0f}s)")
