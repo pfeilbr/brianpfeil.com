@@ -79,6 +79,9 @@ params:
     youtube: "@pfeilbr"
     pinterest: "pfeilbr"
     snapchat: "pfeilbr"
+    # TikTok username (the URL part). The display name is already "pfeilbr";
+    # the username is still TikTok's generated one until it is changed in the app.
+    tiktok: "user8768514322831"
     # Handle only. A Discord profile URL needs the numeric user id, not the
     # @handle, so the footer offers this to copy rather than linking to it.
     discord: "pfeilbr"

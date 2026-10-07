@@ -135,7 +135,7 @@ test-apps: ## Tests for the /apps/ check, and a check of data/apps.json (verify 
 	python3 -m unittest discover -s tools/apps -p 'test_*.py'
 	python3 tools/apps/check_page.py
 
-test-profiles: ## Tests for the social-profile check (verify runs it against the built site)
+test-profiles: ## Tests for the social-profile check and the TikTok handle switch (verify runs it against the built site)
 	python3 -m unittest discover -s tools/profiles -p 'test_*.py'
 
 # Every public repo of pfeilbr, classified into areas and learning paths

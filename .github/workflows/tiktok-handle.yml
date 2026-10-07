@@ -1,0 +1,56 @@
+name: TikTok handle
+
+# B's TikTok shows "pfeilbr" as its name but its username is still the one
+# TikTok generated, so the site links that. Every Monday this checks whether
+# @pfeilbr now belongs to the same account (same user id) and, if it does,
+# switches every link on the site to it and deploys. It never switches to an
+# @pfeilbr owned by someone else. Once switched, it finds nothing to do.
+on:
+  schedule:
+    - cron: "41 9 * * 1"   # Mondays 09:41 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: tiktok-handle
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Tests
+        run: python -m unittest discover -s tools/profiles -p 'test_*.py'
+      - name: Check and switch
+        run: python tools/profiles/tiktok_handle.py --apply
+      - name: Commit and push
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A config.yaml data/home.yaml content tools/profiles
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -q -m "TikTok: link @pfeilbr now that the username is changed"
+          for i in 1 2 3; do
+            git pull -q --rebase origin main && git push -q origin HEAD:main && break
+            sleep 5
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # Pushes made with GITHUB_TOKEN never trigger other workflows, so the
+      # deploy is dispatched explicitly (gh-pages.yml has workflow_dispatch).
+      - name: Deploy
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run gh-pages.yml --ref main

@@ -20,6 +20,9 @@
       {{ with .Site.Params.author.snapchat }}
       <a href="https://www.snapchat.com/@{{ . }}" class="hover:text-brand no-underline" title="Snapchat" target="_blank" rel="noopener noreferrer">Snapchat</a>
       {{ end }}
+      {{ with .Site.Params.author.tiktok }}
+      <a href="https://www.tiktok.com/@{{ . }}" class="hover:text-brand no-underline" title="TikTok" target="_blank" rel="noopener noreferrer">TikTok</a>
+      {{ end }}
       {{ with .Site.Params.author.discord }}
       {{- /* Not a link: Discord profile URLs key off a numeric user id, not the
          handle, so the useful action is copying the handle to paste into

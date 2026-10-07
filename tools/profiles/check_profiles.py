@@ -33,11 +33,12 @@ PROFILES = {
     "youtube": "https://www.youtube.com/@pfeilbr",
     "pinterest": "https://www.pinterest.com/pfeilbr/",
     "snapchat": "https://www.snapchat.com/@pfeilbr",
+    "tiktok": "https://www.tiktok.com/@user8768514322831",
     "stackoverflow": "stackoverflow.com/users/29148/pfeilbr",
 }
 # The JSON-LD spells X as x.com; the links still use twitter.com.
 SAME_AS = {**PROFILES, "x": "https://x.com/pfeilbr"}
-FOOTER = ("x", "github", "stackoverflow", "youtube", "pinterest", "snapchat")
+FOOTER = ("x", "github", "stackoverflow", "youtube", "pinterest", "snapchat", "tiktok")
 
 LD = re.compile(r'<script type="?application/ld\+json"?>(.*?)</script>', re.S)
 FOOT = re.compile(r"<footer\b.*?</footer>", re.S)
