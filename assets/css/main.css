@@ -1340,7 +1340,7 @@ html[data-theme="dark"] .ic {
 .tw-arrow { margin-left: auto; color: var(--text-fainter); flex-shrink: 0; }
 .tw-card:hover .tw-arrow { color: var(--brand); }
 
-/* Footer handle that copies instead of linking (Discord). Styled to sit in the
+/* Handle that copies instead of linking (Discord, WeChat). Styled to sit in the
    row of social links without announcing itself as a different kind of thing. */
 .social-copy {
   font: inherit;
@@ -1375,6 +1375,7 @@ html[data-theme="dark"] .ic {
 .about-social [data-net="facebook"] .about-social-icon { color: #1877f2; }
 .about-social [data-net="stack"] .about-social-icon { color: #f48024; }
 .about-social [data-net="discord"] .about-social-icon { color: #5865f2; }
+.about-social [data-net="wechat"] .about-social-icon { color: #07c160; }
 .about-social [data-net="youtube"] .about-social-icon { color: #ff0000; }
 .about-social [data-net="pinterest"] .about-social-icon { color: #e60023; }
 .about-social [data-net="snapchat"] .about-social-icon { fill: #fffc00; }
@@ -2121,7 +2122,8 @@ nav details > summary {
 .hub-more svg, .hub-all svg { width: 1rem; height: 1rem; transition: transform 0.15s ease; }
 .hub-more:hover svg, .hub-all:hover svg { transform: translateX(2px); }
 .hub-social-links { display: inline-flex; gap: 0.25rem; }
-.hub-social-links a {
+.hub-social-links a,
+.hub-social-links .social-copy {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2132,7 +2134,13 @@ nav details > summary {
   text-decoration: none;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
-.hub-social-links a:hover { color: var(--brand); background-color: var(--bg-muted); }
+.hub-social-links a:hover,
+.hub-social-links .social-copy:hover { color: var(--brand); background-color: var(--bg-muted); }
+/* Icon-only copy button: "Copied" floats under it instead of widening the row. */
+.hub-social-links .social-copy-done {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  font-size: 0.75rem; font-weight: 600;
+}
 .hub-social-links svg { width: 1.125rem; height: 1.125rem; }
 
 .hub-h2 {

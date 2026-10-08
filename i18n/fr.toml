@@ -240,6 +240,12 @@ other = "{{ . }} abonnés"
 [copy_discord]
 other = "Copier mon nom d'utilisateur Discord ({{ . }})"
 
+[copy_wechat]
+other = "Copier mon identifiant WeChat ({{ . }})"
+
+[wechat]
+other = "WeChat"
+
 [copied]
 other = "Copié"
 

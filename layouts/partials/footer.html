@@ -32,6 +32,13 @@
         <span class="social-copy-done" hidden>{{ i18n "copied" }}</span>
       </button>
       {{ end }}
+      {{ with .Site.Params.author.wechat }}
+      {{- /* WeChat has no public profile URL: people add you by ID. */ -}}
+      <button type="button" class="social-copy" data-copy="{{ . }}" title="{{ i18n "copy_wechat" . }}">
+        <span class="social-copy-label">{{ i18n "wechat" }}</span>
+        <span class="social-copy-done" hidden>{{ i18n "copied" }}</span>
+      </button>
+      {{ end }}
       <a href="{{ printf "%sindex.xml" hugo.Sites.Default.Home.RelPermalink }}" class="hover:text-brand no-underline" title="{{ i18n "rss" }}">{{ i18n "rss" }}</a>
     </div>
   </div>

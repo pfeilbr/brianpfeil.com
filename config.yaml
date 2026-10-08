@@ -86,6 +86,9 @@ params:
     # Handle only. A Discord profile URL needs the numeric user id, not the
     # @handle, so the footer offers this to copy rather than linking to it.
     discord: "pfeilbr"
+    # WeChat ID. WeChat has no public profile URL either, so it is offered to
+    # copy (footer, home hero, /about/) like Discord.
+    wechat: "methym00"
 
 mediaTypes:
   text/plain:

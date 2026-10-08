@@ -65,3 +65,8 @@ social:
   - name: Stack Overflow
     url: https://stackoverflow.com/users/29148/pfeilbr
     icon: i-stack
+  # No profile URL: a button that copies the ID (the footer's script), its
+  # tooltip from i18n "copy_<key>".
+  - key: wechat
+    copy: methym00
+    icon: i-wechat

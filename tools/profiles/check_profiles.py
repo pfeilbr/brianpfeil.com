@@ -12,6 +12,10 @@ all four, so this checks a built site for every profile in each of them:
     lists every one in the Person's sameAs;
   - the footer (read from the English home page) links FOOTER.
 
+Networks with no profile URL (HANDLES: Discord, WeChat) are copy buttons
+instead of links; each must be offered wherever HANDLES says, and they are
+not in sameAs, which takes URLs only.
+
     python3 tools/profiles/check_profiles.py --public public
 
 Exit status 1 on any problem. Standard library only.
@@ -40,6 +44,12 @@ PROFILES = {
 SAME_AS = {**PROFILES, "x": "https://x.com/pfeilbr"}
 FOOTER = ("x", "github", "stackoverflow", "youtube", "pinterest", "snapchat", "tiktok")
 
+# Copy-only handles and where they appear: about, hero, footer.
+HANDLES = {
+    "discord": ("pfeilbr", ("about", "footer")),
+    "wechat": ("methym00", ("about", "hero", "footer")),
+}
+
 LD = re.compile(r'<script type="?application/ld\+json"?>(.*?)</script>', re.S)
 FOOT = re.compile(r"<footer\b.*?</footer>", re.S)
 
@@ -50,6 +60,13 @@ def page(public: Path, lang: str, path: str) -> Path:
 
 def missing(html: str, keys, urls=PROFILES) -> list[str]:
     return [k for k in keys if urls[k] not in html]
+
+
+def no_copy(html: str, place: str) -> list[str]:
+    """Handles meant for `place` with no copy button there. Minified HTML
+    drops the attribute quotes, so match either form."""
+    return [k for k, (h, where) in HANDLES.items() if place in where
+            and not re.search(rf'data-copy="?{re.escape(h)}"?[\s>]', html)]
 
 
 def same_as(html: str) -> list[str]:
@@ -73,19 +90,26 @@ def check(public: Path) -> list[str]:
         errors += [f"{f}: not built" for f in unbuilt]
         if unbuilt:
             continue
-        for k in missing(about.read_text(), PROFILES):
+        about_html = about.read_text()
+        for k in missing(about_html, PROFILES):
             errors.append(f"/{lang}/about/: no link to {k} ({PROFILES[k]})")
+        for k in no_copy(about_html, "about"):
+            errors.append(f"/{lang}/about/: no {k} copy button")
         html = home.read_text()
         foot = FOOT.search(html)
         hero = LD.sub("", html[: foot.start()] if foot else html)
         for k in missing(hero, PROFILES):
             errors.append(f"/{lang}/ hero: no link to {k} ({PROFILES[k]})")
+        for k in no_copy(hero, "hero"):
+            errors.append(f"/{lang}/ hero: no {k} copy button")
         sa = " ".join(same_as(html))
         for k in missing(sa, SAME_AS, SAME_AS):
             errors.append(f"/{lang}/ sameAs: missing {k} ({SAME_AS[k]})")
         if lang == "en":
             for k in missing(foot.group(0) if foot else "", FOOTER):
                 errors.append(f"footer: no link to {k} ({PROFILES[k]})")
+            for k in no_copy(foot.group(0) if foot else "", "footer"):
+                errors.append(f"footer: no {k} copy button")
     return errors
 
 
@@ -97,7 +121,7 @@ def main() -> int:
         print(f"error: {e}", file=sys.stderr)
     if errors:
         return 1
-    print(f"ok: {len(PROFILES)} profiles linked on /about/, the home hero and sameAs in all {len(LANGS)} languages, and the footer")
+    print(f"ok: {len(PROFILES)} profiles and {len(HANDLES)} handles linked on /about/, the home hero and sameAs in all {len(LANGS)} languages, and the footer")
     return 0
 
 

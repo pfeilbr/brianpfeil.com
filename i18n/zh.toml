@@ -240,6 +240,12 @@ other = "{{ . }} 关注者"
 [copy_discord]
 other = "复制我的 Discord 用户名（{{ . }}）"
 
+[copy_wechat]
+other = "复制我的微信号（{{ . }}）"
+
+[wechat]
+other = "微信"
+
 [copied]
 other = "已复制"
 

@@ -31,9 +31,17 @@
         <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
       <span class="hub-social-links">
         {{ range hugo.Data.home.social }}
+        {{ if .copy }}
+        {{ $t := i18n (printf "copy_%s" .key) .copy }}
+        <button type="button" class="social-copy" data-copy="{{ .copy }}" title="{{ $t }}" aria-label="{{ $t }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#{{ .icon }}"/></svg>
+          <span class="social-copy-done" role="status" hidden>{{ i18n "copied" }}</span>
+        </button>
+        {{ else }}
         <a href="{{ .url }}" target="_blank" rel="{{ if .me }}me {{ end }}noopener noreferrer" title="{{ .name }}" aria-label="{{ .name }}">
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#{{ .icon }}"/></svg>
         </a>
+        {{ end }}
         {{ end }}
       </span>
     </div>

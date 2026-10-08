@@ -240,6 +240,12 @@ other = "フォロワー {{ . }} 人"
 [copy_discord]
 other = "Discord のユーザー名（{{ . }}）をコピー"
 
+[copy_wechat]
+other = "WeChat ID（{{ . }}）をコピー"
+
+[wechat]
+other = "WeChat"
+
 [copied]
 other = "コピーしました"
 

@@ -240,6 +240,12 @@ other = "팔로워 {{ . }}명"
 [copy_discord]
 other = "내 Discord 사용자명 복사 ({{ . }})"
 
+[copy_wechat]
+other = "내 WeChat ID 복사 ({{ . }})"
+
+[wechat]
+other = "WeChat"
+
 [copied]
 other = "복사됨"
 

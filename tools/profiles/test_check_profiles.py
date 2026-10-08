@@ -12,10 +12,20 @@ def links(keys, urls=cp.PROFILES):
     return "".join(f"<a href={urls[k]}>{k}</a>" for k in keys)
 
 
-def home(keys=cp.PROFILES, same=cp.SAME_AS, foot=cp.FOOTER):
+def copies(place, skip=()):
+    return "".join(f"<button data-copy={h}>{k}</button>"
+                   for k, (h, where) in cp.HANDLES.items() if place in where and k not in skip)
+
+
+def home(keys=cp.PROFILES, same=cp.SAME_AS, foot=cp.FOOTER, skip=()):
     ld = json.dumps({"@graph": [{"@type": "Person", "sameAs": [same[k] for k in same]}]})
     return (f"<script type=application/ld+json>{ld}</script>"
-            f"<div>{links(keys)}</div><footer>{links(foot)}</footer>")
+            f"<div>{links(keys)}{copies('hero', skip)}</div>"
+            f"<footer>{links(foot)}{copies('footer', skip)}</footer>")
+
+
+def about_page(keys=cp.PROFILES, skip=()):
+    return links(keys) + copies("about", skip)
 
 
 class CheckProfiles(unittest.TestCase):
@@ -24,7 +34,7 @@ class CheckProfiles(unittest.TestCase):
         for lang in cp.LANGS:
             base = root / ("" if lang == "en" else lang)
             (base / "about").mkdir(parents=True)
-            (base / "about" / "index.html").write_text(about or links(cp.PROFILES))
+            (base / "about" / "index.html").write_text(about or about_page())
             (base / "index.html").write_text(home_html or home())
         return root
 
@@ -33,7 +43,7 @@ class CheckProfiles(unittest.TestCase):
 
     def test_about_missing_profile(self):
         keys = [k for k in cp.PROFILES if k != "snapchat"]
-        errors = cp.check(self.build(about=links(keys)))
+        errors = cp.check(self.build(about=about_page(keys)))
         self.assertEqual(len(errors), len(cp.LANGS))
         self.assertTrue(all("snapchat" in e for e in errors))
 
@@ -50,6 +60,18 @@ class CheckProfiles(unittest.TestCase):
     def test_footer_missing(self):
         errors = cp.check(self.build(home_html=home(foot=("x", "github"))))
         self.assertIn("footer: no link to youtube (https://www.youtube.com/@pfeilbr)", errors)
+
+    def test_wechat_copy_button_missing(self):
+        errors = cp.check(self.build(about=about_page(skip=("wechat",)),
+                                     home_html=home(skip=("wechat",))))
+        self.assertIn("/en/about/: no wechat copy button", errors)
+        self.assertIn("/zh/ hero: no wechat copy button", errors)
+        self.assertIn("footer: no wechat copy button", errors)
+        self.assertFalse(any("discord" in e for e in errors))
+
+    def test_quoted_copy_attribute_counts(self):
+        self.assertEqual(cp.no_copy('<button data-copy="methym00">', "hero"), [])
+        self.assertEqual(cp.no_copy("<button data-copy=methym00x>", "hero"), ["wechat"])
 
     def test_unbuilt_site(self):
         self.assertTrue(cp.check(Path(tempfile.mkdtemp())))
