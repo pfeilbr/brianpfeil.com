@@ -199,6 +199,10 @@ touching a template:
   output, since a year match can pick a same-year namesake. Synopses, titles
   and genres come back in all nine languages from JustWatch, so they are
   data, not i18n. Set `"mpa"` on an entry to override a wrong rating.
+  To add many at once by IMDb id: `python3 tools/movies/add.py tt… …`
+  (appends, skips ones already listed, refreshes only the new ones).
+  `tools/movies/candidates.py` turns raw mentions (title, source,
+  evidence) into matched films not yet on the page, for a pick list.
   The page loads `/data/movies.<lang>.json` (those three maps cut to its
   language + English, ~40–60 KB gzipped instead of 207 KB); the full
   `movies.json` is still published for the raw link.
