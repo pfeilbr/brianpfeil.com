@@ -246,6 +246,9 @@ other = "复制我的微信号（{{ . }}）"
 [wechat]
 other = "微信"
 
+[call_me]
+other = "给我打电话或发短信: {{ . }}"
+
 [copied]
 other = "已复制"
 

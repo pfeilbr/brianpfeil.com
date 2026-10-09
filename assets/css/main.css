@@ -1376,6 +1376,7 @@ html[data-theme="dark"] .ic {
 .about-social [data-net="stack"] .about-social-icon { color: #f48024; }
 .about-social [data-net="discord"] .about-social-icon { color: #5865f2; }
 .about-social [data-net="wechat"] .about-social-icon { color: #07c160; }
+.about-social [data-net="phone"] .about-social-icon { color: var(--brand); }
 .about-social [data-net="youtube"] .about-social-icon { color: #ff0000; }
 .about-social [data-net="pinterest"] .about-social-icon { color: #e60023; }
 .about-social [data-net="snapchat"] .about-social-icon { fill: #fffc00; }

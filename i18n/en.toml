@@ -246,6 +246,9 @@ other = "Copy my WeChat ID ({{ . }})"
 [wechat]
 other = "WeChat"
 
+[call_me]
+other = "Call or text me: {{ . }}"
+
 [copied]
 other = "Copied"
 

@@ -70,3 +70,7 @@ social:
   - key: wechat
     copy: methym00
     icon: i-wechat
+  # A tel: link; the number is params.author.phone, its tooltip i18n "call_me".
+  - key: phone
+    tel: true
+    icon: i-phone

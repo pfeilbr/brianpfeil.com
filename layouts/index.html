@@ -37,6 +37,13 @@
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#{{ .icon }}"/></svg>
           <span class="social-copy-done" role="status" hidden>{{ i18n "copied" }}</span>
         </button>
+        {{ else if .tel }}
+        {{ with site.Params.author.phone }}
+        {{ $t := i18n "call_me" . }}
+        <a href="tel:{{ replaceRE `[^+0-9]` "" . }}" title="{{ $t }}" aria-label="{{ $t }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-phone"/></svg>
+        </a>
+        {{ end }}
         {{ else }}
         <a href="{{ .url }}" target="_blank" rel="{{ if .me }}me {{ end }}noopener noreferrer" title="{{ .name }}" aria-label="{{ .name }}">
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#{{ .icon }}"/></svg>

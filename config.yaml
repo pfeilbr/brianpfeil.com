@@ -89,6 +89,9 @@ params:
     # WeChat ID. WeChat has no public profile URL either, so it is offered to
     # copy (footer, home hero, /about/) like Discord.
     wechat: "methym00"
+    # Phone, published on purpose (B, 2026-10-08). Shown as written; the tel:
+    # link and the JSON-LD telephone strip the spaces and dashes.
+    phone: "+1 215-872-2791"
 
 mediaTypes:
   text/plain:

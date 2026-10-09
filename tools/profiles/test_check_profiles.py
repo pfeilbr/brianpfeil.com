@@ -17,15 +17,20 @@ def copies(place, skip=()):
                    for k, (h, where) in cp.HANDLES.items() if place in where and k not in skip)
 
 
-def home(keys=cp.PROFILES, same=cp.SAME_AS, foot=cp.FOOTER, skip=()):
-    ld = json.dumps({"@graph": [{"@type": "Person", "sameAs": [same[k] for k in same]}]})
+def tel(place, skip=()):
+    return "" if place in skip else f"<a href=tel:{cp.PHONE}>call</a>"
+
+
+def home(keys=cp.PROFILES, same=cp.SAME_AS, foot=cp.FOOTER, skip=(), phone=cp.PHONE):
+    ld = json.dumps({"@graph": [{"@type": "Person", "telephone": phone,
+                                 "sameAs": [same[k] for k in same]}]})
     return (f"<script type=application/ld+json>{ld}</script>"
-            f"<div>{links(keys)}{copies('hero', skip)}</div>"
-            f"<footer>{links(foot)}{copies('footer', skip)}</footer>")
+            f"<div>{links(keys)}{copies('hero', skip)}{tel('hero', skip)}</div>"
+            f"<footer>{links(foot)}{copies('footer', skip)}{tel('footer', skip)}</footer>")
 
 
 def about_page(keys=cp.PROFILES, skip=()):
-    return links(keys) + copies("about", skip)
+    return links(keys) + copies("about", skip) + tel("about", skip)
 
 
 class CheckProfiles(unittest.TestCase):
@@ -72,6 +77,24 @@ class CheckProfiles(unittest.TestCase):
     def test_quoted_copy_attribute_counts(self):
         self.assertEqual(cp.no_copy('<button data-copy="methym00">', "hero"), [])
         self.assertEqual(cp.no_copy("<button data-copy=methym00x>", "hero"), ["wechat"])
+
+    def test_phone_missing(self):
+        errors = cp.check(self.build(about=about_page(skip=("about",)),
+                                     home_html=home(skip=("hero", "footer"), phone="")))
+        self.assertIn("/en/about/: no phone link", errors)
+        self.assertIn("/ko/ hero: no phone link", errors)
+        self.assertIn("footer: no phone link", errors)
+        self.assertIn("/fr/ JSON-LD: telephone is '', not +12158722791", errors)
+
+    def test_footer_phone_does_not_count_for_hero(self):
+        errors = cp.check(self.build(home_html=home(skip=("hero",))))
+        self.assertIn("/en/ hero: no phone link", errors)
+        self.assertNotIn("footer: no phone link", errors)
+
+    def test_quoted_tel_counts(self):
+        self.assertTrue(cp.has_tel('<a href="tel:+12158722791">'))
+        self.assertTrue(cp.has_tel('<a href="tel:&#43;12158722791" title=x>'))
+        self.assertFalse(cp.has_tel("<a href=tel:+121587227910>"))
 
     def test_unbuilt_site(self):
         self.assertTrue(cp.check(Path(tempfile.mkdtemp())))

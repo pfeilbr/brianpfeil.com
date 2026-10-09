@@ -246,6 +246,9 @@ other = "WeChat ID（{{ . }}）をコピー"
 [wechat]
 other = "WeChat"
 
+[call_me]
+other = "電話・SMS: {{ . }}"
+
 [copied]
 other = "コピーしました"
 

@@ -114,6 +114,7 @@
       "image" $img
       "jobTitle" "Principal Cloud Architect"
       "description" $desc
+      "telephone" (replaceRE `[^+0-9]` "" .Site.Params.author.phone)
       "knowsAbout" (slice "Cloud architecture" "AWS" "Serverless" "Architecture review" "Terraform" "AI")
       "sameAs" (slice
         (printf "https://github.com/%s" .Site.Params.author.github)

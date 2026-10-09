@@ -16,12 +16,16 @@ Networks with no profile URL (HANDLES: Discord, WeChat) are copy buttons
 instead of links; each must be offered wherever HANDLES says, and they are
 not in sameAs, which takes URLs only.
 
+The phone number (PHONE) is a tel: link on /about/, the home hero and the
+footer, and the Person's telephone in the JSON-LD.
+
     python3 tools/profiles/check_profiles.py --public public
 
 Exit status 1 on any problem. Standard library only.
 """
 
 import argparse
+import html as htmllib
 import json
 import re
 import sys
@@ -50,6 +54,9 @@ HANDLES = {
     "wechat": ("methym00", ("about", "hero", "footer")),
 }
 
+# Published on purpose (B, 2026-10-08).
+PHONE = "+12158722791"
+
 LD = re.compile(r'<script type="?application/ld\+json"?>(.*?)</script>', re.S)
 FOOT = re.compile(r"<footer\b.*?</footer>", re.S)
 
@@ -67,6 +74,23 @@ def no_copy(html: str, place: str) -> list[str]:
     drops the attribute quotes, so match either form."""
     return [k for k, (h, where) in HANDLES.items() if place in where
             and not re.search(rf'data-copy="?{re.escape(h)}"?[\s>]', html)]
+
+
+def has_tel(html: str) -> bool:
+    """Hugo writes the + in an attribute as &#43;, so decode first."""
+    return bool(re.search(rf'href="?tel:{re.escape(PHONE)}"?[\s>]', htmllib.unescape(html)))
+
+
+def telephone(html: str) -> str:
+    for block in LD.findall(html):
+        try:
+            data = json.loads(block)
+        except ValueError:
+            continue
+        for node in data.get("@graph", [data]):
+            if node.get("@type") == "Person" and node.get("telephone"):
+                return node["telephone"]
+    return ""
 
 
 def same_as(html: str) -> list[str]:
@@ -95,6 +119,8 @@ def check(public: Path) -> list[str]:
             errors.append(f"/{lang}/about/: no link to {k} ({PROFILES[k]})")
         for k in no_copy(about_html, "about"):
             errors.append(f"/{lang}/about/: no {k} copy button")
+        if not has_tel(about_html):
+            errors.append(f"/{lang}/about/: no phone link")
         html = home.read_text()
         foot = FOOT.search(html)
         hero = LD.sub("", html[: foot.start()] if foot else html)
@@ -102,6 +128,10 @@ def check(public: Path) -> list[str]:
             errors.append(f"/{lang}/ hero: no link to {k} ({PROFILES[k]})")
         for k in no_copy(hero, "hero"):
             errors.append(f"/{lang}/ hero: no {k} copy button")
+        if not has_tel(hero):
+            errors.append(f"/{lang}/ hero: no phone link")
+        if telephone(html) != PHONE:
+            errors.append(f"/{lang}/ JSON-LD: telephone is {telephone(html)!r}, not {PHONE}")
         sa = " ".join(same_as(html))
         for k in missing(sa, SAME_AS, SAME_AS):
             errors.append(f"/{lang}/ sameAs: missing {k} ({SAME_AS[k]})")
@@ -110,6 +140,8 @@ def check(public: Path) -> list[str]:
                 errors.append(f"footer: no link to {k} ({PROFILES[k]})")
             for k in no_copy(foot.group(0) if foot else "", "footer"):
                 errors.append(f"footer: no {k} copy button")
+            if not has_tel(foot.group(0) if foot else ""):
+                errors.append("footer: no phone link")
     return errors
 
 
@@ -121,7 +153,7 @@ def main() -> int:
         print(f"error: {e}", file=sys.stderr)
     if errors:
         return 1
-    print(f"ok: {len(PROFILES)} profiles and {len(HANDLES)} handles linked on /about/, the home hero and sameAs in all {len(LANGS)} languages, and the footer")
+    print(f"ok: {len(PROFILES)} profiles and {len(HANDLES)} handles and the phone number linked on /about/, the home hero and sameAs in all {len(LANGS)} languages, and the footer")
     return 0
 
 

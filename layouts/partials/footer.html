@@ -39,6 +39,9 @@
         <span class="social-copy-done" hidden>{{ i18n "copied" }}</span>
       </button>
       {{ end }}
+      {{ with .Site.Params.author.phone }}
+      <a href="tel:{{ replaceRE `[^+0-9]` "" . }}" class="hover:text-brand no-underline" title="{{ i18n "call_me" . }}">{{ . }}</a>
+      {{ end }}
       <a href="{{ printf "%sindex.xml" hugo.Sites.Default.Home.RelPermalink }}" class="hover:text-brand no-underline" title="{{ i18n "rss" }}">{{ i18n "rss" }}</a>
     </div>
   </div>
