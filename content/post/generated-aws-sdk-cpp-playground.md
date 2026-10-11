@@ -26,7 +26,6 @@ see `README.md` file(s) in subdirectories of [`src`](https://github.com/pfeilbr/
 ## install aws-sdk-cpp
 
 ```sh
-cd ~/dev
 git clone https://github.com/aws/aws-sdk-cpp.git
 cd aws-sdk-cpp
 mkdir build

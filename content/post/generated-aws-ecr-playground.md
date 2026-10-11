@@ -25,7 +25,6 @@ truncated = true
 ### Session
 
 ```sh
-cd ~/projects
 mkdir aws-ecr-playground
 code aws-ecr-playground
 touch Dockerfile

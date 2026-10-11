@@ -43,7 +43,6 @@ with "***REMOVED***"
 2. Run the following to update / remove from  commit history
     ```sh
     REPO_NAME="git-scratchpad"
-    cd ~/projects
     git clone --mirror https://github.com/pfeilbr/$REPO_NAME.git
     bfg --replace-text ./bfg-replace-text.txt $REPO_NAME.git
     cd $REPO_NAME.git

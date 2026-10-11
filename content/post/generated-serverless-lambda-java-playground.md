@@ -24,7 +24,7 @@ truncated = true
 ## Build and Deploy
 
 ```sh
-cd ~/projects/serverless-lambda-java-playground
+cd serverless-lambda-java-playground
 serverless create --template aws-java-maven
 mvn clean install
 sls deploy --verbose

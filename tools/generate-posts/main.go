@@ -17,13 +17,31 @@ func main() {
 		cache bool
 		debug bool
 		trim  bool
+		strip bool
 	)
 	flag.StringVar(&user, "user", "", "GitHub username")
 	flag.StringVar(&dest, "dest", "", "destination directory for generated posts")
 	flag.BoolVar(&cache, "cache", false, "cache GitHub API responses locally")
 	flag.BoolVar(&debug, "debug", false, "enable debug logging")
 	flag.BoolVar(&trim, "trim-existing", false, "apply the long-code-block rule to the generated posts already in -dest, without calling GitHub")
+	flag.BoolVar(&strip, "strip-existing", false, "apply the laptop-specific-setup rule (config local_setup) to the generated posts already in -dest, without calling GitHub")
 	flag.Parse()
+
+	if strip {
+		if dest == "" {
+			log.Fatal("-strip-existing needs -dest")
+		}
+		cfg, err := LoadConfig()
+		if err != nil {
+			log.Fatalf("config: %v", err)
+		}
+		n, err := stripExisting(dest, cfg.LocalSetup)
+		if err != nil {
+			log.Fatalf("strip: %v", err)
+		}
+		log.Printf("stripped laptop-specific setup from %d post(s)", n)
+		return
+	}
 
 	if trim {
 		if dest == "" {

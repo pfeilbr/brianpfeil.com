@@ -27,6 +27,9 @@ type Config struct {
 	// repos whose interesting work happened long after they were created.
 	DateOverrides map[string]string `yaml:"date_overrides"`
 
+	// LocalSetup is what only works on B's laptop; see localsetup.go.
+	LocalSetup LocalSetup `yaml:"local_setup"`
+
 	TitleMappings    map[string]string `yaml:"title_mappings"`
 	CasingCorrections []string         `yaml:"casing_corrections"`
 

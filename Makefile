@@ -17,6 +17,9 @@ verify: test-tools test-media test-layout test-link-check test-learn-links test-
 generate-posts: ## Regenerate generated-*.md posts from GitHub
 	cd tools/generate-posts && go run . -user=pfeilbr -dest=../../content/post -debug
 
+notes-strip: ## Strip laptop-specific setup (local_setup in the generator config) from the lab notes already in content/post (no GitHub; a no-op when clean)
+	cd tools/generate-posts && go run . -strip-existing -dest=../../content/post
+
 test-tools: ## Go tests for the post generator
 	cd tools/generate-posts && go test ./...
 
@@ -251,4 +254,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: check-post-links test-movies apps-icon test-apps test-profiles learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf
+.PHONY: notes-strip check-post-links test-movies apps-icon test-apps test-profiles learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf

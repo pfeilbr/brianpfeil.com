@@ -26,7 +26,6 @@ based on [KarlDeux/arps](https://github.com/KarlDeux/arps)
 ## Demo
 
 ```sh
-export AWS_PROFILE="hub01-admin"
 export STACK_NAME=aws-app-runner-private-service-with-private-integration
 export REGION=us-east-1
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
@@ -91,7 +90,6 @@ for (( i=0; i<$length; i++ )); do
   echo "Pausing ServiceName: $service_name"
   aws apprunner pause-service --service-arn "${service_arn}"
 done
-
 ```
 
 - log types - event logs (`/aws/apprunner/code-based-private-endpoint-1/ba93db338128426481f912edc4d493c1/service/events`), deployment logs (`/aws/apprunner/code-based-private-endpoint-1/ba93db338128426481f912edc4d493c1/service/deployment/<deployment_id>`), application logs

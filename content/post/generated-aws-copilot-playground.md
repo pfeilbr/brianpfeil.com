@@ -52,8 +52,6 @@ learn [AWS Copilot CLI](https://aws.github.io/copilot-cli/)
 
 ```sh
 # copilot does not allow use of root account.
-# copilot will use `AWS_PROFILE` setting
-export AWS_PROFILE=admin
 
 copilot init
 

@@ -25,13 +25,9 @@ learn [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide)
 
 ```sh
 pipenv install
-
-# login for boto3 credentials
-aws sso login --profile root-AWSAdministratorAccess
 ```
 
 - visit [`main.ipynb`](https://github.com/pfeilbr/amazon-bedrock-playground/blob/master/main.ipynb)
-- in vscode select `.venv` kernel in top right
 
 ---
 

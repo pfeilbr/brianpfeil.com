@@ -25,7 +25,7 @@ learn [AWS SSO](https://docs.aws.amazon.com/singlesignon/index.html)
 
 ## SSO Access Token
 
-The `aws sso` CLI commands require the `--access-token` parameter.  First login via sso (e.g. `aws sso login --profile root-AWSAdministratorAccess`), then run the following to get.
+The `aws sso` CLI commands require the `--access-token` parameter.  First login via sso (e.g. `aws sso login`), then run the following to get.
 
 ```sh
 # get cached aws sso accessToken

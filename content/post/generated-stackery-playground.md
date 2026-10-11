@@ -58,7 +58,7 @@ stackery deploy --interactive-setup
 cd src/get
 
 # invoke
-stackery local invoke -e pfeilbr-development --aws-profile admin
+stackery local invoke -e pfeilbr-development
 
 ```
 

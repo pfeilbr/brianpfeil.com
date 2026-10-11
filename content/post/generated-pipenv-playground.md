@@ -34,7 +34,6 @@ learn [pipenv](https://github.com/pypa/pipenv)
 pip3 install pipenv
 
 # create directory
-cd ~/tmp
 mkdir pipenv-playground
 cd pipenv-playground
 

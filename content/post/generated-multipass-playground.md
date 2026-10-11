@@ -49,7 +49,7 @@ multipass shell
 multipass exec capital-tapir -- ls
 
 # mount local host folder into instance
-# /Users/pfeilbr/tmp (host) => /Users/pfeilbr/tmp (instance)
+# $HOME/tmp (host) => $HOME/tmp (instance)
 multipass mount ~/tmp capital-tapir
 
 # unmount mounts

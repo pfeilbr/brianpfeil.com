@@ -24,7 +24,6 @@ learn [Amazon MemoryDB for Redis](https://aws.amazon.com/memorydb/)
 ## Demo
 
 ```sh
-export AWS_PROFILE="hub01-admin"
 export STACK_NAME=amazon-memorydb-playground
 export REGION=us-east-1
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
@@ -41,7 +40,6 @@ aws cloudformation describe-stacks \
   > stack-outputs.json
 
 sam delete --no-prompts
-
 ```
 
 ## resources

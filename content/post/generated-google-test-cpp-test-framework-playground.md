@@ -27,7 +27,6 @@ see `README.md` in each subdirectory under [`src`](https://github.com/pfeilbr/go
 
 ```sh
 # download source
-cd ~/dev
 curl -LO https://github.com/google/googletest/archive/release-1.8.1.zip
 unzip release-1.8.1.zip
 cd googletest-release-1.8.1

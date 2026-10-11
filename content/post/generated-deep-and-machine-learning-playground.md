@@ -28,7 +28,7 @@ docker hub image @ <https://hub.docker.com/r/pfeilbr/deep-and-machine-learning/>
 ## Running
 
 ```sh
-docker run -it -p 8888:8888 -p 6006:6006 -v /Users/brianpfeil/projects/deep-and-machine-learning-playground:/root/sharedfolder pfeilbr/deep-and-machine-learning:v2 bash
+docker run -it -p 8888:8888 -p 6006:6006 -v /path/to/deep-and-machine-learning-playground:/root/sharedfolder pfeilbr/deep-and-machine-learning:v2 bash
 
 # this lands you at a bash prompt in the container
 # start jupyter

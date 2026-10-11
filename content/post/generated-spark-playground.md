@@ -23,9 +23,7 @@ Project to learn and experiment with the [Spark](https://spark.apache.org) clust
 
 ## Setup
 
-spark installed at `~/dev/spark-2.2.0-bin-hadoop2.7` and is part of `PATH` in `.bash_profile`
-
-	export SPARK_HOME=~/dev/spark-2.2.0-bin-hadoop2.7
+	export SPARK_HOME=/path/to/spark-2.2.0-bin-hadoop2.7
 	export PATH=$SPARK_HOME/bin:$PATH
 
 ## Running an example
@@ -34,7 +32,7 @@ spark installed at `~/dev/spark-2.2.0-bin-hadoop2.7` and is part of `PATH` in `.
 
 ## Docker
 
-	$ docker run -i -t -P --name spark -v /Users/pfeilbr/Dropbox/mac01/Users/brianpfeil/projects/spark-playground:/src sequenceiq/spark:latest bash
+	$ docker run -i -t -P --name spark -v /path/to/spark-playground:/src sequenceiq/spark:latest bash
 
 ## Resources
 

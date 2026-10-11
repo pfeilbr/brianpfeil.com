@@ -231,22 +231,22 @@ PREFIX="v0.0.1"
 TARGET="${PREFIX}/about"
 REDIRECT_LOCATION="/about/"
 
-aws --profile automation-user s3api put-object \
+aws s3api put-object \
     --bucket "${BUCKET}" \
     --key "${TARGET}" \
     --website-redirect-location "${REDIRECT_LOCATION}" \
     --content-length "0"
 
-aws --profile automation-user s3api head-object \
+aws s3api head-object \
     --bucket "${BUCKET}" \
     --key "${TARGET}"
 
-aws --profile automation-user s3api delete-object \
+aws s3api delete-object \
     --bucket "${BUCKET}" \
     --key "${TARGET}"
 
 
-aws --profile automation-user s3api list-objects \
+aws s3api list-objects \
     --bucket "${BUCKET}"
 ```
 

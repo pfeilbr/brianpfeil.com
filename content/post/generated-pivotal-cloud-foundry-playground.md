@@ -72,8 +72,6 @@ cf login -a https://api.local.pcfdev.io --skip-ssl-validation
 open https://apps.local.pcfdev.io
 # login: admin/admin
 
-cd ~/dev
-
 # fetch sample
 git clone https://github.com/cloudfoundry-samples/spring-music
 cd spring-music

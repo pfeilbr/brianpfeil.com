@@ -21,8 +21,6 @@ truncated = true
 
 project to learn and develop with [V8](https://developers.google.com/v8/)
 
-> Root V8 source directory is @ `~/dev/v8` on local machine
-
 ## Build Source and Sample(s)
 
 1. Follow steps at https://github.com/v8/v8/wiki/Building-from-Source up until, but not inlcuding `tools/dev/v8gen.py ...`

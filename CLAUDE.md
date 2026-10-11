@@ -11,7 +11,11 @@ them, not `site-posts.html`, for anything a visitor browses). Both pages
 share `partials/post-list-page.html` (switch, search, infinite scroll, a
 one-line summary per row from `partials/post-summary.html`). Note URLs stay
 `/post/<slug>/`; each note opens with a "Lab note" line naming its repo.
-Search covers both and takes `?q=`.
+Search covers both and takes `?q=`. Lab notes carry no laptop-specific setup: the generator's
+`local_setup` (B's AWS profiles, SSO logins, `/Users/pfeilbr` paths,
+`cd ~/projects`, "where I installed X" lines) is applied to every README,
+and `make notes-strip` re-applies it to the files in place. A new personal
+profile or path goes in that config, not in a hand edit of a note.
 
 **A finished project has one page: `/projects/<x>/`.** Repos in the
 generator's `project_repos` get `[build] list/render = "never"` in their

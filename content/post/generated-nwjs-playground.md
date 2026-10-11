@@ -52,7 +52,7 @@ alias nw="/Applications/nwjs.app/Contents/MacOS/nwjs"
 Run
 
 ```bash
-cd ~/projects/nwjs-playground
+cd nwjs-playground
 nw .
 ```
 
@@ -61,7 +61,7 @@ nw .
 1. Create `.nw` file
 
 	```bash
-	cd ~/projects/nwjs-playground
+	cd nwjs-playground
 	zip -r ../${PWD##*/}.nw *
 	```
 

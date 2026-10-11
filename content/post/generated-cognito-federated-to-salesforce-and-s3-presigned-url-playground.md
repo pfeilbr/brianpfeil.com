@@ -22,7 +22,6 @@ truncated = true
 ## Login with Cognito Federated to Salesforce Example
 
 * see [`index.html`](https://github.com/pfeilbr/cognito-federated-to-salesforce-and-s3-presigned-url-playground/blob/master/index.html)
-* see `~/Dropbox/notes/static-s3-cognito-authentication.md` on local machine also for greater detail on setup
 
 ```sh
 # local dev

@@ -24,7 +24,6 @@ learn kubernetes.  based on tutorial at <http://kubernetes.io/docs/tutorials/kub
 ### Install and start [minikube](https://github.com/kubernetes/minikube)
 
 ```sh
-$ cd ~/tmp
 $ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.11.0/minikube-darwin-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 
 # verify install

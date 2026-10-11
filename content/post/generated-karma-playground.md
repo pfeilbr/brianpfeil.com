@@ -26,7 +26,7 @@ Project to learn and experiment with the Karma javascript test runner.  Karma ru
 
 1. Change to project directory
 
-		$ cd ~/projects/karma-playground
+		$ cd karma-playground
 
 2. New NPM project
 	

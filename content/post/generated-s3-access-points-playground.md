@@ -94,7 +94,6 @@ aws --profile partner-01 s3api get-object --key a.c --bucket 'arn:aws:s3:us-east
 ## Scratch
 
 ```sh
-cd ~/tmp
 aws s3 cp a.c s3://s3-access-points-playground/
 
 # verify assume role works
@@ -103,6 +102,5 @@ aws --profile partner-01 sts get-caller-identity
 aws --profile partner-01 s3api get-object --key a.c --bucket 'arn:aws:s3:us-east-1:529276214230:accesspoint/partner-01-read-write' -
 
 aws --profile partner-01 sts get-caller-identity
-
 ```
 

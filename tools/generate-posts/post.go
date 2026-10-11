@@ -49,6 +49,7 @@ func buildPost(repo *github.Repository, cfg Config) (*RepoPost, error) {
 	body = stripFrontMatterAndH1(body)
 	body = convertRelativeLinksToAbsolute(body, repo.GetFullName(), repo.GetHTMLURL(), branch)
 	body = truncateLongCodeBlocks(body, repo.GetHTMLURL())
+	body = stripLocalSetup(body, repo.GetName(), cfg.LocalSetup)
 
 	title := postTitle(repo.GetName(), cfg)
 

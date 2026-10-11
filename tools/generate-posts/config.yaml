@@ -462,3 +462,36 @@ tags:
     "c++": "cpp"
     "js": "javascript"
     "go": "golang"
+
+# What in a README only works on B's laptop (localsetup.go). Applied to every
+# generated post; `make notes-strip` re-applies it to the posts already in
+# content/post/ without calling GitHub.
+local_setup:
+  # AWS CLI profiles that exist only in B's ~/.aws/config: the flag is
+  # removed and `export AWS_PROFILE=` lines are dropped. Profiles that are
+  # part of a demo (partner-01 in s3-access-points, my-lambda-role in
+  # aws-sam-golang) are deliberately not here.
+  profiles:
+    - "root-AWSAdministratorAccess"
+    - "hub01-admin"
+    - "admin"
+    - "automation-user"
+  home_dirs:
+    - "/Users/pfeilbr"
+    - "/Users/brianpfeil"
+  # `cd ~/projects` and friends: just "go to where I keep checkouts".
+  workspace_dirs:
+    - "projects"
+    - "dev"
+    - "tmp"
+  replace:
+    "/Users/pfeilbr/Dropbox/Alfred/Alfred.alfredpreferences": "/path/to/Alfred.alfredpreferences"
+    "~/dev/spark-2.2.0-bin-hadoop2.7": "/path/to/spark-2.2.0-bin-hadoop2.7"
+    "~/dev/emsdk": "/path/to/emsdk"
+  # Lines that only say where something lives on B's machine.
+  drop_lines:
+    - '(?i)^\s*[-*]\s+in vs ?code,? select .*kernel'
+    - '(?i)^>?\s*Root V8 source directory is @ .* on local machine'
+    - '^spark installed at '
+    # pointers to B's private notes
+    - '(?i)^\s*[-*]\s+see .*~/Dropbox/'
