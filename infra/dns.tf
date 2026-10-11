@@ -6,8 +6,7 @@
 #     Hover had one A) and www → pfeilbr.github.io
 #   - mail: MX to SES inbound (support@ → S3, the `store-in-s3` receipt rule)
 #     and SES's domain verification TXT
-#   - Hover's leftovers (mail CNAME, old ACME challenges), a wildcard to the
-#     site, and dev01, kept
+#   - Hover's leftovers (mail CNAME, old ACME challenges) and dev01, kept
 #     until the move is settled
 # The zone does nothing until the registrar's nameservers point at it
 # (output `brianpfeil_com_nameservers`).
@@ -87,15 +86,10 @@ output "brianpfeil_com_nameservers" {
   value = aws_route53_zone.brianpfeil_com.name_servers
 }
 
-# Read off Hover's DNS page (2026-10-11): three records no lookup by name finds.
-resource "aws_route53_record" "wildcard" {
-  zone_id = local.zone_id
-  name    = "*.brianpfeil.com"
-  type    = "A"
-  ttl     = 300
-  records = ["185.199.108.153"]
-}
-
+# Read off Hover's DNS page (2026-10-11): records no lookup by name finds.
+# Hover's `*` wildcard (→ GitHub Pages) is deliberately NOT copied: it sent every
+# unknown name, media.brianpfeil.com included while resolvers still asked
+# Hover, to GitHub's *.github.io certificate — a browser warning, not a site.
 resource "aws_route53_record" "dev01" {
   zone_id = local.zone_id
   name    = "dev01.brianpfeil.com"
