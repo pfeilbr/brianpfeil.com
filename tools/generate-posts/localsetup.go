@@ -17,6 +17,10 @@ type LocalSetup struct {
 	// README defines or depends on as part of its demo (a partner account,
 	// an assumed lambda role) are deliberately not listed.
 	Profiles []string `yaml:"profiles"`
+	// B's own AWS account numbers, rewritten to AWS's documented example
+	// account, 123456789012. AWS-owned accounts in a README (Ground Truth
+	// lambdas, Serverless Inc's trust account) must not be listed here.
+	Accounts []string `yaml:"accounts"`
 	// Absolute home directories, rewritten to $HOME/.
 	HomeDirs []string `yaml:"home_dirs"`
 	// Folders under ~ that B works in; a bare `cd` into one is dropped.
@@ -26,6 +30,9 @@ type LocalSetup struct {
 	// Lines (regexes) that only describe B's machine; dropped.
 	DropLines []string `yaml:"drop_lines"`
 }
+
+// ExampleAccount is the account number AWS's own documentation uses.
+const ExampleAccount = "123456789012"
 
 var (
 	fenceLine   = regexp.MustCompile("^\\s*(```|~~~)")
@@ -159,6 +166,9 @@ func stripLocalSetup(body, repoName string, ls LocalSetup) string {
 
 		for _, k := range keys {
 			line = strings.ReplaceAll(line, k, ls.Replace[k])
+		}
+		for _, a := range ls.Accounts {
+			line = strings.ReplaceAll(line, a, ExampleAccount)
 		}
 		drop := false
 		for _, d := range drops {

@@ -55,7 +55,7 @@ class StructureTest(unittest.TestCase):
         path.write_text(text)
 
     def check(self):
-        return cs.check(self.public, self.content, self.data)
+        return cs.check(self.public, self.content, self.data, accounts=["529276214230"])
 
     def test_good_site_passes(self):
         self.assertEqual(self.check(), [])
@@ -89,6 +89,17 @@ class StructureTest(unittest.TestCase):
         self.assertIn("/post/a/: contents without the has-toc article", self.check())
         self.write(self.public / "post" / "a" / "index.html", '<article class="has-toc"><nav class="toc"></nav></article>')
         self.assertEqual(self.check(), [])
+
+    def test_own_account_anywhere_in_the_build_fails(self):
+        self.write(self.public / "index.json", '[{"contents": "arn:aws:iam::529276214230:root"}]')
+        self.assertIn("/index.json: shows account 529276214230", self.check())
+
+    def test_example_account_is_fine(self):
+        self.write(self.public / "post" / "a" / "index.html", "arn:aws:iam::123456789012:root")
+        self.assertEqual(self.check(), [])
+
+    def test_accounts_read_from_the_generator_config(self):
+        self.assertEqual(cs.own_accounts(), ["529276214230"])
 
     def test_draft_notes_are_ignored(self):
         (self.content / "post" / "generated-d.md").write_text(

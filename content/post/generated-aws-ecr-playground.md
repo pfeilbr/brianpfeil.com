@@ -36,7 +36,7 @@ docker-machine ip
 docker run -p 80:80 hello-world
 docker-machine ip
 aws ecr create-repository --repository-name hello-world
-docker tag hello-world 529276214230.dkr.ecr.us-east-1.amazonaws.com/hello-world
+docker tag hello-world 123456789012.dkr.ecr.us-east-1.amazonaws.com/hello-world
 $(aws ecr get-login --no-include-email)
-docker push 529276214230.dkr.ecr.us-east-1.amazonaws.com/hello-world
+docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/hello-world
 ```

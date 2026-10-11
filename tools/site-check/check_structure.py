@@ -13,7 +13,9 @@ What it holds in place, on a built site (hugo --minify first):
   - a lab note whose repo is gone (data/repo_gone.json) links to it nowhere
     on its page;
   - every page with a table of contents marks its article .has-toc, so the
-    contents become the sidebar on wide screens.
+    contents become the sidebar on wide screens;
+  - no built page, feed or index shows B's own AWS account number (the
+    generator's local_setup accounts; examples use 123456789012).
 
     python3 tools/site-check/check_structure.py --public public
 
@@ -68,6 +70,25 @@ def project_aliases(content: Path) -> dict[str, str]:
     return out
 
 
+GENERATOR_CONFIG = REPO / "tools" / "generate-posts" / "config.yaml"
+
+
+def own_accounts(config: Path = GENERATOR_CONFIG) -> list[str]:
+    """local_setup.accounts from the generator config (no YAML library)."""
+    m = re.search(r"^  accounts:\n((?:\s+- \"?\d{12}\"?\n)+)", config.read_text(encoding="utf-8"), re.M)
+    return re.findall(r"\d{12}", m.group(1)) if m else []
+
+
+def account_leaks(public: Path, accounts: list[str]) -> list[str]:
+    """Built text files (pages, feeds, search index, llms.txt) naming one."""
+    hits = []
+    for f in sorted(public.rglob("*")):
+        if f.suffix in (".html", ".xml", ".json", ".txt") and f.is_file():
+            text = f.read_text(encoding="utf-8", errors="ignore")
+            hits += [f"/{f.relative_to(public)}: shows account {a}" for a in accounts if a in text]
+    return hits
+
+
 def page(public: Path, lang: str, path: str) -> Path:
     return public / ("" if lang == "en" else lang) / path.strip("/") / "index.html"
 
@@ -86,8 +107,9 @@ def slug_of(href: str) -> str:
     return m.group(1) if m else ""
 
 
-def check(public: Path, content: Path = REPO / "content", data: Path = REPO / "data") -> list[str]:
-    errors = []
+def check(public: Path, content: Path = REPO / "content", data: Path = REPO / "data",
+          accounts: list[str] | None = None) -> list[str]:
+    errors = account_leaks(public, own_accounts() if accounts is None else accounts)
     lab = notes(content)
     note_slugs = {s for s, n in lab.items() if not n["project"]}
     for lang in LANGS:
@@ -145,7 +167,7 @@ def main() -> int:
         print(f"error: {e}", file=sys.stderr)
     if errors:
         return 1
-    print(f"ok: nav, home, articles vs lab notes, project redirects and gone repos in all {len(LANGS)} languages")
+    print(f"ok: nav, home, articles vs lab notes, project redirects, gone repos and no own account number in all {len(LANGS)} languages")
     return 0
 
 

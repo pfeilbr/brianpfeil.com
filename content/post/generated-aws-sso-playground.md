@@ -41,7 +41,7 @@ list account assignments ([AWS::SSO::Assignment](https://docs.aws.amazon.com/AWS
 ```sh
 aws sso-admin list-account-assignments \
     --instance-arn 'arn:aws:sso:::instance/ssoins-72234101455cbc87' \
-    --account-id '529276214230' \
+    --account-id '123456789012' \
     --permission-set-arn 'arn:aws:sso:::permissionSet/ssoins-72234101455cbc87/ps-51eacb02632f0b26'
 
 ```
@@ -50,13 +50,13 @@ aws sso-admin list-account-assignments \
 {
     "AccountAssignments": [
         {
-            "AccountId": "529276214230",
+            "AccountId": "123456789012",
             "PermissionSetArn": "arn:aws:sso:::permissionSet/ssoins-72234101455cbc87/ps-51eacb02632f0b26",
             "PrincipalType": "USER",
             "PrincipalId": "906770ec60-e34082a0-033a-4dd2-90cb-9107804545e9"
         },
         {
-            "AccountId": "529276214230",
+            "AccountId": "123456789012",
             "PermissionSetArn": "arn:aws:sso:::permissionSet/ssoins-72234101455cbc87/ps-51eacb02632f0b26",
             "PrincipalType": "USER",
             "PrincipalId": "906770ec60-9d6f0b65-701c-4650-b95c-7dab0f6046d7"

@@ -48,7 +48,7 @@ curl http://aws-a-myLoa-MFYJ9QBS4CCL-673155384.us-east-1.elb.amazonaws.com
 # <h1>Hello from Lambda via ALB</h1><pre><code>{
 #   "requestContext": {
 #     "elb": {
-#       "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:529276214230:targetgroup/aws-a-myTar-1OF41QMSUR19N/c81f17d663a5ef3a"
+#       "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/aws-a-myTar-1OF41QMSUR19N/c81f17d663a5ef3a"
 #     }
 #   },
 #   "httpMethod": "GET",
@@ -74,7 +74,7 @@ curl http://aws-a-myLoa-MFYJ9QBS4CCL-673155384.us-east-1.elb.amazonaws.com/api/h
 # <h1>Hello from Lambda via ALB</h1><pre><code>{
 #   "requestContext": {
 #     "elb": {
-#       "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:529276214230:targetgroup/aws-a-myTar-1OF41QMSUR19N/c81f17d663a5ef3a"
+#       "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:123456789012:targetgroup/aws-a-myTar-1OF41QMSUR19N/c81f17d663a5ef3a"
 #     }
 #   },
 #   "httpMethod": "GET",

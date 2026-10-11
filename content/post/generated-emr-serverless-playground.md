@@ -42,7 +42,7 @@ aws emr-serverless get-application \
     "application": {
         "applicationId": "00f1du6284vksm09",
         "name": "spark-3.2",
-        "arn": "arn:aws:emr-serverless:us-east-1:529276214230:/applications/00f1du6284vksm09",
+        "arn": "arn:aws:emr-serverless:us-east-1:123456789012:/applications/00f1du6284vksm09",
         "releaseLabel": "emr-6.6.0",
         "type": "Spark",
         "state": "CREATED",
@@ -65,7 +65,7 @@ aws emr-serverless get-application \
 aws s3 cp s3://us-east-1.elasticmapreduce/emr-containers/samples/wordcount/scripts/wordcount.py s3://emr-serverless-playground-scriptbucket-1fl6snd6viqk6/scripts/
 
 APPLICATION_ID="00f1du6284vksm09"
-EXECUTION_ROLE_ARN="arn:aws:iam::529276214230:role/EMRServerless_Job_Execution_Role"
+EXECUTION_ROLE_ARN="arn:aws:iam::123456789012:role/EMRServerless_Job_Execution_Role"
 BUCKET_NAME="emr-serverless-playground-scriptbucket-1fl6snd6viqk6"
 aws emr-serverless start-job-run \
     --application-id $APPLICATION_ID \
@@ -81,7 +81,7 @@ aws emr-serverless start-job-run \
 {
     "applicationId": "00f1du6284vksm09",
     "jobRunId": "00f1e0i4fr44ra01",
-    "arn": "arn:aws:emr-serverless:us-east-1:529276214230:/applications/00f1du6284vksm09/jobruns/00f1e0i4fr44ra01"
+    "arn": "arn:aws:emr-serverless:us-east-1:123456789012:/applications/00f1du6284vksm09/jobruns/00f1e0i4fr44ra01"
 }
 
 JOB_RUN_ID="00f1e0i4fr44ra01"
@@ -94,11 +94,11 @@ aws emr-serverless get-job-run \
     "jobRun": {
         "applicationId": "00f1du6284vksm09",
         "jobRunId": "00f1e0i4fr44ra01",
-        "arn": "arn:aws:emr-serverless:us-east-1:529276214230:/applications/00f1du6284vksm09/jobruns/00f1e0i4fr44ra01",
-        "createdBy": "arn:aws:sts::529276214230:assumed-role/AWSReservedSSO_AWSAdministratorAccess_af1bdd24238208b5/pfeilbr",
+        "arn": "arn:aws:emr-serverless:us-east-1:123456789012:/applications/00f1du6284vksm09/jobruns/00f1e0i4fr44ra01",
+        "createdBy": "arn:aws:sts::123456789012:assumed-role/AWSReservedSSO_AWSAdministratorAccess_af1bdd24238208b5/pfeilbr",
         "createdAt": "2022-06-02T22:22:36.221000+00:00",
         "updatedAt": "2022-06-02T22:28:06.614000+00:00",
-        "executionRole": "arn:aws:iam::529276214230:role/EMRServerless_Job_Execution_Role",
+        "executionRole": "arn:aws:iam::123456789012:role/EMRServerless_Job_Execution_Role",
         "state": "SUCCESS",
         "stateDetails": "",
         "releaseLabel": "emr-6.6.0",

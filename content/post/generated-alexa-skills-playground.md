@@ -133,7 +133,7 @@ LaunchRequest Payload Example (full)
         "functionVersion": "$LATEST",
         "invokeid": "f8d0e1c0-5865-11e8-9638-0df1b13913aa",
         "awsRequestId": "f8d0e1c0-5865-11e8-9638-0df1b13913aa",
-        "invokedFunctionArn": "arn:aws:lambda:us-east-1:529276214230:function:aws-serverless-repository-alexaskillskitnodejsfact-6CKGX2O4QCIR"
+        "invokedFunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:aws-serverless-repository-alexaskillskitnodejsfact-6CKGX2O4QCIR"
     },
     "attributesManager": {},
     "responseBuilder": {},
@@ -228,7 +228,7 @@ IntentRequest Payload Example (full)
         "functionVersion": "$LATEST",
         "invokeid": "2e99cd8c-5866-11e8-ac6c-091c252114f4",
         "awsRequestId": "2e99cd8c-5866-11e8-ac6c-091c252114f4",
-        "invokedFunctionArn": "arn:aws:lambda:us-east-1:529276214230:function:aws-serverless-repository-alexaskillskitnodejsfact-6CKGX2O4QCIR"
+        "invokedFunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:aws-serverless-repository-alexaskillskitnodejsfact-6CKGX2O4QCIR"
     },
     "attributesManager": {},
     "responseBuilder": {},

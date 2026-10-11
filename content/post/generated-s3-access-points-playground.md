@@ -46,10 +46,10 @@ limit access to `partner-01` role
             "Sid": "AllObjectActions",
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::529276214230:role/partner-01"
+                "AWS": "arn:aws:iam::123456789012:role/partner-01"
             },
             "Action": "s3:*Object",
-            "Resource": ["arn:aws:s3:us-east-1:529276214230:accesspoint/partner-01-read-write/object/*"]
+            "Resource": ["arn:aws:s3:us-east-1:123456789012:accesspoint/partner-01-read-write/object/*"]
         }
     ]
 }
@@ -57,13 +57,13 @@ limit access to `partner-01` role
 
 **Access Point Hostname**
 
-<https://partner-01-read-write-529276214230.s3-accesspoint.us-east-1.amazonaws.com>
+<https://partner-01-read-write-123456789012.s3-accesspoint.us-east-1.amazonaws.com>
 
 ### Example Usage
 
 ```sh
 # get `a.c` using `partner-01` role
-aws --profile partner-01 s3api get-object --key a.c --bucket 'arn:aws:s3:us-east-1:529276214230:accesspoint/partner-01-read-write' -
+aws --profile partner-01 s3api get-object --key a.c --bucket 'arn:aws:s3:us-east-1:123456789012:accesspoint/partner-01-read-write' -
 ```
 
 ## Resources
@@ -99,7 +99,7 @@ aws s3 cp a.c s3://s3-access-points-playground/
 # verify assume role works
 aws --profile partner-01 sts get-caller-identity
 
-aws --profile partner-01 s3api get-object --key a.c --bucket 'arn:aws:s3:us-east-1:529276214230:accesspoint/partner-01-read-write' -
+aws --profile partner-01 s3api get-object --key a.c --bucket 'arn:aws:s3:us-east-1:123456789012:accesspoint/partner-01-read-write' -
 
 aws --profile partner-01 sts get-caller-identity
 ```

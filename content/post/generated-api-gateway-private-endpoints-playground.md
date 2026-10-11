@@ -46,7 +46,7 @@ configure API Gateway private endpoint that leverages HTTP proxy integration.  T
             "Effect": "Deny",
             "Principal": "*",
             "Action": "execute-api:Invoke",
-            "Resource": "arn:aws:execute-api:us-east-1:529276214230:scheqe4ymi/*",
+            "Resource": "arn:aws:execute-api:us-east-1:123456789012:scheqe4ymi/*",
             "Condition": {
                 "StringNotEquals": {
                     "aws:sourceVpce": "vpce-02b487f2d021986fb"
@@ -57,7 +57,7 @@ configure API Gateway private endpoint that leverages HTTP proxy integration.  T
             "Effect": "Allow",
             "Principal": "*",
             "Action": "execute-api:Invoke",
-            "Resource": "arn:aws:execute-api:us-east-1:529276214230:scheqe4ymi/*"
+            "Resource": "arn:aws:execute-api:us-east-1:123456789012:scheqe4ymi/*"
         }
     ]
 }

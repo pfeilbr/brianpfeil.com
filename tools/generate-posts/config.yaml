@@ -476,6 +476,11 @@ local_setup:
     - "hub01-admin"
     - "admin"
     - "automation-user"
+  # B's own AWS account (personal, hub01), shown as AWS's documented example
+  # account 123456789012 instead. Only B's: README examples also name
+  # AWS-owned accounts (Ground Truth, Serverless Inc) that must stay.
+  accounts:
+    - "529276214230"
   home_dirs:
     - "/Users/pfeilbr"
     - "/Users/brianpfeil"

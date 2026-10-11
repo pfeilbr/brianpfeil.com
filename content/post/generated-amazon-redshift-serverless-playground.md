@@ -38,7 +38,7 @@ learn [Amazon Redshift Serverless](https://docs.aws.amazon.com/redshift/latest/m
 ## Demo
 
 ```sh
-psql -h workgroup01.529276214230.us-east-1.redshift-serverless.amazonaws.com -d sample_data_dev -p 5439 -U uadmin
+psql -h workgroup01.123456789012.us-east-1.redshift-serverless.amazonaws.com -d sample_data_dev -p 5439 -U uadmin
 
 # create user
 CREATE USER user01 with password 'Password01' createdb connection limit 30;
@@ -52,7 +52,7 @@ group by trunc(start_time)
 order by 1
 
 # login as `user01`
-psql -h workgroup01.529276214230.us-east-1.redshift-serverless.amazonaws.com -d sample_data_dev -p 5439 -U user01
+psql -h workgroup01.123456789012.us-east-1.redshift-serverless.amazonaws.com -d sample_data_dev -p 5439 -U user01
 
 # list databases
 \l

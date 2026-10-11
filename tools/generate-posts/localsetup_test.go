@@ -9,6 +9,7 @@ import (
 
 var testLocal = LocalSetup{
 	Profiles:      []string{"root-AWSAdministratorAccess", "hub01-admin", "admin"},
+	Accounts:      []string{"529276214230"},
 	HomeDirs:      []string{"/Users/pfeilbr"},
 	WorkspaceDirs: []string{"projects", "dev", "tmp"},
 	Replace:       map[string]string{"~/dev/emsdk": "/path/to/emsdk"},
@@ -53,6 +54,11 @@ func TestStripLocalSetup(t *testing.T) {
 			"VIDEO=\"$HOME/Downloads/a.mp4\"\n# $HOME/tmp (host)"},
 		{"image file names that merely contain the path are untouched",
 			"![](https://x/__Users_pfeilbr_Dropbox_a.png)", "![](https://x/__Users_pfeilbr_Dropbox_a.png)"},
+		{"B's account becomes the documented example account, in code, ARNs and hostnames",
+			"docker push 529276214230.dkr.ecr.us-east-1.amazonaws.com/x\n\"Arn\": \"arn:aws:sts::529276214230:assumed-role/r\"\n<https://ap-529276214230.s3-accesspoint.us-east-1.amazonaws.com>",
+			"docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/x\n\"Arn\": \"arn:aws:sts::123456789012:assumed-role/r\"\n<https://ap-123456789012.s3-accesspoint.us-east-1.amazonaws.com>"},
+		{"other accounts are left alone",
+			"\"AWS\": \"arn:aws:iam::802587217904:root\"", "\"AWS\": \"arn:aws:iam::802587217904:root\""},
 		{"exact replacements and drop lines",
 			"$ source ~/dev/emsdk_env.sh\n- in vscode select `.venv` kernel in top right\n- visit main.ipynb",
 			"$ source /path/to/emsdk_env.sh\n- visit main.ipynb"},
@@ -120,7 +126,7 @@ func TestConfigLocalSetupLoads(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(cfg.LocalSetup.Profiles) == 0 || len(cfg.LocalSetup.HomeDirs) == 0 {
+	if len(cfg.LocalSetup.Profiles) == 0 || len(cfg.LocalSetup.HomeDirs) == 0 || len(cfg.LocalSetup.Accounts) == 0 {
 		t.Fatalf("local_setup not loaded: %+v", cfg.LocalSetup)
 	}
 	// Every pattern must compile, or the generator panics mid-run.

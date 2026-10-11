@@ -13,7 +13,9 @@ one-line summary per row from `partials/post-summary.html`). Note URLs stay
 `/post/<slug>/`; each note opens with a "Lab note" line naming its repo.
 Search covers both and takes `?q=`. Lab notes carry no laptop-specific setup: the generator's
 `local_setup` (B's AWS profiles, SSO logins, `/Users/pfeilbr` paths,
-`cd ~/projects`, "where I installed X" lines) is applied to every README,
+`cd ~/projects`, "where I installed X" lines, and his account number
+529276214230, shown as AWS's example 123456789012 — the structure check
+fails on any built page that still has it) is applied to every README,
 and `make notes-strip` re-applies it to the files in place. A new personal
 profile or path goes in that config, not in a hand edit of a note.
 

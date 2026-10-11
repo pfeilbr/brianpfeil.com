@@ -49,7 +49,7 @@ curl https://17xns8g41h.execute-api.us-east-1.amazonaws.com/Prod/start/
 
 # e.g. output
 # {
-#     "executionArn": "arn:aws:states:us-east-1:529276214230:execution:SimpleStateMachine-zIFFWgUF6O6D:53313d15-1005-44d0-84a0-ea57b66d1ac3",
+#     "executionArn": "arn:aws:states:us-east-1:123456789012:execution:SimpleStateMachine-zIFFWgUF6O6D:53313d15-1005-44d0-84a0-ea57b66d1ac3",
 #     "startDate": 1.597426336318E9
 # }
 

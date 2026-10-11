@@ -46,7 +46,7 @@ custom:
     collectLambdaLogs: false
 ```
 
-Serverless framework creates a role during the deploy. This allows for the cloudwatch log group logs to be sent to serverless SaaS app.  e.g. `arn:aws:iam::529276214230:role/serverless-with-dashboard-EnterpriseLogAccessIamRo-19SDI69RM1KJ4`
+Serverless framework creates a role during the deploy. This allows for the cloudwatch log group logs to be sent to serverless SaaS app.  e.g. `arn:aws:iam::123456789012:role/serverless-with-dashboard-EnterpriseLogAccessIamRo-19SDI69RM1KJ4`
 
 ![](https://www.evernote.com/l/AAFnznpUKxhHjIXCHwFwzUcmYXBdiLCgln0B/image.png)
 
@@ -60,7 +60,7 @@ inline policy
                 "logs:FilterLogEvents"
             ],
             "Resource": [
-                "arn:aws:logs:us-east-1:529276214230:log-group:/aws/lambda/serverless-with-dashboard-playground-01-dev-hello:*"
+                "arn:aws:logs:us-east-1:123456789012:log-group:/aws/lambda/serverless-with-dashboard-playground-01-dev-hello:*"
             ],
             "Effect": "Allow"
         }

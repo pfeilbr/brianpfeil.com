@@ -98,7 +98,7 @@ EOF
 
 # generate access key pair for role
 # creates an IAM user with the policy inlined.
-# e.g. arn:aws:iam::529276214230:user/vault-root-my-role-1620146368-5005
+# e.g. arn:aws:iam::123456789012:user/vault-root-my-role-1620146368-5005
 vault read aws/creds/my-role
 
 

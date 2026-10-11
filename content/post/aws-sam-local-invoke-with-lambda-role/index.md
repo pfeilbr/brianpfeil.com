@@ -83,7 +83,7 @@ If successful, the response will look like.
 {
     "UserId": "AROAXWO2SDPLLBS55Q345:botocore-session-1596129185",
     "Account": "xxxxxxxxxxxx",
-    "Arn": "arn:aws:sts::529276214230:assumed-role/my-lambda-role/botocore-"
+    "Arn": "arn:aws:sts::123456789012:assumed-role/my-lambda-role/botocore-"
 }
 ```
 

@@ -275,7 +275,7 @@ output
         "extendedRequestId": "R2rVaGENIAMFgKA=",
         "requestTime": "26/Aug/2020:01:48:05 +0000",
         "path": "/Prod/api/",
-        "accountId": "529276214230",
+        "accountId": "123456789012",
         "protocol": "HTTP/1.1",
         "stage": "Prod",
         "domainPrefix": "9t5xagyya6",

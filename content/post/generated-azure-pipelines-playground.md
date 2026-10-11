@@ -254,7 +254,7 @@ policy components
 ```json
 {
     "Effect": "Allow",
-    "Principal": "arn:aws:iam::529276214230:user/admin",
+    "Principal": "arn:aws:iam::123456789012:user/admin",
     "Action": "s3:*",
     "Resource": "arn:aws:s3:::dev-agency-website-s3bucketforwebsitecontent-11u56g1n9u9oo/*",
 },

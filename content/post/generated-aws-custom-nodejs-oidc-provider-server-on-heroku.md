@@ -98,7 +98,7 @@ example of a custom nodejs OIDC provider server running on heroku for use as a c
     ![](https://www.evernote.com/l/AAEis9B1oNZLAqxl-RNwG1Q_UVdbLP0lPlkB/image.png)
 
 1. Give the role a name (e.g. `custom-oidc-role-example-01`)
-    note role ARN.  e.g. `arn:aws:iam::529276214230:role/custom-oidc-role-example-01`
+    note role ARN.  e.g. `arn:aws:iam::123456789012:role/custom-oidc-role-example-01`
     ![](https://www.evernote.com/l/AAEis9B1oNZLAqxl-RNwG1Q_UVdbLP0lPlkB/image.png)
 
     ![](https://www.evernote.com/l/AAEI-_h4KrhEDKAojtRY38L_EJ5CSh1Ww1IB/image.png)
@@ -123,7 +123,7 @@ example of a custom nodejs OIDC provider server running on heroku for use as a c
 1. Call `assume-role-with-web-identity` with role-arn, role-session-name (can be anything), and web-identity-token (`id_token` from step above)
     ```sh
     aws sts assume-role-with-web-identity \
-    --role-arn 'arn:aws:iam::529276214230:role/custom-oidc-role-example-01' \
+    --role-arn 'arn:aws:iam::123456789012:role/custom-oidc-role-example-01' \
     --role-session-name 'user01' \
     --web-identity-token '<id_token>'
     ```

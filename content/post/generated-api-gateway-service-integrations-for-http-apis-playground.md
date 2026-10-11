@@ -55,7 +55,7 @@ curl --header "Content-Type: application/json" \
 aws logs tail "apigateway-http-api-service-integration/EventBus"
 
 # response
-# 2021-04-02T23:47:46+00:00 ca4b84fb-60f2-302d-b6ce-90338469d249 {"version":"0","id":"11555ee7-774f-e922-1022-46401bbe5f9b","detail-type":"MyDetailType","source":"demo","account":"529276214230","time":"2021-04-02T23:47:46Z","region":"us-east-1","resources":[],"detail":{"action":"withdrawal","amount":100}}
+# 2021-04-02T23:47:46+00:00 ca4b84fb-60f2-302d-b6ce-90338469d249 {"version":"0","id":"11555ee7-774f-e922-1022-46401bbe5f9b","detail-type":"MyDetailType","source":"demo","account":"123456789012","time":"2021-04-02T23:47:46Z","region":"us-east-1","resources":[],"detail":{"action":"withdrawal","amount":100}}
 
 # cleanup
 STACK_NAME="apig-svc-int-eb-cwl-01"

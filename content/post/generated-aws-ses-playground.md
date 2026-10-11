@@ -88,7 +88,7 @@ aws ses send-email \
 
 ![](https://www.evernote.com/l/AAGSNu1zXqpCG5BHQmlu-0ioPQSr1yW5sWYB/image.png)
 
-Creates IAM user `arn:aws:iam::529276214230:user/ses-smtp-user.20210330-092121` with following policy
+Creates IAM user `arn:aws:iam::123456789012:user/ses-smtp-user.20210330-092121` with following policy
 
 ```json
 {

@@ -45,7 +45,7 @@ aws dynamodb list-exports # in progress
 {
     "ExportSummaries": [
         {
-            "ExportArn": "arn:aws:dynamodb:us-east-1:529276214230:table/dynamodb-export-to-s3-and-query-with-athena-playground-v2-MyTable-1WGSJ3W2WJWPK/export/01605130432834-8a918b87",
+            "ExportArn": "arn:aws:dynamodb:us-east-1:123456789012:table/dynamodb-export-to-s3-and-query-with-athena-playground-v2-MyTable-1WGSJ3W2WJWPK/export/01605130432834-8a918b87",
             "ExportStatus": "IN_PROGRESS"
         }
     ]
@@ -59,7 +59,7 @@ aws dynamodb list-exports # completed
 {
     "ExportSummaries": [
         {
-            "ExportArn": "arn:aws:dynamodb:us-east-1:529276214230:table/dynamodb-export-to-s3-and-query-with-athena-playground-v2-MyTable-1WGSJ3W2WJWPK/export/01605130432834-8a918b87",
+            "ExportArn": "arn:aws:dynamodb:us-east-1:123456789012:table/dynamodb-export-to-s3-and-query-with-athena-playground-v2-MyTable-1WGSJ3W2WJWPK/export/01605130432834-8a918b87",
             "ExportStatus": "COMPLETED"
         }
     ]

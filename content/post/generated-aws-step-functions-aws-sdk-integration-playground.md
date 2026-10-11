@@ -44,7 +44,7 @@ aws cloudformation deploy \
 
 # execute step fn
 aws stepfunctions start-execution \
-  --state-machine-arn "arn:aws:states:us-east-1:529276214230:stateMachine:Gather-S3-Bucket-Info-Standard" \
+  --state-machine-arn "arn:aws:states:us-east-1:123456789012:stateMachine:Gather-S3-Bucket-Info-Standard" \
   --input "{}"
 
 ```
