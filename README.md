@@ -126,6 +126,8 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make social-kit` | Write `tools/social/build/kit.html`: ready-to-post copy per channel for every learn path, guide and course, one per weekday |
 | `make devto-preview` | Convert the architecture guides to dev.to Markdown in `tools/social/build/devto/` |
 | `make devto-push` | Create/update dev.to drafts of the guides, canonical to this site (needs `DEVTO_API_KEY`) |
+| `make newsletter-send` | Send the issues in `tools/newsletter/issues/` that aren't in `sent.json` yet, through Buttondown (needs `BUTTONDOWN_API_KEY`); without the key, `python3 tools/newsletter/send.py` lists what's pending |
+| `make test-newsletter` | Tests for the newsletter sender; every issue must parse and link only to this site |
 | `make social-post` | Dry run: what the weekday Action posts next to Bluesky and Mastodon |
 | `make ai-refresh` | Fetch every `/ai/` source and rewrite `data/ai.json` (the daily Action does this) |
 | `make ai-i18n` | Write the `/ai/` UI strings into all nine i18n files |

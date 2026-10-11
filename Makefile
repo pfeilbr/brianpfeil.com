@@ -4,7 +4,7 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-subscriptions test-ai test-ai-page test-social test-ig-carousel test-movies test-apps test-profiles ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-subscriptions test-ai test-ai-page test-social test-newsletter test-ig-carousel test-movies test-apps test-profiles ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
 	python3 tools/site-check/check_site.py --public public
@@ -183,6 +183,12 @@ social-post: ## Dry run: show what the weekday Action would post next to Bluesky
 
 test-social: ## Unit tests for the social kit, poster and dev.to cross-poster
 	python3 -m unittest discover -s tools/social/tests
+
+test-newsletter: ## Tests for the newsletter sender, and a check of every issue and the sent ledger
+	python3 -m unittest discover -s tools/newsletter -p 'test_*.py'
+
+newsletter-send: ## Send newsletter issues not yet in tools/newsletter/sent.json through Buttondown (needs BUTTONDOWN_API_KEY)
+	python3 tools/newsletter/send.py --send
 
 ig-carousel: ## Instagram text carousels of the bipolar post (tools/ig-carousel/build/review.html; ICLOUD=1 also copies them to iCloud Drive; needs Chrome, poppler)
 	python3 tools/ig-carousel/carousel.py $(if $(ICLOUD),--icloud)

@@ -377,6 +377,16 @@ touching a template:
 Buttondown (double opt-in, unsubscribe handled there). No script, no
 third-party request until someone presses Subscribe.
 
+**Issues** are Markdown files in `tools/newsletter/issues/` (front matter
+`subject`, `url`); `tools/newsletter/sent.json` is the ledger of what has
+gone out (Buttondown id + archive URL), so nothing is sent twice. Five went
+out on 2026-10-11 (four guides + the courses), sent by hand in the
+Buttondown editor from B's Chrome session, since there is no API key yet.
+With `BUTTONDOWN_API_KEY` set, `make newsletter-send` sends new issues and
+records them. In the editor, the first input after `/emails/new` loads is
+dropped, and an empty subject is auto-filled from the body: paste the body,
+then set the subject. Archive: https://buttondown.com/pfeilbr/archive/
+
 ## Social
 
 Every page but home has a Hugo-drawn share card (`partials/og-image.html`).
