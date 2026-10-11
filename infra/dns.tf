@@ -111,3 +111,33 @@ resource "aws_route53_record" "old_acme_www" {
   ttl     = 300
   records = ["dkOTzcON4bTWX4Xt0ETvbM6U3Rv2WxqRHZy3u7olZvY"]
 }
+
+# One wildcard certificate for every app at <app>.brianpfeil.com (media,
+# relhub, …), used by each app's CloudFront distribution. A wildcard on
+# purpose: certificate-transparency logs then show *.brianpfeil.com and never
+# the name of any one app.
+resource "aws_acm_certificate" "apps" {
+  domain_name       = "*.brianpfeil.com"
+  validation_method = "DNS"
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_route53_record" "apps_validation" {
+  zone_id         = local.zone_id
+  name            = one(aws_acm_certificate.apps.domain_validation_options).resource_record_name
+  type            = one(aws_acm_certificate.apps.domain_validation_options).resource_record_type
+  ttl             = 60
+  records         = [one(aws_acm_certificate.apps.domain_validation_options).resource_record_value]
+  allow_overwrite = true
+}
+
+resource "aws_acm_certificate_validation" "apps" {
+  certificate_arn         = aws_acm_certificate.apps.arn
+  validation_record_fqdns = [aws_route53_record.apps_validation.fqdn]
+}
+
+output "apps_certificate_arn" {
+  value = aws_acm_certificate_validation.apps.certificate_arn
+}
