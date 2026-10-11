@@ -4,6 +4,7 @@ description = "Um PWA para reduzir uma lista de faculdades a uma só: guias de v
 date = 2026-07-21T00:00:00Z
 draft = false
 weight = -5
+repo = "pfeilbr/college-pilot"
 +++
 
 Um PWA movido a dados para reduzir uma lista de faculdades a uma única escolha. Cada campus ganha um guia de visita completo; um estimador de auxílio financeiro dá conta dos casos espinhosos (inclusive renda de pais divorciados); uma tabela comparativa lado a lado junta os números; e um Quadro de Decisão transforma as notas dadas no dia da visita numa lista final ordenada.

@@ -28,6 +28,13 @@
   {{ end }}
 {{ end }}
 
+{{- /* A finished project's page beats its README: projects (translated, in
+   this language) override whatever a post said about the same repo. */ -}}
+{{ with site.GetPage "/projects" }}{{ range .Pages }}{{ $p := . }}{{ with $p.Params.repo }}
+  {{ $parts := split . "/" }}
+  {{ if eq (len $parts) 2 }}{{ $articles = merge $articles (dict (lower (index $parts 1)) (dict "u" $p.RelPermalink "t" $p.Title)) }}{{ end }}
+{{ end }}{{ end }}{{ end }}
+
 {{ $areas := dict }}
 {{ with $data }}{{ range .areas }}{{ $areas = merge $areas (dict .key (i18n (printf "gh_area_%s" .key))) }}{{ end }}{{ end }}
 {{ $tracks := dict }}

@@ -7,50 +7,50 @@
 # language's root; `icon` is a glyph id in partials/icons/sprite-topics.html.
 
 sections:
-  - key: apps
-    path: apps
-    icon: i-device
   - key: projects
     path: projects
     icon: i-rocket
-  - key: architecture
-    path: architecture
-    icon: i-layers
-  - key: courses
-    path: courses
-    icon: i-doc
-  - key: music
-    path: music
-    icon: i-music
-  - key: subscriptions
-    path: subscriptions
-    icon: i-youtube
+  - key: apps
+    path: apps
+    icon: i-device
+  - key: notes
+    path: notes
+    icon: i-beaker
+  - key: ai
+    path: ai
+    icon: i-sparkles
+  - key: github
+    path: github
+    icon: i-github
   - key: resume
     path: resume-full
     icon: i-briefcase
-  - key: archive
-    path: archive
-    icon: i-archive
-  - key: tags
-    path: tags
-    icon: i-tag
 
-# Profiles linked from the hero. Names are brand names, so not translated.
+# Guides, Courses, Articles, Learn and "Off the clock" (media, movies, music,
+# subscriptions) are wide cards drawn by the template. Archive and Tags are
+# only in the footer now: they are ways to browse, not reasons to visit.
+
+# Profiles. Names are brand names, so not translated. The hero shows only
+# the ones marked hero: true (the professional four); /about/ lists them all.
 social:
   - name: GitHub
+    hero: true
     url: https://github.com/pfeilbr
     icon: i-github
   - name: LinkedIn
+    hero: true
     url: https://www.linkedin.com/in/brian-pfeil-175a011/
     icon: i-linkedin
   - name: Instagram
     url: https://www.instagram.com/pfeilbr/
     icon: i-instagram
   - name: X (Twitter)
+    hero: true
     url: https://twitter.com/pfeilbr
     icon: i-x
     me: true
   - name: YouTube
+    hero: true
     url: https://www.youtube.com/@pfeilbr
     icon: i-youtube
   - name: Pinterest

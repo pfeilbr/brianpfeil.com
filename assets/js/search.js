@@ -16,7 +16,8 @@
     noMatches: "No matches found.",
     oneMatch: "1 match",
     nMatches: "%d matches",
-    topMatches: "top %d matches"
+    topMatches: "top %d matches",
+    labNote: "Lab note"
   };
 
   function count(tpl, n) { return tpl.replace("%d", n); }
@@ -31,9 +32,11 @@
   resultsContainer.parentNode.insertBefore(status, resultsContainer);
 
   // Update placeholder with post count
-  if (typeof postCount !== "undefined") {
-    searchInput.placeholder = count(T.placeholderCount, postCount);
-  }
+  // searchCount is everything the index covers (articles and lab notes);
+  // postCount, the length of the list on this page, is the fallback.
+  var total = typeof searchCount !== "undefined" ? searchCount
+    : (typeof postCount !== "undefined" ? postCount : 0);
+  if (total) searchInput.placeholder = count(T.placeholderCount, total);
 
   function fetchIndex(cb) {
     if (indexCache) return cb(indexCache);
@@ -191,7 +194,9 @@
       highlightInto(link, item.title || "", matcher);
 
       var dateEl = el.querySelector(".search-result-date");
-      dateEl.textContent = item.date || "";
+      dateEl.textContent = item.kind === "note"
+        ? T.labNote + (item.date ? " \u00b7 " + item.date : "")
+        : (item.date || "");
 
       var snippetEl = el.querySelector(".search-result-snippet");
       var snippet = buildSnippet(item.contents || "", terms || []);
@@ -303,4 +308,27 @@
     if (sentinel) sentinel.style.display = query ? "none" : "";
     origOnInput();
   };
+
+  // The query lives in the address bar (?q=…), so a search can be linked
+  // to, bookmarked, and survives the back button.
+  var urlTimer = null;
+  function syncUrl() {
+    try {
+      var u = new URL(window.location.href);
+      var q = searchInput.value.trim();
+      if (q) u.searchParams.set("q", q); else u.searchParams.delete("q");
+      window.history.replaceState(null, "", u.pathname + u.search + u.hash);
+    } catch (e) { /* old browser: the search still works, just unlinked */ }
+  }
+  searchInput.addEventListener("input", function () {
+    clearTimeout(urlTimer);
+    urlTimer = setTimeout(syncUrl, 400);
+  });
+  var initial = null;
+  try { initial = new URLSearchParams(window.location.search).get("q"); } catch (e) {}
+  if (initial) {
+    searchInput.value = initial;
+    if (kbdHint) kbdHint.style.display = "none";
+    onInput();
+  }
 })();

@@ -11,6 +11,15 @@ title = "{{ .Title }}"
 repoFullName = "{{ .Repo.GetFullName }}"
 repoHTMLURL = "{{ .Repo.GetHTMLURL }}"
 truncated = true
+{{- if eq .Category "project" }}
+
+# A finished project lives on its /projects/ page, which shows this README
+# under "Under the hood" and redirects the old /post/ URL. So this file is
+# never listed or rendered on its own.
+[build]
+  list = "never"
+  render = "never"
+{{- end }}
 
 +++
 

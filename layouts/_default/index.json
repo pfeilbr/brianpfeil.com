@@ -17,6 +17,6 @@
     {{- end }}{{ end }}{{ end -}}
     {{- $contents = delimit $words " · " | truncate 1500 | htmlUnescape -}}
   {{- end -}}
-  {{- $.Scratch.Add "index" (dict "title" .Title "tags" .Params.tags "categories" .Params.categories "contents" $contents "permalink" .RelPermalink "date" (.Date.Format "January 2, 2006")) -}}
+  {{- $.Scratch.Add "index" (dict "title" .Title "kind" (.Params.kind | default "") "tags" .Params.tags "categories" .Params.categories "contents" $contents "permalink" .RelPermalink "date" (.Date.Format "January 2, 2006")) -}}
 {{- end -}}
 {{- $.Scratch.Get "index" | jsonify -}}

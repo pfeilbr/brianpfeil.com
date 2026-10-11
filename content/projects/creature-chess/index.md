@@ -4,6 +4,8 @@ description = "Full-rules chess with monster pieces, built for a kid learning th
 date = 2026-08-24T00:00:00Z
 draft = false
 weight = -7
+repo = "pfeilbr/creature-chess"
+aliases = ["/post/creature-chess/"]
 +++
 
 Real chess, monster pieces. A complete tournament-rules chess game that runs entirely in the browser — castling, en passant, promotion, the lot — wrapped in original creature artwork so a kid learning the real game actually wants to play it. Legal-move helpers, hints, take-backs, and trainer badges.

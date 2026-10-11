@@ -26,11 +26,18 @@
       &middot; {{ i18n "aws_community_builder" }}
     </p>
     <p class="hub-bio">{{ i18n "hub_bio" }}</p>
+    {{- /* The three things worth a stranger's time, as buttons. */}}
+    <nav class="hub-cta" aria-label="{{ i18n "hub_cta_label" }}">
+      <a class="hub-cta-main" href="{{ $prefix }}architecture/">{{ i18n "hub_cta_guides" }}</a>
+      <a href="{{ $prefix }}courses/">{{ i18n "hub_cta_courses" }}</a>
+      <a href="{{ $prefix }}post/">{{ i18n "hub_cta_articles" }}</a>
+    </nav>
     <div class="hub-social">
       <a class="hub-more" href="{{ $prefix }}about/">{{ i18n "hub_more_about" }}
         <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
       <span class="hub-social-links">
-        {{ range hugo.Data.home.social }}
+        {{- /* Only the profiles marked hero: true; /about/ lists them all. */}}
+        {{ range where hugo.Data.home.social "hero" true }}
         {{ if .copy }}
         {{ $t := i18n (printf "copy_%s" .key) .copy }}
         <button type="button" class="social-copy" data-copy="{{ .copy }}" title="{{ $t }}" aria-label="{{ $t }}">
@@ -58,8 +65,58 @@
 <h2 class="hub-h2">{{ i18n "hub_explore" }}</h2>
 
 <div class="hub-grid">
-  {{- /* Posts: the biggest section, so it gets the latest few inline. Not one
-     big link, because each title inside it is its own link. */ -}}
+  {{- /* Guides lead: they are what nobody else has -- what a few hundred
+     architecture reviews taught me. English only, like the guides. */ -}}
+  {{ with hugo.Sites.Default.GetPage "/architecture" }}
+  <section class="hub-card hub-wide hub-feature" data-ic="i-layers" aria-labelledby="hub-guides">
+    <div class="hub-card-head">
+      {{ partial "icons/chip.html" (dict "id" "i-layers" "size" "lg") }}
+      <div class="hub-card-text">
+        <h3 id="hub-guides" class="hub-card-title"><a href="{{ $prefix }}architecture/">{{ i18n "hub_cta_guides" }}</a></h3>
+        <p class="hub-card-blurb">{{ i18n "hub_architecture_blurb" }}</p>
+      </div>
+      <span class="hub-count">{{ i18n "hub_architecture_count" (dict "count" (len .Pages)) }}</span>
+    </div>
+    <ol class="hub-latest hub-guides">
+      {{ range .Pages.ByWeight }}
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <span class="hub-meta">{{ i18n "min_read" .ReadingTime }}</span>
+      </li>
+      {{ end }}
+    </ol>
+    <a class="hub-all" href="{{ $prefix }}architecture/">{{ i18n "hub_all_guides" }}
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
+  </section>
+  {{ end }}
+
+  {{- /* Courses: the four with the most lessons -- the deepest ones. */ -}}
+  {{ with hugo.Data.courses }}{{ with .courses }}
+  <section class="hub-card hub-wide" data-ic="i-doc" aria-labelledby="hub-courses">
+    <div class="hub-card-head">
+      {{ partial "icons/chip.html" (dict "id" "i-doc" "size" "lg") }}
+      <div class="hub-card-text">
+        <h3 id="hub-courses" class="hub-card-title"><a href="{{ $prefix }}courses/">{{ i18n "hub_courses_title" }}</a></h3>
+        <p class="hub-card-blurb">{{ i18n "hub_courses_blurb" }}</p>
+      </div>
+      <span class="hub-count">{{ i18n "hub_courses_count" (dict "count" (len .)) }}</span>
+    </div>
+    <ul class="hub-latest">
+      {{ $deep := slice }}{{ range . }}{{ $deep = $deep | append (merge . (dict "n" (len .lessons))) }}{{ end }}
+      {{ range first 4 (sort $deep "n" "desc") }}
+      <li>
+        <a href="/courses/{{ .slug }}/">{{ .title }}</a>
+        <span class="hub-meta">{{ replace (i18n "courses_lessons") "{n}" (string .n) }}</span>
+      </li>
+      {{ end }}
+    </ul>
+    <a class="hub-all" href="{{ $prefix }}courses/">{{ i18n "hub_all_courses" }}
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
+  </section>
+  {{ end }}{{ end }}
+
+  {{- /* Articles: the hand-written posts only. Lab notes get their own card. */ -}}
+  {{ $articles := partial "site-articles.html" . }}
   <section class="hub-card hub-wide" data-ic="i-pen" aria-labelledby="hub-posts">
     <div class="hub-card-head">
       {{ partial "icons/chip.html" (dict "id" "i-pen" "size" "lg") }}
@@ -67,10 +124,10 @@
         <h3 id="hub-posts" class="hub-card-title"><a href="{{ $prefix }}post/">{{ i18n "hub_posts_title" }}</a></h3>
         <p class="hub-card-blurb">{{ i18n "hub_posts_blurb" }}</p>
       </div>
-      <span class="hub-count">{{ i18n "posts_count" (len $posts) }}</span>
+      <span class="hub-count">{{ i18n "articles_count" (len $articles) }}</span>
     </div>
     <ul class="hub-latest">
-      {{ range first 4 $posts }}
+      {{ range first 4 $articles }}
       <li>
         <a href="{{ .RelPermalink }}">{{ .Title }}</a>
         <time datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "fmt-date.html" (dict "t" .Date "f" "month_year") }}</time>
@@ -103,126 +160,6 @@
     </ul>
   </section>
   {{ end }}
-  {{- /* AI radar: today's headlines, rebuilt every morning from data/ai.json
-     (tools/ai-radar). Labs and community only -- the same pool the page's
-     Latest tab starts from. */ -}}
-  {{ with hugo.Data.ai }}{{ with .items }}
-  {{ $heads := first 4 (sort (where . "section" "in" (slice "labs" "community")) "published" "desc") }}
-  {{ if $heads }}
-  <section class="hub-card hub-wide" data-ic="i-sparkles" aria-labelledby="hub-ai">
-    <div class="hub-card-head">
-      {{ partial "icons/chip.html" (dict "id" "i-sparkles" "size" "lg") }}
-      <div class="hub-card-text">
-        <h3 id="hub-ai" class="hub-card-title"><a href="{{ $prefix }}ai/">{{ i18n "hub_ai_title" }}</a></h3>
-        <p class="hub-card-blurb">{{ i18n "hub_ai_blurb" }}</p>
-      </div>
-    </div>
-    {{- /* The day's briefing headline, in this language, when there is one. */ -}}
-    {{ with hugo.Data.ai.digest }}{{ with index .lang $lang | default (index .lang "en") }}
-    <p class="hub-ai-headline">{{ .headline }}</p>
-    {{ end }}{{ end }}
-    <ul class="hub-latest">
-      {{ range $heads }}
-      <li>
-        <a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a>
-        <time datetime="{{ .published }}">{{ partial "fmt-date.html" (dict "t" .published "f" "day_month") }}</time>
-      </li>
-      {{ end }}
-    </ul>
-    <a class="hub-all" href="{{ $prefix }}ai/">{{ i18n "hub_ai_all" }}
-      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
-  </section>
-  {{ end }}
-  {{ end }}{{ end }}
-
-  {{- /* Media: a strip of the newest tiles, each opening that item. */ -}}
-  {{ if and $media $media.items }}
-  <section class="hub-card hub-wide" data-ic="i-camera" aria-labelledby="hub-media">
-    <div class="hub-card-head">
-      {{ partial "icons/chip.html" (dict "id" "i-camera" "size" "lg") }}
-      <div class="hub-card-text">
-        <h3 id="hub-media" class="hub-card-title"><a href="{{ $prefix }}media/">{{ i18n "hub_media_title" }}</a></h3>
-        <p class="hub-card-blurb">{{ i18n "hub_media_blurb" }}</p>
-      </div>
-      <span class="hub-count">{{ i18n "media_count" (dict "count" $media.count) }}</span>
-    </div>
-    <div class="hub-strip">
-      {{ range first 6 $media.items }}
-      {{ $first := index .media 0 }}
-      {{ $grid := index $first "grid" }}
-      {{ $color := index $first "color" }}
-      <a href="{{ $prefix }}media/#{{ .id }}" aria-label="{{ cond (ne .caption "") (.caption | plainify | truncate 80) (i18n "media_untitled") }}"
-         {{- if and $color (findRE `^#[0-9a-f]{6}$` $color) }} style="background-color:{{ $color | safeCSS }}"{{ end }}>
-        <img src="{{ $media.base_url }}{{ if $grid }}{{ index $grid 0 }}{{ else }}{{ $first.thumb }}{{ end }}" alt="" loading="lazy" decoding="async" width="360" height="360">
-      </a>
-      {{ end }}
-    </div>
-  </section>
-  {{ end }}
-
-  {{- /* Movies: the first few posters, each landing on that movie (#imdb id). */ -}}
-  {{ with hugo.Data.movies }}{{ with .movies }}
-  <section class="hub-card hub-wide" data-ic="i-film" aria-labelledby="hub-movies">
-    <div class="hub-card-head">
-      {{ partial "icons/chip.html" (dict "id" "i-film" "size" "lg") }}
-      <div class="hub-card-text">
-        <h3 id="hub-movies" class="hub-card-title"><a href="{{ $prefix }}movies/">{{ i18n "hub_movies_title" }}</a></h3>
-        <p class="hub-card-blurb">{{ i18n "hub_movies_blurb" }}</p>
-      </div>
-      <span class="hub-count">{{ i18n "hub_movies_count" (dict "count" (len .)) }}</span>
-    </div>
-    <div class="hub-strip hub-posters">
-      {{ range first 6 . }}
-      {{ $title := or (index (default dict .titles) $lang) .title }}
-      <a href="{{ $prefix }}movies/#{{ .imdb }}" aria-label="{{ $title }} ({{ .year }})" title="{{ $title }} ({{ .year }})">
-        <img src="{{ .poster }}" alt="" loading="lazy" decoding="async" width="200" height="300">
-      </a>
-      {{ end }}
-    </div>
-  </section>
-  {{ end }}{{ end }}
-
-  {{- /* GitHub: the language mix as one bar, then the latest repos pushed to. */ -}}
-  {{ with hugo.Data.github }}{{ with .repos }}
-  {{ $own := where . "kind" "ne" "fork" }}
-  {{ $langs := dict }}
-  {{ range $own }}{{ with .lang }}{{ $langs = merge $langs (dict . (add (index $langs .| default 0) 1)) }}{{ end }}{{ end }}
-  {{ $rows := slice }}
-  {{ range $name, $n := $langs }}{{ $rows = $rows | append (dict "name" $name "n" $n) }}{{ end }}
-  <section class="hub-card hub-wide" data-ic="i-github" aria-labelledby="hub-github">
-    <div class="hub-card-head">
-      {{ partial "icons/chip.html" (dict "id" "i-github" "size" "lg") }}
-      <div class="hub-card-text">
-        <h3 id="hub-github" class="hub-card-title"><a href="{{ $prefix }}github/">{{ i18n "hub_github_title" }}</a></h3>
-        <p class="hub-card-blurb">{{ i18n "hub_github_blurb" }}</p>
-      </div>
-      <span class="hub-count">{{ i18n "hub_github_count" (dict "count" (len .)) }}</span>
-    </div>
-    <div class="gh-langbar hub-langbar" aria-hidden="true">
-      <div class="gh-langbar-track">
-        {{ range first 8 (sort $rows "n" "desc") }}
-        <span class="gh-seg-part" style="width:{{ div (mul .n 100.0) (len $own) }}%;background-color:{{ index hugo.Data.github.colors .name | default "#8d939e" | safeCSS }}" title="{{ .name }}"></span>
-        {{ end }}
-      </div>
-      <div class="gh-langbar-legend">
-        {{ range first 6 (sort $rows "n" "desc") }}
-        <span class="gh-legend"><span class="gh-dot" style="background-color:{{ index hugo.Data.github.colors .name | default "#8d939e" | safeCSS }}"></span>{{ .name }}</span>
-        {{ end }}
-      </div>
-    </div>
-    <ul class="hub-latest">
-      {{ range first 4 (sort $own "pushed" "desc") }}
-      <li>
-        <a href="https://github.com/pfeilbr/{{ .name }}" target="_blank" rel="noopener">{{ .name }}</a>
-        <time datetime="{{ .pushed }}">{{ partial "fmt-date.html" (dict "t" .pushed "f" "month_year") }}</time>
-      </li>
-      {{ end }}
-    </ul>
-    <a class="hub-all" href="{{ $prefix }}github/">{{ i18n "hub_github_all" }}
-      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
-  </section>
-  {{ end }}{{ end }}
-
   {{- /* Everything else: one card, one link. */ -}}
   {{ range hugo.Data.home.sections }}
   {{ $count := "" }}
@@ -240,6 +177,10 @@
     {{ with hugo.Data.subscriptions }}{{ $count = i18n "hub_subscriptions_count" (dict "count" (add .total (default 0 hugo.Data.twitch.following_total))) }}{{ end }}
   {{ else if eq .key "archive" }}
     {{ with $posts }}{{ $count = printf "%d–%d" (index (last 1 .) 0).Date.Year (index . 0).Date.Year }}{{ end }}
+  {{ else if eq .key "notes" }}
+    {{ $count = i18n "notes_count" (len (partial "site-notes.html" $)) }}
+  {{ else if eq .key "github" }}
+    {{ with hugo.Data.github }}{{ $count = i18n "hub_github_count" (dict "count" (len .repos)) }}{{ end }}
   {{ else if eq .key "tags" }}
     {{ $count = i18n "hub_tags_count" (dict "count" (len hugo.Sites.Default.Taxonomies.tags)) }}
   {{ end }}
@@ -249,12 +190,46 @@
     {{ partial "icons/chip.html" (dict "id" .icon "size" "lg") }}
     <span class="hub-card-text">
       <span class="hub-card-title">{{ i18n (printf "hub_%s_title" .key) }}</span>
-      <span class="hub-card-blurb">{{ i18n (printf "hub_%s_blurb" .key) }}</span>
+      {{ $blurb := i18n (printf "hub_%s_blurb" .key) }}
+      {{- /* The AI card carries the day's briefing headline when there is one. */}}
+      {{ if eq .key "ai" }}{{ with hugo.Data.ai }}{{ with .digest }}{{ with index .lang $lang | default (index .lang "en") }}{{ with .headline }}{{ $blurb = . }}{{ end }}{{ end }}{{ end }}{{ end }}{{ end }}
+      <span class="hub-card-blurb">{{ $blurb }}</span>
       {{ with $count }}<span class="hub-count">{{ . }}</span>{{ end }}
     </span>
     <svg class="hub-go" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
   </a>
   {{ end }}
+
+  {{- /* Off the clock: photos, films, music and channels share one card --
+     a strip of the newest Instagram tiles, then a link to each page. */ -}}
+  <section class="hub-card hub-wide" data-ic="i-camera" aria-labelledby="hub-offclock">
+    <div class="hub-card-head">
+      {{ partial "icons/chip.html" (dict "id" "i-camera" "size" "lg") }}
+      <div class="hub-card-text">
+        <h3 id="hub-offclock" class="hub-card-title">{{ i18n "hub_offclock_title" }}</h3>
+        <p class="hub-card-blurb">{{ i18n "hub_offclock_blurb" }}</p>
+      </div>
+    </div>
+    {{ if and $media $media.items }}
+    <div class="hub-strip">
+      {{ range first 6 $media.items }}
+      {{ $first := index .media 0 }}
+      {{ $grid := index $first "grid" }}
+      {{ $color := index $first "color" }}
+      <a href="{{ $prefix }}media/#{{ .id }}" aria-label="{{ cond (ne .caption "") (.caption | plainify | truncate 80) (i18n "media_untitled") }}"
+         {{- if and $color (findRE `^#[0-9a-f]{6}$` $color) }} style="background-color:{{ $color | safeCSS }}"{{ end }}>
+        <img src="{{ $media.base_url }}{{ if $grid }}{{ index $grid 0 }}{{ else }}{{ $first.thumb }}{{ end }}" alt="" loading="lazy" decoding="async" width="360" height="360">
+      </a>
+      {{ end }}
+    </div>
+    {{ end }}
+    <ul class="hub-offclock">
+      {{ with $media }}<li><a href="{{ $prefix }}media/" data-ic="i-camera">{{ partial "icons/chip.html" (dict "id" "i-camera" "size" "sm") }}<span>{{ i18n "hub_media_title" }}</span><small>{{ i18n "media_count" (dict "count" .count) }}</small></a></li>{{ end }}
+      {{ with hugo.Data.movies }}<li><a href="{{ $prefix }}movies/" data-ic="i-film">{{ partial "icons/chip.html" (dict "id" "i-film" "size" "sm") }}<span>{{ i18n "hub_movies_title" }}</span><small>{{ i18n "hub_movies_count" (dict "count" (len .movies)) }}</small></a></li>{{ end }}
+      {{ with hugo.Data.music }}<li><a href="{{ $prefix }}music/" data-ic="i-music">{{ partial "icons/chip.html" (dict "id" "i-music" "size" "sm") }}<span>{{ i18n "hub_music_title" }}</span><small>{{ i18n "hub_music_count" (dict "count" (add (len .mine) (len .saved))) }}</small></a></li>{{ end }}
+      {{ with hugo.Data.subscriptions }}<li><a href="{{ $prefix }}subscriptions/" data-ic="i-youtube">{{ partial "icons/chip.html" (dict "id" "i-youtube" "size" "sm") }}<span>{{ i18n "hub_subscriptions_title" }}</span><small>{{ i18n "hub_subscriptions_count" (dict "count" (add .total (default 0 hugo.Data.twitch.following_total))) }}</small></a></li>{{ end }}
+    </ul>
+  </section>
 </div>
 
 {{ partial "newsletter.html" . }}

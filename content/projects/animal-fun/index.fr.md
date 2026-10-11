@@ -4,6 +4,7 @@ description = "Une application iPhone et iPad pour aider les enfants à découvr
 date = 2014-08-04T18:55:46Z
 draft = false
 weight = 2
+repo = "pfeilbr/animalfun"
 +++
 
 Animal Fun est une application iPhone et iPad que j'ai écrite pour mon fils quand il avait 3 ans, afin de lui faire découvrir les animaux tout en l'occupant. C'est une application gratuite, [disponible sur l'App Store](http://itunes.apple.com/us/app/animal-fun/id314278061?mt=8), dont le [code source est publié sur github](https://github.com/pfeilbr/animalfun)

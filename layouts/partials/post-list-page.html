@@ -1,0 +1,102 @@
+{{- /* The body of /post/ (articles) and /notes/ (lab notes): heading, a
+   switch between the two, search over both, and an infinitely scrolling list.
+   Called with (dict "page" . "pages" <list> "kind" "articles"|"notes"). */ -}}
+{{ $page := .page }}
+{{ $all := .pages }}
+{{ $kind := .kind }}
+{{ $prefix := cond (eq $page.Site.Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" $page.Site.Language.Lang) }}
+{{ $nArticles := len (partial "site-articles.html" $page) }}
+{{ $nNotes := len (partial "site-notes.html" $page) }}
+<h1 class="page-title text-2xl font-bold text-gray-900 mb-2">
+  {{ partial "icons/chip.html" (dict "id" (cond (eq $kind "notes") "i-beaker" "i-pen") "size" "lg") }}
+  <span>{{ $page.Title }}</span>
+</h1>
+<p class="section-sub">{{ i18n (cond (eq $kind "notes") "hub_notes_blurb" "hub_posts_blurb") }}</p>
+
+<nav class="kind-switch" aria-label="{{ i18n "kind_switch" }}">
+  <a href="{{ $prefix }}post/"{{ if eq $kind "articles" }} aria-current="page"{{ end }}>{{ i18n "hub_posts_title" }} <span>{{ $nArticles }}</span></a>
+  <a href="{{ $prefix }}notes/"{{ if eq $kind "notes" }} aria-current="page"{{ end }}>{{ i18n "hub_notes_title" }} <span>{{ $nNotes }}</span></a>
+</nav>
+
+{{ partial "search.html" $page }}
+
+<div id="search-results"></div>
+
+<div id="post-list">
+  {{ $pag := $page.Paginate $all }}
+  {{ range $pag.Pages }}{{ partial "post-row.html" . }}{{ end }}
+</div>
+
+{{ if $pag.HasNext }}
+<div id="scroll-sentinel" class="py-4 text-center">
+  <span id="scroll-progress" class="text-xs text-gray-400"></span>
+</div>
+{{ end }}
+
+{{ if and (eq $kind "articles") (not $pag.HasNext) }}
+<a class="notes-teaser" href="{{ $prefix }}notes/">
+  {{ partial "icons/chip.html" (dict "id" "i-beaker" "size" "sm") }}
+  <span>{{ i18n "hub_notes_teaser" (dict "count" $nNotes) }}</span>
+  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
+</a>
+{{ end }}
+
+{{ partial "row-click.html" $page }}
+<script>
+var I18N = {{ dict "progress" (i18n "scroll_progress" (dict "loaded" "{loaded}" "total" "{total}")) "loading" (i18n "loading") | jsonify | safeJS }};
+var postCount = {{ len $all }};
+var searchCount = {{ add $nArticles $nNotes }};
+var pageSize = {{ $pag.PagerSize }};
+
+/* Infinite scroll with progress counter */
+(function() {
+  var postList = document.getElementById("post-list");
+  var sentinel = document.getElementById("scroll-sentinel");
+  var progress = document.getElementById("scroll-progress");
+  if (!sentinel || !postList) return;
+
+  var nextPage = {{ if $pag.HasNext }}{{ $pag.Next.PageNumber }}{{ else }}0{{ end }};
+  /* "/post/page/2/" on the English site, "/zh/post/page/2/" on the Chinese one. */
+  var pageBase = {{ if $pag.HasNext }}{{ replaceRE `[0-9]+/$` "" $pag.Next.URL }}{{ else }}""{{ end }};
+  var totalPages = {{ $pag.TotalPages }};
+  var loading = false;
+  var loadedCount = postList.querySelectorAll("article").length;
+
+  function updateProgress() {
+    if (progress) {
+      progress.textContent = I18N.progress
+        .replace("{loaded}", loadedCount)
+        .replace("{total}", postCount);
+    }
+  }
+  updateProgress();
+
+  function loadNext() {
+    if (loading || nextPage > totalPages) return;
+    loading = true;
+    if (progress) progress.textContent = I18N.loading;
+
+    fetch(pageBase + nextPage + "/")
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var items = doc.querySelectorAll("#post-list > article");
+        items.forEach(function(item) { postList.appendChild(item); });
+        loadedCount += items.length;
+        nextPage++;
+        loading = false;
+        if (nextPage > totalPages) {
+          sentinel.remove();
+        } else {
+          updateProgress();
+        }
+      })
+      .catch(function() { loading = false; updateProgress(); });
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) loadNext();
+  }, { rootMargin: "200px" });
+  observer.observe(sentinel);
+})();
+</script>

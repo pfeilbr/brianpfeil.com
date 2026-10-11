@@ -4,6 +4,7 @@ description = "Veinticuatro guías de ciudades en una sola tabla ordenable y con
 date = 2026-07-19T00:00:00Z
 draft = false
 weight = -3
+repo = "pfeilbr/things-to-do"
 +++
 
 Elige una ciudad en el desplegable y obtén cosas que hacer en una sola tabla ordenable y con buscador. Incluye veinticuatro guías: Filadelfia, Nueva York, Brooklyn, Queens, Boston, Washington D. C., Chicago, Toronto, Los Ángeles, San Francisco, Seattle y más.

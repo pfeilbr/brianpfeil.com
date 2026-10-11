@@ -4,6 +4,7 @@ description = "耳元で使う中国語フレーズのプロンプター。オ�
 date = 2026-07-26T00:00:00Z
 draft = false
 weight = -4
+repo = "pfeilbr/chinese-mandarin-language-app"
 +++
 
 一緒に暮らしている相手に中国語で話しかけるための、耳元で使えるフレーズプロンプター。英語のフレーズを選び、好きな速さで読み上げを聞いて、そのまま真似して口に出します。

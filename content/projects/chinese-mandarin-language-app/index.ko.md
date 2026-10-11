@@ -4,6 +4,7 @@ description = "귀에 꽂고 쓰는 중국어 문장 프롬프터. 오프라인�
 date = 2026-07-26T00:00:00Z
 draft = false
 weight = -4
+repo = "pfeilbr/chinese-mandarin-language-app"
 +++
 
 같이 사는 사람에게 실제로 중국어로 말을 걸기 위한, 귀에 꽂고 쓰는 문장 프롬프터입니다. 영어 문장을 고르고, 원하는 속도로 들은 다음, 따라 말하면 됩니다.

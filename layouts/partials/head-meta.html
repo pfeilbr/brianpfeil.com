@@ -1,6 +1,9 @@
 {{- $default := i18n "site_description" -}}
 {{- $desc := "" -}}
 {{- with .Description }}{{ $desc = . }}{{ end -}}
+{{- /* A post with no description gets the same one-liner its list row shows
+   (a lab note's "Learning by building: X", else its first paragraph). */ -}}
+{{- if and (eq $desc "") .IsPage (eq .Section "post") }}{{ $desc = partial "post-summary.html" . }}{{ end -}}
 {{- /* /ai/ describes itself with the day's briefing headline, in this language. */ -}}
 {{- if eq .Layout "ai" }}{{ with hugo.Data.ai }}{{ with .digest }}{{ with index .lang $.Site.Language.Lang }}{{ $desc = .headline }}{{ end }}{{ end }}{{ end }}{{ end -}}
 {{- if and (eq $desc "") (eq .Kind "term") }}{{ $desc = i18n "tag_desc" (dict "tag" (.Data.Term | default .Title)) }}{{ end -}}

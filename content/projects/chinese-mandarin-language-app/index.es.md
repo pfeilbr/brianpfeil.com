@@ -4,6 +4,7 @@ description = "Un apuntador de frases en mandarín al oído. PWA que funciona si
 date = 2026-07-26T00:00:00Z
 draft = false
 weight = -4
+repo = "pfeilbr/chinese-mandarin-language-app"
 +++
 
 Un apuntador de frases al oído para hablar mandarín con alguien con quien de verdad convives. Eliges una frase en inglés, la escuchas a la velocidad que necesites y la repites.

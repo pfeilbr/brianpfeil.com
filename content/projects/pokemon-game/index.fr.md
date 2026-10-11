@@ -4,6 +4,7 @@ description = "Un jeu de cartes et de collection de créatures où chaque attaqu
 date = 2026-08-11T00:00:00Z
 draft = false
 weight = -2
+repo = "pfeilbr/pokemon-game"
 +++
 
 Attrapez des monstres, gagnez des combats, devenez plus rapide en calcul. Un jeu de cartes et de collection de créatures où chaque attaque est alimentée par la résolution d'un problème de maths : répondez juste pour toucher, répondez vite pour un coup critique, enchaînez les bonnes réponses pour bâtir une série.

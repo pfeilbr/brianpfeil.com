@@ -130,36 +130,24 @@ languages:
       homeTitle: "Brian Pfeil"
     menus:
       main:
-        - name: "about"
-          url: "/about/"
+        - name: "guides"
+          url: "/architecture/"
           weight: 10
-        - name: "posts"
-          url: "/post/"
+        - name: "courses"
+          url: "/courses/"
           weight: 20
-        - name: "projects"
-          url: "/projects/"
-          weight: 30
-        - name: "music"
-          url: "/music/"
-          weight: 35
-        - name: "subscriptions"
-          url: "/subscriptions/"
-          weight: 36
-        - name: "media"
-          url: "/media/"
-          weight: 37
-        - name: "movies"
-          url: "/movies/"
-          weight: 38
-        - name: "GitHub"
-          url: "/github/"
-          weight: 39
-        - name: "tags"
-          url: "/tags/"
-          weight: 40
         - name: "learn"
           url: "/learn/"
-          weight: 32
+          weight: 30
+        - name: "articles"
+          url: "/post/"
+          weight: 40
+        - name: "projects"
+          url: "/projects/"
+          weight: 50
+        - name: "about"
+          url: "/about/"
+          weight: 60
 
   zh:
     locale: "zh-CN"
@@ -176,38 +164,24 @@ languages:
         - html
     menus:
       main:
-        - name: "关于"
-          url: "/zh/about/"
+        - name: "指南"
+          url: "/zh/architecture/"
           weight: 10
-        - name: "文章"
-          url: "/zh/post/"
+        - name: "课程"
+          url: "/zh/courses/"
           weight: 20
-        - name: "项目"
-          url: "/zh/projects/"
-          weight: 30
-        - name: "音乐"
-          url: "/zh/music/"
-          weight: 35
-        - name: "订阅"
-          url: "/zh/subscriptions/"
-          weight: 36
-        - name: "影像"
-          url: "/zh/media/"
-          weight: 37
-        - name: "电影"
-          url: "/zh/movies/"
-          weight: 38
-        - name: "GitHub"
-          url: "/zh/github/"
-          weight: 39
-        # Tags are generated from the English posts, so this points at the
-        # English taxonomy rather than an empty /zh/tags/.
-        - name: "标签"
-          url: "/tags/"
-          weight: 40
         - name: "学习"
           url: "/zh/learn/"
-          weight: 32
+          weight: 30
+        - name: "文章"
+          url: "/zh/post/"
+          weight: 40
+        - name: "项目"
+          url: "/zh/projects/"
+          weight: 50
+        - name: "关于"
+          url: "/zh/about/"
+          weight: 60
 
   es:
     locale: "es-es"
@@ -224,36 +198,24 @@ languages:
         - html
     menus:
       main:
-        - name: "acerca de"
-          url: "/es/about/"
+        - name: "guías"
+          url: "/es/architecture/"
           weight: 10
-        - name: "artículos"
-          url: "/es/post/"
+        - name: "cursos"
+          url: "/es/courses/"
           weight: 20
-        - name: "proyectos"
-          url: "/es/projects/"
-          weight: 30
-        - name: "música"
-          url: "/es/music/"
-          weight: 35
-        - name: "suscripciones"
-          url: "/es/subscriptions/"
-          weight: 36
-        - name: "fotos"
-          url: "/es/media/"
-          weight: 37
-        - name: "películas"
-          url: "/es/movies/"
-          weight: 38
-        - name: "GitHub"
-          url: "/es/github/"
-          weight: 39
-        - name: "etiquetas"
-          url: "/tags/"
-          weight: 40
         - name: "aprender"
           url: "/es/learn/"
-          weight: 32
+          weight: 30
+        - name: "artículos"
+          url: "/es/post/"
+          weight: 40
+        - name: "proyectos"
+          url: "/es/projects/"
+          weight: 50
+        - name: "acerca de"
+          url: "/es/about/"
+          weight: 60
 
   pt:
     locale: "pt-br"
@@ -270,36 +232,24 @@ languages:
         - html
     menus:
       main:
-        - name: "sobre"
-          url: "/pt/about/"
+        - name: "guias"
+          url: "/pt/architecture/"
           weight: 10
-        - name: "artigos"
-          url: "/pt/post/"
+        - name: "cursos"
+          url: "/pt/courses/"
           weight: 20
-        - name: "projetos"
-          url: "/pt/projects/"
-          weight: 30
-        - name: "música"
-          url: "/pt/music/"
-          weight: 35
-        - name: "assinaturas"
-          url: "/pt/subscriptions/"
-          weight: 36
-        - name: "fotos"
-          url: "/pt/media/"
-          weight: 37
-        - name: "filmes"
-          url: "/pt/movies/"
-          weight: 38
-        - name: "GitHub"
-          url: "/pt/github/"
-          weight: 39
-        - name: "tags"
-          url: "/tags/"
-          weight: 40
         - name: "aprender"
           url: "/pt/learn/"
-          weight: 32
+          weight: 30
+        - name: "artigos"
+          url: "/pt/post/"
+          weight: 40
+        - name: "projetos"
+          url: "/pt/projects/"
+          weight: 50
+        - name: "sobre"
+          url: "/pt/about/"
+          weight: 60
 
   fr:
     locale: "fr-fr"
@@ -316,36 +266,24 @@ languages:
         - html
     menus:
       main:
-        - name: "à propos"
-          url: "/fr/about/"
+        - name: "guides"
+          url: "/fr/architecture/"
           weight: 10
-        - name: "articles"
-          url: "/fr/post/"
+        - name: "cours"
+          url: "/fr/courses/"
           weight: 20
-        - name: "projets"
-          url: "/fr/projects/"
-          weight: 30
-        - name: "musique"
-          url: "/fr/music/"
-          weight: 35
-        - name: "abonnements"
-          url: "/fr/subscriptions/"
-          weight: 36
-        - name: "photos"
-          url: "/fr/media/"
-          weight: 37
-        - name: "films"
-          url: "/fr/movies/"
-          weight: 38
-        - name: "GitHub"
-          url: "/fr/github/"
-          weight: 39
-        - name: "étiquettes"
-          url: "/tags/"
-          weight: 40
         - name: "apprendre"
           url: "/fr/learn/"
-          weight: 32
+          weight: 30
+        - name: "articles"
+          url: "/fr/post/"
+          weight: 40
+        - name: "projets"
+          url: "/fr/projects/"
+          weight: 50
+        - name: "à propos"
+          url: "/fr/about/"
+          weight: 60
 
   de:
     locale: "de-de"
@@ -362,36 +300,24 @@ languages:
         - html
     menus:
       main:
-        - name: "über mich"
-          url: "/de/about/"
+        - name: "guides"
+          url: "/de/architecture/"
           weight: 10
-        - name: "beiträge"
-          url: "/de/post/"
+        - name: "kurse"
+          url: "/de/courses/"
           weight: 20
-        - name: "projekte"
-          url: "/de/projects/"
-          weight: 30
-        - name: "musik"
-          url: "/de/music/"
-          weight: 35
-        - name: "abos"
-          url: "/de/subscriptions/"
-          weight: 36
-        - name: "fotos"
-          url: "/de/media/"
-          weight: 37
-        - name: "filme"
-          url: "/de/movies/"
-          weight: 38
-        - name: "GitHub"
-          url: "/de/github/"
-          weight: 39
-        - name: "tags"
-          url: "/tags/"
-          weight: 40
         - name: "lernen"
           url: "/de/learn/"
-          weight: 32
+          weight: 30
+        - name: "artikel"
+          url: "/de/post/"
+          weight: 40
+        - name: "projekte"
+          url: "/de/projects/"
+          weight: 50
+        - name: "über mich"
+          url: "/de/about/"
+          weight: 60
 
   it:
     locale: "it-it"
@@ -408,36 +334,24 @@ languages:
         - html
     menus:
       main:
-        - name: "chi sono"
-          url: "/it/about/"
+        - name: "guide"
+          url: "/it/architecture/"
           weight: 10
-        - name: "articoli"
-          url: "/it/post/"
+        - name: "corsi"
+          url: "/it/courses/"
           weight: 20
-        - name: "progetti"
-          url: "/it/projects/"
-          weight: 30
-        - name: "musica"
-          url: "/it/music/"
-          weight: 35
-        - name: "iscrizioni"
-          url: "/it/subscriptions/"
-          weight: 36
-        - name: "foto"
-          url: "/it/media/"
-          weight: 37
-        - name: "film"
-          url: "/it/movies/"
-          weight: 38
-        - name: "GitHub"
-          url: "/it/github/"
-          weight: 39
-        - name: "tag"
-          url: "/tags/"
-          weight: 40
         - name: "impara"
           url: "/it/learn/"
-          weight: 32
+          weight: 30
+        - name: "articoli"
+          url: "/it/post/"
+          weight: 40
+        - name: "progetti"
+          url: "/it/projects/"
+          weight: 50
+        - name: "chi sono"
+          url: "/it/about/"
+          weight: 60
 
   ja:
     locale: "ja-jp"
@@ -454,36 +368,24 @@ languages:
         - html
     menus:
       main:
-        - name: "プロフィール"
-          url: "/ja/about/"
+        - name: "ガイド"
+          url: "/ja/architecture/"
           weight: 10
-        - name: "記事"
-          url: "/ja/post/"
+        - name: "コース"
+          url: "/ja/courses/"
           weight: 20
-        - name: "プロジェクト"
-          url: "/ja/projects/"
-          weight: 30
-        - name: "音楽"
-          url: "/ja/music/"
-          weight: 35
-        - name: "購読"
-          url: "/ja/subscriptions/"
-          weight: 36
-        - name: "メディア"
-          url: "/ja/media/"
-          weight: 37
-        - name: "映画"
-          url: "/ja/movies/"
-          weight: 38
-        - name: "GitHub"
-          url: "/ja/github/"
-          weight: 39
-        - name: "タグ"
-          url: "/tags/"
-          weight: 40
         - name: "学ぶ"
           url: "/ja/learn/"
-          weight: 32
+          weight: 30
+        - name: "記事"
+          url: "/ja/post/"
+          weight: 40
+        - name: "プロジェクト"
+          url: "/ja/projects/"
+          weight: 50
+        - name: "プロフィール"
+          url: "/ja/about/"
+          weight: 60
 
   ko:
     locale: "ko-kr"
@@ -500,33 +402,21 @@ languages:
         - html
     menus:
       main:
-        - name: "소개"
-          url: "/ko/about/"
+        - name: "가이드"
+          url: "/ko/architecture/"
           weight: 10
-        - name: "글"
-          url: "/ko/post/"
+        - name: "강좌"
+          url: "/ko/courses/"
           weight: 20
-        - name: "프로젝트"
-          url: "/ko/projects/"
-          weight: 30
-        - name: "음악"
-          url: "/ko/music/"
-          weight: 35
-        - name: "구독"
-          url: "/ko/subscriptions/"
-          weight: 36
-        - name: "미디어"
-          url: "/ko/media/"
-          weight: 37
-        - name: "영화"
-          url: "/ko/movies/"
-          weight: 38
-        - name: "GitHub"
-          url: "/ko/github/"
-          weight: 39
-        - name: "태그"
-          url: "/tags/"
-          weight: 40
         - name: "배우기"
           url: "/ko/learn/"
-          weight: 32
+          weight: 30
+        - name: "글"
+          url: "/ko/post/"
+          weight: 40
+        - name: "프로젝트"
+          url: "/ko/projects/"
+          weight: 50
+        - name: "소개"
+          url: "/ko/about/"
+          weight: 60

@@ -4,6 +4,7 @@ description = "Un gioco di carte da battaglia con creature da collezionare, in c
 date = 2026-08-11T00:00:00Z
 draft = false
 weight = -2
+repo = "pfeilbr/pokemon-game"
 +++
 
 Cattura mostri, vinci le battaglie, diventa più veloce con i conti. Un gioco di carte da battaglia con creature da collezionare in cui ogni attacco si alimenta risolvendo un problema di matematica: rispondi giusto per colpire, rispondi in fretta per fare critico, incatena le risposte per costruire una serie.

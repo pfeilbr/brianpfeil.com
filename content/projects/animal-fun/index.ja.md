@@ -4,6 +4,7 @@ description = "子どもが動物について学べる iPhone・iPad アプリ�
 date = 2014-08-04T18:55:46Z
 draft = false
 weight = 2
+repo = "pfeilbr/animalfun"
 +++
 
 Animal Fun は、息子が 3 歳のときに、動物のことを覚えながら楽しんでもらおうと書いた iPhone・iPad アプリです。無料アプリで、[App Store から入手でき](http://itunes.apple.com/us/app/animal-fun/id314278061?mt=8)、[ソースコードは GitHub で公開しています](https://github.com/pfeilbr/animalfun)。

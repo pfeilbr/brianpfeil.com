@@ -1,6 +1,6 @@
 +++
 author = "Brian Pfeil"
-categories = ["Objective-C", "playground"]
+categories = ["Objective-C", "project"]
 date = 2025-12-31
 description = "A simple animal learning program for children on the iPhone"
 summary = " "
@@ -11,6 +11,13 @@ title = "Animal Fun"
 repoFullName = "pfeilbr/animalfun"
 repoHTMLURL = "https://github.com/pfeilbr/animalfun"
 truncated = true
+
+# A finished project lives on its /projects/ page, which shows this README
+# under "Under the hood" and redirects the old /post/ URL. So this file is
+# never listed or rendered on its own.
+[build]
+  list = "never"
+  render = "never"
 
 +++
 

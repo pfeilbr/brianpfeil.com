@@ -4,6 +4,7 @@ description = "Ein Mandarin-Satztrainer für den Ohrhörer. Offlinefähige PWA."
 date = 2026-07-26T00:00:00Z
 draft = false
 weight = -4
+repo = "pfeilbr/chinese-mandarin-language-app"
 +++
 
 Ein Satztrainer für den Ohrhörer, um Mandarin mit jemandem zu sprechen, mit dem man tatsächlich zusammenlebt. Einen englischen Satz auswählen, ihn im gewünschten Tempo anhören, nachsprechen.

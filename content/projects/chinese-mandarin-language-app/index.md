@@ -4,6 +4,8 @@ description = "An in-ear Mandarin phrase prompter. Offline PWA."
 date = 2026-07-26T00:00:00Z
 draft = false
 weight = -4
+repo = "pfeilbr/chinese-mandarin-language-app"
+aliases = ["/post/say-it-in-mandarin/"]
 +++
 
 An in-ear phrase prompter for speaking Mandarin to someone you actually live with. Pick an English phrase, hear it spoken at whatever speed you need, say it back.

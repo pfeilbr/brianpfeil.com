@@ -81,5 +81,30 @@ class CheckTest(unittest.TestCase):
         self.assertEqual(crl.broken(results), [])
 
 
+class GoneTest(unittest.TestCase):
+    BAD = [{"file": "b.md", "title": "B", "url": "https://github.com/pfeilbr/private", "status": 404},
+           {"file": "c.md", "title": "C", "url": "https://github.com/pfeilbr/zgone/", "status": 0}]
+
+    def setUp(self):
+        self.tmp = TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.path = Path(self.tmp.name) / "repo_gone.json"
+
+    def test_full_name(self):
+        self.assertEqual(crl.full_name("https://github.com/pfeilbr/x/"), "pfeilbr/x")
+
+    def test_write_then_read_round_trips_sorted(self):
+        crl.write_gone(list(reversed(self.BAD)), self.path)
+        self.assertEqual(self.path.read_text(), '{\n  "repos": [\n    "pfeilbr/private",\n    "pfeilbr/zgone"\n  ]\n}\n')
+        self.assertEqual(crl.recorded(self.path), {"pfeilbr/private", "pfeilbr/zgone"})
+
+    def test_missing_file_records_nothing(self):
+        self.assertEqual(crl.recorded(self.path), set())
+
+    def test_only_unrecorded_repos_fail(self):
+        self.assertEqual([r["file"] for r in crl.unrecorded(self.BAD, {"pfeilbr/private"})], ["c.md"])
+        self.assertEqual(crl.unrecorded(self.BAD, {"pfeilbr/private", "pfeilbr/zgone"}), [])
+
+
 if __name__ == "__main__":
     unittest.main()

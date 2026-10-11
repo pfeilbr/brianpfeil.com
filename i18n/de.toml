@@ -1103,7 +1103,7 @@ other = "{{ .count }} kostenlose Angebote"
 
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]
-other = "Seit 30 Jahren baue ich Dinge mit Technik und schreibe über das, was ich dabei lerne, damit andere von dieser Erfahrung profitieren. Angefangen hat das als Blog; inzwischen finden sich hier auch meine Projekte, Fotos und Videos, Musik und die Kanäle, denen ich folge."
+other = "Dreißig Jahre Arbeit mit Technologie und einige hundert Cloud-Architektur-Reviews. Hier steht, worauf ich in einem Review achte, dazu kostenlose Kurse, die ich beim Lernen geschrieben habe, und praktische Notizen zu dem, was ich baue."
 
 [hub_more_about]
 other = "Mehr über mich"
@@ -1112,13 +1112,13 @@ other = "Mehr über mich"
 other = "Entdecken"
 
 [hub_all_posts]
-other = "Alle Beiträge"
+other = "Alle Artikel"
 
 [hub_posts_title]
-other = "Beiträge"
+other = "Artikel"
 
 [hub_posts_blurb]
-other = "Notizen und Experimente zu Cloud, Code, KI und Werkzeugen"
+other = "Selbst geschriebene Artikel über Cloud-Architektur, Serverless und Softwareentwicklung"
 
 [hub_media_title]
 other = "Fotos"
@@ -2016,3 +2016,69 @@ other = "Derselbe Satz-Souffleur, für Birmanisch: Hör einen Satz in jedem Temp
 
 [apps_blurb_money-trees]
 other = "Eine Plattform, um Geld an Prognosemärkten, mit Aktien und Krypto wachsen zu lassen – jede Strategie muss sich den Weg vom Papierhandel zur Automatisierung verdienen."
+
+[hub_cta_guides]
+other = "Architektur-Guides"
+
+[hub_cta_courses]
+other = "Kostenlose Kurse"
+
+[hub_cta_articles]
+other = "Artikel"
+
+[hub_cta_label]
+other = "Hier anfangen"
+
+[articles_count]
+other = "{{ . }} Artikel"
+
+[hub_notes_title]
+other = "Labornotizen"
+
+[hub_notes_blurb]
+other = "Kurze Notizen vom Lernen eines Tools oder Dienstes durch Ausprobieren, eine pro Repository"
+
+[notes_count]
+other = "{{ . }} Notizen"
+
+[hub_notes_teaser]
+other = "Lieber etwas Kurzes? {{ .count }} Labornotizen, eine für jedes Projekt, das ich zum Lernen gebaut habe."
+
+[lab_note]
+other = "Labornotiz"
+
+[kind_switch]
+other = "Artikel oder Labornotizen"
+
+[note_summary_learn]
+other = "Lernen durch Bauen: {{ .topic }}"
+
+[note_frame]
+other = "Was ich mir notiert habe, während ich das durch Ausprobieren gelernt habe. Bewusst kurz; der Code liegt in {{ .repo }}."
+
+[note_frame_norepo]
+other = "Was ich mir notiert habe, während ich das durch Ausprobieren gelernt habe. Bewusst kurz; der Code ist nicht mehr öffentlich."
+
+[hub_all_guides]
+other = "Alle Guides"
+
+[hub_all_courses]
+other = "Alle Kurse"
+
+[hub_offclock_title]
+other = "Nach Feierabend"
+
+[hub_offclock_blurb]
+other = "Fotos und Videos, Lieblingsfilme, Playlists und die Kanäle, denen ich folge"
+
+[under_the_hood]
+other = "Unter der Haube"
+
+[under_the_hood_note]
+other = "Die README des Projekts, auf Englisch."
+
+[footer_sitemap]
+other = "Bereiche der Website"
+
+[project_about]
+other = "Über dieses Projekt"

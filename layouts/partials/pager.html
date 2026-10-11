@@ -4,12 +4,15 @@
    same one back after that, and a page whose paginator exists gets its
    /page/N/ pages built. So this only asks on the two kinds of page whose
    templates paginate, with the same collection they use:
-   - the /post/ section (post/list.html: partials/site-posts.html)
+   - the /post/ section (post/list.html: partials/site-articles.html)
+   - the /notes/ section (notes/list.html: partials/site-notes.html)
    - tag and category terms (_default/list.html: .Pages)
    baseof.html calls this from <head>, before the template's own call. */ -}}
 {{- $p := false -}}
 {{- if and (eq .Kind "section") (eq .Section "post") -}}
-  {{- $p = .Paginate (partial "site-posts.html" .) -}}
+  {{- $p = .Paginate (partial "site-articles.html" .) -}}
+{{- else if and (eq .Kind "section") (eq .Section "notes") -}}
+  {{- $p = .Paginate (partial "site-notes.html" .) -}}
 {{- else if eq .Kind "term" -}}
   {{- $p = .Paginate .Pages -}}
 {{- end -}}

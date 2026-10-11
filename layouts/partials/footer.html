@@ -1,4 +1,14 @@
 <footer class="border-t border-gray-200 mt-12">
+  {{- /* The nav row holds six sections; every other one is linked here, on
+     every page, so nothing is only reachable from the home page. Tags exist
+     on the English site only (posts are English-only). */ -}}
+  {{ $prefix := cond (eq .Site.Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" .Site.Language.Lang) }}
+  <nav class="foot-map max-w-2xl mx-auto px-4 pt-6" aria-label="{{ i18n "footer_sitemap" }}">
+    {{ range slice (slice "notes" "notes") (slice "ai" "ai") (slice "github" "github") (slice "apps" "apps") (slice "media" "media") (slice "movies" "movies") (slice "music" "music") (slice "subscriptions" "subscriptions") (slice "resume" "resume-full") (slice "archive" "archive") (slice "tags" "") }}
+    {{ $href := cond (eq (index . 0) "tags") "/tags/" (printf "%s%s/" $prefix (index . 1)) }}
+    <a href="{{ $href }}">{{ i18n (printf "hub_%s_title" (index . 0)) }}</a>
+    {{ end }}
+  </nav>
   <div class="max-w-2xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500">
     <span>&copy; {{ now.Format "2006" }} {{ .Site.Params.author.name }}</span>
     <div class="flex flex-wrap items-center justify-center gap-4">

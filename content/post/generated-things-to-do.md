@@ -12,6 +12,13 @@ repoFullName = "pfeilbr/things-to-do"
 repoHTMLURL = "https://github.com/pfeilbr/things-to-do"
 truncated = true
 
+# A finished project lives on its /projects/ page, which shows this README
+# under "Under the hood" and redirects the old /post/ URL. So this file is
+# never listed or rendered on its own.
+[build]
+  list = "never"
+  render = "never"
+
 +++
 
 <div class="alert alert-info small bg-info" role="alert">

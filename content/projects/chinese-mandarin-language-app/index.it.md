@@ -4,6 +4,7 @@ description = "Un suggeritore di frasi in mandarino, direttamente nell'orecchio.
 date = 2026-07-26T00:00:00Z
 draft = false
 weight = -4
+repo = "pfeilbr/chinese-mandarin-language-app"
 +++
 
 Un suggeritore di frasi che ti parla nell'orecchio, per usare il mandarino con qualcuno con cui vivi davvero. Scegli una frase in inglese, ascoltala pronunciare alla velocità che ti serve, ripetila.

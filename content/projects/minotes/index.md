@@ -4,6 +4,7 @@ description = "Minimalist notes app — fast, clean, and beautiful note taking f
 date = 2014-08-04T18:55:46Z
 draft = false
 weight = 1
+aliases = ["/post/minotes/"]
 +++
 
 <img src="images/minotes-Icon-72@2x.png" width="72px">

@@ -4,6 +4,7 @@ description = "Un allenatore di mira per FPS gratuito, che gira nel browser. Thr
 date = 2026-07-22T00:00:00Z
 draft = false
 weight = -6
+repo = "pfeilbr/aim-trainer"
 +++
 
 Un allenatore di mira per FPS gratuito, che gira nel browser, ispirato a KovaaK's. Quindici scenari integrati tra clicking, flicking, tracking e switching, con punteggio, conversione della sensibilità e monitoraggio dei progressi.

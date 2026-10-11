@@ -1,15 +1,37 @@
 # brianpfeil.com
 
-Hugo site. `content/post/*.md` are blog/project posts; `content/projects/` are project bundles.
+Hugo site. `content/post/*.md` are posts; `content/projects/` are project bundles.
 
-**The home page is a table of contents, not the post list.** `/` is an
-about-style hero plus a card per section (`layouts/index.html`, driven by
-`data/home.yaml`; titles/blurbs are `hub_<key>_title` / `hub_<key>_blurb`).
-Posts, Media and Movies are wide cards with a preview (latest titles, newest
-tiles, first posters); the rest are plain cards listed in the YAML.
-The searchable, infinitely-scrolling post list lives at `/post/`
-(`layouts/post/list.html`, `content/post/_index.<lang>.md` in all nine
-languages). A new section = one entry in `data/home.yaml` + its i18n keys.
+**Posts are two kinds (2026-10-11).** Hand-written *articles* (24) are listed
+at `/post/`; the generated `generated-*.md` posts, one per playground repo's
+README, are *lab notes* (~290), listed at `/notes/`. A cascade in
+`content/post/_index.md` gives every `generated-*` file `kind = "note"`;
+`partials/site-articles.html` / `site-notes.html` are the two lists (use
+them, not `site-posts.html`, for anything a visitor browses). Both pages
+share `partials/post-list-page.html` (switch, search, infinite scroll, a
+one-line summary per row from `partials/post-summary.html`). Note URLs stay
+`/post/<slug>/`; each note opens with a "Lab note" line naming its repo.
+Search covers both and takes `?q=`.
+
+**A finished project has one page: `/projects/<x>/`.** Repos in the
+generator's `project_repos` get `[build] list/render = "never"` in their
+generated post, so the README is shown folded ("Under the hood") on the
+project page (matched by the bundle's `repo` param) and the old
+`/post/<slug>/` is an `aliases` redirect on the project's English
+`index.md`. A new project = bundle with `repo` + alias, and the repo in
+`project_repos`. GitHub and /apps/ link the project page, not the README.
+
+**The home page is a pitch, then a table of contents.** `/` is a hero
+(positioning line, three calls to action: guides, courses, articles; four
+professional profiles, `hero: true` in `data/home.yaml` — /about/ and the
+footer keep all of them), then wide cards for Architecture guides, Courses,
+Articles and Learn, plain cards listed in `data/home.yaml` (projects, apps,
+lab notes, AI, GitHub, résumé; titles/blurbs `hub_<key>_title` /
+`hub_<key>_blurb`), and one "Off the clock" card for media, movies, music
+and subscriptions. Archive and Tags are footer-only. The footer's site map
+(`partials/footer.html`) links every section not in the nav.
+`tools/site-check/check_structure.py` (verify and CI) holds all of this in
+place in every language.
 
 ## Where /media/ stands (read this first)
 
@@ -85,11 +107,12 @@ languages, and a
 warning-surfacing Hugo build. The Tests workflow runs the same on every push
 and PR, plus `terraform fmt` and `validate` on both stacks.
 
-**Open decision for B: 16 posts link to repos that are now private.** Their
-"code for article" link 404s for visitors. `make check-repo-links` lists them
-(it exits 1 while any are broken). The options are to make those repos
-public, remove the posts, or keep the posts and drop the link — nothing has
-been changed until B picks one.
+**Posts whose repo went private keep their text, minus the link**
+(decided 2026-10-11; 16 repos, 10 of them published notes).
+`data/repo_gone.json` lists them and `single.html` renders those notes
+without a repo link. `make check-repo-links` exits 1 only for a broken repo
+not yet in that file; `python3 tools/link-check/check_repo_links.py --write`
+records the current set (and drops any that are public again).
 
 **Terraform manages all of the AWS side.** State is remote in
 `s3://brianpfeil-tfstate-529276214230` (versioned, native S3 locking, no
@@ -145,10 +168,9 @@ unreliable here — see `infra/README.md`.
   if the local Hugo is a different version, so check the Actions run, not just
   the local build. Bump the pin on purpose.
 - **The nav row is capped, so it never gets roomier.** `.nav-row` is
-  `max-width: 56rem`: widening the browser adds nothing, and a seventh link
-  overlapped the language switcher at *every* width, not just narrow ones.
-  `.lang-label` truncates so flexbox can shrink instead of overlapping —
-  check a long-worded language (es, fr) before adding another nav item.
+  `max-width: 60rem`: widening the browser adds nothing. `.lang-label`
+  truncates so flexbox can shrink instead of overlapping — check a
+  long-worded language (es, fr) before adding another nav item.
 - **Inline JSON for a script needs `safeJS`.** Same trap as the JSON-LD in
   `head-meta.html`: without it Go wraps the array in quotes and `JSON.parse`
   returns a string. `jsonify` escapes `<` first, so a caption still cannot
@@ -232,7 +254,7 @@ touching a template:
   Every Monday `.github/workflows/learn-links.yml` opens each link; while any
   is broken, the issue "Learn: broken links" stays open (closes itself).
   `page` instead of `url` links one of this site's projects in the visitor's
-  language. Learn took Archive's nav slot; Archive is still a home card.
+  language. Archive is linked from the footer.
 - **/ai/ refreshes itself.** `.github/workflows/ai-radar.yml` runs
   `tools/ai-radar/radar.py` twice a day, then `digest.py` (the daily Claude
   briefing, nine languages, a no-op without the `ANTHROPIC_API_KEY` secret),
@@ -245,9 +267,10 @@ touching a template:
   `tools/ai-radar/i18n_strings.py` (`make ai-i18n` writes them into the nine
   toml files between markers), so after a merge conflict in `i18n/`, re-run
   that rather than hand-merging the block.
-- **Ten nav links** (GitHub was the tenth). `.nav-row` is now `60rem` and the
-  full row appears from 980px, because Spanish needs ~950px with a legible
-  language label. An eleventh link means re-measuring every language.
+- **Six nav links** since 2026-10-11 (guides, courses, learn, articles,
+  projects, about; it was ten). The full row shows from 820px, measured in
+  Spanish and French. Every other section is in the footer's site map; keep
+  it that way rather than growing the row again.
 
 - **/github/:** `make github-refresh` re-fetches every *public* repo (via
   `gh`, README excerpts included) and classifies it. Areas and learning

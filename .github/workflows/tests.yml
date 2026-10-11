@@ -104,6 +104,10 @@ jobs:
       # Every same-site link resolves; no tag/category casing clashes.
       - name: Internal link check
         run: python3 tools/site-check/check_site.py --public public
+      # Six nav links, the home page's calls to action, articles vs lab notes
+      # in every language, project redirects, no links to gone repos.
+      - name: Site structure check
+        run: python3 tools/site-check/check_structure.py --public public
       # /movies/ loads /data/movies.<lang>.json; it must match movies.json.
       - name: Movies per-language payload check
         run: python3 tools/movies/check_payload.py --public public

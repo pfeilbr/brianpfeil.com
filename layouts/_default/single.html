@@ -1,8 +1,21 @@
 {{ define "main" }}
 {{ $isPost := ne .Params.layout "page" }}
 {{ $story := .Params.story }}
+{{- /* A lab note is a playground README (see content/post/_index.md). Its
+   repo banner moves into the framing line under the title, and a repo that
+   has gone private or been deleted (data/repo_gone.json, kept by
+   tools/link-check/check_repo_links.py --write) is named without a link. */ -}}
+{{ $isNote := eq .Params.kind "note" }}
+{{ $repo := .Params.repoFullName }}
+{{ $gone := and $repo (in (index (hugo.Data.repo_gone | default dict) "repos" | default slice) $repo) }}
+{{- /* Contents only on a long read: 800+ words with four or more sections.
+   It used to show from 400 words, and on a phone the open box filled the
+   first screen of a three-minute post. Now it is one closed line in the
+   text column and an open sidebar on wide screens. */ -}}
+{{ $heads := len (findRE "<h[23]" .Content) }}
+{{ $toc := and $isPost (not $story) (ge .WordCount 800) (ge $heads 4) }}
 {{ if $story }}{{ partial "story.html" . }}{{ end }}
-<article{{ if $story }} class="story"{{ end }}>
+<article{{ if $story }} class="story"{{ else if $toc }} class="has-toc"{{ end }}>
   {{- /* A story post opens on its hero photo (front matter hero, hero_alt,
      hero_credit, hero_href); see partials/story.html. */ -}}
   {{ if $story }}{{ with .Resources.Get .Params.hero }}
@@ -23,15 +36,27 @@
       {{ end }}
     </div>
     {{ end }}
+    {{ if $isNote }}
+    {{ $prefix := cond (eq .Site.Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" .Site.Language.Lang) }}
+    <p class="note-frame"><a class="note-badge" href="{{ $prefix }}notes/">{{ i18n "lab_note" }}</a>
+      {{ if and $repo (not $gone) -}}
+      {{ i18n "note_frame" (dict "repo" (printf `<a href="%s" target="_blank" rel="noopener">%s</a>` (.Params.repoHTMLURL | default (printf "https://github.com/%s" $repo)) $repo)) | safeHTML }}
+      {{- else -}}
+      {{ i18n "note_frame_norepo" }}
+      {{- end }}</p>
+    {{ end }}
   </header>
 
-  {{ if and $isPost (ge .WordCount 400) (gt (len (findRE "<h[23]" .Content)) 2) }}
+  {{ if $toc }}
   <nav class="toc" aria-label="{{ i18n "table_of_contents" }}">
-    <details open>
+    <details>
       <summary>{{ i18n "contents" }}</summary>
       {{ .TableOfContents }}
     </details>
   </nav>
+  {{- /* Closed in the text column (one line, not a screenful before the
+     first sentence); open as the sidebar, where it costs nothing. */}}
+  <script>(function(){var d=document.querySelector(".toc details");if(d&&window.matchMedia("(min-width: 1280px)").matches)d.open=true;})();</script>
   {{ end }}
 
   {{- /* Raw <img src="images/x.png"> in a bundle resolves against the page's
@@ -39,12 +64,26 @@
      path, so on /ja/projects/x/ every such image was a 404. Point each one
      at where its file is actually published. */ -}}
   {{- $content := .Content -}}
+  {{- if or $isNote $gone }}{{ $content = replaceRE `(?s)<div class="alert.*?</div>` "" $content 1 }}{{ end -}}
   {{- range .Resources -}}
     {{- $content = replace $content (printf `src="%s"` .Name) (printf `src="%s"` .RelPermalink) -}}
   {{- end }}
   <div class="prose">
     {{ partial "content-a11y.html" $content | safeHTML }}
   </div>
+  {{- /* A project's README used to be a second page, a post. It is never
+     rendered on its own now (tools/generate-posts marks it build: never);
+     it is shown here, folded, and its old /post/ URL redirects here. */ -}}
+  {{ if eq .Section "projects" }}{{ with .Params.repo }}
+  {{ with hugo.Sites.Default.GetPage (printf "/post/generated-%s" (index (split . "/") 1)) }}
+  <section class="under-hood" aria-labelledby="under-hood-h">
+    <details>
+      <summary><h2 id="under-hood-h">{{ i18n "under_the_hood" }}</h2><span>{{ i18n "under_the_hood_note" }}</span></summary>
+      <div class="prose">{{ partial "content-a11y.html" (replaceRE `(?s)<div class="alert.*?</div>` "" .Content 1) | safeHTML }}</div>
+    </details>
+  </section>
+  {{ end }}
+  {{ end }}{{ end }}
 </article>
 
 {{ if $isPost }}
@@ -55,18 +94,7 @@
 {{ if $related }}
 <nav class="mt-12 pt-6 border-t border-gray-200" aria-label="{{ i18n "related_posts" }}">
   <h2 class="text-sm font-semibold text-gray-900 mb-2">{{ i18n "related_posts" }}</h2>
-  {{ range $related }}
-  {{ $icon := partial "icons/topic-for-page.html" . }}
-  <article class="post-preview post-row py-2 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
-    {{ partial "icons/chip.html" (dict "id" $icon "size" "sm" "label" (partial "icons/topic-label.html" $icon)) }}
-    <div class="post-row-body">
-      <div class="flex items-baseline justify-between gap-3">
-        <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
-        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ partial "fmt-date.html" (dict "t" .Date "f" "month_year") }}</time>
-      </div>
-    </div>
-  </article>
-  {{ end }}
+  {{ range $related }}{{ partial "post-row.html" . }}{{ end }}
 </nav>
 {{ end }}
 

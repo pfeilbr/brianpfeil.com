@@ -4,6 +4,7 @@ description = "免费的浏览器端 FPS 瞄准训练器。基于 Three.js，纯
 date = 2026-07-22T00:00:00Z
 draft = false
 weight = -6
+repo = "pfeilbr/aim-trainer"
 +++
 
 一款受 KovaaK's 启发的免费浏览器端 FPS 瞄准训练器。内置十五个训练场景，涵盖点击、甩枪、跟踪和切换目标，并提供计分、灵敏度换算和进度追踪。

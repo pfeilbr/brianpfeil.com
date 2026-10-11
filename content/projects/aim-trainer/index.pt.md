@@ -4,6 +4,7 @@ description = "Um treinador de mira de FPS gratuito, no navegador. Three.js, tot
 date = 2026-07-22T00:00:00Z
 draft = false
 weight = -6
+repo = "pfeilbr/aim-trainer"
 +++
 
 Um treinador de mira de FPS gratuito, no navegador, inspirado no KovaaK's. Quinze cenários prontos cobrindo clicking, flicking, tracking e switching, com pontuação, conversão de sensibilidade e acompanhamento de progresso.

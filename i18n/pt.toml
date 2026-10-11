@@ -1101,7 +1101,7 @@ other = "{{ .count }} recursos gratuitos"
 
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]
-other = "Há 30 anos construo coisas com tecnologia e escrevo sobre o que aprendo para que outros possam aproveitar essa experiência. Isto começou como um blog; agora também reúne meus projetos, fotos e vídeos, música e os canais que acompanho."
+other = "Trinta anos construindo com tecnologia e algumas centenas de revisões de arquitetura em nuvem. Aqui está o que procuro numa revisão, cursos gratuitos que escrevi enquanto aprendia e notas práticas do que construo."
 
 [hub_more_about]
 other = "Mais sobre mim"
@@ -1116,7 +1116,7 @@ other = "Todos os artigos"
 other = "Artigos"
 
 [hub_posts_blurb]
-other = "Notas e experimentos sobre nuvem, código, IA e ferramentas"
+other = "Textos escritos à mão sobre arquitetura em nuvem, serverless e desenvolvimento de software"
 
 [hub_media_title]
 other = "Fotos"
@@ -2014,3 +2014,69 @@ other = "O mesmo ponto eletrônico de frases, para o birmanês: ouça uma frase 
 
 [apps_blurb_money-trees]
 other = "Uma plataforma para fazer o dinheiro crescer em mercados de previsão, ações e cripto, onde cada estratégia conquista o caminho da simulação à automação."
+
+[hub_cta_guides]
+other = "Guias de arquitetura"
+
+[hub_cta_courses]
+other = "Cursos gratuitos"
+
+[hub_cta_articles]
+other = "Artigos"
+
+[hub_cta_label]
+other = "Comece aqui"
+
+[articles_count]
+other = "{{ . }} artigos"
+
+[hub_notes_title]
+other = "Notas de laboratório"
+
+[hub_notes_blurb]
+other = "Notas curtas de aprender uma ferramenta ou serviço construindo com ela, uma por repositório"
+
+[notes_count]
+other = "{{ . }} notas"
+
+[hub_notes_teaser]
+other = "Procurando algo mais curto? {{ .count }} notas de laboratório, uma para cada coisa que construí para aprender."
+
+[lab_note]
+other = "Nota de laboratório"
+
+[kind_switch]
+other = "Artigos ou notas de laboratório"
+
+[note_summary_learn]
+other = "Aprender construindo: {{ .topic }}"
+
+[note_frame]
+other = "O que anotei enquanto aprendia isto construindo com ele. Curto de propósito; o código está em {{ .repo }}."
+
+[note_frame_norepo]
+other = "O que anotei enquanto aprendia isto construindo com ele. Curto de propósito; o código não é mais público."
+
+[hub_all_guides]
+other = "Todos os guias"
+
+[hub_all_courses]
+other = "Todos os cursos"
+
+[hub_offclock_title]
+other = "Fora do trabalho"
+
+[hub_offclock_blurb]
+other = "Fotos e vídeos, filmes favoritos, playlists e os canais que sigo"
+
+[under_the_hood]
+other = "Por dentro"
+
+[under_the_hood_note]
+other = "O README do projeto, em inglês."
+
+[footer_sitemap]
+other = "Seções do site"
+
+[project_about]
+other = "Sobre este projeto"

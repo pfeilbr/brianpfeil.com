@@ -1101,7 +1101,7 @@ other = "{{ .count }} 个免费资源"
 
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]
-other = "我在技术领域动手做东西已有 30 年，并把学到的写下来，希望这些经验能帮助别人学习。这里最初是个博客，如今也收录我的项目、照片和视频、音乐，以及我关注的频道。"
+other = "三十年的技术实践，几百次云架构评审。这里有我在评审中关注的要点、我边学边写的免费课程，以及我动手做项目时留下的笔记。"
 
 [hub_more_about]
 other = "更多关于我"
@@ -1116,7 +1116,7 @@ other = "全部文章"
 other = "文章"
 
 [hub_posts_blurb]
-other = "关于云、代码、AI 和工具的笔记与实验记录"
+other = "关于云架构、无服务器和软件开发的原创文章"
 
 [hub_media_title]
 other = "影像"
@@ -2014,3 +2014,69 @@ other = "同一款耳机短句提示器，用于缅甸语：以任意语速听�
 
 [apps_blurb_money-trees]
 other = "让资金在预测市场、股票和加密货币中增长的平台，每个策略都要凭实绩从模拟交易一步步走向自动化。"
+
+[hub_cta_guides]
+other = "架构指南"
+
+[hub_cta_courses]
+other = "免费课程"
+
+[hub_cta_articles]
+other = "文章"
+
+[hub_cta_label]
+other = "从这里开始"
+
+[articles_count]
+other = "{{ . }} 篇文章"
+
+[hub_notes_title]
+other = "实验笔记"
+
+[hub_notes_blurb]
+other = "动手学习某个工具或服务时留下的简短笔记，每个仓库一篇"
+
+[notes_count]
+other = "{{ . }} 篇笔记"
+
+[hub_notes_teaser]
+other = "想看短一点的？这里有 {{ .count }} 篇实验笔记，每篇对应一个我为学习而做的项目。"
+
+[lab_note]
+other = "实验笔记"
+
+[kind_switch]
+other = "文章或实验笔记"
+
+[note_summary_learn]
+other = "边做边学：{{ .topic }}"
+
+[note_frame]
+other = "这是我边做边学时记下的内容，刻意写得简短；代码在 {{ .repo }}。"
+
+[note_frame_norepo]
+other = "这是我边做边学时记下的内容，刻意写得简短；代码已不再公开。"
+
+[hub_all_guides]
+other = "全部指南"
+
+[hub_all_courses]
+other = "全部课程"
+
+[hub_offclock_title]
+other = "工作之外"
+
+[hub_offclock_blurb]
+other = "照片和视频、喜欢的电影、歌单和我关注的频道"
+
+[under_the_hood]
+other = "技术细节"
+
+[under_the_hood_note]
+other = "项目的 README（英文）。"
+
+[footer_sitemap]
+other = "网站栏目"
+
+[project_about]
+other = "关于这个项目"

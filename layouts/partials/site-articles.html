@@ -1,0 +1,4 @@
+{{- /* The hand-written posts, newest first: every post that is not a lab
+   note (see the cascade in content/post/_index.md). This is what /post/,
+   the home page's Articles card and the archive's headline count list. */ -}}
+{{- return where (partial "site-posts.html" .) "Params.kind" "ne" "note" -}}

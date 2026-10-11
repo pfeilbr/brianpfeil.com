@@ -1102,7 +1102,7 @@ other = "{{ .count }} free resources"
 
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]
-other = "I've spent 30 years building things with technology, and I write about what I learn so others can learn from that experience. This started as a blog; now it's also home to my projects, photos and video, music, and the channels I follow."
+other = "Thirty years of building with technology and a few hundred cloud architecture reviews. Here is what I look for in a review, free courses I wrote while learning, and hands-on notes from the things I build."
 
 [hub_more_about]
 other = "More about me"
@@ -1111,13 +1111,13 @@ other = "More about me"
 other = "Explore"
 
 [hub_all_posts]
-other = "All posts"
+other = "All articles"
 
 [hub_posts_title]
-other = "Posts"
+other = "Articles"
 
 [hub_posts_blurb]
-other = "Notes and playground write-ups on cloud, code, AI and tooling"
+other = "Hand-written pieces on cloud architecture, serverless and building software"
 
 [hub_media_title]
 other = "Media"
@@ -2015,3 +2015,69 @@ other = "The same in-ear phrase prompter, for Burmese: hear a phrase at any spee
 
 [apps_blurb_money-trees]
 other = "A platform for growing money across prediction markets, stocks and crypto, where every strategy earns its way from paper trading to automation."
+
+[hub_cta_guides]
+other = "Architecture guides"
+
+[hub_cta_courses]
+other = "Free courses"
+
+[hub_cta_articles]
+other = "Articles"
+
+[hub_cta_label]
+other = "Start here"
+
+[articles_count]
+other = "{{ . }} articles"
+
+[hub_notes_title]
+other = "Lab notes"
+
+[hub_notes_blurb]
+other = "Short notes from learning a tool or service by building with it, one per repo"
+
+[notes_count]
+other = "{{ . }} notes"
+
+[hub_notes_teaser]
+other = "Looking for the short stuff? {{ .count }} lab notes, one per thing I built to learn."
+
+[lab_note]
+other = "Lab note"
+
+[kind_switch]
+other = "Articles or lab notes"
+
+[note_summary_learn]
+other = "Learning by building: {{ .topic }}"
+
+[note_frame]
+other = "What I wrote down while learning this by building with it. Short by design; the code is in {{ .repo }}."
+
+[note_frame_norepo]
+other = "What I wrote down while learning this by building with it. Short by design; the code is no longer public."
+
+[hub_all_guides]
+other = "All guides"
+
+[hub_all_courses]
+other = "All courses"
+
+[hub_offclock_title]
+other = "Off the clock"
+
+[hub_offclock_blurb]
+other = "Photos and video, favorite films, playlists and the channels I follow"
+
+[under_the_hood]
+other = "Under the hood"
+
+[under_the_hood_note]
+other = "The project's README, in English."
+
+[footer_sitemap]
+other = "Site sections"
+
+[project_about]
+other = "About this project"

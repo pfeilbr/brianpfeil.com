@@ -4,6 +4,7 @@ description = "Ein Kartenkampfspiel zum Kreatursammeln, bei dem jeder Angriff ei
 date = 2026-08-11T00:00:00Z
 draft = false
 weight = -2
+repo = "pfeilbr/pokemon-game"
 +++
 
 Monster fangen, Kämpfe gewinnen, schneller rechnen. Ein Kartenkampfspiel zum Kreatursammeln, bei dem jeder Angriff durch das Lösen einer Rechenaufgabe angetrieben wird — richtig antworten heißt treffen, schnell antworten heißt kritischer Treffer, mehrere Antworten hintereinander bauen eine Serie auf.

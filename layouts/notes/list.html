@@ -1,0 +1,5 @@
+{{ define "main" }}
+{{- /* Lab notes: one short note per playground repo, generated from its
+   README (tools/generate-posts). The pages themselves stay at /post/<slug>/. */ -}}
+{{ partial "post-list-page.html" (dict "page" . "pages" (partial "site-notes.html" .) "kind" "notes") }}
+{{ end }}

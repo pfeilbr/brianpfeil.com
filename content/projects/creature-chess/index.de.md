@@ -4,6 +4,7 @@ description = "Schach nach allen Regeln, mit Monsterfiguren – für ein Kind, d
 date = 2026-08-24T00:00:00Z
 draft = false
 weight = -7
+repo = "pfeilbr/creature-chess"
 +++
 
 Echtes Schach, Monsterfiguren. Ein vollständiges Schachspiel nach Turnierregeln, das komplett im Browser läuft — Rochade, en passant, Umwandlung, alles dabei — verpackt in eigens gezeichnete Kreaturen, damit ein Kind, das gerade das echte Spiel lernt, auch wirklich spielen will. Mit Zughilfen, Hinweisen, Zugrücknahme und Trainerabzeichen.

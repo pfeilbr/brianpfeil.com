@@ -4,6 +4,7 @@ description = "Vingt-quatre guides de ville dans un seul tableau triable et cons
 date = 2026-07-19T00:00:00Z
 draft = false
 weight = -3
+repo = "pfeilbr/things-to-do"
 +++
 
 Choisissez une ville dans la liste déroulante et découvrez quoi y faire, dans un seul tableau triable et consultable. Livré avec vingt-quatre guides — Philadelphie, New York, Brooklyn, Queens, Boston, Washington, Chicago, Toronto, Los Angeles, San Francisco, Seattle et d'autres encore.

@@ -4,6 +4,7 @@ description = "Xadrez com regras completas e peças de monstro, feito para uma c
 date = 2026-08-24T00:00:00Z
 draft = false
 weight = -7
+repo = "pfeilbr/creature-chess"
 +++
 
 Xadrez de verdade, peças de monstro. Um jogo de xadrez completo, com regras de torneio, que roda inteiro no navegador — roque, en passant, promoção, tudo — embrulhado em arte original de criaturas para que uma criança aprendendo o jogo de verdade realmente queira jogar. Indicação de lances legais, dicas, desfazer jogada e medalhas de treino.

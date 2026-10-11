@@ -4,6 +4,7 @@ description = "Ajedrez con todas las reglas y piezas monstruo, hecho para un ni�
 date = 2026-08-24T00:00:00Z
 draft = false
 weight = -7
+repo = "pfeilbr/creature-chess"
 +++
 
 Ajedrez de verdad, piezas monstruo. Una partida de ajedrez completa con reglas de torneo que funciona íntegramente en el navegador —enroque, captura al paso, coronación, todo— envuelta en ilustraciones originales de criaturas para que un niño que está aprendiendo el juego de verdad tenga ganas de jugar. Ayudas de movimientos legales, pistas, deshacer jugadas e insignias de entrenamiento.

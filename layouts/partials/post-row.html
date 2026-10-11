@@ -1,0 +1,16 @@
+{{- /* One row of a post list (/post/, /notes/, related posts): glyph, title,
+   date, a one-line summary and up to three tags. */ -}}
+{{ $icon := partial "icons/topic-for-page.html" . }}
+<article class="post-preview post-row py-2.5 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
+  {{ partial "icons/chip.html" (dict "id" $icon "size" "sm" "label" (partial "icons/topic-label.html" $icon)) }}
+  <div class="post-row-body">
+    <div class="flex items-baseline justify-between gap-3">
+      <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>
+      <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-xs text-gray-400 whitespace-nowrap shrink-0">{{ partial "fmt-date.html" (dict "t" .Date "f" "month_year") }}</time>
+    </div>
+    {{ with partial "post-summary.html" . }}<p class="post-row-sum">{{ . }}</p>{{ end }}
+    {{ with .Params.tags }}
+    <div class="mt-0.5 post-tags">{{ range $i, $t := . }}{{ if lt $i 3 }}<a href="/tags/{{ $t | urlize }}/" class="text-xs text-gray-400 hover:text-brand no-underline mr-2">{{ $t }}</a>{{ end }}{{ end }}</div>
+    {{ end }}
+  </div>
+</article>

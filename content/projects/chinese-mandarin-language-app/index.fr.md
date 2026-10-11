@@ -4,6 +4,7 @@ description = "Un souffleur de phrases en mandarin, directement dans l'oreille. 
 date = 2026-07-26T00:00:00Z
 draft = false
 weight = -4
+repo = "pfeilbr/chinese-mandarin-language-app"
 +++
 
 Un souffleur de phrases dans l'oreille, pour parler mandarin à quelqu'un avec qui on vit vraiment. On choisit une phrase en anglais, on l'entend prononcée à la vitesse qu'il faut, on la répète.

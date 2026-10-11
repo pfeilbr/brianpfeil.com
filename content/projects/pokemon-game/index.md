@@ -4,6 +4,8 @@ description = "A creature-collecting card battler where every attack is a maths 
 date = 2026-08-11T00:00:00Z
 draft = false
 weight = -2
+repo = "pfeilbr/pokemon-game"
+aliases = ["/post/mathmon-battle-league/"]
 +++
 
 Catch monsters, win battles, get faster at maths. A creature-collecting card battler where every attack is powered by solving a maths problem — answer correctly to hit, answer fast to crit, chain answers to build a streak.

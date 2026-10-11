@@ -4,6 +4,8 @@ description = "iPhone and iPad app to help kids learn about animals."
 date = 2014-08-04T18:55:46Z
 draft = false
 weight = 2
+repo = "pfeilbr/animalfun"
+aliases = ["/post/animal-fun/"]
 +++
 
 Animal Fun is an iPhone and iPad app I wrote for my son when he was 3 to help him learn about animals while also entertaining him. It's a free app [available on the App Store](http://itunes.apple.com/us/app/animal-fun/id314278061?mt=8) and the [source code is available on github](https://github.com/pfeilbr/animalfun)

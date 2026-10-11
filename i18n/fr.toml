@@ -1102,7 +1102,7 @@ other = "{{ .count }} ressources gratuites"
 
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]
-other = "Depuis 30 ans, je construis des choses avec la technologie et j'écris sur ce que j'apprends pour que d'autres profitent de cette expérience. Ce site a commencé comme un blog ; il réunit aussi mes projets, photos et vidéos, ma musique et les chaînes que je suis."
+other = "Trente ans à construire avec la technologie et quelques centaines de revues d'architecture cloud. Vous trouverez ici ce que je regarde lors d'une revue, des cours gratuits écrits en apprenant, et des notes pratiques sur ce que je construis."
 
 [hub_more_about]
 other = "En savoir plus sur moi"
@@ -1117,7 +1117,7 @@ other = "Tous les articles"
 other = "Articles"
 
 [hub_posts_blurb]
-other = "Notes et expériences sur le cloud, le code, l'IA et les outils"
+other = "Des articles écrits à la main sur l'architecture cloud, le serverless et le développement logiciel"
 
 [hub_media_title]
 other = "Photos"
@@ -2015,3 +2015,69 @@ other = "Le même souffleur de phrases, pour le birman : écoutez une phrase à 
 
 [apps_blurb_money-trees]
 other = "Une plateforme pour faire fructifier son argent sur les marchés de prédiction, les actions et les cryptos, où chaque stratégie doit mériter son passage de la simulation à l'automatisation."
+
+[hub_cta_guides]
+other = "Guides d'architecture"
+
+[hub_cta_courses]
+other = "Cours gratuits"
+
+[hub_cta_articles]
+other = "Articles"
+
+[hub_cta_label]
+other = "Commencer ici"
+
+[articles_count]
+other = "{{ . }} articles"
+
+[hub_notes_title]
+other = "Notes de labo"
+
+[hub_notes_blurb]
+other = "De courtes notes prises en apprenant un outil ou un service par la pratique, une par dépôt"
+
+[notes_count]
+other = "{{ . }} notes"
+
+[hub_notes_teaser]
+other = "Envie de plus court ? {{ .count }} notes de labo, une par chose construite pour apprendre."
+
+[lab_note]
+other = "Note de labo"
+
+[kind_switch]
+other = "Articles ou notes de labo"
+
+[note_summary_learn]
+other = "Apprendre en construisant : {{ .topic }}"
+
+[note_frame]
+other = "Ce que j'ai noté en apprenant ceci par la pratique. Court à dessein ; le code est dans {{ .repo }}."
+
+[note_frame_norepo]
+other = "Ce que j'ai noté en apprenant ceci par la pratique. Court à dessein ; le code n'est plus public."
+
+[hub_all_guides]
+other = "Tous les guides"
+
+[hub_all_courses]
+other = "Tous les cours"
+
+[hub_offclock_title]
+other = "En dehors du travail"
+
+[hub_offclock_blurb]
+other = "Photos et vidéos, films préférés, playlists et les chaînes que je suis"
+
+[under_the_hood]
+other = "Sous le capot"
+
+[under_the_hood_note]
+other = "Le README du projet, en anglais."
+
+[footer_sitemap]
+other = "Rubriques du site"
+
+[project_about]
+other = "À propos de ce projet"

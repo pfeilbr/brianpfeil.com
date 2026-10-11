@@ -1101,7 +1101,7 @@ other = "무료 자료 {{ .count }}개"
 
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]
-other = "30년 동안 기술로 무언가를 만들어 왔고, 그 경험이 다른 사람들의 배움에 도움이 되도록 배운 것을 글로 씁니다. 블로그로 시작한 이곳에는 이제 프로젝트, 사진과 영상, 음악, 구독 중인 채널도 모여 있습니다."
+other = "30년 동안 기술로 무언가를 만들어 왔고, 수백 건의 클라우드 아키텍처 리뷰를 했습니다. 리뷰에서 무엇을 보는지, 배우면서 쓴 무료 강좌, 그리고 직접 만들며 남긴 실습 노트를 모았습니다."
 
 [hub_more_about]
 other = "더 알아보기"
@@ -1116,7 +1116,7 @@ other = "모든 글"
 other = "글"
 
 [hub_posts_blurb]
-other = "클라우드, 코드, AI, 도구에 관한 노트와 실험 기록"
+other = "클라우드 아키텍처, 서버리스, 소프트웨어 개발에 관해 직접 쓴 글"
 
 [hub_media_title]
 other = "미디어"
@@ -2014,3 +2014,69 @@ other = "같은 문장 프롬프터의 버마어판: 원하는 속도로 문장�
 
 [apps_blurb_money-trees]
 other = "예측 시장, 주식, 암호화폐에서 돈을 키우는 플랫폼. 모든 전략은 모의 거래에서 자동화까지 성과로 단계를 밟아 올라갑니다."
+
+[hub_cta_guides]
+other = "아키텍처 가이드"
+
+[hub_cta_courses]
+other = "무료 강좌"
+
+[hub_cta_articles]
+other = "글"
+
+[hub_cta_label]
+other = "여기서 시작"
+
+[articles_count]
+other = "글 {{ . }}편"
+
+[hub_notes_title]
+other = "실험 노트"
+
+[hub_notes_blurb]
+other = "도구나 서비스를 직접 만들어 보며 배운 짧은 메모, 저장소마다 하나씩"
+
+[notes_count]
+other = "노트 {{ . }}개"
+
+[hub_notes_teaser]
+other = "짧은 글을 찾나요? 배우려고 만든 것마다 하나씩, 실험 노트 {{ .count }}개가 있습니다."
+
+[lab_note]
+other = "실험 노트"
+
+[kind_switch]
+other = "글 또는 실험 노트"
+
+[note_summary_learn]
+other = "만들며 배우기: {{ .topic }}"
+
+[note_frame]
+other = "직접 만들어 보며 배우는 동안 적어 둔 내용입니다. 일부러 짧게 썼고, 코드는 {{ .repo }}에 있습니다."
+
+[note_frame_norepo]
+other = "직접 만들어 보며 배우는 동안 적어 둔 내용입니다. 일부러 짧게 썼고, 코드는 더 이상 공개되어 있지 않습니다."
+
+[hub_all_guides]
+other = "모든 가이드"
+
+[hub_all_courses]
+other = "모든 강좌"
+
+[hub_offclock_title]
+other = "일 바깥에서"
+
+[hub_offclock_blurb]
+other = "사진과 영상, 좋아하는 영화, 플레이리스트, 구독 중인 채널"
+
+[under_the_hood]
+other = "내부 구조"
+
+[under_the_hood_note]
+other = "프로젝트 README(영어)."
+
+[footer_sitemap]
+other = "사이트 섹션"
+
+[project_about]
+other = "이 프로젝트 소개"

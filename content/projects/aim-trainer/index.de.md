@@ -4,6 +4,7 @@ description = "Ein kostenloser FPS-Aim-Trainer für den Browser. Three.js, kompl
 date = 2026-07-22T00:00:00Z
 draft = false
 weight = -6
+repo = "pfeilbr/aim-trainer"
 +++
 
 Ein kostenloser FPS-Aim-Trainer für den Browser, inspiriert von KovaaK's. Fünfzehn eingebaute Szenarien für Clicking, Flicking, Tracking und Switching, mit Punktewertung, Sensitivity-Umrechnung und Fortschrittsverfolgung.

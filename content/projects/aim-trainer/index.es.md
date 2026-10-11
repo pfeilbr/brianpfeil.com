@@ -4,6 +4,7 @@ description = "Un entrenador de puntería para FPS, gratuito y en el navegador. 
 date = 2026-07-22T00:00:00Z
 draft = false
 weight = -6
+repo = "pfeilbr/aim-trainer"
 +++
 
 Un entrenador de puntería para FPS, gratuito y en el navegador, inspirado en KovaaK's. Quince escenarios integrados de clic, flick, seguimiento y cambio de objetivo, con puntuación, conversión de sensibilidad y seguimiento del progreso.

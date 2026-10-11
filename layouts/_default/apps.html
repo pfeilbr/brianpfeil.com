@@ -7,7 +7,13 @@
 {{ range hugo.Data.apps.apps }}
   {{ $blurbs = merge $blurbs (dict .key (i18n (printf "apps_blurb_%s" .key))) }}
 {{ end }}
+{{- /* repo -> this language's /projects/ page, when the app has one: the
+   project page is the one place that explains it. */ -}}
+{{ $projects := dict }}
+{{ with site.GetPage "/projects" }}{{ range .Pages }}{{ $p := . }}{{ with $p.Params.repo }}{{ $projects = merge $projects (dict . $p.RelPermalink) }}{{ end }}{{ end }}{{ end }}
 {{ $T := dict
+  "about" (i18n "project_about")
+  "projects" $projects
   "open" (i18n "apps_open")
   "source" (i18n "apps_source")
   "copy" (i18n "apps_copy")
@@ -79,6 +85,7 @@
 
     var actions = el("div", "app-actions");
     actions.appendChild(D.link(a.url, "app-open", T.open + " →"));
+    if (a.repo && T.projects[a.repo]) actions.appendChild(D.link(T.projects[a.repo], "app-source", T.about));
     if (a.repo) actions.appendChild(D.link("https://github.com/" + a.repo, "app-source", T.source));
     c.appendChild(actions);
 

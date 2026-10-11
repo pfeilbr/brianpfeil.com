@@ -4,6 +4,7 @@ description = "무료 브라우저 기반 FPS 에임 트레이너. Three.js로 �
 date = 2026-07-22T00:00:00Z
 draft = false
 weight = -6
+repo = "pfeilbr/aim-trainer"
 +++
 
 KovaaK's에서 영감을 받은, 무료 브라우저 기반 FPS 에임 트레이너입니다. 클릭, 플릭, 트래킹, 타깃 전환을 아우르는 기본 시나리오 15종에 점수 계산, 감도 변환, 기록 추적 기능을 갖췄습니다.

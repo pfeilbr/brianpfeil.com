@@ -4,6 +4,8 @@ description = "Twenty-four city guides in one sortable, searchable table."
 date = 2026-07-19T00:00:00Z
 draft = false
 weight = -3
+repo = "pfeilbr/things-to-do"
+aliases = ["/post/things-to-do/"]
 +++
 
 Pick a city from the dropdown and get things to do in one sortable, searchable table. Ships with twenty-four guides — Philadelphia, NYC, Brooklyn, Queens, Boston, DC, Chicago, Toronto, Los Angeles, San Francisco, Seattle and more.

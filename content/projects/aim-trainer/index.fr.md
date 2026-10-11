@@ -4,6 +4,7 @@ description = "Un entraîneur de visée FPS gratuit, dans le navigateur. Three.j
 date = 2026-07-22T00:00:00Z
 draft = false
 weight = -6
+repo = "pfeilbr/aim-trainer"
 +++
 
 Un entraîneur de visée FPS gratuit qui tourne dans le navigateur, inspiré de KovaaK's. Quinze scénarios intégrés répartis entre clic, flick, suivi et changement de cible, avec score, conversion de sensibilité et suivi des progrès.

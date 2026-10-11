@@ -8,8 +8,13 @@ visitor would — and lists the ones that are broken.
 
     python3 tools/link-check/check_repo_links.py          # report
     python3 tools/link-check/check_repo_links.py --json   # machine-readable
+    python3 tools/link-check/check_repo_links.py --write  # record them
 
-Exit status is 1 when anything is broken, so it can gate a workflow.
+Posts whose repo is gone keep their text but lose the link: every repo in
+data/repo_gone.json is rendered without one (layouts/_default/single.html).
+--write records today's broken set there. Exit status is 1 only when a repo
+is broken and not yet recorded, so a newly private repo still gates a
+workflow, and one that comes back is reported so it can be dropped.
 Standard library only.
 """
 
@@ -23,6 +28,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 POSTS = REPO / "content" / "post"
+GONE = REPO / "data" / "repo_gone.json"
 
 URL_LINE = re.compile(r'^repoHTMLURL\s*=\s*"([^"]+)"', re.MULTILINE)
 TITLE_LINE = re.compile(r'^title\s*=\s*"((?:[^"\\]|\\.)*)"', re.MULTILINE)
@@ -73,19 +79,51 @@ def broken(results: list[dict]) -> list[dict]:
     return [r for r in results if r["status"] != 200]
 
 
+def full_name(url: str) -> str:
+    """"https://github.com/pfeilbr/x" -> "pfeilbr/x"."""
+    return url.rstrip("/").split("github.com/", 1)[-1]
+
+
+def recorded(path: Path = GONE) -> set[str]:
+    """Repos already known to be gone (rendered without a link)."""
+    if not path.exists():
+        return set()
+    return set(json.loads(path.read_text(encoding="utf-8")).get("repos", []))
+
+
+def write_gone(bad: list[dict], path: Path = GONE) -> None:
+    """Record the broken set; sorted so a re-run with no change is a no-op."""
+    data = {"repos": sorted({full_name(r["url"]) for r in bad})}
+    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
+
+def unrecorded(bad: list[dict], known: set[str]) -> list[dict]:
+    return [r for r in bad if full_name(r["url"]) not in known]
+
+
 def main() -> int:
-    as_json = "--json" in sys.argv[1:]
+    args = sys.argv[1:]
     results = check(repo_links(POSTS))
     bad = broken(results)
+    if "--write" in args:
+        write_gone(bad)
+    known = recorded()
+    new = unrecorded(bad, known)
+    back = sorted(known - {full_name(r["url"]) for r in bad})
 
-    if as_json:
-        print(json.dumps({"checked": len(results), "broken": bad}, indent=2))
+    if "--json" in args:
+        print(json.dumps({"checked": len(results), "broken": bad,
+                          "unrecorded": new, "back": back}, indent=2))
     else:
-        print(f"checked {len(results)} repo links, {len(bad)} broken")
+        print(f"checked {len(results)} repo links, {len(bad)} broken, "
+              f"{len(new)} not yet in data/repo_gone.json")
         for r in bad:
             reason = "no response" if r["status"] == 0 else f"HTTP {r['status']}"
-            print(f"  {reason:<12} {r['file']}\n               {r['url']}")
-    return 1 if bad else 0
+            flag = "" if r in new else "  (recorded: shown without a link)"
+            print(f"  {reason:<12} {r['file']}{flag}\n               {r['url']}")
+        for name in back:
+            print(f"  public again: {name} (re-run with --write to restore its link)")
+    return 1 if new else 0
 
 
 if __name__ == "__main__":

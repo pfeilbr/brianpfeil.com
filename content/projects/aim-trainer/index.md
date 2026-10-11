@@ -4,6 +4,8 @@ description = "A free, browser-based FPS aim trainer. Three.js, fully client-sid
 date = 2026-07-22T00:00:00Z
 draft = false
 weight = -6
+repo = "pfeilbr/aim-trainer"
+aliases = ["/post/aimforge/"]
 +++
 
 A free, browser-based FPS aim trainer inspired by KovaaK's. Fifteen built-in scenarios across clicking, flicking, tracking and switching, with scoring, sensitivity conversion and progress tracking.

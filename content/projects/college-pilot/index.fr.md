@@ -4,6 +4,7 @@ description = "Une PWA pour ramener une liste d'universités à une seule : gu
 date = 2026-07-21T00:00:00Z
 draft = false
 weight = -5
+repo = "pfeilbr/college-pilot"
 +++
 
 Une PWA nourrie aux données pour ramener une liste d'universités à un seul établissement. Chaque campus a droit à un guide de visite complet ; un estimateur d'aides financières gère les cas épineux (y compris les revenus de parents divorcés) ; un tableau comparatif met les chiffres côte à côte ; et un tableau de décision transforme les notes attribuées le jour de la visite en une liste courte, classée.

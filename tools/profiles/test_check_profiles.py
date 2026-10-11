@@ -21,7 +21,7 @@ def tel(place, skip=()):
     return "" if place in skip else f"<a href=tel:{cp.PHONE}>call</a>"
 
 
-def home(keys=cp.PROFILES, same=cp.SAME_AS, foot=cp.FOOTER, skip=(), phone=cp.PHONE):
+def home(keys=cp.HERO, same=cp.SAME_AS, foot=cp.FOOTER, skip=(), phone=cp.PHONE):
     ld = json.dumps({"@graph": [{"@type": "Person", "telephone": phone,
                                  "sameAs": [same[k] for k in same]}]})
     return (f"<script type=application/ld+json>{ld}</script>"
@@ -53,9 +53,14 @@ class CheckProfiles(unittest.TestCase):
         self.assertTrue(all("snapchat" in e for e in errors))
 
     def test_footer_link_does_not_count_for_hero(self):
-        keys = [k for k in cp.PROFILES if k != "youtube"]
+        keys = [k for k in cp.HERO if k != "youtube"]
         errors = cp.check(self.build(home_html=home(keys=keys)))
         self.assertTrue(any("hero: no link to youtube" in e for e in errors))
+
+    def test_hero_needs_only_the_professional_four(self):
+        self.assertEqual(cp.HERO, ("github", "linkedin", "x", "youtube"))
+        errors = cp.check(self.build(home_html=home(keys=cp.HERO)))
+        self.assertFalse(any("hero" in e for e in errors), errors)
 
     def test_same_as_missing(self):
         same = {k: v for k, v in cp.SAME_AS.items() if k != "pinterest"}
@@ -70,26 +75,25 @@ class CheckProfiles(unittest.TestCase):
         errors = cp.check(self.build(about=about_page(skip=("wechat",)),
                                      home_html=home(skip=("wechat",))))
         self.assertIn("/en/about/: no wechat copy button", errors)
-        self.assertIn("/zh/ hero: no wechat copy button", errors)
+        self.assertFalse(any("hero: no wechat" in e for e in errors))
         self.assertIn("footer: no wechat copy button", errors)
         self.assertFalse(any("discord" in e for e in errors))
 
     def test_quoted_copy_attribute_counts(self):
-        self.assertEqual(cp.no_copy('<button data-copy="methym00">', "hero"), [])
-        self.assertEqual(cp.no_copy("<button data-copy=methym00x>", "hero"), ["wechat"])
+        self.assertNotIn("wechat", cp.no_copy('<button data-copy="methym00">', "about"))
+        self.assertIn("wechat", cp.no_copy("<button data-copy=methym00x>", "about"))
 
     def test_phone_missing(self):
         errors = cp.check(self.build(about=about_page(skip=("about",)),
                                      home_html=home(skip=("hero", "footer"), phone="")))
         self.assertIn("/en/about/: no phone link", errors)
-        self.assertIn("/ko/ hero: no phone link", errors)
+        self.assertFalse(any("hero: no phone" in e for e in errors))
         self.assertIn("footer: no phone link", errors)
         self.assertIn("/fr/ JSON-LD: telephone is '', not +12158722791", errors)
 
-    def test_footer_phone_does_not_count_for_hero(self):
+    def test_hero_without_phone_passes(self):
         errors = cp.check(self.build(home_html=home(skip=("hero",))))
-        self.assertIn("/en/ hero: no phone link", errors)
-        self.assertNotIn("footer: no phone link", errors)
+        self.assertEqual(errors, [])
 
     def test_quoted_tel_counts(self):
         self.assertTrue(cp.has_tel('<a href="tel:+12158722791">'))

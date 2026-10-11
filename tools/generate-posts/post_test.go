@@ -636,6 +636,34 @@ func TestPostCategory(t *testing.T) {
 	}
 }
 
+// A project's README is shown on its /projects/ page, so its generated post
+// must be neither listed nor rendered; a playground's must be both.
+func TestRenderPostProjectIsNotPublished(t *testing.T) {
+	ts := github.Timestamp{Time: time.Date(2026, 8, 24, 0, 0, 0, 0, time.UTC)}
+	mk := func(category string) string {
+		post := &RepoPost{
+			Repo: &github.Repository{
+				Name: strPtr("creature-chess"), FullName: strPtr("pfeilbr/creature-chess"),
+				HTMLURL: strPtr("https://github.com/pfeilbr/creature-chess"), CreatedAt: &ts,
+			},
+			Title: "Creature Chess", Slug: "creature-chess", Category: category,
+			MarkdownBody: "Body.", FileName: "generated-creature-chess.md",
+		}
+		out, err := renderPost(post)
+		if err != nil {
+			t.Fatalf("renderPost(%s): %v", category, err)
+		}
+		return out
+	}
+	project := mk("project")
+	if !strings.Contains(project, "[build]\n  list = \"never\"\n  render = \"never\"\n\n+++\n") {
+		t.Errorf("project post should end its front matter with never-list/never-render build options:\n%s", project)
+	}
+	if strings.Contains(mk("playground"), "[build]") {
+		t.Error("playground post must stay listed and rendered")
+	}
+}
+
 func TestPostDescription(t *testing.T) {
 	tests := []struct {
 		name     string

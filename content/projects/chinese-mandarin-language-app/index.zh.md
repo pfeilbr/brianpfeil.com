@@ -4,6 +4,7 @@ description = "戴上耳机就能用的中文口语提示器。离线可用的 P
 date = 2026-07-26T00:00:00Z
 draft = false
 weight = -4
+repo = "pfeilbr/chinese-mandarin-language-app"
 +++
 
 一个戴在耳朵里的口语提示器，专为跟朝夕相处的人说中文而做。选一句英文，按你需要的语速听它念出来，然后跟着说一遍。

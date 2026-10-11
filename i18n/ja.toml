@@ -1101,7 +1101,7 @@ other = "{{ .count }} 件の無料リソース"
 
 # Home page table of contents (layouts/index.html, data/home.yaml)
 [hub_bio]
-other = "30 年にわたりテクノロジーでものを作ってきました。その経験がほかの人の学びに役立つよう、学んだことを書いています。ブログとして始まったこのサイトには、今ではプロジェクト、写真と動画、音楽、フォローしているチャンネルもまとめています。"
+other = "30年間テクノロジーでものを作り、数百件のクラウドアーキテクチャレビューをしてきました。レビューで何を見るか、学びながら書いた無料コース、そして作ったものの実践ノートをまとめています。"
 
 [hub_more_about]
 other = "プロフィールをもっと見る"
@@ -1116,7 +1116,7 @@ other = "すべての記事"
 other = "記事"
 
 [hub_posts_blurb]
-other = "クラウド、コード、AI、ツールについてのメモと実験記録"
+other = "クラウドアーキテクチャ、サーバーレス、ソフトウェア開発についての手書きの記事"
 
 [hub_media_title]
 other = "メディア"
@@ -2014,3 +2014,69 @@ other = "同じフレーズ・プロンプターのビルマ語版。好きな�
 
 [apps_blurb_money-trees]
 other = "予測市場・株・暗号資産でお金を育てるプラットフォーム。どの戦略も、ペーパートレードから自動売買まで実績で段階を上がっていく。"
+
+[hub_cta_guides]
+other = "アーキテクチャガイド"
+
+[hub_cta_courses]
+other = "無料コース"
+
+[hub_cta_articles]
+other = "記事"
+
+[hub_cta_label]
+other = "ここから"
+
+[articles_count]
+other = "{{ . }} 本の記事"
+
+[hub_notes_title]
+other = "ラボノート"
+
+[hub_notes_blurb]
+other = "ツールやサービスを実際に作りながら学んだときの短いメモ。リポジトリごとに1本"
+
+[notes_count]
+other = "{{ . }} 本のノート"
+
+[hub_notes_teaser]
+other = "短いものを読みたいなら、学ぶために作ったものごとに1本、{{ .count }} 本のラボノートがあります。"
+
+[lab_note]
+other = "ラボノート"
+
+[kind_switch]
+other = "記事とラボノート"
+
+[note_summary_learn]
+other = "作りながら学ぶ：{{ .topic }}"
+
+[note_frame]
+other = "実際に作りながら学んだときのメモです。あえて短くしています。コードは {{ .repo }} にあります。"
+
+[note_frame_norepo]
+other = "実際に作りながら学んだときのメモです。あえて短くしています。コードは現在公開していません。"
+
+[hub_all_guides]
+other = "すべてのガイド"
+
+[hub_all_courses]
+other = "すべてのコース"
+
+[hub_offclock_title]
+other = "仕事の外で"
+
+[hub_offclock_blurb]
+other = "写真と動画、好きな映画、プレイリスト、フォローしているチャンネル"
+
+[under_the_hood]
+other = "しくみ"
+
+[under_the_hood_note]
+other = "プロジェクトの README（英語）。"
+
+[footer_sitemap]
+other = "サイトのセクション"
+
+[project_about]
+other = "このプロジェクトについて"

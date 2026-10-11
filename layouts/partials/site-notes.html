@@ -1,0 +1,4 @@
+{{- /* Lab notes, newest first: the generated-*.md posts, one per playground
+   repo's README (tools/generate-posts). Listed on /notes/; their pages stay
+   at /post/<slug>/. */ -}}
+{{- return where (partial "site-posts.html" .) "Params.kind" "note" -}}

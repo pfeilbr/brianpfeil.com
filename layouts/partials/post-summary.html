@@ -1,0 +1,24 @@
+{{- /* One plain-text line describing a post, for list rows and the meta
+   description: the front-matter description if there is one, else the first
+   real paragraph (no repo banner, code, headings or tables). A lab note that
+   opens "learn X" / "learn and experiment with X" -- most of them -- reads
+   as "Learning by building: X" instead. Empty when nothing usable exists.
+   Called with the page; the i18n prefix follows the current site. */ -}}
+{{- $p := . -}}
+{{- $s := "" -}}
+{{- with $p.Description }}{{ $s = . }}{{ end -}}
+{{- if eq (trim $s " ") "" -}}
+  {{- $body := replaceRE `(?s)<div class="alert.*?</div>` "" $p.Content -}}
+  {{- $body = replaceRE `(?s)<pre\b.*?</pre>|<div class="highlight.*?</div>|<h[1-6]\b.*?</h[1-6]>|<table\b.*?</table>|<figure\b.*?</figure>` " " $body -}}
+  {{- range findRE `(?s)<p>.*?</p>` $body 3 -}}
+    {{- $t := . | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+    {{- if and (eq $s "") (ge (len $t) 12) }}{{ $s = $t }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- $s = $s | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
+{{- if eq $p.Params.kind "note" -}}
+  {{- with findRESubmatch `(?i)^(?:a\s+)?(?:project|playground|repo)?\s*(?:to\s+)?(?:learn|explore)(?:\s+and\s+(?:experiment|play)\s+with|\s*/\s*explore|\s+about|\s+how\s+to\s+use)?\s+(.+?)\.?$` $s 1 -}}
+    {{- $s = i18n "note_summary_learn" (dict "topic" (index (index . 0) 1)) -}}
+  {{- end -}}
+{{- end -}}
+{{- return ($s | truncate 160) -}}

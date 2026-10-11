@@ -34,6 +34,7 @@ window.SEARCH_I18N = {{ dict
   "oneMatch" (i18n "search_one_match")
   "nMatches" (i18n "search_n_matches" "%d")
   "topMatches" (i18n "search_top_matches" "%d")
+  "labNote" (i18n "lab_note")
   | jsonify | safeJS }};
 </script>
 {{ $js := resources.Get "js/search.js" | minify | fingerprint }}

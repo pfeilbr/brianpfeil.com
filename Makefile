@@ -8,6 +8,7 @@ verify: test-tools test-media test-layout test-link-check test-learn-links test-
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
 	python3 tools/site-check/check_site.py --public public
+	python3 tools/site-check/check_structure.py --public public
 	python3 tools/github-repos/check_page.py --public public
 	python3 tools/movies/check_payload.py --public public
 	python3 tools/apps/check_page.py --public public
