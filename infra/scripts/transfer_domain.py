@@ -70,11 +70,19 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("domain")
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--finish", action="store_true",
+                    help="after the transfer lands: WHOIS privacy and the transfer lock, which a transfer-in does NOT "
+                         "carry over (brianpfeil.com arrived 2026-10-11 with privacy off despite the flags)")
     ap.add_argument("--wait-minutes", type=int, default=3)
     a = ap.parse_args()
     domains = boto3.client("route53domains", region_name=REGION)
     route53 = boto3.client("route53")
 
+    if a.finish:
+        domains.update_domain_contact_privacy(DomainName=a.domain, AdminPrivacy=True, RegistrantPrivacy=True, TechPrivacy=True)
+        domains.enable_domain_transfer_lock(DomainName=a.domain)
+        print(f"{a.domain}: privacy on, transfer lock requested")
+        return 0
     if any(d["DomainName"] == a.domain for d in domains.list_domains().get("Domains", [])):
         print(f"{a.domain} is already registered in this account — nothing to transfer")
         return 0
@@ -109,6 +117,7 @@ def main() -> int:
     print(f"transfer submitted: operation {out['OperationId']}")
     print(poll(domains, out["OperationId"], a.wait_minutes))
     print("Hover will email a transfer-away notice; approving it there finishes in minutes, otherwise it completes in about 5 days.")
+    print(f"When it lands: ./infra/scripts/transfer_domain.py {a.domain} --finish  (privacy + transfer lock)")
     return 0
 
 
