@@ -17,7 +17,7 @@ verify: test-tools test-media test-layout test-link-check test-learn-links test-
 generate-posts: ## Regenerate generated-*.md posts from GitHub
 	cd tools/generate-posts && go run . -user=pfeilbr -dest=../../content/post -debug
 
-notes-strip: ## Strip laptop-specific setup (local_setup in the generator config) from the lab notes already in content/post (no GitHub; a no-op when clean)
+notes-strip: ## Strip laptop-specific setup and B's own names (tools/generate-posts/local_setup.toml) from the lab notes already in content/post (no GitHub; a no-op when clean)
 	cd tools/generate-posts && go run . -strip-existing -dest=../../content/post
 
 test-tools: ## Go tests for the post generator

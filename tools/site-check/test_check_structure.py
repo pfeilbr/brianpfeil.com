@@ -92,7 +92,7 @@ class StructureTest(unittest.TestCase):
 
     def test_own_account_anywhere_in_the_build_fails(self):
         self.write(self.public / "index.json", '[{"contents": "arn:aws:iam::529276214230:root"}]')
-        self.assertIn("/index.json: shows account 529276214230", self.check())
+        self.assertIn("/index.json: shows 529276214230", self.check())
 
     def test_example_account_is_fine(self):
         self.write(self.public / "post" / "a" / "index.html", "arn:aws:iam::123456789012:root")
@@ -100,6 +100,16 @@ class StructureTest(unittest.TestCase):
 
     def test_accounts_read_from_the_generator_config(self):
         self.assertEqual(cs.own_accounts(), ["529276214230"])
+
+    def test_names_read_from_the_generator_config(self):
+        names = cs.own_names()
+        for n in ("529276214230", "com.brianpfeil.scratch01", "brianpfeilmyfn01", "brianpfeilgmail.onmicrosoft.com"):
+            self.assertIn(n, names)
+
+    def test_a_bucket_name_in_the_build_fails(self):
+        self.write(self.public / "post" / "a" / "index.html", "aws s3 ls s3://com.brianpfeil.scratch01")
+        errors = cs.check(self.public, self.content, self.data, accounts=cs.own_names())
+        self.assertIn("/post/a/index.html: shows com.brianpfeil.scratch01", errors)
 
     def test_draft_notes_are_ignored(self):
         (self.content / "post" / "generated-d.md").write_text(

@@ -103,7 +103,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make verify` | Every `test-*` target below, then a production build and the i18n fallback check on it (not the live link check or Terraform) |
 | **Posts** | |
 | `make generate-posts` | Regenerate `generated-*.md` from GitHub |
-| `make notes-strip` | Strip laptop-specific setup (B's AWS profiles, SSO logins, home-directory paths, `cd ~/projects`) from the lab notes already in `content/post/`; the generator applies the same rule on every regeneration |
+| `make notes-strip` | Strip laptop-specific setup and B's own names (AWS profiles, SSO logins, home-directory paths, `cd ~/projects`, his account number, S3 buckets and Azure resources; `tools/generate-posts/local_setup.toml`) from the lab notes already in `content/post/`; the generator and `make github-refresh` apply the same rules |
 | `make check-repo-links` | List posts whose repo link 404s for a visitor (live, needs network) |
 | `make check-post-links` | Open every outbound link in posts, projects and guides; lists the gone ones (live, ~10 min) |
 | `make learn-pages` | Regenerate the per-path pages `content/learn/<path>.<lang>.md` from `data/learn.json` |

@@ -1,12 +1,33 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"regexp"
 	"sort"
 	"strings"
+
+	"github.com/BurntSushi/toml"
 )
+
+// LocalSetupFile is shared with tools/github-repos/refresh.py.
+const LocalSetupFile = "local_setup.toml"
+
+// LoadLocalSetup reads local_setup.toml (relative to the working directory,
+// like config.yaml). A missing file means no rules (a test's scratch
+// directory); a malformed one is an error. TestConfigLocalSetupLoads holds
+// the real file to having rules.
+func LoadLocalSetup(path string) (LocalSetup, error) {
+	var ls LocalSetup
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return ls, nil
+	}
+	if _, err := toml.DecodeFile(path, &ls); err != nil {
+		return ls, fmt.Errorf("read %s: %w", path, err)
+	}
+	return ls, nil
+}
 
 // LocalSetup lists what in a README only works on B's own laptop: his AWS
 // CLI profiles, his home directory, the folders he keeps checkouts in, and a
@@ -16,19 +37,19 @@ type LocalSetup struct {
 	// AWS CLI profiles that exist only in B's ~/.aws/config. Profiles a
 	// README defines or depends on as part of its demo (a partner account,
 	// an assumed lambda role) are deliberately not listed.
-	Profiles []string `yaml:"profiles"`
+	Profiles []string `toml:"profiles"`
 	// B's own AWS account numbers, rewritten to AWS's documented example
 	// account, 123456789012. AWS-owned accounts in a README (Ground Truth
 	// lambdas, Serverless Inc's trust account) must not be listed here.
-	Accounts []string `yaml:"accounts"`
+	Accounts []string `toml:"accounts"`
 	// Absolute home directories, rewritten to $HOME/.
-	HomeDirs []string `yaml:"home_dirs"`
+	HomeDirs []string `toml:"home_dirs"`
 	// Folders under ~ that B works in; a bare `cd` into one is dropped.
-	WorkspaceDirs []string `yaml:"workspace_dirs"`
+	WorkspaceDirs []string `toml:"workspace_dirs"`
 	// Exact strings to rewrite, longest first.
-	Replace map[string]string `yaml:"replace"`
+	Replace map[string]string `toml:"replace"`
 	// Lines (regexes) that only describe B's machine; dropped.
-	DropLines []string `yaml:"drop_lines"`
+	DropLines []string `toml:"drop_lines"`
 }
 
 // ExampleAccount is the account number AWS's own documentation uses.

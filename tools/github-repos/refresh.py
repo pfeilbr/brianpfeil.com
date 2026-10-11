@@ -38,6 +38,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
+# What in a README only works on, or names, B's own machine and accounts.
+# Shared with the post generator (tools/generate-posts/localsetup.go).
+LOCAL_SETUP = ROOT / "tools" / "generate-posts" / "local_setup.toml"
+EXAMPLE_ACCOUNT = "123456789012"
 OUT = ROOT / "data" / "github.json"
 POSTS = ROOT / "content" / "post"
 CONFIG = HERE / "config.json"
@@ -139,6 +143,49 @@ LINK = re.compile(r"\[([^\]]*)\]\([^)]*\)")
 REFDEF = re.compile(r"^\s*\[[^\]]+\]:\s*\S+.*$", re.M)
 TAG = re.compile(r"<[^>]+>")
 FENCE = re.compile(r"^(```|~~~).*?^\1", re.S | re.M)
+
+
+def load_local_setup(path=LOCAL_SETUP):
+    """local_setup.toml, or no rules if it is missing."""
+    if not path.exists():
+        return {}
+    return tomllib.loads(path.read_text(encoding="utf-8"))
+
+
+def scrub(md, rules, repo_name=""):
+    """Markdown with B's own setup and names taken out, the same rules the
+    post generator applies to a lab note: B's AWS profiles and SSO logins,
+    his home directory and checkout paths, "where I installed X" lines, his
+    account number, buckets and Azure resources. Line by line, before the
+    README is cut down to an excerpt."""
+    if not md or not rules:
+        return md
+    replace = sorted((rules.get("replace") or {}).items(), key=lambda kv: (-len(kv[0]), kv[0]))
+    drops = [re.compile(d) for d in rules.get("drop_lines", [])]
+    homes = "|".join(re.escape(h.rstrip("/")) for h in rules.get("home_dirs", []))
+    home_alt = f"(?:~|{homes})" if homes else "~"
+    own = re.compile(home_alt + r"(?:/[^\s:'\"`]*?)?/projects/" + re.escape(repo_name) + r"\b") if repo_name else None
+    profs = [re.escape(p) for p in rules.get("profiles", [])]
+    flag = re.compile(r"[ \t]+--(?:aws-)?profile[= ](?:\"(?:%s)\"|'(?:%s)'|(?:%s))(?=[\s`)\\]|$)"
+                      % (("|".join(profs),) * 3)) if profs else None
+    env = re.compile(r"^\s*(?:export\s+)?AWS_PROFILE=[\"']?(?:%s)[\"']?\s*$" % "|".join(profs)) if profs else None
+    sso = re.compile(r"^\s*(\$\s*)?aws\s+sso\s+login(\s.*)?$")
+    out = []
+    for line in md.split("\n"):
+        for k, v in replace:
+            line = line.replace(k, v)
+        for a in rules.get("accounts", []):
+            line = line.replace(a, EXAMPLE_ACCOUNT)
+        if any(d.search(line) for d in drops) or sso.match(line) or (env and env.match(line)):
+            continue
+        if own:
+            line = own.sub("/path/to/" + repo_name, line)
+        if flag:
+            line = flag.sub("", line)
+        if homes:
+            line = re.sub(f"(?:{homes})(?=/|\\b)", "$HOME", line)
+        out.append(line)
+    return "\n".join(out)
 
 
 def readme_text(md):
@@ -284,8 +331,9 @@ def slim(repo, tags, cfg, vocab, posted):
         if blob and blob.get("text"):
             readme = blob["text"]
             break
-    paras = readme_text(readme)
-    desc = (repo.get("description") or "").strip()
+    rules = LOCAL_RULES
+    paras = readme_text(scrub(readme, rules, repo["name"]))
+    desc = scrub((repo.get("description") or "").strip(), rules, repo["name"])
     if same_words(desc, repo["name"]):
         desc = ""  # "aws-ecs-playground" says nothing the name doesn't
     langs = []
@@ -380,6 +428,9 @@ def decide(new, old, force=False):
     if not force and new["count"] < old.get("count", 0) * (1 - MAX_DROP):
         return "shrunk"
     return "write"
+
+
+LOCAL_RULES = load_local_setup()
 
 
 def main():

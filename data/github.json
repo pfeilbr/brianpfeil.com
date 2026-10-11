@@ -1,6 +1,6 @@
 {
  "user": "pfeilbr",
- "updated": "2026-10-07",
+ "updated": "2026-10-11",
  "count": 413,
  "areas": [
   {
@@ -714,7 +714,7 @@
    "stars": 0,
    "created": "2023-10-19",
    "pushed": "2024-02-02",
-   "readme": "learn Amazon Bedrock visit main.ipynb in vscode select .venv kernel in top right run jupyter lab UI allows you to train a model with new unlabeled data. Use continued pre-training to teach a model new domain knowledge that's not already present in the base models. You can train a model with private data, such as business documents, that are not publically available for training large language models. Additionally, you can continue to improve the model by retraining the model with more unlabeled data as it becomes available. allows you to improve a model's performance on specific tasks. By…",
+   "readme": "learn Amazon Bedrock visit main.ipynb run jupyter lab UI allows you to train a model with new unlabeled data. Use continued pre-training to teach a model new domain knowledge that's not already present in the base models. You can train a model with private data, such as business documents, that are not publically available for training large language models. Additionally, you can continue to improve the model by retraining the model with more unlabeled data as it becomes available. allows you to improve a model's performance on specific tasks. By providing a training dataset of labeled…",
    "post": true
   },
   {
@@ -3361,7 +3361,7 @@
    "stars": 1,
    "created": "2022-07-06",
    "pushed": "2022-07-06",
-   "readme": "learn AWS SSO The aws sso CLI commands require the --access-token parameter. First login via sso (e.g. aws sso login --profile root-AWSAdministratorAccess), then run the following to get. list account assignments (AWS::SSO::Assignment) AWS Single Sign-On Documentation aws sso-admin - cli benkehoe/aws-sso-util AWS::SSO::PermissionSet AWS::SSO::Assignment How can I get temporary credentials for an AWS Single Sign-On user using the AWS CLI?",
+   "readme": "learn AWS SSO The aws sso CLI commands require the --access-token parameter. First login via sso (e.g. aws sso login), then run the following to get. list account assignments (AWS::SSO::Assignment) AWS Single Sign-On Documentation aws sso-admin - cli benkehoe/aws-sso-util AWS::SSO::PermissionSet AWS::SSO::Assignment How can I get temporary credentials for an AWS Single Sign-On user using the AWS CLI?",
    "post": true
   },
   {
@@ -4164,11 +4164,11 @@
    "langs": [
     [
      "HTML",
-     87
+     86
     ],
     [
      "Python",
-     9
+     10
     ],
     [
      "CSS",
@@ -4186,7 +4186,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-02-16",
-   "pushed": "2026-10-07",
+   "pushed": "2026-10-11",
    "readme": "Personal site built with Hugo, in nine languages: English at the root, and zh es pt fr de it ja ko under //. Posts are English-only; pages, layouts and UI strings are translated. For working on it with an AI agent, CLAUDE.md holds the conventions and the gotchas that have bitten before, and opens with where current work stands. Hugo Extended 0.166.0 — the version CI is pinned to. A different local version can build fine and still fail to deploy. Go 1.25+ — only for generating posts from GitHub repos Python 3.11+ and ffmpeg — only for the media page Terraform 1.10+ and the AWS CLI — only for…",
    "post": false,
    "homepage": "https://brianpfeil.com/"
@@ -4685,7 +4685,7 @@
   },
   {
    "name": "cognito-federated-to-salesforce-and-s3-presigned-url-playground",
-   "desc": "see index.html see ~/Dropbox/notes/static-s3-cognito-authentication.md on local machine also for greater detail on setup",
+   "desc": "see index.html",
    "lang": "HTML",
    "langs": [
     [
@@ -4712,7 +4712,7 @@
    "stars": 0,
    "created": "2019-06-13",
    "pushed": "2019-06-13",
-   "readme": "see index.html see ~/Dropbox/notes/static-s3-cognito-authentication.md on local machine also for greater detail on setup see index.js node index.js outputs pre-signed url. (uses ~/.aws/credentials and pre-signed URL generated under that users context/permission) PUT / upload file to S3 via curl -X PUT -T hello.txt -L ''",
+   "readme": "see index.html see index.js node index.js outputs pre-signed url. (uses ~/.aws/credentials and pre-signed URL generated under that users context/permission) PUT / upload file to S3 via curl -X PUT -T hello.txt -L ''",
    "post": true,
    "license": "MIT"
   },
@@ -10155,7 +10155,7 @@
    "stars": 0,
    "created": "2015-06-05",
    "pushed": "2017-08-28",
-   "readme": "Project to learn and experiment with the Spark cluster computing system. spark installed at ~/dev/spark-2.2.0-bin-hadoop2.7 and is part of PATH in .bashprofile Spark Documentation",
+   "readme": "Project to learn and experiment with the Spark cluster computing system. Spark Documentation",
    "post": true
   },
   {
@@ -10533,11 +10533,15 @@
    "langs": [
     [
      "JavaScript",
-     61
+     57
     ],
     [
      "HTML",
-     39
+     37
+    ],
+    [
+     "Python",
+     6
     ]
    ],
    "areas": [
@@ -10550,8 +10554,8 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-07-19",
-   "pushed": "2026-09-03",
-   "readme": "A single-page, fully client-side web app — pick a city from the dropdown, get things to do in one sortable, searchable table. Ships with twenty-four guides: Philly (Willow Grove) · Forest Hills · NYC · Brooklyn · Queens · Flushing · Ithaca (Cornell) · Atlantic City · Baltimore · Washington DC · Pittsburgh · Richmond · Boston · Virginia Beach · Buffalo · Cleveland · Raleigh-Durham · Chicago · Toronto · Nashville · Los Angeles · San Francisco · Seattle · San Diego. Live site: https://pfeilbr.github.io/things-to-do/ City switcher — a region-grouped dropdown in the app bar swaps the whole guide…",
+   "pushed": "2026-10-11",
+   "readme": "A single-page, fully client-side web app — pick a city from the dropdown, get things to do in one sortable, searchable table. Ships with twenty-five guides: Philly (Willow Grove) · Forest Hills · NYC · Brooklyn · Queens · Flushing · Ithaca (Cornell) · Verona · Atlantic City · Baltimore · Washington DC · Pittsburgh · Richmond · Boston · Virginia Beach · Buffalo · Cleveland · Raleigh-Durham · Chicago · Toronto · Nashville · Los Angeles · San Francisco · Seattle · San Diego. Live site: https://pfeilbr.github.io/things-to-do/ City switcher — a region-grouped dropdown in the app bar swaps the…",
    "post": true
   },
   {
@@ -10561,7 +10565,7 @@
    "langs": [
     [
      "TypeScript",
-     84
+     83
     ],
     [
      "Astro",
@@ -10579,7 +10583,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-10-01",
-   "pushed": "2026-10-07",
+   "pushed": "2026-10-11",
    "readme": "Everything travel and the things that go with it: trips and live availability checks, places with photos and real ratings, wishlists, reviews and trip plans. It's a static web app on GitHub Pages with Supabase for user accounts and data. Live: https://pfeilbr.github.io/travel/ Landing page: hero search (where / stay / drive), the latest live-checked trip, top picks, and browse-by-vibe tiles. Explore and trip pages: an Airbnb-style browse view. Photo-carousel cards, filter chips (roof, cabin, glamping, biking, fishing, waterfalls…), sorting, and a split list + map view with price pins. Filters…",
    "post": false,
    "homepage": "https://pfeilbr.github.io/travel/"
@@ -10762,7 +10766,7 @@
    "stars": 0,
    "created": "2018-09-21",
    "pushed": "2018-09-21",
-   "readme": "project to learn and develop with V8 Root V8 source directory is @ ~/dev/v8 on local machine Follow steps at https://github.com/v8/v8/wiki/Building-from-Source up until, but not inlcuding tools/dev/v8gen.py ... generate \"debug\" build files tools/dev/v8gen.py x64.debug change contents of v8/out.gn/x64.debug/args.gn to compile with ninja -C out.gn/x64.debug compile debug version of samples/hello-world.cc with move into output directory pushd out.gn/x64.debug set library path and run LDLIBRARYPATH=./ ./helloworld return to v8 root popd configure: modify script/env for your setup build…",
+   "readme": "project to learn and develop with V8 Follow steps at https://github.com/v8/v8/wiki/Building-from-Source up until, but not inlcuding tools/dev/v8gen.py ... generate \"debug\" build files tools/dev/v8gen.py x64.debug change contents of v8/out.gn/x64.debug/args.gn to compile with ninja -C out.gn/x64.debug compile debug version of samples/hello-world.cc with move into output directory pushd out.gn/x64.debug set library path and run LDLIBRARYPATH=./ ./helloworld return to v8 root popd configure: modify script/env for your setup build: ./scripts/build src/playground.cc run: ./scripts/run…",
    "post": true
   },
   {

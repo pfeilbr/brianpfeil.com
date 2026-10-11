@@ -121,12 +121,21 @@ func TestStripExistingLeavesFrontMatterAndBanner(t *testing.T) {
 	}
 }
 
+func TestLoadLocalSetupMalformedFails(t *testing.T) {
+	f := filepath.Join(t.TempDir(), "bad.toml")
+	os.WriteFile(f, []byte("profiles = [unclosed"), 0o644)
+	if _, err := LoadLocalSetup(f); err == nil {
+		t.Error("a malformed local_setup.toml must be an error, not an empty rule set")
+	}
+}
+
 func TestConfigLocalSetupLoads(t *testing.T) {
 	cfg, err := LoadConfig()
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(cfg.LocalSetup.Profiles) == 0 || len(cfg.LocalSetup.HomeDirs) == 0 || len(cfg.LocalSetup.Accounts) == 0 {
+	if len(cfg.LocalSetup.Profiles) == 0 || len(cfg.LocalSetup.HomeDirs) == 0 || len(cfg.LocalSetup.Accounts) == 0 ||
+		cfg.LocalSetup.Replace["brianpfeilmyfn01"] != "myfunctionapp01" || len(cfg.LocalSetup.DropLines) < 4 {
 		t.Fatalf("local_setup not loaded: %+v", cfg.LocalSetup)
 	}
 	// Every pattern must compile, or the generator panics mid-run.

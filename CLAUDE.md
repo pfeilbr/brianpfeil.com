@@ -11,13 +11,16 @@ them, not `site-posts.html`, for anything a visitor browses). Both pages
 share `partials/post-list-page.html` (switch, search, infinite scroll, a
 one-line summary per row from `partials/post-summary.html`). Note URLs stay
 `/post/<slug>/`; each note opens with a "Lab note" line naming its repo.
-Search covers both and takes `?q=`. Lab notes carry no laptop-specific setup: the generator's
-`local_setup` (B's AWS profiles, SSO logins, `/Users/pfeilbr` paths,
-`cd ~/projects`, "where I installed X" lines, and his account number
-529276214230, shown as AWS's example 123456789012 — the structure check
-fails on any built page that still has it) is applied to every README,
-and `make notes-strip` re-applies it to the files in place. A new personal
-profile or path goes in that config, not in a hand edit of a note.
+Search covers both and takes `?q=`. Lab notes carry no laptop-specific setup and none of B's own names:
+`tools/generate-posts/local_setup.toml` (his AWS profiles, SSO logins,
+`/Users/pfeilbr` paths, `cd ~/projects`, "where I installed X" lines, his
+account number as AWS's example 123456789012, his S3 buckets as
+`amzn-s3-demo-*`, his Azure resources as Microsoft's `contoso`/`my*`
+names) is applied by the generator to every README and by
+`make github-refresh` to the /github/ excerpts; `make notes-strip`
+re-applies it to the notes in place. The structure check fails if any
+account or `[replace]` key reaches the built site. A new personal name
+goes in that file, never in a hand edit of a note.
 
 **A finished project has one page: `/projects/<x>/`.** Repos in the
 generator's `project_repos` get `[build] list/render = "never"` in their

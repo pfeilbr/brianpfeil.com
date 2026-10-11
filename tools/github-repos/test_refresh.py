@@ -173,5 +173,40 @@ class Output(unittest.TestCase):
             self.assertTrue(set(t["repos"]) <= names, t["key"])
 
 
+class ScrubTest(unittest.TestCase):
+    """The README excerpt on /github/ follows the lab notes' local_setup."""
+
+    RULES = {
+        "profiles": ["root-AWSAdministratorAccess", "admin"],
+        "accounts": ["529276214230"],
+        "home_dirs": ["/Users/pfeilbr"],
+        "drop_lines": [r"(?i)^\s*spark installed at "],
+        "replace": {"com.brianpfeil.scratch01": "amzn-s3-demo-bucket", "com.brianpfeil.scratch": "amzn-s3-demo-bucket",
+                    "brianpfeilmyfn01": "myfunctionapp01"},
+    }
+
+    def test_profiles_sso_and_exports(self):
+        md = "First login (e.g. `aws sso login --profile root-AWSAdministratorAccess`).\naws sso login\nexport AWS_PROFILE=admin\naws --profile partner-01 s3 ls"
+        self.assertEqual(refresh.scrub(md, self.RULES),
+                         "First login (e.g. `aws sso login`).\naws --profile partner-01 s3 ls")
+
+    def test_names_accounts_and_paths(self):
+        md = "s3://com.brianpfeil.scratch01 and s3://com.brianpfeil.scratch https://brianpfeilmyfn01.azurewebsites.net\narn:aws:iam::529276214230:root /Users/pfeilbr/tmp ~/projects/demo"
+        self.assertEqual(refresh.scrub(md, self.RULES, "demo"),
+                         "s3://amzn-s3-demo-bucket and s3://amzn-s3-demo-bucket https://myfunctionapp01.azurewebsites.net\narn:aws:iam::123456789012:root $HOME/tmp /path/to/demo")
+
+    def test_machine_only_lines_dropped_before_the_excerpt(self):
+        md = "Learn Spark.\n\nspark installed at `~/dev/spark` and on PATH\n\nRun it."
+        self.assertEqual(refresh.readme_text(refresh.scrub(md, self.RULES)), ["Learn Spark.", "Run it."])
+
+    def test_no_rules_changes_nothing(self):
+        self.assertEqual(refresh.scrub("aws sso login", {}), "aws sso login")
+
+    def test_shared_rules_file_loads(self):
+        rules = refresh.load_local_setup()
+        self.assertIn("529276214230", rules["accounts"])
+        self.assertEqual(rules["replace"]["brianpfeilmyfn01"], "myfunctionapp01")
+
+
 if __name__ == "__main__":
     unittest.main()

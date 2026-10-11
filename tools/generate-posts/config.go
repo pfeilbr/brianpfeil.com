@@ -27,8 +27,9 @@ type Config struct {
 	// repos whose interesting work happened long after they were created.
 	DateOverrides map[string]string `yaml:"date_overrides"`
 
-	// LocalSetup is what only works on B's laptop; see localsetup.go.
-	LocalSetup LocalSetup `yaml:"local_setup"`
+	// LocalSetup is what only works on B's laptop or names his accounts;
+	// loaded from local_setup.toml, see localsetup.go.
+	LocalSetup LocalSetup `yaml:"-"`
 
 	TitleMappings    map[string]string `yaml:"title_mappings"`
 	CasingCorrections []string         `yaml:"casing_corrections"`
@@ -52,6 +53,12 @@ func LoadConfig() (Config, error) {
 	if err := yaml.Unmarshal(data, &cfg); err != nil {
 		return cfg, fmt.Errorf("parse config.yaml: %w", err)
 	}
+
+	ls, err := LoadLocalSetup(LocalSetupFile)
+	if err != nil {
+		return cfg, err
+	}
+	cfg.LocalSetup = ls
 
 	// Merge local overrides (secrets)
 	if localData, err := os.ReadFile("config.local.yaml"); err == nil {

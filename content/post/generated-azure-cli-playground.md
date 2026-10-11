@@ -35,7 +35,7 @@ az find "az functionapp list"
 az login
 
 # log in with a service principal using client secret.
-az login --service-principal -u http://azure-cli-2019-05-09-16-09-40 -p '[CLIENT_SECRET_HERE]' --tenant brianpfeilgmail.onmicrosoft.com
+az login --service-principal -u http://azure-cli-2019-05-09-16-09-40 -p '[CLIENT_SECRET_HERE]' --tenant contoso.onmicrosoft.com
 
 az logout
 
@@ -75,7 +75,7 @@ az ad sp list --query "[].{id:appId, tenant:appOwnerTenantId, name:displayName}"
 az role assignment list --assignee 'http://azure-cli-2019-05-09-16-09-40'
 
 # list role assignments for user (user sign-in name)
-az role assignment list --assignee 'dev01@brianpfeilgmail.onmicrosoft.com'
+az role assignment list --assignee 'dev01@contoso.onmicrosoft.com'
 
 # list role assignments for user (object id)
 az role assignment list --assignee '38d35c72-5a26-464c-bbb3-c4487a1d4779'
@@ -101,11 +101,11 @@ az login --service-principal --username "http://service-principal-01" --password
 # NOTE: must be logged in with `service-principal-01` above for this example
 # or may need to add client id to authorize application.  see following screenshot
 # <https://www.evernote.com/l/AAFJLMG88QhDgqehvtS8P-qkVuCcmFFUhCMB/image.png>
-ACCESS_TOKEN=$(az account get-access-token --resource 'https://brianpfeilmyfn01.azurewebsites.net')
+ACCESS_TOKEN=$(az account get-access-token --resource 'https://myfunctionapp01.azurewebsites.net')
 
 
 # call endpoint protected by azure ad.  e.g. functions function endpoint
-curl --header "Authorization: Bearer ${ACCESS_TOKEN}" https://brianpfeilmyfn01.azurewebsites.net/api/HttpExample
+curl --header "Authorization: Bearer ${ACCESS_TOKEN}" https://myfunctionapp01.azurewebsites.net/api/HttpExample
 
 # show service principal details
 az ad sp show --id "http://service-principal-01"

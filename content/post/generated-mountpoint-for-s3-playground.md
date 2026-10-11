@@ -52,7 +52,7 @@ mount-s3 --help
 mount-s3 <bucket name>  ~/mnt/s3
 
 # mount with delete
-mount-s3 --allow-delete "com.brianpfeil.scratch01" ~/mnt/s3
+mount-s3 --allow-delete "amzn-s3-demo-bucket" ~/mnt/s3
 
 # unmount
 sudo umount ~/mnt/s3

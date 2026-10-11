@@ -31,7 +31,7 @@ learn [iann0036/iamlive](https://github.com/iann0036/iamlive) - cli tool to *Gen
 iamlive --set-ini
 
 # run the following in another shell
-aws s3 ls s3://com.brianpfeil.scratch01
+aws s3 ls s3://amzn-s3-demo-bucket
 ```
 
 ![](https://www.evernote.com/l/AAGpI2UD7ldEYZs7Kv4Uo_48n1eX6UJ158kB/image.png)

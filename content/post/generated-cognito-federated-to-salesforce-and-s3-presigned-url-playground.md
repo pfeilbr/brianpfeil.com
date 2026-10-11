@@ -30,13 +30,13 @@ sudo node server.js
 open https://localhost
 
 # on s3
-open https://pfeil-static-site-01.s3.amazonaws.com/index.html
+open https://amzn-s3-demo-static-site.s3.amazonaws.com/index.html
 
 # on cloudfront
 open https://d3tz189emgpc7c.cloudfront.net/index.html
 
 # copy updated file to s3
-aws s3 cp index.html s3://pfeil-static-site-01/index.html
+aws s3 cp index.html s3://amzn-s3-demo-static-site/index.html
 # invalidate cloudfront dist after copy
 
 # if any login issues
