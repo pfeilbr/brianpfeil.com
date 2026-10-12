@@ -64,6 +64,13 @@ markup:
     noClasses: false
 
 params:
+  # Search Console / Bing Webmaster ownership codes (the content="" part of
+  # their meta tag). Empty renders nothing. Waiting on B: see CLAUDE.md,
+  # "Waiting on B".
+  verification:
+    google: ""
+    bing: ""
+    yandex: ""
   homeTitle: "Brian Pfeil"
   mainSections: ["post", "posts"]
   dateFormat: "January 2, 2006"

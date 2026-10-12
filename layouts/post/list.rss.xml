@@ -1,0 +1,2 @@
+{{- /* /post/index.xml: articles only; lab notes are /notes/index.xml. */ -}}
+{{- partial "rss-feed.html" (dict "page" . "pages" (partial "site-articles.html" .) "title" (printf "%s · %s" .Title site.Title)) -}}

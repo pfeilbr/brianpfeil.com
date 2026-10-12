@@ -61,7 +61,13 @@ Top stories:
 - [{{ .Title }}]({{ .Permalink }}): {{ .Description | plainify | htmlUnescape }}
 {{- end }}
 
-## Posts
-{{ range (where site.RegularPages "Section" "post").ByDate.Reverse }}
-- [{{ .Title }}]({{ .Permalink }}){{ with .Description }}: {{ . | plainify | htmlUnescape }}{{ end }}
+## Articles
+{{ range (partial "site-articles.html" .).ByDate.Reverse }}
+- [{{ .Title }}]({{ .Permalink }}){{ with partial "post-summary.html" . }}: {{ . }}{{ end }}
+{{- end }}
+
+## Lab notes
+Short notes from learning a tool or service by building with it, one per repo.
+{{ range (partial "site-notes.html" .).ByDate.Reverse }}
+- [{{ .Title }}]({{ .Permalink }}): {{ partial "post-summary.html" . }}
 {{- end }}

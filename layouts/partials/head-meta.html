@@ -90,7 +90,10 @@
 {{- /* Breadcrumbs (Home › Section › Page) for articles and course pages, so
    search results can show where a page sits. */ -}}
 {{- if and .IsPage (in (slice "post" "projects" "architecture" "courses" "learn") .Section) }}
-{{- with .CurrentSection }}
+{{- $crumb := .CurrentSection -}}
+{{- /* A lab note sits under /notes/ for a visitor, though its file is in post/. */ -}}
+{{- if eq .Params.kind "note" }}{{ with site.GetPage "/notes" }}{{ $crumb = . }}{{ end }}{{ end -}}
+{{- with $crumb }}
 <script type="application/ld+json">
 {{ dict
   "@context" "https://schema.org"
@@ -170,4 +173,11 @@
   | jsonify (dict "indent" "  ") | safeJS }}
 {{- end -}}
 </script>
+{{- end }}
+{{- /* Search-engine ownership checks. Empty until B pastes a code into
+   params.verification in config.yaml; then one meta tag each. */ -}}
+{{- with site.Params.verification }}
+{{- with .google }}<meta name="google-site-verification" content="{{ . }}">{{ end }}
+{{- with .bing }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
+{{- with .yandex }}<meta name="yandex-verification" content="{{ . }}">{{ end }}
 {{- end }}
