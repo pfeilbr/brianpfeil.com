@@ -2083,3 +2083,9 @@ other = "关于这个项目"
 
 [note_summary_fallback]
 other = "{{ .title }} 的动手笔记和代码。"
+
+[post_age_notice]
+other = "写于 {{ .year }} 年。此后工具、API 和价格可能已有变化。"
+
+[updated_on]
+other = "更新于 {{ .date }}"

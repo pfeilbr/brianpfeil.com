@@ -2082,3 +2082,9 @@ other = "Informazioni sul progetto"
 
 [note_summary_fallback]
 other = "Appunti pratici e codice per {{ .title }}."
+
+[post_age_notice]
+other = "Scritto nel {{ .year }}. Strumenti, API e prezzi potrebbero essere cambiati da allora."
+
+[updated_on]
+other = "Aggiornato il {{ .date }}"

@@ -25,6 +25,9 @@ jobs:
       HUGO_ENVIRONMENT: production
     steps:
       - uses: actions/checkout@v7
+        with:
+          # Full history: enableGitInfo dates every page by its last commit.
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3

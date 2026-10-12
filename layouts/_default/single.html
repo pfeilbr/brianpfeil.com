@@ -36,6 +36,14 @@
       {{ end }}
     </div>
     {{ end }}
+    {{- /* Guides are kept current; say when one last changed (git date). */ -}}
+    {{ if and (eq .Section "architecture") .IsPage (gt (sub .Lastmod.Unix .Date.Unix) 1209600) }}
+    <p class="text-sm text-gray-500 updated-on">{{ i18n "updated_on" (dict "date" (.Lastmod.Format (.Site.Params.dateFormat | default "January 2, 2006"))) }}</p>
+    {{ end }}
+    {{- /* An old post says so up front: its commands and APIs may have moved on. */ -}}
+    {{ if and (eq .Section "post") (not $story) (ge (sub now.Year .Date.Year) 3) }}
+    <p class="age-note" role="note">{{ i18n "post_age_notice" (dict "year" .Date.Year) }}</p>
+    {{ end }}
     {{ if $isNote }}
     {{ $prefix := cond (eq .Site.Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" .Site.Language.Lang) }}
     <p class="note-frame"><a class="note-badge" href="{{ $prefix }}notes/">{{ i18n "lab_note" }}</a>
@@ -65,6 +73,17 @@
      at where its file is actually published. */ -}}
   {{- $content := .Content -}}
   {{- if or $isNote $gone }}{{ $content = replaceRE `(?s)<div class="alert.*?</div>` "" $content 1 }}{{ end -}}
+  {{- /* Some READMEs open with a heading that only repeats the title
+     ("## go-postgres-playground" under "Go Postgres"); drop it. */ -}}
+  {{- if $isNote -}}
+    {{- with findRESubmatch `^\s*<h[1-3][^>]*>(.*?)</h[1-3]>` $content 1 -}}
+      {{- $norm := `[^a-z0-9]` -}}
+      {{- $h := replace (replaceRE $norm "" (lower ((index (index . 0) 1) | plainify))) "playground" "" -}}
+      {{- $t := replace (replaceRE $norm "" (lower $.Title)) "playground" "" -}}
+      {{- $r := replace (replaceRE $norm "" (lower (index (split ($repo | default "/") "/") 1))) "playground" "" -}}
+      {{- if and (ne $h "") (or (eq $h $t) (eq $h $r)) }}{{ $content = replace $content (index (index . 0) 0) "" }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
   {{- range .Resources -}}
     {{- $content = replace $content (printf `src="%s"` .Name) (printf `src="%s"` .RelPermalink) -}}
   {{- end }}
@@ -98,16 +117,23 @@
 </nav>
 {{ end }}
 
-{{ if or .PrevInSection .NextInSection }}
+{{- /* Previous/next stay within one kind: an article leads to articles, a
+   lab note to lab notes (projects and guides keep their section order). */ -}}
+{{ $prev := .PrevInSection }}{{ $next := .NextInSection }}
+{{ if eq .Section "post" }}
+  {{ $list := cond $isNote (partial "site-notes.html" .) (partial "site-articles.html" .) }}
+  {{ $prev = $list.Prev . }}{{ $next = $list.Next . }}
+{{ end }}
+{{ if or $prev $next }}
 <nav class="mt-8 pt-6 border-t border-gray-200 flex justify-between gap-4 text-sm" aria-label="{{ i18n "post_navigation" }}">
   <div class="flex-1 min-w-0">
-    {{ with .PrevInSection }}
+    {{ with $prev }}
     <span class="block text-xs text-gray-400 mb-0.5">&larr; {{ i18n "previous" }}</span>
     <a href="{{ .RelPermalink }}" rel="prev" class="text-brand no-underline hover:underline">{{ .Title | default (i18n "previous") }}</a>
     {{ end }}
   </div>
   <div class="flex-1 min-w-0 text-right">
-    {{ with .NextInSection }}
+    {{ with $next }}
     <span class="block text-xs text-gray-400 mb-0.5">{{ i18n "next" }} &rarr;</span>
     <a href="{{ .RelPermalink }}" rel="next" class="text-brand no-underline hover:underline">{{ .Title | default (i18n "next") }}</a>
     {{ end }}

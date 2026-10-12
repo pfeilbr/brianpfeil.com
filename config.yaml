@@ -11,6 +11,9 @@ defaultContentLanguage: "en"
 defaultContentLanguageInSubdir: false
 
 buildFuture: true
+# Lastmod from git: accurate sitemap dates, and the "Updated" line on the
+# architecture guides. The deploy checks out full history for this.
+enableGitInfo: true
 pagination:
   pagerSize: 30
 

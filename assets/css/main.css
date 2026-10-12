@@ -3647,3 +3647,11 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
     padding: 0.25rem 0 0.25rem 1rem; border-left: 1px solid var(--border);
   }
 }
+
+/* === Post freshness ===================================================== */
+.age-note {
+  margin: 0.75rem 0 0; padding: 0.5rem 0.75rem;
+  border-left: 3px solid var(--border-strong); background-color: var(--bg-subtle);
+  font-size: 0.8125rem; line-height: 1.5; color: var(--text-subtle);
+}
+.updated-on { margin-top: 0.25rem; }
