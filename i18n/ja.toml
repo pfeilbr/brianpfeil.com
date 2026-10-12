@@ -2080,3 +2080,6 @@ other = "サイトのセクション"
 
 [project_about]
 other = "このプロジェクトについて"
+
+[note_summary_fallback]
+other = "{{ .title }} の実践メモとコード。"

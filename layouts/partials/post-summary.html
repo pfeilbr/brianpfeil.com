@@ -1,24 +1,37 @@
 {{- /* One plain-text line describing a post, for list rows and the meta
-   description: the front-matter description if there is one, else the first
-   real paragraph (no repo banner, code, headings or tables). A lab note that
-   opens "learn X" / "learn and experiment with X" -- most of them -- reads
-   as "Learning by building: X" instead. Empty when nothing usable exists.
-   Called with the page; the i18n prefix follows the current site. */ -}}
+   description. Tried in order: the front-matter description, then the
+   first few real paragraphs (no repo banner, code, headings or tables).
+   A candidate that is only a pointer ("see x.md", "based on y", "demo via
+   <url>", "App URL: ...") or has under 12 letters is skipped; URLs and a
+   trailing "based on ..." clause are cut from the one that is kept.
+   A lab note that opens "learn X" / "learn and experiment with X" -- most
+   of them -- reads "Learning by building: X"; one with nothing usable reads
+   "Hands-on notes and code for <title>". Articles with nothing usable get
+   an empty string (the caller then shows no line). */ -}}
 {{- $p := . -}}
+{{- $isNote := eq $p.Params.kind "note" -}}
+{{- $cands := slice -}}
+{{- with $p.Description }}{{ $cands = $cands | append . }}{{ end -}}
+{{- $body := replaceRE `(?s)<div class="alert.*?</div>` "" $p.Content -}}
+{{- $body = replaceRE `(?s)<pre\b.*?</pre>|<div class="highlight.*?</div>|<h[1-6]\b.*?</h[1-6]>|<table\b.*?</table>|<figure\b.*?</figure>` " " $body -}}
+{{- range findRE `(?s)<p>.*?</p>` $body 5 }}{{ $cands = $cands | append . }}{{ end -}}
 {{- $s := "" -}}
-{{- with $p.Description }}{{ $s = . }}{{ end -}}
-{{- if eq (trim $s " ") "" -}}
-  {{- $body := replaceRE `(?s)<div class="alert.*?</div>` "" $p.Content -}}
-  {{- $body = replaceRE `(?s)<pre\b.*?</pre>|<div class="highlight.*?</div>|<h[1-6]\b.*?</h[1-6]>|<table\b.*?</table>|<figure\b.*?</figure>` " " $body -}}
-  {{- range findRE `(?s)<p>.*?</p>` $body 3 -}}
+{{- range $cands -}}
+  {{- if eq $s "" -}}
     {{- $t := . | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
-    {{- if and (eq $s "") (ge (len $t) 12) }}{{ $s = $t }}{{ end -}}
+    {{- $t = replaceRE `\s*[(<]?https?://\S+[)>]?` "" $t -}}
+    {{- $t = replaceRE `(?i)[.,;]?\s+based on\b.*$` "" $t | strings.TrimSpace -}}
+    {{- $pointer := findRE `(?i)^(see|based on|demo via|app url|tl;?dr|e\.g\.|todo|note \(to self\))\b` $t -}}
+    {{- $table := ge (len (findRE `\s\|\s` $t)) 2 -}}
+    {{- if and (not $pointer) (not $table) (ge (len (replaceRE `[^A-Za-z]` "" $t)) 12) }}{{ $s = $t }}{{ end -}}
   {{- end -}}
 {{- end -}}
-{{- $s = $s | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace -}}
-{{- if eq $p.Params.kind "note" -}}
+{{- if $isNote -}}
   {{- with findRESubmatch `(?i)^(?:a\s+)?(?:project|playground|repo)?\s*(?:to\s+)?(?:learn|explore)(?:\s+and\s+(?:experiment|play)\s+with|\s*/\s*explore|\s+about|\s+how\s+to\s+use)?\s+(.+?)\.?$` $s 1 -}}
     {{- $s = i18n "note_summary_learn" (dict "topic" (index (index . 0) 1)) -}}
   {{- end -}}
+  {{- if eq $s "" }}{{ $s = i18n "note_summary_fallback" (dict "title" $p.Title) }}{{ end -}}
 {{- end -}}
+{{- /* "example of x" -> "Example of x". */ -}}
+{{- with findRESubmatch `^([a-z])(.*)$` $s 1 }}{{ $s = printf "%s%s" (upper (index (index . 0) 1)) (index (index . 0) 2) }}{{ end -}}
 {{- return ($s | truncate 160) -}}

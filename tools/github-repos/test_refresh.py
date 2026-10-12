@@ -199,6 +199,14 @@ class ScrubTest(unittest.TestCase):
         md = "Learn Spark.\n\nspark installed at `~/dev/spark` and on PATH\n\nRun it."
         self.assertEqual(refresh.readme_text(refresh.scrub(md, self.RULES)), ["Learn Spark.", "Run it."])
 
+    def test_redactions_with_a_captured_group(self):
+        rules = {"redact": [
+            {"pattern": r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b", "with": "AKIAIOSFODNN7EXAMPLE"},
+            {"pattern": r"(?i)(aws_secret_access_key\s*=\s*)[A-Za-z0-9/+]{40}", "with": "${1}wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"}]}
+        md = "AWS_ACCESS_KEY_ID=AKIAZZZZZZZZZZZZZZZZ\nAWS_SECRET_ACCESS_KEY=" + "a" * 40
+        self.assertEqual(refresh.scrub(md, rules),
+                         "AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE\nAWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY")
+
     def test_no_rules_changes_nothing(self):
         self.assertEqual(refresh.scrub("aws sso login", {}), "aws sso login")
 

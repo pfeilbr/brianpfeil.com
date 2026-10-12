@@ -16,7 +16,8 @@ What it holds in place, on a built site (hugo --minify first):
     contents become the sidebar on wide screens;
   - no built page, feed or index shows B's own AWS account number or a
     name the generator's local_setup rewrites (his S3 buckets, Azure
-    resources, home paths); examples use AWS's and Microsoft's own.
+    resources, home paths), nor any secret-shaped string ([[redact]]);
+    examples use AWS's and Microsoft's own.
 
     python3 tools/site-check/check_structure.py --public public
 
@@ -87,13 +88,25 @@ def own_names(path: Path = LOCAL_SETUP) -> list[str]:
     return own_accounts(path) + list((rules.get("replace") or {}).keys())
 
 
-def account_leaks(public: Path, accounts: list[str]) -> list[str]:
-    """Built text files (pages, feeds, search index, llms.txt) naming one."""
+def secret_patterns(path: Path = LOCAL_SETUP) -> list[tuple[str, "re.Pattern"]]:
+    """[[redact]] rules from local_setup.toml: (name, compiled pattern)."""
+    rules = tomllib.loads(path.read_text(encoding="utf-8"))
+    return [(r["name"], re.compile(r["pattern"])) for r in rules.get("redact", [])]
+
+
+def account_leaks(public: Path, accounts: list[str], secrets=None) -> list[str]:
+    """Built text files (pages, feeds, search index, llms.txt) naming one of
+    B's accounts or resources, or holding a secret-shaped string. A match
+    that contains EXAMPLE is AWS's own documented example value; it passes.
+    The secret itself is never printed, only its kind."""
     hits = []
     for f in sorted(public.rglob("*")):
         if f.suffix in (".html", ".xml", ".json", ".txt") and f.is_file():
             text = f.read_text(encoding="utf-8", errors="ignore")
             hits += [f"/{f.relative_to(public)}: shows {a}" for a in accounts if a in text]
+            for name, rx in secrets or []:
+                if any("EXAMPLE" not in m.group(0) for m in rx.finditer(text)):
+                    hits.append(f"/{f.relative_to(public)}: has a {name}")
     return hits
 
 
@@ -116,8 +129,9 @@ def slug_of(href: str) -> str:
 
 
 def check(public: Path, content: Path = REPO / "content", data: Path = REPO / "data",
-          accounts: list[str] | None = None) -> list[str]:
-    errors = account_leaks(public, own_names() if accounts is None else accounts)
+          accounts: list[str] | None = None, secrets=None) -> list[str]:
+    errors = account_leaks(public, own_names() if accounts is None else accounts,
+                           secret_patterns() if accounts is None else secrets)
     lab = notes(content)
     note_slugs = {s for s, n in lab.items() if not n["project"]}
     for lang in LANGS:
@@ -175,7 +189,7 @@ def main() -> int:
         print(f"error: {e}", file=sys.stderr)
     if errors:
         return 1
-    print(f"ok: nav, home, articles vs lab notes, project redirects, gone repos and none of B's own account, bucket or Azure names in all {len(LANGS)} languages")
+    print(f"ok: nav, home, articles vs lab notes, project redirects, gone repos and no secrets or B's own account, bucket or Azure names in all {len(LANGS)} languages")
     return 0
 
 

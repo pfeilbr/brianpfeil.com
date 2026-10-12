@@ -2080,3 +2080,6 @@ other = "Secciones del sitio"
 
 [project_about]
 other = "Sobre este proyecto"
+
+[note_summary_fallback]
+other = "Notas prácticas y código de {{ .title }}."

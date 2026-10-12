@@ -29,7 +29,7 @@ truncated = true
 
 # streaming an existing video via ffmpeg
 VIDEO_FILEPATH="$HOME/Downloads/tailer.mp4" # fortnite game trailer
-STREAM_KEY="sk_us-east-1_LvBpPyJZzkix_yMQ6LPLZ7PDr6dYsI0zqM4H2oZTL31"
+STREAM_KEY="sk_us-east-1_EXAMPLESTREAMKEY"
 INGEST_ENDPOINT="0f426742eaf2.global-contribute.live-video.net"
 ffmpeg -re -stream_loop -1 -i $VIDEO_FILEPATH -r 30 -c:v libx264 -pix_fmt yuv420p -profile:v main -preset veryfast -x264opts "nal-hrd=cbr:no-scenecut" -minrate 3000 -maxrate 3000 -g 60 -c:a aac -b:a 160k -ac 2 -ar 44100 -f flv rtmps://$INGEST_ENDPOINT/app/$STREAM_KEY
 

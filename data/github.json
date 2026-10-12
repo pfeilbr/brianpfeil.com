@@ -2100,7 +2100,7 @@
    "stars": 0,
    "created": "2020-10-05",
    "pushed": "2020-10-11",
-   "readme": "learn AWS Cloud9 setup remote development environment add SSH inbound rule to Security Group add ~/.ssh/idrsa.pub to /home/ec2-user/.ssh/authorizedkeys. do this via Cloud9 IDE shell ssh -i ~/.ssh/idrsa ubuntu@dev01.brianpfeil.com may need to connect via Cloud9 IDE to \"wake up\"/start instance due to \"auto stop\" of EC2 instance after X minutes. May need to remote remote host in ~/.ssh/knownhosts on client if the following error perform \"Enabling SSH Connectivity\" steps see vscode | Remote development over SSH vscode remotely SSH connected screenshot VS Code Remote Development vscode | Remote…",
+   "readme": "learn AWS Cloud9 setup remote development environment add SSH inbound rule to Security Group add ~/.ssh/idrsa.pub to /home/ec2-user/.ssh/authorizedkeys. do this via Cloud9 IDE shell ssh -i ~/.ssh/idrsa ubuntu@dev01.example.com may need to connect via Cloud9 IDE to \"wake up\"/start instance due to \"auto stop\" of EC2 instance after X minutes. May need to remote remote host in ~/.ssh/knownhosts on client if the following error perform \"Enabling SSH Connectivity\" steps see vscode | Remote development over SSH vscode remotely SSH connected screenshot VS Code Remote Development vscode | Remote…",
    "post": true
   },
   {
@@ -2550,7 +2550,7 @@
    "stars": 0,
    "created": "2019-09-03",
    "pushed": "2026-10-06",
-   "readme": "learn aws-delivlib, which is a library that leverages AWS Cloud Development Kit (CDK) for defining continuous pipelines for building, testing and publishing code libraries through AWS CodeBuild and AWS CodePipeline. pipeline source github repo must exist. (e.g. pfeilbr/aws-delivlib-playground) github personal access token must be stored in SSM Parameter named /com/brianpfeil/aws-delivlib-playground/github-personal-access-token src/pipeline-hello-world is an example code pipeline where the source is this github repo (pfeilbr/aws-delivlib-playground). The source nodejs app is src/hello-world…",
+   "readme": "learn aws-delivlib, which is a library that leverages AWS Cloud Development Kit (CDK) for defining continuous pipelines for building, testing and publishing code libraries through AWS CodeBuild and AWS CodePipeline. pipeline source github repo must exist. (e.g. pfeilbr/aws-delivlib-playground) github personal access token must be stored in SSM Parameter named /com/example/aws-delivlib-playground/github-personal-access-token src/pipeline-hello-world is an example code pipeline where the source is this github repo (pfeilbr/aws-delivlib-playground). The source nodejs app is src/hello-world with…",
    "post": true
   },
   {
@@ -4186,7 +4186,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-02-16",
-   "pushed": "2026-10-11",
+   "pushed": "2026-10-12",
    "readme": "Personal site built with Hugo, in nine languages: English at the root, and zh es pt fr de it ja ko under //. Posts are English-only; pages, layouts and UI strings are translated. For working on it with an AI agent, CLAUDE.md holds the conventions and the gotchas that have bitten before, and opens with where current work stands. Hugo Extended 0.166.0 — the version CI is pinned to. A different local version can build fine and still fail to deploy. Go 1.25+ — only for generating posts from GitHub repos Python 3.11+ and ffmpeg — only for the media page Terraform 1.10+ and the AWS CLI — only for…",
    "post": false,
    "homepage": "https://brianpfeil.com/"

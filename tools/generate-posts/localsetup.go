@@ -50,6 +50,16 @@ type LocalSetup struct {
 	Replace map[string]string `toml:"replace"`
 	// Lines (regexes) that only describe B's machine; dropped.
 	DropLines []string `toml:"drop_lines"`
+	// Secret-shaped strings (key ids, tokens, JWTs) rewritten to an example
+	// value or a marker; `With` may use ${1} for a captured group.
+	Redact []Redaction `toml:"redact"`
+}
+
+// Redaction is one [[redact]] rule of local_setup.toml.
+type Redaction struct {
+	Name    string `toml:"name"`
+	Pattern string `toml:"pattern"`
+	With    string `toml:"with"`
 }
 
 // ExampleAccount is the account number AWS's own documentation uses.
@@ -107,6 +117,14 @@ func stripLocalSetup(body, repoName string, ls LocalSetup) string {
 		val := `(?:"` + q + `"|'` + q + `'|` + q + `)`
 		profileFlag = append(profileFlag, regexp.MustCompile(`[ \t]+--(?:aws-)?profile[= ]`+val+"([\\s`)\\\\]|$)"))
 		profileEnv = append(profileEnv, regexp.MustCompile(`^\s*(?:export\s+)?AWS_PROFILE=`+val+`\s*$`))
+	}
+	type redactRe struct {
+		re   *regexp.Regexp
+		with string
+	}
+	var redacts []redactRe
+	for _, r := range ls.Redact {
+		redacts = append(redacts, redactRe{regexp.MustCompile(r.Pattern), r.With})
 	}
 	var drops []*regexp.Regexp
 	for _, d := range ls.DropLines {
@@ -190,6 +208,9 @@ func stripLocalSetup(body, repoName string, ls LocalSetup) string {
 		}
 		for _, a := range ls.Accounts {
 			line = strings.ReplaceAll(line, a, ExampleAccount)
+		}
+		for _, r := range redacts {
+			line = r.re.ReplaceAllString(line, r.with)
 		}
 		drop := false
 		for _, d := range drops {

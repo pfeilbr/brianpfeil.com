@@ -30,6 +30,8 @@ drop_lines = [
   '(?i)^\s*spark installed at ',
   # pointers to B's private notes
   '(?i)^\s*[-*]\s+see .*~/Dropbox/',
+  # notes to himself about his own machine
+  '(?i)^>?\s*NOTE \(to self\)',
 ]
 
 # Exact strings, rewritten longest first.
@@ -49,3 +51,59 @@ drop_lines = [
 "brianpfeilmystorage01" = "mystorageaccount01"
 "brianpfeilmyfn01" = "myfunctionapp01"
 "pfeilbr-aks-01" = "my-aks-01"
+# Other names of B's own resources
+"com-brianpfeil-test-01" = "my-test-domain-01"
+"com.brianpfeil.app01" = "com.example.app01"
+"/com/brianpfeil/" = "/com/example/"
+"dev01.brianpfeil.com" = "dev01.example.com"
+
+# `with` may use ${1} for a captured group (Go syntax; refresh.py and the
+# structure check translate it).
+# Secret-shaped strings in sample commands and output (all checked dead on
+# 2026-10-12: the AWS key ids are gone from IAM, no IVS channel exists).
+# Rewritten to AWS's own example values or a plain marker. The structure
+# check fails the build if any pattern matches anything but its `with`.
+[[redact]]
+name = "AWS access key id"
+pattern = '\b(?:AKIA|ASIA)[A-Z0-9]{16}\b'
+with = "AKIAIOSFODNN7EXAMPLE"
+
+[[redact]]
+name = "AWS secret access key"
+pattern = '''(?i)(aws_secret_access_key["']?\s*[=:]\s*["']?)[A-Za-z0-9/+]{40}'''
+with = "${1}wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+[[redact]]
+name = "IVS stream key"
+pattern = '\bsk_[a-z]{2}-[a-z]+-\d_[A-Za-z0-9_]{20,}'
+with = "sk_us-east-1_EXAMPLESTREAMKEY"
+
+[[redact]]
+name = "JWT"
+pattern = '\beyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}'
+with = "<JWT redacted>"
+
+[[redact]]
+name = "GitHub token"
+pattern = '\b(?:ghp|gho|ghu|ghs|github_pat)_[A-Za-z0-9_]{20,}'
+with = "<GitHub token redacted>"
+
+[[redact]]
+name = "Slack token"
+pattern = '\bxox[abpors]-[A-Za-z0-9-]{10,}'
+with = "<Slack token redacted>"
+
+[[redact]]
+name = "Stripe key"
+pattern = '\b(?:sk|rk)_live_[A-Za-z0-9]{16,}'
+with = "<Stripe key redacted>"
+
+[[redact]]
+name = "Google API key"
+pattern = '\bAIza[0-9A-Za-z_-]{35}\b'
+with = "<Google API key redacted>"
+
+[[redact]]
+name = "private key block"
+pattern = '-----BEGIN [A-Z ]*PRIVATE KEY-----'
+with = "-----BEGIN EXAMPLE PRIVATE KEY (redacted)-----"

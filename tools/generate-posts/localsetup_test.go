@@ -84,6 +84,25 @@ func TestStripLocalSetup(t *testing.T) {
 	}
 }
 
+func TestRedactions(t *testing.T) {
+	ls := LocalSetup{Redact: []Redaction{
+		{"AWS access key id", `\b(?:AKIA|ASIA)[A-Z0-9]{16}\b`, "AKIAIOSFODNN7EXAMPLE"},
+		{"AWS secret", `(?i)(aws_secret_access_key["']?\s*[=:]\s*["']?)[A-Za-z0-9/+]{40}`, "${1}wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"},
+		{"JWT", `\beyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}`, "<JWT redacted>"},
+	}}
+	in := "AWS_ACCESS_KEY_ID=AKIAZZZZZZZZZZZZZZZZ\nexport AWS_SECRET_ACCESS_KEY=" + strings.Repeat("a", 40) +
+		"\n\"Token\": \"eyJabcdefghijk.eyJabcdefghijk.abcdefghijk\""
+	want := "AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE\nexport AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" +
+		"\n\"Token\": \"<JWT redacted>\""
+	got := stripLocalSetup(in, "x", ls)
+	if got != want {
+		t.Errorf("got:\n%s\nwant:\n%s", got, want)
+	}
+	if again := stripLocalSetup(got, "x", ls); again != got {
+		t.Errorf("not idempotent:\n%s", again)
+	}
+}
+
 func TestStripLocalSetupIsIdempotent(t *testing.T) {
 	in := "```sh\n# login\naws sso login --profile admin\naws --profile admin s3 ls\ncd ~/projects/demo-playground\n```\n"
 	once := stripLocalSetup(in, "demo-playground", testLocal)
@@ -135,7 +154,8 @@ func TestConfigLocalSetupLoads(t *testing.T) {
 		t.Fatal(err)
 	}
 	if len(cfg.LocalSetup.Profiles) == 0 || len(cfg.LocalSetup.HomeDirs) == 0 || len(cfg.LocalSetup.Accounts) == 0 ||
-		cfg.LocalSetup.Replace["brianpfeilmyfn01"] != "myfunctionapp01" || len(cfg.LocalSetup.DropLines) < 4 {
+		cfg.LocalSetup.Replace["brianpfeilmyfn01"] != "myfunctionapp01" || len(cfg.LocalSetup.DropLines) < 4 ||
+		len(cfg.LocalSetup.Redact) < 5 {
 		t.Fatalf("local_setup not loaded: %+v", cfg.LocalSetup)
 	}
 	// Every pattern must compile, or the generator panics mid-run.

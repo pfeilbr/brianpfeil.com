@@ -170,12 +170,17 @@ def scrub(md, rules, repo_name=""):
                       % (("|".join(profs),) * 3)) if profs else None
     env = re.compile(r"^\s*(?:export\s+)?AWS_PROFILE=[\"']?(?:%s)[\"']?\s*$" % "|".join(profs)) if profs else None
     sso = re.compile(r"^\s*(\$\s*)?aws\s+sso\s+login(\s.*)?$")
+    # Go's ${1} in a replacement is Python's \g<1>.
+    redacts = [(re.compile(r["pattern"]), re.sub(r"\$\{(\d+)\}", r"\\g<\1>", r["with"]))
+               for r in rules.get("redact", [])]
     out = []
     for line in md.split("\n"):
         for k, v in replace:
             line = line.replace(k, v)
         for a in rules.get("accounts", []):
             line = line.replace(a, EXAMPLE_ACCOUNT)
+        for rx, with_ in redacts:
+            line = rx.sub(with_, line)
         if any(d.search(line) for d in drops) or sso.match(line) or (env and env.match(line)):
             continue
         if own:

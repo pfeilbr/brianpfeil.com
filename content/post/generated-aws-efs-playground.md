@@ -46,7 +46,7 @@ export ACCESS_POINT_MOUNT_POINT="/home/ec2-user/efs-access-point-mount-point-01"
 export ACCESS_POINT_ARN="arn:aws:elasticfilesystem:us-east-1:123456789012:access-point/fsap-01514965758e980b3"
 
 # ssh into ec2 instance within the *same VPC and subnet* of EFS mount target(s)
-ssh ec2-user@dev01.brianpfeil.com
+ssh ec2-user@dev01.example.com
 
 # install EFS mount helper
 sudo yum install amazon-efs-utils

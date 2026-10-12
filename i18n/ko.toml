@@ -2080,3 +2080,6 @@ other = "사이트 섹션"
 
 [project_about]
 other = "이 프로젝트 소개"
+
+[note_summary_fallback]
+other = "{{ .title }} 실습 노트와 코드."

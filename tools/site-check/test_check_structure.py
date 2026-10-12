@@ -111,6 +111,17 @@ class StructureTest(unittest.TestCase):
         errors = cs.check(self.public, self.content, self.data, accounts=cs.own_names())
         self.assertIn("/post/a/index.html: shows com.brianpfeil.scratch01", errors)
 
+    def test_a_secret_in_the_build_fails_without_printing_it(self):
+        key = "AKIA" + "Q" * 16
+        self.write(self.public / "post" / "a" / "index.html", f"AWS_ACCESS_KEY_ID={key}")
+        errors = cs.check(self.public, self.content, self.data, accounts=[], secrets=cs.secret_patterns())
+        self.assertIn("/post/a/index.html: has a AWS access key id", errors)
+        self.assertFalse(any(key in e for e in errors))
+
+    def test_aws_example_values_pass(self):
+        self.write(self.public / "post" / "a" / "index.html", "AKIAIOSFODNN7EXAMPLE aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY")
+        self.assertEqual(cs.check(self.public, self.content, self.data, accounts=[], secrets=cs.secret_patterns()), [])
+
     def test_draft_notes_are_ignored(self):
         (self.content / "post" / "generated-d.md").write_text(
             NOTE.format(slug="d", repo="d", extra="").replace("draft = false", "draft = true"))

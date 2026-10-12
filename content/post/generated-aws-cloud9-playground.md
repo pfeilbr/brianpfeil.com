@@ -28,7 +28,7 @@ truncated = true
     ![](https://www.evernote.com/l/AAEY_BSM7g5PVa72gIFEevDXgdKE1E-zAdoB/image.png)
 * add `~/.ssh/id_rsa.pub` to `/home/ec2-user/.ssh/authorized_keys`.  do this via Cloud9 IDE shell
     ![](https://www.evernote.com/l/AAGhf-SuVVRDtpS8fMS9lRQmHCwQSs6A1v8B/image.png)
-* ssh -i ~/.ssh/id_rsa  ubuntu@dev01.brianpfeil.com
+* ssh -i ~/.ssh/id_rsa  ubuntu@dev01.example.com
 
 
 ### Troubleshooting
@@ -48,7 +48,7 @@ X minutes.
     Please contact your system administrator.
     Add correct host key in ~/.ssh/known_hosts to get rid of this message.
     Offending ECDSA key in ~/.ssh/known_hosts:37
-    ECDSA host key for dev01.brianpfeil.com has changed and you have requested strict checking.
+    ECDSA host key for dev01.example.com has changed and you have requested strict checking.
     Host key verification failed.
     ```
 

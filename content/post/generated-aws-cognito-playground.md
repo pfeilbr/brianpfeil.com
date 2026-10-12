@@ -55,13 +55,13 @@ truncated = true
 
 response_type=code for the authentication code grant
 
-<https://com-brianpfeil-test-01.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=5uol3m3jk3bqn39jrsjvhaooqp&redirect_uri=https%3A%2F%2Flocalhost>
+<https://my-test-domain-01.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=5uol3m3jk3bqn39jrsjvhaooqp&redirect_uri=https%3A%2F%2Flocalhost>
 
 <https://myapp-user-pool.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=1l4tbhvki3sb8jjpcu3depj4t6&redirect_uri=http%3A%2F%2Flocalhost%3A3000>
 
 implicit code grant where response_type=token
 
-<https://com-brianpfeil-test-01.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=5uol3m3jk3bqn39jrsjvhaooqp&redirect_uri=https%3A%2F%2Flocalhost>
+<https://my-test-domain-01.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=5uol3m3jk3bqn39jrsjvhaooqp&redirect_uri=https%3A%2F%2Flocalhost>
 
 example return values to callback URL
 
@@ -80,7 +80,7 @@ token_type=Bearer
 
 example callback URL
 
-https://localhost/#id_token=eyJraWQiOiJlMXd2TlwvVG9ZaVBhXC91RmtlbGlsUDE0ZTkzbU12UU52a1Y1VDRlY0lLazg9IiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoibFpERjFSZmxEbXB4S1lOeHFZTzNIQSIsInN1YiI6IjRhY2JmZGZkLTExOGUtNDJhMi1hZTY0LTZjM2UzNjI3YmQ1OSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfQ3ZPNWYxNWNWIiwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjp0cnVlLCJjb2duaXRvOnVzZXJuYW1lIjoicGZlaWxiciIsImF1ZCI6IjV1b2wzbTNqazNicW4zOWpyc2p2aGFvb3FwIiwiZXZlbnRfaWQiOiJiNDhmN2M2Zi04NDgxLTExZTgtYWMxZC02MTIwMzliOGJmY2UiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTUzMTI1NTMyNSwicGhvbmVfbnVtYmVyIjoiKzEyMTU4NzIyNzkxIiwiZXhwIjoxNTMxMjU4OTI1LCJpYXQiOjE1MzEyNTUzMjUsImVtYWlsIjoiYnJpYW4ucGZlaWxAZ21haWwuY29tIn0.fVScj-3EKuYswxPkX3VXHcc50JegnJ09VDQ5xENQYDkZGFHmtjh8p_VKdcvgXtNmym3X1UUkAgaiMl_DVkp0Qa48-d4QD06tER_Paw7osmuFtSKchpyiXeZLBwWZy76eTNfUuAx1B9_qjKLr1s3Pyr4cXCozbk1Xn-p7SUyTjH4_IXfaXHQdELCw2KpeI_O64hG1A523k8oC01iz_1xXOliLzUPsj28b1L-1kGOxkgprfhscJNgFxB0PjmUvbZdEzQedOQKThiKGc1aJUIL06HWfzDxMhQfI6nME3WmMJNP7J7Ub8L1wLrrbKsRqEB9ubyyNlnMtALXCyXvziZaYOQ&access_token=eyJraWQiOiJ2MmxaeDNwdFpFUjVEbk9OWGhaSEZoSlIra3VqVGFIbHN6V2YxVFwvU0VIbz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI0YWNiZmRmZC0xMThlLTQyYTItYWU2NC02YzNlMzYyN2JkNTkiLCJldmVudF9pZCI6ImI0OGY3YzZmLTg0ODEtMTFlOC1hYzFkLTYxMjAzOWI4YmZjZSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1MzEyNTUzMjUsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xX0N2TzVmMTVjViIsImV4cCI6MTUzMTI1ODkyNSwiaWF0IjoxNTMxMjU1MzI1LCJ2ZXJzaW9uIjoyLCJqdGkiOiIyZWRmNmFiZi1hNDVhLTQ2NDItYmM2NS05YjI3OWEyNzc3NzciLCJjbGllbnRfaWQiOiI1dW9sM20zamszYnFuMzlqcnNqdmhhb29xcCIsInVzZXJuYW1lIjoicGZlaWxiciJ9.T7oBdRLZXPIdmc8hRcg2xsDoJO-izBvg6nB-htxdYwdTD11WPXrcj9-IcTpsICiBAeOchUnXGzL5nSSG9bXhsXgjGZS6NmnOvccGwyvShgiKWl4Gw6sD_hau4eIbfFc67WL3qwE74sHU3b02EZGpc-Uco9fPj3ospMNAv9-ZnPw_1Dc7-N2o6_n9D_xtHLFdvwe_5OlOlKnEPlLKLg5vLJ2kB-m0YXLBzFZqk1M9yDxT1kAR4SYYnBzGj4JnmWMn6t5vyGyMC_y4YLmh8mIHOpxcZVJEsprf3y3ZBq8uOCvVsyJh1OJW7akkGV6m0E9aqgTPyauLUiZ_HEGPMPIRNA&expires_in=3600&token_type=Bearer
+https://localhost/#id_token=<JWT redacted>&access_token=<JWT redacted>&expires_in=3600&token_type=Bearer
 
 Screenshot
 
@@ -134,7 +134,7 @@ Make request to endpoint with Authorization header set to cognito identity token
 
 ### Auth0 SAML IdP
 
-visit <https://com-brianpfeil-test-01.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=5uol3m3jk3bqn39jrsjvhaooqp&redirect_uri=https%3A%2F%2Flocalhost>
+visit <https://my-test-domain-01.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=5uol3m3jk3bqn39jrsjvhaooqp&redirect_uri=https%3A%2F%2Flocalhost>
 
 ![](https://www.evernote.com/l/AAE5xJKluNxPC44pRUGDaq-ntPw0LiQfVWoB/image.png)
 
@@ -161,7 +161,7 @@ visit <https://com-brianpfeil-test-01.auth.us-east-1.amazoncognito.com/login?res
 ### Salesforce as Identity Provider (sign into app with salesforce credentials)
 
 - Follow [Adding OIDC Identity Providers to a User Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-oidc-idp.html) instructions
-- Test via <https://com-brianpfeil-test-01.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=5uol3m3jk3bqn39jrsjvhaooqp&redirect_uri=https%3A%2F%2Flocalhost>
+- Test via <https://my-test-domain-01.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=5uol3m3jk3bqn39jrsjvhaooqp&redirect_uri=https%3A%2F%2Flocalhost>
 - login with `brian.pfeil@gmail.com` salesforce account
 
 **Salesforce Configuration**

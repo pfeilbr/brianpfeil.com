@@ -24,7 +24,7 @@ learn [aws-delivlib](https://github.com/awslabs/aws-delivlib), which is a librar
 ## Prerequisites
 
 * pipeline source github repo must exist. (e.g. [pfeilbr/aws-delivlib-playground](https://github.com/pfeilbr/aws-delivlib-playground))
-* github personal access token must be stored in SSM Parameter named `/com/brianpfeil/aws-delivlib-playground/github-personal-access-token`
+* github personal access token must be stored in SSM Parameter named `/com/example/aws-delivlib-playground/github-personal-access-token`
     ![](https://www.evernote.com/l/AAF_-QmIfApO6L_mprwOy_t1KOBcrEHejtwB/image.png)
 
 

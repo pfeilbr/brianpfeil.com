@@ -24,8 +24,6 @@ based on [nesteruk/ModernCpp](https://github.com/nesteruk/ModernCpp)
 * [`playground.cpp`](https://github.com/pfeilbr/modern-cpp-playground/blob/master/playground.cpp) - main file
 * [`scripts/`](https://github.com/pfeilbr/modern-cpp-playground/blob/master/scripts) - build, run, etc. scripts
 
-> NOTE (to self): developed and ran on 2016 MacBook Pro.  Depends on local file locations.
-
 ## development
 
 build and run on file contents change (live reload)

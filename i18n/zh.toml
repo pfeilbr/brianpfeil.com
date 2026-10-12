@@ -2080,3 +2080,6 @@ other = "网站栏目"
 
 [project_about]
 other = "关于这个项目"
+
+[note_summary_fallback]
+other = "{{ .title }} 的动手笔记和代码。"
