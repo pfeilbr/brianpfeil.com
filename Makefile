@@ -215,6 +215,9 @@ check-repo-links: ## List posts whose repo link 404s for a visitor (live, needs 
 check-post-links: ## Open every outbound link in posts, projects and guides (live, needs network, ~10 min)
 	@d=$$(mktemp -d) && hugo --quiet -d $$d && python3 tools/link-check/check_post_links.py --public $$d --json $$d/post-links.json; s=$$?; echo "results: $$d/post-links.json"; exit $$s
 
+links-rescue: ## Point dead outbound links in posts at their Wayback Machine copy, or unlink them (data/link_rewrites.json; live, needs network, ~1 h)
+	@d=$$(mktemp -d) && hugo --quiet -d $$d && (python3 tools/link-check/check_post_links.py --public $$d --json $$d/post-links.json; true) && python3 tools/link-check/rescue_links.py --results $$d/post-links.json --public $$d --apply
+
 check-learn-links: ## Open every /learn/ link as an anonymous visitor (live, needs network)
 	python3 tools/learn-links/check_learn_links.py
 
@@ -263,4 +266,4 @@ tf-validate: ## terraform fmt -check and validate
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: media-posters notes-strip check-post-links test-movies apps-icon test-apps test-profiles learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf
+.PHONY: media-posters notes-strip check-post-links links-rescue test-movies apps-icon test-apps test-profiles learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf

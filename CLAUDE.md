@@ -370,6 +370,17 @@ touching a template:
   website buckets (static-content-01, static-screenshots-01) were deleted;
   their names can be re-registered by anyone, so the site check fails on
   any page that loads or links to them (`DEAD_HOSTS` in the rescue tool).
+- **Dead outbound links** (`data/link_rewrites.json`): `make check-post-links`
+  finds links in posts, projects and guides whose page is gone;
+  `python3 tools/link-check/rescue_links.py --results <post-links.json>
+  --public <site> --apply` maps each to the Wayback Machine copy closest to
+  the post's date (availability API, then the slower CDX index, which finds
+  what the first misses), or to null when there is none.
+  `partials/content-a11y.html` applies it at render time: the archived copy
+  (titled `link_archived`), or the text kept with the link dropped
+  (`.link-gone`, titled `link_gone`). Every run re-opens the mapped URLs
+  first and drops any that answer again — the checker's parallel fetches
+  report GitHub network errors as dead hosts.
 - **Evernote screenshots are self-hosted** (`make images-selfhost`, then
   `make images-rescue`): the ~320 that still load are WebP copies in
   `static/images/remote/`, mapped in the same `image_rewrites.json`. A new
@@ -454,6 +465,11 @@ changes nothing) while empty.
   future TXT value to that one record. Bing is waiting on B: sign in to Bing Webmaster Tools and
   "Import from Google Search Console" (an OAuth grant only B can give), or
   paste its `msvalidate.01` code into `params.verification.bing`.
+- **Repo secrets for the automation** (each is a no-op until set):
+  `ANTHROPIC_API_KEY` (the daily /ai/ briefing) and `BLUESKY_APP_PASSWORD`
+  (the weekday Bluesky post; `BLUESKY_HANDLE` = pfeilbr.bsky.social is
+  set). Mastodon stays off: no @pfeilbr account was found on the big
+  instances. `gh secret set NAME --repo pfeilbr/brianpfeil.com` and paste.
 - **16 private repos:** the lab notes show without their link
   (`data/repo_gone.json`). Making any of them public again brings the link
   back on the next `check_repo_links.py --write`.

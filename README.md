@@ -106,6 +106,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make notes-strip` | Strip laptop-specific setup and B's own names (AWS profiles, SSO logins, home-directory paths, `cd ~/projects`, his account number, S3 buckets and Azure resources; `tools/generate-posts/local_setup.toml`) from the lab notes already in `content/post/`; the generator and `make github-refresh` apply the same rules |
 | `make check-repo-links` | List posts whose repo link 404s for a visitor (live, needs network) |
 | `make check-post-links` | Open every outbound link in posts, projects and guides; lists the gone ones (live, ~10 min) |
+| `make links-rescue` | Point the gone ones at their Wayback Machine copy, or unlink them (`data/link_rewrites.json`; live, ~1 h) |
 | `make learn-pages` | Regenerate the per-path pages `content/learn/<path>.<lang>.md` from `data/learn.json` |
 | `make check-learn-links` | Open every /learn/ link as an anonymous visitor (live, needs network) |
 | `make courses-sync` | Publish the /teach courses from ~/projects/learn to /courses/ |
