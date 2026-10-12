@@ -442,9 +442,15 @@ conversion there, or the script refuses to convert.
 Stubbed so nothing breaks until B fills them in; each renders nothing (or
 changes nothing) while empty.
 
-- **Search-engine verification:** paste the Google Search Console, Bing
-  Webmaster and (optionally) Yandex codes into `params.verification` in
-  `config.yaml`. Then submit `https://brianpfeil.com/sitemap.xml` in each.
+- **Search-engine verification:** Google is done (2026-10-12): property
+  `https://brianpfeil.com/` in B's Search Console, verified by the Analytics
+  tag, the domain provider and the `params.verification.google` meta tag;
+  `sitemap.xml` and `sitemap-courses.xml` submitted. A domain property
+  (`sc-domain:brianpfeil.com`) is also added, pending a DNS TXT record
+  (`google-site-verification=` + the same code) in `infra/dns.tf`, not yet
+  applied. Bing is waiting on B: sign in to Bing Webmaster Tools and
+  "Import from Google Search Console" (an OAuth grant only B can give), or
+  paste its `msvalidate.01` code into `params.verification.bing`.
 - **16 private repos:** the lab notes show without their link
   (`data/repo_gone.json`). Making any of them public again brings the link
   back on the next `check_repo_links.py --write`.

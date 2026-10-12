@@ -65,10 +65,11 @@ markup:
 
 params:
   # Search Console / Bing Webmaster ownership codes (the content="" part of
-  # their meta tag). Empty renders nothing. Waiting on B: see CLAUDE.md,
-  # "Waiting on B".
+  # their meta tag). Empty renders nothing. Google is verified (property
+  # https://brianpfeil.com/, 2026-10-12; also by the Analytics tag); Bing is
+  # waiting on B: see CLAUDE.md, "Waiting on B".
   verification:
-    google: ""
+    google: "1DJQUTVWpKiCAx3Hqh9J2U4Z1CLgisozBz4nshMt3RE"
     bing: ""
     yandex: ""
   homeTitle: "Brian Pfeil"
