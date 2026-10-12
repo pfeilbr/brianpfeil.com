@@ -1691,6 +1691,11 @@ nav details > summary {
   border-bottom: 1px solid var(--border);
 }
 
+/* The grid is drawn from /data/media.json after load. Until then it holds a
+   screen's height, so the footer starts out below the fold instead of
+   jumping down as the tiles arrive (CLS 0.61 before this). */
+#media-grid[aria-busy="true"] { min-height: 100vh; }
+
 .media-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -3493,6 +3498,14 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
   font-size: 0.8125rem;
   font-style: italic;
   color: var(--text-subtle);
+}
+
+/* A link whose page is gone and has no archived copy: the text stays, the
+   dotted underline says it once was a link (title explains). */
+.link-gone {
+  text-decoration: underline dotted var(--border-strong);
+  text-underline-offset: 0.2em;
+  cursor: help;
 }
 
 .ai-top-list { list-style: none; margin: 0.25rem 0 0; padding: 0; }

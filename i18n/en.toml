@@ -592,6 +592,12 @@ other = "Course"
 [image_gone]
 other = "Image no longer available"
 
+[link_archived]
+other = "Archived copy: the original page is gone"
+
+[link_gone]
+other = "The page this linked to is gone"
+
 # --- Newsletter sign-up (partials/newsletter.html) ---
 
 [nl_title]
@@ -625,6 +631,9 @@ other = "Brian Pfeil — Principal Cloud Architect and AWS Community Builder. Fr
 
 [tag_desc]
 other = "Posts tagged “{{ .tag }}” by Brian Pfeil."
+
+[category_desc]
+other = "Brian Pfeil’s posts in the {{ .tag }} category."
 
 # --- /architecture/ (layouts/architecture/, content/architecture/) ---
 

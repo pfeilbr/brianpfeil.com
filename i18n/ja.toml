@@ -592,6 +592,12 @@ other = "講座"
 [image_gone]
 other = "この画像は現在表示できません"
 
+[link_archived]
+other = "アーカイブ版：元のページは削除されています"
+
+[link_gone]
+other = "リンク先のページは削除されています"
+
 # --- Newsletter sign-up (partials/newsletter.html) ---
 
 [nl_title]
@@ -625,6 +631,9 @@ other = "Brian Pfeil（プリンシパル・クラウドアーキテクト、AWS
 
 [tag_desc]
 other = "Brian Pfeil の「{{ .tag }}」タグの記事。"
+
+[category_desc]
+other = "Brian Pfeil の「{{ .tag }}」カテゴリの記事。"
 
 # --- /architecture/ (layouts/architecture/, content/architecture/) ---
 

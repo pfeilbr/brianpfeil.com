@@ -592,6 +592,12 @@ other = "강좌"
 [image_gone]
 other = "더 이상 볼 수 없는 이미지"
 
+[link_archived]
+other = "보관된 사본: 원래 페이지는 더 이상 없습니다"
+
+[link_gone]
+other = "이 링크가 가리키던 페이지는 더 이상 없습니다"
+
 # --- Newsletter sign-up (partials/newsletter.html) ---
 
 [nl_title]
@@ -625,6 +631,9 @@ other = "Brian Pfeil — 프린시펄 클라우드 아키텍트이자 AWS Commun
 
 [tag_desc]
 other = "Brian Pfeil의 ‘{{ .tag }}’ 태그 글."
+
+[category_desc]
+other = "Brian Pfeil의 ‘{{ .tag }}’ 카테고리 글."
 
 # --- /architecture/ (layouts/architecture/, content/architecture/) ---
 

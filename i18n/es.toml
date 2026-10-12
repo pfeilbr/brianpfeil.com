@@ -592,6 +592,12 @@ other = "Curso"
 [image_gone]
 other = "La imagen ya no está disponible"
 
+[link_archived]
+other = "Copia archivada: la página original ya no existe"
+
+[link_gone]
+other = "La página a la que enlazaba ya no existe"
+
 # --- Newsletter sign-up (partials/newsletter.html) ---
 
 [nl_title]
@@ -625,6 +631,9 @@ other = "Brian Pfeil, Arquitecto Principal de Cloud y AWS Community Builder. Cur
 
 [tag_desc]
 other = "Artículos de Brian Pfeil con la etiqueta «{{ .tag }}»."
+
+[category_desc]
+other = "Artículos de Brian Pfeil en la categoría «{{ .tag }}»."
 
 # --- /architecture/ (layouts/architecture/, content/architecture/) ---
 

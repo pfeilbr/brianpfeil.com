@@ -106,7 +106,6 @@ window.MediaGrid = function (raw, strings) {
     a.dataset.item = p.id;
     var text = (p.caption || "").replace(/\s+/g, " ").trim();
     var label = text ? (text.length > 120 ? text.slice(0, 119) + "\u2026" : text) : s.untitled;
-    a.setAttribute("aria-label", label + " \u2014 " + s.open);
     /* Checked again here, though the payload already only carries hex. */
     if (m.c && /^#[0-9a-f]{6}$/.test(m.c)) a.style.backgroundColor = m.c;
     tile++;
@@ -140,6 +139,11 @@ window.MediaGrid = function (raw, strings) {
       c.textContent = perPost[idx];
       a.appendChild(c);
     }
+    /* The name carries the badge's visible text (a clip's length, an
+       album's count), so what is read out includes what is shown. */
+    var badge = a.querySelector(".media-badge");
+    var shown = badge ? badge.textContent.trim() : "";
+    a.setAttribute("aria-label", label + (shown ? " (" + shown + ")" : "") + " \u2014 " + s.open);
     return a;
   }
 

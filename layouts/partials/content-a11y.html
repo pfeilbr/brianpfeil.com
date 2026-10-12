@@ -34,4 +34,35 @@
     {{- end -}}
   {{- end -}}
 {{- end -}}
+{{- /* The page's <h1> is the title, so the body's headings must start at
+   <h2> and never skip a level: 35 posts (READMEs written with ###) did,
+   which breaks screen-reader navigation by heading. Each heading is
+   clamped to one level below the one before it, in document order. */ -}}
+{{- $prev := 1 -}}
+{{- range findRE `(?s)<h[2-6][\s>].*?</h[2-6]>` $c -}}
+  {{- $n := int (substr . 2 1) -}}
+  {{- if gt $n (add $prev 1) -}}
+    {{- $to := add $prev 1 -}}
+    {{- $h := replaceRE `^<h\d` (printf "<h%d" $to) . | replaceRE `</h\d>$` (printf "</h%d>" $to) -}}
+    {{- $c = replace $c . $h 1 -}}
+    {{- $n = $to -}}
+  {{- end -}}
+  {{- $prev = $n -}}
+{{- end -}}
+{{- /* Dead outbound links (data/link_rewrites.json,
+   tools/link-check/rescue_links.py): point them at the Wayback Machine's
+   copy, or, with no copy, keep the text and drop the link. Matched on the
+   whole href="…" so a longer URL sharing the prefix is left alone. */ -}}
+{{- range $url, $to := hugo.Data.link_rewrites | default dict -}}
+  {{- $href := printf `href="%s"` (replace $url "&" "&amp;") -}}
+  {{- if in $c $href -}}
+    {{- if $to -}}
+      {{- $c = replace $c $href (printf `href="%s" title="%s"` $to (i18n "link_archived")) -}}
+    {{- else -}}
+      {{- $mark := printf `href="gone:%s"` (md5 $url) -}}
+      {{- $c = replace $c $href $mark -}}
+      {{- $c = replaceRE (printf `(?s)<a\b[^>]*%s[^>]*>(.*?)</a>` $mark) (printf `<span class="link-gone" title="%s">$1</span>` (i18n "link_gone")) $c -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
 {{- return $c -}}
