@@ -10,6 +10,11 @@
   {{- if eq .Kind "404" }}
   <meta name="robots" content="noindex">
   {{- else }}
+  {{- /* noindex = true in front matter (or a section's cascade) keeps a page
+     working at its URL but out of search results; see content/steps/. */}}
+  {{- if .Params.noindex }}
+  <meta name="robots" content="noindex">
+  {{- end }}
   <link rel="canonical" href="{{ partial "canonical-url.html" . }}">
   {{- end }}
   {{- /* Posts (and therefore the feed) only exist on the default-language site. */}}
