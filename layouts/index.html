@@ -14,7 +14,11 @@
 {{ $media := hugo.Data.media }}
 
 <section class="hub-hero">
-  <img class="hub-avatar" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg"
+  {{- /* Shown at 88px (120px from 640px wide): WebP at 2x, the 320px JPEG
+     only for 3x screens. */}}
+  <img class="hub-avatar" src="/images/2025-03-01-profile-brian-pfeil-avatar-240.webp"
+       srcset="/images/2025-03-01-profile-brian-pfeil-avatar-176.webp 176w, /images/2025-03-01-profile-brian-pfeil-avatar-240.webp 240w, /images/2025-03-01-profile-brian-pfeil-avatar.jpg 320w"
+       sizes="(min-width: 640px) 120px, 88px"
        alt="Brian Pfeil" width="320" height="320" decoding="async" fetchpriority="high">
   <div class="hub-hero-text">
     <h1 class="hub-name">{{ .Site.Title }}</h1>
