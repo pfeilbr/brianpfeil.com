@@ -135,3 +135,17 @@ resource "aws_acm_certificate_validation" "apps" {
 output "apps_certificate_arn" {
   value = aws_acm_certificate_validation.apps.certificate_arn
 }
+
+# Search-engine ownership proofs at the apex (public by design: anyone can
+# read a TXT record). One record holds every value; add a value here rather
+# than a second apex TXT resource, which Route 53 would refuse.
+resource "aws_route53_record" "apex_txt" {
+  zone_id = local.zone_id
+  name    = "brianpfeil.com"
+  type    = "TXT"
+  ttl     = 300
+  records = [
+    # Google Search Console, domain property sc-domain:brianpfeil.com (2026-10-12)
+    "google-site-verification=1DJQUTVWpKiCAx3Hqh9J2U4Z1CLgisozBz4nshMt3RE",
+  ]
+}

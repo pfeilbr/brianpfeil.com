@@ -445,10 +445,10 @@ changes nothing) while empty.
 - **Search-engine verification:** Google is done (2026-10-12): property
   `https://brianpfeil.com/` in B's Search Console, verified by the Analytics
   tag, the domain provider and the `params.verification.google` meta tag;
-  `sitemap.xml` and `sitemap-courses.xml` submitted. A domain property
-  (`sc-domain:brianpfeil.com`) is also added, pending a DNS TXT record
-  (`google-site-verification=` + the same code) in `infra/dns.tf`, not yet
-  applied. Bing is waiting on B: sign in to Bing Webmaster Tools and
+  `sitemap.xml` and `sitemap-courses.xml` submitted. The domain property
+  `sc-domain:brianpfeil.com` (every subdomain) is verified too, by the apex
+  TXT record `aws_route53_record.apex_txt` in `infra/dns.tf` — add any
+  future TXT value to that one record. Bing is waiting on B: sign in to Bing Webmaster Tools and
   "Import from Google Search Console" (an OAuth grant only B can give), or
   paste its `msvalidate.01` code into `params.verification.bing`.
 - **16 private repos:** the lab notes show without their link
