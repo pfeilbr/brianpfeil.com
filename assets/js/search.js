@@ -75,6 +75,13 @@
         if (contents.indexOf(term) !== -1) score += 1;
       }
 
+      // Two neighbouring query words together in the title ("function url")
+      // beat the same words scattered: a mistyped or renamed URL then lands
+      // on the page it meant.
+      for (var a = 0; a + 1 < terms.length; a++) {
+        if (title.indexOf(terms[a] + " " + terms[a + 1]) !== -1) score += 15;
+      }
+
       if (score > 0) {
         scored.push({ item: item, score: score });
       }
@@ -326,6 +333,8 @@
   });
   var initial = null;
   try { initial = new URLSearchParams(window.location.search).get("q"); } catch (e) {}
+  // The 404 page sets SEARCH_PREFILL from the words of the missing URL.
+  if (!initial && window.SEARCH_PREFILL) initial = window.SEARCH_PREFILL;
   if (initial) {
     searchInput.value = initial;
     if (kbdHint) kbdHint.style.display = "none";

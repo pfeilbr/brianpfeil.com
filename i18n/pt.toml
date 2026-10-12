@@ -2089,3 +2089,9 @@ other = "Escrito em {{ .year }}. Ferramentas, APIs e preços podem ter mudado de
 
 [updated_on]
 other = "Atualizado em {{ .date }}"
+
+[tags_main]
+other = "Tópicos principais"
+
+[tags_more]
+other = "Mais {{ .count }} tópicos, com um ou dois posts cada"

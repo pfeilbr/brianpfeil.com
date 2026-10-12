@@ -30,6 +30,17 @@
   <p class="text-gray-500 mb-6">{{ i18n "not_found_body" }}</p>
 </section>
 
+{{- /* Search for the words in the URL the visitor tried ("/post/aws-lamda-
+   tips/" -> "aws lamda tips"), so a renamed or mistyped page is usually one
+   click away. search.js runs it when there is no ?q= of its own. */ -}}
+<script>
+(function () {
+  var stop = ["post", "posts", "page", "projects", "notes", "learn", "courses", "architecture", "tags", "index", "html", "playground", "zh", "es", "pt", "fr", "de", "it", "ja", "ko"];
+  var words = decodeURIComponent(location.pathname).toLowerCase().split(/[\/\-_.\s]+/)
+    .filter(function (w) { return w.length > 1 && !/^\d+$/.test(w) && stop.indexOf(w) === -1; });
+  if (words.length) window.SEARCH_PREFILL = words.slice(-4).join(" ");
+})();
+</script>
 {{ partial "search.html" . }}
 <div id="search-results"></div>
 
@@ -53,7 +64,7 @@
 <section class="mt-8">
   <h2 class="text-sm font-semibold text-gray-900 mb-2">{{ i18n "recent_posts" }}</h2>
   <div id="post-list">
-    {{ range first 10 (partial "site-posts.html" .) }}
+    {{ range first 10 (partial "site-articles.html" .) }}
     <article class="post-preview py-2.5 border-b border-gray-100 cursor-pointer hover:bg-gray-50 -mx-3 px-3 rounded" data-href="{{ .RelPermalink }}">
       <div class="flex items-baseline justify-between gap-3">
         <a href="{{ .RelPermalink }}" class="text-sm font-medium text-gray-900 no-underline truncate">{{ .Title }}</a>

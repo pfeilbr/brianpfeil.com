@@ -2089,3 +2089,9 @@ other = "{{ .year }}년에 쓴 글입니다. 이후 도구, API, 가격이 바�
 
 [updated_on]
 other = "{{ .date }} 업데이트"
+
+[tags_main]
+other = "주요 주제"
+
+[tags_more]
+other = "주제 {{ .count }}개 더 보기(각 1~2편)"

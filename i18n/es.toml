@@ -2089,3 +2089,9 @@ other = "Escrito en {{ .year }}. Desde entonces pueden haber cambiado las herram
 
 [updated_on]
 other = "Actualizado el {{ .date }}"
+
+[tags_main]
+other = "Temas principales"
+
+[tags_more]
+other = "{{ .count }} temas más, con una o dos entradas cada uno"

@@ -18,6 +18,18 @@
   <a href="{{ $prefix }}notes/"{{ if eq $kind "notes" }} aria-current="page"{{ end }}>{{ i18n "hub_notes_title" }} <span>{{ $nNotes }}</span></a>
 </nav>
 
+{{- /* Lab notes: the biggest topics, each a link to its tag page. */ -}}
+{{ if eq $kind "notes" }}
+{{ $counts := dict }}
+{{ range $all }}{{ range .Params.tags }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}{{ end }}
+{{ $rows := slice }}{{ range $k, $v := $counts }}{{ $rows = $rows | append (dict "t" $k "n" $v) }}{{ end }}
+<nav class="topic-chips" aria-label="{{ i18n "tags_main" }}">
+  {{ range first 14 (sort $rows "n" "desc") }}
+  <a href="/tags/{{ .t | urlize }}/">{{ .t }} <span>{{ .n }}</span></a>
+  {{ end }}
+</nav>
+{{ end }}
+
 {{ partial "search.html" $page }}
 
 <div id="search-results"></div>

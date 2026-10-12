@@ -2091,3 +2091,9 @@ other = "Geschrieben {{ .year }}. Tools, APIs und Preise haben sich seitdem viel
 
 [updated_on]
 other = "Aktualisiert am {{ .date }}"
+
+[tags_main]
+other = "Hauptthemen"
+
+[tags_more]
+other = "{{ .count }} weitere Themen mit je ein oder zwei Beiträgen"

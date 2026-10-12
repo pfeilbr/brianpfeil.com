@@ -3655,3 +3655,21 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
   font-size: 0.8125rem; line-height: 1.5; color: var(--text-subtle);
 }
 .updated-on { margin-top: 0.25rem; }
+
+/* === Tags, archive, topic chips ========================================= */
+.tags-h { margin: 0 0 0.75rem; font-size: 0.875rem; font-weight: 600; color: var(--text-strong); }
+.tags-tail { margin-top: 1.5rem; }
+.tags-tail summary { cursor: pointer; margin-bottom: 0.75rem; font-size: 0.875rem; font-weight: 600; color: var(--text-muted); }
+.tags-tail summary:hover { color: var(--brand); }
+.archive-meta { display: inline-flex; align-items: baseline; gap: 0.5rem; flex-shrink: 0; }
+.row-kind {
+  padding: 0 0.4rem; border-radius: 9999px; background-color: var(--bg-muted);
+  font-size: 0.6875rem; font-weight: 600; color: var(--text-subtle); white-space: nowrap;
+}
+.topic-chips { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: -0.25rem 0 1rem; }
+.topic-chips a {
+  padding: 0.125rem 0.5rem; border: 1px solid var(--border); border-radius: 9999px;
+  font-size: 0.75rem; color: var(--text-muted); text-decoration: none;
+}
+.topic-chips a:hover { border-color: var(--brand); color: var(--brand); }
+.topic-chips span { color: var(--text-faint); }

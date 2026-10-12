@@ -2089,3 +2089,9 @@ other = "写于 {{ .year }} 年。此后工具、API 和价格可能已有变化
 
 [updated_on]
 other = "更新于 {{ .date }}"
+
+[tags_main]
+other = "主要主题"
+
+[tags_more]
+other = "另外 {{ .count }} 个主题，每个一到两篇"

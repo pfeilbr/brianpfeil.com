@@ -2088,3 +2088,9 @@ other = "Scritto nel {{ .year }}. Strumenti, API e prezzi potrebbero essere camb
 
 [updated_on]
 other = "Aggiornato il {{ .date }}"
+
+[tags_main]
+other = "Argomenti principali"
+
+[tags_more]
+other = "Altri {{ .count }} argomenti, con uno o due articoli ciascuno"

@@ -2089,3 +2089,9 @@ other = "{{ .year }}年に書いた記事です。ツール、API、料金はそ
 
 [updated_on]
 other = "{{ .date }} 更新"
+
+[tags_main]
+other = "主なトピック"
+
+[tags_more]
+other = "ほかに {{ .count }} のトピック（各1〜2本）"
