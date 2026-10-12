@@ -11,15 +11,21 @@ them, not `site-posts.html`, for anything a visitor browses). Both pages
 share `partials/post-list-page.html` (switch, search, infinite scroll, a
 one-line summary per row from `partials/post-summary.html`). Note URLs stay
 `/post/<slug>/`; each note opens with a "Lab note" line naming its repo.
-Search covers both and takes `?q=`. Lab notes carry no laptop-specific setup and none of B's own names:
+Search covers both and takes `?q=` (the 404 page searches the words of the
+missing URL). Posts 3+ years old open with an age notice; previous/next
+stay within one kind. Feeds: `/index.xml` is articles + projects + guides,
+`/post/index.xml` articles, `/notes/index.xml` lab notes. Lab notes carry no laptop-specific setup and none of B's own names:
 `tools/generate-posts/local_setup.toml` (his AWS profiles, SSO logins,
 `/Users/pfeilbr` paths, `cd ~/projects`, "where I installed X" lines, his
 account number as AWS's example 123456789012, his S3 buckets as
 `amzn-s3-demo-*`, his Azure resources as Microsoft's `contoso`/`my*`
 names) is applied by the generator to every README and by
 `make github-refresh` to the /github/ excerpts; `make notes-strip`
-re-applies it to the notes in place. The structure check fails if any
-account or `[replace]` key reaches the built site. A new personal name
+re-applies it to the notes in place. Its `[[redact]]` rules rewrite
+secret-shaped strings (AWS key ids, JWTs, stream keys, tokens) to AWS's
+example values or a marker. The structure check fails if any account,
+`[replace]` key or unredacted secret reaches the built site; it names the
+kind of secret, never the value. A new personal name
 goes in that file, never in a hand edit of a note.
 
 **A finished project has one page: `/projects/<x>/`.** Repos in the
@@ -116,12 +122,21 @@ languages, and a
 warning-surfacing Hugo build. The Tests workflow runs the same on every push
 and PR, plus `terraform fmt` and `validate` on both stacks.
 
+**Every video's poster is a real frame.** `derive.py` takes the first frame
+that isn't near-black (mean grey under 16), because clips that fade in from
+black gave nine reels an all-black tile; `make media-posters` repaired those
+on the CDN in place (same file names, invalidated) and is a no-op now. It
+reads the derive lock from the main checkout's
+`tools/instagram-media/derivatives.lock.json` (not in git), so run it there.
+
 **Posts whose repo went private keep their text, minus the link**
 (decided 2026-10-11; 16 repos, 10 of them published notes).
 `data/repo_gone.json` lists them and `single.html` renders those notes
 without a repo link. `make check-repo-links` exits 1 only for a broken repo
 not yet in that file; `python3 tools/link-check/check_repo_links.py --write`
-records the current set (and drops any that are public again).
+records the current set (and drops any that are public again). The Monday
+`.github/workflows/repo-links.yml` keeps the issue "Lab notes: repo links"
+open while a newly private repo is unrecorded, and closes it after.
 
 **Terraform manages all of the AWS side.** State is remote in
 `s3://brianpfeil-tfstate-529276214230` (versioned, native S3 locking, no
@@ -421,3 +436,15 @@ conversion there, or the script refuses to convert.
   `baseof.html`, so every page gets the same floating arrow (bottom right,
   after 400px of scroll). Don't add a per-page one. It sits at `z-index: 50`,
   under the lightbox/zoom overlays (100).
+
+## Waiting on B
+
+Stubbed so nothing breaks until B fills them in; each renders nothing (or
+changes nothing) while empty.
+
+- **Search-engine verification:** paste the Google Search Console, Bing
+  Webmaster and (optionally) Yandex codes into `params.verification` in
+  `config.yaml`. Then submit `https://brianpfeil.com/sitemap.xml` in each.
+- **16 private repos:** the lab notes show without their link
+  (`data/repo_gone.json`). Making any of them public again brings the link
+  back on the next `check_repo_links.py --write`.

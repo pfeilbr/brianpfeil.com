@@ -142,6 +142,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make media-picker` | Google Photos picker on http://127.0.0.1:8790: suggests photos and video of B alone by activity, publishes the picks |
 | `make media-photos-publish` | Publish the Google Photos picks from the command line; `DATA_ONLY=1` rewrites `data/photos.yaml` without uploading |
 | `make media-audit` | Every file the page references exists on the CDN (exits 1 if not) |
+| `make media-posters` | Rebuild any near-black video poster, thumbnail and grid tile on the CDN from the first frame that is not black (needs AWS; does nothing when none are dark) |
 | `make media-watch-install` | Install the launchd agent that stages exports from `~/Downloads` |
 | `make media-watch-uninstall` | Remove the Downloads watcher |
 | `make media-watch-status` | Whether the watcher is loaded, and its last runs |

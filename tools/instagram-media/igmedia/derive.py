@@ -214,12 +214,68 @@ def _encode_video(src: Path, dest: Path) -> None:
     ])
 
 
-def _extract_frame(src: Path, dest: Path) -> None:
+# Mean grey (0-255) below which a frame reads as black. Clips that fade in
+# from black gave seven reels an all-black poster and grid tile (2026-10).
+DARK_LUMA = 16
+
+
+def frame_luma(path: Path) -> float:
+    """Average brightness of an image, 0 (black) to 255 (white)."""
+    from PIL import Image, ImageStat
+
+    with Image.open(path) as im:
+        return ImageStat.Stat(im.convert("L")).mean[0]
+
+
+def candidate_times(duration: float | None) -> list[float]:
+    """Where to look for a poster frame, in order: the start, a second or two
+    in, then a tenth, a quarter and half way through."""
+    times = [0.0, 1.0, 2.0]
+    if duration:
+        times += [duration * f for f in (0.1, 0.25, 0.5)]
+        times = [t for t in times if t < duration]
+    out = []
+    for t in times:
+        t = round(t, 2)
+        if t not in out:
+            out.append(t)
+    return out
+
+
+def pick_frame(lumas: list[tuple[float, float]], dark: float = DARK_LUMA) -> float:
+    """The first (time, luma) that isn't black; else the brightest one."""
+    for t, luma in lumas:
+        if luma >= dark:
+            return t
+    return max(lumas, key=lambda tl: tl[1])[0]
+
+
+def _extract_frame(src: Path, dest: Path, duration: float | None = None) -> None:
+    """The video's poster frame: the first that isn't near-black."""
     dest.parent.mkdir(parents=True, exist_ok=True)
-    _run([
-        "ffmpeg", "-nostdin", "-y", "-loglevel", "error",
-        "-i", str(src), "-frames:v", "1", "-map_metadata", "-1", str(dest),
-    ])
+    tried = []
+    for t in candidate_times(duration):
+        shot = dest.with_name(f"{dest.stem}-at{t}.png")
+        try:
+            _run([
+                "ffmpeg", "-nostdin", "-y", "-loglevel", "error", "-ss", f"{t:.2f}",
+                "-i", str(src), "-frames:v", "1", "-map_metadata", "-1", str(shot),
+            ])
+        except RuntimeError:
+            continue
+        if not shot.exists():
+            continue
+        tried.append((t, frame_luma(shot), shot))
+        if tried[-1][1] >= DARK_LUMA:
+            break
+    if not tried:
+        raise RuntimeError(f"no frame could be read from {src}")
+    best = pick_frame([(t, l) for t, l, _ in tried])
+    for t, _, shot in tried:
+        if t == best:
+            shot.replace(dest)
+        else:
+            shot.unlink(missing_ok=True)
 
 
 class Lock:
@@ -427,7 +483,7 @@ def derive(media, item_id: str, outdir: Path, prefix: str, lock: Lock) -> Derive
         width, height, duration = ffprobe_video(dest_dir / name)
 
         frame = dest_dir / f"{stem}-frame.png"
-        _extract_frame(dest_dir / name, frame)
+        _extract_frame(dest_dir / name, frame, duration)
         _save_image(frame, dest_dir / poster, IMAGE_MAX, IMAGE_QUALITY)
         _save_image(frame, dest_dir / thumb, THUMB_MAX, THUMB_QUALITY)
         frame.unlink(missing_ok=True)

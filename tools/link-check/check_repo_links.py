@@ -9,6 +9,7 @@ visitor would — and lists the ones that are broken.
     python3 tools/link-check/check_repo_links.py          # report
     python3 tools/link-check/check_repo_links.py --json   # machine-readable
     python3 tools/link-check/check_repo_links.py --write  # record them
+    python3 tools/link-check/check_repo_links.py --report report.md
 
 Posts whose repo is gone keep their text but lose the link: every repo in
 data/repo_gone.json is rendered without one (layouts/_default/single.html).
@@ -101,6 +102,23 @@ def unrecorded(bad: list[dict], known: set[str]) -> list[dict]:
     return [r for r in bad if full_name(r["url"]) not in known]
 
 
+def report(new: list[dict], back: list[str]) -> str:
+    """Markdown for the weekly issue; empty when nothing needs doing."""
+    if not new and not back:
+        return ""
+    out = []
+    if new:
+        out += ["These lab notes link to a repo a visitor can no longer open "
+                "(private or deleted). Make the repo public again, or record it so "
+                "the note is shown without the link:", "",
+                "```sh", "python3 tools/link-check/check_repo_links.py --write", "```", ""]
+        out += [f"- [{r['title']}]({r['url']}) ({r['file']}, HTTP {r['status'] or 'no response'})" for r in new]
+    if back:
+        out += ["", "Public again (re-run with `--write` to restore their link):", ""]
+        out += [f"- https://github.com/{n}" for n in back]
+    return "\n".join(out) + "\n"
+
+
 def main() -> int:
     args = sys.argv[1:]
     results = check(repo_links(POSTS))
@@ -110,6 +128,9 @@ def main() -> int:
     known = recorded()
     new = unrecorded(bad, known)
     back = sorted(known - {full_name(r["url"]) for r in bad})
+
+    if "--report" in args:
+        Path(args[args.index("--report") + 1]).write_text(report(new, back), encoding="utf-8")
 
     if "--json" in args:
         print(json.dumps({"checked": len(results), "broken": bad,

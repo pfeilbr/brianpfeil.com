@@ -1,0 +1,38 @@
+name: Repo links
+
+# Every Monday, checks that each lab note's repo still opens for a visitor
+# (tools/link-check/check_repo_links.py). A repo that went private or was
+# deleted since the last check -- not yet in data/repo_gone.json -- keeps
+# one issue ("Lab notes: repo links") open with the list and the one
+# command that fixes it; the next clean run closes it. Repos that are
+# public again are listed too, so their link can come back.
+on:
+  schedule:
+    - cron: "17 12 * * 1"   # Mondays 12:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Check every repo link
+        run: python tools/link-check/check_repo_links.py --report report.md || true
+      - name: Repo-links issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Lab notes: repo links"
+          num="$(gh issue list --state open --search "\"$title\" in:title" --json number -q '.[0].number')"
+          if [ -s report.md ]; then
+            if [ -n "$num" ]; then gh issue edit "$num" --body-file report.md; else gh issue create --title "$title" --body-file report.md; fi
+          elif [ -n "$num" ]; then
+            gh issue close "$num" --comment "Every lab note's repo link opens, or is recorded as gone."
+          fi

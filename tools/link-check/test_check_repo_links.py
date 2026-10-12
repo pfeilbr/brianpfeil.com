@@ -106,5 +106,17 @@ class GoneTest(unittest.TestCase):
         self.assertEqual(crl.unrecorded(self.BAD, {"pfeilbr/private", "pfeilbr/zgone"}), [])
 
 
+class ReportTest(unittest.TestCase):
+    def test_nothing_to_do_is_empty(self):
+        self.assertEqual(crl.report([], []), "")
+
+    def test_new_and_back_are_listed(self):
+        md = crl.report([{"title": "B", "url": "https://github.com/pfeilbr/b", "file": "generated-b.md", "status": 404}],
+                        ["pfeilbr/c"])
+        self.assertIn("- [B](https://github.com/pfeilbr/b) (generated-b.md, HTTP 404)", md)
+        self.assertIn("--write", md)
+        self.assertIn("- https://github.com/pfeilbr/c", md)
+
+
 if __name__ == "__main__":
     unittest.main()
