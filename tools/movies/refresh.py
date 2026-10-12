@@ -48,19 +48,36 @@ GROUPS = {"FREE": "free", "ADS": "free", "FLATRATE": "stream", "RENT": "rent", "
 QUALITY = {"_4K": 3, "HD": 2, "SD": 1}
 
 
+def retry_after(value, attempt):
+    """Seconds to wait before retrying a 429: the server's Retry-After when it
+    gives a number of seconds (capped at two minutes), else a backoff."""
+    try:
+        return min(max(int(value), 1), 120)
+    except (TypeError, ValueError):
+        return min(5 * 2 ** attempt, 120)
+
+
 def http(url, data=None, headers=None, tries=3):
     hdrs = {"User-Agent": UA, **(headers or {})}
-    for attempt in range(tries):
+    # A 429 is a "slow down", not an answer: JustWatch starts sending them
+    # from GitHub's runners after about ten films, so it gets more tries.
+    attempt = limited = 0
+    while attempt < tries:
         try:
             req = urllib.request.Request(url, data=data, headers=hdrs)
             with urllib.request.urlopen(req, timeout=30) as r:
                 return r.status, r.read()
         except urllib.error.HTTPError as e:
+            if e.code == 429 and limited < 6:
+                time.sleep(retry_after(e.headers.get("Retry-After"), limited))
+                limited += 1
+                continue
             if e.code < 500:
                 return e.code, b""
         except (urllib.error.URLError, OSError):
             pass
         time.sleep(2 ** attempt)
+        attempt += 1
     return 0, b""
 
 
