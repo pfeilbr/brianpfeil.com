@@ -32,7 +32,7 @@
       <span class="mx-1.5 text-gray-300" aria-hidden="true">&middot;</span>
       <span>{{ i18n "min_read" .ReadingTime }}</span>
       {{ with .Params.tags }}
-      <span class="ml-2">{{ range $i, $t := . }}{{ if $i }}, {{ end }}<a href="/tags/{{ $t | urlize }}/" class="text-brand no-underline hover:underline">{{ $t }}</a>{{ end }}</span>
+      <span class="ml-2">{{ range $i, $t := . }}{{ if $i }}, {{ end }}<a href="/tags/{{ $t | urlize }}/" class="text-brand link-quiet">{{ $t }}</a>{{ end }}</span>
       {{ end }}
     </div>
     {{ end }}
@@ -129,13 +129,13 @@
   <div class="flex-1 min-w-0">
     {{ with $prev }}
     <span class="block text-xs text-gray-400 mb-0.5">&larr; {{ i18n "previous" }}</span>
-    <a href="{{ .RelPermalink }}" rel="prev" class="text-brand no-underline hover:underline">{{ .Title | default (i18n "previous") }}</a>
+    <a href="{{ .RelPermalink }}" rel="prev" class="text-brand link-quiet">{{ .Title | default (i18n "previous") }}</a>
     {{ end }}
   </div>
   <div class="flex-1 min-w-0 text-right">
     {{ with $next }}
     <span class="block text-xs text-gray-400 mb-0.5">{{ i18n "next" }} &rarr;</span>
-    <a href="{{ .RelPermalink }}" rel="next" class="text-brand no-underline hover:underline">{{ .Title | default (i18n "next") }}</a>
+    <a href="{{ .RelPermalink }}" rel="next" class="text-brand link-quiet">{{ .Title | default (i18n "next") }}</a>
     {{ end }}
   </div>
 </nav>

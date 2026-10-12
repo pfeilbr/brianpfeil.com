@@ -2962,6 +2962,8 @@ a.ai-badge:hover { color: var(--brand); border-color: var(--brand); }
 /* Dark mode: the raw category hue is too dark on the page (indigo was 3:1);
    lighten it the same way .ic lightens its glyph. */
 html[data-theme="dark"] .course-cat { color: color-mix(in srgb, var(--ic-c, var(--text-subtle)) 55%, white); }
+/* Light mode: some hues (amber, cyan) were under 4.5:1 on white; darken. */
+html:not([data-theme="dark"]) .course-cat { color: color-mix(in srgb, var(--ic-c, var(--text-subtle)) 62%, black); }
 .course-title { font-size: 1rem; font-weight: 700; line-height: 1.3; color: var(--text-strong); }
 .course-card:hover .course-title { color: var(--brand); }
 .course-desc { font-size: 0.8125rem; line-height: 1.5; color: var(--text-muted); }
@@ -3580,7 +3582,7 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
 }
 .hub-offclock a:hover { border-color: var(--border-strong); color: var(--brand); }
 .hub-offclock .ic { grid-row: span 2; }
-.hub-offclock small { grid-column: 2; font-size: 0.75rem; font-weight: 400; color: var(--text-faint); }
+.hub-offclock small { grid-column: 2; font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
 
 /* === Articles / lab notes ============================================== */
 .kind-switch {
@@ -3607,7 +3609,7 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
 .notes-teaser:hover { border-color: var(--border-strong); color: var(--brand); }
 .notes-teaser svg { width: 1rem; height: 1rem; flex-shrink: 0; margin-left: auto; }
 .note-frame { margin: 0.75rem 0 0; font-size: 0.875rem; line-height: 1.55; color: var(--text-subtle); }
-.note-frame a { color: var(--brand); }
+.note-frame a { color: var(--brand); text-decoration: underline; text-underline-offset: 2px; }
 .note-frame .note-badge {
   display: inline-block; margin-right: 0.375rem; padding: 0.0625rem 0.5rem;
   border-radius: 9999px; background-color: var(--bg-muted);
@@ -3664,7 +3666,7 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
 .archive-meta { display: inline-flex; align-items: baseline; gap: 0.5rem; flex-shrink: 0; }
 .row-kind {
   padding: 0 0.4rem; border-radius: 9999px; background-color: var(--bg-muted);
-  font-size: 0.6875rem; font-weight: 600; color: var(--text-subtle); white-space: nowrap;
+  font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); white-space: nowrap;
 }
 .topic-chips { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: -0.25rem 0 1rem; }
 .topic-chips a {
@@ -3673,3 +3675,16 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
 }
 .topic-chips a:hover { border-color: var(--brand); color: var(--brand); }
 .topic-chips span { color: var(--text-faint); }
+
+/* === Links inside a line of text ====================================== */
+/* Colour alone does not mark a link (WCAG 1.4.1, axe link-in-text-block):
+   tag links in a post's byline and previous/next titles get a quiet
+   underline that firms up on hover. */
+.link-quiet {
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+}
+.link-quiet:hover { text-decoration-color: currentColor; }
+/* Tag counts on /tags/: --text-muted passes 4.5:1 on the pill's grey. */
+.tag-n { color: var(--text-muted); }
+a:hover > .tag-n { color: inherit; }
