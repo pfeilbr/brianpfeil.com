@@ -1,0 +1,94 @@
+name: Data refresh
+
+# Refreshes the two keyless data files that drift: /movies/ (scores, where to
+# stream each film, trailers -- tools/movies/refresh.py) and the Twitch
+# follower counts on /subscriptions/ (tools/subscriptions/twitch.py). Both
+# read only public sources, so no secret is needed. A movie whose lookup
+# fails keeps yesterday's data; the run still refuses to commit if more than
+# a tenth of the trailers, streaming offers or Rotten Tomatoes scores vanish
+# at once (a source blocking the runner rather than real change).
+on:
+  schedule:
+    - cron: "41 9 * * 2"   # Tuesdays 09:41 UTC, off the top of the hour
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Snapshot
+        run: cp data/movies.json /tmp/movies.before.json
+      - name: Twitch
+        run: python tools/subscriptions/twitch.py
+      - name: Movies
+        # Exit 1 means some films failed and kept their old data; the guard
+        # below decides whether the rest is worth keeping.
+        run: python tools/movies/refresh.py || echo "some films failed; kept their old data"
+      - name: Guard against a partial answer
+        run: |
+          python - <<'EOF'
+          import json, sys
+          def counts(path):
+              movies = json.load(open(path))["movies"]
+              return {
+                  "trailers": sum(1 for m in movies if m.get("trailer")),
+                  "offers": sum(len(m.get("offers") or []) for m in movies),
+                  "scores": sum(1 for m in movies if (m.get("rotten_tomatoes") or {}).get("critics")),
+              }
+          before, after = counts("/tmp/movies.before.json"), counts("data/movies.json")
+          print("before", before, "after", after)
+          lost = [k for k in before if after[k] < before[k] * 0.9]
+          if lost:
+              sys.exit(f"refusing to commit: {', '.join(lost)} fell by more than 10%")
+          EOF
+      - name: Tests
+        run: |
+          python -m unittest discover -s tools/movies -p 'test_*.py'
+          python -m unittest discover -s tools/subscriptions -p 'test_*.py'
+      # The pages must still build with the new data before anything is
+      # pushed. Same Hugo pin as the deploy.
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.166.0"
+          extended: true
+      - name: Build
+        run: |
+          hugo --minify
+          python tools/movies/check_payload.py --public public
+      - name: Commit and push
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/movies.json data/twitch.yaml static/movies
+          # The date stamp alone is not a change worth a deploy.
+          if ! git diff --cached -U0 | grep '^[+-]' | grep -v '^[+-][+-]' | grep -qv '"updated":'; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -q -m "Data refresh: $(date -u +%Y-%m-%d) (movies, Twitch)"
+          for i in 1 2 3; do
+            git pull -q --rebase origin main && git push -q origin HEAD:main && break
+            sleep 5
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # Pushes made with GITHUB_TOKEN never trigger other workflows, so the
+      # deploy is dispatched explicitly (gh-pages.yml has workflow_dispatch).
+      - name: Deploy
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run gh-pages.yml --ref main

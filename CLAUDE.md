@@ -253,6 +253,9 @@ touching a template:
   language + English, ~40–60 KB gzipped instead of 207 KB); the full
   `movies.json` is still published for the raw link.
   `tools/movies/check_payload.py` (in verify) keeps the two in step.
+  Scores, streaming offers and trailers refresh every Tuesday
+  (`.github/workflows/data-refresh.yml`, with the Twitch follower counts);
+  it refuses to commit if a tenth of any of them vanish at once.
 - **/architecture/:** hand-written guides in `content/architecture/*.md`,
   English only, ordered by `weight`; the section index is translated. They
   are generic by design — drawn from B's review practice with every company,
