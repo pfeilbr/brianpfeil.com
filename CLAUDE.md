@@ -253,9 +253,12 @@ touching a template:
   language + English, ~40–60 KB gzipped instead of 207 KB); the full
   `movies.json` is still published for the raw link.
   `tools/movies/check_payload.py` (in verify) keeps the two in step.
-  Scores, streaming offers and trailers refresh every Tuesday
-  (`.github/workflows/data-refresh.yml`, with the Twitch follower counts);
-  it refuses to commit if a tenth of any of them vanish at once.
+  Scores, streaming offers and trailers refresh daily
+  (`.github/workflows/data-refresh.yml`, with the Twitch follower counts):
+  `refresh.py --budget 25` takes the stalest films first (each entry's
+  `refreshed` date) and stops when JustWatch starts answering 429, which it
+  does to GitHub's runners after about ten films. It refuses to commit if a
+  tenth of the trailers, offers or scores vanish at once.
 - **/architecture/:** hand-written guides in `content/architecture/*.md`,
   English only, ordered by `weight`; the section index is translated. They
   are generic by design — drawn from B's review practice with every company,

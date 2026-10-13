@@ -17,8 +17,14 @@ Sources, all public and keyless:
 
 Posters and service logos are downloaded into static/movies/, never hotlinked.
 
-  python3 tools/movies/refresh.py            # every movie
-  python3 tools/movies/refresh.py tt0111161  # just these
+  python3 tools/movies/refresh.py               # every movie
+  python3 tools/movies/refresh.py tt0111161     # just these
+  python3 tools/movies/refresh.py --budget 25   # stalest first, for 25 minutes
+
+Each refreshed entry records the day in "refreshed". With --budget the
+stalest go first and the run stops when the time is up or JustWatch keeps
+answering 429 (it rate-limits GitHub's runners after about ten films), so a
+daily job works through the whole list over a few days.
 """
 import datetime
 import json
@@ -48,13 +54,17 @@ GROUPS = {"FREE": "free", "ADS": "free", "FLATRATE": "stream", "RENT": "rent", "
 QUALITY = {"_4K": 3, "HD": 2, "SD": 1}
 
 
+class RateLimited(Exception):
+    """JustWatch kept answering 429: stop for today rather than fail every film."""
+
+
 def retry_after(value, attempt):
     """Seconds to wait before retrying a 429: the server's Retry-After when it
     gives a number of seconds (capped at two minutes), else a backoff."""
     try:
-        return min(max(int(value), 1), 120)
+        return min(max(int(value), 1), 60)
     except (TypeError, ValueError):
-        return min(5 * 2 ** attempt, 120)
+        return min(5 * 2 ** attempt, 60)
 
 
 def http(url, data=None, headers=None, tries=3):
@@ -68,7 +78,7 @@ def http(url, data=None, headers=None, tries=3):
             with urllib.request.urlopen(req, timeout=30) as r:
                 return r.status, r.read()
         except urllib.error.HTTPError as e:
-            if e.code == 429 and limited < 6:
+            if e.code == 429 and limited < 3:
                 time.sleep(retry_after(e.headers.get("Retry-After"), limited))
                 limited += 1
                 continue
@@ -85,6 +95,8 @@ def jw(query, variables):
     body = json.dumps({"query": query, "variables": variables}).encode()
     status, raw = http("https://apis.justwatch.com/graphql", body,
                        {"Content-Type": "application/json"})
+    if status == 429:
+        raise RateLimited("JustWatch 429")
     if status != 200:
         raise RuntimeError(f"JustWatch {status}")
     out = json.loads(raw)
@@ -312,21 +324,43 @@ def refresh(movie):
     return movie
 
 
+def order(movies, budgeted):
+    """The films to refresh, in turn: file order, or stalest first."""
+    if not budgeted:
+        return list(movies)
+    return sorted(movies, key=lambda m: m.get("refreshed", ""))
+
+
 def main(argv):
+    budget = None
+    if "--budget" in argv:
+        i = argv.index("--budget")
+        budget = float(argv[i + 1]) * 60
+        argv = argv[:i] + argv[i + 2:]
     doc = json.loads(DATA.read_text())
     only = set(argv)
     failed = []
-    for movie in doc["movies"]:
+    start = time.monotonic()
+    today = datetime.date.today().isoformat()
+    for movie in order(doc["movies"], budget is not None):
         if only and movie.get("imdb") not in only and movie["title"] not in only:
             continue
+        if budget is not None and time.monotonic() - start > budget:
+            print("time budget used up; the rest wait for the next run")
+            break
         try:
             refresh(movie)
+            movie["refreshed"] = today
             rt = (movie.get("rotten_tomatoes") or {}).get("critics")
             print(f'{movie["title"]:<45} RT {rt}  trailer {movie["trailer"]}  '
-                  f'{len(movie["offers"])} offers')
+                  f'{len(movie["offers"])} offers', flush=True)
+        except RateLimited:
+            print(f"JustWatch is rate-limiting us at {movie.get('title')}; "
+                  "stopping, the rest wait for the next run", flush=True)
+            break
         except Exception as e:  # keep going; report at the end
             failed.append(f'{movie.get("title")}: {e}')
-    doc["updated"] = datetime.date.today().isoformat()
+    doc["updated"] = today
     DATA.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
     for f in failed:
         print("FAILED", f, file=sys.stderr)

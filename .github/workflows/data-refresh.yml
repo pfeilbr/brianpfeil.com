@@ -1,6 +1,6 @@
 name: Data refresh
 
-# Refreshes the two keyless data files that drift: /movies/ (scores, where to
+# Daily, refreshes the two keyless data files that drift: /movies/ (scores, where to
 # stream each film, trailers -- tools/movies/refresh.py) and the Twitch
 # follower counts on /subscriptions/ (tools/subscriptions/twitch.py). Both
 # read only public sources, so no secret is needed. A movie whose lookup
@@ -9,7 +9,7 @@ name: Data refresh
 # at once (a source blocking the runner rather than real change).
 on:
   schedule:
-    - cron: "41 9 * * 2"   # Tuesdays 09:41 UTC, off the top of the hour
+    - cron: "41 9 * * *"   # daily 09:41 UTC, off the top of the hour
   workflow_dispatch:
 
 permissions:
@@ -23,7 +23,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-24.04
-    timeout-minutes: 75
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -34,9 +34,11 @@ jobs:
       - name: Twitch
         run: python tools/subscriptions/twitch.py
       - name: Movies
+        # Stalest first for 25 minutes; JustWatch rate-limits runners after
+        # about ten films, so the list is covered over a few daily runs.
         # Exit 1 means some films failed and kept their old data; the guard
         # below decides whether the rest is worth keeping.
-        run: python tools/movies/refresh.py || echo "some films failed; kept their old data"
+        run: python -u tools/movies/refresh.py --budget 25 || echo "some films failed; kept their old data"
       - name: Guard against a partial answer
         run: |
           python - <<'EOF'

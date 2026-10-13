@@ -32,11 +32,29 @@ class Ok:
 class RetryAfterTest(unittest.TestCase):
     def test_server_value_is_used_and_capped(self):
         self.assertEqual(refresh.retry_after("7", 0), 7)
-        self.assertEqual(refresh.retry_after("900", 0), 120)
+        self.assertEqual(refresh.retry_after("900", 0), 60)
 
     def test_backoff_without_a_number(self):
         self.assertEqual(refresh.retry_after(None, 0), 5)
         self.assertEqual(refresh.retry_after("Wed, 21 Oct 2015 07:28:00 GMT", 2), 20)
+
+
+class OrderTest(unittest.TestCase):
+    def test_file_order_without_a_budget(self):
+        movies = [{"title": "b", "refreshed": "2026-10-02"}, {"title": "a"}]
+        self.assertEqual([m["title"] for m in refresh.order(movies, False)], ["b", "a"])
+
+    def test_stalest_first_with_a_budget(self):
+        movies = [{"title": "new", "refreshed": "2026-10-12"}, {"title": "never"},
+                  {"title": "old", "refreshed": "2026-10-01"}]
+        self.assertEqual([m["title"] for m in refresh.order(movies, True)], ["never", "old", "new"])
+
+
+class JwTest(unittest.TestCase):
+    def test_429_stops_the_run(self):
+        with mock.patch.object(refresh, "http", return_value=(429, b"")):
+            with self.assertRaises(refresh.RateLimited):
+                refresh.jw("q", {})
 
 
 class HttpTest(unittest.TestCase):
