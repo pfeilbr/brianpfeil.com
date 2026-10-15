@@ -10,23 +10,25 @@
 # https://music.youtube.com/playlist?list=<id>.
 
 
-tracks_counted: 972
+tracks_counted: 983
 top_artists:
   - name: "Drake"
     count: 47
   - name: "Taylor Swift"
-    count: 41
+    count: 42
   - name: "21 Savage"
     count: 38
   - name: "Wu-Tang Clan"
     count: 21
   - name: "2Pac"
-    count: 19
+    count: 18
   - name: "Rihanna"
     count: 18
   - name: "Metro Boomin"
     count: 17
   - name: "Kendrick Lamar"
+    count: 16
+  - name: "Wiz Khalifa"
     count: 16
   - name: "Eminem"
     count: 15
@@ -34,17 +36,15 @@ top_artists:
     count: 12
   - name: "Nas"
     count: 12
-  - name: "The Chainsmokers"
-    count: 12
 
 mine:
   - title: "bangers"
     id: "PL0zUO3X8BkkyVrlASNua59emH9TO6r9GU"
     tracks: 162
     note_key: "bangers"
-  - title: "a0"
+  - title: "universal-00"
     id: "PLbrfPv24a4kE"
-    tracks: 157
+    tracks: 160
   - title: "rage01"
     id: "PLZbF2hnK5dzQ"
     tracks: 113
@@ -52,7 +52,7 @@ mine:
     id: "PL0zUO3X8Bkkx_WcNkU5m8SK9DKu9vVJdV"
     tracks: 86
     note_key: "gym"
-  - title: "a"
+  - title: "rap-bangers-00"
     id: "PLLb3QFOcze08"
     tracks: 78
     note_key: "a"
@@ -82,16 +82,16 @@ mine:
     id: "PL0zUO3X8BkkzLN1nIN5FGA7-1s0nA--XN"
     tracks: 24
     note_key: "upbeat"
+  - title: "current-repeat-00"
+    id: "PLNc6liNiI_NM"
+    tracks: 19
   - title: "rap01"
     id: "PL0zUO3X8BkkwsKnL63X-ph8wugcHINhOv"
     tracks: 17
-  - title: "wu0"
+  - title: "wu-tang-bangers"
     id: "PLYMYmTQFFL54"
     tracks: 16
-  - title: "00"
-    id: "PLNc6liNiI_NM"
-    tracks: 11
-  - title: "dance02"
+  - title: "dance-00"
     id: "PLSU0FzKgcV_c"
     tracks: 10
   - title: "ggs"
@@ -104,7 +104,7 @@ mine:
     id: "PL0zUO3X8BkkygNefLNyQScSMUJ4FJYGFD"
     tracks: 8
     note_key: "songs_from_the_gut"
-  - title: "Beth"
+  - title: "bethlehem-trip"
     id: "PL0zUO3X8Bkkzr-Xbxc1_gzZmhRODyxAtY"
     tracks: 5
   - title: "feels"
