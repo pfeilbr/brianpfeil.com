@@ -23,6 +23,10 @@ def home(pre):
             '<ol class="hub-latest hub-guides"></ol>')
 
 
+def offclock(pre):
+    return "".join(f'<a class="hub-card hub-link" href={pre}/{p}/ data-ic=x>{p}</a>' for p in cs.OFF_THE_CLOCK)
+
+
 def row(slug):
     return f'<article class="post-preview post-row py-2.5" data-href=/post/{slug}/>'
 
@@ -46,6 +50,7 @@ class StructureTest(unittest.TestCase):
             self.write(cs.page(self.public, lang, ""), home(pre))
             self.write(cs.page(self.public, lang, "post"), row("article-one"))
             self.write(cs.page(self.public, lang, "notes"), row("a") + row("gone"))
+            self.write(cs.page(self.public, lang, "off-the-clock"), offclock(pre))
         self.write(self.public / "post" / "chess" / "index.html",
                    '<meta http-equiv=refresh content="0; url=https://x/projects/chess/">')
         self.write(self.public / "post" / "gone" / "index.html", "<article><p>no link</p></article>")
@@ -60,7 +65,23 @@ class StructureTest(unittest.TestCase):
     def test_good_site_passes(self):
         self.assertEqual(self.check(), [])
 
-    def test_a_seventh_nav_link_fails(self):
+    def test_off_the_clock_is_in_the_nav(self):
+        self.assertIn("off-the-clock", cs.NAV)
+        self.assertEqual(cs.NAV.index("off-the-clock"), cs.NAV.index("about") - 1)
+
+    def test_missing_off_the_clock_page_fails(self):
+        cs.page(self.public, "fr", "off-the-clock").unlink()
+        self.assertIn("/fr/off-the-clock/: not built", self.check())
+
+    def test_off_the_clock_without_a_page_link_fails(self):
+        self.write(cs.page(self.public, "es", "off-the-clock"), offclock("/es").replace("/es/music/", "/es/x/"))
+        self.assertIn("/es/off-the-clock/: no link to music", self.check())
+
+    def test_off_the_clock_linking_another_language_fails(self):
+        self.write(cs.page(self.public, "de", "off-the-clock"), offclock(""))
+        self.assertTrue(any(e.startswith("/de/off-the-clock/: no link to") for e in self.check()))
+
+    def test_an_eighth_nav_link_fails(self):
         self.write(cs.page(self.public, "de", ""), home("/de").replace("<button", "<a href=/de/music/>m</a><button"))
         self.assertTrue(any(e.startswith("/de/ nav:") for e in self.check()))
 

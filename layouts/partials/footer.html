@@ -1,5 +1,5 @@
 <footer class="border-t border-gray-200 mt-12">
-  {{- /* The nav row holds six sections; every other one is linked here, on
+  {{- /* The nav row holds seven sections; every other one is linked here, on
      every page, so nothing is only reachable from the home page. Tags exist
      on the English site only (posts are English-only). */ -}}
   {{ $prefix := cond (eq .Site.Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" .Site.Language.Lang) }}

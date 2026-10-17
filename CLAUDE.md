@@ -43,7 +43,7 @@ footer keep all of them), then wide cards for Architecture guides, Courses,
 Articles and Learn, plain cards listed in `data/home.yaml` (projects, apps,
 lab notes, AI, GitHub, résumé; titles/blurbs `hub_<key>_title` /
 `hub_<key>_blurb`), and one "Off the clock" card for media, movies, music
-and subscriptions. Archive and Tags are footer-only. The footer's site map
+and subscriptions (its title links `/off-the-clock/`, which is also in the nav). Archive and Tags are footer-only. The footer's site map
 (`partials/footer.html`) links every section not in the nav.
 `tools/site-check/check_structure.py` (verify and CI) holds all of this in
 place in every language.
@@ -298,10 +298,16 @@ touching a template:
   `tools/ai-radar/i18n_strings.py` (`make ai-i18n` writes them into the nine
   toml files between markers), so after a merge conflict in `i18n/`, re-run
   that rather than hand-merging the block.
-- **Six nav links** since 2026-10-11 (guides, courses, learn, articles,
-  projects, about; it was ten). The full row shows from 820px, measured in
-  Spanish and French. Every other section is in the footer's site map; keep
-  it that way rather than growing the row again.
+- **Seven nav links** since 2026-10-16 (guides, courses, learn, articles,
+  projects, off the clock, about; it was ten, then six). "Off the clock" goes
+  to `/off-the-clock/` (`layouts/_default/offclock.html`), a landing page for
+  media, movies, music and subscriptions; it and the home card share
+  `partials/offclock-items.html` and `offclock-strip.html`. Its nav label is
+  short on purpose (es "tiempo libre", fr "loisirs", de "freizeit") and
+  matches `hub_offclock_title`. The full row shows from 820px, measured in
+  es, fr and de (narrowest clearance: es, 80px at 820). Every other section
+  is in the footer's site map; keep it that way rather than growing the row
+  again.
 
 - **/github/:** `make github-refresh` re-fetches every *public* repo (via
   `gh`, README excerpts included) and classifies it. Areas and learning

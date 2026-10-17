@@ -1,0 +1,29 @@
+{{ define "main" }}
+{{- /* /off-the-clock/: the landing page for the nav's "Off the clock" link.
+   The newest Instagram tiles, then one card per page (media, movies, music,
+   subscriptions) -- the same list as the home page's card
+   (partials/offclock-items.html), with each page's blurb and count. */ -}}
+{{ $prefix := cond (eq .Site.Language.Lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" .Site.Language.Lang) }}
+<article class="offclock">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600">{{ i18n "hub_offclock_blurb" }}</p>
+  </header>
+
+  {{ partial "offclock-strip.html" $prefix }}
+
+  <div class="hub-grid offclock-grid">
+    {{ range partial "offclock-items.html" . }}
+    <a class="hub-card hub-link" href="{{ $prefix }}{{ .path }}/" data-ic="{{ .icon }}">
+      {{ partial "icons/chip.html" (dict "id" .icon "size" "lg") }}
+      <span class="hub-card-text">
+        <span class="hub-card-title">{{ i18n (printf "hub_%s_title" .key) }}</span>
+        <span class="hub-card-blurb">{{ i18n (printf "hub_%s_blurb" .key) }}</span>
+        <span class="hub-count">{{ .count }}</span>
+      </span>
+      <svg class="hub-go" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
+    </a>
+    {{ end }}
+  </div>
+</article>
+{{ end }}

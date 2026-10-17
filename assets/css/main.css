@@ -1560,9 +1560,10 @@ nav details > summary {
    language switcher and seven links do not fit in 42rem, and every width
    above it was capped at the same 42rem, so the links overlapped the
    switcher at every viewport rather than only on narrow ones. */
-/* Six links since 2026-10 (guides, courses, learn, articles, projects,
-   about; everything else is in the footer). The full row shows from 820px,
-   measured in Spanish and French, the longest labels. */
+/* Seven links since 2026-10-16 (guides, courses, learn, articles, projects,
+   off the clock, about; everything else is in the footer). The full row
+   shows from 820px, measured in Spanish, French and German, the longest
+   labels: Spanish keeps 80px between the switcher and the first link. */
 .nav-row { max-width: 60rem; }
 .nav-wide a { white-space: nowrap; }
 
@@ -3596,6 +3597,8 @@ button.gh-year-y:focus-visible { outline: 2px solid var(--brand); outline-offset
 .hub-offclock a:hover { border-color: var(--border-strong); color: var(--brand); }
 .hub-offclock .ic { grid-row: span 2; }
 .hub-offclock small { grid-column: 2; font-size: 0.75rem; font-weight: 400; color: var(--text-muted); }
+/* /off-the-clock/: the same tiles, then a full card per page. */
+.offclock-grid { margin-top: 1.25rem; }
 
 /* === Articles / lab notes ============================================== */
 .kind-switch {

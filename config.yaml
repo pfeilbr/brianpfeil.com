@@ -156,6 +156,9 @@ languages:
         - name: "projects"
           url: "/projects/"
           weight: 50
+        - name: "off the clock"
+          url: "/off-the-clock/"
+          weight: 55
         - name: "about"
           url: "/about/"
           weight: 60
@@ -190,6 +193,9 @@ languages:
         - name: "项目"
           url: "/zh/projects/"
           weight: 50
+        - name: "工作之外"
+          url: "/zh/off-the-clock/"
+          weight: 55
         - name: "关于"
           url: "/zh/about/"
           weight: 60
@@ -224,6 +230,9 @@ languages:
         - name: "proyectos"
           url: "/es/projects/"
           weight: 50
+        - name: "tiempo libre"
+          url: "/es/off-the-clock/"
+          weight: 55
         - name: "acerca de"
           url: "/es/about/"
           weight: 60
@@ -258,6 +267,9 @@ languages:
         - name: "projetos"
           url: "/pt/projects/"
           weight: 50
+        - name: "lazer"
+          url: "/pt/off-the-clock/"
+          weight: 55
         - name: "sobre"
           url: "/pt/about/"
           weight: 60
@@ -292,6 +304,9 @@ languages:
         - name: "projets"
           url: "/fr/projects/"
           weight: 50
+        - name: "loisirs"
+          url: "/fr/off-the-clock/"
+          weight: 55
         - name: "à propos"
           url: "/fr/about/"
           weight: 60
@@ -326,6 +341,9 @@ languages:
         - name: "projekte"
           url: "/de/projects/"
           weight: 50
+        - name: "freizeit"
+          url: "/de/off-the-clock/"
+          weight: 55
         - name: "über mich"
           url: "/de/about/"
           weight: 60
@@ -360,6 +378,9 @@ languages:
         - name: "progetti"
           url: "/it/projects/"
           weight: 50
+        - name: "tempo libero"
+          url: "/it/off-the-clock/"
+          weight: 55
         - name: "chi sono"
           url: "/it/about/"
           weight: 60
@@ -394,6 +415,9 @@ languages:
         - name: "プロジェクト"
           url: "/ja/projects/"
           weight: 50
+        - name: "趣味"
+          url: "/ja/off-the-clock/"
+          weight: 55
         - name: "プロフィール"
           url: "/ja/about/"
           weight: 60
@@ -428,6 +452,9 @@ languages:
         - name: "프로젝트"
           url: "/ko/projects/"
           weight: 50
+        - name: "취미"
+          url: "/ko/off-the-clock/"
+          weight: 55
         - name: "소개"
           url: "/ko/about/"
           weight: 60

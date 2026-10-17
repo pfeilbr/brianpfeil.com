@@ -3,7 +3,8 @@
 
 What it holds in place, on a built site (hugo --minify first):
 
-  - the nav row has the six section links, in every language;
+  - the nav row has the seven section links, in every language, and the
+    "Off the clock" page links media, movies, music and subscriptions;
   - the home page leads with the three calls to action and the guides card;
   - /post/ lists articles only and /notes/ lists lab notes only (a lab note
     is a generated-*.md post; see the cascade in content/post/_index.md),
@@ -33,7 +34,9 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 LANGS = ("en", "zh", "es", "pt", "fr", "de", "it", "ja", "ko")
-NAV = ("architecture", "courses", "learn", "post", "projects", "about")
+NAV = ("architecture", "courses", "learn", "post", "projects", "off-the-clock", "about")
+# /off-the-clock/ (the nav's "Off the clock") links each of these pages.
+OFF_THE_CLOCK = ("media", "movies", "music", "subscriptions")
 
 FRONT = re.compile(r"\A\+\+\+\n(.*?)\n\+\+\+", re.S)
 ROW = re.compile(r'<article class="?post-preview post-row[^>]*data-href="?([^">\s]+)')
@@ -149,6 +152,15 @@ def check(public: Path, content: Path = REPO / "content", data: Path = REPO / "d
             errors.append(f"/{lang}/: home page has no three calls to action")
         if "hub-guides" not in html:
             errors.append(f"/{lang}/: home page has no guides card")
+        f = page(public, lang, "off-the-clock")
+        if not f.exists():
+            errors.append(f"/{lang}/off-the-clock/: not built")
+        else:
+            text = f.read_text(encoding="utf-8")
+            missing = [p for p in OFF_THE_CLOCK
+                       if not re.search(rf'href="?{re.escape(pre)}/{p}/["\s>]', text)]
+            if missing:
+                errors.append(f"/{lang}/off-the-clock/: no link to {', '.join(missing)}")
         for path, kind in (("post", "article"), ("notes", "note")):
             f = page(public, lang, path)
             if not f.exists():

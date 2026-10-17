@@ -11,7 +11,6 @@
 {{ $lang := .Site.Language.Lang }}
 {{ $prefix := cond (eq $lang hugo.Sites.Default.Language.Lang) "/" (printf "/%s/" $lang) }}
 {{ $posts := partial "site-posts.html" . }}
-{{ $media := hugo.Data.media }}
 
 <section class="hub-hero">
   {{- /* Shown at 88px (120px from 640px wide): WebP at 2x, the 320px JPEG
@@ -210,28 +209,15 @@
     <div class="hub-card-head">
       {{ partial "icons/chip.html" (dict "id" "i-camera" "size" "lg") }}
       <div class="hub-card-text">
-        <h3 id="hub-offclock" class="hub-card-title">{{ i18n "hub_offclock_title" }}</h3>
+        <h3 id="hub-offclock" class="hub-card-title"><a href="{{ $prefix }}off-the-clock/">{{ i18n "hub_offclock_title" }}</a></h3>
         <p class="hub-card-blurb">{{ i18n "hub_offclock_blurb" }}</p>
       </div>
     </div>
-    {{ if and $media $media.items }}
-    <div class="hub-strip">
-      {{ range first 6 $media.items }}
-      {{ $first := index .media 0 }}
-      {{ $grid := index $first "grid" }}
-      {{ $color := index $first "color" }}
-      <a href="{{ $prefix }}media/#{{ .id }}" aria-label="{{ cond (ne .caption "") (.caption | plainify | truncate 80) (i18n "media_untitled") }}"
-         {{- if and $color (findRE `^#[0-9a-f]{6}$` $color) }} style="background-color:{{ $color | safeCSS }}"{{ end }}>
-        <img src="{{ $media.base_url }}{{ if $grid }}{{ index $grid 0 }}{{ else }}{{ $first.thumb }}{{ end }}" alt="" loading="lazy" decoding="async" width="360" height="360">
-      </a>
-      {{ end }}
-    </div>
-    {{ end }}
+    {{ partial "offclock-strip.html" $prefix }}
     <ul class="hub-offclock">
-      {{ with $media }}<li><a href="{{ $prefix }}media/" data-ic="i-camera">{{ partial "icons/chip.html" (dict "id" "i-camera" "size" "sm") }}<span>{{ i18n "hub_media_title" }}</span><small>{{ i18n "media_count" (dict "count" .count) }}</small></a></li>{{ end }}
-      {{ with hugo.Data.movies }}<li><a href="{{ $prefix }}movies/" data-ic="i-film">{{ partial "icons/chip.html" (dict "id" "i-film" "size" "sm") }}<span>{{ i18n "hub_movies_title" }}</span><small>{{ i18n "hub_movies_count" (dict "count" (len .movies)) }}</small></a></li>{{ end }}
-      {{ with hugo.Data.music }}<li><a href="{{ $prefix }}music/" data-ic="i-music">{{ partial "icons/chip.html" (dict "id" "i-music" "size" "sm") }}<span>{{ i18n "hub_music_title" }}</span><small>{{ i18n "hub_music_count" (dict "count" (add (len .mine) (len .saved))) }}</small></a></li>{{ end }}
-      {{ with hugo.Data.subscriptions }}<li><a href="{{ $prefix }}subscriptions/" data-ic="i-youtube">{{ partial "icons/chip.html" (dict "id" "i-youtube" "size" "sm") }}<span>{{ i18n "hub_subscriptions_title" }}</span><small>{{ i18n "hub_subscriptions_count" (dict "count" (add .total (default 0 hugo.Data.twitch.following_total))) }}</small></a></li>{{ end }}
+      {{ range partial "offclock-items.html" . }}
+      <li><a href="{{ $prefix }}{{ .path }}/" data-ic="{{ .icon }}">{{ partial "icons/chip.html" (dict "id" .icon "size" "sm") }}<span>{{ i18n (printf "hub_%s_title" .key) }}</span><small>{{ .count }}</small></a></li>
+      {{ end }}
     </ul>
   </section>
 </div>

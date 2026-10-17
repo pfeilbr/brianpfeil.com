@@ -1,0 +1,18 @@
+{{- /* The newest six Instagram tiles, each linking to its item on /media/.
+   Shared by the home page's "Off the clock" card and /off-the-clock/.
+   Takes the language's root prefix ("/" or "/<lang>/"). */ -}}
+{{ $prefix := . }}
+{{ $media := hugo.Data.media }}
+{{ if and $media $media.items }}
+<div class="hub-strip">
+  {{ range first 6 $media.items }}
+  {{ $first := index .media 0 }}
+  {{ $grid := index $first "grid" }}
+  {{ $color := index $first "color" }}
+  <a href="{{ $prefix }}media/#{{ .id }}" aria-label="{{ cond (ne .caption "") (.caption | plainify | truncate 80) (i18n "media_untitled") }}"
+     {{- if and $color (findRE `^#[0-9a-f]{6}$` $color) }} style="background-color:{{ $color | safeCSS }}"{{ end }}>
+    <img src="{{ $media.base_url }}{{ if $grid }}{{ index $grid 0 }}{{ else }}{{ $first.thumb }}{{ end }}" alt="" loading="lazy" decoding="async" width="360" height="360">
+  </a>
+  {{ end }}
+</div>
+{{ end }}

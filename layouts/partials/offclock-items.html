@@ -1,0 +1,11 @@
+{{- /* The "Off the clock" pages -- media, movies, music, subscriptions -- as
+   a list of {key, path, icon, count}, shared by the home page's card and the
+   /off-the-clock/ landing page so the two never drift apart. A page whose
+   data file is missing is left out. Titles and blurbs are i18n
+   hub_<key>_title / hub_<key>_blurb. */ -}}
+{{- $items := slice -}}
+{{- with hugo.Data.media }}{{ $items = $items | append (dict "key" "media" "path" "media" "icon" "i-camera" "count" (i18n "media_count" (dict "count" .count))) }}{{ end -}}
+{{- with hugo.Data.movies }}{{ $items = $items | append (dict "key" "movies" "path" "movies" "icon" "i-film" "count" (i18n "hub_movies_count" (dict "count" (len .movies)))) }}{{ end -}}
+{{- with hugo.Data.music }}{{ $items = $items | append (dict "key" "music" "path" "music" "icon" "i-music" "count" (i18n "hub_music_count" (dict "count" (add (len .mine) (len .saved))))) }}{{ end -}}
+{{- with hugo.Data.subscriptions }}{{ $items = $items | append (dict "key" "subscriptions" "path" "subscriptions" "icon" "i-youtube" "count" (i18n "hub_subscriptions_count" (dict "count" (add .total (default 0 hugo.Data.twitch.following_total))))) }}{{ end -}}
+{{- return $items -}}
