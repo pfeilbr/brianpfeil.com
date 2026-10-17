@@ -9,7 +9,11 @@ Where the playlists come from:
   saved  the ids in config "saved" -- other people's playlists I saved.
          The library that holds them needs my sign-in, so they are listed
          by hand; this refreshes their titles, owners and track counts and
-         drops any that stopped being public.
+         drops any that stopped being public. To resync the list, open
+         https://music.youtube.com/library/playlists signed in, scroll to
+         the end, and take every list id whose owner is not me, leaving
+         out Liked Music (LM), episodes (SE), mixes (RDTMAK…) and recaps
+         (LRSR…), which are personal and not shareable.
 
 A playlist is listed only if a stranger can play it: its page loads without
 signing in, and the embed /music/ uses reports status OK when fetched with
