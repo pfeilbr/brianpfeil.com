@@ -92,8 +92,10 @@
   function play(card) {
     close(open);
     var frame = document.createElement("iframe");
-    frame.src = "https://www.youtube.com/embed/videoseries?list=" +
-      encodeURIComponent(card.dataset.list) + "&autoplay=1";
+    /* A playlist whose first track won't embed starts at one that does. */
+    frame.src = "https://www.youtube.com/embed/" +
+      (card.dataset.start ? encodeURIComponent(card.dataset.start) : "videoseries") +
+      "?list=" + encodeURIComponent(card.dataset.list) + "&autoplay=1";
     frame.title = card.dataset.title || "playlist";
     frame.loading = "lazy";
     frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
@@ -114,6 +116,7 @@
     var c = el("div", "pl-card");
     c.dataset.list = p.id;
     c.dataset.title = p.title;
+    if (p.start) c.dataset.start = p.start;
     var media = el("div", "pl-media");
     media.dataset.hue = String(i % 12);
     var btn = el("button", "pl-play");

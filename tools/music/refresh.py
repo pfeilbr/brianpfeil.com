@@ -17,7 +17,9 @@ Where the playlists come from:
 
 A playlist is listed only if a stranger can play it: its page loads without
 signing in, and the embed /music/ uses reports status OK when fetched with
-this site as the referer -- the same answer a visitor's browser gets. That
+this site as the referer -- the same answer a visitor's browser gets. When
+the first track is blocked but a later one plays, the card starts there
+("start" in the YAML). That
 catches a first track blocked by a rights claim ("Video unavailable"),
 which oEmbed and the player API both miss. "exclude" is for playlists that
 play but shouldn't be listed.
@@ -58,6 +60,7 @@ EMBED = "https://www.youtube.com/embed/videoseries?list="
 SITE = "https://brianpfeil.com/"  # the embed refuses to say anything without a referer (error 153)
 MAX_LOSS = 0.25  # refuse to drop more than this share of listed playlists in one run
 RETRIES = 4
+PROBE = 12  # tracks tried for a starting point when the first one won't embed
 MAX_PAGES = 50  # 100 tracks a page; a runaway continuation stops here
 
 HEADER = """\
@@ -118,10 +121,13 @@ def music_browse(body):
                 {"context": {"client": REMIX}, **body}, "https://music.youtube.com")
 
 
-def embeds(pid):
-    """What the embedded player says when /music/ loads this playlist."""
+def embeds(pid, start=None):
+    """What the embedded player says when /music/ loads this playlist --
+    from its first track, or from track `start` when one is given."""
+    url = (f"https://www.youtube.com/embed/{urllib.parse.quote(start)}?list={urllib.parse.quote(pid)}"
+           if start else EMBED + urllib.parse.quote(pid))
     try:
-        html = get(EMBED + urllib.parse.quote(pid), referer=SITE)
+        html = get(url, referer=SITE)
     except urllib.error.HTTPError:
         return "HTTP_ERROR"
     return embed_status(html)
@@ -265,12 +271,16 @@ def to_yaml(tracks_counted, artists, mine, saved):
     lines += ["", "mine:"]
     for p in mine:
         lines += [f"  - title: {q(p['title'])}", f"    id: {q(p['id'])}", f"    tracks: {p['tracks']}"]
+        if p.get("start"):
+            lines.append(f"    start: {q(p['start'])}")
         if p.get("note_key"):
             lines.append(f"    note_key: {q(p['note_key'])}")
     lines += ["", "saved:"]
     for p in saved:
         lines += [f"  - title: {q(p['title'])}", f"    id: {q(p['id'])}",
                   f"    by: {q(p['by'])}", f"    tracks: {p['tracks']}"]
+        if p.get("start"):
+            lines.append(f"    start: {q(p['start'])}")
     return "\n".join(lines) + "\n"
 
 
@@ -305,8 +315,21 @@ def fetch_playlist(pid):
     return {"id": pid, "title": title, "by": owner, "tracks": count or len(tl), "list": tl}
 
 
-def playable(p):
-    return bool(p and p["list"] and embeds(p["id"]) == "OK")
+def playable(p, status=None):
+    """Can a stranger play this playlist on /music/? Sets p["start"] when
+    the first track refuses to embed (a rights block) but a later one
+    plays: the card then starts the player there, and the rest of the
+    list follows. Only the first PROBE tracks are tried."""
+    status = status or embeds
+    if not (p and p["list"]):
+        return False
+    if status(p["id"]) == "OK":
+        return True
+    for vid, _ in p["list"][1:PROBE]:
+        if status(p["id"], vid) == "OK":
+            p["start"] = vid
+            return True
+    return False
 
 
 def main():

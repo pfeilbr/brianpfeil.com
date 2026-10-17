@@ -139,6 +139,21 @@ class Output(unittest.TestCase):
         self.assertEqual(d["saved"][0]["by"], "YouTube Music")
         self.assertEqual(d["tracks_counted"], 3)
 
+    def test_playable_starts_past_a_blocked_first_track(self):
+        p = {"id": "PL1", "list": [("a", []), ("b", []), ("c", [])]}
+        ok_from = lambda first_ok: (lambda pid, start=None: "OK" if (start or "a") == first_ok else "UNPLAYABLE")
+        self.assertTrue(refresh.playable(dict(p), ok_from("a")))
+        q = dict(p)
+        self.assertTrue(refresh.playable(q, ok_from("b")))
+        self.assertEqual(q["start"], "b")
+        self.assertFalse(refresh.playable(dict(p), ok_from("zz")))
+        self.assertFalse(refresh.playable({"id": "PL1", "list": []}, ok_from("a")))
+
+    def test_yaml_records_start_track(self):
+        out = refresh.to_yaml(1, [], [{"title": "chill", "id": "PL1", "tracks": 8, "start": "XmN4pI0oD88"}],
+                              [{"title": "F", "id": "RD1", "by": "x", "tracks": 2}])
+        self.assertEqual(out.count('start: "XmN4pI0oD88"'), 1)
+
     def test_vanished_share(self):
         old = '  - title: "a"\n    id: "PL1"\n  - title: "b"\n    id: "PL2"\n'
         self.assertEqual(refresh.vanished(old, old), 0.0)
