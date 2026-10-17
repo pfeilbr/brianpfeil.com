@@ -194,7 +194,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "Fight Club",
@@ -359,7 +359,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "The Breakfast Club",
@@ -502,9 +502,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B01FUYRK7G?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$9.99",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B00AQ5XXNK?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$6.89",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -539,7 +539,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "Inception",
@@ -737,7 +737,7 @@
           "quality": "DVD"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "Gladiator",
@@ -904,8 +904,8 @@
           "type": "rent",
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
-          "url": "https://athome.fandango.com/content/browse/details/Gladiator-Extended-Edition-/662439",
-          "price": "$3.99",
+          "url": "https://athome.fandango.com/content/browse/details/Gladiator/17075",
+          "price": "$5.99",
           "quality": "4K"
         },
         {
@@ -968,7 +968,7 @@
           "type": "buy",
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
-          "url": "https://athome.fandango.com/content/browse/details/Gladiator-Extended-Edition-/662439",
+          "url": "https://athome.fandango.com/content/browse/details/Gladiator/17075",
           "price": "$16.99",
           "quality": "4K"
         },
@@ -981,7 +981,7 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "The Lord of the Rings: The Fellowship of the Ring",
@@ -989,7 +989,7 @@
       "imdb": "tt0120737",
       "justwatch_id": "tm44313",
       "poster": "/movies/posters/the-lord-of-the-rings-the-fellowship-of-the-ring-2001.webp",
-      "runtime": 178,
+      "runtime": 179,
       "rating": "PG-13",
       "genres": {
         "en": [
@@ -1099,6 +1099,22 @@
         },
         {
           "type": "stream",
+          "service": "TBS",
+          "icon": "/movies/services/tbs.webp",
+          "url": "https://www.tbs.com/movies/the-lord-of-the-rings-the-fellowship-of-the-ring",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "TNT",
+          "icon": "/movies/services/tnt.webp",
+          "url": "https://www.tntdrama.com/movies/the-lord-of-the-rings-the-fellowship-of-the-ring",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "YouTube TV",
           "icon": "/movies/services/youtubetv.webp",
           "url": "https://tv.youtube.com/browse/UCleiLJLvBEmidOlboGBkRWg",
@@ -1149,8 +1165,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/0780661095?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$14.95",
+          "url": "https://www.amazon.com/dp/B003TT2X6I?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.10",
           "quality": "BLURAY"
         },
         {
@@ -1186,7 +1202,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "The Lord of the Rings: The Two Towers",
@@ -1304,6 +1320,22 @@
         },
         {
           "type": "stream",
+          "service": "TBS",
+          "icon": "/movies/services/tbs.webp",
+          "url": "https://www.tbs.com/movies/lord-of-the-rings-the-two-towers-theatrical",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "TNT",
+          "icon": "/movies/services/tnt.webp",
+          "url": "https://www.tntdrama.com/movies/the-lord-of-the-rings-the-two-towers-theatrical",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "YouTube TV",
           "icon": "/movies/services/youtubetv.webp",
           "url": "https://tv.youtube.com/browse/UC3fz_yavyrxnjUZtFwGYSdA",
@@ -1346,8 +1378,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B003VD2QB4?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$12.95",
+          "url": "https://www.amazon.com/dp/B00OCND238?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$12.70",
           "quality": "BLURAY"
         },
         {
@@ -1383,7 +1415,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "The Lord of the Rings: The Return of the King",
@@ -1501,6 +1533,22 @@
         },
         {
           "type": "stream",
+          "service": "TBS",
+          "icon": "/movies/services/tbs.webp",
+          "url": "https://www.tbs.com/movies/the-lord-of-the-rings-the-return-of-the-king-theatrical",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "TNT",
+          "icon": "/movies/services/tnt.webp",
+          "url": "https://www.tntdrama.com/movies/the-lord-of-the-rings-the-return-of-the-king-theatrical",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "YouTube TV",
           "icon": "/movies/services/youtubetv.webp",
           "url": "https://tv.youtube.com/browse/UCLR-Nnpq5MLJoUAYuUwFFjQ",
@@ -1549,6 +1597,14 @@
         },
         {
           "type": "buy",
+          "service": "Amazon DVD / Blu-ray",
+          "icon": "/movies/services/amazondvdbr.webp",
+          "url": "https://www.amazon.com/dp/B0000D9BF6?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$7.99",
+          "quality": "DVD"
+        },
+        {
+          "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.91d91081-a2e1-4004-af7d-4efb31e99e27",
@@ -1580,7 +1636,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "Titanic",
@@ -1832,7 +1888,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "Forrest Gump",
@@ -2048,9 +2104,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0HFYHSM9S?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$32.99",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B07NRLKDRQ?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$19.95",
+          "quality": "BLURAY_4K"
         },
         {
           "type": "buy",
@@ -2093,7 +2149,7 @@
           "quality": "BLURAY_4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-17"
     },
     {
       "title": "Sixteen Candles",
@@ -12437,5 +12493,5 @@
       "refreshed": "2026-10-16"
     }
   ],
-  "updated": "2026-10-16"
+  "updated": "2026-10-17"
 }
