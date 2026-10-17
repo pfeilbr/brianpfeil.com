@@ -50,8 +50,9 @@ place in every language.
 
 ## Where /media/ stands (read this first)
 
-**Live, with all 89 feed items** (79 posts, 10 reels, 2011–2026; 575 photos
-and videos, 1,382 files on the CDN) — released as `bf44087` on 2026-09-21.
+**Live, with all 143 feed items** (2011–2026; 2,972 Instagram files on the
+CDN) — last released as `2b8734e` on 2026-10-16. First release `bf44087`
+on 2026-09-21.
 
 **The source is the instagram-archive project**, `~/projects/instagram/archive`
 (`archive_dir` in `tools/instagram-media/config.yaml`), which keeps every feed
