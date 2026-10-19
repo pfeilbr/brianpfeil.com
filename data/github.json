@@ -1,6 +1,6 @@
 {
  "user": "pfeilbr",
- "updated": "2026-10-16",
+ "updated": "2026-10-19",
  "count": 413,
  "areas": [
   {
@@ -4186,7 +4186,7 @@
    "kind": "project",
    "stars": 0,
    "created": "2026-02-16",
-   "pushed": "2026-10-17",
+   "pushed": "2026-10-19",
    "readme": "Personal site built with Hugo, in nine languages: English at the root, and zh es pt fr de it ja ko under //. Posts are English-only; pages, layouts and UI strings are translated. For working on it with an AI agent, CLAUDE.md holds the conventions and the gotchas that have bitten before, and opens with where current work stands. Hugo Extended 0.166.0 — the version CI is pinned to. A different local version can build fine and still fail to deploy. Go 1.25+ — only for generating posts from GitHub repos Python 3.11+ and ffmpeg — only for the media page Terraform 1.10+ and the AWS CLI — only for…",
    "post": false,
    "homepage": "https://brianpfeil.com/"
