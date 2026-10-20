@@ -6352,14 +6352,6 @@
           "quality": "HD"
         },
         {
-          "type": "free",
-          "service": "Tubi TV",
-          "icon": "/movies/services/tubitv.webp",
-          "url": "https://tubitv.com/movies/100007690",
-          "price": null,
-          "quality": "SD"
-        },
-        {
           "type": "stream",
           "service": "Amazon Prime Video",
           "icon": "/movies/services/amazonprime.webp",
@@ -6488,7 +6480,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "Raiders of the Lost Ark",
@@ -6668,9 +6660,9 @@
         },
         {
           "type": "rent",
-          "service": "JustWatch TV",
-          "icon": "/movies/services/justwatchtv.webp",
-          "url": "https://www.justwatch.com/us/movie/indiana-jones-and-the-raiders-of-the-lost-ark?package=jwt",
+          "service": "JustWatch TV Store",
+          "icon": "/movies/services/justwatchtvstore.webp",
+          "url": "https://tv.justwatch.com/view/film/227828",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -6731,7 +6723,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "The Martian",
@@ -6883,7 +6875,7 @@
           "type": "rent",
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
-          "url": "https://athome.fandango.com/content/browse/details/The-Martian-Extended-Edition-/771391",
+          "url": "https://athome.fandango.com/content/browse/details/The-Martian/704656",
           "price": "$3.99",
           "quality": "4K"
         },
@@ -6891,9 +6883,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B01BKLZGZ6?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$42.98",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B01C4BMSFC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$38.56",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -6923,12 +6915,12 @@
           "type": "buy",
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
-          "url": "https://athome.fandango.com/content/browse/details/The-Martian-Extended-Edition-/771391",
+          "url": "https://athome.fandango.com/content/browse/details/The-Martian/704656",
           "price": "$14.99",
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "Inglourious Basterds",
@@ -7030,6 +7022,22 @@
       "offers": [
         {
           "type": "stream",
+          "service": "Amazon Prime Video",
+          "icon": "/movies/services/amazonprime.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.443db758-06aa-47ac-ac2d-ef6dfd2fd8d8",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Amazon Prime Video with Ads",
+          "icon": "/movies/services/amazonprimevideowithads.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.443db758-06aa-47ac-ac2d-ef6dfd2fd8d8",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "Hulu",
           "icon": "/movies/services/hulu.webp",
           "url": "https://www.hulu.com/watch/54da4af5-9c47-48d1-91bf-d05e27024b94",
@@ -7080,16 +7088,16 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B09CRLZKVS?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$14.99",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B0054OGQS2?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$8.24",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.f910e65e-848d-4c57-922d-e2260146113a",
-          "price": "$14.99",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.443db758-06aa-47ac-ac2d-ef6dfd2fd8d8",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -7112,7 +7120,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-inglourious-basterds-tarantino/15787573",
+          "url": "https://www.barnesandnoble.com/w/dvd-inglourious-basterds-quentin-tarantino/15787573",
           "price": "$49.99",
           "quality": "DVD"
         },
@@ -7123,17 +7131,9 @@
           "url": "https://athome.fandango.com/content/browse/details/Inglourious-Basterds/172294",
           "price": "$14.99",
           "quality": "4K"
-        },
-        {
-          "type": "buy",
-          "service": "GRUV",
-          "icon": "/movies/services/gruv.webp",
-          "url": "https://gruv.com/products/inglourious-basterds-dvd-_61108380",
-          "price": "$7.99",
-          "quality": "DVD"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "Good Will Hunting",
@@ -7141,7 +7141,7 @@
       "imdb": "tt0119217",
       "justwatch_id": "tm191716",
       "poster": "/movies/posters/good-will-hunting-1997.webp",
-      "runtime": 126,
+      "runtime": 127,
       "rating": "R",
       "genres": {
         "en": [
@@ -7330,9 +7330,9 @@
         },
         {
           "type": "rent",
-          "service": "JustWatch TV",
-          "icon": "/movies/services/justwatchtv.webp",
-          "url": "https://www.justwatch.com/us/movie/good-will-hunting?package=jwt",
+          "service": "JustWatch TV Store",
+          "icon": "/movies/services/justwatchtvstore.webp",
+          "url": "https://tv.justwatch.com/view/film/225018",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -7348,8 +7348,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B08F6CG8MM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$9.09",
+          "url": "https://www.amazon.com/dp/B08KKP983B?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$16.77",
           "quality": "DVD"
         },
         {
@@ -7385,7 +7385,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "Braveheart",
@@ -7578,7 +7578,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B00003CX95?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$11.24",
+          "price": "$9.81",
           "quality": "DVD"
         },
         {
@@ -7615,7 +7615,7 @@
         }
       ],
       "mpa": "R",
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "Requiem for a Dream",
@@ -7627,39 +7627,30 @@
       "rating": "R",
       "genres": {
         "en": [
-          "Crime",
           "Drama"
         ],
         "zh": [
-          "Crime",
           "Drama"
         ],
         "es": [
-          "Crimen",
           "Drama"
         ],
         "pt": [
-          "Crime",
           "Drama"
         ],
         "fr": [
-          "Crime & Thriller",
           "Drame"
         ],
         "de": [
-          "Krimi",
           "Drama"
         ],
         "it": [
-          "Giallo",
           "Drammatico"
         ],
         "ja": [
-          "犯罪",
           "ドラマ"
         ],
         "ko": [
-          "범죄",
           "드라마"
         ]
       },
@@ -7859,7 +7850,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "Reservoir Dogs",
@@ -8072,7 +8063,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "Up",
@@ -8227,7 +8218,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B001KVZ6FW?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.74",
+          "price": "$6.13",
           "quality": "DVD"
         },
         {
@@ -8263,7 +8254,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "Full Metal Jacket",
@@ -8348,7 +8339,7 @@
       "rt_slug": "m/full_metal_jacket",
       "rotten_tomatoes": {
         "url": "https://www.rottentomatoes.com/m/full_metal_jacket",
-        "critics": 89,
+        "critics": 84,
         "audience": 94,
         "certified": true
       },
@@ -8447,7 +8438,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B000UJ48UO?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.46",
+          "price": "$7.79",
           "quality": "BLURAY"
         },
         {
@@ -8470,7 +8461,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-full-metal-jacket-stanley-kubrick/3619985",
+          "url": "https://www.barnesandnoble.com/w/dvd-full-metal-jacket-kubrick/3619985",
           "price": "$5.00",
           "quality": "DVD"
         },
@@ -8491,7 +8482,7 @@
           "quality": "DVD"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-20"
     },
     {
       "title": "Die Hard",
@@ -12502,5 +12493,5 @@
       "refreshed": "2026-10-16"
     }
   ],
-  "updated": "2026-10-19"
+  "updated": "2026-10-20"
 }
