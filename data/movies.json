@@ -10618,9 +10618,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B003FTM1IM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$9.28",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B00FWPQ82C?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$11.99",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -10653,17 +10653,9 @@
           "url": "https://athome.fandango.com/content/browse/details/Million-Dollar-Baby/10972",
           "price": "$12.99",
           "quality": "HD"
-        },
-        {
-          "type": "buy",
-          "service": "GRUV",
-          "icon": "/movies/services/gruv.webp",
-          "url": "https://gruv.com/products/million-dollar-baby-dvd-widescreen-dvd-_1000149835",
-          "price": "$7.99",
-          "quality": "DVD"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     },
     {
       "title": "Gone Girl",
@@ -10782,8 +10774,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B07FDPF4FK?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$11.64",
+          "url": "https://www.amazon.com/dp/B0749WKZTD?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$31.00",
           "quality": "BLURAY"
         },
         {
@@ -10799,7 +10791,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/gone-girl/umc.cmc.60iqscr23rfe93khaawil8edc?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A917874539",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -10819,7 +10811,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     },
     {
       "title": "Jaws",
@@ -10827,59 +10819,50 @@
       "imdb": "tt0073195",
       "justwatch_id": "tm123933",
       "poster": "/movies/posters/jaws-1975.webp",
-      "runtime": 124,
+      "runtime": 125,
       "rating": "PG",
       "genres": {
         "en": [
-          "Action & Adventure",
           "Drama",
           "Horror",
           "Mystery & Thriller"
         ],
         "zh": [
-          "Action & Adventure",
           "Drama",
           "Horror",
           "Mystery & Thriller"
         ],
         "es": [
-          "Acción & Aventura",
           "Drama",
           "Terror",
           "Misterio & Suspense"
         ],
         "pt": [
-          "Ação & Aventura",
           "Drama",
           "Terror",
           "Mistério & Thriller"
         ],
         "fr": [
-          "Action & Aventure",
           "Drame",
           "Horreur",
           "Mystère & Thriller"
         ],
         "de": [
-          "Action & Abenteuer",
           "Drama",
           "Horror",
           "Mystery & Thriller"
         ],
         "it": [
-          "Azione e Avventura",
           "Drammatico",
           "Orrore",
           "Thriller e Mistero"
         ],
         "ja": [
-          "アクション",
           "ドラマ",
           "ホラー",
           "スリラー"
         ],
         "ko": [
-          "액션",
           "드라마",
           "공포",
           "스릴러"
@@ -11021,7 +11004,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/jaws/umc.cmc.2bz6csnv519zyivpg4qb9cgbn?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A526768967",
-          "price": "$7.99",
+          "price": "$14.99",
           "quality": "4K"
         },
         {
@@ -11039,17 +11022,9 @@
           "url": "https://athome.fandango.com/content/browse/details/Jaws/5685",
           "price": "$14.99",
           "quality": "4K"
-        },
-        {
-          "type": "buy",
-          "service": "GRUV",
-          "icon": "/movies/services/gruv.webp",
-          "url": "https://gruv.com/products/jaws-dvd-_61120918",
-          "price": "$7.99",
-          "quality": "DVD"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     },
     {
       "title": "Rocky",
@@ -11057,7 +11032,7 @@
       "imdb": "tt0075148",
       "justwatch_id": "tm82169",
       "poster": "/movies/posters/rocky-1976.webp",
-      "runtime": 119,
+      "runtime": 115,
       "rating": "PG",
       "genres": {
         "en": [
@@ -11269,7 +11244,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     },
     {
       "title": "The Terminator",
@@ -11277,7 +11252,7 @@
       "imdb": "tt0088247",
       "justwatch_id": "tm163236",
       "poster": "/movies/posters/the-terminator-1984.webp",
-      "runtime": 108,
+      "runtime": 107,
       "rating": "R",
       "genres": {
         "en": [
@@ -11419,6 +11394,14 @@
         },
         {
           "type": "stream",
+          "service": "fuboTV",
+          "icon": "/movies/services/fubotv.webp",
+          "url": "https://www.fubo.tv/welcome/program/MV000160240000?irmp=1206980&irad=599309",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "YouTube TV",
           "icon": "/movies/services/youtubetv.webp",
           "url": "https://tv.youtube.com/browse/UCP7d1n02oPXc653HvP2AXNA",
@@ -11493,7 +11476,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-the-terminator-james-cameron/3619569",
+          "url": "https://www.barnesandnoble.com/w/dvd-terminator-james-cameron/3619569",
           "price": "$23.79",
           "quality": "DVD"
         },
@@ -11506,7 +11489,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     },
     {
       "title": "The Big Lebowski",
@@ -11627,7 +11610,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B000A7DVR2?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$5.00",
+          "price": "$5.99",
           "quality": "DVD"
         },
         {
@@ -11643,7 +11626,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-big-lebowski/umc.cmc.3ev2yyf8c4chboxiibx165ysv?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A280338635",
-          "price": "$7.99",
+          "price": "$14.99",
           "quality": "4K"
         },
         {
@@ -11663,7 +11646,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     },
     {
       "title": "Platoon",
@@ -11895,7 +11878,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-platoon-stone/3922623",
+          "url": "https://www.barnesandnoble.com/w/dvd-platoon-oliver-stone/3922623",
           "price": "$27.99",
           "quality": "DVD"
         },
@@ -11908,7 +11891,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     },
     {
       "title": "Stand by Me",
@@ -11920,39 +11903,30 @@
       "rating": "R",
       "genres": {
         "en": [
-          "Action & Adventure",
           "Drama"
         ],
         "zh": [
-          "Action & Adventure",
           "Drama"
         ],
         "es": [
-          "Acción & Aventura",
           "Drama"
         ],
         "pt": [
-          "Ação & Aventura",
           "Drama"
         ],
         "fr": [
-          "Action & Aventure",
           "Drame"
         ],
         "de": [
-          "Action & Abenteuer",
           "Drama"
         ],
         "it": [
-          "Azione e Avventura",
           "Drammatico"
         ],
         "ja": [
-          "アクション",
           "ドラマ"
         ],
         "ko": [
-          "액션",
           "드라마"
         ]
       },
@@ -12044,7 +12018,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B018S2FN80?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$41.00",
+          "price": "$44.00",
           "quality": "BLURAY"
         },
         {
@@ -12052,7 +12026,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.596ecfbd-591b-4e11-8a87-e128eb529596",
-          "price": "$14.99",
+          "price": "$6.99",
           "quality": "HD"
         },
         {
@@ -12060,7 +12034,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/stand-by-me/umc.cmc.o1f68kw690wa5x8h3n52abkw?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A263821729",
-          "price": "$12.99",
+          "price": "$6.99",
           "quality": "HD"
         },
         {
@@ -12076,11 +12050,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Stand-by-Me/12466",
-          "price": "$13.99",
+          "price": "$6.99",
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     },
     {
       "title": "The Wizard of Oz",
@@ -12088,51 +12062,42 @@
       "imdb": "tt0032138",
       "justwatch_id": "tm155702",
       "poster": "/movies/posters/the-wizard-of-oz-1939.webp",
-      "runtime": 102,
+      "runtime": 101,
       "rating": "G",
       "genres": {
         "en": [
-          "Action & Adventure",
           "Fantasy",
           "Kids & Family"
         ],
         "zh": [
-          "Action & Adventure",
           "Fantasy",
           "Kids & Family"
         ],
         "es": [
-          "Acción & Aventura",
           "Fantasía",
           "Familia"
         ],
         "pt": [
-          "Ação & Aventura",
           "Fantasia",
           "Família"
         ],
         "fr": [
-          "Action & Aventure",
           "Fantastique",
           "Pour enfants"
         ],
         "de": [
-          "Action & Abenteuer",
           "Fantasy",
           "Kinder & Familie"
         ],
         "it": [
-          "Azione e Avventura",
           "Fantasy",
           "Famiglia"
         ],
         "ja": [
-          "アクション",
           "ファンタジー",
           "ファミリー"
         ],
         "ko": [
-          "액션",
           "판타지",
           "가족"
         ]
@@ -12192,7 +12157,7 @@
           "type": "stream",
           "service": "HBO Max Amazon Channel",
           "icon": "/movies/services/amazonhbomax.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.f0b87b0d-11a1-b68c-f4b9-41dfbe0ca3bc",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.758f239c-8787-4d09-96b2-2a59b0811989",
           "price": null,
           "quality": "4K"
         },
@@ -12200,7 +12165,7 @@
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.f0b87b0d-11a1-b68c-f4b9-41dfbe0ca3bc",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.758f239c-8787-4d09-96b2-2a59b0811989",
           "price": "$4.99",
           "quality": "4K"
         },
@@ -12241,7 +12206,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B00000JS62?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$5.64",
+          "price": "$6.85",
           "quality": "DVD"
         },
         {
@@ -12277,7 +12242,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     },
     {
       "title": "The Truman Show",
@@ -12285,7 +12250,7 @@
       "imdb": "tt0120382",
       "justwatch_id": "tm68909",
       "poster": "/movies/posters/the-truman-show-1998.webp",
-      "runtime": 102,
+      "runtime": 103,
       "rating": "PG",
       "genres": {
         "en": [
@@ -12330,9 +12295,9 @@
       ],
       "cast": [
         "Jim Carrey",
+        "Ed Harris",
         "Laura Linney",
-        "Noah Emmerich",
-        "Natascha McElhone"
+        "Noah Emmerich"
       ],
       "titles": {
         "en": "The Truman Show",
@@ -12389,7 +12354,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.4fef4b7d-9ad9-4cbb-a79e-1ef700edc0f6",
-          "price": "$4.99",
+          "price": "$5.66",
           "quality": "4K"
         },
         {
@@ -12410,9 +12375,9 @@
         },
         {
           "type": "rent",
-          "service": "JustWatch TV",
-          "icon": "/movies/services/justwatchtv.webp",
-          "url": "https://www.justwatch.com/us/movie/the-truman-show?package=jwt",
+          "service": "JustWatch TV Store",
+          "icon": "/movies/services/justwatchtvstore.webp",
+          "url": "https://tv.justwatch.com/view/film/225045",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -12453,7 +12418,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-truman-show/umc.cmc.3thpf98o5diknnctdycef69fu?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A311726400",
-          "price": "$4.99",
+          "price": "$16.99",
           "quality": "4K"
         },
         {
@@ -12469,12 +12434,12 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Truman-Show/13653",
-          "price": "$5.00",
+          "price": "$16.99",
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-16"
+      "refreshed": "2026-10-22"
     }
   ],
-  "updated": "2026-10-21"
+  "updated": "2026-10-22"
 }
