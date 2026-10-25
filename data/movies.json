@@ -4351,7 +4351,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "The Godfather",
@@ -4532,9 +4532,9 @@
         },
         {
           "type": "rent",
-          "service": "JustWatch TV",
-          "icon": "/movies/services/justwatchtv.webp",
-          "url": "https://www.justwatch.com/us/movie/the-godfather-part-i?package=jwt",
+          "service": "JustWatch TV Store",
+          "icon": "/movies/services/justwatchtvstore.webp",
+          "url": "https://tv.justwatch.com/view/film/225041",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -4551,7 +4551,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B0001NBNB6?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$5.91",
+          "price": "$5.98",
           "quality": "DVD"
         },
         {
@@ -4587,7 +4587,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "Pulp Fiction",
@@ -4599,55 +4599,46 @@
       "rating": "R",
       "genres": {
         "en": [
-          "Comedy",
           "Crime",
           "Drama",
           "Mystery & Thriller"
         ],
         "zh": [
-          "Comedy",
           "Crime",
           "Drama",
           "Mystery & Thriller"
         ],
         "es": [
-          "Comedia",
           "Crimen",
           "Drama",
           "Misterio & Suspense"
         ],
         "pt": [
-          "Comédia",
           "Crime",
           "Drama",
           "Mistério & Thriller"
         ],
         "fr": [
-          "Comédie",
           "Crime & Thriller",
           "Drame",
           "Mystère & Thriller"
         ],
         "de": [
-          "Komödien",
           "Krimi",
           "Drama",
           "Mystery & Thriller"
         ],
         "it": [
-          "Commedia",
           "Giallo",
           "Drammatico",
           "Thriller e Mistero"
         ],
         "ja": [
-          "コメディ",
           "犯罪",
           "ドラマ",
           "スリラー"
         ],
         "ko": [
-          "코미디",
           "범죄",
           "드라마",
           "스릴러"
@@ -4675,7 +4666,7 @@
       },
       "synopsis": {
         "en": "A burger-loving hit man, his philosophical partner, a drug-addled gangster's moll and a washed-up boxer converge in this sprawling, comedic crime caper. Their adventures unfurl in three stories that ingeniously trip back and forth in time.",
-        "zh": "这部独具风格的犯罪惊悚喜剧片将几个故事糅合在一起，其中包含形形色色的人物：一名杀手、杀手的冷静搭档和一个失败的拳击手。",
+        "zh": "由序幕、尾声及三个独立又环环相扣的故事构成。早餐店两名劫匪打劫时，偶遇黑道打手朱尔斯与文森特；文森特奉命陪伴老大马沙的妻子，深陷诱惑困境；拳击手布奇因祖传金表，和马沙结下恩怨。",
         "es": "Jules y Vincent, dos asesinos a sueldo con muy pocas luces, trabajan para Marsellus Wallace. Vincent le confiesa a Jules que Marsellus le ha pedido que cuide de Mia, su mujer. Jules le recomienda prudencia porque es muy peligroso sobrepasarse con la novia del jefe. Cuando llega la hora de trabajar, ambos deben ponerse manos a la obra. Su misión: recuperar un misterioso maletín.",
         "pt": "Pulp Fiction retrata três histórias interligadas que seguem as desventuras de dois assassinos baratos, da insinuante mulher do seu patrão e de um desesperado boxeur em fuga.",
         "fr": "L’odyssée sanglante et burlesque de petits malfrats dans la jungle d’Hollywood : Deux petits tueurs, un dangereux gangster marié à une camée, un boxeur roublard, des prêteurs sur gages sadiques, un caïd élégant et dévoué, un dealer bon mari et deux tourtereaux à la gâchette facile.",
@@ -4804,9 +4795,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B004LCMFRE?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.18",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B00005LKI2?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$19.90",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -4841,7 +4832,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "The Matrix",
@@ -5022,7 +5013,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "Se7en",
@@ -5175,7 +5166,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B0G6BTD8X1?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$15.16",
+          "price": "$14.99",
           "quality": "BLURAY_4K"
         },
         {
@@ -5209,9 +5200,17 @@
           "url": "https://athome.fandango.com/content/browse/details/Seven/12463",
           "price": "$9.99",
           "quality": "4K"
+        },
+        {
+          "type": "buy",
+          "service": "GRUV",
+          "icon": "/movies/services/gruv.webp",
+          "url": "https://gruv.com/products/seven-repackaged-4k-ultra-hd-digital-uhd-_1000860209",
+          "price": "$14.99",
+          "quality": "BLURAY_4K"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "GoodFellas",
@@ -5219,7 +5218,7 @@
       "imdb": "tt0099685",
       "justwatch_id": "tm155787",
       "poster": "/movies/posters/goodfellas-1990.webp",
-      "runtime": 146,
+      "runtime": 145,
       "rating": "R",
       "genres": {
         "en": [
@@ -5285,7 +5284,7 @@
         "es": "Henry, un niño de trece años de Brooklyn, vive fascinado con el mundo de los gángsters. Su sueño se hace realidad cuando entra a formar parte de la familia Pauline, dueña absoluta de la zona, que lo educan como un miembro más de la banda convirtiéndole en un destacado mafioso.",
         "pt": "A história verídica da vida do gangster Henry Hill, desde os tempos da sua adolescência nas ruas de Nova Iorque até à sua terrível ascensão ao poder e consequente queda nos anos setenta.",
         "fr": "Brooklyn, dans les années 50. Depuis l'enfance, le jeune Henry Hill rêve de devenir gangster. À 16 ans, il se met en selle auprès de Paul Cicero, un caïd local, et commet ses premiers délits. Arrêté et interrogé, il refuse de parler et gagne ainsi le respect du milieu. À sa sortie de prison, il fait la connaissance de James Conway et de Tommy DeVito, deux truands d'une extrême violence, et se lance avec eux dans des trafics de grande envergure. Karen, une jeune bourgeoise qu'il courtise et finit par épouser, ne devine sa profession qu'après être passée devant l'officier d'état-civil. Grisé par le succès, Henry multiplie les coups les plus audacieux…",
-        "de": "Jimmy und Tommy können machen, was sie wollen. Sie sind Mitglieder der New Yorker Quartier-Mafia, brauchen auf niemanden Rücksicht zu nehmen und verdienen eine Menge Geld. Henry Hill ist von diesem Leben fasziniert und arbeitet daran, es ebenfalls führen zu können. Er wird in die Mafia aufgenommen und macht Karriere - schon bald organisiert er selbst Banküberfälle. Wer dabei im Weg steht, wird \"weggeräumt\", umgebracht. Dabei sind Jimmy und vor allem Tommy nicht zimperlich. Sie verstehen ihr Handwerk, einschließlich Mord, und kennen weder Pardon noch Gewissen...",
+        "de": "Das ergreifende Mafia-Opus begleitet den Gangster Henry Hill, der davon träumte, es in der Familie weit zu bringen, und stattdessen im Zeugenschutzprogramm landete.",
         "it": "Henry Hill, figlio di emigranti italo-irlandesi, fin da giovane entra a far parte della piccola mafia dei quartieri poveri di New York. Ma ben presto scopre la ferocia dei boss locali che usano chiamarsi fra di loro \"bravi ragazzi\"...",
         "ja": "ヘンリー・ヒル、1943年ブルックリン生まれ。大物ギャング、ポーリーのアジトで育った彼は、物心ついた頃からマフィアに憧れていた。やがて念願の\"グッドフェローズ\"の仲間となり、\"強奪\"専門のジミー、野心旺盛なチンピラ、トミーと共に犯罪に犯罪を重ねていく。が、麻薬に手を出したことから育ての親、ポーリーに見放され、さらにジミーたちが起こした600万ドル強奪事件を追うCIAの捜査の手もヘンリーに迫る。",
         "ko": "아일랜드계 이탈리아인 헨리 힐와 토미는 13살에 마피아에 입문해 지미와 함께 트럭이나 공항 화물을 훔치는 일을 한다. 결혼 후에도 마피아 생활을 계속하는 헨리는 이제 조직에서도 안정된 위치와 경제적 여유를 갖는다.  어느 날 헨리와 지미는 공항터미널 사건을 모의해 현금 6백만 달러라는 엄청한 돈을 훔친다. 이 사건을 은폐하기 위해 혈안이 된 지미는 모의에 참여했던 사람들을 죽이고, 토미는 마피아 조직에 가담했다가 살해당한다. 엎친데 덮친격으로 헨리마저 마약거래로 경찰서에 잡혀 들어가는데..."
@@ -5338,9 +5337,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B000LPS4BG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.50",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B01LTHO3QY?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$13.08",
+          "quality": "BLURAY_4K"
         },
         {
           "type": "buy",
@@ -5367,7 +5366,7 @@
           "quality": "DVD"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "The Silence of the Lambs",
@@ -5600,9 +5599,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0DPB1SG3J?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$18.44",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B000068QJM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$4.79",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -5617,14 +5616,14 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-silence-of-the-lambs/umc.cmc.vo1hrvp25kr64fq8irp5jx75?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A300887252",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-the-silence-of-the-lambs-demme/3620929",
+          "url": "https://www.barnesandnoble.com/w/dvd-silence-of-the-lambs-jonathan-demme/3620929",
           "price": "$39.99",
           "quality": "DVD"
         },
@@ -5637,7 +5636,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "The Green Mile",
@@ -5781,9 +5780,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0063FGEX8?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.96",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B01GWBZPSC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$15.17",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -5806,7 +5805,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-the-green-mile-frank-darabont/3981460",
-          "price": "$5.00",
+          "price": "$12.99",
           "quality": "DVD"
         },
         {
@@ -5818,7 +5817,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "Back to the Future",
@@ -5947,7 +5946,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B019OI2APG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$7.99",
+          "price": "$8.41",
           "quality": "DVD"
         },
         {
@@ -5963,7 +5962,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/back-to-the-future/umc.cmc.1alygfljzpxrofhgpoa6mmjnb?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A380239015",
-          "price": "$14.99",
+          "price": "$7.99",
           "quality": "4K"
         },
         {
@@ -5991,7 +5990,7 @@
           "quality": "DVD"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "Django Unchained",
@@ -6175,8 +6174,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B01I063G6K?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$19.88",
+          "url": "https://www.amazon.com/dp/B005LAIIJY?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$6.99",
           "quality": "DVD"
         },
         {
@@ -6184,7 +6183,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.59983d09-9b7b-481b-b29d-c0ebe1f197b4",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -6204,7 +6203,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-10-19"
+      "refreshed": "2026-10-25"
     },
     {
       "title": "Memento",
@@ -12457,5 +12456,5 @@
       "refreshed": "2026-10-22"
     }
   ],
-  "updated": "2026-10-24"
+  "updated": "2026-10-25"
 }
