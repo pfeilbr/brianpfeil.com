@@ -83,6 +83,14 @@
       "offers": [
         {
           "type": "stream",
+          "service": "AMC",
+          "icon": "/movies/services/amc.webp",
+          "url": "https://www.amc.com/movies/the-shawshank-redemption--1060531",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "MGM Plus Roku Premium Channel",
           "icon": "/movies/services/rokuchannelepix.webp",
           "url": "https://therokuchannel.roku.com/details/f1afea9cbac9535f8c7723a30b2a4d5c/the-shawshank-redemption?source=bing",
@@ -91,25 +99,9 @@
         },
         {
           "type": "stream",
-          "service": "TBS",
-          "icon": "/movies/services/tbs.webp",
-          "url": "https://www.tbs.com/movies/the-shawshank-redemption-theatrical",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "TNT",
-          "icon": "/movies/services/tnt.webp",
-          "url": "https://www.tntdrama.com/movies/the-shawshank-redemption-theatrical",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "tru TV",
-          "icon": "/movies/services/trutv.webp",
-          "url": "https://www.trutv.com/movies/the-shawshank-redemption-theatrical",
+          "service": "Philo",
+          "icon": "/movies/services/philo.webp",
+          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDIyNzE",
           "price": null,
           "quality": "HD"
         },
@@ -157,9 +149,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B000Q67876?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$5.71",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B0000399WI?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$6.57",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -194,7 +186,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-28"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "Fight Club",
@@ -10629,22 +10621,6 @@
           "quality": "HD"
         },
         {
-          "type": "stream",
-          "service": "Paramount+ Amazon Channel",
-          "icon": "/movies/services/amazonparamountplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.26a9f738-929f-2a31-57f9-0f7a9723d11f",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Paramount+ Roku Premium Channel",
-          "icon": "/movies/services/rokuchannelparamountplus.webp",
-          "url": "https://therokuchannel.roku.com/details/b15c5c0acb155ca7a8be50770ac5d8a0/million-dollar-baby?source=bing",
-          "price": null,
-          "quality": "HD"
-        },
-        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -10672,8 +10648,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B000R346R8?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.53",
+          "url": "https://www.amazon.com/dp/B00FWPQ82C?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$11.99",
           "quality": "BLURAY"
         },
         {
@@ -10717,7 +10693,7 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-10-27"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "Gone Girl",
@@ -10809,6 +10785,14 @@
       "trailer": "2-_-1nJf8Vg",
       "offers": [
         {
+          "type": "stream",
+          "service": "Paramount+ Amazon Channel",
+          "icon": "/movies/services/amazonparamountplus.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.7ab0f623-cfe3-4214-ae7f-2eaffa38f89f",
+          "price": null,
+          "quality": "HD"
+        },
+        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -10836,8 +10820,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0749WKZTD?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$31.00",
+          "url": "https://www.amazon.com/dp/B07FDPF4FK?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$11.64",
           "quality": "BLURAY"
         },
         {
@@ -10853,7 +10837,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/gone-girl/umc.cmc.60iqscr23rfe93khaawil8edc?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A917874539",
-          "price": "$4.99",
+          "price": "$14.99",
           "quality": "4K"
         },
         {
@@ -10869,11 +10853,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Gone-Girl/585524",
-          "price": "$14.99",
+          "price": "$5.00",
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-27"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "Jaws",
@@ -11049,8 +11033,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0DXFQDSV6?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$23.87",
+          "url": "https://www.amazon.com/dp/B08F6RCC76?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$14.99",
           "quality": "BLURAY_4K"
         },
         {
@@ -11094,7 +11078,7 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-10-27"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "Rocky",
@@ -11102,7 +11086,7 @@
       "imdb": "tt0075148",
       "justwatch_id": "tm82169",
       "poster": "/movies/posters/rocky-1976.webp",
-      "runtime": 119,
+      "runtime": 120,
       "rating": "PG",
       "genres": {
         "en": [
@@ -11203,6 +11187,14 @@
         },
         {
           "type": "stream",
+          "service": "AMC+ Amazon Channel",
+          "icon": "/movies/services/amazonamcplus.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.b051ef6a-6336-4a7a-a2aa-39e4ed092974",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "Paramount Plus Essential",
           "icon": "/movies/services/paramountplusessential.webp",
           "url": "https://www.paramountplus.com/movies/rocky/GRyB2ojHA0gxBNelHDutxobvlf9wtI45?searchReferral=publisher&source=search-feeds",
@@ -11230,6 +11222,14 @@
           "service": "Paramount+ Roku Premium Channel",
           "icon": "/movies/services/rokuchannelparamountplus.webp",
           "url": "https://therokuchannel.roku.com/details/e04fbb4fc17c5dcc8c96023ac42e31df/rocky?source=bing",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Philo",
+          "icon": "/movies/services/philo.webp",
+          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDI4MTk",
           "price": null,
           "quality": "HD"
         },
@@ -11301,8 +11301,8 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-rocky-john-g-avildsen/3623957",
-          "price": "$14.99",
+          "url": "https://www.barnesandnoble.com/w/dvd-rocky-heavyweight-collection-rocky-heavyweight-collection-6-discs-blu-ray/27197876",
+          "price": "$39.99",
           "quality": "DVD"
         },
         {
@@ -11314,7 +11314,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-27"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "The Terminator",
@@ -11432,14 +11432,6 @@
         },
         {
           "type": "free",
-          "service": "Tubi TV",
-          "icon": "/movies/services/tubitv.webp",
-          "url": "https://tubitv.com/movies/301815",
-          "price": null,
-          "quality": "SD"
-        },
-        {
-          "type": "free",
           "service": "YouTube Free",
           "icon": "/movies/services/youtubefree.webp",
           "url": "https://www.youtube.com/watch?v=vrHeuwO5agw",
@@ -11459,6 +11451,30 @@
           "service": "Amazon Prime Video with Ads",
           "icon": "/movies/services/amazonprimevideowithads.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.28a714d9-9c98-4a7b-ab30-9613fee0e89f",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "AMC+ Amazon Channel",
+          "icon": "/movies/services/amazonamcplus.webp",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.28a714d9-9c98-4a7b-ab30-9613fee0e89f",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "fuboTV",
+          "icon": "/movies/services/fubotv.webp",
+          "url": "https://www.fubo.tv/welcome/program/MV000160240000?irmp=1206980&irad=599309",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "Philo",
+          "icon": "/movies/services/philo.webp",
+          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDM3NzQ",
           "price": null,
           "quality": "HD"
         },
@@ -11515,7 +11531,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B0DDT4L725?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$22.78",
+          "price": "$21.78",
           "quality": "BLURAY_4K"
         },
         {
@@ -11538,7 +11554,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-terminator-james-cameron/3619569",
+          "url": "https://www.barnesandnoble.com/w/dvd-the-terminator-james-cameron/3619569",
           "price": "$23.79",
           "quality": "DVD"
         },
@@ -11551,7 +11567,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-27"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "The Big Lebowski",
@@ -11688,7 +11704,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-big-lebowski/umc.cmc.3ev2yyf8c4chboxiibx165ysv?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A280338635",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -11708,7 +11724,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-27"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "Platoon",
@@ -11812,7 +11828,7 @@
           "type": "free",
           "service": "Fawesome",
           "icon": "/movies/services/fawesometv.webp",
-          "url": "https://fawesome.tv/movies/10728660/platoon?utm_source=justwatch&utm_medium=feed",
+          "url": "https://fawesome.tv/movies/10866032/platoon-en-espaol?utm_source=justwatch&utm_medium=feed",
           "price": null,
           "quality": "HD"
         },
@@ -11940,8 +11956,8 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-platoon-oliver-stone/3922623",
-          "price": "$27.99",
+          "url": "https://www.barnesandnoble.com/w/dvd-platoon-stone/3922623",
+          "price": "$36.99",
           "quality": "DVD"
         },
         {
@@ -11953,7 +11969,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-10-27"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "Stand by Me",
@@ -12006,7 +12022,7 @@
         "zh": "伴我同行",
         "es": "Cuenta conmigo",
         "pt": "Conta Comigo",
-        "fr": "Compte sur moi",
+        "fr": "Stand by Me",
         "de": "Stand By Me - Das Geheimnis eines Sommers",
         "it": "Stand by Me - Ricordo di un'estate",
         "ja": "スタンド・バイ・ミー",
@@ -12037,9 +12053,9 @@
       "offers": [
         {
           "type": "stream",
-          "service": "Philo",
-          "icon": "/movies/services/philo.webp",
-          "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDMzNTA",
+          "service": "Netflix",
+          "icon": "/movies/services/netflix.webp",
+          "url": "https://www.netflix.com/title/994992",
           "price": null,
           "quality": "HD"
         },
@@ -12104,7 +12120,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-stand-by-me-rob-reiner/3625950",
-          "price": "$9.99",
+          "price": "$14.99",
           "quality": "DVD"
         },
         {
@@ -12116,7 +12132,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-10-27"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "The Wizard of Oz",
@@ -12124,42 +12140,51 @@
       "imdb": "tt0032138",
       "justwatch_id": "tm155702",
       "poster": "/movies/posters/the-wizard-of-oz-1939.webp",
-      "runtime": 101,
+      "runtime": 102,
       "rating": "G",
       "genres": {
         "en": [
+          "Action & Adventure",
           "Fantasy",
           "Kids & Family"
         ],
         "zh": [
+          "Action & Adventure",
           "Fantasy",
           "Kids & Family"
         ],
         "es": [
+          "Acción & Aventura",
           "Fantasía",
           "Familia"
         ],
         "pt": [
+          "Ação & Aventura",
           "Fantasia",
           "Família"
         ],
         "fr": [
+          "Action & Aventure",
           "Fantastique",
           "Pour enfants"
         ],
         "de": [
+          "Action & Abenteuer",
           "Fantasy",
           "Kinder & Familie"
         ],
         "it": [
+          "Azione e Avventura",
           "Fantasy",
           "Famiglia"
         ],
         "ja": [
+          "アクション",
           "ファンタジー",
           "ファミリー"
         ],
         "ko": [
+          "액션",
           "판타지",
           "가족"
         ]
@@ -12207,14 +12232,6 @@
       },
       "trailer": "njdreZRjvpc",
       "offers": [
-        {
-          "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV000087710000?irmp=1206980&irad=599309",
-          "price": null,
-          "quality": "HD"
-        },
         {
           "type": "stream",
           "service": "HBO Max",
@@ -12276,7 +12293,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B00000JS62?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.85",
+          "price": "$5.51",
           "quality": "DVD"
         },
         {
@@ -12299,8 +12316,8 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-the-wizard-of-oz-victor-fleming/3557277",
-          "price": "$8.99",
+          "url": "https://www.barnesandnoble.com/w/dvd-wizard-of-oz-75th-anniversary-n-a/26634186",
+          "price": "$11.89",
           "quality": "DVD"
         },
         {
@@ -12320,7 +12337,7 @@
           "quality": "BLURAY_4K"
         }
       ],
-      "refreshed": "2026-10-27"
+      "refreshed": "2026-11-01"
     },
     {
       "title": "The Truman Show",
@@ -12519,5 +12536,5 @@
       "refreshed": "2026-10-28"
     }
   ],
-  "updated": "2026-10-31"
+  "updated": "2026-11-01"
 }
