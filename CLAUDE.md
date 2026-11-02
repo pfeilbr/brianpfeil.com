@@ -155,6 +155,11 @@ unreliable here — see `infra/README.md`.
 - **When a post's title changes, change its slug to match** (and rename the
   bundle directory), and add the old URL to `aliases` so existing links
   still land. B asked for this every time, without being asked again.
+- **Sourced content changes only through scripts** (B, 2026-11-02): music,
+  movies, subscriptions, GitHub, lab notes, courses, media. `make refresh`
+  (`tools/refresh/refresh_all.py`) runs every refresher; `STEPS="music
+  movies"` for some, `COMMIT=1` to verify, commit and push. A source with
+  no refresher gets one, plus a step in that script, not a hand edit.
 - Commit only the files related to the current task; leave unrelated
   work-in-progress changes uncommitted.
 - After pushing, poll the live site until the change appears — the deploy takes

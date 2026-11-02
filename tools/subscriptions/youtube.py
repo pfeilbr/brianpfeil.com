@@ -25,6 +25,10 @@ by subscribers within each. A channel I unsubscribed from drops off.
 
   python3 tools/subscriptions/youtube.py --ids ids.txt            # write
   python3 tools/subscriptions/youtube.py --ids ids.txt --dry-run  # print only
+  python3 tools/subscriptions/youtube.py                          # listed only
+
+Without --ids it refreshes the channels already listed (names, handles,
+subscriber counts) and adds or drops none, so it needs no sign-in.
 
 Standard library only.
 """
@@ -139,18 +143,21 @@ def parse_channel_page(page, cid):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--ids", required=True, help="file of subscribed channel ids (UC...), one per line")
+    ap.add_argument("--ids", help="file of subscribed channel ids (UC...), one per line; "
+                    "omit to refresh the channels already listed")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
     config = json.loads(CONFIG.read_text())
-    ids = [i for i in re.split(r"\s+", pathlib.Path(args.ids).read_text()) if i]
-    ids = [i if i.startswith("UC") else "UC" + i for i in ids]
-    if len(ids) < 20:
-        raise SystemExit(f"only {len(ids)} ids -- is the list complete?")
-
     head, cats, channels = parse(DATA.read_text())
     listed = {"UC" + c["uploads"][2:]: c for c in channels}
+    if args.ids:
+        ids = [i for i in re.split(r"\s+", pathlib.Path(args.ids).read_text()) if i]
+        ids = [i if i.startswith("UC") else "UC" + i for i in ids]
+    else:
+        ids = list(listed)
+    if len(ids) < 20:
+        raise SystemExit(f"only {len(ids)} ids -- is the list complete?")
     unknown = [i for i in ids if i not in listed and i not in config["exclude"] and i not in config["cat"]]
     if unknown:
         for i in unknown:

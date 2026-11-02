@@ -120,6 +120,12 @@ test-i18n: ## Tests for, and a run of, the i18n consistency check
 	python3 -m unittest discover -s tools/i18n-check -p 'test_*.py'
 	python3 tools/i18n-check/check_i18n.py
 
+# Every sourced page in one run (music, Twitch, YouTube, movies, GitHub, lab
+# notes, repo links, courses, media when its archive and AWS are there).
+# STEPS="music movies" for a subset; COMMIT=1 verifies, commits and pushes.
+refresh: ## Run every content refresher (tools/refresh/refresh_all.py); STEPS=… for some, COMMIT=1 to verify, commit and push
+	python3 tools/refresh/refresh_all.py $(STEPS) $(if $(COMMIT),--commit)
+
 # Add a movie to data/movies.json as {"title": …, "year": …} (or "imdb": "tt…"), then run this.
 music-refresh: ## Refresh data/music.yaml from my public YouTube Music playlists
 	python3 tools/music/refresh.py
@@ -127,9 +133,10 @@ music-refresh: ## Refresh data/music.yaml from my public YouTube Music playlists
 test-music: ## Tests for the music page's playlist refresher
 	python3 -m unittest discover -s tools/music -p 'test_*.py'
 
-# IDS = channel ids from youtube.com/feed/channels (signed in; see the script's docstring).
-subscriptions-refresh: ## Refresh data/subscriptions.yaml (YouTube tab): subscriber counts, new channels
-	python3 tools/subscriptions/youtube.py --ids $(IDS)
+# IDS = channel ids from youtube.com/feed/channels (signed in; see the script's
+# docstring). Without IDS it refreshes the channels already listed.
+subscriptions-refresh: ## Refresh data/subscriptions.yaml (YouTube tab): subscriber counts, new channels with IDS=…
+	python3 tools/subscriptions/youtube.py $(if $(IDS),--ids $(IDS))
 
 twitch-refresh: ## Refresh follower counts in data/twitch.yaml (public; the lists need sign-in)
 	python3 tools/subscriptions/twitch.py
