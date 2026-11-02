@@ -16,11 +16,17 @@ same files. --commit stages only the files the successful steps own, runs
 `make verify`, then commits and pushes. Unrelated work in progress is left
 alone. A missing tool (go, hugo) skips its step and says so.
 
+Instagram is two steps. `instagram` brings the instagram-archive project up
+to date (tools/refresh/instagram.py: files a capture left on the clipboard,
+downloads new media, restores parked reels); `media` then publishes it
+(`make media-sync`, which uploads to S3 and commits on its own; it needs
+`aws sso login`). New posts reach the archive only through a harvest in the
+signed-in instagram.com tab; when the last one is over a day old, the run says
+so at the end, with the commands.
+
 Not here, on purpose:
   /ai/          ai-radar.yml commits data/ai.json twice a day; local copies
                 must never be committed.
-  /media/       `make media-sync` uploads to S3 and commits on its own; it runs
-                here only when the Instagram archive and an AWS session exist.
   /learn/, /apps/  hand-curated; their link checks are reports, not updates.
 
 Standard library only.
@@ -34,19 +40,14 @@ import subprocess
 import sys
 import time
 
+import instagram
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 
 def aws_signed_in():
     return shutil.which("aws") and subprocess.run(
         ["aws", "sts", "get-caller-identity"], capture_output=True).returncode == 0
-
-
-def instagram_archive():
-    cfg = (ROOT / "tools/instagram-media/config.yaml").read_text()
-    line = next((l for l in cfg.splitlines() if l.startswith("archive_dir:")), "")
-    path = line.partition(":")[2].strip().strip('"\'')
-    return path and pathlib.Path(path).expanduser().is_dir()
 
 
 def gh_token():
@@ -74,8 +75,11 @@ STEPS = [
      ["data/courses.json", "static/courses", "content/courses", "static/sitemap-courses.xml"],
      lambda: None if (pathlib.Path.home() / "projects/learn").is_dir()
      else "~/projects/learn is not on this machine"),
+    ("instagram", ["python3", "tools/refresh/instagram.py"], [],  # commits in its own repo
+     lambda: None if instagram.archive_root()
+     else "the instagram-archive project is not on this machine"),
     ("media", ["make", "media-sync"], [],  # commits and pushes its own files
-     lambda: None if instagram_archive() and aws_signed_in()
+     lambda: None if instagram.archive_root() and aws_signed_in()
      else "needs the Instagram archive and `aws sso login`"),
 ]
 CWD = {"notes": ROOT / "tools/generate-posts"}
@@ -143,6 +147,11 @@ def main(argv=None):
     print("\n=== summary")
     for name, status, note, _ in results:
         print(f"{name:<11} {status:<8} {note}")
+    ig = instagram.archive_root()
+    if ig and any(name in ("instagram", "media") for name, *_ in results):
+        note = instagram.stale_note(ig)
+        if note:
+            print(f"\n!! {note}")
     # A step that failed partway may still have written good data (movies keeps
     # each film's old data on failure, for one); commit only clean runs.
     to_commit = sorted({f for _, status, _, files in results if status == "ok" for f in files})

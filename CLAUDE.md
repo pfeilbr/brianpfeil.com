@@ -71,8 +71,9 @@ live items they belong to (`--allow-drop` overrides). Restore them from
 each `.oversized.json` pointer's `source_url`, checked against its sha256
 (the URLs expire within hours of a harvest).
 
-To refresh after the archive picks up new posts — one command, repeatable,
-and a no-op when nothing is new:
+`make refresh STEPS="instagram media"` runs all of that after the harvest
+(`tools/refresh/instagram.py`). By hand, to publish what the archive already
+has — one command, repeatable, and a no-op when nothing is new:
 
 ```sh
 make media-sync        # stage, approve every item, encode, upload, commit, push
@@ -166,10 +167,17 @@ unreliable here — see `infra/README.md`.
   bundle directory), and add the old URL to `aliases` so existing links
   still land. B asked for this every time, without being asked again.
 - **Sourced content changes only through scripts** (B, 2026-11-02): music,
-  movies, subscriptions, GitHub, lab notes, courses, media. `make refresh`
+  movies, subscriptions, GitHub, lab notes, courses, Instagram. `make refresh`
   (`tools/refresh/refresh_all.py`) runs every refresher; `STEPS="music
   movies"` for some, `COMMIT=1` to verify, commit and push. A source with
   no refresher gets one, plus a step in that script, not a hand edit.
+  **A refresh always includes Instagram** (B was explicit, 2026-11-02): before
+  `make refresh`, harvest new posts in his Chrome — `make -C
+  ~/projects/instagram-archive harvest-snippet` puts the collector on the
+  clipboard; with Claude in Chrome, open instagram.com/pfeilbr in a new tab,
+  inject `tmp/harvest-snippet.js` from that project with the JavaScript
+  tool, click COPY CAPTURE. The `instagram` step files the capture and
+  updates the archive; `media` publishes /media/.
 - Commit only the files related to the current task; leave unrelated
   work-in-progress changes uncommitted.
 - After pushing, poll the live site until the change appears — the deploy takes
