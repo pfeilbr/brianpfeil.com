@@ -11,8 +11,10 @@ hand edits, so a refresh is always repeatable.
   python3 tools/refresh/refresh_all.py --list           # the steps and what they write
   python3 tools/refresh/refresh_all.py --commit         # + make verify, commit, push
 
---commit stages only the files the successful steps own, runs `make verify`,
-then commits and pushes. Unrelated work in progress is left alone.
+Every run (but --list) first pulls main, since the daily Actions commit to the
+same files. --commit stages only the files the successful steps own, runs
+`make verify`, then commits and pushes. Unrelated work in progress is left
+alone. A missing tool (go, hugo) skips its step and says so.
 
 Not here, on purpose:
   /ai/          ai-radar.yml commits data/ai.json twice a day; local copies
@@ -115,6 +117,11 @@ def main(argv=None):
     unknown = set(args.steps) - set(names)
     if unknown:
         raise SystemExit(f"unknown step(s): {', '.join(sorted(unknown))}; choose from {', '.join(names)}")
+
+    # The daily Actions commit to these same files, so start from the latest
+    # main or the push ends in conflicts over week-old data.
+    if subprocess.run(["git", "pull", "--rebase", "--autostash", "-q"], cwd=ROOT).returncode != 0:
+        raise SystemExit("git pull failed; resolve it, then re-run")
 
     results = []
     for name, cmd, owns, skip in STEPS:
