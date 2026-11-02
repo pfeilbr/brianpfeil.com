@@ -24,7 +24,7 @@ test-tools: ## Go tests for the post generator
 	cd tools/generate-posts && go test ./...
 
 # --- Instagram media page (/media/) ---------------------------------------
-# Source: the instagram-archive project (~/projects/instagram/archive, set in
+# Source: the instagram-archive project (~/projects/instagram-archive/archive, set in
 # tools/instagram-media/config.yaml) by default; EXPORT=… uses an Instagram
 # "Download your information" zip instead.
 #   make media-deps

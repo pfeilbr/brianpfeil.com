@@ -171,3 +171,18 @@ class DataFileTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DroppedTest(unittest.TestCase):
+    """An approved item that stops showing up in the source must not silently
+    leave the site: four live reels did when their parked videos were absent."""
+
+    def test_approved_missing_item_is_reported(self):
+        existing = {"a": {"approved": True}, "b": {"approved": True}, "c": {"approved": False}}
+        items = [FakeItem(id="a", caption="", kind="photo", taken_at=datetime(2026, 1, 1, tzinfo=timezone.utc))]
+        self.assertEqual(manifest.dropped(items, existing), ["b"])
+
+    def test_nothing_dropped(self):
+        existing = {"a": {"approved": True}}
+        items = [FakeItem(id="a", caption="", kind="photo", taken_at=datetime(2026, 1, 1, tzinfo=timezone.utc))]
+        self.assertEqual(manifest.dropped(items, existing), [])

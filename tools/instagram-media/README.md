@@ -9,7 +9,7 @@ also the only way to get this media without breaking Instagram's terms.
 
 ## Sources
 
-**The instagram-archive project (default).** `~/projects/instagram/archive`,
+**The instagram-archive project (default).** `~/projects/instagram-archive/archive`,
 set as `archive_dir` in `config.yaml`, keeps every feed item as a directory of
 `metadata.json` + `media/`. `igmedia/archive.py` reads `posts/` and `reels/`
 only — not stories or highlights. `_oversized/` is read only through an
@@ -241,7 +241,7 @@ Private S3 bucket `brianpfeil-media01`, served through CloudFront
 public policy and direct S3 URLs return 403. Names contain a content hash, so
 objects are immutable and cached for a year.
 
-`--prune` deletes objects for items that are no longer approved. Without it,
+`--prune` deletes objects for items that are no longer approved. An approved item that vanishes from the source (usually an oversized reel whose file is not on this machine) stops `stage` and `sync` with its ids; restore its file, or pass `--allow-drop` to let it come off the page. Without it,
 un-approving an item removes it from the page but leaves the file on the CDN.
 
 ## Determinism

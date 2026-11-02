@@ -43,6 +43,15 @@ def merge(items, existing: dict[str, dict]) -> list[dict]:
     return records
 
 
+def dropped(items, existing: dict[str, dict]) -> list[str]:
+    """Approved ids the fresh read no longer has. Usually a source file that
+    is missing on this machine (an oversized video parked outside git), not
+    a decision to take the item down, so stage refuses rather than let the
+    next release quietly un-publish it."""
+    present = {item.id for item in items}
+    return sorted(i for i, r in existing.items() if r.get("approved") and i not in present)
+
+
 def save(path: Path, records: list[dict]) -> None:
     body = yaml.safe_dump(
         {"items": records},

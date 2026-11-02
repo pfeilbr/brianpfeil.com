@@ -50,16 +50,26 @@ place in every language.
 
 ## Where /media/ stands (read this first)
 
-**Live, with all 143 feed items** (2011–2026; 2,972 Instagram files on the
-CDN) — last released as `2b8734e` on 2026-10-16. First release `bf44087`
-on 2026-09-21.
+**Live, with all 176 feed items** (2011–2026-11-01) — last released as
+`19aec8f` on 2026-11-02. First release `bf44087` on 2026-09-21.
 
-**The source is the instagram-archive project**, `~/projects/instagram/archive`
+**The source is the instagram-archive project**, `~/projects/instagram-archive/archive`
 (`archive_dir` in `tools/instagram-media/config.yaml`), which keeps every feed
 item as `metadata.json` + `media/`. Only posts and reels are read; stories,
 highlights and `_oversized/` (higher-bitrate duplicates of reels) are not.
 Every record carries a GPS location and tagged users; neither is published.
 Ids are local date + Instagram shortcode, so they survive re-downloads.
+
+**New posts reach the archive only from B's signed-in Chrome.** In the
+instagram-archive project: on instagram.com/pfeilbr, run the collector
+(`make collector`) with `__IGH.flush.noDownload = true`, `__IGH.posts()`
+for a few pages, `__IGH.copyButton()` and click it, then `pbpaste` into a
+folder and `DOWNLOAD_DIR=<it> make collect && make ingest && make sync`.
+Reels over GitHub's size limit live in `archive/_oversized/` (outside git):
+on a fresh machine they are missing, and `stage` now refuses to drop the
+live items they belong to (`--allow-drop` overrides). Restore them from
+each `.oversized.json` pointer's `source_url`, checked against its sha256
+(the URLs expire within hours of a harvest).
 
 To refresh after the archive picks up new posts — one command, repeatable,
 and a no-op when nothing is new:

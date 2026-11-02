@@ -73,7 +73,15 @@ def cmd_stage(args, cfg) -> int:
         print("no posts or reels found — is this a JSON export with media?", file=sys.stderr)
         return 1
 
-    records = manifest.merge(items, manifest.load(manifest_path))
+    existing = manifest.load(manifest_path)
+    gone = manifest.dropped(items, existing)
+    if gone and not getattr(args, "allow_drop", False):
+        print(f"{len(gone)} live item(s) are missing from the source: {', '.join(gone)}", file=sys.stderr)
+        print("Their files are probably not on this machine (archive/_oversized/ is outside git).",
+              file=sys.stderr)
+        print("Restore them, or re-run with --allow-drop to take them off /media/.", file=sys.stderr)
+        return 1
+    records = manifest.merge(items, existing)
     manifest.save(manifest_path, records)
 
     sheet = review.build(items, records, workdir)
@@ -273,6 +281,8 @@ def add_source(parser) -> None:
                         help="Instagram export .zip(s) or directory: adds its stories and archived posts to the archive")
     parser.add_argument("--no-archive", action="store_true",
                         help="use the export alone, posts and reels included")
+    parser.add_argument("--allow-drop", action="store_true",
+                        help="let approved items missing from the source drop off /media/")
 
 
 def cmd_picker(args, cfg) -> int:

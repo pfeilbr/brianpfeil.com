@@ -18,12 +18,12 @@ data_file: "data/media.yaml"
 
 # The default media source: the instagram-archive project, which keeps every
 # feed post and reel as metadata.json + media/. --export overrides it.
-archive_dir: "~/projects/instagram/archive"
+archive_dir: "~/projects/instagram-archive/archive"
 
 # Stories read off the iOS app, with which ones were reshares. A story that
 # reshares someone else's post, or one of the reels already on the page, is
 # published with a "reshared" label. Missing file = no labels.
-story_inventory: "~/projects/instagram/harvest/iphone/story-inventory.jsonl"
+story_inventory: "~/projects/instagram-archive/harvest/iphone/story-inventory.jsonl"
 
 # Google Photos, chosen by hand in the picker (make media-picker). Candidates
 # come from Google Photos searches: "<person> <query>" finds shots Google

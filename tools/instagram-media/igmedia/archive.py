@@ -1,4 +1,4 @@
-"""Read the instagram-archive project (~/projects/instagram/archive).
+"""Read the instagram-archive project (~/projects/instagram-archive/archive).
 
 That project keeps every feed item as a directory with a normalised
 metadata.json and a media/ folder:

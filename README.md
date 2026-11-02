@@ -78,7 +78,7 @@ Or put a token in `tools/generate-posts/config.local.yaml` (gitignored) as
 ## The media page (`/media/`)
 
 Photos and video from Instagram, built from the instagram-archive project
-(`~/projects/instagram/archive`) or an official Instagram data export — no
+(`~/projects/instagram-archive/archive`) or an official Instagram data export — no
 scraping, no stored credentials. Files are re-encoded with all metadata
 (including GPS) stripped, and served from a private S3 bucket behind
 CloudFront; only `data/media.yaml` lives in the repo. **Nothing is published
