@@ -1,8 +1,9 @@
 # Infrastructure for brianpfeil.com.
 #
-# These resources were first created with the AWS CLI while building /media/;
-# the import blocks in imports.tf adopt them, so `terraform plan` is a no-op
-# rather than a rebuild. Everything from here on goes through Terraform.
+# These resources were first created with the AWS CLI while building /media/
+# and were then adopted with import blocks, so `terraform plan` was a no-op
+# rather than a rebuild. imports.tf holds the ones still being adopted.
+# Everything from here on goes through Terraform. dns.tf is the Route 53 zone.
 
 variable "region" {
   description = "AWS region."

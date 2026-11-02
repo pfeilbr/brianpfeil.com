@@ -21,11 +21,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     env:
       HUGO_ENVIRONMENT: production
     steps:
       - uses: actions/checkout@v7
         with:
+          persist-credentials: false
           # Full history: enableGitInfo dates every page by its last commit.
           fetch-depth: 0
 
@@ -37,8 +39,24 @@ jobs:
           hugo-version: "0.166.0"
           extended: true
 
+      # Hugo draws a share card for nearly every page (partials/og-image.html),
+      # ~100 MB of images, and redrew all of them on every deploy. Keep its
+      # cache between deploys: one entry per ISO week, falling back to the
+      # last one, so the cache stays fresh without a new 100 MB entry per push.
+      - name: Cache week
+        id: week
+        run: echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+      - name: Cache Hugo's generated images
+        uses: actions/cache@v6
+        with:
+          path: resources/_gen
+          key: hugo-resources-${{ steps.week.outputs.week }}
+          restore-keys: hugo-resources-
+
+      # --gc drops cached images no page uses any more, so the saved cache
+      # holds only what the current site needs.
       - name: Build
-        run: hugo --minify
+        run: hugo --minify --gc
 
       # The manifest of the last batch IndexNow actually accepted. Saved by
       # the indexnow job only on success, so a refused batch is retried.
@@ -77,6 +95,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -90,9 +109,11 @@ jobs:
   indexnow:
     needs: deploy
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
         with:
+          persist-credentials: false
           sparse-checkout: tools/indexnow
 
       - name: Fetch the changed-URL list

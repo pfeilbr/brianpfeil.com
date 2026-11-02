@@ -1,6 +1,8 @@
 # Keeps the GitHub Actions used by the workflows on current versions
-# (checkout, setup-*, upload/deploy-pages, cache...). The Hugo version is a
-# workflow input, not an action version, so it stays pinned by hand.
+# (checkout, setup-*, upload/deploy-pages, cache...), and the two places that
+# pull third-party code: the Go post generator's modules and the Python
+# tools' requirements. The Hugo version is a workflow input, not an action
+# version, so it stays pinned by hand. Monthly and grouped: one PR each.
 version: 2
 updates:
   - package-ecosystem: github-actions
@@ -9,4 +11,22 @@ updates:
       interval: monthly
     groups:
       actions:
+        patterns: ["*"]
+
+  - package-ecosystem: gomod
+    directory: /tools/generate-posts
+    schedule:
+      interval: monthly
+    groups:
+      go:
+        patterns: ["*"]
+
+  - package-ecosystem: pip
+    directories:
+      - /tools/ai-radar
+      - /tools/instagram-media
+    schedule:
+      interval: monthly
+    groups:
+      python:
         patterns: ["*"]

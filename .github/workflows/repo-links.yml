@@ -15,11 +15,20 @@ permissions:
   contents: read
   issues: write
 
+# Two overlapping runs (the Monday schedule plus a manual one) could each
+# find no open issue and open one apiece.
+concurrency:
+  group: repo-links
+  cancel-in-progress: false
+
 jobs:
   check:
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v7
         with:
           python-version: "3.13"

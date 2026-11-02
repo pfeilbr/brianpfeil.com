@@ -253,10 +253,12 @@ guides-pdf: ## PDF of every architecture guide, for sharing and printing (needs 
 
 # --- Terraform (infra/) ---------------------------------------------------
 # State lives in S3 (infra/backend.hcl). The provider comes from a local
-# mirror because the registry download is unreliable here; populate it with
-# `python3 infra/scripts/fetch_provider.py --detach` if it is missing.
+# mirror when there is one, because the registry download has been
+# unreliable here; populate it with
+# `python3 infra/scripts/fetch_provider.py --detach`. Without the mirror,
+# init falls back to the registry instead of failing outright.
 TF_MIRROR := $(HOME)/.terraform.d/plugin-mirror
-TF_INIT = terraform init -input=false -backend-config=$(1) -plugin-dir=$(TF_MIRROR)
+TF_INIT = terraform init -input=false -backend-config=$(1) $(if $(wildcard $(TF_MIRROR)),-plugin-dir=$(TF_MIRROR))
 
 tf-init: ## Terraform init, both stacks, S3 backend + local provider mirror
 	cd infra && $(call TF_INIT,backend.hcl)
@@ -266,8 +268,9 @@ tf-plan: ## Terraform plan, both stacks
 	cd infra && terraform plan -input=false
 	cd infra/bootstrap && terraform plan -input=false
 
-tf-validate: ## terraform fmt -check and validate
+tf-validate: ## terraform fmt -check and validate, both stacks (as CI does)
 	cd infra && terraform fmt -check -recursive && terraform validate
+	cd infra/bootstrap && terraform validate
 
 
 help: ## List every target

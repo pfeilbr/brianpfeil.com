@@ -14,6 +14,13 @@
 resource "aws_route53_zone" "brianpfeil_com" {
   name    = "brianpfeil.com"
   comment = "brianpfeil.com (moved from Hover)"
+
+  # Every site and app under brianpfeil.com resolves through this zone, and a
+  # new zone gets new nameservers that the registrar would have to be told
+  # about. Terraform refuses to plan its destruction.
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 locals {
@@ -147,5 +154,23 @@ resource "aws_route53_record" "apex_txt" {
   records = [
     # Google Search Console, domain property sc-domain:brianpfeil.com (2026-10-12)
     "google-site-verification=1DJQUTVWpKiCAx3Hqh9J2U4Z1CLgisozBz4nshMt3RE",
+  ]
+}
+
+# Which certificate authorities may issue for brianpfeil.com and every name
+# under it. Only the two in use today: Let's Encrypt (GitHub Pages, for the
+# apex and www) and Amazon (ACM: the *.brianpfeil.com wildcard and each app's
+# own certificate). Anyone else asked for a certificate must refuse.
+resource "aws_route53_record" "caa" {
+  zone_id = local.zone_id
+  name    = "brianpfeil.com"
+  type    = "CAA"
+  ttl     = 3600
+  records = [
+    "0 issue \"letsencrypt.org\"",
+    "0 issue \"amazon.com\"",
+    "0 issue \"amazontrust.com\"",
+    "0 issue \"awstrust.com\"",
+    "0 issue \"amazonaws.com\"",
   ]
 }

@@ -46,6 +46,16 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "state" {
   }
 }
 
+# ACLs off: the bucket owner owns every state object. Already the live
+# setting; written down so a console change shows up as drift.
+resource "aws_s3_bucket_ownership_controls" "state" {
+  bucket = aws_s3_bucket.state.id
+
+  rule {
+    object_ownership = "BucketOwnerEnforced"
+  }
+}
+
 # State files hold resource ids and sometimes secrets; nothing about this
 # bucket is ever public.
 resource "aws_s3_bucket_public_access_block" "state" {

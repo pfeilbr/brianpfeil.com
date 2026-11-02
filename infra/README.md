@@ -10,15 +10,19 @@ infra/
 ├── backend.hcl              shared S3 backend settings (bucket named once)
 ├── backend.tf               site stack state key
 ├── main.tf                  site stack: the /media/ CDN
-├── versions.tf
+├── dns.tf                   site stack: Route 53 zone, records, CAA, wildcard cert
+├── imports.tf               live settings adopted into Terraform
+├── versions.tf              provider, with default_tags for cost attribution
 ├── bootstrap/               creates the state bucket itself
 │   ├── main.tf
+│   ├── imports.tf
 │   └── backend.tf
 ├── modules/
 │   ├── media-cdn/           private S3 bucket + CloudFront via OAC
 │   └── state-bucket/        versioned, locked-down Terraform state bucket
 └── scripts/
-    └── fetch_provider.py    resumable provider download for slow links
+    ├── fetch_provider.py    resumable provider download for slow links
+    └── transfer_domain.py   the Hover → Route 53 registrar transfer
 ```
 
 The modules are the reusable units. A second CDN or a second state bucket is
@@ -38,8 +42,20 @@ Remote, in `s3://brianpfeil-tfstate-529276214230`:
 - **Versioned**: every apply writes a new revision, so a bad apply can be
   rolled back to an earlier state object. Old revisions expire after 90 days,
   but the 20 most recent are always kept.
-- Encrypted, all four public-access blocks on, TLS-only bucket policy, and
-  `prevent_destroy` on the bucket.
+- Encrypted, ACLs disabled (`BucketOwnerEnforced`), all four public-access
+  blocks on, TLS-only bucket policy, and `prevent_destroy` on the bucket.
+
+## Guard rails
+
+- `prevent_destroy` on the three things that are expensive to lose: the
+  state bucket, the Route 53 zone (new nameservers would have to go to the
+  registrar) and the media bucket (hours of encoding).
+- The media bucket is TLS-only, ACL-free and readable only by its
+  CloudFront distribution; interrupted multipart uploads expire after 7 days.
+- A CAA record limits certificates for the domain to Let's Encrypt (GitHub
+  Pages) and Amazon (ACM).
+- Every taggable resource in the site stack carries `project`,
+  `managed-by` and `stack` tags (provider `default_tags`).
 
 `backend.hcl` holds the bucket, region and locking settings so they are
 written exactly once; each stack's `backend.tf` declares only its key.

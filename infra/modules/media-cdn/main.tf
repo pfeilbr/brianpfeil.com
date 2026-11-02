@@ -33,6 +33,42 @@ data "aws_cloudfront_response_headers_policy" "security" {
 resource "aws_s3_bucket" "media" {
   bucket = var.bucket_name
   tags   = var.tags
+
+  # The encoded derivatives took hours of ffmpeg (and composed music) to
+  # make; losing the bucket means redoing all of it and a dead /media/ page.
+  # Terraform refuses to plan its destruction; removing this is deliberate.
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+# ACLs off: the bucket owner owns every object and access is decided by the
+# policy alone. Already the live setting (S3's default since 2023); written
+# down so a console change shows up as drift.
+resource "aws_s3_bucket_ownership_controls" "media" {
+  bucket = aws_s3_bucket.media.id
+
+  rule {
+    object_ownership = "BucketOwnerEnforced"
+  }
+}
+
+# Publishing uploads with `aws s3 sync`, which uses multipart for the larger
+# reels. An interrupted sync leaves invisible parts that are billed until
+# they are aborted; this clears them after a week.
+resource "aws_s3_bucket_lifecycle_configuration" "media" {
+  bucket = aws_s3_bucket.media.id
+
+  rule {
+    id     = "abort-incomplete-multipart-uploads"
+    status = "Enabled"
+
+    filter {}
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "media" {
@@ -111,16 +147,28 @@ resource "aws_s3_bucket_policy" "media" {
   bucket = aws_s3_bucket.media.id
   policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [{
-      Sid       = "AllowCloudFrontServicePrincipalReadOnly"
-      Effect    = "Allow"
-      Principal = { Service = "cloudfront.amazonaws.com" }
-      Action    = "s3:GetObject"
-      Resource  = "${aws_s3_bucket.media.arn}/*"
-      Condition = {
-        StringEquals = { "AWS:SourceArn" = aws_cloudfront_distribution.media.arn }
-      }
-    }]
+    Statement = [
+      {
+        Sid       = "AllowCloudFrontServicePrincipalReadOnly"
+        Effect    = "Allow"
+        Principal = { Service = "cloudfront.amazonaws.com" }
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.media.arn}/*"
+        Condition = {
+          StringEquals = { "AWS:SourceArn" = aws_cloudfront_distribution.media.arn }
+        }
+      },
+      {
+        # Same rule as the state bucket: nothing talks to S3 in plain HTTP.
+        # CloudFront's origin fetch and the publish step's sync are both TLS.
+        Sid       = "DenyInsecureTransport"
+        Effect    = "Deny"
+        Principal = "*"
+        Action    = "s3:*"
+        Resource  = [aws_s3_bucket.media.arn, "${aws_s3_bucket.media.arn}/*"]
+        Condition = { Bool = { "aws:SecureTransport" = "false" } }
+      },
+    ]
   })
 }
 

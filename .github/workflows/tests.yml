@@ -7,24 +7,45 @@ on:
     branches: [main]
   pull_request:
 
+# Read-only: nothing here writes to the repo, issues or packages. The
+# checkouts also drop the token (persist-credentials: false), since no step
+# pushes.
+permissions:
+  contents: read
+
+# A newer push to the same PR makes the older run moot; cancel it. Runs on
+# main are never cancelled, so every commit there keeps its own result.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   post-generator:
     name: generate-posts (Go)
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-go@v7
         with:
           go-version-file: tools/generate-posts/go.mod
           cache-dependency-path: tools/generate-posts/go.sum
+      # vet catches the mistakes tests miss (bad Printf verbs, copied locks).
+      - run: go vet ./...
+        working-directory: tools/generate-posts
       - run: go test ./...
         working-directory: tools/generate-posts
 
   media-tool:
     name: instagram-media (Python)
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
@@ -83,13 +104,24 @@ jobs:
   site:
     name: hugo build
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: peaceiris/actions-hugo@v3
         with:
           # Same pin as the deploy workflow; bump them together.
           hugo-version: "0.166.0"
           extended: true
+      # The share cards the deploy already drew (see gh-pages.yml); read-only
+      # here, so a PR can never put anything in the deploy's cache.
+      - name: Restore Hugo's generated images
+        uses: actions/cache/restore@v6
+        with:
+          path: resources/_gen
+          key: hugo-resources-none
+          restore-keys: hugo-resources-
       - name: Build with warnings surfaced
         run: hugo --minify --printI18nWarnings --printPathWarnings
       # Hugo falls back to English silently; this checks the i18n files agree
@@ -127,8 +159,11 @@ jobs:
   terraform:
     name: terraform fmt + validate
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: "1.16.3"
