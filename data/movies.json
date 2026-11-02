@@ -158,8 +158,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0C2WL7QMW?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$13.90",
+          "url": "https://www.amazon.com/dp/B01MYZTLIY?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$8.99",
           "quality": "DVD"
         },
         {
@@ -453,6 +453,22 @@
       "offers": [
         {
           "type": "stream",
+          "service": "AMC Plus Apple TV channel",
+          "icon": "/movies/services/appletvamcplus.webp",
+          "url": "https://tv.apple.com",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "AMC+",
+          "icon": "/movies/services/amcplus.webp",
+          "url": "https://www.amcplus.com/movies/the-breakfast-club--1055114",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "AMC+ Amazon Channel",
           "icon": "/movies/services/amazonamcplus.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.29d2463c-29d4-4bdd-b2bf-8c0f4cb9fb8d",
@@ -519,9 +535,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00TF7KZ90?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$5.00",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B0027G7PVC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$6.39",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -937,8 +953,8 @@
           "type": "rent",
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
-          "url": "https://tv.apple.com/us/movie/gladiator/umc.cmc.50lk1pxm803ym8vizumxitxd2?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A978530057",
-          "price": "$3.99",
+          "url": "https://tv.apple.com/us/movie/gladiator/umc.cmc.50lk1pxm803ym8vizumxitxd2?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A397380075",
+          "price": "$5.99",
           "quality": "4K"
         },
         {
@@ -993,7 +1009,7 @@
           "type": "buy",
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
-          "url": "https://tv.apple.com/us/movie/gladiator/umc.cmc.50lk1pxm803ym8vizumxitxd2?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A978530057",
+          "url": "https://tv.apple.com/us/movie/gladiator/umc.cmc.50lk1pxm803ym8vizumxitxd2?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A397380075",
           "price": "$16.99",
           "quality": "4K"
         },
@@ -1680,8 +1696,8 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-lord-of-the-rings-the-return-of-the-king/1111917257",
-          "price": "$22.49",
+          "url": "https://www.barnesandnoble.com/w/dvd-the-lord-of-the-rings-the-return-of-the-king-jackson/7262987",
+          "price": "$13.99",
           "quality": "DVD"
         },
         {
@@ -2042,6 +2058,22 @@
           "service": "AMC",
           "icon": "/movies/services/amc.webp",
           "url": "https://www.amc.com/movies/forrest-gump--1010507",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "AMC Plus Apple TV channel",
+          "icon": "/movies/services/appletvamcplus.webp",
+          "url": "https://tv.apple.com",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "AMC+",
+          "icon": "/movies/services/amcplus.webp",
+          "url": "https://www.amcplus.com/movies/forrest-gump--1010507",
           "price": null,
           "quality": "HD"
         },
