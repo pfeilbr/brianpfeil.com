@@ -158,9 +158,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B01MYZTLIY?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.99",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B000Q67876?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$5.39",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -195,7 +195,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "Fight Club",
@@ -360,7 +360,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "The Breakfast Club",
@@ -477,14 +477,6 @@
         },
         {
           "type": "stream",
-          "service": "Hulu",
-          "icon": "/movies/services/hulu.webp",
-          "url": "https://www.hulu.com/watch/f13d7a53-8747-4bea-a17b-39f4f638dd23",
-          "price": null,
-          "quality": "4K"
-        },
-        {
-          "type": "stream",
           "service": "Philo",
           "icon": "/movies/services/philo.webp",
           "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDI0NzQ",
@@ -544,7 +536,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.0dae0bfe-939f-4572-bda4-b0a876bd5707",
-          "price": "$12.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -552,7 +544,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-breakfast-club/umc.cmc.1gjwhsujjtm7lpbghuwru7l6m?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A280360440",
-          "price": "$12.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -572,7 +564,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "Inception",
@@ -770,7 +762,7 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "Gladiator",
@@ -1030,7 +1022,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "The Lord of the Rings: The Fellowship of the Ring",
@@ -1130,6 +1122,14 @@
       },
       "trailer": "V75dMMIW2B4",
       "offers": [
+        {
+          "type": "stream",
+          "service": "fuboTV",
+          "icon": "/movies/services/fubotv.webp",
+          "url": "https://www.fubo.tv/welcome/program/MV001154490000?irmp=1206980&irad=599309",
+          "price": null,
+          "quality": "HD"
+        },
         {
           "type": "stream",
           "service": "HBO Max",
@@ -1259,7 +1259,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "The Lord of the Rings: The Two Towers",
@@ -1359,6 +1359,14 @@
       },
       "trailer": "LbfMDwc4azU",
       "offers": [
+        {
+          "type": "stream",
+          "service": "fuboTV",
+          "icon": "/movies/services/fubotv.webp",
+          "url": "https://www.fubo.tv/welcome/program/MV001281470000?irmp=1206980&irad=599309",
+          "price": null,
+          "quality": "HD"
+        },
         {
           "type": "stream",
           "service": "HBO Max",
@@ -1480,7 +1488,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "The Lord of the Rings: The Return of the King",
@@ -1709,7 +1717,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "Titanic",
@@ -1900,8 +1908,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0GTK7CDTC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$24.81",
+          "url": "https://www.amazon.com/dp/B00HDQB6A2?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$10.41",
           "quality": "DVD"
         },
         {
@@ -1937,7 +1945,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "Forrest Gump",
@@ -2217,8 +2225,8 @@
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d2a9f65f-019a-dc2a-9f03-e9b342352bac",
-          "price": "$6.99",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.a75bbfef-d811-4fcc-9b4c-192e2fc43b28",
+          "price": "$9.99",
           "quality": "4K"
         },
         {
@@ -2246,7 +2254,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "Sixteen Candles",
@@ -2339,6 +2347,22 @@
       "offers": [
         {
           "type": "stream",
+          "service": "AMC Plus Apple TV channel",
+          "icon": "/movies/services/appletvamcplus.webp",
+          "url": "https://tv.apple.com",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
+          "service": "AMC+",
+          "icon": "/movies/services/amcplus.webp",
+          "url": "https://www.amcplus.com/movies/sixteen-candles--1032030",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "AMC+ Amazon Channel",
           "icon": "/movies/services/amazonamcplus.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.14a9f65c-336e-ad44-825d-c5d005009c3c",
@@ -2406,7 +2430,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.14a9f65c-336e-ad44-825d-c5d005009c3c",
-          "price": "$7.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -2414,7 +2438,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/sixteen-candles/umc.cmc.4jt5o6qld8cltp18i89tu66n3?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A280497940",
-          "price": "$12.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -2422,7 +2446,7 @@
           "service": "Arrow Video",
           "icon": "/movies/services/arrowvideo.webp",
           "url": "https://www.arrowvideo.com/p/sixteen-candles-blu-ray/12946844/",
-          "price": "$17.00",
+          "price": "$28.00",
           "quality": "BLURAY"
         },
         {
@@ -2450,7 +2474,7 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-03"
     },
     {
       "title": "Weird Science",
@@ -12658,5 +12682,5 @@
       "refreshed": "2026-11-02"
     }
   ],
-  "updated": "2026-11-02"
+  "updated": "2026-11-03"
 }
