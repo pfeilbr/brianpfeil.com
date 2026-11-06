@@ -37,6 +37,16 @@ module:
 security:
   allowContent:
     - ".*"
+  # Nothing in the templates fetches from the network (no resources.GetRemote)
+  # or runs a program other than git (enableGitInfo), so the build is
+  # forbidden both: a template or theme change can't quietly start pulling
+  # third-party content into the site, or shelling out, at build time.
+  exec:
+    allow:
+      - "^git$"
+  http:
+    urls:
+      - "none"
 
 related:
   includeNewer: true
