@@ -104,6 +104,25 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
 
+  # deploy-pages reports success once GitHub accepts the artifact; this
+  # checks what a visitor actually gets: the main pages, a translated one,
+  # the feeds and a data payload all answer 200 over HTTPS on the real
+  # domain (catches a DNS, certificate or custom-domain problem).
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Live pages answer 200
+        run: |
+          failed=0
+          for path in / /post/ /notes/ /projects/ /media/ /about/ /zh/ /index.xml /sitemap.xml /data/media.json; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' --retry 3 --retry-delay 10 --retry-all-errors "https://brianpfeil.com$path" || true)"
+            echo "$code $path"
+            if [ "$code" != 200 ]; then failed=1; echo "::error::https://brianpfeil.com$path answered $code"; fi
+          done
+          exit "$failed"
+
   # Tell Bing and the other IndexNow engines what just changed, once the new
   # pages are actually live (they fetch the key file to verify us).
   indexnow:
