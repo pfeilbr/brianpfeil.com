@@ -171,6 +171,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-social` | Unit tests for the social kit, the Bluesky/Mastodon poster and the dev.to cross-poster |
 | `make ig-carousel` | Instagram text carousels of the bipolar post (condensed + five-part series), with captions, in `tools/ig-carousel/build/review.html`; `ICLOUD=1` also copies them to iCloud Drive for posting from a phone |
 | `make test-ig-carousel` | Unit tests for the Instagram carousel builder |
+| `make test-drafts-extract` | Unit tests for the Drafts-backup extractor |
 | **Infrastructure** | |
 | `make tf-init` / `tf-plan` / `tf-validate` | Terraform, both stacks, S3 backend |
 

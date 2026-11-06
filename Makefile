@@ -4,7 +4,7 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-subscriptions test-ai test-ai-page test-social test-newsletter test-ig-carousel test-movies test-apps test-profiles ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-subscriptions test-ai test-ai-page test-social test-newsletter test-ig-carousel test-drafts-extract test-movies test-apps test-profiles ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
 	python3 tools/site-check/check_site.py --public public
@@ -206,6 +206,9 @@ ig-carousel: ## Instagram text carousels of the bipolar post (tools/ig-carousel/
 test-ig-carousel: ## Unit tests for the Instagram carousel builder
 	python3 -m unittest discover -s tools/ig-carousel -p 'test_*.py'
 
+test-drafts-extract: ## Unit tests for the Drafts-backup extractor
+	python3 -m unittest discover -s tools/drafts-extract -p 'test_*.py'
+
 test-ai: ## Unit tests for the AI radar, and a check that its i18n block is current
 	python3 -m unittest discover -s tools/ai-radar/tests
 	python3 tools/ai-radar/i18n_strings.py --check
@@ -276,4 +279,4 @@ tf-validate: ## terraform fmt -check and validate, both stacks (as CI does)
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: media-posters notes-strip check-post-links links-rescue test-movies apps-icon test-apps test-profiles learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf
+.PHONY: test-drafts-extract test-ig-carousel test-newsletter test-subscriptions media-posters notes-strip check-post-links links-rescue test-movies apps-icon test-apps test-profiles learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf

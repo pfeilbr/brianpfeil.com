@@ -96,6 +96,16 @@ jobs:
         run: python -m unittest discover -s tools/movies -p 'test_*.py' -v
       - name: apps check tests
         run: python -m unittest discover -s tools/apps -p 'test_*.py' -v
+      # These four ran only in `make verify` (or nowhere): stdlib-only unit
+      # tests, so CI can run them as-is.
+      - name: music refresher tests
+        run: python -m unittest discover -s tools/music -p 'test_*.py' -v
+      - name: newsletter tests (issues and the sent ledger)
+        run: python -m unittest discover -s tools/newsletter -p 'test_*.py' -v
+      - name: Instagram carousel tests
+        run: python -m unittest discover -s tools/ig-carousel -p 'test_*.py' -v
+      - name: Drafts extractor tests
+        run: python -m unittest discover -s tools/drafts-extract -p 'test_*.py' -v
       - name: docs check (every Makefile target documented)
         run: |
           python -m unittest discover -s tools/docs-check -p 'test_*.py' -v
