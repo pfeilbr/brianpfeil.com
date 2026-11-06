@@ -43,10 +43,11 @@ jobs:
           ONLY: ${{ inputs.only }}
           UPDATE: ${{ inputs.update_published }}
         run: |
-          args="--push"
-          [ -n "$ONLY" ] && args="$args --only $ONLY"
-          [ "$UPDATE" = "true" ] && args="$args --update-published"
-          python tools/social/devto.py $args
+          args=(--push)
+          read -r -a only <<< "$ONLY"   # space-separated slugs
+          if [ "${#only[@]}" -gt 0 ]; then args+=(--only "${only[@]}"); fi
+          if [ "$UPDATE" = "true" ]; then args+=(--update-published); fi
+          python tools/social/devto.py "${args[@]}"
       - name: Commit the ledger
         if: always()
         run: |

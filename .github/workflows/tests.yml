@@ -209,6 +209,25 @@ jobs:
       - name: AI radar page render check
         run: python3 tools/ai-radar/check_page.py --build
 
+  workflows:
+    name: actionlint (workflows + shellcheck)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      # Catches bad expressions, unknown inputs and, through shellcheck
+      # (preinstalled on the runner), shell bugs in run: blocks -- the
+      # push loops that never failed were one. Pinned release, checked
+      # against its published SHA-256.
+      - name: Install actionlint 1.7.12
+        run: |
+          curl -fsSL -o actionlint.tgz https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  actionlint.tgz" | sha256sum -c -
+          tar -xzf actionlint.tgz actionlint
+      - run: ./actionlint -color
+
   terraform:
     name: terraform fmt + validate
     runs-on: ubuntu-24.04

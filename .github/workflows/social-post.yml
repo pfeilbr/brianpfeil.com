@@ -49,10 +49,10 @@ jobs:
           CHANNEL: ${{ inputs.channel }}
           DRY: ${{ inputs.dry_run }}
         run: |
-          args=""
-          [ "$DRY" = "true" ] || args="--post"
-          [ -n "$CHANNEL" ] && args="$args --channel $CHANNEL"
-          python tools/social/post.py $args
+          args=()
+          if [ "$DRY" != "true" ]; then args+=(--post); fi
+          if [ -n "$CHANNEL" ]; then args+=(--channel "$CHANNEL"); fi
+          python tools/social/post.py "${args[@]}"
       - name: Commit the ledger
         # Runs even if one channel failed, so the other's post is recorded.
         if: always()
