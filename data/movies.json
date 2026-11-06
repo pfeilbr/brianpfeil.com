@@ -7,7 +7,7 @@
       "imdb": "tt0111161",
       "justwatch_id": "tm119206",
       "poster": "/movies/posters/the-shawshank-redemption-1994.webp",
-      "runtime": 142,
+      "runtime": 140,
       "rating": "R",
       "genres": {
         "en": [
@@ -158,9 +158,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B000Q67876?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$5.39",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B0000399WI?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$8.25",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -182,7 +182,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-the-shawshank-redemption-the-green-mile-the-shawshank-redemption-the-green-mile-2-discs/30988699",
+          "url": "https://www.barnesandnoble.com/w/dvd-the-shawshank-redemption-frank-darabont/3557553",
           "price": "$5.00",
           "quality": "DVD"
         },
@@ -195,7 +195,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-06"
     },
     {
       "title": "Fight Club",
@@ -296,6 +296,14 @@
       "trailer": "qtRKdVHc-cE",
       "offers": [
         {
+          "type": "free",
+          "service": "Pluto TV",
+          "icon": "/movies/services/plutotv.webp",
+          "url": "https://pluto.tv/us/movies/6ada510773415cc4ae13acd6/",
+          "price": null,
+          "quality": "SD"
+        },
+        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -340,7 +348,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/fight-club/umc.cmc.70dbl3043tb6ealg0u12k1pih?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A290531770",
-          "price": "$4.99",
+          "price": "$19.99",
           "quality": "4K"
         },
         {
@@ -360,7 +368,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-06"
     },
     {
       "title": "The Breakfast Club",
@@ -452,6 +460,14 @@
       "trailer": "BSXBvor47Zs",
       "offers": [
         {
+          "type": "free",
+          "service": "YouTube Free",
+          "icon": "/movies/services/youtubefree.webp",
+          "url": "https://www.youtube.com/watch?v=__P7OBLo9NI",
+          "price": null,
+          "quality": "HD"
+        },
+        {
           "type": "stream",
           "service": "AMC Plus Apple TV channel",
           "icon": "/movies/services/appletvamcplus.webp",
@@ -527,8 +543,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0027G7PVC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.39",
+          "url": "https://www.amazon.com/dp/078322687X?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.99",
           "quality": "DVD"
         },
         {
@@ -552,7 +568,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-the-breakfast-club-john-hughes/3622368",
-          "price": "$39.99",
+          "price": "$19.99",
           "quality": "DVD"
         },
         {
@@ -560,11 +576,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Breakfast-Club/5946",
-          "price": "$12.99",
+          "price": "$5.00",
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-06"
     },
     {
       "title": "Inception",
@@ -641,7 +657,7 @@
       ],
       "titles": {
         "en": "Inception",
-        "zh": "潛行凶間",
+        "zh": "盗梦空间",
         "es": "Origen",
         "pt": "A Origem",
         "fr": "Inception",
@@ -762,7 +778,7 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-06"
     },
     {
       "title": "Gladiator",
@@ -945,8 +961,8 @@
           "type": "rent",
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
-          "url": "https://tv.apple.com/us/movie/gladiator/umc.cmc.50lk1pxm803ym8vizumxitxd2?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A397380075",
-          "price": "$5.99",
+          "url": "https://tv.apple.com/us/movie/gladiator/umc.cmc.50lk1pxm803ym8vizumxitxd2?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A978530057",
+          "price": "$3.99",
           "quality": "4K"
         },
         {
@@ -985,9 +1001,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00005OLIT?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.92",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B01M7SPZGG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.59",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -1001,7 +1017,7 @@
           "type": "buy",
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
-          "url": "https://tv.apple.com/us/movie/gladiator/umc.cmc.50lk1pxm803ym8vizumxitxd2?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A397380075",
+          "url": "https://tv.apple.com/us/movie/gladiator/umc.cmc.50lk1pxm803ym8vizumxitxd2?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A978530057",
           "price": "$16.99",
           "quality": "4K"
         },
@@ -1022,7 +1038,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-06"
     },
     {
       "title": "The Lord of the Rings: The Fellowship of the Ring",
@@ -1124,14 +1140,6 @@
       "offers": [
         {
           "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV001154490000?irmp=1206980&irad=599309",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "HBO Max",
           "icon": "/movies/services/max.webp",
           "url": "https://play.hbomax.com/show/fb9f961f-6302-4776-91d7-f1b7a69fb61d?utm_source=universal_search",
@@ -1222,8 +1230,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B003TT2X6I?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$9.10",
+          "url": "https://www.amazon.com/dp/B003VD2QAU?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$14.68",
           "quality": "BLURAY"
         },
         {
@@ -1246,8 +1254,8 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-lord-of-the-rings-the-fellowship-of-the-ring/1112296831",
-          "price": "$22.49",
+          "url": "https://www.barnesandnoble.com/w/dvd-the-lord-of-the-rings-the-fellowship-of-the-ring-peter-jackson/6054019",
+          "price": "$13.99",
           "quality": "DVD"
         },
         {
@@ -1259,7 +1267,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-06"
     },
     {
       "title": "The Lord of the Rings: The Two Towers",
@@ -1337,7 +1345,7 @@
         "ko": "반지의 제왕: 두 개의 탑"
       },
       "synopsis": {
-        "en": "Frodo Baggins and the other members of the Fellowship continue on their sacred quest to destroy the One Ring--but on separate paths. Their destinies lie at two towers--Orthanc Tower in Isengard, where the corrupt wizard Saruman awaits, and Sauron's fortress at Barad-dur, deep within the dark lands of Mordor.",
+        "en": "Frodo Baggins and the other members of the Fellowship continue on their sacred quest to destroy the One Ring--but on separate paths. Their destinies lie at two towers - Orthanc Tower in Isengard, where the corrupt wizard Saruman awaits, and Sauron's fortress at Barad-dur, deep within the dark lands of Mordor.",
         "zh": "在J.R.R.托尔金史诗三部曲的第二篇章中，护戒同盟队面对难以想象的敌军与诡谲阴谋，同时见证了远古奇迹与同胞未觉醒的力量。",
         "es": "La Compañía del Anillo se ha disuelto. El portador del anillo Frodo y su fiel amigo Sam se dirigen hacia Mordor para destruir el Anillo Único y acabar con el poder de Sauron. Mientras, y tras la dura batalla contra los orcos donde cayó Boromir, el hombre Aragorn, el elfo Legolas y el enano Gimli intentan rescatar a los medianos Merry y Pipin, secuestrados por los ogros de Mordor. Por su parte, Saurón y el traidor Sarumán continúan con sus planes en Mordor, en espera de la guerra contra las razas libres de la Tierra Media.",
         "pt": "Depois da morte do guerreiro Boromir e da queda de Gandalf para o abismo de Khazad-dûm, a Irmandade do Anel - constituída por Frodo Baggins, o hobbit que tinha como missão destruir o anel, Sam, um hobbit que personifica a honestidade e a simplicidade, Pippin, um hobbit trapalhão, Merry, um hobbit astuto e divertido, os elfos Legolas e Elrond, o humano Aragorn, um guerreiro herdeiro do trono de Gondor - vê-se obrigada a separar-se em três grupos. No entanto, cada um dos seus elementos permanece imperturbável no objectivo de afastar das mãos de Saruman. Em viagens paralelas, a Irmandade enfrenta exércitos e emboscadas inimagináveis. Terão de vencer as poderosas e obscuras forças que emergem das duas Torres: Orthanc, em Isengard, onde o perverso feiticeiro Saruman criou um mortífero exército 10 mil vezes mais poderoso; e a fortaleza de Sauron em Barad-dûr, no coração do tenebroso território de Mordor.",
@@ -1359,14 +1367,6 @@
       },
       "trailer": "LbfMDwc4azU",
       "offers": [
-        {
-          "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV001281470000?irmp=1206980&irad=599309",
-          "price": null,
-          "quality": "HD"
-        },
         {
           "type": "stream",
           "service": "HBO Max",
@@ -1488,7 +1488,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-06"
     },
     {
       "title": "The Lord of the Rings: The Return of the King",
@@ -1717,7 +1717,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-06"
     },
     {
       "title": "Titanic",
@@ -1908,9 +1908,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00HDQB6A2?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$10.41",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B006DZZLC8?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$12.99",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -1945,7 +1945,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-06"
     },
     {
       "title": "Forrest Gump",
@@ -12618,8 +12618,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0G1TXJSM5?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$11.78",
+          "url": "https://www.amazon.com/dp/B000LW7MCG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$19.98",
           "quality": "DVD"
         },
         {
@@ -12655,8 +12655,8 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-02"
+      "refreshed": "2026-11-06"
     }
   ],
-  "updated": "2026-11-05"
+  "updated": "2026-11-06"
 }
