@@ -8,9 +8,12 @@ no accounts, no server-side code and no visitor data beyond Google Analytics.
 
 Please don't open a public issue for anything exploitable (a leaked secret,
 a way to change what the site serves, a hole in the automation). Instead,
-send a private message through one of the profiles on
-<https://brianpfeil.com/about/> with what you found and how to reproduce it.
-You'll get an answer within a few days.
+report it privately on GitHub:
+<https://github.com/pfeilbr/brianpfeil.com/security/advisories/new>
+(Security tab → "Report a vulnerability"), with what you found and how to
+reproduce it. No GitHub account? A private message through one of the
+profiles on <https://brianpfeil.com/about/> works too. You'll get an answer
+within a few days.
 
 Useful to report:
 
@@ -33,3 +36,5 @@ and findings in third-party sites the pages link to.
 - Third-party actions are pinned to commit SHAs; Dependabot proposes updates
   after a week's cooldown; CI runs `govulncheck` and `pip-audit`.
 - The S3 buckets are private, TLS-only and encrypted (`infra/`).
+- GitHub secret scanning with push protection, Dependabot security alerts
+  and security updates are on for the repository.
