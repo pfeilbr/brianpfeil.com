@@ -116,6 +116,10 @@ test-docs: ## Every Makefile target has help text and is in the README
 	python3 -m unittest discover -s tools/docs-check -p 'test_*.py'
 	python3 tools/docs-check/check_docs.py
 
+lint: ## actionlint (with shellcheck) over every workflow, as CI does (brew install actionlint shellcheck)
+	@command -v actionlint >/dev/null || { echo "actionlint not installed: brew install actionlint shellcheck" >&2; exit 1; }
+	actionlint
+
 test-ci: ## Checks of the CI setup: one Hugo version pinned in every workflow, every tool test suite run by verify and CI
 	python3 -m unittest discover -s tools/ci-check -p 'test_*.py'
 	python3 tools/ci-check/check_ci.py
@@ -283,4 +287,4 @@ tf-validate: ## terraform fmt -check and validate, both stacks (as CI does)
 help: ## List every target
 	@awk 'BEGIN {FS = ":.*## "} /^[a-z0-9-]+:.*## / {printf "  \033[1m%-22s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: test-ci test-drafts-extract test-ig-carousel test-newsletter test-subscriptions media-posters notes-strip check-post-links links-rescue test-movies apps-icon test-apps test-profiles learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf
+.PHONY: lint test-ci test-drafts-extract test-ig-carousel test-newsletter test-subscriptions media-posters notes-strip check-post-links links-rescue test-movies apps-icon test-apps test-profiles learn-pages social-kit social-post devto-preview devto-push test-social help dev build verify generate-posts music-refresh test-music movies-refresh ai-refresh ai-i18n ai-digest test-ai test-ai-page github-refresh test-github test-tools media-deps media-stage media-publish media-release media-sync media-audit media-status media-watch-install media-watch-uninstall media-watch-status test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs check-repo-links check-learn-links courses-sync check-course-links images-optimize images-rescue images-selfhost tf-init tf-plan tf-validate guides-pdf
