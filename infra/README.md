@@ -91,9 +91,13 @@ tail -f infra/.provider-cache/fetch.log
 ```
 
 It resumes after interruptions, verifies the published SHA256, and runs
-init / validate / plan when done. Because the mirror bypasses the registry,
-the generated `.terraform.lock.hcl` only has darwin_arm64 hashes and is
-gitignored rather than committed.
+init / validate / plan when done. Both stacks commit `.terraform.lock.hcl`,
+written with `terraform providers lock -platform=linux_amd64
+-platform=darwin_arm64 -platform=darwin_amd64` so it carries the registry's
+checksums for CI and the laptop; a `-plugin-dir` install only checks the
+mirror's copy against it. To move to a newer provider: `terraform init
+-upgrade` on a machine that reaches the registry, the same `providers lock`
+command in both stacks, and commit both lock files.
 
 ## Bootstrapping from nothing
 

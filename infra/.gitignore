@@ -3,7 +3,7 @@
 *.tfstate.*
 *.tfplan
 .provider-cache/
-# Written by a -plugin-dir install, so it carries locally-computed
-# checksums for darwin_arm64 only and would break CI or a Linux box.
-# Commit a real one from `terraform providers lock -platform=...`.
-.terraform.lock.hcl
+# .terraform.lock.hcl is committed (both stacks). It was written with
+# `terraform providers lock -platform=linux_amd64 -platform=darwin_arm64
+# -platform=darwin_amd64`, so it holds registry checksums for CI and the
+# laptop alike; a -plugin-dir install only verifies against it.
