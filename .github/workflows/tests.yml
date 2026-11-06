@@ -37,6 +37,29 @@ jobs:
         working-directory: tools/generate-posts
       - run: go test ./...
         working-directory: tools/generate-posts
+      # The downloaded modules match go.sum.
+      - run: go mod verify
+        working-directory: tools/generate-posts
+
+  go-vulns:
+    name: generate-posts (govulncheck)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      # Current stable Go, not go.mod's exact 1.26.0: the generator is run on
+      # a laptop with an up-to-date Go, and 1.26.0's own standard-library
+      # bugs (fixed in its patch releases) say nothing about the code here.
+      - uses: actions/setup-go@v7
+        with:
+          go-version: stable
+          cache-dependency-path: tools/generate-posts/go.sum
+      # Fails only on a known vulnerability in code the generator actually
+      # calls. govulncheck itself is pinned; bump it on purpose.
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...
+        working-directory: tools/generate-posts
 
   media-tool:
     name: instagram-media (Python)
