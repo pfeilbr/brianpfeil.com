@@ -66,6 +66,15 @@ jobs:
         with:
           hugo-version: "0.166.0"
           extended: true
+      # The share cards the deploy already drew (gh-pages.yml), read-only:
+      # without it this build redraws ~100 MB of images just to check the
+      # page, and a scheduled run never writes the deploy's cache.
+      - name: Restore Hugo's generated images
+        uses: actions/cache/restore@v6
+        with:
+          path: resources/_gen
+          key: hugo-resources-none
+          restore-keys: hugo-resources-
       - name: Build
         run: |
           hugo --minify
