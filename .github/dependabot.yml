@@ -5,12 +5,16 @@
 # version, so it stays pinned by hand. Monthly and grouped: one PR each.
 # The two third-party actions (peaceiris/actions-hugo, hashicorp/setup-terraform)
 # are pinned to a commit SHA with the tag in a comment; Dependabot bumps both.
+# cooldown: a release is only proposed once it is a week old, so a hijacked
+# package that is caught and yanked within days never reaches a PR here.
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 7
     groups:
       actions:
         patterns: ["*"]
@@ -19,6 +23,8 @@ updates:
     directory: /tools/generate-posts
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 7
     groups:
       go:
         patterns: ["*"]
@@ -29,6 +35,8 @@ updates:
       - /tools/instagram-media
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 7
     groups:
       python:
         patterns: ["*"]
