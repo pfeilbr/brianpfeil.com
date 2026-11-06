@@ -25,5 +25,59 @@ class HugoPinTest(unittest.TestCase):
         self.assertEqual(check_ci.hugo_problems(check_ci.load_workflows()), [])
 
 
+MAKEFILE = """verify: test-a test-b ## Every test suite
+\thugo --minify
+
+test-a: ## a
+\tpython3 -m unittest discover -s tools/a -p 'test_*.py'
+
+test-b: ## b
+\tcd tools/b && go test ./...
+
+test-c: ## c, not in verify
+\tpython3 -m unittest discover -s tools/c -p 'test_*.py'
+"""
+
+
+class SuiteWiringTest(unittest.TestCase):
+    def test_suites_in_both_pass(self):
+        ci = "run: python -m unittest discover -s tools/a\nworking-directory: tools/b\n"
+        self.assertEqual(check_ci.suite_problems(["tools/a", "tools/b"], MAKEFILE, ci), [])
+
+    def test_a_suite_missing_from_verify_or_ci_is_named(self):
+        ci = "run: python -m unittest discover -s tools/a\n"
+        problems = check_ci.suite_problems(["tools/a", "tools/b", "tools/c"], MAKEFILE, ci)
+        self.assertEqual(problems, [
+            "tools/b: has tests but the Tests workflow never runs them",
+            "tools/c: has tests but `make verify` never runs them",
+            "tools/c: has tests but the Tests workflow never runs them",
+        ])
+
+    def test_a_name_that_prefixes_another_is_not_a_match(self):
+        ci = "tools/ab\n"
+        self.assertIn("tools/a: has tests but the Tests workflow never runs them",
+                      check_ci.suite_problems(["tools/a"], MAKEFILE, ci))
+
+    def test_finds_python_go_and_node_suites_and_skips_venvs(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            for f in ["py/test_x.py", "go/x_test.go", "js/x.test.mjs", "none/x.py", "venv/.venv/lib/test_y.py"]:
+                (root / f).parent.mkdir(parents=True, exist_ok=True)
+                (root / f).write_text("")
+            self.assertEqual(check_ci.tools_with_tests(root), ["tools/go", "tools/js", "tools/py"])
+
+    def test_the_repo_passes(self):
+        from pathlib import Path
+        repo = Path(check_ci.REPO)
+        problems = check_ci.suite_problems(
+            check_ci.tools_with_tests(repo / "tools"),
+            (repo / "Makefile").read_text(encoding="utf-8"),
+            check_ci.load_workflows()["tests.yml"],
+        )
+        self.assertEqual(problems, [])
+
+
 if __name__ == "__main__":
     unittest.main()

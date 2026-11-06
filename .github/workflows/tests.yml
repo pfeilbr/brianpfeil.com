@@ -133,7 +133,7 @@ jobs:
         run: |
           python -m unittest discover -s tools/docs-check -p 'test_*.py' -v
           python tools/docs-check/check_docs.py
-      - name: CI setup check (one Hugo pin everywhere)
+      - name: CI setup check (one Hugo pin, every test suite wired in)
         run: |
           python -m unittest discover -s tools/ci-check -p 'test_*.py' -v
           python tools/ci-check/check_ci.py

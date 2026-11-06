@@ -116,7 +116,7 @@ test-docs: ## Every Makefile target has help text and is in the README
 	python3 -m unittest discover -s tools/docs-check -p 'test_*.py'
 	python3 tools/docs-check/check_docs.py
 
-test-ci: ## Checks of the CI setup: one Hugo version pinned in every workflow
+test-ci: ## Checks of the CI setup: one Hugo version pinned in every workflow, every tool test suite run by verify and CI
 	python3 -m unittest discover -s tools/ci-check -p 'test_*.py'
 	python3 tools/ci-check/check_ci.py
 

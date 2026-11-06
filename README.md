@@ -166,7 +166,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-image-rescue` | Tests for the dead-image rescue map and the Evernote self-hosting (every Evernote image in a post is mapped) |
 | `make test-i18n` | Tests for, and a run of, the i18n consistency check |
 | `make test-docs` | Every Makefile target has help text and is in the README |
-| `make test-ci` | Checks of the CI setup: one Hugo version pinned in every workflow |
+| `make test-ci` | Checks of the CI setup: one Hugo version pinned in every workflow, every tool test suite run by verify and CI |
 | `make test-ai` | Unit tests for the AI radar, and its i18n block is current |
 | `make test-ai-page` | Build `/ai/` from a fixture and with no data; check page, briefing, feed and home card in all nine languages |
 | `make test-social` | Unit tests for the social kit, the Bluesky/Mastodon poster and the dev.to cross-poster |
