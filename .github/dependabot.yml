@@ -3,6 +3,8 @@
 # pull third-party code: the Go post generator's modules and the Python
 # tools' requirements. The Hugo version is a workflow input, not an action
 # version, so it stays pinned by hand. Monthly and grouped: one PR each.
+# The two third-party actions (peaceiris/actions-hugo, hashicorp/setup-terraform)
+# are pinned to a commit SHA with the tag in a comment; Dependabot bumps both.
 version: 2
 updates:
   - package-ecosystem: github-actions

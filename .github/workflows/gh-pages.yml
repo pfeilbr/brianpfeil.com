@@ -32,7 +32,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+        uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3.2.1
         with:
           # Pinned: "latest" picked up 0.166.0 unannounced and broke the deploy.
           # Bump deliberately after a local build passes on the new version.
