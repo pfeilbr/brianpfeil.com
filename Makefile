@@ -20,8 +20,8 @@ generate-posts: ## Regenerate generated-*.md posts from GitHub
 notes-strip: ## Strip laptop-specific setup and B's own names (tools/generate-posts/local_setup.toml) from the lab notes already in content/post (no GitHub; a no-op when clean)
 	cd tools/generate-posts && go run . -strip-existing -dest=../../content/post
 
-test-tools: ## Go tests for the post generator
-	cd tools/generate-posts && go test ./...
+test-tools: ## go vet and Go tests for the post generator (as CI runs them)
+	cd tools/generate-posts && go vet ./... && go test ./...
 
 # --- Instagram media page (/media/) ---------------------------------------
 # Source: the instagram-archive project (~/projects/instagram-archive/archive, set in

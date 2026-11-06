@@ -149,7 +149,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make media-watch-uninstall` | Remove the Downloads watcher |
 | `make media-watch-status` | Whether the watcher is loaded, and its last runs |
 | **Tests** | |
-| `make test-tools` | Go tests for the post generator |
+| `make test-tools` | `go vet` and Go tests for the post generator (as CI runs them) |
 | `make test-media` | Python tests for the media tool |
 | `make test-layout` | Build `/media/` from a fixture; check `/data/media.json` and the page in all nine languages |
 | `make test-link-check` | Tests for the repo-link and post-link checkers |
