@@ -134,6 +134,22 @@ jobs:
           python -m unittest discover -s tools/docs-check -p 'test_*.py' -v
           python tools/docs-check/check_docs.py
 
+  python-vulns:
+    name: Python requirements (pip-audit)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      # The only pinned third-party Python packages (every other tool is
+      # standard library only). pip-audit is pinned; bump it on purpose.
+      - run: pip install -q pip-audit==2.10.1
+      - run: pip-audit --progress-spinner off -r tools/ai-radar/requirements.txt -r tools/instagram-media/requirements.txt
+
   site:
     name: hugo build
     runs-on: ubuntu-24.04
