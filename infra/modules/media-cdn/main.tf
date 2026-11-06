@@ -69,6 +69,40 @@ resource "aws_s3_bucket_lifecycle_configuration" "media" {
       days_after_initiation = 7
     }
   }
+
+  # With versioning on (below), an overwritten or deleted file is kept as a
+  # noncurrent version for 30 days, then removed, so the safety net costs
+  # at most a month of the few files a prune or a poster repair replaces.
+  # Delete markers left with nothing behind them are cleared too.
+  rule {
+    id     = "expire-noncurrent-versions"
+    status = "Enabled"
+
+    filter {}
+
+    noncurrent_version_expiration {
+      noncurrent_days = 30
+    }
+
+    expiration {
+      expired_object_delete_marker = true
+    }
+  }
+
+  # The rule above means nothing until versioning is on.
+  depends_on = [aws_s3_bucket_versioning.media]
+}
+
+# A mistaken `pull.py release --prune`, an `aws s3 sync --delete` from the
+# wrong folder or a bad poster repair would otherwise destroy hours of
+# encoding for good. Versioning keeps the previous copy restorable for the
+# 30 days the lifecycle rule allows; published URLs and reads are unchanged.
+resource "aws_s3_bucket_versioning" "media" {
+  bucket = aws_s3_bucket.media.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "media" {
