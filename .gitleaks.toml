@@ -1,0 +1,27 @@
+# gitleaks (run by the Tests workflow on the commits each push or PR adds).
+# The default rules, minus strings that look like secrets but are public or
+# meaningless by design. Add to these lists only for something that is truly
+# not a secret; a real one gets rotated and redacted instead
+# (tools/generate-posts/local_setup.toml for lab notes).
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Google Photos media keys of published picks, and the test fixtures that copy their shape"
+paths = [
+  '''^tools/instagram-media/picks\.yaml$''',
+  '''^tools/instagram-media/tests/''',
+]
+
+[[allowlists]]
+description = "The IndexNow key is public by design: it is served at /<key>.txt"
+paths = ['''^tools/indexnow/config\.json$''']
+
+[[allowlists]]
+description = "Lab notes: a vault -dev root token the note marks as ephemeral, and AWS resource ids that grant nothing"
+regexTarget = "line"
+regexes = [
+  '''ok to expose for demo''',
+  '''\bfsap-[0-9a-f]{17}\b''',
+]
