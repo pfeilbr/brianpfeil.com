@@ -60,9 +60,26 @@ jobs:
         run: |
           python -m unittest discover -s tools/movies -p 'test_*.py'
           python -m unittest discover -s tools/subscriptions -p 'test_*.py'
+      # The same test the commit step makes: a change other than the date
+      # stamp (new posters included). Nothing new = no commit, so the build
+      # that only guards a commit is skipped too.
+      - name: Anything new?
+        id: diff
+        run: |
+          git add data/movies.json data/twitch.yaml static/movies
+          # grep -c, not -q: -q stops reading at the first hit, and under
+          # pipefail the SIGPIPE that gives the upstream grep on a big diff
+          # would read as "nothing changed".
+          n="$(git diff --cached -U0 | grep '^[+-]' | grep -v '^[+-][+-]' | grep -cv '"updated":' || true)"
+          if [ "${n:-0}" -gt 0 ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"; echo "nothing new; skipping the build"
+          fi
       # The pages must still build with the new data before anything is
       # pushed. Same Hugo pin as the deploy.
       - uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3.2.1
+        if: steps.diff.outputs.changed == 'true'
         with:
           hugo-version: "0.166.0"
           extended: true
@@ -70,12 +87,14 @@ jobs:
       # without it this build redraws ~100 MB of images just to check the
       # page, and a scheduled run never writes the deploy's cache.
       - name: Restore Hugo's generated images
+        if: steps.diff.outputs.changed == 'true'
         uses: actions/cache/restore@v6
         with:
           path: resources/_gen
           key: hugo-resources-none
           restore-keys: hugo-resources-
       - name: Build
+        if: steps.diff.outputs.changed == 'true'
         run: |
           hugo --minify
           python tools/movies/check_payload.py --public public
@@ -85,8 +104,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/movies.json data/twitch.yaml static/movies
-          # The date stamp alone is not a change worth a deploy.
-          if ! git diff --cached -U0 | grep '^[+-]' | grep -v '^[+-][+-]' | grep -qv '"updated":'; then
+          # The date stamp alone is not a change worth a deploy. (grep -c:
+          # see "Anything new?".)
+          n="$(git diff --cached -U0 | grep '^[+-]' | grep -v '^[+-][+-]' | grep -cv '"updated":' || true)"
+          if [ "${n:-0}" -eq 0 ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi

@@ -37,9 +37,21 @@ jobs:
         run: python tools/github-repos/refresh.py
       - name: Check the refreshed file
         run: python -m unittest discover -s tools/github-repos -p 'test_*.py'
+      # The same test the commit step makes (the refresher leaves the file
+      # alone when only the date would change). Nothing new = no commit, so
+      # the build that only guards a commit is skipped too.
+      - name: Anything new?
+        id: diff
+        run: |
+          if git diff --quiet -- data/github.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"; echo "nothing new; skipping the build"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
       # The page must still build and render in all nine languages with the
       # new data before anything is pushed. Same Hugo pin as the deploy.
       - uses: peaceiris/actions-hugo@2752ce1d29631191ea3f27c23495fa06139a5b78 # v3.2.1
+        if: steps.diff.outputs.changed == 'true'
         with:
           hugo-version: "0.166.0"
           extended: true
@@ -47,12 +59,14 @@ jobs:
       # without it this build redraws ~100 MB of images just to check the
       # page, and a scheduled run never writes the deploy's cache.
       - name: Restore Hugo's generated images
+        if: steps.diff.outputs.changed == 'true'
         uses: actions/cache/restore@v6
         with:
           path: resources/_gen
           key: hugo-resources-none
           restore-keys: hugo-resources-
       - name: Build and render check
+        if: steps.diff.outputs.changed == 'true'
         run: |
           hugo --minify
           python tools/github-repos/check_page.py --public public
