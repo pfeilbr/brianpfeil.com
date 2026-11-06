@@ -63,10 +63,14 @@ jobs:
           git commit -q -m "AI radar: $(date -u +%Y-%m-%d)"
           # Someone may have pushed while this ran; data/ai.json is only
           # written here, so a rebase never conflicts on it.
-          for i in 1 2 3; do
-            git pull -q --rebase origin main && git push -q origin HEAD:main && break
+          # Three tries; if none lands, fail rather than report a change
+          # (and dispatch a deploy) that never reached main.
+          pushed=false
+          for _ in 1 2 3; do
+            if git pull -q --rebase origin main && git push -q origin HEAD:main; then pushed=true; break; fi
             sleep 5
           done
+          if [ "$pushed" != true ]; then echo "::error::push to main failed 3 times"; exit 1; fi
           echo "changed=true" >> "$GITHUB_OUTPUT"
       - name: Source health issue
         env:

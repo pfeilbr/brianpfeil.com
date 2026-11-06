@@ -62,7 +62,7 @@ jobs:
           git add tools/social/posted.json 2>/dev/null || exit 0
           git diff --cached --quiet && exit 0
           git commit -q -m "Social: posted $(date -u +%Y-%m-%d)"
-          for i in 1 2 3 4 5; do
+          for _ in 1 2 3 4 5; do
             git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0
             sleep 7
           done
