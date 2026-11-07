@@ -8,7 +8,7 @@ title = "Chi sono"
 layout = "page"
 +++
 
-<img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
+<img class="about-photo" src="/images/2026-11-07-profile-brian-pfeil-linkedin-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
 Ciao, sono Brian Pfeil. Da 30 anni costruisco cose con la tecnologia e scrivo di ciò che imparo perché altri possano trarre beneficio da questa esperienza.
 

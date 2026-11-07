@@ -31,47 +31,65 @@ sections:
 # cards drawn by the template. Archive and Tags are
 # only in the footer now: they are ways to browse, not reasons to visit.
 
-# Profiles. Names are brand names, so not translated. The hero shows only
-# the ones marked hero: true (the professional four); /about/ lists them all.
+# Profiles, in this order, every one of them on the home page (B,
+# 2026-11-07: "all my socials on the root, more prominent"), as a row of
+# icons in each network's colour (`net`, see .hub-socials in main.css).
+# Names are brand names, so not translated. /about/ and the footer list
+# them too; tools/profiles/check_profiles.py keeps all three in step.
 social:
   - name: GitHub
-    hero: true
+    net: github
     url: https://github.com/pfeilbr
     icon: i-github
   - name: LinkedIn
-    hero: true
+    net: linkedin
     url: https://www.linkedin.com/in/brian-pfeil-175a011/
     icon: i-linkedin
-  - name: Instagram
-    url: https://www.instagram.com/pfeilbr/
-    icon: i-instagram
   - name: X (Twitter)
-    hero: true
+    net: x
     url: https://twitter.com/pfeilbr
     icon: i-x
     me: true
   - name: YouTube
-    hero: true
+    net: youtube
     url: https://www.youtube.com/@pfeilbr
     icon: i-youtube
+  - name: Stack Overflow
+    net: stack
+    url: https://stackoverflow.com/users/29148/pfeilbr
+    icon: i-stack
+  - name: Instagram
+    net: instagram
+    url: https://www.instagram.com/pfeilbr/
+    icon: i-instagram
+  - name: TikTok
+    net: tiktok
+    url: https://www.tiktok.com/@pfeilbr
+    icon: i-tiktok
+  - name: Facebook
+    net: facebook
+    url: https://www.facebook.com/brian.pfeil
+    icon: i-facebook
   - name: Pinterest
+    net: pinterest
     url: https://www.pinterest.com/pfeilbr/
     icon: i-pinterest
   - name: Snapchat
+    net: snapchat
     url: https://www.snapchat.com/@pfeilbr
     icon: i-snapchat
-  - name: TikTok
-    url: https://www.tiktok.com/@pfeilbr
-    icon: i-tiktok
-  - name: Stack Overflow
-    url: https://stackoverflow.com/users/29148/pfeilbr
-    icon: i-stack
   # No profile URL: a button that copies the ID (the footer's script), its
   # tooltip from i18n "copy_<key>".
+  - key: discord
+    net: discord
+    copy: pfeilbr
+    icon: i-discord
   - key: wechat
+    net: wechat
     copy: methym00
     icon: i-wechat
   # A tel: link; the number is params.author.phone, its tooltip i18n "call_me".
   - key: phone
+    net: phone
     tel: true
     icon: i-phone

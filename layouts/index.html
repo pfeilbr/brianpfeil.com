@@ -13,10 +13,16 @@
 {{ $posts := partial "site-posts.html" . }}
 
 <section class="hub-hero">
+  {{- /* The LinkedIn cover (a lake at dusk) as a banner, the photo overlapping
+     its lower edge. Decorative, so no alt text. Shown at most 640px wide. */}}
+  <img class="hub-cover" src="/images/2026-11-07-brian-pfeil-linkedin-cover-lake-at-dusk-1400.webp"
+       srcset="/images/2026-11-07-brian-pfeil-linkedin-cover-lake-at-dusk-800.webp 800w, /images/2026-11-07-brian-pfeil-linkedin-cover-lake-at-dusk-1400.webp 1400w"
+       sizes="(min-width: 700px) 640px, 100vw"
+       alt="" width="1400" height="350" decoding="async">
   {{- /* Shown at 88px (120px from 640px wide): WebP at 2x, the 320px JPEG
      only for 3x screens. */}}
-  <img class="hub-avatar" src="/images/2025-03-01-profile-brian-pfeil-avatar-240.webp"
-       srcset="/images/2025-03-01-profile-brian-pfeil-avatar-176.webp 176w, /images/2025-03-01-profile-brian-pfeil-avatar-240.webp 240w, /images/2025-03-01-profile-brian-pfeil-avatar.jpg 320w"
+  <img class="hub-avatar" src="/images/2026-11-07-profile-brian-pfeil-linkedin-avatar-240.webp"
+       srcset="/images/2026-11-07-profile-brian-pfeil-linkedin-avatar-176.webp 176w, /images/2026-11-07-profile-brian-pfeil-linkedin-avatar-240.webp 240w, /images/2026-11-07-profile-brian-pfeil-linkedin-avatar.jpg 320w"
        sizes="(min-width: 640px) 120px, 88px"
        alt="Brian Pfeil" width="320" height="320" decoding="async" fetchpriority="high">
   <div class="hub-hero-text">
@@ -38,31 +44,37 @@
     <div class="hub-social">
       <a class="hub-more" href="{{ $prefix }}about/">{{ i18n "hub_more_about" }}
         <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a>
-      <span class="hub-social-links">
-        {{- /* Only the profiles marked hero: true; /about/ lists them all. */}}
-        {{ range where hugo.Data.home.social "hero" true }}
-        {{ if .copy }}
+    </div>
+  </div>
+  {{- /* Every profile, full width under the hero, each in its network's
+     colour (data/home.yaml `social`). */}}
+  <nav class="hub-socials" aria-labelledby="hub-socials-label">
+    <p id="hub-socials-label" class="hub-socials-label">{{ i18n "hub_social_label" }}</p>
+    <ul class="hub-socials-list">
+      {{ range hugo.Data.home.social }}
+      <li data-net="{{ .net }}">
+      {{ if .copy }}
         {{ $t := i18n (printf "copy_%s" .key) .copy }}
         <button type="button" class="social-copy" data-copy="{{ .copy }}" title="{{ $t }}" aria-label="{{ $t }}">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#{{ .icon }}"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#{{ .icon }}"/></svg>
           <span class="social-copy-done" role="status" hidden>{{ i18n "copied" }}</span>
         </button>
-        {{ else if .tel }}
+      {{ else if .tel }}
         {{ with site.Params.author.phone }}
         {{ $t := i18n "call_me" . }}
         <a href="tel:{{ replaceRE `[^+0-9]` "" . }}" title="{{ $t }}" aria-label="{{ $t }}">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#i-phone"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-phone"/></svg>
         </a>
         {{ end }}
-        {{ else }}
+      {{ else }}
         <a href="{{ .url }}" target="_blank" rel="{{ if .me }}me {{ end }}noopener noreferrer" title="{{ .name }}" aria-label="{{ .name }}">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#{{ .icon }}"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#{{ .icon }}"/></svg>
         </a>
-        {{ end }}
-        {{ end }}
-      </span>
-    </div>
-  </div>
+      {{ end }}
+      </li>
+      {{ end }}
+    </ul>
+  </nav>
 </section>
 
 <h2 class="hub-h2">{{ i18n "hub_explore" }}</h2>

@@ -8,7 +8,7 @@ title = "소개"
 layout = "page"
 +++
 
-<img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
+<img class="about-photo" src="/images/2026-11-07-profile-brian-pfeil-linkedin-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
 안녕하세요, Brian Pfeil입니다. 30년 동안 기술로 무언가를 만들어 왔고, 그 경험이 다른 사람들의 배움에 도움이 되도록 배운 것을 글로 씁니다.
 

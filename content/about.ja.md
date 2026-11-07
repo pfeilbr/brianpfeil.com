@@ -8,7 +8,7 @@ title = "自己紹介"
 layout = "page"
 +++
 
-<img class="about-photo" src="/images/2025-03-01-profile-brian-pfeil-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
+<img class="about-photo" src="/images/2026-11-07-profile-brian-pfeil-linkedin-avatar.jpg" alt="Brian Pfeil" width="320" height="320" decoding="async">
 
 こんにちは、Brian Pfeil です。30 年にわたりテクノロジーでものを作ってきました。その経験がほかの人の学びに役立つよう、学んだことを書いています。
 

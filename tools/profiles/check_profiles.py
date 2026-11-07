@@ -8,10 +8,10 @@ Person `sameAs` (partials/head-meta.html). Adding a network means touching
 all four, so this checks a built site for every profile in each of them:
 
   - /about/ in every language links every profile;
-  - the home page in every language links the HERO profiles from the hero
-    (the professional four, `hero: true` in data/home.yaml; B trimmed the
-    rest from the hero on 2026-10-11) and lists every profile in the
-    Person's sameAs;
+  - the home page in every language links every profile from the hero
+    (plus HERO_ONLY; B asked for all of them there on 2026-11-07, after
+    trimming it to four on 2026-10-11), and the copy buttons and phone link,
+    and lists every profile in the Person's sameAs;
   - the footer (read from the English home page) links FOOTER.
 
 Networks with no profile URL (HANDLES: Discord, WeChat) are copy buttons
@@ -49,12 +49,14 @@ PROFILES = {
 # The JSON-LD spells X as x.com; the links still use twitter.com.
 SAME_AS = {**PROFILES, "x": "https://x.com/pfeilbr"}
 FOOTER = ("x", "github", "stackoverflow", "youtube", "pinterest", "snapchat", "tiktok")
-HERO = ("github", "linkedin", "x", "youtube")
+HERO = tuple(PROFILES)
+# On the home page and /about/, not (yet) in sameAs or the check above.
+HERO_ONLY = {"facebook": "https://www.facebook.com/brian.pfeil"}
 
 # Copy-only handles and where they appear: about, hero, footer.
 HANDLES = {
-    "discord": ("pfeilbr", ("about", "footer")),
-    "wechat": ("methym00", ("about", "footer")),
+    "discord": ("pfeilbr", ("about", "hero", "footer")),
+    "wechat": ("methym00", ("about", "hero", "footer")),
 }
 
 # Published on purpose (B, 2026-10-08).
@@ -129,6 +131,12 @@ def check(public: Path) -> list[str]:
         hero = LD.sub("", html[: foot.start()] if foot else html)
         for k in missing(hero, HERO):
             errors.append(f"/{lang}/ hero: no link to {k} ({PROFILES[k]})")
+        for k in missing(hero, HERO_ONLY, HERO_ONLY):
+            errors.append(f"/{lang}/ hero: no link to {k} ({HERO_ONLY[k]})")
+        for k in no_copy(hero, "hero"):
+            errors.append(f"/{lang}/ hero: no {k} copy button")
+        if not has_tel(hero):
+            errors.append(f"/{lang}/ hero: no phone link")
         if telephone(html) != PHONE:
             errors.append(f"/{lang}/ JSON-LD: telephone is {telephone(html)!r}, not {PHONE}")
         sa = " ".join(same_as(html))
@@ -152,7 +160,7 @@ def main() -> int:
         print(f"error: {e}", file=sys.stderr)
     if errors:
         return 1
-    print(f"ok: {len(PROFILES)} profiles and {len(HANDLES)} handles and the phone number linked on /about/ and sameAs ({len(HERO)} in the home hero) in all {len(LANGS)} languages, and the footer")
+    print(f"ok: {len(PROFILES)} profiles and {len(HANDLES)} handles and the phone number linked on /about/ and sameAs (all {len(HERO) + len(HERO_ONLY)}, the handles and the phone in the home hero) in all {len(LANGS)} languages, and the footer")
     return 0
 
 

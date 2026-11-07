@@ -37,9 +37,10 @@ project page (matched by the bundle's `repo` param) and the old
 `project_repos`. GitHub and /apps/ link the project page, not the README.
 
 **The home page is a pitch, then a table of contents.** `/` is a hero
-(positioning line, three calls to action: guides, courses, articles; four
-professional profiles, `hero: true` in `data/home.yaml` — /about/ and the
-footer keep all of them), then wide cards for Architecture guides, Courses,
+(the LinkedIn cover photo as a banner with the photo over its edge,
+positioning line, three calls to action: guides, courses, articles; then
+every profile in `data/home.yaml` `social` as a row of icons in each
+network's colour, B's call 2026-11-07), then wide cards for Architecture guides, Courses,
 Articles and Learn, plain cards listed in `data/home.yaml` (projects, apps,
 lab notes, AI, GitHub, résumé; titles/blurbs `hub_<key>_title` /
 `hub_<key>_blurb`), and one "Off the clock" card for media, movies, music
