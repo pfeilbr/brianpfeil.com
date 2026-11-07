@@ -2047,14 +2047,6 @@
       "offers": [
         {
           "type": "free",
-          "service": "Kanopy",
-          "icon": "/movies/services/kanopy.webp",
-          "url": "https://www.kanopy.com/product/justwatch-15187571",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "free",
           "service": "YouTube Free",
           "icon": "/movies/services/youtubefree.webp",
           "url": "https://www.youtube.com/watch?v=22W83FgIX54",
@@ -2089,7 +2081,7 @@
           "type": "stream",
           "service": "AMC+ Amazon Channel",
           "icon": "/movies/services/amazonamcplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d2a9f65f-019a-dc2a-9f03-e9b342352bac",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.a75bbfef-d811-4fcc-9b4c-192e2fc43b28",
           "price": null,
           "quality": "HD"
         },
@@ -2105,17 +2097,9 @@
           "type": "stream",
           "service": "Apple TV Amazon Channel",
           "icon": "/movies/services/amazonappletvplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d2a9f65f-019a-dc2a-9f03-e9b342352bac",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.a75bbfef-d811-4fcc-9b4c-192e2fc43b28",
           "price": null,
           "quality": "4K"
-        },
-        {
-          "type": "stream",
-          "service": "fuboTV",
-          "icon": "/movies/services/fubotv.webp",
-          "url": "https://www.fubo.tv/welcome/program/MV000398520000?irmp=1206980&irad=599309",
-          "price": null,
-          "quality": "HD"
         },
         {
           "type": "stream",
@@ -2137,7 +2121,7 @@
           "type": "stream",
           "service": "Paramount+ Amazon Channel",
           "icon": "/movies/services/amazonparamountplus.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d2a9f65f-019a-dc2a-9f03-e9b342352bac",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.a75bbfef-d811-4fcc-9b4c-192e2fc43b28",
           "price": null,
           "quality": "4K"
         },
@@ -2161,7 +2145,7 @@
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.d2a9f65f-019a-dc2a-9f03-e9b342352bac",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.a75bbfef-d811-4fcc-9b4c-192e2fc43b28",
           "price": "$3.99",
           "quality": "4K"
         },
@@ -2201,7 +2185,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/forrest-gump?utm_content=5d7768294de0ee001fcc9261&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/forrest-gump-1994?utm_content=5d7768294de0ee001fcc9261&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -2250,11 +2234,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Forrest-Gump/22436",
-          "price": "$16.99",
+          "price": "$9.99",
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "Sixteen Candles",
@@ -2462,7 +2446,7 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Sixteen-Candles/5256",
-          "price": "$12.99",
+          "price": "$5.00",
           "quality": "HD"
         },
         {
@@ -2474,7 +2458,7 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-11-03"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "Weird Science",
@@ -2619,8 +2603,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B07G24KRCN?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.34",
+          "url": "https://www.amazon.com/dp/B00E5WQVAM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$19.32",
           "quality": "BLURAY"
         },
         {
@@ -2664,7 +2648,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "Real Genius",
@@ -2816,7 +2800,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/real-genius?utm_content=5d77683b4de0ee001fcccc05&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/real-genius-1985?utm_content=5d77683b4de0ee001fcccc05&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -2861,7 +2845,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "Road House",
@@ -2920,7 +2904,7 @@
       ],
       "titles": {
         "en": "Road House",
-        "zh": "威龍殺陣",
+        "zh": "拳霸街头",
         "es": "De profesión: duro",
         "pt": "Profissão: Duro",
         "fr": "Bar routier",
@@ -2953,14 +2937,6 @@
       "trailer": "YH3BMICpXyA",
       "offers": [
         {
-          "type": "stream",
-          "service": "AMC Plus Apple TV channel",
-          "icon": "/movies/services/appletvamcplus.webp",
-          "url": "https://tv.apple.com/us/movie/road-house/umc.cmc.2ha4cqzcxv4s5ovlbfamqfy33?at=1000l3V2&ct=app_tvplus&itscg=30200&itsct=justwatch_tv",
-          "price": null,
-          "quality": "HD"
-        },
-        {
           "type": "rent",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
@@ -2988,7 +2964,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/road-house?utm_content=5d776d17f617c90020185e57&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/road-house-1989?utm_content=5d776d17f617c90020185e57&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -3033,7 +3009,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "The Notebook",
@@ -3152,15 +3128,15 @@
           "type": "rent",
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
-          "url": "https://athome.fandango.com/content/browse/details/The-Notebook-Le-Grand-Cahier-/600346",
-          "price": "$3.99",
+          "url": "https://athome.fandango.com/content/browse/details/The-Notebook/44659",
+          "price": "$5.99",
           "quality": "HD"
         },
         {
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/the-notebook?utm_content=5d776836999c64001ec2f707&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/the-notebook-2004?utm_content=5d776836999c64001ec2f707&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$2.99",
           "quality": "HD"
         },
@@ -3200,12 +3176,12 @@
           "type": "buy",
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
-          "url": "https://athome.fandango.com/content/browse/details/The-Notebook-Le-Grand-Cahier-/600346",
-          "price": "$13.99",
+          "url": "https://athome.fandango.com/content/browse/details/The-Notebook/44659",
+          "price": "$14.99",
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "A River Runs Through It",
@@ -3331,7 +3307,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/a-river-runs-through-it?utm_content=5d776824f54112001f5bbdda&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/a-river-runs-through-it-1992?utm_content=5d776824f54112001f5bbdda&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -3384,7 +3360,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "Wedding Crashers",
@@ -3543,9 +3519,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0011E5D2Y?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$3.95",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B000VBP3C8?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$11.40",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -3580,7 +3556,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "Evil Dead II",
@@ -3741,7 +3717,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B005J9ZFQG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$14.10",
+          "price": "$14.34",
           "quality": "DVD"
         },
         {
@@ -3777,7 +3753,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "Teen Wolf",
@@ -3977,7 +3953,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/teen-wolf?utm_content=5d776837961905001eb949b4&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/teen-wolf-1985?utm_content=5d776837961905001eb949b4&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -4022,7 +3998,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-07"
     },
     {
       "title": "The Wolf of Wall Street",
@@ -12658,5 +12634,5 @@
       "refreshed": "2026-11-06"
     }
   ],
-  "updated": "2026-11-06"
+  "updated": "2026-11-07"
 }
