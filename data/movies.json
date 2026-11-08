@@ -4174,7 +4174,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/the-wolf-of-wall-street?utm_content=5d77691c9ab54400214efcc8&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/the-wolf-of-wall-street-2013?utm_content=5d77691c9ab54400214efcc8&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -4182,9 +4182,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00DGWRX90?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$15.96",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B09BF7VT4S?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$16.38",
+          "quality": "BLURAY_4K"
         },
         {
           "type": "buy",
@@ -4206,8 +4206,8 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-the-wolf-of-wall-street-leonardo-dicaprio/24205795",
-          "price": "$7.79",
+          "url": "https://www.barnesandnoble.com/w/dvd-leonardo-dicaprio-movie-3-pack-leonardo-dicaprio-4-pack-2pc/1147504946",
+          "price": "$12.99",
           "quality": "DVD"
         },
         {
@@ -4219,7 +4219,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "Air",
@@ -4363,8 +4363,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0H63STL84?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$27.99",
+          "url": "https://www.amazon.com/dp/B0C7F6W1KZ?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.99",
           "quality": "DVD"
         },
         {
@@ -4400,7 +4400,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-04"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "The Godfather",
@@ -4408,7 +4408,7 @@
       "imdb": "tt0068646",
       "justwatch_id": "tm155580",
       "poster": "/movies/posters/the-godfather-1972.webp",
-      "runtime": 168,
+      "runtime": 175,
       "rating": "R",
       "genres": {
         "en": [
@@ -4592,7 +4592,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B0001NBNB6?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$9.79",
+          "price": "$6.20",
           "quality": "DVD"
         },
         {
@@ -4615,7 +4615,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-godfather-francis-ford-coppola/3633903",
+          "url": "https://www.barnesandnoble.com/w/dvd-godfather-ii-francis-ford-coppola/3633914",
           "price": "$19.59",
           "quality": "DVD"
         },
@@ -4628,7 +4628,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "Pulp Fiction",
@@ -4827,9 +4827,17 @@
         },
         {
           "type": "rent",
+          "service": "FlixFling",
+          "icon": "/movies/services/flixfling.webp",
+          "url": "https://www.flixfling.com/justwatch/24442",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/pulp-fiction?utm_content=5d776827103a2d001f564488&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/pulp-fiction-1994?utm_content=5d776827103a2d001f564488&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -4882,7 +4890,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "The Matrix",
@@ -5010,7 +5018,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/the-matrix?utm_content=5d776827880197001ec90904&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/the-matrix-1999?utm_content=5d776827880197001ec90904&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$2.99",
           "quality": "HD"
         },
@@ -5027,7 +5035,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B003Z7R44A?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.99",
+          "price": "$6.71",
           "quality": "DVD"
         },
         {
@@ -5063,7 +5071,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "Se7en",
@@ -5071,7 +5079,7 @@
       "imdb": "tt0114369",
       "justwatch_id": "tm15897",
       "poster": "/movies/posters/se7en-1995.webp",
-      "runtime": 127,
+      "runtime": 128,
       "rating": "R",
       "genres": {
         "en": [
@@ -5240,7 +5248,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-se7en-fincher/8295212",
-          "price": "$27.19",
+          "price": "$5.00",
           "quality": "DVD"
         },
         {
@@ -5255,12 +5263,12 @@
           "type": "buy",
           "service": "GRUV",
           "icon": "/movies/services/gruv.webp",
-          "url": "https://gruv.com/products/seven-repackaged-4k-ultra-hd-digital-uhd-_1000860209",
-          "price": "$14.99",
-          "quality": "BLURAY_4K"
+          "url": "https://gruv.com/products/seven-blu-ray-_1000213432",
+          "price": "$8.36",
+          "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "GoodFellas",
@@ -5408,7 +5416,7 @@
           "quality": "DVD"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "The Silence of the Lambs",
@@ -5416,7 +5424,7 @@
       "imdb": "tt0102926",
       "justwatch_id": "tm8843",
       "poster": "/movies/posters/the-silence-of-the-lambs-1991.webp",
-      "runtime": 118,
+      "runtime": 119,
       "rating": "R",
       "genres": {
         "en": [
@@ -5593,7 +5601,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/the-silence-of-the-lambs?utm_content=5d7768253c3c2a001fbcab73&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/the-silence-of-the-lambs-1991?utm_content=5d7768253c3c2a001fbcab73&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -5601,9 +5609,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00I3YZLKO?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$23.99",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B000068QJM?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$4.79",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -5626,7 +5634,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-the-silence-of-the-lambs-demme/3620929",
-          "price": "$39.99",
+          "price": "$19.99",
           "quality": "DVD"
         },
         {
@@ -5638,7 +5646,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "The Green Mile",
@@ -5782,8 +5790,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0D23QSQ6D?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$19.99",
+          "url": "https://www.amazon.com/dp/B01GWBZPSC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$17.98",
           "quality": "DVD"
         },
         {
@@ -5819,7 +5827,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "Back to the Future",
@@ -5992,7 +6000,7 @@
           "quality": "DVD"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-08"
     },
     {
       "title": "Django Unchained",
@@ -12634,5 +12642,5 @@
       "refreshed": "2026-11-06"
     }
   ],
-  "updated": "2026-11-07"
+  "updated": "2026-11-08"
 }
