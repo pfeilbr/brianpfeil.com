@@ -1,5 +1,8 @@
 {{- /* A 1200x630 share card for the page, drawn at build time: section label,
    title, avatar and name on assets/og/base.png (tools/og/make_base.py).
+   The avatar is images/avatar.jpg, the same profile photo the nav uses
+   (mounted from static/ in config.yaml), and its hash is part of the file
+   name, so a new photo gives every card a new URL and share caches refetch.
    Returns the card's absolute URL, or "" when the page should keep the
    default image (home page) or has none of its own title.
 
@@ -19,7 +22,8 @@
   {{- $title := $p.Title -}}
   {{- $size := 68 -}}
   {{- if gt (len $title) 90 }}{{ $size = 48 }}{{ else if gt (len $title) 55 }}{{ $size = 58 }}{{ end -}}
-  {{- $avatar := (resources.Get "og/avatar.jpg").Fill "112x112 Center png" | images.Filter (images.Mask (resources.Get "og/avatar-mask.png")) -}}
+  {{- $face := resources.Get "images/avatar.jpg" -}}
+  {{- $avatar := $face.Fill "112x112 Center png" | images.Filter (images.Mask (resources.Get "og/avatar-mask.png")) -}}
   {{- $titleImg := resources.Get "og/title-canvas.png" | images.Filter
       (images.Text $title (dict "font" $bold "size" $size "color" "#f3f4f6" "x" 0 "y" 0 "linespacing" 10)) -}}
   {{- $img := resources.Get "og/base.png" | images.Filter
@@ -28,7 +32,7 @@
       (images.Overlay $avatar 80 464)
       (images.Text $p.Site.Params.author.name (dict "font" $bold "size" 32 "color" "#f3f4f6" "x" 214 "y" 482))
       (images.Text "brianpfeil.com" (dict "font" $semi "size" 26 "color" "#9ca3af" "x" 214 "y" 526)) -}}
-  {{- $name := printf "og/%s.jpg" (md5 (printf "%s|%s|%s" $label $title $p.Site.Params.author.name)) -}}
+  {{- $name := printf "og/%s.jpg" (md5 (printf "%s|%s|%s|%s" $label $title $p.Site.Params.author.name (md5 $face.Content))) -}}
   {{- /* A course's card also has a fixed name, og/course-<slug>.jpg: its
      lessons are static files (tools/courses/sync_courses.py) that point at it. */ -}}
   {{- if and (eq $p.Section "courses") $p.IsPage $p.File -}}
