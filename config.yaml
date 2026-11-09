@@ -24,8 +24,9 @@ googleAnalytics: "G-SKVHNJ985Y"
 # are hand-authored standalone HTML pages, so the default breaks the build.
 # Single-author repo, so restore the pre-0.162 behavior.
 # The nav avatar is shown at 36px but the file in static/ is 320px; mounting it
-# into assets lets partials/nav.html resize it at build time, so it can never
-# drift from the original. Declaring an assets mount replaces the default one,
+# into assets lets partials/nav.html (and the face on every share card,
+# partials/og-image.html) resize it at build time, so it can never drift from
+# the original. Declaring an assets mount replaces the default one,
 # hence assets/ itself is listed too.
 module:
   mounts:
