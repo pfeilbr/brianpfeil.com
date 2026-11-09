@@ -6160,7 +6160,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/django-unchained?utm_content=5d7768adebdf2200209c5d46&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/django-unchained-2012?utm_content=5d7768adebdf2200209c5d46&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -6205,7 +6205,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "Memento",
@@ -6353,6 +6353,14 @@
           "quality": "HD"
         },
         {
+          "type": "free",
+          "service": "Tubi TV",
+          "icon": "/movies/services/tubitv.webp",
+          "url": "https://tubitv.com/movies/100007690",
+          "price": null,
+          "quality": "SD"
+        },
+        {
           "type": "stream",
           "service": "Amazon Prime Video",
           "icon": "/movies/services/amazonprime.webp",
@@ -6445,7 +6453,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B001THMIGC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$7.29",
+          "price": "$11.14",
           "quality": "DVD"
         },
         {
@@ -6469,7 +6477,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-memento-christopher-nolan/4749029",
-          "price": "$19.99",
+          "price": "$24.99",
           "quality": "DVD"
         },
         {
@@ -6481,7 +6489,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "Raiders of the Lost Ark",
@@ -6671,7 +6679,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/raiders-of-the-lost-ark?utm_content=5d776824eb5d26001f1dd001&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/raiders-of-the-lost-ark-1981?utm_content=5d776824eb5d26001f1dd001&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -6687,9 +6695,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0014CDVEU?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$14.19",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B00FZIJ18Y?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.69",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -6711,7 +6719,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-indiana-jones-and-the-raiders-of-the-lost-ark-spielberg/3633639",
+          "url": "https://www.barnesandnoble.com/w/dvd-indiana-jones-and-the-raiders-of-the-lost-ark-steven-spielberg/3633639",
           "price": "$20.29",
           "quality": "DVD"
         },
@@ -6724,7 +6732,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "The Martian",
@@ -6732,42 +6740,51 @@
       "imdb": "tt3659388",
       "justwatch_id": "tm138400",
       "poster": "/movies/posters/the-martian-2015.webp",
-      "runtime": 144,
+      "runtime": 141,
       "rating": "PG-13",
       "genres": {
         "en": [
+          "Action & Adventure",
           "Drama",
           "Science-Fiction"
         ],
         "zh": [
+          "Action & Adventure",
           "Drama",
           "Science-Fiction"
         ],
         "es": [
+          "Acción & Aventura",
           "Drama",
           "Ciencia ficción"
         ],
         "pt": [
+          "Ação & Aventura",
           "Drama",
           "Ficção Científica"
         ],
         "fr": [
+          "Action & Aventure",
           "Drame",
           "Science-Fiction"
         ],
         "de": [
+          "Action & Abenteuer",
           "Drama",
           "Science-Fiction"
         ],
         "it": [
+          "Azione e Avventura",
           "Drammatico",
           "Fantascienza"
         ],
         "ja": [
+          "アクション",
           "ドラマ",
           "サイエンスフィクション"
         ],
         "ko": [
+          "액션",
           "드라마",
           "SF"
         ]
@@ -6883,7 +6900,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-the-martian-aditya-sood/27708569",
+          "url": "https://www.barnesandnoble.com/w/dvd-the-martian-ridley-scott/27708569",
           "price": "$26.99",
           "quality": "DVD"
         },
@@ -6896,7 +6913,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "Inglourious Basterds",
@@ -6904,7 +6921,7 @@
       "imdb": "tt0361748",
       "justwatch_id": "tm143861",
       "poster": "/movies/posters/inglourious-basterds-2009.webp",
-      "runtime": 152,
+      "runtime": 153,
       "rating": "R",
       "genres": {
         "en": [
@@ -7014,14 +7031,6 @@
         },
         {
           "type": "stream",
-          "service": "Hulu",
-          "icon": "/movies/services/hulu.webp",
-          "url": "https://www.hulu.com/watch/54da4af5-9c47-48d1-91bf-d05e27024b94",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "MovieSphere+ Amazon Channel",
           "icon": "/movies/services/amazontribecashortlist.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.443db758-06aa-47ac-ac2d-ef6dfd2fd8d8",
@@ -7056,7 +7065,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/inglourious-basterds?utm_content=5d77683f880197001ec9598e&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/inglourious-basterds-2009?utm_content=5d77683f880197001ec9598e&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -7064,8 +7073,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B006HXQ5XA?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$7.93",
+          "url": "https://www.amazon.com/dp/B00J0VW4RC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$14.58",
           "quality": "DVD"
         },
         {
@@ -7088,9 +7097,9 @@
           "type": "buy",
           "service": "Arrow Video",
           "icon": "/movies/services/arrowvideo.webp",
-          "url": "https://www.arrowvideo.com/p/4k/inglourious-basterds-4k-uhd/16057029/",
-          "price": "$25.00",
-          "quality": "BLURAY_4K"
+          "url": "https://www.arrowvideo.com/p/blu-ray/inglourious-basterds-blu-ray/16057030/",
+          "price": "$28.00",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -7117,15 +7126,15 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "Good Will Hunting",
-      "year": 1997,
+      "year": 1998,
       "imdb": "tt0119217",
       "justwatch_id": "tm191716",
-      "poster": "/movies/posters/good-will-hunting-1997.webp",
-      "runtime": 127,
+      "poster": "/movies/posters/good-will-hunting-1998.webp",
+      "runtime": 126,
       "rating": "R",
       "genres": {
         "en": [
@@ -7250,14 +7259,6 @@
         },
         {
           "type": "stream",
-          "service": "Apple TV",
-          "icon": "/movies/services/appletvplus.webp",
-          "url": "https://tv.apple.com/us/movie/good-will-hunting/umc.cmc.ljmzio5szpnhca4ydns8f99q?at=1000l3V2&ct=app_tvplus&itscg=30200&itsct=justwatch_tv",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "Paramount Plus Essential",
           "icon": "/movies/services/paramountplusessential.webp",
           "url": "https://www.paramountplus.com/movies/good-will-hunting/wRw3w8BmmuyJ4WIIOaNv_1WqdGEKi6lp?searchReferral=publisher&source=search-feeds",
@@ -7377,7 +7378,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "Braveheart",
@@ -7559,6 +7560,14 @@
         },
         {
           "type": "rent",
+          "service": "FlixFling",
+          "icon": "/movies/services/flixfling.webp",
+          "url": "https://www.flixfling.com/justwatch/30833",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Spectrum On Demand",
           "icon": "/movies/services/spectrumondemand.webp",
           "url": "https://ondemand.spectrum.net/movies/16782/braveheart/",
@@ -7599,7 +7608,7 @@
         }
       ],
       "mpa": "R",
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "Requiem for a Dream",
@@ -7709,7 +7718,7 @@
           "type": "free",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/requiem-for-a-dream?autoplay=1&utm_content=5d776827103a2d001f56448a&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/requiem-for-a-dream-2000?autoplay=1&utm_content=5d776827103a2d001f56448a&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": null,
           "quality": "HD"
         },
@@ -7778,12 +7787,20 @@
           "quality": "4K"
         },
         {
+          "type": "rent",
+          "service": "FlixFling",
+          "icon": "/movies/services/flixfling.webp",
+          "url": "https://www.flixfling.com/justwatch/31115",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B00284BNKC?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$10.46",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B00005V1WQ?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$3.87",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -7818,7 +7835,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "Reservoir Dogs",
@@ -7922,7 +7939,7 @@
           "type": "stream",
           "service": "Amazon Prime Video",
           "icon": "/movies/services/amazonprime.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.debb6b89-c99a-8b61-320d-95fb5075d48f",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.aea9f6e2-15a5-2d18-6ef1-15b4e69cf089",
           "price": null,
           "quality": "HD"
         },
@@ -7930,7 +7947,7 @@
           "type": "stream",
           "service": "Amazon Prime Video with Ads",
           "icon": "/movies/services/amazonprimevideowithads.webp",
-          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.debb6b89-c99a-8b61-320d-95fb5075d48f",
+          "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.aea9f6e2-15a5-2d18-6ef1-15b4e69cf089",
           "price": null,
           "quality": "HD"
         },
@@ -8031,7 +8048,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "Up",
@@ -8176,9 +8193,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0029Z9UQ4?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$11.83",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B0062O58F0?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$17.26",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -8213,7 +8230,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-09"
     },
     {
       "title": "Full Metal Jacket",
@@ -12642,5 +12659,5 @@
       "refreshed": "2026-11-06"
     }
   ],
-  "updated": "2026-11-08"
+  "updated": "2026-11-09"
 }
