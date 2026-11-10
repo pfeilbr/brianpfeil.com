@@ -8421,7 +8421,7 @@
           "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/full-metal-jacket?utm_content=5d776826880197001ec90902&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/full-metal-jacket-1987?utm_content=5d776826880197001ec90902&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$2.99",
           "quality": "HD"
         },
@@ -8438,7 +8438,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/B00000J2KT?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$16.76",
+          "price": "$16.96",
           "quality": "DVD"
         },
         {
@@ -8461,8 +8461,8 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-full-metal-jacket-kubrick/3619985",
-          "price": "$5.00",
+          "url": "https://www.barnesandnoble.com/w/dvd-full-metal-jacket-stanley-kubrick/3619985",
+          "price": "$7.79",
           "quality": "DVD"
         },
         {
@@ -8477,12 +8477,12 @@
           "type": "buy",
           "service": "GRUV",
           "icon": "/movies/services/gruv.webp",
-          "url": "https://gruv.com/products/full-metal-jacket-deluxe-edition-blu-ray-_1000027137",
-          "price": "$8.99",
-          "quality": "BLURAY"
+          "url": "https://gruv.com/products/full-metal-jacket-dvd-_1000025416",
+          "price": "$7.99",
+          "quality": "DVD"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "Die Hard",
@@ -8650,7 +8650,7 @@
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
           "url": "https://www.amazon.com/dp/630528069X?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$2.71",
+          "price": "$29.94",
           "quality": "DVD"
         },
         {
@@ -8686,7 +8686,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "A Clockwork Orange",
@@ -8814,7 +8814,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.06a9f6d1-45d1-ad9b-d7ee-8b91320da6ae",
-          "price": "$4.99",
+          "price": "$5.99",
           "quality": "4K"
         },
         {
@@ -8890,7 +8890,7 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "Jurassic Park",
@@ -8974,22 +8974,6 @@
       "offers": [
         {
           "type": "stream",
-          "service": "Peacock Premium",
-          "icon": "/movies/services/peacocktv.webp",
-          "url": "https://www.peacocktv.com/watch/asset/movies/jurassic-park/3991271c-4aa9-303e-ac93-3de6656aa9ce",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
-          "service": "Peacock Premium Plus",
-          "icon": "/movies/services/peacocktvpremium.webp",
-          "url": "https://www.peacocktv.com/watch/asset/movies/jurassic-park/3991271c-4aa9-303e-ac93-3de6656aa9ce",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "Philo",
           "icon": "/movies/services/philo.webp",
           "url": "https://www.philo.com/player/show/U2hvdzo2MDg1NDg4OTk2NDg0NDIxMTY",
@@ -9053,6 +9037,14 @@
           "quality": "4K"
         },
         {
+          "type": "rent",
+          "service": "FlixFling",
+          "icon": "/movies/services/flixfling.webp",
+          "url": "https://www.flixfling.com/justwatch/26544",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
@@ -9101,7 +9093,7 @@
           "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "The Sixth Sense",
@@ -9194,22 +9186,6 @@
       "offers": [
         {
           "type": "stream",
-          "service": "Apple TV",
-          "icon": "/movies/services/appletvplus.webp",
-          "url": "https://tv.apple.com/us/movie/the-sixth-sense/umc.cmc.2j3fje2s0rh78ius1k1kil5tr?at=1000l3V2&ct=app_tvplus&itscg=30200&itsct=justwatch_tv",
-          "price": null,
-          "quality": "4K"
-        },
-        {
-          "type": "stream",
-          "service": "Hulu",
-          "icon": "/movies/services/hulu.webp",
-          "url": "https://www.hulu.com/watch/219a5dfc-1b65-4644-9415-044c7d3a425d",
-          "price": null,
-          "quality": "HD"
-        },
-        {
-          "type": "stream",
           "service": "Netflix",
           "icon": "/movies/services/netflix.webp",
           "url": "https://www.netflix.com/title/26797528",
@@ -9269,7 +9245,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.fecf8794-9b3f-4549-a5b2-0e2c7e93833c",
-          "price": "$17.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -9277,7 +9253,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-sixth-sense/umc.cmc.2j3fje2s0rh78ius1k1kil5tr?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A792925493",
-          "price": "$17.99",
+          "price": "$4.99",
           "quality": "4K"
         },
         {
@@ -9297,7 +9273,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "Casino",
@@ -9437,6 +9413,14 @@
           "quality": "4K"
         },
         {
+          "type": "rent",
+          "service": "FlixFling",
+          "icon": "/movies/services/flixfling.webp",
+          "url": "https://www.flixfling.com/justwatch/31088",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
@@ -9485,7 +9469,7 @@
           "quality": "DVD"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "A Beautiful Mind",
@@ -9562,7 +9546,7 @@
         "de": "Princeton Universität, 1947: Der hoch begabte, aber äußerst exzentrische John Nash sucht fieberhaft, fast krankhaft besessen, nach einer revolutionierenden Theorie in der Mathematik. Er schert sich wenig um seine Kommilitonen und die Konventionen der Universität. Und tatsächlich macht er eines Tages die alles entscheidende Entdeckung. Mit seiner Karriere geht es fortan steil bergauf, und Nash bekommt eine Stelle als Forscher und Dozent. Da er zudem die außergewöhnliche Fähigkeit besitzt, innerhalb weniger Sekunden komplexe Codes zu knacken, übernimmt er immer häufiger Decodier-Aufgaben für den amerikanischen Geheimdienst. Doch der Stress, die Gefahr und die Heimlichkeiten seiner Tätigkeit fordern ihren Tribut: John leidet zunehmend unter Verfolgungswahn und wittert ständig Verschwörungen. Die erschütternde Diagnose: paranoide Schizophrenie. John droht alles zu verlieren: seine geliebte Frau, seinen Job und seinen Verstand…",
         "it": "Il film si ispira alla vita di John Forbes Nash Jr. Di origini medio borghesi, Forbes nacque in una piccola città della Virginia occidentale il 13 giugno 1928 e, per oltre cinquant'anni è stato considerato un mito negli ambienti della ricerca matematica. Grazie al suo studio della teoria dei giochi, negli anni 50 diventò l'astro nascente della \"nuova matematica\". Poco a poco, vittima di una grave forma di schizofrenia, Nash sprofondò in un mondo tutto suo, convinto che le sue allucinazioni fossero realtà. Passò diversi anni in ospedali psichiatrici, ma durante la sua assenza, la teoria dei giochi acquistò un ruolo di importanza fondamentale nei campi dell'economia e degli affari. Nel 1994, Nash aveva riacquistato il pieno controllo della sua vita e ripreso le ricerche. In quello stesso anno venne insignito del Premio Nobel per l'economia.",
         "ja": "1947年9月、プリンストン大学院の数学科に入学を果たしたジョン・ナッシュ。ひとり研究に没頭するナッシュは次第にクラスメートからも好奇の目で見られるようになる。しかし、ナッシュはついに画期的な「ゲーム理論」を発見する。やがてウィーラー研究所に採用されるが、米ソ冷戦下、彼の類い希な頭脳が暗号解読という極秘任務に利用され、次第に大きなプレッシャーに追いつめられていく…。",
-        "ko": "천재 수학자 존 포브스 내시 주니어의 이야기를 그린 전기 영화. 역사에 남을 학문적 위업을 달성할 무렵, 그에게 조현병 증세가 나타나기 시작하는데."
+        "ko": "1947년 프린스턴 대학에 들어온 존 내쉬는 사람들과 어울리는 데 서툴지만, 독창적인 이론을 찾는 데 몰두한다. 일상에서 발견한 경쟁과 협력의 원리를 논문으로 발전시킨 그는 학계의 인정을 받고 연구와 강의를 이어간다. 그러던 중 비밀요원 윌리엄 파처가 접근해 신문과 잡지 속에 숨은 소련의 암호를 찾아달라는 임무를 맡긴다. 남들이 지나치는 숫자와 문양에서 의미를 읽어내는 내쉬는 자신만이 국가의 위협을 막을 수 있다고 믿으며 작업에 빠져든다. 제자 알리샤와 사랑을 나누고 가정을 꾸리지만, 임무를 둘러싼 불안과 누군가 자신을 지켜본다는 공포가 두 사람의 일상을 침범한다. 모든 것을 논리로 설명하려는 그에게 가장 가까운 사람의 믿음마저 이해하기 어려운 문제가 되어간다."
       },
       "imdb_url": "https://www.imdb.com/title/tt0268978/",
       "imdb_rating": 8.2,
@@ -9576,14 +9560,6 @@
       },
       "trailer": "9wZM7CQY130",
       "offers": [
-        {
-          "type": "stream",
-          "service": "Apple TV",
-          "icon": "/movies/services/appletvplus.webp",
-          "url": "https://tv.apple.com/us/movie/a-beautiful-mind/umc.cmc.2iqk0c0jh9ocfk2jtv2yda0k1?at=1000l3V2&ct=app_tvplus&itscg=30200&itsct=justwatch_tv",
-          "price": null,
-          "quality": "4K"
-        },
         {
           "type": "stream",
           "service": "Wonder Project Amazon Channel",
@@ -9628,9 +9604,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0033AI41G?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "url": "https://www.amazon.com/dp/B000FVQLQQ?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
           "price": "$5.99",
-          "quality": "BLURAY"
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -9653,7 +9629,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-a-beautiful-mind-25th-anniversary-ron-howard/6052924",
-          "price": "$5.99",
+          "price": "$8.99",
           "quality": "DVD"
         },
         {
@@ -9668,12 +9644,12 @@
           "type": "buy",
           "service": "GRUV",
           "icon": "/movies/services/gruv.webp",
-          "url": "https://gruv.com/products/a-beautiful-mind-dvd-_61030265",
+          "url": "https://gruv.com/products/a-beautiful-mind-blu-ray-_61116264",
           "price": "$7.99",
-          "quality": "DVD"
+          "quality": "BLURAY"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "Catch Me If You Can",
@@ -9862,6 +9838,14 @@
         },
         {
           "type": "rent",
+          "service": "FlixFling",
+          "icon": "/movies/services/flixfling.webp",
+          "url": "https://www.flixfling.com/justwatch/30894",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "JustWatch TV Store",
           "icon": "/movies/services/justwatchtvstore.webp",
           "url": "https://tv.justwatch.com/view/film/224920",
@@ -9880,8 +9864,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0074GV1C4?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$17.13",
+          "url": "https://www.amazon.com/dp/B0B5PW4F46?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$14.95",
           "quality": "BLURAY"
         },
         {
@@ -9917,7 +9901,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "Trainspotting",
@@ -9925,7 +9909,7 @@
       "imdb": "tt0117951",
       "justwatch_id": "tm113248",
       "poster": "/movies/posters/trainspotting-1996.webp",
-      "runtime": 94,
+      "runtime": 93,
       "rating": "R",
       "genres": {
         "en": [
@@ -10034,9 +10018,17 @@
         },
         {
           "type": "rent",
+          "service": "FlixFling",
+          "icon": "/movies/services/flixfling.webp",
+          "url": "https://www.flixfling.com/justwatch/24729",
+          "price": "$3.99",
+          "quality": "HD"
+        },
+        {
+          "type": "rent",
           "service": "Plex",
           "icon": "/movies/services/plex.webp",
-          "url": "https://watch.plex.tv/movie/trainspotting?utm_content=5d7768276f4521001ea98f74&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
+          "url": "https://watch.plex.tv/movie/trainspotting-1996?utm_content=5d7768276f4521001ea98f74&utm_medium=deeplink&utm_source=justWatch-v2-catalog",
           "price": "$3.99",
           "quality": "HD"
         },
@@ -10044,8 +10036,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B000TJBNFI?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$18.87",
+          "url": "https://www.amazon.com/dp/B0021ZMHNK?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$62.00",
           "quality": "DVD"
         },
         {
@@ -10069,7 +10061,7 @@
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
           "url": "https://www.barnesandnoble.com/w/dvd-trainspotting-danny-boyle/3637216",
-          "price": "$49.99",
+          "price": "$24.99",
           "quality": "DVD"
         },
         {
@@ -10081,7 +10073,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "Hacksaw Ridge",
@@ -10281,9 +10273,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B01LTHZVT2?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.24",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B01LTHZVSI?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$6.99",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -10318,7 +10310,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-05"
+      "refreshed": "2026-11-10"
     },
     {
       "title": "Fargo",
@@ -12659,5 +12651,5 @@
       "refreshed": "2026-11-06"
     }
   ],
-  "updated": "2026-11-09"
+  "updated": "2026-11-10"
 }
