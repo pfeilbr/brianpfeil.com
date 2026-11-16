@@ -2140,3 +2140,128 @@ other = "Chinesisch"
 
 [food_sec_other]
 other = "Alles andere"
+
+# Tech Digest (/tech-digest/, layouts/tech-digest/, partials/techdigest-view.html)
+
+[hub_techdigest_title]
+other = "Tech-Digest"
+
+[hub_techdigest_blurb]
+other = "Die Tech-Posts, über die meine X-Timeline spricht, jeden Morgen gerankt"
+
+[td_intro]
+other = "Jeden Morgen liest ein Skript meine X-Timelines, die Leute, denen ich folge, und die „Für dich“-Auswahl von X, behält die Posts über Technologie und sortiert sie danach, wie stark darauf reagiert wurde. Unten steht die vollständige Liste des Tages; jeder Post verlinkt auf das Original bei X."
+
+[td_intro_short]
+other = "Die Tech-Posts aus meiner X-Timeline an diesem Tag, nach Interaktionen sortiert. Jeder Post verlinkt auf das Original bei X."
+
+[td_how_title]
+other = "So entsteht es"
+
+[td_how]
+other = "Ein Python-Skript erledigt alles; keine KI schreibt hier etwas. Es scrollt meine Timelines in meinem eigenen Browser, gleicht jeden Post mit einer festen Liste von Tech-Themen ab, lässt Vulgäres weg und bewertet den Rest: Likes plus doppelt Reposts und Antworten plus dreifach Lesezeichen. Was an einem früheren Tag schon zu sehen war, fällt weg, also ist jeder Tag neu. „Im Kommen“ sortiert nach Punkten pro Stunde seit dem Post."
+
+[td_lead]
+other = "Top-Themen: {{ . }}"
+
+[td_stats]
+other = "{{ .tech }} Tech-Posts von {{ .scanned }} gelesenen"
+
+[td_captured]
+other = "erfasst {{ . }}"
+
+[td_count]
+other = "{{ . }} Posts"
+
+[td_all]
+other = "Alle"
+
+[td_following]
+other = "Folge ich"
+
+[td_for_you]
+other = "Für dich"
+
+[td_popular]
+other = "Beliebt"
+
+[td_rising]
+other = "Im Kommen"
+
+[td_latest]
+other = "Neueste"
+
+[td_highlights]
+other = "Das Wichtigste des Tages"
+
+[td_all_topics]
+other = "Alle Themen"
+
+[td_topics]
+other = "Themen"
+
+[td_feeds]
+other = "Timelines"
+
+[td_sort]
+other = "Sortierung"
+
+[td_search]
+other = "Posts filtern"
+
+[td_media]
+other = "Medien zeigen ({{ . }})"
+
+[td_media_note]
+other = "Lädt die Bilder von X"
+
+[td_more]
+other = "Mehr auf X lesen"
+
+[td_open]
+other = "Den Post von {{ . }} auf X öffnen"
+
+[td_empty]
+other = "Keine passenden Posts."
+
+[td_metrics]
+other = "{{ .replies }} Antworten, {{ .reposts }} Reposts, {{ .likes }} Likes, {{ .bookmarks }} Lesezeichen, {{ .views }} Aufrufe"
+
+[td_prev]
+other = "Vorheriger Tag"
+
+[td_next]
+other = "Nächster Tag"
+
+[td_archive]
+other = "Frühere Tage"
+
+[td_crumb]
+other = "Brotkrümelnavigation"
+
+[td_topic_ai]
+other = "KI"
+
+[td_topic_chips]
+other = "Chips"
+
+[td_topic_space]
+other = "Raumfahrt"
+
+[td_topic_dev]
+other = "Entwickler"
+
+[td_topic_security]
+other = "Sicherheit"
+
+[td_topic_startups]
+other = "Start-ups"
+
+[td_topic_bigtech]
+other = "Big Tech"
+
+[td_topic_robotics]
+other = "Robotik"
+
+[td_topic_science]
+other = "Wissenschaft"

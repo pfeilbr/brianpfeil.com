@@ -2139,3 +2139,128 @@ other = "Chinese"
 
 [food_sec_other]
 other = "Everything else"
+
+# Tech Digest (/tech-digest/, layouts/tech-digest/, partials/techdigest-view.html)
+
+[hub_techdigest_title]
+other = "Tech Digest"
+
+[hub_techdigest_blurb]
+other = "The tech posts my X timeline is talking about, ranked every morning"
+
+[td_intro]
+other = "Every morning a script reads my X timelines, the people I follow and X's own For you picks, keeps the posts about technology and ranks them by how much people engaged with them. Below is the full list for the day; every post links to the original on X."
+
+[td_intro_short]
+other = "The tech posts from my X timeline that day, ranked by engagement. Every post links to the original on X."
+
+[td_how_title]
+other = "How it's made"
+
+[td_how]
+other = "A Python script does all of it; no AI writes anything here. It scrolls my timelines in my own browser, matches each post against a fixed list of tech topics, drops anything crude, and scores the rest: likes, plus twice the reposts and replies, plus three times the bookmarks. Posts shown on an earlier day are left out, so each day is new. Rising sorts by score per hour since posting."
+
+[td_lead]
+other = "Top topics: {{ . }}"
+
+[td_stats]
+other = "{{ .tech }} tech posts out of {{ .scanned }} read"
+
+[td_captured]
+other = "captured {{ . }}"
+
+[td_count]
+other = "{{ . }} posts"
+
+[td_all]
+other = "All"
+
+[td_following]
+other = "Following"
+
+[td_for_you]
+other = "For you"
+
+[td_popular]
+other = "Popular"
+
+[td_rising]
+other = "Rising"
+
+[td_latest]
+other = "Latest"
+
+[td_highlights]
+other = "Top of the day"
+
+[td_all_topics]
+other = "All topics"
+
+[td_topics]
+other = "Topics"
+
+[td_feeds]
+other = "Timelines"
+
+[td_sort]
+other = "Sort"
+
+[td_search]
+other = "Filter posts"
+
+[td_media]
+other = "Show media ({{ . }})"
+
+[td_media_note]
+other = "Loads the images from X"
+
+[td_more]
+other = "Show more on X"
+
+[td_open]
+other = "Open the post by {{ . }} on X"
+
+[td_empty]
+other = "No posts match."
+
+[td_metrics]
+other = "{{ .replies }} replies, {{ .reposts }} reposts, {{ .likes }} likes, {{ .bookmarks }} bookmarks, {{ .views }} views"
+
+[td_prev]
+other = "Previous day"
+
+[td_next]
+other = "Next day"
+
+[td_archive]
+other = "Earlier days"
+
+[td_crumb]
+other = "Breadcrumb"
+
+[td_topic_ai]
+other = "AI"
+
+[td_topic_chips]
+other = "Chips"
+
+[td_topic_space]
+other = "Space"
+
+[td_topic_dev]
+other = "Developers"
+
+[td_topic_security]
+other = "Security"
+
+[td_topic_startups]
+other = "Startups"
+
+[td_topic_bigtech]
+other = "Big tech"
+
+[td_topic_robotics]
+other = "Robotics"
+
+[td_topic_science]
+other = "Science"

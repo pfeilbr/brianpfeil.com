@@ -247,6 +247,7 @@ touching a template:
 | `/github/` | `data/github.json` (`make github-refresh`) | `layouts/_default/github.html` |
 | `/apps/` | `data/apps.json` (hand-edited) | `layouts/_default/apps.html` |
 | `/food/` | `data/food.json` (`make food-publish KEY=…`) | `layouts/_default/food.html` |
+| `/tech-digest/` | `data/techdigest.json` + `static/tech-digest/` (written by `pfeilbr/twitter`) | `layouts/tech-digest/` |
 
 - **Every data-driven page is drawn in the browser from `/data/<name>.json`.**
   `partials/publish-data.html` publishes each `data/` file there (media gets
@@ -265,6 +266,17 @@ touching a template:
   `s3://com.brianpfeil.media/derived/review/food-gallery/<KEY>/`); `make food-publish KEY=<KEY>` makes the WebP
   sizes, uploads them to the CDN bucket under `food/<KEY>/` (hashed names, cached a year) and writes
   `data/food.json`. Section names are i18n `food_sec_<key>`; a new section key needs that string in all nine files.
+- **/tech-digest/** (B, 2026-11-16: "a new top level section named tech digest ... public ... the full
+  list for each day ... keep the twitter look and feel but make it blend"): the tech posts from B's X
+  timelines, one page per day (`content/tech-digest/<date>.md`, English, like posts) plus the translated
+  section page (latest day + earlier days). Everything under `content/tech-digest/<date>.md`,
+  `static/tech-digest/` and `data/techdigest.json` is written by the private `pfeilbr/twitter` repo
+  (`python3 -m xdigest daily` every morning at 7:00, or `publish`): never hand-edit it; change the filter
+  or ranking there. The view is `partials/techdigest-view.html` (drawn from
+  `/tech-digest/data/<date>.json`), strings are `td_*` and `hub_techdigest_*`, topic names
+  `td_topic_<key>` (a new topic key in the twitter repo needs its string in all nine files). Avatars are
+  copies under `static/tech-digest/av/`; post media loads from X only on a click ("Show media"). It has a
+  home card and a footer link, not a nav slot (the row stays at seven).
 - **/apps/:** B's own apps, each with a short link `/apps/<key>/` (all
   lowercase) that redirects to it — `partials/apps-links.html` publishes those
   from the English home page, carrying `?query` and `#hash` along. To add one:

@@ -2138,3 +2138,128 @@ other = "Chinesa"
 
 [food_sec_other]
 other = "Todo o resto"
+
+# Tech Digest (/tech-digest/, layouts/tech-digest/, partials/techdigest-view.html)
+
+[hub_techdigest_title]
+other = "Resumo tech"
+
+[hub_techdigest_blurb]
+other = "Os posts de tecnologia que a minha timeline do X está comentando, ordenados toda manhã"
+
+[td_intro]
+other = "Toda manhã um script lê as minhas timelines do X, as pessoas que sigo e a seleção \"Para você\" do X, fica com os posts sobre tecnologia e os ordena pelo engajamento que tiveram. Abaixo está a lista completa do dia; cada post leva ao original no X."
+
+[td_intro_short]
+other = "Os posts de tecnologia da minha timeline do X naquele dia, ordenados por engajamento. Cada post leva ao original no X."
+
+[td_how_title]
+other = "Como é feito"
+
+[td_how]
+other = "Um script em Python faz tudo; nenhuma IA escreve nada aqui. Ele rola as minhas timelines no meu próprio navegador, compara cada post com uma lista fixa de temas de tecnologia, descarta o que é grosseiro e pontua o resto: curtidas, mais o dobro de reposts e respostas, mais o triplo de itens salvos. O que já apareceu num dia anterior fica de fora, então cada dia é novo. \"Em alta\" ordena por pontos por hora desde a publicação."
+
+[td_lead]
+other = "Principais temas: {{ . }}"
+
+[td_stats]
+other = "{{ .tech }} posts de tecnologia de {{ .scanned }} lidos"
+
+[td_captured]
+other = "capturado {{ . }}"
+
+[td_count]
+other = "{{ . }} posts"
+
+[td_all]
+other = "Todos"
+
+[td_following]
+other = "Seguindo"
+
+[td_for_you]
+other = "Para você"
+
+[td_popular]
+other = "Populares"
+
+[td_rising]
+other = "Em alta"
+
+[td_latest]
+other = "Recentes"
+
+[td_highlights]
+other = "Destaques do dia"
+
+[td_all_topics]
+other = "Todos os temas"
+
+[td_topics]
+other = "Temas"
+
+[td_feeds]
+other = "Timelines"
+
+[td_sort]
+other = "Ordem"
+
+[td_search]
+other = "Filtrar posts"
+
+[td_media]
+other = "Mostrar mídia ({{ . }})"
+
+[td_media_note]
+other = "Carrega as imagens do X"
+
+[td_more]
+other = "Ver mais no X"
+
+[td_open]
+other = "Abrir no X o post de {{ . }}"
+
+[td_empty]
+other = "Nenhum post corresponde."
+
+[td_metrics]
+other = "{{ .replies }} respostas, {{ .reposts }} reposts, {{ .likes }} curtidas, {{ .bookmarks }} itens salvos, {{ .views }} visualizações"
+
+[td_prev]
+other = "Dia anterior"
+
+[td_next]
+other = "Próximo dia"
+
+[td_archive]
+other = "Dias anteriores"
+
+[td_crumb]
+other = "Navegação estrutural"
+
+[td_topic_ai]
+other = "IA"
+
+[td_topic_chips]
+other = "Chips"
+
+[td_topic_space]
+other = "Espaço"
+
+[td_topic_dev]
+other = "Desenvolvimento"
+
+[td_topic_security]
+other = "Segurança"
+
+[td_topic_startups]
+other = "Startups"
+
+[td_topic_bigtech]
+other = "Big techs"
+
+[td_topic_robotics]
+other = "Robótica"
+
+[td_topic_science]
+other = "Ciência"

@@ -2138,3 +2138,128 @@ other = "中餐"
 
 [food_sec_other]
 other = "其他"
+
+# Tech Digest (/tech-digest/, layouts/tech-digest/, partials/techdigest-view.html)
+
+[hub_techdigest_title]
+other = "科技摘要"
+
+[hub_techdigest_blurb]
+other = "我的 X 时间线上热议的科技帖子,每天早上排名"
+
+[td_intro]
+other = "每天早上,一个脚本会读取我的 X 时间线(我关注的人,以及 X 的“为你推荐”),只保留与科技相关的帖子,并按互动量排序。下面是当天的完整列表,每条帖子都链接到 X 上的原帖。"
+
+[td_intro_short]
+other = "当天我的 X 时间线上的科技帖子,按互动量排序。每条帖子都链接到 X 上的原帖。"
+
+[td_how_title]
+other = "制作方式"
+
+[td_how]
+other = "全部由一个 Python 脚本完成,这里没有任何内容由 AI 撰写。它在我自己的浏览器里滚动我的时间线,把每条帖子与一份固定的科技话题列表对照,去掉粗俗内容,再给其余帖子打分:点赞数,加上两倍的转帖和回复,再加上三倍的书签。前几天已经出现过的帖子不再收录,所以每天都是新内容。“上升中”按发帖后每小时的得分排序。"
+
+[td_lead]
+other = "热门话题:{{ . }}"
+
+[td_stats]
+other = "读取 {{ .scanned }} 条,其中科技帖子 {{ .tech }} 条"
+
+[td_captured]
+other = "采集于 {{ . }}"
+
+[td_count]
+other = "{{ . }} 条帖子"
+
+[td_all]
+other = "全部"
+
+[td_following]
+other = "正在关注"
+
+[td_for_you]
+other = "为你推荐"
+
+[td_popular]
+other = "热门"
+
+[td_rising]
+other = "上升中"
+
+[td_latest]
+other = "最新"
+
+[td_highlights]
+other = "今日精选"
+
+[td_all_topics]
+other = "全部话题"
+
+[td_topics]
+other = "话题"
+
+[td_feeds]
+other = "时间线"
+
+[td_sort]
+other = "排序"
+
+[td_search]
+other = "筛选帖子"
+
+[td_media]
+other = "显示媒体({{ . }})"
+
+[td_media_note]
+other = "从 X 加载图片"
+
+[td_more]
+other = "在 X 上查看全文"
+
+[td_open]
+other = "在 X 上打开 {{ . }} 的帖子"
+
+[td_empty]
+other = "没有匹配的帖子。"
+
+[td_metrics]
+other = "{{ .replies }} 条回复,{{ .reposts }} 次转帖,{{ .likes }} 个赞,{{ .bookmarks }} 个书签,{{ .views }} 次浏览"
+
+[td_prev]
+other = "前一天"
+
+[td_next]
+other = "后一天"
+
+[td_archive]
+other = "往日"
+
+[td_crumb]
+other = "面包屑导航"
+
+[td_topic_ai]
+other = "AI"
+
+[td_topic_chips]
+other = "芯片"
+
+[td_topic_space]
+other = "太空"
+
+[td_topic_dev]
+other = "开发者"
+
+[td_topic_security]
+other = "安全"
+
+[td_topic_startups]
+other = "初创公司"
+
+[td_topic_bigtech]
+other = "科技巨头"
+
+[td_topic_robotics]
+other = "机器人"
+
+[td_topic_science]
+other = "科学"

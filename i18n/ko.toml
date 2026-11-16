@@ -2138,3 +2138,128 @@ other = "중식"
 
 [food_sec_other]
 other = "그 밖의 음식"
+
+# Tech Digest (/tech-digest/, layouts/tech-digest/, partials/techdigest-view.html)
+
+[hub_techdigest_title]
+other = "테크 다이제스트"
+
+[hub_techdigest_blurb]
+other = "내 X 타임라인에서 화제인 테크 게시물을 매일 아침 순위로"
+
+[td_intro]
+other = "매일 아침 스크립트가 내 X 타임라인(내가 팔로우하는 사람들과 X의 '추천')을 읽고, 기술에 관한 게시물만 남겨 반응이 많은 순서로 정렬합니다. 아래는 그날의 전체 목록이며, 모든 게시물은 X의 원문으로 연결됩니다."
+
+[td_intro_short]
+other = "그날 내 X 타임라인의 테크 게시물을 반응 순으로 정렬한 목록입니다. 모든 게시물은 X의 원문으로 연결됩니다."
+
+[td_how_title]
+other = "만드는 방법"
+
+[td_how]
+other = "모든 작업은 Python 스크립트가 하며, 여기서 AI가 쓰는 글은 없습니다. 내 브라우저에서 타임라인을 스크롤하고, 각 게시물을 정해진 테크 주제 목록과 대조하고, 저속한 것은 빼고, 나머지에 점수를 매깁니다. 좋아요에 리포스트와 답글의 2배, 북마크의 3배를 더한 값입니다. 이전 날에 이미 나온 게시물은 빼므로 매일 새로운 내용입니다. '급상승'은 게시 후 시간당 점수로 정렬합니다."
+
+[td_lead]
+other = "주요 주제: {{ . }}"
+
+[td_stats]
+other = "읽은 {{ .scanned }}개 중 테크 게시물 {{ .tech }}개"
+
+[td_captured]
+other = "수집 {{ . }}"
+
+[td_count]
+other = "게시물 {{ . }}개"
+
+[td_all]
+other = "전체"
+
+[td_following]
+other = "팔로잉"
+
+[td_for_you]
+other = "추천"
+
+[td_popular]
+other = "인기"
+
+[td_rising]
+other = "급상승"
+
+[td_latest]
+other = "최신"
+
+[td_highlights]
+other = "오늘의 하이라이트"
+
+[td_all_topics]
+other = "모든 주제"
+
+[td_topics]
+other = "주제"
+
+[td_feeds]
+other = "타임라인"
+
+[td_sort]
+other = "정렬"
+
+[td_search]
+other = "게시물 필터"
+
+[td_media]
+other = "미디어 보기({{ . }})"
+
+[td_media_note]
+other = "X에서 이미지를 불러옵니다"
+
+[td_more]
+other = "X에서 더 보기"
+
+[td_open]
+other = "X에서 {{ . }}의 게시물 열기"
+
+[td_empty]
+other = "일치하는 게시물이 없습니다."
+
+[td_metrics]
+other = "답글 {{ .replies }}개, 리포스트 {{ .reposts }}개, 좋아요 {{ .likes }}개, 북마크 {{ .bookmarks }}개, 조회수 {{ .views }}회"
+
+[td_prev]
+other = "이전 날"
+
+[td_next]
+other = "다음 날"
+
+[td_archive]
+other = "지난 날들"
+
+[td_crumb]
+other = "이동 경로"
+
+[td_topic_ai]
+other = "AI"
+
+[td_topic_chips]
+other = "반도체"
+
+[td_topic_space]
+other = "우주"
+
+[td_topic_dev]
+other = "개발자"
+
+[td_topic_security]
+other = "보안"
+
+[td_topic_startups]
+other = "스타트업"
+
+[td_topic_bigtech]
+other = "빅테크"
+
+[td_topic_robotics]
+other = "로보틱스"
+
+[td_topic_science]
+other = "과학"

@@ -2138,3 +2138,128 @@ other = "中華"
 
 [food_sec_other]
 other = "そのほか"
+
+# Tech Digest (/tech-digest/, layouts/tech-digest/, partials/techdigest-view.html)
+
+[hub_techdigest_title]
+other = "テックダイジェスト"
+
+[hub_techdigest_blurb]
+other = "Xのタイムラインで話題のテック投稿を、毎朝ランキング"
+
+[td_intro]
+other = "毎朝スクリプトが私のXのタイムライン(フォロー中の人たちと、Xの「おすすめ」)を読み、テクノロジーに関する投稿を残して、反応の多さで並べます。下はその日の全リストで、各投稿はXの元の投稿にリンクしています。"
+
+[td_intro_short]
+other = "その日の私のXタイムラインから集めたテック投稿を、反応の多さで並べたものです。各投稿はXの元の投稿にリンクしています。"
+
+[td_how_title]
+other = "作り方"
+
+[td_how]
+other = "すべてPythonのスクリプトが行い、AIは何も書いていません。私自身のブラウザでタイムラインをスクロールし、各投稿を決まったテックの話題リストと照合し、下品なものを除いて、残りに点数を付けます。いいね数に、リポストと返信の2倍、ブックマークの3倍を足したものです。前の日にすでに載った投稿は除くので、毎日が新しい内容になります。「急上昇」は投稿からの1時間あたりの点数で並べます。"
+
+[td_lead]
+other = "主な話題:{{ . }}"
+
+[td_stats]
+other = "読んだ{{ .scanned }}件のうちテック投稿{{ .tech }}件"
+
+[td_captured]
+other = "取得 {{ . }}"
+
+[td_count]
+other = "{{ . }}件"
+
+[td_all]
+other = "すべて"
+
+[td_following]
+other = "フォロー中"
+
+[td_for_you]
+other = "おすすめ"
+
+[td_popular]
+other = "人気"
+
+[td_rising]
+other = "急上昇"
+
+[td_latest]
+other = "新着"
+
+[td_highlights]
+other = "今日のトップ"
+
+[td_all_topics]
+other = "すべての話題"
+
+[td_topics]
+other = "話題"
+
+[td_feeds]
+other = "タイムライン"
+
+[td_sort]
+other = "並べ替え"
+
+[td_search]
+other = "投稿を絞り込む"
+
+[td_media]
+other = "メディアを表示({{ . }})"
+
+[td_media_note]
+other = "Xから画像を読み込みます"
+
+[td_more]
+other = "続きをXで読む"
+
+[td_open]
+other = "{{ . }}の投稿をXで開く"
+
+[td_empty]
+other = "該当する投稿はありません。"
+
+[td_metrics]
+other = "返信{{ .replies }}件、リポスト{{ .reposts }}件、いいね{{ .likes }}件、ブックマーク{{ .bookmarks }}件、表示{{ .views }}回"
+
+[td_prev]
+other = "前の日"
+
+[td_next]
+other = "次の日"
+
+[td_archive]
+other = "これまでの日"
+
+[td_crumb]
+other = "パンくずリスト"
+
+[td_topic_ai]
+other = "AI"
+
+[td_topic_chips]
+other = "半導体"
+
+[td_topic_space]
+other = "宇宙"
+
+[td_topic_dev]
+other = "開発者"
+
+[td_topic_security]
+other = "セキュリティ"
+
+[td_topic_startups]
+other = "スタートアップ"
+
+[td_topic_bigtech]
+other = "ビッグテック"
+
+[td_topic_robotics]
+other = "ロボティクス"
+
+[td_topic_science]
+other = "科学"

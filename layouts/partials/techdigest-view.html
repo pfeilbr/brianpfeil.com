@@ -1,0 +1,361 @@
+{{- /* One day of the Tech Digest, drawn in the browser. Used by the section
+   page (/tech-digest/, the latest day) and by each day's page
+   (/tech-digest/<date>/). Arguments: "page" (the page) and "date".
+
+   Data: /tech-digest/data/<date>.json (the day's full ranked list and its
+   briefing) and /data/techdigest.json (the list of days, for previous/next).
+   Both are written by the xdigest exporter in pfeilbr/twitter
+   (`python3 -m xdigest publish`); never hand-edit them. Topic names are
+   i18n td_topic_<key>; post text is data and set as text, never markup.
+   Media loads from X only when the visitor asks for it; avatars are copies
+   under /tech-digest/av/. */ -}}
+{{ $p := .page }}
+{{ $topics := dict }}
+{{ range slice "ai" "chips" "space" "dev" "security" "startups" "bigtech" "robotics" "science" }}
+  {{ $topics = merge $topics (dict . (i18n (printf "td_topic_%s" .))) }}
+{{ end }}
+{{ $T := dict
+  "lang" $p.Site.Language.Lang
+  "date" .date
+  "topics" $topics
+  "lead" (i18n "td_lead" "{list}")
+  "stats" (i18n "td_stats" (dict "tech" "{tech}" "scanned" "{scanned}"))
+  "captured" (i18n "td_captured" "{when}")
+  "count" (i18n "td_count" "{n}")
+  "all" (i18n "td_all")
+  "following" (i18n "td_following")
+  "forYou" (i18n "td_for_you")
+  "popular" (i18n "td_popular")
+  "rising" (i18n "td_rising")
+  "latest" (i18n "td_latest")
+  "highlights" (i18n "td_highlights")
+  "allTopics" (i18n "td_all_topics")
+  "media" (i18n "td_media" "{n}")
+  "mediaNote" (i18n "td_media_note")
+  "more" (i18n "td_more")
+  "open" (i18n "td_open" "{name}")
+  "empty" (i18n "td_empty")
+  "metrics" (i18n "td_metrics" (dict "replies" "{replies}" "reposts" "{reposts}" "likes" "{likes}" "bookmarks" "{bookmarks}" "views" "{views}"))
+  "prev" (i18n "td_prev")
+  "next" (i18n "td_next")
+  "error" (i18n "data_load_error")
+}}
+<section class="td" id="td" aria-busy="true">
+  <header class="td-dayhead">
+    <a class="td-step" id="td-prev" rel="prev" aria-label="{{ i18n "td_prev" }}" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></a>
+    <div class="td-dayhead-text">
+      <h2 class="td-date" id="td-date"></h2>
+      <p class="td-sub" id="td-sub"></p>
+    </div>
+    <a class="td-step" id="td-next" rel="next" aria-label="{{ i18n "td_next" }}" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+  </header>
+
+  <div class="td-brief" id="td-brief" hidden>
+    <p class="td-lead" id="td-lead"></p>
+    <h3 class="td-h3">{{ i18n "td_highlights" }}</h3>
+    <ol class="td-highlights" id="td-highlights"></ol>
+    <div class="td-topics" id="td-topics" role="group" aria-label="{{ i18n "td_topics" }}"></div>
+  </div>
+
+  <div class="ptabs td-tabs" id="td-tabs" role="group" aria-label="{{ i18n "td_feeds" }}"></div>
+  <div class="td-controls">
+    <div class="td-seg" id="td-sort" role="group" aria-label="{{ i18n "td_sort" }}"></div>
+    <label class="sr-only" for="td-q">{{ i18n "td_search" }}</label>
+    <input class="td-q" id="td-q" type="search" placeholder="{{ i18n "td_search" }}" autocomplete="off">
+  </div>
+  <p class="td-count" id="td-count" aria-live="polite"></p>
+  <ol class="td-list" id="td-list"></ol>
+  <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" (printf "/tech-digest/data/%s.json" .date)) | safeHTML }}</p></noscript>
+</section>
+
+{{ partial "data-render.html" $p }}
+<script>
+(function () {
+  var T = {{ $T | jsonify | safeJS }};
+  var D = window.DataPage, root = document.getElementById("td");
+  var $ = function (id) { return document.getElementById(id); };
+  var NS = "http://www.w3.org/2000/svg";
+  var num = new Intl.NumberFormat(T.lang, { notation: "compact", maximumFractionDigits: 1 });
+  var dayFmt = new Intl.DateTimeFormat(T.lang, { weekday: "long", year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+  var whenFmt = new Intl.DateTimeFormat(T.lang, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+  var state = { feed: "all", sort: "popular", topic: "", q: "" };
+  var day = null;
+
+  // ---- small builders ------------------------------------------------------
+  function icon(paths, cls) {
+    var s = document.createElementNS(NS, "svg");
+    s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("aria-hidden", "true");
+    if (cls) s.setAttribute("class", cls);
+    paths.forEach(function (d) { var p = document.createElementNS(NS, "path"); p.setAttribute("d", d); s.appendChild(p); });
+    return s;
+  }
+  var IC = {
+    reply: ["M4 5h16v11H9l-5 4z"],
+    repost: ["M7 7h11l-3-3", "M18 7l-3 3", "M17 17H6l3 3", "M6 17l3-3"],
+    like: ["M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"],
+    bookmark: ["M6 4h12v16l-6-4-6 4z"],
+    views: ["M5 20V12", "M10 20V5", "M15 20v-9", "M20 20v-5"],
+    check: ["M8 12.5l2.5 2.5L16 9.5"],
+    media: ["M4 5h16v14H4z", "M4 15l5-5 4 4 3-3 4 4"]
+  };
+  function postUrl(p) { return "https://x.com/" + p.handle + "/status/" + p.id; }
+  function initials(name) { return (name || "?").replace(/[^\p{L}\p{N} ]/gu, "").trim().split(/\s+/).slice(0, 2).map(function (w) { return w[0] || ""; }).join("").toUpperCase() || "?"; }
+  function avatar(p, size) {
+    var box = D.el("span", "td-av" + (size ? " td-av-" + size : ""));
+    box.setAttribute("aria-hidden", "true");
+    box.dataset.initials = initials(p.name);
+    if (p.avatar) {
+      var img = D.el("img"); img.src = p.avatar; img.alt = ""; img.loading = "lazy"; img.decoding = "async";
+      img.width = 40; img.height = 40;
+      img.onerror = function () { img.remove(); };
+      box.appendChild(img);
+    }
+    return box;
+  }
+  function badge() { var b = icon(IC.check, "td-verified"); return b; }
+
+  // Post text: plain text, with its t.co links, @mentions and #tags made into links.
+  function richText(p, cls) {
+    var el = D.el("p", cls || "td-text");
+    var text = p.text || "", links = (p.links || []).slice();
+    var re = /(@[A-Za-z0-9_]{1,15})|(#[\p{L}\p{N}_]{1,60})/gu;
+    var pieces = [], pos = 0;
+    links.forEach(function (l) {
+      var i = l.text ? text.indexOf(l.text, pos) : -1;
+      if (i < 0) return;
+      pieces.push({ t: text.slice(pos, i) });
+      pieces.push({ t: l.text.replace(/^https?:\/\//, ""), href: l.href });
+      pos = i + l.text.length;
+    });
+    pieces.push({ t: text.slice(pos) });
+    pieces.forEach(function (pc) {
+      if (pc.href) { el.appendChild(D.link(pc.href, "td-a", pc.t)); return; }
+      var s = pc.t, last = 0, m;
+      re.lastIndex = 0;
+      while ((m = re.exec(s))) {
+        el.appendChild(document.createTextNode(s.slice(last, m.index)));
+        var h = m[0].slice(1);
+        el.appendChild(D.link(m[1] ? "https://x.com/" + h : "https://x.com/hashtag/" + encodeURIComponent(h), "td-a", m[0]));
+        last = m.index + m[0].length;
+      }
+      el.appendChild(document.createTextNode(s.slice(last)));
+    });
+    return el;
+  }
+
+  function metrics(p) {
+    var row = D.el("div", "td-metrics");
+    row.setAttribute("aria-label", D.fill(T.metrics, { replies: p.replies, reposts: p.reposts, likes: p.likes, bookmarks: p.bookmarks, views: p.views }));
+    [["reply", p.replies], ["repost", p.reposts], ["like", p.likes], ["bookmark", p.bookmarks], ["views", p.views]].forEach(function (m) {
+      var s = D.el("span", "td-m td-m-" + m[0]);
+      s.setAttribute("aria-hidden", "true");
+      s.appendChild(icon(IC[m[0]]));
+      s.appendChild(D.el("span", null, m[1] ? num.format(m[1]) : ""));
+      row.appendChild(s);
+    });
+    return row;
+  }
+
+  function mediaBlock(p) {
+    if (!p.media || !p.media.length) return null;
+    var wrap = D.el("div", "td-media-wrap");
+    var btn = D.el("button", "td-media-btn");
+    btn.type = "button"; btn.title = T.mediaNote;
+    btn.appendChild(icon(IC.media));
+    btn.appendChild(D.el("span", null, D.fill(T.media, { n: p.media.length })));
+    btn.addEventListener("click", function () {
+      var grid = D.el("div", "td-media td-media-" + Math.min(p.media.length, 4));
+      p.media.forEach(function (m) {
+        var cell = D.el("a", "td-media-cell" + (m.type === "video" ? " is-video" : ""));
+        cell.href = postUrl(p); cell.target = "_blank"; cell.rel = "noopener";
+        var img = D.el("img"); img.src = m.src; img.alt = ""; img.referrerPolicy = "no-referrer"; img.loading = "lazy";
+        img.onerror = function () { cell.remove(); };
+        cell.appendChild(img);
+        grid.appendChild(cell);
+      });
+      wrap.replaceChild(grid, btn);
+    });
+    wrap.appendChild(btn);
+    return wrap;
+  }
+
+  function card(p, rank) {
+    var li = D.el("li", "td-post");
+    var cover = D.link(postUrl(p), "td-cover");
+    cover.setAttribute("aria-label", D.fill(T.open, { name: p.name }));
+    li.appendChild(cover);
+    li.appendChild(avatar(p));
+    var body = D.el("div", "td-body");
+    if (p.social) body.appendChild(D.el("p", "td-social", p.social));
+    var meta = D.el("div", "td-meta");
+    var who = D.link("https://x.com/" + p.handle, "td-who");
+    who.appendChild(D.el("span", "td-name", p.name));
+    if (p.verified) who.appendChild(badge());
+    who.appendChild(D.el("span", "td-handle", "@" + p.handle));
+    meta.appendChild(who);
+    var t = new Date(p.time);
+    var time = D.el("time", "td-time", "· " + whenFmt.format(t)); time.dateTime = p.time;
+    meta.appendChild(time);
+    meta.appendChild(D.el("span", "td-rank", "#" + rank));
+    body.appendChild(meta);
+    if (p.text) body.appendChild(richText(p));
+    if (p.truncated) body.appendChild(D.link(postUrl(p), "td-more", T.more));
+    if (p.quote) {
+      var q = D.el(p.quote.id ? "a" : "div", "td-quote");
+      if (p.quote.id) { q.href = "https://x.com/" + p.quote.handle + "/status/" + p.quote.id; q.target = "_blank"; q.rel = "noopener"; }
+      var qh = D.el("p", "td-quote-who");
+      qh.appendChild(D.el("span", "td-name", p.quote.name || p.quote.handle));
+      qh.appendChild(D.el("span", "td-handle", "@" + p.quote.handle));
+      q.appendChild(qh);
+      if (p.quote.text) q.appendChild(D.el("p", "td-quote-text", p.quote.text));
+      body.appendChild(q);
+    }
+    if (p.card && p.card.url) {
+      var c = D.link(p.card.url, "td-linkcard");
+      if (p.card.domain) c.appendChild(D.el("span", "td-linkcard-domain", p.card.domain));
+      if (p.card.title) c.appendChild(D.el("span", "td-linkcard-title", p.card.title));
+      body.appendChild(c);
+    }
+    var mb = mediaBlock(p); if (mb) body.appendChild(mb);
+    var foot = D.el("div", "td-foot");
+    foot.appendChild(metrics(p));
+    var chip = D.el("button", "td-topic", T.topics[p.topic] || p.topic);
+    chip.type = "button";
+    chip.addEventListener("click", function () { setTopic(p.topic); });
+    foot.appendChild(chip);
+    body.appendChild(foot);
+    li.appendChild(body);
+    return li;
+  }
+
+  // ---- the day ---------------------------------------------------------------
+  function sorted(list) {
+    var key = {
+      popular: function (a, b) { return b.engagement - a.engagement || b.views - a.views; },
+      rising: function (a, b) { return b.velocity - a.velocity || b.engagement - a.engagement; },
+      latest: function (a, b) { return a.time < b.time ? 1 : a.time > b.time ? -1 : 0; }
+    }[state.sort];
+    return list.slice().sort(key);
+  }
+  function visible() {
+    var q = state.q.toLowerCase();
+    return day.posts.filter(function (p) {
+      if (state.feed !== "all" && (p.feeds || []).indexOf(state.feed) < 0) return false;
+      if (state.topic && p.topic !== state.topic) return false;
+      if (q && ((p.text || "") + " " + p.name + " @" + p.handle + " " + ((p.quote || {}).text || "")).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+  }
+  function drawList() {
+    var list = $("td-list"), rows = sorted(visible());
+    var rank = {};
+    day.posts.forEach(function (p, i) { rank[p.id] = i + 1; });
+    list.textContent = "";
+    rows.forEach(function (p) { list.appendChild(card(p, rank[p.id])); });
+    if (!rows.length) list.appendChild(D.el("li", "td-empty", T.empty));
+    $("td-count").textContent = D.fill(T.count, { n: rows.length });
+    [].forEach.call($("td-tabs").children, function (b) { b.classList.toggle("is-on", b.dataset.k === state.feed); b.setAttribute("aria-pressed", b.dataset.k === state.feed); });
+    [].forEach.call($("td-sort").children, function (b) { b.setAttribute("aria-pressed", b.dataset.k === state.sort); });
+    [].forEach.call($("td-topics").children, function (b) { b.setAttribute("aria-pressed", (b.dataset.k || "") === state.topic); });
+    var h = [];
+    if (state.feed !== "all") h.push("feed=" + state.feed);
+    if (state.sort !== "popular") h.push("sort=" + state.sort);
+    if (state.topic) h.push("topic=" + state.topic);
+    history.replaceState(null, "", h.length ? "#" + h.join("&") : location.pathname + location.search);
+  }
+  function setTopic(k) { state.topic = state.topic === k ? "" : k; drawList(); root.scrollIntoView({ block: "start" }); }
+
+  function button(parent, k, label, count, cls, onClick) {
+    var b = D.el("button", cls);
+    b.type = "button"; b.dataset.k = k;
+    if (cls.indexOf("ptab") >= 0) {
+      b.appendChild(D.el("span", "ptab-name", label));
+      b.appendChild(D.el("span", "ptab-count", String(count)));
+    } else {
+      b.appendChild(document.createTextNode(label));
+      if (count != null) b.appendChild(D.el("span", "td-n", String(count)));
+    }
+    b.addEventListener("click", onClick);
+    parent.appendChild(b);
+  }
+
+  function draw(index) {
+    var s = day.stats, byId = {};
+    day.posts.forEach(function (p) { byId[p.id] = p; });
+    $("td-date").textContent = dayFmt.format(new Date(day.date + "T12:00:00Z"));
+    $("td-sub").textContent = D.fill(T.stats, { tech: s.tech, scanned: s.scanned }) + " · " +
+      D.fill(T.captured, { when: whenFmt.format(new Date(day.captured_at)) });
+
+    var b = day.brief || {};
+    if (day.posts.length) {
+      $("td-brief").hidden = false;
+      $("td-lead").textContent = D.fill(T.lead, { list: (b.lead || []).map(function (k) { return T.topics[k] || k; }).join(", ") });
+      var hl = $("td-highlights");
+      (b.highlights || []).forEach(function (id) {
+        var p = byId[id]; if (!p) return;
+        var li = D.el("li", "td-hl");
+        var a = D.link(postUrl(p), "td-hl-link");
+        a.appendChild(avatar(p, "sm"));
+        var tx = D.el("span", "td-hl-text");
+        var who = D.el("span", "td-hl-who");
+        who.appendChild(D.el("span", "td-name", p.name));
+        if (p.verified) who.appendChild(badge());
+        who.appendChild(D.el("span", "td-handle", "@" + p.handle));
+        tx.appendChild(who);
+        tx.appendChild(D.el("span", "td-hl-snippet", (p.text || (p.quote || {}).text || "").replace(/\s+/g, " ").slice(0, 160)));
+        a.appendChild(tx);
+        var lk = D.el("span", "td-hl-likes");
+        lk.appendChild(icon(IC.like));
+        lk.appendChild(D.el("span", null, num.format(p.likes)));
+        a.appendChild(lk);
+        li.appendChild(a);
+        hl.appendChild(li);
+      });
+      var tp = $("td-topics");
+      button(tp, "", T.allTopics, null, "td-chip", function () { state.topic = ""; drawList(); });
+      (b.topics || []).forEach(function (t) {
+        button(tp, t.key, T.topics[t.key] || t.key, t.count, "td-chip", function () { setTopic(t.key); });
+      });
+    }
+
+    var tabs = $("td-tabs"), feeds = s.feeds || {};
+    button(tabs, "all", T.all, s.tech, "ptab", function () { state.feed = "all"; drawList(); });
+    if (feeds.following) button(tabs, "following", T.following, feeds.following, "ptab", function () { state.feed = "following"; drawList(); });
+    if (feeds.for_you) button(tabs, "for_you", T.forYou, feeds.for_you, "ptab", function () { state.feed = "for_you"; drawList(); });
+    var sort = $("td-sort");
+    [["popular", T.popular], ["rising", T.rising], ["latest", T.latest]].forEach(function (o) {
+      button(sort, o[0], o[1], null, "td-seg-btn", function () { state.sort = o[0]; drawList(); });
+    });
+    var qi = $("td-q"), timer;
+    qi.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(function () { state.q = qi.value.trim(); drawList(); }, 120); });
+
+    if (index && index.days) {
+      var dates = index.days.map(function (d) { return d.date; }), i = dates.indexOf(day.date);
+      var older = i >= 0 ? dates[i + 1] : null, newer = i > 0 ? dates[i - 1] : null;
+      if (older) { $("td-prev").href = "/tech-digest/" + older + "/"; $("td-prev").hidden = false; }
+      if (newer) { $("td-next").href = "/tech-digest/" + newer + "/"; $("td-next").hidden = false; }
+    }
+
+    location.hash.slice(1).split("&").forEach(function (kv) {
+      var m = kv.split("=");
+      if (m[0] === "feed" && /^(all|following|for_you)$/.test(m[1])) state.feed = m[1];
+      if (m[0] === "sort" && /^(popular|rising|latest)$/.test(m[1])) state.sort = m[1];
+      if (m[0] === "topic" && T.topics[m[1]]) state.topic = m[1];
+    });
+    drawList();
+    root.setAttribute("aria-busy", "false");
+  }
+
+  var dayReq = fetch("/tech-digest/data/" + T.date + ".json").then(function (r) {
+    if (!r.ok) throw new Error(r.status); return r.json();
+  });
+  var indexReq = D.load("techdigest").catch(function () { return null; });
+  Promise.all([dayReq, indexReq]).then(function (res) {
+    if (!res[0] || res[0].version !== 1) throw new Error("version");
+    day = res[0];
+    draw(res[1]);
+  }).catch(function () { D.fail($("td-list"), T.error); root.setAttribute("aria-busy", "false"); });
+})();
+</script>
