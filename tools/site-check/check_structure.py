@@ -36,7 +36,7 @@ REPO = Path(__file__).resolve().parents[2]
 LANGS = ("en", "zh", "es", "pt", "fr", "de", "it", "ja", "ko")
 NAV = ("architecture", "courses", "learn", "post", "projects", "off-the-clock", "about")
 # /off-the-clock/ (the nav's "Off the clock") links each of these pages.
-OFF_THE_CLOCK = ("media", "food", "movies", "music", "subscriptions")
+OFF_THE_CLOCK = ("media", "food", "movies", "music", "subscriptions", "tech-digest")
 
 FRONT = re.compile(r"\A\+\+\+\n(.*?)\n\+\+\+", re.S)
 ROW = re.compile(r'<article class="?post-preview post-row[^>]*data-href="?([^">\s]+)')

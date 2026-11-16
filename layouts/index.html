@@ -194,8 +194,6 @@
     {{ with $posts }}{{ $count = printf "%d–%d" (index (last 1 .) 0).Date.Year (index . 0).Date.Year }}{{ end }}
   {{ else if eq .key "notes" }}
     {{ $count = i18n "notes_count" (len (partial "site-notes.html" $)) }}
-  {{ else if eq .key "techdigest" }}
-    {{ with hugo.Data.techdigest }}{{ with .days }}{{ $count = i18n "td_count" (index . 0).posts }}{{ end }}{{ end }}
   {{ else if eq .key "github" }}
     {{ with hugo.Data.github }}{{ $count = i18n "hub_github_count" (dict "count" (len .repos)) }}{{ end }}
   {{ else if eq .key "tags" }}

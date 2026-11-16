@@ -43,7 +43,7 @@ every profile in `data/home.yaml` `social` as a row of icons in each
 network's colour, B's call 2026-11-07), then wide cards for Architecture guides, Courses,
 Articles and Learn, plain cards listed in `data/home.yaml` (projects, apps,
 lab notes, AI, GitHub, résumé; titles/blurbs `hub_<key>_title` /
-`hub_<key>_blurb`), and one "Off the clock" card for media, movies, music
+`hub_<key>_blurb`), and one "Off the clock" card for media, movies, music, the tech digest
 and subscriptions (its title links `/off-the-clock/`, which is also in the nav). Archive and Tags are footer-only. The footer's site map
 (`partials/footer.html`) links every section not in the nav.
 `tools/site-check/check_structure.py` (verify and CI) holds all of this in
@@ -275,8 +275,9 @@ touching a template:
   or ranking there. The view is `partials/techdigest-view.html` (drawn from
   `/tech-digest/data/<date>.json`), strings are `td_*` and `hub_techdigest_*`, topic names
   `td_topic_<key>` (a new topic key in the twitter repo needs its string in all nine files). Avatars are
-  copies under `static/tech-digest/av/`; post media loads from X only on a click ("Show media"). It has a
-  home card and a footer link, not a nav slot (the row stays at seven).
+  copies under `static/tech-digest/av/`; post media loads from X only on a click ("Show media"). It sits
+  under Off the clock (`partials/offclock-items.html`: the /off-the-clock/ page and the home card's
+  row, B's call 2026-11-16) and in the footer, not in the nav row (the row stays at seven).
 - **/apps/:** B's own apps, each with a short link `/apps/<key>/` (all
   lowercase) that redirects to it — `partials/apps-links.html` publishes those
   from the English home page, carrying `?query` and `#hash` along. To add one:
