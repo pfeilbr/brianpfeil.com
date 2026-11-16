@@ -2107,3 +2107,34 @@ other = "주요 주제"
 
 [tags_more]
 other = "주제 {{ .count }}개 더 보기(각 1~2편)"
+
+# /food/ (tools/food/publish.py, layouts/_default/food.html)
+[hub_food_title]
+other = "음식"
+
+[hub_food_blurb]
+other = "내가 먹은 모든 음식, 한 접시씩, 영상과 함께"
+
+[hub_food_count]
+other = "사진 {{ .count }}장"
+
+[food_intro]
+other = "초밥과 중식부터 나머지 메뉴까지, 내가 먹은 모든 것. 먼저 영상, 그다음 영상에 나온 요리를 이름과 함께 하나씩."
+
+[food_photos]
+other = "사진 {{ .count }}장"
+
+[food_video]
+other = "영상"
+
+[food_jump]
+other = "섹션"
+
+[food_sec_sushi]
+other = "초밥"
+
+[food_sec_chinese]
+other = "중식"
+
+[food_sec_other]
+other = "그 밖의 음식"

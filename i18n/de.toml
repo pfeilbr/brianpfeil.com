@@ -2109,3 +2109,34 @@ other = "Hauptthemen"
 
 [tags_more]
 other = "{{ .count }} weitere Themen mit je ein oder zwei Beiträgen"
+
+# /food/ (tools/food/publish.py, layouts/_default/food.html)
+[hub_food_title]
+other = "Essen"
+
+[hub_food_blurb]
+other = "Alles, was ich esse, Gericht für Gericht, mit den Videos"
+
+[hub_food_count]
+other = "{{ .count }} Fotos"
+
+[food_intro]
+other = "Alles, was ich esse, von Sushi und chinesischer Küche bis zum Rest der Karte: jedes Video und danach jedes Gericht darin, mit Namen."
+
+[food_photos]
+other = "{{ .count }} Fotos"
+
+[food_video]
+other = "Video"
+
+[food_jump]
+other = "Abschnitte"
+
+[food_sec_sushi]
+other = "Sushi"
+
+[food_sec_chinese]
+other = "Chinesisch"
+
+[food_sec_other]
+other = "Alles andere"

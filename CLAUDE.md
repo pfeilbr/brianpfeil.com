@@ -246,6 +246,7 @@ touching a template:
 | `/` (home) | `data/home.yaml` | `layouts/index.html` |
 | `/github/` | `data/github.json` (`make github-refresh`) | `layouts/_default/github.html` |
 | `/apps/` | `data/apps.json` (hand-edited) | `layouts/_default/apps.html` |
+| `/food/` | `data/food.json` (`make food-publish KEY=…`) | `layouts/_default/food.html` |
 
 - **Every data-driven page is drawn in the browser from `/data/<name>.json`.**
   `partials/publish-data.html` publishes each `data/` file there (media gets
@@ -257,6 +258,13 @@ touching a template:
   (`cat_label_*`, `pl_note_*`, …) are still i18n, looked up per key in the
   layout. With JavaScript off these pages show a `<noscript>` link to their
   JSON instead of content — that was B's call.
+- **/food/** (B, 2026-11-16: "each picture of food with the label (as-is) ... a gallery ... and also the video
+  as is ... the first item of many"): one block per food montage, newest first: its video as posted, then every
+  dish photo with its on-screen label, by section, in a 9:16 grid with the /media/ viewer. The gallery is made in
+  the media library (`~/projects/media`, `publish/scripts/food_gallery.py export KEY ... --upload`, kept in
+  `s3://com.brianpfeil.media/derived/review/food-gallery/<KEY>/`); `make food-publish KEY=<KEY>` makes the WebP
+  sizes, uploads them to the CDN bucket under `food/<KEY>/` (hashed names, cached a year) and writes
+  `data/food.json`. Section names are i18n `food_sec_<key>`; a new section key needs that string in all nine files.
 - **/apps/:** B's own apps, each with a short link `/apps/<key>/` (all
   lowercase) that redirects to it — `partials/apps-links.html` publishes those
   from the English home page, carrying `?query` and `#hash` along. To add one:

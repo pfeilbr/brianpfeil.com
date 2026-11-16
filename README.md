@@ -121,6 +121,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make subscriptions-refresh IDS=ids.txt` | Refresh the YouTube tab of `/subscriptions/` (`data/subscriptions.yaml`): subscriber counts from each channel's public page, new channels categorised or excluded in `tools/subscriptions/config.json`. `IDS` is the subscribed list from youtube.com/feed/channels (signed in; how-to in `tools/subscriptions/youtube.py`); without it, the listed channels are refreshed and none added or dropped |
 | `make twitch-refresh` | Refresh follower counts in `data/twitch.yaml` from Twitch's public GraphQL (the lists themselves need the account's sign-in) |
 | `make apps-icon` | Write an app's tile for `/apps/` to `static/images/apps/<KEY>.webp`, from its own icon (`FROM=`) or an emoji (`EMOJI=`) |
+| `make food-publish` | Publish a food gallery to `/food/` (`KEY=` collection id; reads the media library's export from S3, uploads web sizes, writes `data/food.json`) |
 | `make movies-refresh` | Fill in and refresh `data/movies.json`: posters, scores, trailers, US streaming, nine languages |
 | **GitHub** | |
 | `make github-refresh` | Refresh `data/github.json`: every public repo, README excerpts, areas and learning paths for `/github/`. Also runs every Monday (`.github/workflows/github-refresh.yml`), committing only when something changed |
@@ -156,6 +157,7 @@ See [`tools/instagram-media/README.md`](tools/instagram-media/README.md).
 | `make test-music` | Tests for the music page's playlist refresher |
 | `make test-subscriptions` | Tests for the YouTube and Twitch subscription refreshers |
 | `make test-apps` | Tests for the `/apps/` check, and a check of `data/apps.json` (verify also checks the built page and the `/apps/<key>/` short links) |
+| `make test-food` | Tests for the `/food/` publisher, and a check of `data/food.json` |
 | `make test-profiles` | Tests for the social-profile check (`tools/profiles/`) and the TikTok handle switch (`tiktok_handle.py`, run daily by `tiktok-handle.yml`); verify also checks every profile is linked on `/about/`, the home hero, the `sameAs` and the footer in all nine languages |
 | `make test-movies` | Tests for the check that `/data/movies.<lang>.json` matches `movies.json` (verify runs the check on the build) |
 | `make test-github` | Tests for the GitHub page's data refresher (Python) and its search (node) |

@@ -2107,3 +2107,34 @@ other = "主要主题"
 
 [tags_more]
 other = "另外 {{ .count }} 个主题，每个一到两篇"
+
+# /food/ (tools/food/publish.py, layouts/_default/food.html)
+[hub_food_title]
+other = "美食"
+
+[hub_food_blurb]
+other = "我吃过的每一道菜，附视频"
+
+[hub_food_count]
+other = "{{ .count }} 张照片"
+
+[food_intro]
+other = "我吃过的一切，从寿司、中餐到其他各种菜：先看视频，再看其中每一道菜和它的名字。"
+
+[food_photos]
+other = "{{ .count }} 张照片"
+
+[food_video]
+other = "视频"
+
+[food_jump]
+other = "分类"
+
+[food_sec_sushi]
+other = "寿司"
+
+[food_sec_chinese]
+other = "中餐"
+
+[food_sec_other]
+other = "其他"

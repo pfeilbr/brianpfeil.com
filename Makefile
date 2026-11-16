@@ -4,7 +4,7 @@ dev: ## Hugo dev server with live reload
 build: ## Production build (hugo --minify)
 	hugo --minify
 
-verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-subscriptions test-ai test-ai-page test-social test-newsletter test-ig-carousel test-drafts-extract test-movies test-apps test-profiles test-ci ## Every test suite, then a production build and the i18n fallback check
+verify: test-tools test-media test-layout test-link-check test-learn-links test-courses test-indexnow test-site-check test-image-rescue test-i18n test-docs test-github test-music test-subscriptions test-ai test-ai-page test-social test-newsletter test-ig-carousel test-drafts-extract test-movies test-apps test-food test-profiles test-ci ## Every test suite, then a production build and the i18n fallback check
 	hugo --minify --printI18nWarnings --printPathWarnings
 	python3 tools/i18n-check/check_i18n.py --public public
 	python3 tools/site-check/check_site.py --public public
@@ -166,6 +166,14 @@ apps-icon: ## Write an app's /apps/ tile, static/images/apps/<KEY>.webp (KEY=…
 test-apps: ## Tests for the /apps/ check, and a check of data/apps.json (verify also checks the built page and short links)
 	python3 -m unittest discover -s tools/apps -p 'test_*.py'
 	python3 tools/apps/check_page.py
+
+# Add a food gallery to /food/: the media library exports it (publish/scripts/food_gallery.py
+# in ~/projects/media, kept in S3), this makes the web sizes, uploads them and writes data/food.json.
+food-publish: ## Publish a food gallery to /food/ (KEY=<collection id> [SRC=dir|s3://…] [DATA_ONLY=1])
+	uv run --with pillow tools/food/publish.py $(KEY) $(if $(SRC),--src $(SRC),) $(if $(DATA_ONLY),--data-only,)
+
+test-food: ## Tests for the /food/ publisher, and a check of data/food.json
+	python3 -m unittest discover -s tools/food -p 'test_*.py'
 
 test-profiles: ## Tests for the social-profile check and the TikTok handle switch (verify runs it against the built site)
 	python3 -m unittest discover -s tools/profiles -p 'test_*.py'

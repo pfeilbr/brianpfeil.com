@@ -2108,3 +2108,34 @@ other = "Main topics"
 
 [tags_more]
 other = "{{ .count }} more topics, one or two posts each"
+
+# /food/ (tools/food/publish.py, layouts/_default/food.html)
+[hub_food_title]
+other = "Food"
+
+[hub_food_blurb]
+other = "Everything I eat, dish by dish, with the videos"
+
+[hub_food_count]
+other = "{{ .count }} photos"
+
+[food_intro]
+other = "Everything I eat, from sushi and Chinese to the rest of the menu: each video, then every dish in it, named."
+
+[food_photos]
+other = "{{ .count }} photos"
+
+[food_video]
+other = "Video"
+
+[food_jump]
+other = "Sections"
+
+[food_sec_sushi]
+other = "Sushi"
+
+[food_sec_chinese]
+other = "Chinese"
+
+[food_sec_other]
+other = "Everything else"

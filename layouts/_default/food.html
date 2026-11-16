@@ -1,0 +1,244 @@
+{{ define "main" }}
+{{- /* /food/: drawn in the browser from /data/food.json (tools/food/publish.py
+   writes data/food.json from a gallery the media library made). One block
+   per collection, newest first: its video as is, then every dish photo with
+   its on-screen label, grouped by section, in a 9:16 grid that opens a
+   viewer (arrows, swipe, Esc; #<collection>/<n> links to one photo). The
+   template supplies the shell and the translated strings; section names are
+   i18n food_sec_<key>, the dish names are the labels in the photos. */ -}}
+{{ $sections := dict }}
+{{ with hugo.Data.food }}{{ range .collections }}{{ range .sections }}
+  {{ $sections = merge $sections (dict .key (i18n (printf "food_sec_%s" .key))) }}
+{{ end }}{{ end }}{{ end }}
+{{ $T := dict
+  "photos" (i18n "food_photos" (dict "count" "{n}"))
+  "video" (i18n "food_video")
+  "jump" (i18n "food_jump")
+  "error" (i18n "data_load_error")
+  "close" (i18n "media_close")
+  "prev" (i18n "media_prev")
+  "next" (i18n "media_next")
+  "dialog" (i18n "media_viewer")
+  "position" (i18n "media_position" (dict "n" "{n}" "total" "{total}"))
+  "sections" $sections
+  "lang" .Site.Language.Lang
+}}
+<article class="food">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ .Title }}</h1>
+    <p class="text-gray-600">{{ i18n "food_intro" }}</p>
+  </header>
+
+  <div class="prose">{{ .Content }}</div>
+  <noscript><p class="data-error">{{ i18n "data_noscript" (dict "url" "/data/food.json") | safeHTML }}</p></noscript>
+
+  <div id="food-cols" aria-busy="true"></div>
+</article>
+
+{{ partial "data-render.html" . }}
+<script>
+(function () {
+  var D = window.DataPage, el = D.el.bind(D);
+  var T = {{ $T | jsonify | safeJS }};
+  var root = document.getElementById("food-cols");
+  var items = [];          /* every photo on the page, in order: {col, n, title, src, thumb} */
+  var overlay, stage, caption, counter, current = 0, lastFocused = null;
+
+  function dateText(iso) {
+    var d = new Date(iso + "T12:00:00");
+    try { return new Intl.DateTimeFormat(T.lang, { year: "numeric", month: "long", day: "numeric" }).format(d); }
+    catch (e) { return iso; }
+  }
+
+  function tile(it, base) {
+    var a = el("a", "food-tile");
+    a.href = base + it.s;
+    a.dataset.idx = items.length;
+    a.setAttribute("aria-label", it.t);
+    var img = el("img");
+    img.src = base + it.g[0];
+    img.srcset = base + it.g[0] + " 360w, " + base + it.g[1] + " 720w";
+    img.sizes = "(min-width: 900px) 9.5rem, (min-width: 640px) 23vw, 31vw";
+    img.alt = it.t;
+    img.width = 360;
+    img.height = 640;
+    img.loading = items.length < 10 ? "eager" : "lazy";
+    img.decoding = "async";
+    a.appendChild(img);
+    a.addEventListener("click", function (e) {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      show(parseInt(a.dataset.idx, 10), a);
+    });
+    return a;
+  }
+
+  function collection(c, base) {
+    var sec = el("section", "food-col");
+    sec.id = c.key;
+    var total = c.sections.reduce(function (n, s) { return n + s.items.length; }, 0);
+    var h = el("h2", "food-col-title", c.title);
+    sec.appendChild(h);
+    var sub = [c.subtitle, dateText(c.date), D.fill(T.photos, { n: total })].filter(Boolean).join(" · ");
+    sec.appendChild(el("p", "food-col-sub", sub));
+
+    var fig = el("figure", "food-video");
+    var v = el("video");
+    v.src = base + c.video.src;
+    v.poster = base + c.video.poster;
+    v.controls = true;
+    v.playsInline = true;
+    v.preload = "none";
+    v.width = c.video.w;
+    v.height = c.video.h;
+    v.setAttribute("aria-label", T.video + ": " + c.title);
+    fig.appendChild(v);
+    sec.appendChild(fig);
+
+    if (c.sections.length > 1) {
+      var nav = el("nav", "food-jump");
+      nav.setAttribute("aria-label", T.jump);
+      c.sections.forEach(function (s) {
+        var a = el("a", null, (T.sections[s.key] || s.key) + " " + s.items.length);
+        a.href = "#" + c.key + "-" + s.key;
+        nav.appendChild(a);
+      });
+      sec.appendChild(nav);
+    }
+
+    c.sections.forEach(function (s) {
+      var h3 = el("h3", "food-sec", T.sections[s.key] || s.key);
+      h3.id = c.key + "-" + s.key;
+      sec.appendChild(h3);
+      var grid = el("div", "food-grid");
+      s.items.forEach(function (it) {
+        grid.appendChild(tile(it, base));
+        items.push({ col: c.key, n: items.filter(function (x) { return x.col === c.key; }).length + 1,
+                     title: it.t, src: base + it.s, thumb: base + it.g[1] });
+      });
+      sec.appendChild(grid);
+    });
+    return sec;
+  }
+
+  /* ---------- viewer (the /media/ lightbox's look: .media-overlay) ---------- */
+  function build() {
+    overlay = el("div", "media-overlay food-overlay");
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", T.dialog);
+    var close = el("button", "media-close", "×"); close.type = "button"; close.setAttribute("aria-label", T.close);
+    var prev = el("button", "media-nav media-prev", "‹"); prev.type = "button"; prev.setAttribute("aria-label", T.prev);
+    var next = el("button", "media-nav media-next", "›"); next.type = "button"; next.setAttribute("aria-label", T.next);
+    stage = el("div", "media-stage");
+    var meta = el("div", "media-meta");
+    caption = el("p", "media-caption");
+    counter = el("p", "media-counter");
+    meta.appendChild(caption);
+    meta.appendChild(counter);
+    [close, prev, next, stage, meta].forEach(function (n) { overlay.appendChild(n); });
+    close.addEventListener("click", function () { hide(); });
+    prev.addEventListener("click", function () { step(-1); });
+    next.addEventListener("click", function () { step(1); });
+    var tx = null, ty = null;
+    overlay.addEventListener("touchstart", function (e) {
+      if (e.touches.length !== 1) { tx = null; return; }
+      tx = e.touches[0].clientX; ty = e.touches[0].clientY;
+    }, { passive: true });
+    overlay.addEventListener("touchend", function (e) {
+      if (tx === null) return;
+      var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+      tx = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > 1.5 * Math.abs(dy)) step(dx < 0 ? 1 : -1);
+    }, { passive: true });
+    overlay.addEventListener("click", function (e) { if (e.target === overlay || e.target === stage) hide(); });
+    document.body.appendChild(overlay);
+  }
+
+  function hashFor(i) { return "#" + items[i].col + "/" + items[i].n; }
+
+  function indexFromHash() {
+    var m = /^#([^/]+)\/(\d+)$/.exec(location.hash);
+    if (!m) return -1;
+    for (var k = 0; k < items.length; k++) {
+      if (items[k].col === decodeURIComponent(m[1]) && items[k].n === parseInt(m[2], 10)) return k;
+    }
+    return -1;
+  }
+
+  function render(i) {
+    var it = items[i];
+    stage.textContent = "";
+    var img = el("img");
+    img.alt = it.title;
+    img.width = 1080;
+    img.height = 1920;
+    img.src = it.thumb;            /* already cached from the grid; the full size swaps in */
+    stage.appendChild(img);
+    var full = new Image();
+    full.onload = function () { if (items[current] === it && img.isConnected) img.src = it.src; };
+    full.src = it.src;
+    caption.textContent = it.title;
+    counter.textContent = D.fill(T.position, { n: it.n, total: items.filter(function (x) { return x.col === it.col; }).length });
+    current = i;
+    if (history.state && history.state.food) history.replaceState(history.state, "", hashFor(i));
+    [i + 1, i - 1].forEach(function (k) { var p = items[(k + items.length) % items.length]; new Image().src = p.src; });
+  }
+
+  function step(d) { render((current + d + items.length) % items.length); }
+  function isOpen() { return !!overlay && overlay.classList.contains("is-open"); }
+
+  function show(i, opener, fromHistory) {
+    if (!overlay) build();
+    document.querySelectorAll(".food-video video").forEach(function (v) { v.pause(); });
+    lastFocused = opener || document.activeElement;
+    if (!fromHistory) history.pushState({ food: true }, "", hashFor(i));
+    render(i);
+    overlay.classList.add("is-open");
+    document.body.classList.add("zoom-locked");
+    overlay.querySelector(".media-close").focus();
+  }
+
+  function hide(fromHistory) {
+    if (!isOpen()) return;
+    overlay.classList.remove("is-open");
+    document.body.classList.remove("zoom-locked");
+    var t = document.querySelector('.food-tile[data-idx="' + current + '"]') || lastFocused;
+    if (t && t.focus) t.focus({ preventScroll: true });
+    if (fromHistory) return;
+    if (history.state && history.state.food) history.back();
+    else history.replaceState(null, "", location.pathname + location.search);
+  }
+
+  window.addEventListener("popstate", function () {
+    var i = indexFromHash();
+    if (i >= 0) { if (isOpen()) render(i); else show(i, null, true); }
+    else if (isOpen()) hide(true);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (!isOpen()) return;
+    if (e.key === "Escape") hide();
+    else if (e.key === "ArrowLeft") step(-1);
+    else if (e.key === "ArrowRight") step(1);
+    else if (e.key === "Tab") {
+      var f = Array.prototype.filter.call(overlay.querySelectorAll("button"), function (b) { return b.offsetParent !== null; });
+      var a = document.activeElement;
+      if (e.shiftKey && (a === f[0] || !overlay.contains(a))) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && (a === f[f.length - 1] || !overlay.contains(a))) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+
+  D.load("food").then(function (data) {
+    root.setAttribute("aria-busy", "false");
+    (data.collections || []).forEach(function (c) { root.appendChild(collection(c, data.base_url)); });
+    var linked = indexFromHash();
+    if (linked >= 0) show(linked, null, true);
+    else if (location.hash.length > 1) {
+      var target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (target) target.scrollIntoView();
+    }
+  }).catch(function () { D.fail(root, T.error); });
+})();
+</script>
+{{ end }}

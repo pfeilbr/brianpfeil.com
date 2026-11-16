@@ -2107,3 +2107,34 @@ other = "主なトピック"
 
 [tags_more]
 other = "ほかに {{ .count }} のトピック（各1〜2本）"
+
+# /food/ (tools/food/publish.py, layouts/_default/food.html)
+[hub_food_title]
+other = "食べ物"
+
+[hub_food_blurb]
+other = "食べたものを一皿ずつ、動画と一緒に"
+
+[hub_food_count]
+other = "{{ .count }} 枚の写真"
+
+[food_intro]
+other = "寿司や中華から、それ以外のメニューまで、食べたものすべて。まず動画、そのあとに登場する料理を名前つきで一皿ずつ。"
+
+[food_photos]
+other = "{{ .count }} 枚の写真"
+
+[food_video]
+other = "動画"
+
+[food_jump]
+other = "セクション"
+
+[food_sec_sushi]
+other = "寿司"
+
+[food_sec_chinese]
+other = "中華"
+
+[food_sec_other]
+other = "そのほか"

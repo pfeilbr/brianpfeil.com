@@ -119,6 +119,8 @@ jobs:
         run: python -m unittest discover -s tools/movies -p 'test_*.py' -v
       - name: apps check tests
         run: python -m unittest discover -s tools/apps -p 'test_*.py' -v
+      - name: food publisher tests
+        run: python -m unittest discover -s tools/food -p 'test_*.py' -v
       # These four ran only in `make verify` (or nowhere): stdlib-only unit
       # tests, so CI can run them as-is.
       - name: music refresher tests
