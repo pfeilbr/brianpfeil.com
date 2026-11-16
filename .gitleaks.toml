@@ -25,3 +25,8 @@ regexes = [
   '''ok to expose for demo''',
   '''\bfsap-[0-9a-f]{17}\b''',
 ]
+
+[[allowlists]]
+description = "/food/ collection ids are date slugs (\"key\": \"2026-11-15-everything-i-eat\"), not credentials"
+regexTarget = "line"
+regexes = ['''"key": "\d{4}-\d{2}-\d{2}-[a-z0-9-]+"''']
