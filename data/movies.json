@@ -2315,6 +2315,14 @@
         },
         {
           "type": "stream",
+          "service": "AMC+ Roku Premium Channel",
+          "icon": "/movies/services/rokuchannelamcplus.webp",
+          "url": "https://app.roku.com/details/868ca0149772554488e4e0af6eae869a/sixteen-candles?source=bing",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "Hulu",
           "icon": "/movies/services/hulu.webp",
           "url": "https://www.hulu.com/watch/153ae7f9-3419-4b23-b6c5-b93afbf47d44",
@@ -2382,7 +2390,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/sixteen-candles/umc.cmc.4jt5o6qld8cltp18i89tu66n3?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A280497940",
-          "price": "$4.99",
+          "price": "$12.99",
           "quality": "HD"
         },
         {
@@ -2397,7 +2405,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-sixteen-candles-hughes/3620992",
+          "url": "https://www.barnesandnoble.com/w/dvd-sixteen-candles-john-hughes/3620992",
           "price": "$39.99",
           "quality": "DVD"
         },
@@ -2406,11 +2414,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Sixteen-Candles/5256",
-          "price": "$5.00",
+          "price": "$12.99",
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "Weird Science",
@@ -2423,55 +2431,46 @@
       "genres": {
         "en": [
           "Comedy",
-          "Fantasy",
           "Romance",
           "Science-Fiction"
         ],
         "zh": [
           "Comedy",
-          "Fantasy",
           "Romance",
           "Science-Fiction"
         ],
         "es": [
           "Comedia",
-          "Fantasía",
           "Romance",
           "Ciencia ficción"
         ],
         "pt": [
           "Comédia",
-          "Fantasia",
           "Romance",
           "Ficção Científica"
         ],
         "fr": [
           "Comédie",
-          "Fantastique",
           "Comédie Romantique",
           "Science-Fiction"
         ],
         "de": [
           "Komödien",
-          "Fantasy",
           "Romantik",
           "Science-Fiction"
         ],
         "it": [
           "Commedia",
-          "Fantasy",
           "Romantico",
           "Fantascienza"
         ],
         "ja": [
           "コメディ",
-          "ファンタジー",
           "ロマンス",
           "サイエンスフィクション"
         ],
         "ko": [
           "코미디",
-          "판타지",
           "로맨스",
           "SF"
         ]
@@ -2600,7 +2599,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "Real Genius",
@@ -2769,7 +2768,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.aca9f7b3-9019-0cea-c253-77194c243200",
-          "price": "$12.99",
+          "price": "$7.99",
           "quality": "4K"
         },
         {
@@ -2777,7 +2776,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/real-genius/umc.cmc.4lnk8xi4mxsbca5rb5jjhp1ok?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A263719250",
-          "price": "$12.99",
+          "price": "$7.99",
           "quality": "4K"
         },
         {
@@ -2793,11 +2792,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Real-Genius/26354",
-          "price": "$14.99",
+          "price": "$7.99",
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "Road House",
@@ -2941,7 +2940,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/road-house/umc.cmc.2ha4cqzcxv4s5ovlbfamqfy33?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A610767486",
-          "price": "$14.99",
+          "price": "$4.99",
           "quality": "HD"
         },
         {
@@ -2957,11 +2956,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Road-House/140666",
-          "price": "$14.99",
+          "price": "$5.00",
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "The Notebook",
@@ -3080,8 +3079,8 @@
           "type": "rent",
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
-          "url": "https://athome.fandango.com/content/browse/details/The-Notebook-Le-Grand-Cahier-/600346",
-          "price": "$3.99",
+          "url": "https://athome.fandango.com/content/browse/details/The-Notebook/44659",
+          "price": "$5.99",
           "quality": "HD"
         },
         {
@@ -3105,7 +3104,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.b8ba6da7-bca9-bf94-4020-3061f9e1f5e3",
-          "price": "$14.99",
+          "price": "$7.99",
           "quality": "HD"
         },
         {
@@ -3113,7 +3112,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-notebook/umc.cmc.2c4fe2l41ytc6uz845wyzxyb8?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A595178029",
-          "price": "$14.99",
+          "price": "$7.99",
           "quality": "HD"
         },
         {
@@ -3128,12 +3127,12 @@
           "type": "buy",
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
-          "url": "https://athome.fandango.com/content/browse/details/The-Notebook-Le-Grand-Cahier-/600346",
-          "price": "$13.99",
+          "url": "https://athome.fandango.com/content/browse/details/The-Notebook/44659",
+          "price": "$7.99",
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "A River Runs Through It",
@@ -3275,8 +3274,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B0G4FC48H6?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$16.99",
+          "url": "https://www.amazon.com/dp/B0H1J258HG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$24.99",
           "quality": "DVD"
         },
         {
@@ -3284,7 +3283,7 @@
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.06a9f7a8-a9f8-bbcd-7760-9c6038fae783",
-          "price": "$6.99",
+          "price": "$7.99",
           "quality": "HD"
         },
         {
@@ -3292,7 +3291,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/a-river-runs-through-it/umc.cmc.3l3gbb2mtw7hrpx0utejzf9p1?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A263873023",
-          "price": "$12.99",
+          "price": "$7.99",
           "quality": "HD"
         },
         {
@@ -3308,11 +3307,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/A-River-Runs-Through-It/15418",
-          "price": "$13.99",
+          "price": "$7.99",
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "Wedding Crashers",
@@ -3471,8 +3470,8 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B000BKVQS4?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$6.00",
+          "url": "https://www.amazon.com/dp/B000VBP3C8?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$9.97",
           "quality": "DVD"
         },
         {
@@ -3508,7 +3507,7 @@
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "Evil Dead II",
@@ -3594,7 +3593,7 @@
         "de": "Der Student Ash will mit seiner Freundin ein Wochenende in einem abgelegenen Landhaus verbringen. Als er ein Tonband von Professor Knowby findet und abspielt, auf dem dieser Verse aus dem sagenumwobenen Buch des Todes übersetzt, beginnt der Tanz der Teufel. Unheimliche Wesen zwingen Ash, seine Freundin zu töten und bringen ihn fast um den Verstand. Der Spuk endet erst, als Knowbys Tochter mit den richtigen Versen aus dem Buch den Zauber bannt.",
         "it": "Ash (Bruce Campbell) porta la fidanzata Linda (Denise Bixler) nella casetta nei boschi del primo film. Lì trova un registratore a nastro che, azionato, fa sentire le parole del professor Knowby che racconta di quando ha trovato il Libro dei Morti e ha cominciato a tradurlo. Poi il professore declama alcuni passi dal Libro e così facendo risveglia una forza maligna che dal bosco precipita su Linda che conseguentemente attacca Ash prima di essere decapitata e seppellita da lui. Scampato in qualche modo, Ash cerca di fuggire in auto, ma trova il ponte divelto. Torna la notte e Ash è costretto a rifugiarsi di nuovo nella casetta. Annie (Sarah Berry), la figlia del professore, e un collaboratore del padre vanno verso la casetta per prendere la traduzione del Libro dei Morti, ma trovano il ponte interrotto. I due assoldano perciò una coppia di avidi locali quali guide per prendere un sentiero alternativo. Intanto, Ash deve lottare contro la propria mano posseduta.",
         "ja": "休暇を過ごす為、アッシュは恋人リンダと共に森深くたたずむ別荘にやって来る。\n 退屈しのぎに別荘の地下室に入りそこで見つけた古いテープレコーダーを再生すると、そこからは\n かつて別荘の住人だった学者の古文書解読の経緯を伝える音声が流れてくる。\n 古文書の呪文の一節を朗読するその音声は唱えてはならない古代の死霊を呼び出す禁句であった。\n 突如リンダの様相は豹変しアッシュに襲い掛かってくる。防ごうと必死になりついにはリンダを殺して\n しまう。リンダを埋葬している最中アッシュ自身に死霊が憑依するが夜が明けたため死霊はアッシュから\n はなれてしまう。その隙に別荘から脱出を図るが唯一の帰り道にかかる橋が壊れていたためやむなく\n 別荘に戻ることになる。死霊との戦いに供えているアッシュの別荘に現れたのはテープの声の主の娘\n だった。死霊との戦いで血まみれになったアッシュを殺人犯と勘違いした娘は仲間と共にアッシュを\n 袋叩きにし拘束するがその時、またしても死霊が森の奥からアッシュ達を襲うべく別荘を囲み始めるのだった。",
-        "ko": "악마가 이 책을 썼다고 한다. 네클리 마나칸 엑스모터스, 대강 그 뜻을 설명하자면 일명 죽음의 책이다. 이 책은 악마의 세계로 통하는 일종의 관문이며, 이주 오래 전에 쓰여졌다. 바다가 피로 물들었을 때였다. 그 피로 이 책을 썼다고 한다. 그리고 1300년에 이 책이 사라졌다."
+        "ko": "애시는 연인 린다와 로맨틱한 주말을 보내기 위해 깊은 숲속의 외딴 오두막을 찾는다. 그러나 그곳에서 발견한 낡은 녹음기에는 고대의 '죽은 자의 서'를 해독하던 한 고고학 교수의 목소리가 담겨 있고, 호기심에 재생한 주문은 숲에 잠들어 있던 사악한 힘을 깨우고 만다. 린다가 악령에 사로잡히면서 오두막은 순식간에 악몽으로 변하고, 유일한 통로였던 다리마저 무너져 애시는 어디로도 도망칠 수 없게 된다. 이윽고 교수의 딸 애니가 책의 빠진 페이지를 들고 일행과 함께 도착하지만, 피투성이가 된 채 횡설수설하는 애시를 본 그들은 오히려 그를 의심한다. 해가 저물수록 오두막을 에워싼 어둠은 더욱 짙어지는데..."
       },
       "imdb_url": "https://www.imdb.com/title/tt0092991/",
       "imdb_rating": 7.6,
@@ -3668,9 +3667,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B005J9ZFQG?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$13.34",
-          "quality": "DVD"
+          "url": "https://www.amazon.com/dp/B01IN8C35U?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$16.22",
+          "quality": "BLURAY"
         },
         {
           "type": "buy",
@@ -3705,7 +3704,7 @@
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "Teen Wolf",
@@ -3855,6 +3854,14 @@
         },
         {
           "type": "stream",
+          "service": "MGM Plus Roku Premium Channel",
+          "icon": "/movies/services/rokuchannelepix.webp",
+          "url": "https://app.roku.com/details/5ac75f88471a511aa1aa8b14824ab27b/teen-wolf?source=bing",
+          "price": null,
+          "quality": "HD"
+        },
+        {
+          "type": "stream",
           "service": "MGM+ Amazon Channel",
           "icon": "/movies/services/amazonepix.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.76d806ef-25d0-4a62-8348-8d5fa45778bb",
@@ -3913,9 +3920,9 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B004NDJXOO?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$8.70",
-          "quality": "BLURAY"
+          "url": "https://www.amazon.com/dp/B016NVSE16?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$16.48",
+          "quality": "DVD"
         },
         {
           "type": "buy",
@@ -3937,7 +3944,7 @@
           "type": "buy",
           "service": "Barnes & Noble",
           "icon": "/movies/services/barnesandnoble.webp",
-          "url": "https://www.barnesandnoble.com/w/dvd-teen-wolf-daniel/3943869",
+          "url": "https://www.barnesandnoble.com/w/dvd-teen-wolf-rod-daniel/3943869",
           "price": "$14.99",
           "quality": "DVD"
         },
@@ -3946,11 +3953,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/Teen-Wolf/140927",
-          "price": "$14.99",
+          "price": "$9.99",
           "quality": "HD"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "The Wolf of Wall Street",
@@ -4134,16 +4141,16 @@
           "type": "buy",
           "service": "Amazon DVD / Blu-ray",
           "icon": "/movies/services/amazondvdbr.webp",
-          "url": "https://www.amazon.com/dp/B09BF7VT4S?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
-          "price": "$16.38",
-          "quality": "BLURAY_4K"
+          "url": "https://www.amazon.com/dp/B0BBWG5NBT?tag=justwatch09-20&linkCode=osi&th=1&psc=1",
+          "price": "$21.99",
+          "quality": "DVD"
         },
         {
           "type": "buy",
           "service": "Amazon Video",
           "icon": "/movies/services/amazon.webp",
           "url": "https://watch.amazon.com/detail?gti=amzn1.dv.gti.1a9b903a-6665-4d2a-89bc-2bcfd4d96e69",
-          "price": "$4.99",
+          "price": "$16.99",
           "quality": "4K"
         },
         {
@@ -4151,7 +4158,7 @@
           "service": "Apple TV Store",
           "icon": "/movies/services/itunes.webp",
           "url": "https://tv.apple.com/us/movie/the-wolf-of-wall-street/umc.cmc.2tmr7hr6xnw1buspmujtvb9ep?at=1000l3V2&ct=app_tv&itscg=30200&itsct=justwatch_tv&playableId=tvs.sbd.9001%3A774084884",
-          "price": "$4.99",
+          "price": "$16.99",
           "quality": "4K"
         },
         {
@@ -4167,11 +4174,11 @@
           "service": "Fandango At Home",
           "icon": "/movies/services/vudu.webp",
           "url": "https://athome.fandango.com/content/browse/details/The-Wolf-of-Wall-Street/488007",
-          "price": "$5.00",
+          "price": "$16.99",
           "quality": "4K"
         }
       ],
-      "refreshed": "2026-11-13"
+      "refreshed": "2026-11-20"
     },
     {
       "title": "Air",
@@ -12600,5 +12607,5 @@
       "refreshed": "2026-11-19"
     }
   ],
-  "updated": "2026-11-19"
+  "updated": "2026-11-20"
 }
