@@ -1,6 +1,68 @@
 {
   "apps": [
     {
+      "key": "memex",
+      "name": "Memex",
+      "url": "https://memex.brianpfeil.com/",
+      "icon": "/images/apps/memex.webp",
+      "private": true
+    },
+    {
+      "key": "relhub",
+      "name": "Relhub",
+      "url": "https://relhub.brianpfeil.com/",
+      "icon": "/images/apps/relhub.webp",
+      "private": true
+    },
+    {
+      "key": "media",
+      "name": "Media Library",
+      "url": "https://media.brianpfeil.com/",
+      "icon": "/images/apps/media.webp",
+      "private": true
+    },
+    {
+      "key": "mission-control",
+      "name": "Mission Control",
+      "url": "https://mc.brianpfeil.com/",
+      "icon": "/images/apps/mission-control.webp",
+      "private": true
+    },
+    {
+      "key": "capture",
+      "name": "Memex Capture",
+      "url": "https://capture.brianpfeil.com/capture/",
+      "icon": "/images/apps/capture.webp",
+      "private": true
+    },
+    {
+      "key": "jobs",
+      "name": "Job Search",
+      "url": "https://jobs.brianpfeil.com/",
+      "icon": "/images/apps/jobs.webp",
+      "private": true
+    },
+    {
+      "key": "waypoint",
+      "name": "Waypoint",
+      "url": "https://pfeilbr.github.io/travel/",
+      "repo": "pfeilbr/travel",
+      "icon": "/images/apps/waypoint.webp"
+    },
+    {
+      "key": "college",
+      "name": "College Life",
+      "url": "https://college.brianpfeil.com/",
+      "icon": "/images/apps/college.webp"
+    },
+    {
+      "key": "money-trees",
+      "name": "Money Trees",
+      "url": "https://d22hyznskrpudb.cloudfront.net/",
+      "icon": "/images/apps/money-trees.webp",
+      "sign_in": true
+    },
+    {
       "key": "mandarin",
       "name": "Say It In Mandarin",
       "url": "https://pfeilbr.github.io/chinese-mandarin-language-app/",
@@ -15,13 +77,6 @@
       "repo": "pfeilbr/burmese--language",
       "icon": "/images/apps/burmese.webp",
       "offline": true
-    },
-    {
-      "key": "money-trees",
-      "name": "Money Trees",
-      "url": "https://d22hyznskrpudb.cloudfront.net/",
-      "icon": "/images/apps/money-trees.webp",
-      "sign_in": true
     }
   ]
 }

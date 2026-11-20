@@ -19,6 +19,7 @@
   "copy" (i18n "apps_copy")
   "copied" (i18n "apps_copied")
   "signIn" (i18n "apps_sign_in")
+  "private" (i18n "apps_private")
   "offline" (i18n "apps_offline")
   "error" (i18n "data_load_error")
   "blurbs" $blurbs
@@ -80,6 +81,7 @@
 
     var tags = [];
     if (a.offline) tags.push(T.offline);
+    if (a.private) tags.push(T.private);
     if (a.sign_in) tags.push(T.signIn);
     if (tags.length) c.appendChild(el("p", "app-tags", tags.join(" · ")));
 

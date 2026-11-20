@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{- /* Publishes every data/ file as /data/<name>.json for the data-driven
    pages; once, from the English home page. */ -}}
-{{- if eq .Site.Language.Lang "en" }}{{ partial "publish-data.html" . }}{{ partial "apps-links.html" . }}{{ end }}
+{{- if eq .Site.Language.Lang "en" }}{{ partial "publish-data.html" . }}{{ partial "apps-links.html" . }}{{ partial "apps-portal.html" . }}{{ end }}
 {{- /* The home page is a table of contents: who I am up top, then a card for
    every section of the site. The post list that used to live here is at
    /post/ (layouts/post/list.html).

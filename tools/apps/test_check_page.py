@@ -65,9 +65,36 @@ class RedirectTest(unittest.TestCase):
         self.assertEqual(cp.check_redirect(html, URL), ["not noindex"])
 
 
+def portal(url: str = URL, *, target: bool = True, icon: str = "data:image/webp;base64,AA") -> str:
+    blank = ' target="_blank" rel="noopener"' if target else ""
+    return ('<link rel="canonical" href="https://apps.brianpfeil.com/"><meta name="robots" content="noindex">'
+            f'<a class="card" href="{url}"{blank} id="mandarin"><img class="icon" src="{icon}" alt="">'
+            '<span class="blurb">blurb en</span></a>')
+
+
+class PortalTest(unittest.TestCase):
+    def test_good_portal_passes(self):
+        self.assertEqual(cp.check_portal(portal(), {"apps": [APP]}, I18N["en"]), [])
+
+    def test_card_must_open_a_new_tab(self):
+        errors = cp.check_portal(portal(target=False), {"apps": [APP]}, I18N["en"])
+        self.assertTrue(any("new tab" in e for e in errors))
+
+    def test_missing_app_fails(self):
+        other = {**APP, "key": "burmese"}
+        errors = cp.check_portal(portal(), {"apps": [APP, other]}, {**I18N["en"], "apps_blurb_burmese": {"other": "b"}})
+        self.assertTrue(any("burmese" in e for e in errors))
+
+    def test_root_relative_icon_fails(self):
+        errors = cp.check_portal(portal(icon="/images/apps/mandarin.webp"), {"apps": [APP]}, I18N["en"])
+        self.assertTrue(any("root-relative" in e for e in errors))
+
+
 class BuildTest(unittest.TestCase):
     def build(self, root: Path, *, home_link: bool = True, blurb: bool = True) -> None:
         (root / "data").mkdir(parents=True)
+        (root / "apps-home").mkdir(parents=True)
+        (root / "apps-home" / "index.html").write_text(portal())
         (root / "data" / "apps.json").write_text(json.dumps({"apps": [APP]}))
         (root / "apps" / "mandarin").mkdir(parents=True)
         (root / "apps" / "mandarin" / "index.html").write_text(redirect())

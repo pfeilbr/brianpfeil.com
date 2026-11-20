@@ -1,0 +1,88 @@
+{{- /* apps.brianpfeil.com: a directory of every app in data/apps.json, one
+   card each (icon, name, blurb), every card opening its app in a new tab.
+
+   One self-contained file, /apps-home/index.html: CSS inline and every icon
+   a data: URI, so it needs nothing else from this site. A CloudFront
+   distribution (infra/apps.tf) serves it as apps.brianpfeil.com/ with
+   origin path /apps-home; its viewer function sends apps.brianpfeil.com/<key>
+   to the /apps/<key>/ short link and anything else back to /. On
+   brianpfeil.com itself the file is noindex with apps.brianpfeil.com as
+   its canonical, so search engines see one page.
+
+   English, like the short links: called once, from the English home page.
+   Strings are the /apps/ page's own (apps_intro, apps_blurb_<key>, …). */ -}}
+{{- $apps := hugo.Data.apps.apps -}}
+{{- $favicon := printf "data:image/svg+xml;base64,%s" (readFile "static/favicon.svg" | base64Encode) -}}
+{{- $cards := slice -}}
+{{- range $apps -}}
+  {{- $tags := slice -}}
+  {{- if .private }}{{ $tags = $tags | append (i18n "apps_private") }}{{ end -}}
+  {{- if .sign_in }}{{ $tags = $tags | append (i18n "apps_sign_in") }}{{ end -}}
+  {{- if .offline }}{{ $tags = $tags | append (i18n "apps_offline") }}{{ end -}}
+  {{- $icon := printf "data:image/webp;base64,%s" (readFile (printf "static%s" .icon) | base64Encode) -}}
+  {{- $host := replaceRE `^https://([^/]+).*$` "$1" .url -}}
+  {{- $card := printf `<li><a class="card" href="%s" target="_blank" rel="noopener" id="%s">
+<img class="icon" src="%s" alt="" width="64" height="64">
+<span class="text"><span class="name">%s<span class="ext" aria-hidden="true">↗</span></span>
+<span class="blurb">%s</span>
+<span class="meta">%s</span></span>
+</a></li>`
+    (.url | htmlEscape) .key $icon (.name | htmlEscape)
+    (i18n (printf "apps_blurb_%s" .key) | htmlEscape)
+    (delimit (slice $host | append $tags) " · " | htmlEscape) -}}
+  {{- $cards = $cards | append $card -}}
+{{- end -}}
+{{- $title := i18n "hub_apps_title" -}}
+{{- $intro := i18n "apps_portal_intro" -}}
+{{- $html := printf `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>%s · Brian Pfeil</title>
+<meta name="description" content="%s">
+<link rel="canonical" href="https://apps.brianpfeil.com/">
+<meta name="robots" content="noindex">
+<link rel="icon" href="%s" type="image/svg+xml">
+<meta name="color-scheme" content="light dark">
+<style>
+:root { --bg: #f7f8fa; --card: #fff; --text: #111827; --muted: #4b5563; --subtle: #5b6472; --border: #e5e7eb; --brand: #0c779e; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0b0d12; --card: #151922; --text: #f3f4f6; --muted: #c4c9d2; --subtle: #9aa3b2; --border: #262c38; --brand: #4ab8e0; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+main { max-width: 68rem; margin: 0 auto; padding: 3rem 1.25rem 2rem; }
+h1 { margin: 0 0 0.5rem; font-size: 2rem; letter-spacing: -0.02em; }
+.intro { margin: 0 0 2rem; color: var(--muted); max-width: 40rem; }
+ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); }
+.card { display: flex; gap: 1rem; align-items: flex-start; height: 100%%; padding: 1.125rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--card); color: inherit; text-decoration: none; transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease; }
+.card:hover, .card:focus-visible { border-color: var(--brand); box-shadow: 0 6px 20px rgb(0 0 0 / .08); transform: translateY(-2px); }
+.card:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.icon { flex-shrink: 0; width: 4rem; height: 4rem; border-radius: 1rem; box-shadow: 0 1px 3px rgb(0 0 0 / .15); }
+.text { min-width: 0; display: flex; flex-direction: column; gap: 0.25rem; }
+.name { font-weight: 650; font-size: 1.0625rem; }
+.ext { margin-left: 0.375rem; font-size: 0.875rem; color: var(--subtle); }
+.card:hover .ext { color: var(--brand); }
+.blurb { font-size: 0.9rem; color: var(--muted); }
+.meta { font-size: 0.75rem; color: var(--subtle); overflow-wrap: anywhere; }
+footer { max-width: 68rem; margin: 0 auto; padding: 1rem 1.25rem 3rem; font-size: 0.875rem; color: var(--subtle); }
+footer a { color: var(--brand); }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
+</style>
+</head>
+<body>
+<main>
+<h1>%s</h1>
+<p class="intro">%s</p>
+<ul>
+%s
+</ul>
+</main>
+<footer><a href="https://brianpfeil.com/">brianpfeil.com</a> · <a href="https://brianpfeil.com/apps/">brianpfeil.com/apps</a></footer>
+</body>
+</html>
+` ($title | htmlEscape) ($intro | htmlEscape) $favicon ($title | htmlEscape) ($intro | htmlEscape) (delimit $cards "\n") -}}
+{{- with resources.FromString "apps-home/index.html" $html -}}
+  {{- .Publish -}}
+{{- end -}}

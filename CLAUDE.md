@@ -285,7 +285,14 @@ touching a template:
   `sign_in`) in `data/apps.json`, `apps_blurb_<key>` in all nine i18n files,
   then `make apps-icon KEY=… FROM=<its icon png>` (or `EMOJI=…`). The home
   card counts them; `tools/apps/check_page.py` (in verify and CI) checks the
-  data, the page in every language and every redirect.
+  data, the page in every language and every redirect. `"private": true`
+  marks an app only B can sign in to (memex, relhub, media, …).
+  **apps.brianpfeil.com** (B, 2026-11-20: "a directory of all my web apps
+  ... cards ... open a new tab") is the same list: `partials/apps-portal.html`
+  writes one self-contained page to `/apps-home/` (icons inlined), and the
+  CloudFront distribution in `infra/apps.tf` serves it with origin path
+  `/apps-home`, so every deploy updates it (within GitHub's 10-minute
+  cache). `apps.brianpfeil.com/<key>` redirects to the app.
 - **/movies/:** append `{"title", "year"}` (or `"imdb"`) to
   `data/movies.json` and run `make movies-refresh`; check the new title in its
   output, since a year match can pick a same-year namesake. Synopses, titles

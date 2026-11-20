@@ -11,7 +11,10 @@ at /apps/<key>/ for every app. This checks, against a built site:
   - /apps/<key>/index.html redirects to that app (refresh, script and
     canonical all agree) and is noindex;
   - /apps/ exists in every language, loads apps.json and carries that
-    language's blurbs, and the home page links to it.
+    language's blurbs, and the home page links to it;
+  - /apps-home/ (served as apps.brianpfeil.com, infra/apps.tf) has a card
+    for every app, in order, each opening it in a new tab with its icon
+    inlined, and nothing loaded from anywhere else.
 
     python3 tools/apps/check_page.py --public public
 
@@ -73,6 +76,31 @@ def check_redirect(html: str, url: str) -> list[str]:
     return errors
 
 
+def check_portal(html: str, data: dict, i18n: dict) -> list[str]:
+    errors = []
+    if 'rel="canonical" href="https://apps.brianpfeil.com/"' not in html:
+        errors.append("canonical is not https://apps.brianpfeil.com/")
+    if 'name="robots" content="noindex"' not in html:
+        errors.append("not noindex")
+    cards = re.findall(r'<a class="card" href="([^"]+)" target="_blank" rel="noopener" id="([^"]+)">', html)
+    if [k for _, k in cards] != [a["key"] for a in data["apps"]]:
+        errors.append("cards do not match data/apps.json (same apps, same order)")
+    for a in data["apps"]:
+        if (a["url"], a["key"]) not in cards:
+            errors.append(f"{a['key']}: no card opening {a['url']} in a new tab")
+        if html_escape(i18n[f"apps_blurb_{a['key']}"]["other"]) not in html:
+            errors.append(f"{a['key']}: blurb missing")
+    if html.count('class="icon" src="data:image/webp;base64,') != len(data["apps"]):
+        errors.append("every card needs its icon inlined as a data: URI")
+    if re.search(r'(?:src|href)="/(?!/)', html):
+        errors.append("loads a root-relative URL, which apps.brianpfeil.com does not serve")
+    return errors
+
+
+def html_escape(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&#34;").replace("'", "&#39;")
+
+
 def check_build(public: Path, data: dict, i18n: dict[str, dict]) -> list[str]:
     errors = []
     published = public / "data" / "apps.json"
@@ -87,6 +115,11 @@ def check_build(public: Path, data: dict, i18n: dict[str, dict]) -> list[str]:
             errors.append(f"/apps/{a['key']}/ was not published")
             continue
         errors += [f"/apps/{a['key']}/: {e}" for e in check_redirect(page.read_text(encoding="utf-8"), a["url"])]
+    portal = public / "apps-home" / "index.html"
+    if portal.is_file():
+        errors += [f"/apps-home/: {e}" for e in check_portal(portal.read_text(encoding="utf-8"), data, i18n["en"])]
+    else:
+        errors.append("/apps-home/ (apps.brianpfeil.com) was not published")
     for lang in LANGS:
         page = public / prefix(lang) / "apps" / "index.html"
         if not page.is_file():
