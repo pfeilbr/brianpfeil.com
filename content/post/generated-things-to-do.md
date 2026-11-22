@@ -26,7 +26,9 @@ truncated = true
 </div>
 
 
-A single-page, fully client-side web app — pick a city from the dropdown, get things to do in one sortable, searchable table. Ships with twenty-five guides: **Philly (Willow Grove) · Forest Hills · NYC · Brooklyn · Queens · Flushing · Ithaca (Cornell) · Verona · Atlantic City · Baltimore · Washington DC · Pittsburgh · Richmond · Boston · Virginia Beach · Buffalo · Cleveland · Raleigh-Durham · Chicago · Toronto · Nashville · Los Angeles · San Francisco · Seattle · San Diego**.
+[![CI](https://github.com/pfeilbr/things-to-do/actions/workflows/ci.yml/badge.svg)](https://github.com/pfeilbr/things-to-do/actions/workflows/ci.yml) [![Deploy](https://github.com/pfeilbr/things-to-do/actions/workflows/pages.yml/badge.svg)](https://github.com/pfeilbr/things-to-do/actions/workflows/pages.yml) [![Timetables](https://github.com/pfeilbr/things-to-do/actions/workflows/transit.yml/badge.svg)](https://github.com/pfeilbr/things-to-do/actions/workflows/transit.yml)
+
+A single-page, fully client-side web app — pick a city from the dropdown, get things to do in one sortable, searchable table. Ships with twenty-six guides: **Philly (Willow Grove) · Forest Hills · NYC · Brooklyn · Queens · Flushing · Ithaca (Cornell) · Verona · Atlantic City · Baltimore · Washington DC · Pittsburgh · Richmond · Stamford · Boston · Virginia Beach · Buffalo · Cleveland · Raleigh-Durham · Chicago · Toronto · Nashville · Los Angeles · San Francisco · Seattle · San Diego**.
 
 **Live site:** https://pfeilbr.github.io/things-to-do/
 
@@ -41,8 +43,12 @@ A single-page, fully client-side web app — pick a city from the dropdown, get 
   - **Fishing** — piers, lakes, party boats, and surf spots with license notes
   - **MTB** — real mountain-bike trails within a drive, labeled honestly (singletrack vs. greenway)
   - **Social** — recurring series where strangers actually talk: dance socials, run clubs, trivia, language exchanges, night markets — with a "today" badge on ones happening now
-  - **Events** — dated, source-verified listings for the next few weeks, on Philly, Ithaca, Verona, Boston and the five NYC-area guides; the ones happening today get a TODAY badge
+  - **Events** — dated, source-verified listings for the next few weeks, on Philly, Ithaca, Verona, Stamford, Boston and the five NYC-area guides; the ones happening today get a TODAY badge
   - **Coffee** — on the Ithaca/Cornell guide only: campus cafés and Ithaca's roasters, sorted by popularity
+  - **Skiing** — on the Stamford guide (the pilot): every operating ski area within about a two-hour drive, sorted by drive time, with vertical, trail count and night-skiing nights in each line
+- **🚆 To NYC** — a live train board, piloted on Stamford. It opens on the next train from Noroton Heights, Darien or Stamford to Grand Central (or to Bryant Park, walk included), with the New York time, live delays, track and cancellations, the fare for that train, and whether your bike can ride it. Below that are the rest of the day's trains, any day in the next week, and the ride home. A strip above every Stamford list shows the next train at a glance. Panels cover fares, parking, the MTA TrainTime app, taking a full-size bike, and the walk or ride from Grand Central. The timetable is baked from Metro-North's published GTFS feed by `scripts/transit.py` and rebuilt weekly by a GitHub Action, so it never needs an LLM or a person. Live times come straight from the MTA's open GTFS-realtime feed in the browser
+- **☀ Today** — every city opens on it. It reads the city's own clock: in the morning it lists the whole day, in the afternoon only what's still ahead, in the evening what's still on tonight. Up top: the weather (Open-Meteo) and the daylight left. Then "Get outside today" orders riding, rollerblading, ice skating, skiing, walks and fishing for the month, and swaps in rinks and indoor spots after dark or when rain is likely. Group runs, rides and pickup games from Meetup sit under "Show up and play", followed by a filterable timeline of everything on today, tonight's best floors and tables, and the rest of the week. An "Open on Today" checkbox at the bottom switches the default back to the lists. The code lives in `today.js`
+- **✦ Start here** — a first-visit guide, piloted on Stamford. The first time you open the city it asks what you're into (date spots, shows, nightlife, sushi, Chinese, fishing, MTB, skiing, meeting people) and whether it's a day trip or a weekend, then builds a page from that: the next three weeks of events, a day-by-day plan whose stops swap to match your interests and the season, hand-picked rows per interest with a line on why, the neighborhoods, and know-before-you-go facts with sources. Every pick is a live row from the city's data, so distances, ratings, favorites and the detail view all work from it. The content lives in `guide-<city>.json` and is checked by `tests/data/guide.test.js`
 - **Everyday-life tabs** on the seven guides for places actually lived in (Forest Hills, NYC, Brooklyn, Queens, Flushing, Boston, Ithaca) — the stuff you actually look up when you live somewhere rather than visit it:
   - **Museums** — museums and galleries, from the Met down to a museum inside a Tribeca freight elevator
   - **Sights** — things worth looking at: observation decks, public art, architecture, World's Fair ruins, oddities like Grand Central's whispering gallery
@@ -96,5 +102,17 @@ node --test 'tests/unit/*.test.js' 'tests/data/*.test.js'
 python3 -m unittest discover -s tests/scripts
 ```
 
+`sh scripts/check.sh` runs all of those plus the timetable-freshness check in one go (add `--e2e` for the Playwright browser suite).
+
+`scripts/transit.py build` rebuilds the baked train timetables (`transit-<city>.json`) from the agency's GTFS feed; `.github/workflows/transit.yml` runs it every Monday and deploys if anything changed. `scripts/transit.py status` shows how many days each one has left.
+
 `scripts/events.py` maintains the dated Events tabs (`status`, `prune`, `add`) and appends researched rows to any tab with `add --tab <tab>`, computing distances so no origin coordinate is ever stored.
+
+## Operations
+
+- **Deploy** — every push to `main` that touches a served file runs `.github/workflows/pages.yml`. It runs the schema and unit suites first, publishes only what the site serves (no `tests/`, `scripts/`, dotfiles or Markdown), then waits until the live site answers with the new `BUILD` stamp and checks that every file the service worker precaches returns 200. A deploy that serves the old page fails.
+- **Release stamp** — bump `const BUILD` in `index.html` on every deploy. Open pages compare it against a `no-store` fetch of themselves and reload when it changes.
+- **Monitoring** — CI runs weekly (Monday 11:00 UTC). It catches dated data going stale, a timetable refresh that stopped landing, and a live site that drifted from `main`.
+- **Rollback** — every change ships as one commit: `git revert <sha> && git push` undoes it and redeploys within a few minutes. The only setting outside git is the Pages source (GitHub Actions); see `CLAUDE.md` for the one-line command to switch it back to branch builds.
+- **Offline copies** — after any change to `sw.js`, bump its `CACHE` name so installed copies replace their cache.
 
