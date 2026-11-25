@@ -44,11 +44,12 @@ PROFILES = {
     "pinterest": "https://www.pinterest.com/pfeilbr/",
     "snapchat": "https://www.snapchat.com/@pfeilbr",
     "tiktok": "https://www.tiktok.com/@pfeilbr",
+    "rednote": "https://www.rednote.com/user/profile/6a5110ac0000000001004000",
     "stackoverflow": "stackoverflow.com/users/29148/pfeilbr",
 }
 # The JSON-LD spells X as x.com; the links still use twitter.com.
 SAME_AS = {**PROFILES, "x": "https://x.com/pfeilbr"}
-FOOTER = ("x", "github", "stackoverflow", "youtube", "pinterest", "snapchat", "tiktok")
+FOOTER = ("x", "github", "stackoverflow", "youtube", "pinterest", "snapchat", "tiktok", "rednote")
 HERO = tuple(PROFILES)
 # On the home page and /about/, not (yet) in sameAs or the check above.
 HERO_ONLY = {"facebook": "https://www.facebook.com/brian.pfeil"}

@@ -105,6 +105,10 @@ params:
     # user8768514322831 on 2026-10-07; tools/profiles/tiktok_handle.py (daily
     # Action) confirms @pfeilbr is still the same account.
     tiktok: "pfeilbr"
+    # Rednote (小红书) user id, the part after /user/profile/ (the handle
+    # 95959486309 isn't in any URL). Rednote's web shows profiles only to
+    # signed-in visitors; phones open the app.
+    rednote: "6a5110ac0000000001004000"
     # Handle only. A Discord profile URL needs the numeric user id, not the
     # @handle, so the footer offers this to copy rather than linking to it.
     discord: "pfeilbr"

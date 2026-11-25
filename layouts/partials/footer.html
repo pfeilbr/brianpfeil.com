@@ -33,6 +33,9 @@
       {{ with .Site.Params.author.tiktok }}
       <a href="https://www.tiktok.com/@{{ . }}" class="hover:text-brand no-underline" title="TikTok" target="_blank" rel="noopener noreferrer">TikTok</a>
       {{ end }}
+      {{ with .Site.Params.author.rednote }}
+      <a href="https://www.rednote.com/user/profile/{{ . }}" class="hover:text-brand no-underline" title="Rednote" target="_blank" rel="noopener noreferrer">Rednote</a>
+      {{ end }}
       {{ with .Site.Params.author.discord }}
       {{- /* Not a link: Discord profile URLs key off a numeric user id, not the
          handle, so the useful action is copying the handle to paste into

@@ -1380,6 +1380,7 @@ html[data-theme="dark"] .ic {
 .about-social [data-net="youtube"] .about-social-icon { color: #ff0000; }
 .about-social [data-net="pinterest"] .about-social-icon { color: #e60023; }
 .about-social [data-net="snapchat"] .about-social-icon { fill: #fffc00; }
+.about-social [data-net="rednote"] .about-social-icon { color: #ff2442; }
 html[data-theme="dark"] .about-social [data-net="linkedin"] .about-social-icon { color: #3b8fe0; }
 
 /* Platform tabs on /subscriptions/. Both platforms reachable from the top
@@ -2146,7 +2147,7 @@ nav details > summary {
 .hub-more svg, .hub-all svg { width: 1rem; height: 1rem; transition: transform 0.15s ease; }
 .hub-more:hover svg, .hub-all:hover svg { transform: translateX(2px); }
 /* Every profile, as its own full-width row under the hero: 44px circles
-   (40px on phones, so 13 make two even rows), tinted in each network's colour (data-net on the <li>), so they read as
+   (40px on phones, so 14 make two even rows), tinted in each network's colour (data-net on the <li>), so they read as
    a real way to reach me rather than fine print. */
 .hub-socials { flex-basis: 100%; width: 100%; margin-top: 0.5rem; }
 .hub-socials-label {
@@ -2207,6 +2208,7 @@ nav details > summary {
 [data-net="facebook"]  { --net: #1877f2; }
 [data-net="pinterest"] { --net: #e60023; }
 [data-net="snapchat"]  { --net: #c9a800; }
+[data-net="rednote"]   { --net: #e8183a; }
 [data-net="discord"]   { --net: #5865f2; }
 [data-net="wechat"]    { --net: #07a852; }
 [data-net="phone"]     { --net: var(--brand); }
@@ -2233,9 +2235,11 @@ html[data-theme="dark"] [data-net="discord"]  { --net: #7f8bff; }
 .hub-grid { display: grid; gap: 0.75rem; grid-template-columns: 1fr; }
 @media (min-width: 640px) {
   .hub-avatar { width: 120px; height: 120px; margin: calc(-60px - 1rem) 0 0 1.5rem; }
-  /* All 13 on one line, spread edge to edge (13 x 44px + gaps < 640px). */
+  /* All 14 on one line, spread edge to edge: up to 44px each, shrinking
+     (still round) when the row is narrower than 14 x 44px + gaps. */
   .hub-socials-list { flex-wrap: nowrap; justify-content: space-between; gap: 0.25rem; }
-  .hub-socials-list a, .hub-socials-list .social-copy { width: 2.75rem; height: 2.75rem; }
+  .hub-socials-list li { flex: 0 1 2.75rem; min-width: 0; }
+  .hub-socials-list a, .hub-socials-list .social-copy { width: 100%; height: auto; aspect-ratio: 1; }
   .hub-name { font-size: 2rem; }
   .hub-grid { grid-template-columns: 1fr 1fr; }
   .hub-wide { grid-column: 1 / -1; }
