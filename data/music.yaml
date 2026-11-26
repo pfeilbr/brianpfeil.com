@@ -10,14 +10,20 @@
 # https://music.youtube.com/playlist?list=<id>.
 
 
-tracks_counted: 1200
+tracks_counted: 1350
 top_artists:
+  - name: "Method Man"
+    count: 157
   - name: "Drake"
     count: 60
+  - name: "Redman"
+    count: 48
   - name: "Taylor Swift"
     count: 42
   - name: "21 Savage"
     count: 39
+  - name: "Wu-Tang Clan"
+    count: 23
   - name: "2Pac"
     count: 22
   - name: "Coldplay"
@@ -26,16 +32,10 @@ top_artists:
     count: 21
   - name: "Kendrick Lamar"
     count: 21
-  - name: "Wu-Tang Clan"
-    count: 21
   - name: "Wiz Khalifa"
     count: 20
   - name: "Metro Boomin"
     count: 18
-  - name: "Rihanna"
-    count: 18
-  - name: "Nas"
-    count: 16
 
 mine:
   - title: "universal-00"
@@ -45,6 +45,9 @@ mine:
     id: "PL0zUO3X8BkkyVrlASNua59emH9TO6r9GU"
     tracks: 162
     note_key: "bangers"
+  - title: "method man"
+    id: "PLTPElYWlp0Xs"
+    tracks: 150
   - title: "rage01"
     id: "PLZbF2hnK5dzQ"
     tracks: 113
