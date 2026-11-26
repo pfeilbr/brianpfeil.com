@@ -1,0 +1,4055 @@
+{
+ "version": 1,
+ "date": "2026-11-26",
+ "captured_at": "2026-11-26T12:17:30Z",
+ "window_hours": 36.0,
+ "weights": {
+  "likes": 1,
+  "reposts": 2,
+  "replies": 2,
+  "bookmarks": 3
+ },
+ "stats": {
+  "scanned": 740,
+  "accounts": 426,
+  "in_window": 703,
+  "blocked": 11,
+  "tech": 150,
+  "feeds": {
+   "following": 89,
+   "for_you": 79
+  }
+ },
+ "brief": {
+  "lead": [
+   "ai",
+   "space",
+   "chips"
+  ],
+  "highlights": [
+   "2125797463047258119",
+   "2125622238481371372",
+   "2125656399392690605",
+   "2125714117864366416",
+   "2125591320341229890"
+  ],
+  "topics": [
+   {
+    "key": "ai",
+    "count": 87,
+    "engagement": 969605,
+    "ids": [
+     "2125622238481371372",
+     "2125656399392690605",
+     "2125591320341229890",
+     "2125779541952246039",
+     "2125675533761671405",
+     "2125669066388209784",
+     "2125784147889393806",
+     "2125627317263466739",
+     "2125713948091826615",
+     "2125613662203425211",
+     "2125675162578387391",
+     "2125616057788637364",
+     "2125584444064993429",
+     "2125605319489503362",
+     "2125530989946659014",
+     "2125638790593274259",
+     "2125602695545504105",
+     "2125627711049625845",
+     "2125639418849714280",
+     "2125867631546712066",
+     "2125667586545517022",
+     "2125787894522544318",
+     "2125644125483553045",
+     "2125723837224321477",
+     "2125708240554242058",
+     "2125567788320223379",
+     "2125784381268611573",
+     "2125681386388422775",
+     "2125697506436858118",
+     "2125594425560863113",
+     "2125615940138049830",
+     "2125609241264456150",
+     "2125663033993437651",
+     "2125619666873942104",
+     "2125688298010259726",
+     "2125631173401657619",
+     "2125601090557132879",
+     "2125520741709795671",
+     "2125556044436824533",
+     "2125635627341561995",
+     "2125595134037262708",
+     "2125652569779249416",
+     "2125598669001097555",
+     "2125615579964833827",
+     "2125747621331611811",
+     "2125784108844683275",
+     "2125675768231727399",
+     "2125675673876615511",
+     "2125612300950458394",
+     "2125845831051858053",
+     "2125678295530557649",
+     "2125713233172746597",
+     "2125592216198393929",
+     "2125676306591318299",
+     "2125694207197110560",
+     "2125793034390405130",
+     "2125592808845345017",
+     "2125816458911600681",
+     "2125664998454366305",
+     "2125743598587003170",
+     "2125640718953636302",
+     "2125824585027272727",
+     "2125401104943022267",
+     "2125584945636905061",
+     "2125688474611364188",
+     "2125627723062141393",
+     "2125899647336272276",
+     "2125579506446443001",
+     "2125627281230205435",
+     "2125542621250515385",
+     "2125670324192874834",
+     "2125816545897312752",
+     "2125616060481392838",
+     "2125818170611298346",
+     "2125544329229771047",
+     "2125496509349400771",
+     "2125620479461573034",
+     "2125560020355916082",
+     "2125562598380953757",
+     "2125846489662369851",
+     "2125703538995274106",
+     "2125636625824694738",
+     "2125681805189869791",
+     "2125837181398950233",
+     "2125684566614524175",
+     "2125653316969668884",
+     "2125842768534593631"
+    ]
+   },
+   {
+    "key": "space",
+    "count": 14,
+    "engagement": 809589,
+    "ids": [
+     "2125797463047258119",
+     "2125670205456257409",
+     "2125667762324541673",
+     "2125671356339499494",
+     "2125867208358105441",
+     "2125832205301878841",
+     "2125680126004486294",
+     "2125687989544124441",
+     "2125701308342518103",
+     "2125418948162109476",
+     "2125696678984667553",
+     "2125690108279926929",
+     "2125872083393446092",
+     "2125749668889944432"
+    ]
+   },
+   {
+    "key": "chips",
+    "count": 14,
+    "engagement": 259692,
+    "ids": [
+     "2125714117864366416",
+     "2125556856634650809",
+     "2125622509634756857",
+     "2125623026918002860",
+     "2125620263513432251",
+     "2125653367640805799",
+     "2125734260963475605",
+     "2125738611274575979",
+     "2125605032691392708",
+     "2125809049593905319",
+     "2125634461958304194",
+     "2125769301437071693",
+     "2125751488597352518",
+     "2125578737609544083"
+    ]
+   },
+   {
+    "key": "dev",
+    "count": 23,
+    "engagement": 226781,
+    "ids": [
+     "2125546075855741424",
+     "2125682626056839259",
+     "2125724980713505219",
+     "2125564566755291247",
+     "2125586011187015799",
+     "2125645004957753460",
+     "2125705838203462067",
+     "2125805681265782991",
+     "2125675259366195662",
+     "2125659175275659497",
+     "2125707364053680383",
+     "2125593907048091950",
+     "2125565835284717850",
+     "2125651944673034290",
+     "2125634688731750636",
+     "2125807208684458289",
+     "2125656061516677509",
+     "2125489378554487236",
+     "2125609201783406995",
+     "2125653978965016691",
+     "2125685667833520237",
+     "2125669675216629846",
+     "2125621349569769917"
+    ]
+   },
+   {
+    "key": "bigtech",
+    "count": 2,
+    "engagement": 32536,
+    "ids": [
+     "2125624598737891411",
+     "2125818313552932976"
+    ]
+   },
+   {
+    "key": "science",
+    "count": 4,
+    "engagement": 28929,
+    "ids": [
+     "2125668935848861724",
+     "2125809711509336342",
+     "2125756199102820581",
+     "2125831567981297892"
+    ]
+   },
+   {
+    "key": "security",
+    "count": 3,
+    "engagement": 20560,
+    "ids": [
+     "2125641941903921380",
+     "2125666625080975703",
+     "2125560146629914733"
+    ]
+   },
+   {
+    "key": "startups",
+    "count": 2,
+    "engagement": 15709,
+    "ids": [
+     "2125696384003371454",
+     "2125735481984098540"
+    ]
+   },
+   {
+    "key": "robotics",
+    "count": 1,
+    "engagement": 6910,
+    "ids": [
+     "2125730401582829661"
+    ]
+   }
+  ]
+ },
+ "posts": [
+  {
+   "id": "2125797463047258119",
+   "handle": "elonmusk",
+   "name": "Elon Musk",
+   "verified": true,
+   "avatar": "/tech-digest/av/ed9f2766d10d7f80.jpg",
+   "time": "2026-11-26T03:43:05Z",
+   "text": "Every child in America will receive two SpaceX shares, one from the company and one from me personally",
+   "replies": 20556,
+   "reposts": 37317,
+   "likes": 311942,
+   "bookmarks": 15328,
+   "views": 12159914,
+   "engagement": 473672,
+   "velocity": 55247.7,
+   "topic": "space",
+   "feeds": [
+    "following",
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125622238481371372",
+   "handle": "fluxxrider",
+   "name": "Nikita",
+   "verified": true,
+   "avatar": "/tech-digest/av/afad8be4c09a599e.jpg",
+   "time": "2026-11-25T16:06:48Z",
+   "text": "Opus 5.6 is unceremoniously the most powerful model I've laid my hands on. This is insane.\n\nhttps://claude.ai/artifact/Cy2d8Vn63CnzCtonA1LSah…\n\nHave a go.",
+   "links": [
+    {
+     "text": "https://claude.ai/artifact/Cy2d8Vn63CnzCtonA1LSah…",
+     "href": "https://t.co/urg2CftdUp"
+    }
+   ],
+   "replies": 1173,
+   "reposts": 3831,
+   "likes": 30530,
+   "bookmarks": 46078,
+   "views": 8605946,
+   "engagement": 178772,
+   "velocity": 8859.6,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "card": {
+    "url": "https://t.co/urg2CftdUp",
+    "title": "The Last Boring Slide",
+    "domain": "claude.ai"
+   }
+  },
+  {
+   "id": "2125656399392690605",
+   "handle": "DarioAmodei",
+   "name": "Dario Amodei",
+   "verified": true,
+   "avatar": "/tech-digest/av/bd62e9daa3129427.jpg",
+   "time": "2026-11-25T18:22:33Z",
+   "text": "No, I do not believe that we should “surrender human free will” to AI systems, and it’s absurd to suggest that I do. I have written hundreds of pages of essays and a constant theme in them is the need for AI to be governed by legitimate democratic processes. For millennia (going",
+   "truncated": true,
+   "replies": 4840,
+   "reposts": 3718,
+   "likes": 18592,
+   "bookmarks": 12115,
+   "views": 7593188,
+   "engagement": 72053,
+   "velocity": 4021.7,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "axios",
+    "name": "Axios",
+    "text": "Rival AI leaders push back against Anthropic vision of surrendering human agency to AI https://axios.com/2026/11/25/anthropic-ai-human-control-debate-free-will?utm_campaign=mrf-utm_source=x&utm_medium=organic_social&utm_campaign=editorial&utm_source=twitter&utm_medium=social&mrfcid=202611256afc09853051fa79bd04d917…"
+   }
+  },
+  {
+   "id": "2125670205456257409",
+   "handle": "elonmusk",
+   "name": "Elon Musk",
+   "verified": true,
+   "avatar": "/tech-digest/av/ed9f2766d10d7f80.jpg",
+   "time": "2026-11-25T19:17:24Z",
+   "text": "Thanks Ron ❤️\n\nMy greatest privilege is being able to work with the incredibly talented people of SpaceX, Tesla, Neuralink and Boring Company, without whom I would be able to accomplish nothing.",
+   "replies": 1663,
+   "reposts": 4336,
+   "likes": 45861,
+   "bookmarks": 1826,
+   "views": 2966687,
+   "engagement": 63337,
+   "velocity": 3725.3,
+   "topic": "space",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "quote": {
+    "handle": "RonBaronAnalyst",
+    "name": "Ron Baron",
+    "text": "“Watching Elon engineer is like watching Michael Jordan play basketball…”  - SpaceX Director. October 2026\n\nThat was a response to my question \"Is Elon really an incredible engineer?\"  from a SpaceX Director in a recent conversation with me.  So not only is @elonmusk a super",
+    "id": "2125667871665606738"
+   }
+  },
+  {
+   "id": "2125714117864366416",
+   "handle": "DennysDiner",
+   "name": "Denny’s",
+   "verified": true,
+   "avatar": "/tech-digest/av/5d1b543ab4465c23.jpg",
+   "time": "2026-11-25T22:11:54Z",
+   "text": "Every story starts somewhere. We’re proud to be part of Jensen’s.",
+   "replies": 2735,
+   "reposts": 3740,
+   "likes": 31333,
+   "bookmarks": 5233,
+   "views": 3994348,
+   "engagement": 59982,
+   "velocity": 4256.1,
+   "topic": "chips",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HYANuR8X0AAgsrd?format=jpg&name=small"
+    },
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HYANuchXcAEV6mL?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125667762324541673",
+   "handle": "elonmusk",
+   "name": "Elon Musk",
+   "verified": true,
+   "avatar": "/tech-digest/av/ed9f2766d10d7f80.jpg",
+   "time": "2026-11-25T19:07:42Z",
+   "text": "SpaceX Colossus 3 will greatly benefit the Arizona community",
+   "replies": 1418,
+   "reposts": 4418,
+   "likes": 42553,
+   "bookmarks": 1360,
+   "views": 4108807,
+   "engagement": 58305,
+   "velocity": 3397.1,
+   "topic": "space",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "SpaceX",
+    "name": "SpaceX",
+    "text": "Our supercompute site in Cochise County has been designed with Arizona in mind: no gas plant, no industrial water use, and a dry-cooling closed-loop water system. SpaceX will also invest $50B+ into the area, bringing 1,000 local permanent jobs and up to 5,500 construction jobs to",
+    "id": "2125637438710153247"
+   }
+  },
+  {
+   "id": "2125591320341229890",
+   "handle": "Voxyz_ai",
+   "name": "Vox",
+   "verified": true,
+   "avatar": "/tech-digest/av/f199c97013c8ec84.jpg",
+   "time": "2026-11-25T14:03:57Z",
+   "text": "Left speechless from this advice from Gemini 4 Neon",
+   "replies": 283,
+   "reposts": 904,
+   "likes": 10264,
+   "bookmarks": 13109,
+   "views": 1828920,
+   "engagement": 51965,
+   "velocity": 2338.0,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX-d14NWwAAiy4R?format=png&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125556856634650809",
+   "handle": "eurofounder",
+   "name": "Matthias Schmidt",
+   "verified": true,
+   "avatar": "/tech-digest/av/3234d569c7ffd41d.jpg",
+   "time": "2026-11-25T11:47:00Z",
+   "text": "Jensen Huang's therapist",
+   "replies": 308,
+   "reposts": 2032,
+   "likes": 38004,
+   "bookmarks": 2738,
+   "views": 696514,
+   "engagement": 50898,
+   "velocity": 2076.8,
+   "topic": "chips",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "Polymarket",
+    "name": "Polymarket",
+    "text": "JUST IN: Jensen Huang reveals he's undergoing 90 minutes of therapy every day following his ouster & reinstatement, saying it has been helping him “a lot.”",
+    "id": "2125556856634650809"
+   }
+  },
+  {
+   "id": "2125622509634756857",
+   "handle": "GlobeEyeNews",
+   "name": "Globe Eye News",
+   "verified": true,
+   "avatar": "/tech-digest/av/808f70df06b3089f.jpg",
+   "time": "2026-11-25T16:07:53Z",
+   "text": "BREAKING:\n\nUS intelligence finds no evidence that Alice Huang was a Chinese spy.",
+   "replies": 1092,
+   "reposts": 2648,
+   "likes": 37176,
+   "bookmarks": 1653,
+   "views": 1396112,
+   "engagement": 49615,
+   "velocity": 2461.0,
+   "topic": "chips",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX-6Zn5agAAfq9o?format=jpg&name=small"
+    },
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX-6Zn1aIAAyNOd?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125779541952246039",
+   "handle": "karpathy",
+   "name": "Andrej Karpathy",
+   "verified": true,
+   "avatar": "/tech-digest/av/dbc3dbf61540e507.jpg",
+   "time": "2026-11-26T02:31:52Z",
+   "text": "I asked Claude to populate a Civilization-style game map with real data from the US. Opus 5.5 downloaded and parse a ton of public data and 7 hours and 45K lines of code later... it works :)\n\n- 31 real data sources including Census, BEA, BLS, EIA, NOAA, USGS, DoD, NPS, FAA, FEMA,",
+   "truncated": true,
+   "replies": 848,
+   "reposts": 1600,
+   "likes": 14842,
+   "bookmarks": 8087,
+   "views": 956785,
+   "engagement": 43999,
+   "velocity": 4507.8,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125775560517570561/img/GDE8h47dSgwy5uSy.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125675533761671405",
+   "handle": "trq212",
+   "name": "Thariq",
+   "verified": true,
+   "avatar": "/tech-digest/av/53be17dcb15f6ec0.jpg",
+   "time": "2026-11-25T19:38:35Z",
+   "text": "I've joined OpenAI!\n\nI'm very proud of my time at Anthropic, and I'll continue to root for my former colleagues. Both companies have important roles to play in the future.\n\nThere is a tremendous amount of work ahead of us to bring AI to the world, and it will demand the very best",
+   "truncated": true,
+   "replies": 2161,
+   "reposts": 2222,
+   "likes": 27760,
+   "bookmarks": 2446,
+   "views": 2577881,
+   "engagement": 43864,
+   "velocity": 2634.7,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "social": "Hamel Husain reposted"
+  },
+  {
+   "id": "2125669066388209784",
+   "handle": "elonmusk",
+   "name": "Elon Musk",
+   "verified": true,
+   "avatar": "/tech-digest/av/ed9f2766d10d7f80.jpg",
+   "time": "2026-11-25T19:12:53Z",
+   "text": "Interesting",
+   "replies": 1706,
+   "reposts": 1642,
+   "likes": 22466,
+   "bookmarks": 4860,
+   "views": 4794133,
+   "engagement": 43742,
+   "velocity": 2561.5,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "DarioAmodei",
+    "name": "Dario Amodei",
+    "text": "No, I do not believe that we should “surrender human free will” to AI systems, and it’s absurd to suggest that I do. I have written hundreds of pages of essays and a constant theme in them is the need for AI to be governed by legitimate democratic processes. For millennia (going x.com/axios/status/2…"
+   }
+  },
+  {
+   "id": "2125546075855741424",
+   "handle": "treg_ai",
+   "name": "Treg",
+   "verified": true,
+   "avatar": "/tech-digest/av/1c36563d372f1df2.jpg",
+   "time": "2026-11-25T11:04:09Z",
+   "text": "Introducing People API powered by @typesafeai\n\nTry it at https://treg.to/people-search\n\n- $0.07 for full profile search\n- Find anyone with any identity\n- Phone number, Social traces, Personal email, etc.\n- #1 on people search bench\n\n0% markup, Pay per call\n\nOpenSource Repo link below",
+   "truncated": true,
+   "links": [
+    {
+     "text": "https://treg.to/people-search",
+     "href": "https://t.co/D2eDbgiLu0"
+    }
+   ],
+   "replies": 309,
+   "reposts": 974,
+   "likes": 5156,
+   "bookmarks": 11247,
+   "views": 1426331,
+   "engagement": 41463,
+   "velocity": 1643.9,
+   "topic": "dev",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125515249898135552/img/IN4C_jtUoyXlzd0X.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125682626056839259",
+   "handle": "superalesha",
+   "name": "Alexey Fateev",
+   "verified": true,
+   "avatar": "/tech-digest/av/1774d8ecd11f5e30.jpg",
+   "time": "2026-11-25T20:06:45Z",
+   "text": "I deleted Linux completely, baked Qwen3-0.6B into a 24 KB pure x86-64 assembly OS, and it runs up to 54% faster than native Linux llama.cpp.\n\nThe entire Multiboot OS binary (asm-llm-os.elf) is 24,252 bytes, written from scratch without Linux, Windows, C, Rust, or libc. It boots",
+   "truncated": true,
+   "replies": 541,
+   "reposts": 1414,
+   "likes": 9994,
+   "bookmarks": 8706,
+   "views": 596572,
+   "engagement": 40022,
+   "velocity": 2473.7,
+   "topic": "dev",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "social": "geoff reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/ext_tw_video_thumb/2125681516449550336/pu/img/HrWdYggoykJJTNeE.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125671356339499494",
+   "handle": "SpaceX",
+   "name": "SpaceX",
+   "verified": true,
+   "avatar": "/tech-digest/av/2197e0aa9cbdaa43.jpg",
+   "time": "2026-11-25T19:21:59Z",
+   "text": "SpaceX is building the infrastructure of the future and working to make life multiplanetary. We believe ownership of the company creating these systems should extend to the next generation of Americans.\n \nToday, we are committing one SpaceX share to millions of American children",
+   "truncated": true,
+   "replies": 1081,
+   "reposts": 3607,
+   "likes": 21447,
+   "bookmarks": 2327,
+   "views": 3657799,
+   "engagement": 37804,
+   "velocity": 2233.6,
+   "topic": "space",
+   "feeds": [
+    "following"
+   ],
+   "social": "Elon Musk reposted",
+   "card": {
+    "url": "https://t.co/zs20oWsaW2",
+    "title": "SpaceX to Invest in the Next Generation of Americans",
+    "domain": "ir.spacex.com"
+   }
+  },
+  {
+   "id": "2125867208358105441",
+   "handle": "elonmusk",
+   "name": "Elon Musk",
+   "verified": true,
+   "avatar": "/tech-digest/av/ed9f2766d10d7f80.jpg",
+   "time": "2026-11-26T08:20:13Z",
+   "text": "If SpaceX succeeds in making life multiplanetary and harnessing even a millionth of the Sun’s energy, it will be worth about a million times the current global economy.\n\nThese are obviously absurdly difficult goals, but there is a path to achieving them.\n\nI recommend holding on",
+   "truncated": true,
+   "replies": 1078,
+   "reposts": 1953,
+   "likes": 26747,
+   "bookmarks": 1420,
+   "views": 1040708,
+   "engagement": 37069,
+   "velocity": 9373.4,
+   "topic": "space",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125784147889393806",
+   "handle": "thsottiaux",
+   "name": "Tibo",
+   "verified": true,
+   "avatar": "/tech-digest/av/6cf7e1be3787ee65.jpg",
+   "time": "2026-11-26T02:50:10Z",
+   "text": "We made a billing mistake at launch of GPT-6.2 that incorrectly discounted GPT-6.2 Astra and Sol usage for most users. \n\nWe’ve fixed this now, so the same work will use more of your plan’s usage allowance. Comparing to last week, you will reach your limits 40% faster on GPT-6.2",
+   "truncated": true,
+   "replies": 5047,
+   "reposts": 3010,
+   "likes": 14433,
+   "bookmarks": 2065,
+   "views": 3339325,
+   "engagement": 36742,
+   "velocity": 3885.8,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125724980713505219",
+   "handle": "0x0SojalSec",
+   "name": "Md Ismail Šojal 🕷️",
+   "verified": true,
+   "avatar": "/tech-digest/av/8e1f1447c99be0ff.jpg",
+   "time": "2026-11-25T22:55:04Z",
+   "text": "Every software engineer after reading Uber engineering Article.",
+   "replies": 36,
+   "reposts": 369,
+   "likes": 6284,
+   "bookmarks": 9832,
+   "views": 1030781,
+   "engagement": 36590,
+   "velocity": 2735.9,
+   "topic": "dev",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "UberEng",
+    "name": "Uber Engineering"
+   }
+  },
+  {
+   "id": "2125832205301878841",
+   "handle": "elonmusk",
+   "name": "Elon Musk",
+   "verified": true,
+   "avatar": "/tech-digest/av/ed9f2766d10d7f80.jpg",
+   "time": "2026-11-26T06:01:08Z",
+   "text": "The share from SpaceX will be transferred next month. \n\nThe share directly from me will be transferred when my lockup expires in June next year.",
+   "replies": 1098,
+   "reposts": 1567,
+   "likes": 28162,
+   "bookmarks": 980,
+   "views": 1452514,
+   "engagement": 36432,
+   "velocity": 5808.0,
+   "topic": "space",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125627317263466739",
+   "handle": "AnthropicAI",
+   "name": "Anthropic",
+   "verified": true,
+   "avatar": "/tech-digest/av/b86f773a43b2a747.jpg",
+   "time": "2026-11-25T16:26:59Z",
+   "text": "We recently migrated our Messages API from Python to Rust.\n\nOn our engineering blog, we share how we used the existing service to verify the new one, with teams of Claude agents tracking down and fixing differences between the two versions.",
+   "replies": 683,
+   "reposts": 1715,
+   "likes": 12143,
+   "bookmarks": 5909,
+   "views": 3522577,
+   "engagement": 34666,
+   "velocity": 1747.1,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "card": {
+    "url": "https://t.co/NdrMzgrOwP",
+    "title": "Migrating our Messages API to Rust"
+   }
+  },
+  {
+   "id": "2125564566755291247",
+   "handle": "CloudflareDev",
+   "name": "Cloudflare Developers",
+   "verified": true,
+   "avatar": "/tech-digest/av/eb7f8cebbab3b0ad.jpg",
+   "time": "2026-11-25T12:17:38Z",
+   "text": "Email Sending is now available on the Workers Free plan\n\nhttps://developers.cloudflare.com/changelog/post/2026-11-24-email-sending-workers-free/…",
+   "links": [
+    {
+     "text": "https://developers.cloudflare.com/changelog/post/2026-11-24-email-sending-workers-free/…",
+     "href": "https://t.co/KbOvasAM6T"
+    }
+   ],
+   "replies": 319,
+   "reposts": 1569,
+   "likes": 8853,
+   "bookmarks": 5502,
+   "views": 1070290,
+   "engagement": 29135,
+   "velocity": 1214.1,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "social": "Evan You reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125564439919525888/img/VUvgOZCqiCjSHdxQ.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125624598737891411",
+   "handle": "ypzlslpzls",
+   "name": "查不思",
+   "verified": true,
+   "avatar": "/tech-digest/av/1947e2f211e1fa5c.jpg",
+   "time": "2026-11-25T16:16:11Z",
+   "text": "🚨Live TV mishap in South Korea!\n\nA female financial news anchor in South Korea was on air when U.S. stocks plunged. As the broadcast switched to a chart showing the leveraged performance of Samsung Electronics stock, she suddenly choked up and burst into tears......",
+   "replies": 439,
+   "reposts": 1479,
+   "likes": 11386,
+   "bookmarks": 4019,
+   "views": 4738363,
+   "engagement": 27279,
+   "velocity": 1362.5,
+   "topic": "bigtech",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125624564340375552/img/fuYuLgWlYqxcLcgO.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125713948091826615",
+   "handle": "samcallah",
+   "name": "Sam Callahan",
+   "verified": true,
+   "avatar": "/tech-digest/av/6b13b4f5e2e14ffe.jpg",
+   "time": "2026-11-25T22:11:13Z",
+   "text": "Rumors are swirling that AI labs have secretly solved P = NP.\n\nMeanwhile, a movie from 34 years ago walks us through the implications.\n\nNever a dull moment in the simulation.\n\nSneakers (1992)",
+   "replies": 290,
+   "reposts": 940,
+   "likes": 8326,
+   "bookmarks": 5405,
+   "views": 763865,
+   "engagement": 27001,
+   "velocity": 1914.3,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125713576019034113/img/pKFWPVUitrWcHbPg.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125623026918002860",
+   "handle": "BrendanCarrFCC",
+   "name": "Brendan Carr",
+   "verified": true,
+   "avatar": "/tech-digest/av/b81b6a23bead2edc.jpg",
+   "time": "2026-11-25T16:09:56Z",
+   "text": "DATA CENTERS IN SPACE🇺🇸\n\nToday, in a historic first, the FCC approved SpaceX’s request for 1 million satellites (orbital compute modules) to create data centers in space\n\nThe Starmind & competitor constellations will use solar power to extend America’s lead in Super Intelligence",
+   "replies": 627,
+   "reposts": 2932,
+   "likes": 15302,
+   "bookmarks": 1171,
+   "views": 789275,
+   "engagement": 25933,
+   "velocity": 1288.5,
+   "topic": "chips",
+   "feeds": [
+    "following"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX-63utXwAAYotL?format=jpg&name=small"
+    },
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX-63umWoAAFWN5?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125680126004486294",
+   "handle": "altcap",
+   "name": "Brad Gerstner",
+   "verified": true,
+   "avatar": "/tech-digest/av/9183922b8b742c57.jpg",
+   "time": "2026-11-25T19:56:49Z",
+   "text": "Happy Thanksgiving!  Space X + @elonmusk = 2 shares of SpaceX stock for every child under 18 who has claimed their 530A account!!  All 70 MILLION kids are eligible - but you MUST download & claim your child’s acct to get your free shares!  Do it now! 🇺🇸🤍🦃 @TrumpAccounts",
+   "replies": 550,
+   "reposts": 1523,
+   "likes": 11169,
+   "bookmarks": 3527,
+   "views": 2230698,
+   "engagement": 25896,
+   "velocity": 1584.4,
+   "topic": "space",
+   "feeds": [
+    "following"
+   ],
+   "social": "Elon Musk reposted",
+   "quote": {
+    "handle": "SpaceX",
+    "name": "SpaceX",
+    "text": "SpaceX is building the infrastructure of the future and working to make life multiplanetary. We believe ownership of the company creating these systems should extend to the next generation of Americans.\n \nToday, we are committing one SpaceX share to millions of American children"
+   }
+  },
+  {
+   "id": "2125613662203425211",
+   "handle": "0xmaxou",
+   "name": "Max",
+   "verified": true,
+   "avatar": "/tech-digest/av/be287b23fdc05cf3.jpg",
+   "time": "2026-11-25T15:32:43Z",
+   "text": "Asking Claude if your idea is good is like asking your mom if you’re handsome",
+   "replies": 143,
+   "reposts": 1796,
+   "likes": 19136,
+   "bookmarks": 652,
+   "views": 410663,
+   "engagement": 24970,
+   "velocity": 1203.6,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125675162578387391",
+   "handle": "Timmysofine",
+   "name": "Oluwatimileyin✨🦋",
+   "verified": true,
+   "avatar": "/tech-digest/av/d36408d98afd6973.jpg",
+   "time": "2026-11-25T19:37:06Z",
+   "text": "\"Death is so sure of its victory, that it gives an entire lifetime as an advantage.\" - Dan Mitchell\n\nThis is how you use AI👏🏾",
+   "replies": 252,
+   "reposts": 2545,
+   "likes": 8289,
+   "bookmarks": 3494,
+   "views": 360483,
+   "engagement": 24365,
+   "velocity": 1461.3,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125674896545947648/img/eNgZhEwLXLSiBtMm.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125616057788637364",
+   "handle": "claudeai",
+   "name": "Claude",
+   "verified": true,
+   "avatar": "/tech-digest/av/c0642ffd7598f3de.jpg",
+   "time": "2026-11-25T15:42:14Z",
+   "text": "It’s been two weeks since we released Claude Fable 5.2. Here’s what people have been exploring with it:\n\nWhere the letter A came from, one alphabet at a time.",
+   "replies": 404,
+   "reposts": 680,
+   "likes": 12182,
+   "bookmarks": 3156,
+   "views": 1017757,
+   "engagement": 23818,
+   "velocity": 1156.9,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2120263738930442240/img/AOvzOoiRKk71l9na.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125687989544124441",
+   "handle": "MichaelDell",
+   "name": "Michael Dell 🇺🇸",
+   "verified": true,
+   "avatar": "/tech-digest/av/428f72e7602a168f.jpg",
+   "time": "2026-11-25T20:28:04Z",
+   "text": "Thank you @SpaceX and @elonmusk for this awesome announcement! 🚀\n\nEvery child in America 17 and under already has a 530A Trump Account even if they don't know about it yet. Parents just need to claim and activate it!\n\nOne share of SpaceX from the company and another from Elon",
+   "truncated": true,
+   "replies": 311,
+   "reposts": 1662,
+   "likes": 13197,
+   "bookmarks": 1498,
+   "views": 441719,
+   "engagement": 21637,
+   "velocity": 1367.4,
+   "topic": "space",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "SpaceX",
+    "name": "SpaceX",
+    "text": "SpaceX is building the infrastructure of the future and working to make life multiplanetary. We believe ownership of the company creating these systems should extend to the next generation of Americans.\n \nToday, we are committing one SpaceX share to millions of American children"
+   }
+  },
+  {
+   "id": "2125701308342518103",
+   "handle": "Polymarket",
+   "name": "Polymarket",
+   "verified": true,
+   "avatar": "/tech-digest/av/9773b219b2bb55e9.jpg",
+   "time": "2026-11-25T21:21:00Z",
+   "text": "BREAKING: Elon Musk & SpaceX to gift 2 shares of SpaceX stock to every active Trump Account, giving millions of American children a stake in the company.",
+   "replies": 276,
+   "reposts": 1092,
+   "likes": 14453,
+   "bookmarks": 825,
+   "views": 881790,
+   "engagement": 19664,
+   "velocity": 1316.1,
+   "topic": "space",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125584444064993429",
+   "handle": "distortgeekin",
+   "name": "distort",
+   "verified": true,
+   "avatar": "/tech-digest/av/d10b0941ead9d6a7.jpg",
+   "time": "2026-11-25T13:36:37Z",
+   "text": "F*ck YES... Grok Bot runs my Etsy shop now, 2,318 orders in 5 weeks and I've never packed a single box\n\nElon Musk says Grok Bot can find you the real Black Friday deals, mine is the one selling them, and Etsy paid me $14,212 before Black Friday even started\n\n6 bots, a shift each,",
+   "truncated": true,
+   "replies": 224,
+   "reposts": 333,
+   "likes": 3384,
+   "bookmarks": 4909,
+   "views": 708528,
+   "engagement": 19225,
+   "velocity": 847.6,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Elon Musk reposted",
+   "quote": {
+    "handle": "distortgeekin",
+    "name": "distort",
+    "text": "Grok Bot can now make your calls, sort your inbox and run your week while you sleep\n\nMost people still use it like a chatbot\n\nEverything it can do in one guide: first bot, routines, a full team, calls, and 5 rules that keep it off your money ↓"
+   }
+  },
+  {
+   "id": "2125605319489503362",
+   "handle": "Itsfoss",
+   "name": "It's FOSS",
+   "verified": true,
+   "avatar": "/tech-digest/av/53b2a32a6763652c.jpg",
+   "time": "2026-11-25T14:59:34Z",
+   "text": "Linus Torvalds just blasted ext4 developer for his 41,197 lines of AI-assisted code.\n\nReason... first it is a huge change ... 41,000+ lines of code... and it arrived late for the kernel 7.4 release cycle.\n\nAnd that made Torvalds go in his usual rage mode.",
+   "replies": 295,
+   "reposts": 724,
+   "likes": 10327,
+   "bookmarks": 1833,
+   "views": 744247,
+   "engagement": 17864,
+   "velocity": 838.7,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX-pOqobwAAbVdT?format=jpg&name=small"
+    },
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX-p1Pyb0AAnjjR?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125530989946659014",
+   "handle": "JohannMarkov",
+   "name": "Johann Markov",
+   "verified": true,
+   "avatar": "/tech-digest/av/fc3908aead296149.jpg",
+   "time": "2026-11-25T10:04:13Z",
+   "text": "With an IQ above 120 and an LLM on your screen, you can learn basically anything today. There are no more excuses.",
+   "replies": 258,
+   "reposts": 736,
+   "likes": 10322,
+   "bookmarks": 1848,
+   "views": 257900,
+   "engagement": 17854,
+   "velocity": 680.9,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125418948162109476",
+   "handle": "MollySOShea",
+   "name": "Molly O’Shea",
+   "verified": true,
+   "avatar": "/tech-digest/av/cc60ef1d2726f0dc.jpg",
+   "time": "2026-11-25T02:39:00Z",
+   "text": "Former SpaceX CIO Ken Venner explains the 1 trait that makes @elonmusk a \"genius\" operator:\n\n\"Elon hired me because he wanted to build the digital nervous system for the 21st-century rocket company.\"\n\n\"I'm like, this is either the smartest thing or the stupidest thing we've ever",
+   "truncated": true,
+   "replies": 78,
+   "reposts": 1256,
+   "likes": 10880,
+   "bookmarks": 1306,
+   "views": 370152,
+   "engagement": 17466,
+   "velocity": 519.2,
+   "topic": "space",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2077453521566466048/img/qgxbQfq_0RfaD48t.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125638790593274259",
+   "handle": "sama",
+   "name": "Sam Altman",
+   "verified": true,
+   "avatar": "/tech-digest/av/faf0dbea235abd66.jpg",
+   "time": "2026-11-25T17:12:34Z",
+   "text": "We’re now testing Private Inference, our latest offering as part of OpenAI Private Intelligence, with a small group of customers.\n\nStronger privacy protections will make frontier AI useful for a lot more work, and business privacy is important for a healthy ecosystem. Reach out",
+   "truncated": true,
+   "replies": 988,
+   "reposts": 881,
+   "likes": 8805,
+   "bookmarks": 1590,
+   "views": 1160695,
+   "engagement": 17313,
+   "velocity": 907.3,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125620263513432251",
+   "handle": "KobeissiLetter",
+   "name": "The Kobeissi Letter",
+   "verified": true,
+   "avatar": "/tech-digest/av/570b49ddcd776bd3.jpg",
+   "time": "2026-11-25T15:58:57Z",
+   "text": "BREAKING: US intelligence finds “no evidence” that Alice Huang, the woman Jensen Huang had an affair with, was directed by Chinese intelligence to spy on him, per US officials.\n\nIn fact, current evidence suggests Alice Huang and Jensen Huang’s relationship may have been amorous.",
+   "truncated": true,
+   "replies": 612,
+   "reposts": 1206,
+   "likes": 10125,
+   "bookmarks": 965,
+   "views": 994726,
+   "engagement": 16656,
+   "velocity": 820.1,
+   "topic": "chips",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125602695545504105",
+   "handle": "saranormous",
+   "name": "sarah guo",
+   "verified": true,
+   "avatar": "/tech-digest/av/4177c8b87df1dcd9.jpg",
+   "time": "2026-11-25T14:49:09Z",
+   "text": "The $NVDA board was right to bring back @JensenHuang. I argue in the Economist why:",
+   "replies": 221,
+   "reposts": 670,
+   "likes": 11418,
+   "bookmarks": 617,
+   "views": 570913,
+   "engagement": 15051,
+   "velocity": 700.9,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "clem 🤗 reposted",
+   "quote": {
+    "handle": "TheEconomist",
+    "name": "The Economist",
+    "text": "He is the key to stopping AI from becoming the preserve of a few, argues the venture capitalist https://economist.com/by-invitation/2026/11/25/nvidia-was-right-to-bring-back-jensen-huang-writes-sarah-guo?taid=6b06bd72eacbd000018a6a33&utm_campaign=trueanthem&utm_medium=social&utm_source=twitter…"
+   }
+  },
+  {
+   "id": "2125696384003371454",
+   "handle": "itsalexvacca",
+   "name": "Alex Vacca",
+   "verified": true,
+   "avatar": "/tech-digest/av/3675ba1783a22fed.jpg",
+   "time": "2026-11-25T21:01:26Z",
+   "text": "Y Combinator on how to get your first 100 customers",
+   "replies": 67,
+   "reposts": 242,
+   "likes": 2169,
+   "bookmarks": 4056,
+   "views": 195587,
+   "engagement": 14955,
+   "velocity": 979.5,
+   "topic": "startups",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX_9l8SbIAAW0Zf?format=jpg&name=small"
+    },
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX_9mKUaIAAobna?format=png&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125627711049625845",
+   "handle": "JustinPerryPhD",
+   "name": "Justin Perry - Perry Lab",
+   "avatar": "/tech-digest/av/381380ea2d73cd15.jpg",
+   "time": "2026-11-25T16:28:33Z",
+   "text": "We have done it. We've proven P = NP. \n\nWe will post our AI-assisted 45,000 page proof, completely open and available to the public for scrutiny, as soon as possible. \n\nExciting times!",
+   "replies": 478,
+   "reposts": 700,
+   "likes": 6217,
+   "bookmarks": 2074,
+   "views": 1489690,
+   "engagement": 14795,
+   "velocity": 746.6,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125639418849714280",
+   "handle": "sama",
+   "name": "Sam Altman",
+   "verified": true,
+   "avatar": "/tech-digest/av/faf0dbea235abd66.jpg",
+   "time": "2026-11-25T17:15:04Z",
+   "text": "I don't think I'd heard the word \"hyperstitioning\" before, but it's a good one.",
+   "replies": 762,
+   "reposts": 528,
+   "likes": 5659,
+   "bookmarks": 1976,
+   "views": 923456,
+   "engagement": 14167,
+   "velocity": 744.0,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "vitrupo",
+    "name": "vitrupo",
+    "text": "Ex-OpenAI researcher Will Depue says Anthropic may be hyperstitioning AGI, RSI and the AI race into existence.\n\n\"More friends than I'd like at Anthropic think there's a very high chance of everyone dying and are also like our hands are forced we must do this because everyone else"
+   }
+  },
+  {
+   "id": "2125653367640805799",
+   "handle": "shayne_coplan",
+   "name": "Shayne Coplan 🦅",
+   "verified": true,
+   "avatar": "/tech-digest/av/73fdce9746f4a509.jpg",
+   "time": "2026-11-25T18:10:30Z",
+   "text": "Compute markets are finally here.\n\n@Polymarket now prices on-demand compute for @nvidia H100s, B200s, and B300s, out to 2028. More chips and terms soon. https://polymarket.com/compute\n\nThink of it as a yield curve for the cost of compute: the forecasted $/hour price of each chip at",
+   "truncated": true,
+   "links": [
+    {
+     "text": "https://polymarket.com/compute",
+     "href": "https://t.co/CjNZF6kWtg"
+    }
+   ],
+   "replies": 377,
+   "reposts": 843,
+   "likes": 4987,
+   "bookmarks": 2223,
+   "views": 928371,
+   "engagement": 14096,
+   "velocity": 778.1,
+   "topic": "chips",
+   "feeds": [
+    "following"
+   ],
+   "social": "roon reposted",
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX_U_9KX0AI-RJh?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125734260963475605",
+   "handle": "Polymarket",
+   "name": "Polymarket",
+   "verified": true,
+   "avatar": "/tech-digest/av/9773b219b2bb55e9.jpg",
+   "time": "2026-11-25T23:31:56Z",
+   "text": "BREAKING: Pentagon reportedly considered invoking “extraordinary wartime powers” to force Nvidia to reinstate Jensen Huang as CEO. — WaPo",
+   "replies": 332,
+   "reposts": 814,
+   "likes": 7952,
+   "bookmarks": 1265,
+   "views": 624692,
+   "engagement": 14039,
+   "velocity": 1100.3,
+   "topic": "chips",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125867631546712066",
+   "handle": "elonmusk",
+   "name": "Elon Musk",
+   "verified": true,
+   "avatar": "/tech-digest/av/ed9f2766d10d7f80.jpg",
+   "time": "2026-11-26T08:21:54Z",
+   "text": "Teslas have superhuman vision",
+   "replies": 803,
+   "reposts": 1103,
+   "likes": 8306,
+   "bookmarks": 480,
+   "views": 950047,
+   "engagement": 13558,
+   "velocity": 3452.8,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "Rustavi",
+    "name": "Rustavi",
+    "text": "🚨 FSD v15 in heavy rain: your eyes see chaos. The AI sees everything.\nWhile the windshield is flooded with water, glare, and blur, FSD v15’s visualization stays locked, perfectly tracking every vehicle and the blue path ahead. Even with the ‘Camera Visibility Limited’ warning,"
+   }
+  },
+  {
+   "id": "2125667586545517022",
+   "handle": "unusual_whales",
+   "name": "unusual_whales",
+   "verified": true,
+   "avatar": "/tech-digest/av/941364aa516dcfcc.png",
+   "time": "2026-11-25T19:07:00Z",
+   "text": "Anthropic says it cut CPU usage per request by about 70% and memory usage by more than 80% after migrating its Messages API from Python to Rust, with Claude writing much of the code.\n\nMedian time to first token also fell by about 20%, according to an Anthropic engineering blog",
+   "truncated": true,
+   "replies": 173,
+   "reposts": 443,
+   "likes": 7638,
+   "bookmarks": 1181,
+   "views": 670387,
+   "engagement": 12413,
+   "velocity": 722.7,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125586011187015799",
+   "handle": "chhddavid",
+   "name": "David Ch",
+   "verified": true,
+   "avatar": "/tech-digest/av/25452cb93a1eb72f.jpg",
+   "time": "2026-11-25T13:42:51Z",
+   "text": "this is fukcing terrifying….",
+   "replies": 57,
+   "reposts": 98,
+   "likes": 2350,
+   "bookmarks": 3133,
+   "views": 461703,
+   "engagement": 12059,
+   "velocity": 534.1,
+   "topic": "dev",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "treg_ai",
+    "name": "Treg",
+    "text": "Introducing People API powered by @typesafeai\n\nTry it at https://treg.to/people-search\n\n- $0.07 for full profile search\n- Find anyone with any identity\n- Phone number, Social traces, Personal email, etc.\n- #1 on people search bench\n\n0% markup, Pay per call\n\nOpenSource Repo link below"
+   }
+  },
+  {
+   "id": "2125787894522544318",
+   "handle": "demishassabis",
+   "name": "Demis Hassabis",
+   "verified": true,
+   "avatar": "/tech-digest/av/96a101958ef5afc6.jpg",
+   "time": "2026-11-26T03:05:03Z",
+   "text": "This is actually a great bit of advice…!",
+   "replies": 73,
+   "reposts": 242,
+   "likes": 3608,
+   "bookmarks": 2428,
+   "views": 217038,
+   "engagement": 11522,
+   "velocity": 1251.4,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "quote": {
+    "handle": "Voxyz_ai",
+    "name": "Vox",
+    "text": "Left speechless from this advice from Gemini 4 Neon",
+    "id": "2125591320341229890"
+   }
+  },
+  {
+   "id": "2125668935848861724",
+   "handle": "Tim_Denning",
+   "name": "Tim Denning",
+   "verified": true,
+   "avatar": "/tech-digest/av/e90cdef708039fb9.jpg",
+   "time": "2026-11-25T19:12:21Z",
+   "text": "This article should have 100M views.",
+   "replies": 25,
+   "reposts": 187,
+   "likes": 1930,
+   "bookmarks": 3051,
+   "views": 529675,
+   "engagement": 11507,
+   "velocity": 673.5,
+   "topic": "science",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "jawestenberg",
+    "name": "JA Westenberg",
+    "text": "Most people look back after 5 years and wonder why their friendships, fitness, or businesses fell apart.\n\nIt’s not because they failed. It’s because they ignored physics."
+   }
+  },
+  {
+   "id": "2125644125483553045",
+   "handle": "ZackKorman",
+   "name": "Zack Korman",
+   "verified": true,
+   "avatar": "/tech-digest/av/c68a7dd876dfc742.jpg",
+   "time": "2026-11-25T17:33:46Z",
+   "text": "This is unconfirmed, but some people inside the AI labs are suggesting they might have solved updog.",
+   "replies": 361,
+   "reposts": 578,
+   "likes": 8398,
+   "bookmarks": 332,
+   "views": 455643,
+   "engagement": 11272,
+   "velocity": 601.9,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ]
+  },
+  {
+   "id": "2125645004957753460",
+   "handle": "0xishans",
+   "name": "Ishan",
+   "verified": true,
+   "avatar": "/tech-digest/av/cd1e942984e96084.jpg",
+   "time": "2026-11-25T17:37:16Z",
+   "text": "Even a password manager got hacked.\n\nThese are the guys whose whole job is keeping everyone's passwords safe.\n\nWhat happened:\n1.) An employee's GitHub account was compromised on 19 Nov\n2.) The attacker pushed malicious code to backend systems & copied customer names, emails +",
+   "truncated": true,
+   "replies": 110,
+   "reposts": 647,
+   "likes": 5314,
+   "bookmarks": 1391,
+   "views": 633479,
+   "engagement": 11001,
+   "velocity": 589.2,
+   "topic": "dev",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "1Password",
+    "name": "1Password",
+    "text": "We’re sharing an update about a recent security incident involving some of 1Password’s backend systems. 𝗡𝗼 𝗰𝘂𝘀𝘁𝗼𝗺𝗲𝗿 𝘃𝗮𝘂𝗹𝘁 𝗰𝗼𝗻𝘁𝗲𝗻𝘁, 𝗶𝗻𝗰𝗹𝘂𝗱𝗶𝗻𝗴 𝘀𝗲𝗰𝗿𝗲𝘁𝘀, 𝗽𝗮𝘀𝘀𝘄𝗼𝗿𝗱𝘀 𝗮𝗻𝗱 𝗼𝘁𝗵𝗲𝗿 𝘃𝗮𝘂𝗹𝘁 𝗶𝘁𝗲𝗺𝘀, 𝗼𝗿 𝘁𝗵𝗲 𝗸𝗲𝘆𝘀 𝘁𝗵𝗮𝘁"
+   }
+  },
+  {
+   "id": "2125705838203462067",
+   "handle": "Polymarket",
+   "name": "Polymarket",
+   "verified": true,
+   "avatar": "/tech-digest/av/9773b219b2bb55e9.jpg",
+   "time": "2026-11-25T21:39:00Z",
+   "text": "BREAKING: Hackers breach 1Password's backend systems after compromising an employee's GitHub account.",
+   "replies": 177,
+   "reposts": 702,
+   "likes": 6396,
+   "bookmarks": 834,
+   "views": 643857,
+   "engagement": 10656,
+   "velocity": 727.8,
+   "topic": "dev",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125738611274575979",
+   "handle": "Kalshi",
+   "name": "Kalshi",
+   "verified": true,
+   "avatar": "/tech-digest/av/7575932ef9f1c7fe.jpg",
+   "time": "2026-11-25T23:49:13Z",
+   "text": "BREAKING: Denny’s releases a statement on Jensen Huang",
+   "replies": 264,
+   "reposts": 544,
+   "likes": 6312,
+   "bookmarks": 859,
+   "views": 1027665,
+   "engagement": 10505,
+   "velocity": 842.3,
+   "topic": "chips",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HYAkAF6XUAEgSga?format=jpg&name=small"
+    },
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HYAkAF6WkAAq6gU?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125723837224321477",
+   "handle": "SamCorcos",
+   "name": "Sam Corcos",
+   "verified": true,
+   "avatar": "/tech-digest/av/181f22343b085bfb.jpg",
+   "time": "2026-11-25T22:50:31Z",
+   "text": "Correcting the record:\n\n1. It's built by autonomous SI agents that plan, write, test and merge code on their own at all hours of the day. While I am at work, it runs on my home computer. The GitHub activity is agents committing, not me at a keyboard.\n\n2. This is a side project",
+   "truncated": true,
+   "replies": 579,
+   "reposts": 508,
+   "likes": 6264,
+   "bookmarks": 671,
+   "views": 313872,
+   "engagement": 10451,
+   "velocity": 777.0,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "roon reposted",
+   "quote": {
+    "handle": "crampell",
+    "name": "Catherine Rampell",
+    "text": "The Treasury CIO appears to have spent the past three days vibecoding a Civilization game clone instead of working on this major Treasury database cyber breach. As I type this, his Claude code is literally adding theme music",
+    "id": "2125418508314185755"
+   }
+  },
+  {
+   "id": "2125641941903921380",
+   "handle": "gregosuri",
+   "name": "Greg Osuri 🇺🇸",
+   "verified": true,
+   "avatar": "/tech-digest/av/aac5c7415cc78663.jpg",
+   "time": "2026-11-25T17:25:06Z",
+   "text": "1Password has been hacked.\n\nAlthough they claim no customer vaults have been compromised, my trust in the company that's supposed to maintain the highest levels of security is heavily diminished.\n\nMore:",
+   "replies": 228,
+   "reposts": 670,
+   "likes": 3595,
+   "bookmarks": 1686,
+   "views": 1030273,
+   "engagement": 10449,
+   "velocity": 553.6,
+   "topic": "security",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "social": "Lisa Forte reposted",
+   "card": {
+    "url": "https://t.co/JIUb1fR5nv",
+    "title": "Update on a security incident involving 1Password’s backend systems. | 1Password"
+   }
+  },
+  {
+   "id": "2125809711509336342",
+   "handle": "tszzl",
+   "name": "roon",
+   "verified": true,
+   "avatar": "/tech-digest/av/e475172b935d326c.jpg",
+   "time": "2026-11-26T04:31:45Z",
+   "text": "ven chandrasekaran’s proposal for a quantum theory of vacuum gravity in 4d",
+   "replies": 197,
+   "reposts": 730,
+   "likes": 3888,
+   "bookmarks": 1538,
+   "views": 739181,
+   "engagement": 10356,
+   "velocity": 1334.1,
+   "topic": "science",
+   "feeds": [
+    "following"
+   ],
+   "card": {
+    "url": "https://t.co/BmSlfGyj7p",
+    "title": "An algebraic quantization of gravity from the null cone",
+    "domain": "arxiv.org"
+   }
+  },
+  {
+   "id": "2125708240554242058",
+   "handle": "Polymarket",
+   "name": "Polymarket",
+   "verified": true,
+   "avatar": "/tech-digest/av/9773b219b2bb55e9.jpg",
+   "time": "2026-11-25T21:48:32Z",
+   "text": "BREAKING: Computer scientist Scott Aaronson warns OpenAI & Anthropic may be withholding major discoveries in cryptography that could break widely used encryption systems.",
+   "replies": 178,
+   "reposts": 773,
+   "likes": 5903,
+   "bookmarks": 805,
+   "views": 441648,
+   "engagement": 10220,
+   "velocity": 705.7,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125567788320223379",
+   "handle": "Anaya_sharma876",
+   "name": "Anaya",
+   "verified": true,
+   "avatar": "/tech-digest/av/7b452281a80711e6.jpg",
+   "time": "2026-11-25T12:30:26Z",
+   "text": "Can I ask a REALLY dumb computer science question?\n\nIf Linux is open source and anyone can modify its code...\n\nAnd AI can now write thousands of lines of code in seconds...\n\nWhy hasn't someone built an entire operating system using AI that's 100x better than Windows?\n\nWe have",
+   "truncated": true,
+   "replies": 1130,
+   "reposts": 245,
+   "likes": 4092,
+   "bookmarks": 783,
+   "views": 1290606,
+   "engagement": 9191,
+   "velocity": 386.4,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125805681265782991",
+   "handle": "lsanger",
+   "name": "Larry Sanger",
+   "verified": true,
+   "avatar": "/tech-digest/av/9288263cd95b838f.jpg",
+   "time": "2026-11-26T04:15:44Z",
+   "text": "I made The USAID Files into a searchable database. You're welcome.\n\n1. CENSORSHIP: A 2022 USAID guidance paper says USAID programs, such as in Georgia, share lists of accounts with Meta for deeper investigation and removal or de-promotion.",
+   "replies": 103,
+   "reposts": 1147,
+   "likes": 3799,
+   "bookmarks": 929,
+   "views": 212589,
+   "engagement": 9086,
+   "velocity": 1131.6,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "social": "Elon Musk reposted",
+   "card": {
+    "url": "https://t.co/PoNUecILYf",
+    "title": "USAID paper says programs share account lists with Meta for removal"
+   }
+  },
+  {
+   "id": "2125605032691392708",
+   "handle": "cb_doge",
+   "name": "DogeDesigner",
+   "verified": true,
+   "avatar": "/tech-digest/av/3511b6ef585a4e18.jpg",
+   "time": "2026-11-25T14:58:26Z",
+   "text": "BREAKING: Elon Musk played a key role in the push for Jensen Huang’s return as NVIDIA CEO, speaking with President Trump before Jensen’s comeback.\n\nMusk also relayed information about Jensen’s importance to NVIDIA and the company’s importance to the U.S. economy. Trump later",
+   "truncated": true,
+   "replies": 131,
+   "reposts": 487,
+   "likes": 6292,
+   "bookmarks": 319,
+   "views": 339966,
+   "engagement": 8485,
+   "velocity": 398.0,
+   "topic": "chips",
+   "feeds": [
+    "following"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125604949308686336/img/3ROeR1biib_c1bu7.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125784381268611573",
+   "handle": "thekitze",
+   "name": "Kitze",
+   "verified": true,
+   "avatar": "/tech-digest/av/4c178828abec47b4.jpg",
+   "time": "2026-11-26T02:51:06Z",
+   "text": "I promise you this is the most insane Claude artifact you have seen in your life",
+   "replies": 24,
+   "reposts": 48,
+   "likes": 1227,
+   "bookmarks": 2366,
+   "views": 315599,
+   "engagement": 8469,
+   "velocity": 897.1,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "card": {
+    "url": "https://t.co/w5UeOStNVi",
+    "title": "The Last Boring Slide",
+    "domain": "claude.ai"
+   }
+  },
+  {
+   "id": "2125666625080975703",
+   "handle": "dedene",
+   "name": "Peter Dedene",
+   "verified": true,
+   "avatar": "/tech-digest/av/f73cb92745537079.jpg",
+   "time": "2026-11-25T19:03:11Z",
+   "text": "Me after 8 years of telling everyone to use 1Password:",
+   "replies": 110,
+   "reposts": 306,
+   "likes": 6171,
+   "bookmarks": 317,
+   "views": 212914,
+   "engagement": 7954,
+   "velocity": 461.4,
+   "topic": "security",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "gregosuri",
+    "name": "Greg Osuri 🇺🇸",
+    "text": "1Password has been hacked.\n\nAlthough they claim no customer vaults have been compromised, my trust in the company that's supposed to maintain the highest levels of security is heavily diminished.\n\nMore: https://1password.com/blog/update-on-nov-2026-security-incident…",
+    "id": "2125666625080975703"
+   }
+  },
+  {
+   "id": "2125681386388422775",
+   "handle": "OfficialLoganK",
+   "name": "Logan Kilpatrick",
+   "verified": true,
+   "avatar": "/tech-digest/av/8eef9d903bf71eea.jpg",
+   "time": "2026-11-25T20:01:50Z",
+   "text": "PSA, we tried to make it super easy for your coding agent of choice to use Gemini Neon and all of our models via the Gemini API CLI we shipped a few weeks ago! \n\nIt is open source and just requires an API key to get started:",
+   "replies": 254,
+   "reposts": 173,
+   "likes": 2738,
+   "bookmarks": 1405,
+   "views": 235675,
+   "engagement": 7807,
+   "velocity": 480.1,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Demis Hassabis reposted",
+   "card": {
+    "url": "https://t.co/nhYEabtJZ7",
+    "title": "GitHub - google-gemini/gemini-api-cli: An (experimental) CLI for the Gemini API"
+   }
+  },
+  {
+   "id": "2125697506436858118",
+   "handle": "TimSweeneyEpic",
+   "name": "Tim Sweeney",
+   "verified": true,
+   "avatar": "/tech-digest/av/b7a9c5d3134cf62f.jpg",
+   "time": "2026-11-25T21:05:53Z",
+   "text": "Gemini Neon is far ahead of anything else publicly available for mathematical and theoretical reasoning in my experience.\n\nIt intrinsically understands the whole breath of fields I ask it about, vs others rapidly scouring the web to context-cram papers on the topics.",
+   "replies": 177,
+   "reposts": 263,
+   "likes": 4382,
+   "bookmarks": 783,
+   "views": 167387,
+   "engagement": 7611,
+   "velocity": 500.9,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "demishassabis",
+    "name": "Demis Hassabis",
+    "text": "You should try Gemini Neon, it's a good model... 🫡  x.com/OfficialLoganK…",
+    "id": "2125697506436858118"
+   }
+  },
+  {
+   "id": "2125594425560863113",
+   "handle": "exploraX_",
+   "name": "m0h",
+   "verified": true,
+   "avatar": "/tech-digest/av/1d1eea8d6874d4aa.jpg",
+   "time": "2026-11-25T14:16:17Z",
+   "text": "I just open-sourced /Inkworks, a skill for creating interactive 3D projects.\n\n• completely FREE\n• MIT licensed\n• install: npx skills add Moh4696/inkworks-skill\n\n🔗: https://github.com/Moh4696/inkworks-skill…",
+   "links": [
+    {
+     "text": "https://github.com/Moh4696/inkworks-skill…",
+     "href": "https://t.co/oRKnfUMllP"
+    }
+   ],
+   "replies": 19,
+   "reposts": 179,
+   "likes": 1441,
+   "bookmarks": 1863,
+   "views": 44362,
+   "engagement": 7426,
+   "velocity": 337.2,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Jon Zobrist reposted",
+   "quote": {
+    "handle": "exploraX_",
+    "name": "m0h",
+    "text": "This is what engineering class should look like. 🔥\n\ni built this interactive 3D explainer of how a car engine works using Claude Opus 5.5.\n\njust a simple prompt, and i’ve shared the prompt below.\n\nif this post gets enough engagement, i’ll open-source a skill for building 3D"
+   }
+  },
+  {
+   "id": "2125675259366195662",
+   "handle": "dabit3",
+   "name": "nader dabit",
+   "verified": true,
+   "avatar": "/tech-digest/av/2854be9153d2f05c.jpg",
+   "time": "2026-11-25T19:37:29Z",
+   "text": "Principles of Outcome Engineering\n\nIn 2027 the the most effective engineers will channel their craft into defining outcomes\n\nMy attempt at defining what working this way looks like:\nhttps://outcomeengineering.systems",
+   "links": [
+    {
+     "text": "https://outcomeengineering.systems",
+     "href": "https://t.co/2Yk4xGjjjL"
+    }
+   ],
+   "replies": 53,
+   "reposts": 118,
+   "likes": 1330,
+   "bookmarks": 1870,
+   "views": 95064,
+   "engagement": 7282,
+   "velocity": 436.9,
+   "topic": "dev",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX_p5wIWgAAh-Gm?format=jpg&name=small"
+    },
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX_p5wKWcAAcWYa?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125615940138049830",
+   "handle": "ID_AA_Carmack",
+   "name": "John Carmack",
+   "verified": true,
+   "avatar": "/tech-digest/av/ec7b8f8a1e7f74c3.jpg",
+   "time": "2026-11-25T15:41:46Z",
+   "text": "I recently looked at someone's project and had the knee-jerk reaction that the amount of software work required to turn the proof of concept into a product would be completely untenable. Upon reflection, I realized that with agentic coding that may not actually be true.",
+   "truncated": true,
+   "replies": 230,
+   "reposts": 230,
+   "likes": 4585,
+   "bookmarks": 533,
+   "views": 188016,
+   "engagement": 7104,
+   "velocity": 344.9,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125730401582829661",
+   "handle": "nytimes",
+   "name": "The New York Times",
+   "verified": true,
+   "avatar": "/tech-digest/av/65e6fbb68b99123a.png",
+   "time": "2026-11-25T23:16:36Z",
+   "text": "A man has been on the hunt for Waymos in Denver, trapping the self-driving taxis and hurling cartons of eggs at them, the police and company officials said. There have been at least 30 episodes of the egg attacks, according to Waymo.",
+   "replies": 200,
+   "reposts": 580,
+   "likes": 4228,
+   "bookmarks": 374,
+   "views": 534146,
+   "engagement": 6910,
+   "velocity": 530.9,
+   "topic": "robotics",
+   "feeds": [
+    "for_you"
+   ],
+   "card": {
+    "url": "https://t.co/sHun8CbILI",
+    "title": "A Man in Denver Has Been Throwing Eggs at Waymo Vehicles"
+   }
+  },
+  {
+   "id": "2125609241264456150",
+   "handle": "petergyang",
+   "name": "Peter Yang",
+   "verified": true,
+   "avatar": "/tech-digest/av/a8bd1796eb08ee03.jpg",
+   "time": "2026-11-25T15:15:09Z",
+   "text": "The best way to learn something these days is to just get AI to make a short video explainer about it.\n\nThat's why I'm open sourcing /video-explainer, a free AI skill that I've been using to create video explainers for any topic in 3 styles:\n\n→ Motion graphics\n→ Hand-drawn",
+   "truncated": true,
+   "replies": 80,
+   "reposts": 131,
+   "likes": 1211,
+   "bookmarks": 1752,
+   "views": 60345,
+   "engagement": 6889,
+   "velocity": 327.4,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125609207407992832/img/j9AXuCEzc68lU9tt.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125663033993437651",
+   "handle": "demishassabis",
+   "name": "Demis Hassabis",
+   "verified": true,
+   "avatar": "/tech-digest/av/96a101958ef5afc6.jpg",
+   "time": "2026-11-25T18:48:54Z",
+   "text": "You should try Gemini Neon, it's a good model... 🫡",
+   "replies": 278,
+   "reposts": 227,
+   "likes": 4906,
+   "bookmarks": 189,
+   "views": 452298,
+   "engagement": 6483,
+   "velocity": 371.0,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "OfficialLoganK",
+    "name": "Logan Kilpatrick",
+    "text": "Neon usage is 📈📈📈",
+    "id": "2125663033993437651"
+   }
+  },
+  {
+   "id": "2125619666873942104",
+   "handle": "TrungTPhan",
+   "name": "Trung Phan",
+   "verified": true,
+   "avatar": "/tech-digest/av/5ee2b2cb02c5ca9a.jpg",
+   "time": "2026-11-25T15:56:35Z",
+   "text": "John Ternus and Tim Cook watching Apple gain +30% YTD and becoming most valuable company in the world again as the AI trade implodes while Apple invested a total of $38 on AI capex and Siri still can’t set an alarm clock",
+   "replies": 73,
+   "reposts": 238,
+   "likes": 3574,
+   "bookmarks": 587,
+   "views": 489471,
+   "engagement": 5957,
+   "velocity": 292.7,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "TrungTPhan",
+    "name": "Trung Phan",
+    "text": "Apple now worth more ($5.1T) than Nvidia and Antrhoic combined ($4.5T)",
+    "id": "2125605596212990117"
+   }
+  },
+  {
+   "id": "2125688298010259726",
+   "handle": "Madisonkanna",
+   "name": "Madison Kanna",
+   "verified": true,
+   "avatar": "/tech-digest/av/77e7b1053d167212.jpg",
+   "time": "2026-11-25T20:29:18Z",
+   "text": "Tejas hit a $6 million run rate as a solo developer.\n\nI asked @tejasybhakta how he did it, how he manages multiple AI agents, and what he thinks the future holds for software engineers.",
+   "replies": 48,
+   "reposts": 66,
+   "likes": 1301,
+   "bookmarks": 1332,
+   "views": 216834,
+   "engagement": 5525,
+   "velocity": 349.6,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "MTSlive",
+    "name": "MTS",
+    "text": "FULL INTERVIEW: Morph's Tejas Bhakta thinks AI will create \"way more\" bullshit jobs. He says about 40% of jobs already aren't really doing anything, and \"basically most jobs are UBI right now.\" AGI will do all the work, and it still won't lead to mass unemployment.",
+    "id": "2125688298010259726"
+   }
+  },
+  {
+   "id": "2125631173401657619",
+   "handle": "unusual_whales",
+   "name": "unusual_whales",
+   "verified": true,
+   "avatar": "/tech-digest/av/941364aa516dcfcc.png",
+   "time": "2026-11-25T16:42:18Z",
+   "text": "BREAKING: Some employees at Anthropic and OpenAI reportedly don't want their newest AI models released at all, fearing they're too powerful to be safe, per Axios.\n\nThe debate now reaches the highest levels of both companies: whether to stop releasing frontier models to the public",
+   "truncated": true,
+   "replies": 409,
+   "reposts": 352,
+   "likes": 2841,
+   "bookmarks": 387,
+   "views": 515167,
+   "engagement": 5524,
+   "velocity": 282.0,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125601090557132879",
+   "handle": "Polymarket",
+   "name": "Polymarket",
+   "verified": true,
+   "avatar": "/tech-digest/av/9773b219b2bb55e9.jpg",
+   "time": "2026-11-25T14:42:46Z",
+   "text": "JUST IN: Google unveils 6 AI-generated mathematical proofs produced with virtually no human intervention.",
+   "replies": 81,
+   "reposts": 287,
+   "likes": 3716,
+   "bookmarks": 299,
+   "views": 138576,
+   "engagement": 5349,
+   "velocity": 247.9,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Azeem 🛸 reposted"
+  },
+  {
+   "id": "2125818313552932976",
+   "handle": "ThePrimeagen",
+   "name": "ThePrimeagen",
+   "verified": true,
+   "avatar": "/tech-digest/av/9d64b6704dc65106.jpg",
+   "time": "2026-11-26T05:05:56Z",
+   "text": "Google going from the actual worst model to the best is insane and I haven't recovered emotionally",
+   "replies": 185,
+   "reposts": 118,
+   "likes": 4162,
+   "bookmarks": 163,
+   "views": 97297,
+   "engagement": 5257,
+   "velocity": 730.9,
+   "topic": "bigtech",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125696678984667553",
+   "handle": "RapidResponse47",
+   "name": "Rapid Response 47",
+   "verified": true,
+   "avatar": "/tech-digest/av/682a3c37e79a4183.jpg",
+   "time": "2026-11-25T21:02:36Z",
+   "text": ".@SpaceX, @elonmusk pledge to donate a share each to active Trump Accounts",
+   "replies": 138,
+   "reposts": 504,
+   "likes": 3447,
+   "bookmarks": 126,
+   "views": 239110,
+   "engagement": 5109,
+   "velocity": 335.1,
+   "topic": "space",
+   "feeds": [
+    "following"
+   ],
+   "social": "Elon Musk reposted",
+   "card": {
+    "url": "https://t.co/KmpDcTOXmP",
+    "title": "SpaceX, Musk pledge to donate a share each to active Trump Accounts"
+   }
+  },
+  {
+   "id": "2125690108279926929",
+   "handle": "GavinSBaker",
+   "name": "Gavin Baker",
+   "verified": true,
+   "avatar": "/tech-digest/av/27af2a016f75b578.jpg",
+   "time": "2026-11-25T20:36:29Z",
+   "text": "A share of SpaceX for every child in America. Another share coming next year directly from Elon.\n\nThis is great for the country imo. No better way to teach the next generation about the virtues of capitalism.\n\nLove to see more companies and founders do this.\n\nHappy Thanksgiving!",
+   "replies": 152,
+   "reposts": 374,
+   "likes": 3602,
+   "bookmarks": 127,
+   "views": 422474,
+   "engagement": 5035,
+   "velocity": 321.0,
+   "topic": "space",
+   "feeds": [
+    "following"
+   ],
+   "social": "Elon Musk reposted",
+   "quote": {
+    "handle": "SpaceX",
+    "name": "SpaceX",
+    "text": "SpaceX is building the infrastructure of the future and working to make life multiplanetary. We believe ownership of the company creating these systems should extend to the next generation of Americans.\n \nToday, we are committing one SpaceX share to millions of American children"
+   }
+  },
+  {
+   "id": "2125756199102820581",
+   "handle": "headinthebox",
+   "name": "Erik Meijer",
+   "verified": true,
+   "avatar": "/tech-digest/av/b2f65fcee7a67164.jpg",
+   "time": "2026-11-26T00:59:07Z",
+   "text": "... the Riemann Hypothesis proof in just 76K lines of Lean ...\n\nThis is starting to get very close to \"embarrassing that human mathematicians were not able to solve this by hand\" territory.",
+   "replies": 83,
+   "reposts": 109,
+   "likes": 3466,
+   "bookmarks": 338,
+   "views": 237335,
+   "engagement": 4864,
+   "velocity": 430.2,
+   "topic": "science",
+   "feeds": [
+    "following"
+   ],
+   "social": "Hadi reposted"
+  },
+  {
+   "id": "2125659175275659497",
+   "handle": "1337isnot1337",
+   "name": "Cinna Davis",
+   "verified": true,
+   "avatar": "/tech-digest/av/6e9ea5a736fd388c.jpg",
+   "time": "2026-11-25T18:33:34Z",
+   "text": "excited to announce i'll be joining @neuralink as a software engineer intern on the implant team next summer :)\n\nhuge thanks to everyone who helped me along the way!",
+   "replies": 236,
+   "reposts": 132,
+   "likes": 3232,
+   "bookmarks": 262,
+   "views": 128559,
+   "engagement": 4754,
+   "velocity": 268.1,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "social": "jason reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/tweet_video_thumb/HX_boNCXUAA-XYY.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125707364053680383",
+   "handle": "AravSrinivas",
+   "name": "Aravind Srinivas",
+   "verified": true,
+   "avatar": "/tech-digest/av/f31d98e99381a09b.jpg",
+   "time": "2026-11-25T21:45:03Z",
+   "text": "We're building a time machine for the internet.\n\nPerplexity Time Machine shows a model the web exactly as it was on any date you pick. This allows you to post-train agents that can be good at predicting the future.\n\nLive today in our Search and Context APIs.",
+   "replies": 162,
+   "reposts": 152,
+   "likes": 1603,
+   "bookmarks": 630,
+   "views": 174750,
+   "engagement": 4121,
+   "velocity": 283.4,
+   "topic": "dev",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125701661700313088/img/PT9qx2LtDXrMfOu3.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125872083393446092",
+   "handle": "elonmusk",
+   "name": "Elon Musk",
+   "verified": true,
+   "avatar": "/tech-digest/av/ed9f2766d10d7f80.jpg",
+   "time": "2026-11-26T08:39:36Z",
+   "text": "No advantage is insurmountable, but, at least for now, SpaceX is beating the rest of the world by an order of magnitude and that lead appears to be widening",
+   "replies": 208,
+   "reposts": 221,
+   "likes": 2898,
+   "bookmarks": 115,
+   "views": 85646,
+   "engagement": 4101,
+   "velocity": 1129.2,
+   "topic": "space",
+   "feeds": [
+    "following"
+   ]
+  },
+  {
+   "id": "2125749668889944432",
+   "handle": "LibertyValkyrie",
+   "name": "Heatherheather007",
+   "verified": true,
+   "avatar": "/tech-digest/av/0323365433ceacfa.jpg",
+   "time": "2026-11-26T00:33:10Z",
+   "text": "Foster Youth in 24 states, won’t have access to the SpaceX stocks Elon is giving to Trump Accounts:\n(23 out of 24 are Democrats)\n\n•Arizona, Katie Hobbs (D)\n•Connecticut, Ned Lamont (D)\n•Delaware, Matt Meyer (D)\n•Illinois, JB Pritzker (D)\n•Kansas, Laura Kelly (D)\n•Kentucky,",
+   "truncated": true,
+   "replies": 117,
+   "reposts": 588,
+   "likes": 2172,
+   "bookmarks": 160,
+   "views": 98817,
+   "engagement": 4062,
+   "velocity": 346.0,
+   "topic": "space",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "SpaceX",
+    "name": "SpaceX",
+    "text": "SpaceX is building the infrastructure of the future and working to make life multiplanetary. We believe ownership of the company creating these systems should extend to the next generation of Americans.\n \nToday, we are committing one SpaceX share to millions of American children"
+   }
+  },
+  {
+   "id": "2125520741709795671",
+   "handle": "zkMarek",
+   "name": "zkMarek ⛛",
+   "avatar": "/tech-digest/av/d59d990ed6790e3b.jpg",
+   "time": "2026-11-25T09:23:29Z",
+   "text": "Introducing a hardcore skill: /refactor-tests 🧪\n\n🗑️ AI tests got so bad some say: just delete them\n⏳ Friends report suites running for an hour\n⚡ 3 runs on one of my projects → 10x faster tests\n\n⚠️ Big repo? Can take hours. Or run it on every PR.\n\nhttps://github.com/marekkirejczyk/skills…",
+   "links": [
+    {
+     "text": "https://github.com/marekkirejczyk/skills…",
+     "href": "https://t.co/85XweTFagw"
+    }
+   ],
+   "replies": 13,
+   "reposts": 27,
+   "likes": 608,
+   "bookmarks": 1100,
+   "views": 45286,
+   "engagement": 3988,
+   "velocity": 148.3,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Jon Zobrist reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125520713821921282/img/Ph8y8NtqyD4yhDYw.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125556044436824533",
+   "handle": "GergelyOrosz",
+   "name": "Gergely Orosz",
+   "verified": true,
+   "avatar": "/tech-digest/av/f9d2f2995ec16e17.png",
+   "time": "2026-11-25T11:43:46Z",
+   "text": "This kind of stuff is SO triggering\n\nThis dev definitely did not \"vibecode\" their game. They built a damn fun game that works very well\n\nWhoever did it, put in a ton of work, has good taste, polished all the edges... and *shocker* generated some visuals with AI assistance",
+   "replies": 127,
+   "reposts": 95,
+   "likes": 2037,
+   "bookmarks": 387,
+   "views": 103122,
+   "engagement": 3642,
+   "velocity": 148.3,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "Pirat_Nation",
+    "name": "Pirat_Nation 🔴",
+    "text": "A solo developer just vibe-coded his first game and made $1.33 million on Steam in just one week.\n\nHis game, Slotbound, has sold over 200,000 copies in six days and has a 91% Very Positive rating.\n\nThe dev openly admitted using AI for coding and parts of the game’s visuals.\n\n“AI",
+    "id": "2125485386009084378"
+   }
+  },
+  {
+   "id": "2125635627341561995",
+   "handle": "OpenAI",
+   "name": "OpenAI",
+   "verified": true,
+   "avatar": "/tech-digest/av/b4c9ed4c752bf30e.jpg",
+   "time": "2026-11-25T17:00:00Z",
+   "text": "For ordinary days that feel like a movie. \n\nMake a Day Do Anything with ChatGPT.",
+   "replies": 260,
+   "reposts": 149,
+   "likes": 1960,
+   "bookmarks": 285,
+   "views": 267963,
+   "engagement": 3633,
+   "velocity": 188.3,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "jason reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125628610073739270/img/e-7WA3h0XMo65Pcs.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125595134037262708",
+   "handle": "bottegamd",
+   "name": "bottega.md",
+   "verified": true,
+   "avatar": "/tech-digest/av/0e875f61aafd43b4.jpg",
+   "time": "2026-11-25T14:19:06Z",
+   "text": "This is f*cking insane. Yann LeCun won the Turing Award for the neural nets behind today's AI, ran AI at Meta for 12 years, then walked out to build his own lab. Now he says the whole agent boom is built on the wrong thing:\n\n\"Basing agentic systems on LLMs is a recipe for",
+   "truncated": true,
+   "replies": 41,
+   "reposts": 145,
+   "likes": 663,
+   "bookmarks": 861,
+   "views": 102753,
+   "engagement": 3618,
+   "velocity": 164.7,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Yann LeCun reposted",
+   "quote": {
+    "handle": "0xwhrrari",
+    "name": "rari🈀",
+    "text": "Your agent passed every test\n\nThe issue is still open\n\nA better prompt won't fix it, because the model isn't the broken part\n\nI broke down the harness, loop and graph around it: what each one owns, how they nest, and which one to fix first ↓"
+   }
+  },
+  {
+   "id": "2125652569779249416",
+   "handle": "GergelyOrosz",
+   "name": "Gergely Orosz",
+   "verified": true,
+   "avatar": "/tech-digest/av/f9d2f2995ec16e17.png",
+   "time": "2026-11-25T18:07:20Z",
+   "text": "How did Anthropic rewrite the API all Claude tokens from Python to Rust, why did eng teams remove coding interviews, and why do devs spend a LOT more time building internal tools than before? Super interesting details from @katelyn_lesse \n\nTimestamps:\n\n00:00 Intro\n03:09 Stripe",
+   "truncated": true,
+   "replies": 53,
+   "reposts": 82,
+   "likes": 789,
+   "bookmarks": 839,
+   "views": 52530,
+   "engagement": 3576,
+   "velocity": 196.8,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125648600512307201/img/hC5WVUo5mUiB-_Zm.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125598669001097555",
+   "handle": "lensofsans",
+   "name": "Sanskriti Bokde",
+   "verified": true,
+   "avatar": "/tech-digest/av/9d6e67342f23394d.jpg",
+   "time": "2026-11-25T14:33:09Z",
+   "text": "YOU CAN BE PRO AI AND ANTI SLOP. IT'S ALLOWED, BAE!",
+   "replies": 95,
+   "reposts": 232,
+   "likes": 2459,
+   "bookmarks": 89,
+   "views": 47874,
+   "engagement": 3380,
+   "velocity": 155.5,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125593907048091950",
+   "handle": "rickyfm",
+   "name": "Ricky",
+   "verified": true,
+   "avatar": "/tech-digest/av/2316196a826b48b5.jpg",
+   "time": "2026-11-25T14:14:13Z",
+   "text": "Today is my last day at facebook. \n\nIt’s been the best 8 years of my life helping grow React from 4 million to 250 million weekly downloads. \n\nBut most of the React Core team have left Meta, and it’s time for me to leave too.\n\nI’ll continue working on React at a new company",
+   "truncated": true,
+   "replies": 127,
+   "reposts": 60,
+   "likes": 2435,
+   "bookmarks": 150,
+   "views": 115911,
+   "engagement": 3259,
+   "velocity": 147.8,
+   "topic": "dev",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125615579964833827",
+   "handle": "danshipper",
+   "name": "Dan Shipper",
+   "verified": true,
+   "avatar": "/tech-digest/av/0d297946c31f93b9.jpg",
+   "time": "2026-11-25T15:40:20Z",
+   "text": "big news for @every:\n\nwe raised a $17.5m Series A at a $110m valuation to make you and your team AI-native\n\nled by @beyroutey from IA Ventures with participation from @nxthompson, @RattrayAlex, and @betaworks",
+   "replies": 283,
+   "reposts": 90,
+   "likes": 1376,
+   "bookmarks": 295,
+   "views": 103713,
+   "engagement": 3007,
+   "velocity": 145.8,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "card": {
+    "url": "https://t.co/WQtXRC4aVn",
+    "title": "We Raised $17.5 Million to Make You and Your Team AI-native"
+   }
+  },
+  {
+   "id": "2125809049593905319",
+   "handle": "Milajoy",
+   "name": "Mila Joy",
+   "verified": true,
+   "avatar": "/tech-digest/av/8acbc9154ef0e3b9.jpg",
+   "time": "2026-11-26T04:29:07Z",
+   "text": "Jensen Huang used to work at Denny’s…a long, long time ago. \n\nToday Denny’s issued a powerful statement on Jensen Huang.\n\nIt's pure 🔥🔥🔥.",
+   "replies": 61,
+   "reposts": 357,
+   "likes": 1763,
+   "bookmarks": 106,
+   "views": 41679,
+   "engagement": 2917,
+   "velocity": 373.7,
+   "topic": "chips",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HYBkEJqaYAAM6CX?format=jpg&name=small"
+    },
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HYBkEJrbkAAQH8Q?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125747621331611811",
+   "handle": "Baconbrix",
+   "name": "Evan Bacon",
+   "verified": true,
+   "avatar": "/tech-digest/av/5432e7be7bac0fa5.jpg",
+   "time": "2026-11-26T00:25:02Z",
+   "text": "I work on Grok Bot and I’m curious what the biggest problem is",
+   "replies": 873,
+   "reposts": 113,
+   "likes": 747,
+   "bookmarks": 64,
+   "views": 220916,
+   "engagement": 2911,
+   "velocity": 245.1,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Elon Musk reposted",
+   "card": {
+    "title": "Usage limits"
+   }
+  },
+  {
+   "id": "2125565835284717850",
+   "handle": "fayazara",
+   "name": "Fayaz Ahmed",
+   "verified": true,
+   "avatar": "/tech-digest/av/1de27379bb4485b2.jpg",
+   "time": "2026-11-25T12:22:40Z",
+   "text": "Our free plan is unmatchable.",
+   "replies": 75,
+   "reposts": 35,
+   "likes": 1250,
+   "bookmarks": 430,
+   "views": 67855,
+   "engagement": 2760,
+   "velocity": 115.4,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "CloudflareDev",
+    "name": "Cloudflare Developers",
+    "text": "Email Sending is now available on the Workers Free plan\n\nhttps://developers.cloudflare.com/changelog/post/2026-11-24-email-sending-workers-free/…"
+   }
+  },
+  {
+   "id": "2125784108844683275",
+   "handle": "sohmehta",
+   "name": "Soham Mehta",
+   "verified": true,
+   "avatar": "/tech-digest/av/191bf81d349c8884.png",
+   "time": "2026-11-26T02:50:01Z",
+   "text": "Asking Claude if your idea is good is like asking your mom if you’re handsome",
+   "replies": 89,
+   "reposts": 178,
+   "likes": 1939,
+   "bookmarks": 90,
+   "views": 78990,
+   "engagement": 2743,
+   "velocity": 290.0,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125675768231727399",
+   "handle": "charliermarsh",
+   "name": "Charlie Marsh",
+   "verified": true,
+   "avatar": "/tech-digest/av/5f8da7ac383813d2.jpg",
+   "time": "2026-11-25T19:39:30Z",
+   "text": "Over the past two weeks, we reduced baseline memory use in the ChatGPT desktop app by over 40%.\n\nHere's each release measured after five minutes on macOS.",
+   "replies": 152,
+   "reposts": 85,
+   "likes": 1840,
+   "bookmarks": 105,
+   "views": 122628,
+   "engagement": 2629,
+   "velocity": 158.1,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX_qwMaWgAAw3BJ?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125675673876615511",
+   "handle": "ajambrosino",
+   "name": "Andrew Ambrosino",
+   "verified": true,
+   "avatar": "/tech-digest/av/9fd669fcfc71bd95.jpg",
+   "time": "2026-11-25T19:39:08Z",
+   "text": "We took Codex and put it in everything.\nNow it’s time to reinvent Codex.\n\nWelcome to the team, @trq212.",
+   "replies": 80,
+   "reposts": 46,
+   "likes": 2079,
+   "bookmarks": 84,
+   "views": 106446,
+   "engagement": 2583,
+   "velocity": 155.2,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "trq212",
+    "name": "Thariq",
+    "text": "I've joined OpenAI!\n\nI'm very proud of my time at Anthropic, and I'll continue to root for my former colleagues. Both companies have important roles to play in the future.\n\nThere is a tremendous amount of work ahead of us to bring AI to the world, and it will demand the very best"
+   }
+  },
+  {
+   "id": "2125612300950458394",
+   "handle": "OddStats",
+   "name": "OddStats",
+   "verified": true,
+   "avatar": "/tech-digest/av/90831dad1a38b265.jpg",
+   "time": "2026-11-25T15:27:19Z",
+   "text": "Coreweave 2031 bond yield - 17.91%\nCCC+ rated 10y Zambian treasury bond - 16.34%",
+   "replies": 33,
+   "reposts": 152,
+   "likes": 1470,
+   "bookmarks": 228,
+   "views": 134863,
+   "engagement": 2524,
+   "velocity": 121.1,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "roon reposted",
+   "quote": {
+    "handle": "DeItaone",
+    "name": "*Walter Bloomberg",
+    "text": "$CRWV  - COREWEAVE BONDS PLUNGE AS 2031 YIELD SURGES TO 17.91%\n\nCoreWeave's debt is coming under renewed selling pressure, with bond prices falling sharply amid growing concerns over AI infrastructure financing.\n\nAccording to Tradeweb data:\n\n🔸 October 2031 bonds: Down 1.92 cents"
+   }
+  },
+  {
+   "id": "2125651944673034290",
+   "handle": "patio11",
+   "name": "Patrick McKenzie",
+   "verified": true,
+   "avatar": "/tech-digest/av/aa1d52d05bdbeb2b.jpg",
+   "time": "2026-11-25T18:04:50Z",
+   "text": "I have been doing software development the last few months. The endeavor seems entirely changed versus both the majority of my career, during which I solo shipped two SaaS products the old fashioned way, and even against 12 months ago.\n\nhttps://kalzumeus.com/2026/11/25/multiagent-coding-is-the-future/…",
+   "links": [
+    {
+     "text": "https://kalzumeus.com/2026/11/25/multiagent-coding-is-the-future/…",
+     "href": "https://t.co/BQKA4YwoGT"
+    }
+   ],
+   "replies": 39,
+   "reposts": 35,
+   "likes": 667,
+   "bookmarks": 555,
+   "views": 69904,
+   "engagement": 2480,
+   "velocity": 136.2,
+   "topic": "dev",
+   "feeds": [
+    "following",
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125845831051858053",
+   "handle": "dhh",
+   "name": "DHH",
+   "verified": true,
+   "avatar": "/tech-digest/av/fd7cb1b74c8272ad.jpg",
+   "time": "2026-11-26T06:55:17Z",
+   "text": "American open-weight models can too! @thinkymachines's Inkling2 Mini just beat Qwen3.8 27B in my overnight eval shoot-out for best model for a 48-64GB RTX Spark on Omarchy malleability. Great recipe by @MiaAI_lab running on @tensorfold_dev 🤘",
+   "replies": 80,
+   "reposts": 108,
+   "likes": 1285,
+   "bookmarks": 269,
+   "views": 51916,
+   "engagement": 2468,
+   "velocity": 459.6,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HYCFOUnXsAAbbJe?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125678295530557649",
+   "handle": "RhysSullivan",
+   "name": "Rhys",
+   "verified": true,
+   "avatar": "/tech-digest/av/97becd545d1362ff.jpg",
+   "time": "2026-11-25T19:49:33Z",
+   "text": "We just open sourced Claude Artifacts as desktop apps for you to use with any agent\n\nYou get a real backend, all of your connected accounts to build on, and most importantly you own the apps\n\nLive for all local and cloud Executor users!",
+   "replies": 28,
+   "reposts": 38,
+   "likes": 619,
+   "bookmarks": 565,
+   "views": 39807,
+   "engagement": 2446,
+   "velocity": 148.6,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "ClaudeDevs",
+    "name": "ClaudeDevs",
+    "text": "You can now install Claude artifacts as desktop apps on Mac and Windows.\n\nAsk Claude to build an artifact, click \"Install as app\", and open it like any other app. It can use your connectors and, if you allow it, send notifications or add a menu bar item."
+   }
+  },
+  {
+   "id": "2125713233172746597",
+   "handle": "okkshitij",
+   "name": "Kshitij",
+   "verified": true,
+   "avatar": "/tech-digest/av/03329c565b38971f.png",
+   "time": "2026-11-25T22:08:23Z",
+   "text": "Be Thariq Shihipar:\n\n- studies at the University of Toronto\n- meets two friends at a demo night\n- builds a browser extension, Chime, with them\n- HubSpot buys it in 2013. he's still an undergrad\n- works at HubSpot for a year\n- leaves for the MIT Media Lab\n- builds a shape-changing",
+   "truncated": true,
+   "replies": 9,
+   "reposts": 19,
+   "likes": 1028,
+   "bookmarks": 441,
+   "views": 108463,
+   "engagement": 2407,
+   "velocity": 170.1,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "trq212",
+    "name": "Thariq",
+    "text": "I've joined OpenAI!\n\nI'm very proud of my time at Anthropic, and I'll continue to root for my former colleagues. Both companies have important roles to play in the future.\n\nThere is a tremendous amount of work ahead of us to bring AI to the world, and it will demand the very best"
+   }
+  },
+  {
+   "id": "2125634461958304194",
+   "handle": "ying11231",
+   "name": "Ying Sheng",
+   "verified": true,
+   "avatar": "/tech-digest/av/dca51f7f9a3b96ef.jpg",
+   "time": "2026-11-25T16:55:22Z",
+   "text": "This is the video we had planned to play at our first SGLang Summit. Just hours before the event, Jensen resigned as CEO, and we didn’t play it.\n\nIt was a lot to take in. Hearing him recognize what this community has built meant so much to us, and I’ve wanted to share his words",
+   "truncated": true,
+   "replies": 37,
+   "reposts": 198,
+   "likes": 1332,
+   "bookmarks": 173,
+   "views": 85464,
+   "engagement": 2321,
+   "velocity": 119.8,
+   "topic": "chips",
+   "feeds": [
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125634204671295488/img/OzsfYZpwOnuxcyy3.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125592216198393929",
+   "handle": "TaylorLorenz",
+   "name": "Taylor Lorenz",
+   "verified": true,
+   "avatar": "/tech-digest/av/a514cba75fb5ff81.jpg",
+   "time": "2026-11-25T14:07:30Z",
+   "text": "We need to protect open-source and open-weight models at all cost.",
+   "replies": 88,
+   "reposts": 225,
+   "likes": 1343,
+   "bookmarks": 95,
+   "views": 44121,
+   "engagement": 2254,
+   "velocity": 101.7,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "clem 🤗 reposted",
+   "quote": {
+    "handle": "lutherlowe",
+    "name": "Luther Lowe",
+    "text": "EA money pushing AI “guardrails” is finding a receptive audience among tech-skeptical Dems elected amid anxiety about Big Tech, AI and data centers. That combination could put open-source and open-weight models, and the startups that rely on them, on the chopping block this",
+    "id": "2125388005594517892"
+   }
+  },
+  {
+   "id": "2125676306591318299",
+   "handle": "southpolesteve",
+   "name": "Steve Faulkner",
+   "verified": true,
+   "avatar": "/tech-digest/av/32206efabed1a12c.jpg",
+   "time": "2026-11-25T19:41:39Z",
+   "text": "Increasingly frustrated with chat/threads as a medium for working with AI. It's just a reflection of the chaos in my brain. I need something that focuses the chaos. Dots/Grokbot are close but not quite right either. Honestly not sure what the answer is.",
+   "replies": 183,
+   "reposts": 40,
+   "likes": 753,
+   "bookmarks": 350,
+   "views": 55579,
+   "engagement": 2249,
+   "velocity": 135.5,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ]
+  },
+  {
+   "id": "2125634688731750636",
+   "handle": "Leonard41111588",
+   "name": "Leonardo de Moura",
+   "avatar": "/tech-digest/av/54f9bcd26b0526b9.png",
+   "time": "2026-11-25T16:56:16Z",
+   "text": "The Lean community is cleaning up the Riemann Hypothesis proof, with Kim Morrison (Lean FRO) as one of the main contributors. https://github.com/leanprover-community/riemann-hypothesis…\nSebastian Ullrich reports that we can already compile it in 35 minutes on a beefy machine with 192 cores.\nhttps://lnkd.in/p/gjmsF6Zy",
+   "links": [
+    {
+     "text": "https://github.com/leanprover-community/riemann-hypothesis…",
+     "href": "https://t.co/WzOI10kpGZ"
+    },
+    {
+     "text": "https://lnkd.in/p/gjmsF6Zy",
+     "href": "https://t.co/UOdC5N5BOk"
+    }
+   ],
+   "replies": 32,
+   "reposts": 165,
+   "likes": 1193,
+   "bookmarks": 215,
+   "views": 115998,
+   "engagement": 2232,
+   "velocity": 115.3,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "social": "Marc Brooker reposted",
+   "card": {
+    "url": "https://t.co/WzOI10kpGZ",
+    "title": "GitHub - leanprover-community/riemann-hypothesis: Byte-exact mirror and independent Comparator..."
+   }
+  },
+  {
+   "id": "2125694207197110560",
+   "handle": "GoogleDeepMind",
+   "name": "Google DeepMind",
+   "verified": true,
+   "avatar": "/tech-digest/av/bb36557643d0c8fa.jpg",
+   "time": "2026-11-25T20:52:47Z",
+   "text": "Gemini 4 Neon coded a Rube Goldberg machine inside a 1980s arcade.\n\nBuilt in @Antigravity with simulated physics and a Lyria 3.5 synth track, it runs through pinball bumpers before lighting up glass tubes.",
+   "replies": 159,
+   "reposts": 112,
+   "likes": 1128,
+   "bookmarks": 185,
+   "views": 76704,
+   "engagement": 2225,
+   "velocity": 144.4,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125693779227164672/img/tZL5wV7-ZactKazk.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125831567981297892",
+   "handle": "gdb",
+   "name": "Greg Brockman",
+   "verified": true,
+   "avatar": "/tech-digest/av/63bbb3367b8308f2.jpg",
+   "time": "2026-11-26T05:58:36Z",
+   "text": "towards more deeply understanding the universe",
+   "replies": 44,
+   "reposts": 78,
+   "likes": 1385,
+   "bookmarks": 191,
+   "views": 73578,
+   "engagement": 2202,
+   "velocity": 348.7,
+   "topic": "science",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "tszzl",
+    "name": "roon",
+    "text": "ven chandrasekaran’s proposal for a quantum theory of vacuum gravity in 4d\n\nhttps://arxiv.org/abs/2611.34924"
+   }
+  },
+  {
+   "id": "2125560146629914733",
+   "handle": "ycombinator",
+   "name": "Y Combinator",
+   "verified": true,
+   "avatar": "/tech-digest/av/25622568b15e7d95.png",
+   "time": "2026-11-25T12:00:04Z",
+   "text": "Startup School is coming to the UK!\n\nHear directly from @paulg, @garrytan, and founders from @posthog, @Starcloud_, and @GoCardless.\n\nAnd join the best builders and hackers from across Europe for a day of talks and sessions with YC partners in London on February 6.",
+   "replies": 67,
+   "reposts": 103,
+   "likes": 821,
+   "bookmarks": 332,
+   "views": 74560,
+   "engagement": 2157,
+   "velocity": 88.8,
+   "topic": "security",
+   "feeds": [
+    "following"
+   ],
+   "social": "Paul Graham reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125472272945496064/img/7RD5NB3HLuRn6_vP.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125793034390405130",
+   "handle": "TSLAFanMtl",
+   "name": "James Cat",
+   "verified": true,
+   "avatar": "/tech-digest/av/0a4147a3e0f6c9c4.jpg",
+   "time": "2026-11-26T03:25:29Z",
+   "text": "Some quick easy math to highlight the stupidity of how profitable orbital AI will be, using very conservative numbers. \n\nSay it costs SpaceX $3M to build each satellite, and each satellite produces on average 175 kW of compute. Say it costs SpaceX $250/kg to launch it into orbit.",
+   "truncated": true,
+   "replies": 89,
+   "reposts": 80,
+   "likes": 1343,
+   "bookmarks": 158,
+   "views": 99929,
+   "engagement": 2155,
+   "velocity": 243.0,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ]
+  },
+  {
+   "id": "2125592808845345017",
+   "handle": "EHuanglu",
+   "name": "el.cine",
+   "verified": true,
+   "avatar": "/tech-digest/av/5e1298faf5b5af15.jpg",
+   "time": "2026-11-25T14:09:51Z",
+   "text": "magi-2 made this AI video for $2.4\n\ncant believe higgsfield will open source this 400B parameters model soon",
+   "replies": 61,
+   "reposts": 50,
+   "likes": 693,
+   "bookmarks": 379,
+   "views": 53477,
+   "engagement": 2052,
+   "velocity": 92.7,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "elvis reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125592756840288256/img/Vmrgco2_i50WB7gy.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125816458911600681",
+   "handle": "simonw",
+   "name": "Simon Willison",
+   "verified": true,
+   "avatar": "/tech-digest/av/6cc1dddcdc1b95ad.jpg",
+   "time": "2026-11-26T04:58:34Z",
+   "text": "Yeah this is pretty great",
+   "replies": 53,
+   "reposts": 26,
+   "likes": 1057,
+   "bookmarks": 274,
+   "views": 53557,
+   "engagement": 2037,
+   "velocity": 278.4,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "quote": {
+    "handle": "shneural",
+    "name": "kirill sh",
+    "text": "asked Opus Next (5.6/6) to make an Anthropic-style launch video for \"Claude Pelican 1\", a fake model that only generates SVG pelicans on bicycles\n\ngave it their real launch videos as refs. it actually looks like an official ad lol"
+   }
+  },
+  {
+   "id": "2125664998454366305",
+   "handle": "amasad",
+   "name": "Amjad Masad",
+   "verified": true,
+   "avatar": "/tech-digest/av/978c7a2e7781e757.jpg",
+   "time": "2026-11-25T18:56:43Z",
+   "text": "Large scale software migration is now viable provided you can verify the results.\n\nThis is exceptionally important given the aging software systems running critical infrastructure.",
+   "replies": 113,
+   "reposts": 67,
+   "likes": 653,
+   "bookmarks": 315,
+   "views": 53503,
+   "engagement": 1958,
+   "velocity": 112.9,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "AnthropicAI",
+    "name": "Anthropic",
+    "text": "We recently migrated our Messages API from Python to Rust.\n\nOn our engineering blog, we share how we used the existing service to verify the new one, with teams of Claude agents tracking down and fixing differences between the two versions.\n\nhttps://anthropic.com/research/migrating-api-to-rust…",
+    "id": "2125664998454366305"
+   }
+  },
+  {
+   "id": "2125807208684458289",
+   "handle": "TheHackersNews",
+   "name": "The Hacker News",
+   "verified": true,
+   "avatar": "/tech-digest/av/bd613d7864467132.jpg",
+   "time": "2026-11-26T04:21:48Z",
+   "text": "‼️ BREAKING: #1Password has been hacked.\n\nAn attacker hijacked an employee’s GitHub account, injected malicious backend code, and stole customer data and private source code.\n\n1Password says password vaults remain untouched.\n\nHere's what was exposed ↓",
+   "replies": 44,
+   "reposts": 278,
+   "likes": 692,
+   "bookmarks": 147,
+   "views": 102446,
+   "engagement": 1777,
+   "velocity": 224.1,
+   "topic": "dev",
+   "feeds": [
+    "for_you"
+   ],
+   "card": {
+    "url": "https://t.co/zW830liupo",
+    "title": "1Password Hacked, Customer Data and Source Code Stolen in GitHub Account Breach"
+   }
+  },
+  {
+   "id": "2125743598587003170",
+   "handle": "SemiAnalysis_",
+   "name": "SemiAnalysis",
+   "verified": true,
+   "avatar": "/tech-digest/av/d9fa7c6cce02937b.jpg",
+   "time": "2026-11-26T00:09:02Z",
+   "text": "GPT-6.2 Astra debuts at the top of the GDPx leaderboard scoring 19.3%, ahead of Claude Fable 5.2 at 16.4%. Gemini 4 Neon, the model of the moment, lands 6th at 10.1%. (1/9)🧵",
+   "replies": 105,
+   "reposts": 116,
+   "likes": 814,
+   "bookmarks": 165,
+   "views": 148557,
+   "engagement": 1751,
+   "velocity": 144.2,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "roon reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/ext_tw_video_thumb/2125743586775883776/pu/img/lXd_u7MYC3po9eA7.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125769301437071693",
+   "handle": "rawsalerts",
+   "name": "R A W S A L E R T S",
+   "verified": true,
+   "avatar": "/tech-digest/av/3a913b15d0b19ad4.jpg",
+   "time": "2026-11-26T01:51:11Z",
+   "text": "🚨 #BREAKING: Jensen Huang tells employees NVIDIA doesn’t need a succession plan, as the internet jokes a “sexession plan” is sufficient.",
+   "replies": 33,
+   "reposts": 55,
+   "likes": 1427,
+   "bookmarks": 40,
+   "views": 122250,
+   "engagement": 1723,
+   "velocity": 165.1,
+   "topic": "chips",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125640718953636302",
+   "handle": "realEstateTrent",
+   "name": "StripMallGuy",
+   "verified": true,
+   "avatar": "/tech-digest/av/7e3f7e13125f7985.jpg",
+   "time": "2026-11-25T17:20:14Z",
+   "text": "Serious question:\n\nOur team uses Claude like crazy, and it's become a big part of our operation.\n\nWhy is it only costing us $1,756 a year?\n\nI keep hearing about people constantly hitting their usage limits and spending hundreds or even thousands of dollars on additional usage.",
+   "truncated": true,
+   "replies": 220,
+   "reposts": 16,
+   "likes": 565,
+   "bookmarks": 209,
+   "views": 321095,
+   "engagement": 1664,
+   "velocity": 87.8,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "realEstateTrent",
+    "name": "StripMallGuy",
+    "text": "Spent so far this year:\n\n$1,756           for:       Anthropic\n$3,583         for:       Quickbooks\n$4,611           for:       DocuSign\n$35,600      for:       Facebook Ads\n$72,000      for:       FedEx"
+   }
+  },
+  {
+   "id": "2125656061516677509",
+   "handle": "LiamBush20",
+   "name": "Liam Bush",
+   "verified": true,
+   "avatar": "/tech-digest/av/00d1bca4bc5009fa.jpg",
+   "time": "2026-11-25T18:21:12Z",
+   "text": "We built Persistent Agent: an always-on agent that lives in your Slack.\n\n1) It schedules its own work and keeps working toward the goals you give it\n\n2) It contains playbooks of your org's best practices and knowledge, and keeps learning as you use it\n\n3) Each person can connect",
+   "truncated": true,
+   "replies": 13,
+   "reposts": 37,
+   "likes": 247,
+   "bookmarks": 422,
+   "views": 46950,
+   "engagement": 1613,
+   "velocity": 89.9,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "social": "Harrison Chase reposted",
+   "card": {
+    "url": "https://t.co/0VwHIY4yfp",
+    "title": "GitHub - langchain-samples/Persistent-Agent: Persistent Agent is a proactive, always-on, goal-ori..."
+   }
+  },
+  {
+   "id": "2125489378554487236",
+   "handle": "sriramk",
+   "name": "Sriram Krishnan",
+   "verified": true,
+   "avatar": "/tech-digest/av/d6454bfc4485988e.jpg",
+   "time": "2026-11-25T07:18:52Z",
+   "text": "Neon has become my go to on a variety of tasks - perhaps the first GDM model to do so. Impressive work by @sundarpichai @demishassabis and team.",
+   "replies": 40,
+   "reposts": 47,
+   "likes": 1198,
+   "bookmarks": 79,
+   "views": 68782,
+   "engagement": 1609,
+   "velocity": 55.5,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "sundarpichai",
+    "name": "Sundar Pichai",
+    "text": "Neon set a new Day-1 usage record on our paid APIs and @Antigravity tokens/day are ⬆️ 82% since Argon launched (only) 6 weeks ago.\n\nIt's been great to see the reception and thanks for all the model feedback including areas to improve - huge thanks to the teams across"
+   }
+  },
+  {
+   "id": "2125824585027272727",
+   "handle": "gdb",
+   "name": "Greg Brockman",
+   "verified": true,
+   "avatar": "/tech-digest/av/63bbb3367b8308f2.jpg",
+   "time": "2026-11-26T05:30:51Z",
+   "text": "Private Inference — confidential computing, with strict controls over prompts and responses while they're being processed by a model, is now in testing:",
+   "replies": 124,
+   "reposts": 51,
+   "likes": 845,
+   "bookmarks": 135,
+   "views": 72066,
+   "engagement": 1600,
+   "velocity": 236.1,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "sama",
+    "name": "Sam Altman",
+    "text": "We’re now testing Private Inference, our latest offering as part of OpenAI Private Intelligence, with a small group of customers.\n\nStronger privacy protections will make frontier AI useful for a lot more work, and business privacy is important for a healthy ecosystem. Reach out"
+   }
+  },
+  {
+   "id": "2125751488597352518",
+   "handle": "travisk",
+   "name": "travis kalanick",
+   "verified": true,
+   "avatar": "/tech-digest/av/2b4963efe83d9638.jpg",
+   "time": "2026-11-26T00:40:24Z",
+   "text": "GPU futures critical to compute financing… this is very big, and great to see poly pushing into industrial prediction markets",
+   "replies": 36,
+   "reposts": 40,
+   "likes": 882,
+   "bookmarks": 182,
+   "views": 98454,
+   "engagement": 1580,
+   "velocity": 136.0,
+   "topic": "chips",
+   "feeds": [
+    "following"
+   ],
+   "social": "R A W S A L E R T S reposted",
+   "quote": {
+    "handle": "shayne_coplan",
+    "name": "Shayne Coplan 🦅",
+    "text": "Compute markets are finally here.\n\n@Polymarket now prices on-demand compute for @nvidia H100s, B200s, and B300s, out to 2028. More chips and terms soon. https://polymarket.com/compute\n\nThink of it as a yield curve for the cost of compute: the forecasted $/hour price of each chip at",
+    "id": "2125653367640805799"
+   }
+  },
+  {
+   "id": "2125401104943022267",
+   "handle": "stevenstrogatz",
+   "name": "Steven Strogatz",
+   "verified": true,
+   "avatar": "/tech-digest/av/76c14a89b35ac24f.jpg",
+   "time": "2026-11-25T01:28:06Z",
+   "text": "Big news, everybody! The exponent for matrix-matrix multiplication is 9/4. At least, that's what's being reported today, by @OpenAI. And it's Lean verified.",
+   "replies": 24,
+   "reposts": 102,
+   "likes": 806,
+   "bookmarks": 170,
+   "views": 71908,
+   "engagement": 1568,
+   "velocity": 45.0,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Hadi reposted",
+   "quote": {
+    "handle": "naa_ganesan",
+    "name": "நா. கணேசன் (Dr. N. Ganesan)",
+    "text": "\"We prove that the exponent of square matrix multiplication is 9/4 over every field.\" by\n@OpenAI\ntoday.\nhttps://github.com/openai/math/blob/92b516ef8e2abf66c3db7aa31438d3010bc7956f/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/paper.pdf…\n\n@KenOno691 @jdlichtman @aaswaminathan01 @ShivaKintali @stevenstrogatz @Briankeating @AlexKontorovich @__alpoge__"
+   }
+  },
+  {
+   "id": "2125584945636905061",
+   "handle": "dhh",
+   "name": "DHH",
+   "verified": true,
+   "avatar": "/tech-digest/av/fd7cb1b74c8272ad.jpg",
+   "time": "2026-11-25T13:38:37Z",
+   "text": "\"Merge when green and free of greptiles\" has become a common prompt in this house. Lordy do I love me some @greptile reviews!",
+   "replies": 81,
+   "reposts": 20,
+   "likes": 646,
+   "bookmarks": 232,
+   "views": 82948,
+   "engagement": 1544,
+   "velocity": 68.2,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125688474611364188",
+   "handle": "Polymarket",
+   "name": "Polymarket",
+   "verified": true,
+   "avatar": "/tech-digest/av/9773b219b2bb55e9.jpg",
+   "time": "2026-11-25T20:30:00Z",
+   "text": "JUST IN: Google DeepMind cofounder Shane Legg now estimates a 65% chance of achieving “minimal AGI” before 2028.",
+   "replies": 55,
+   "reposts": 69,
+   "likes": 987,
+   "bookmarks": 73,
+   "views": 65036,
+   "engagement": 1454,
+   "velocity": 92.1,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ]
+  },
+  {
+   "id": "2125609201783406995",
+   "handle": "RoundtableSpace",
+   "name": "0xMarioNawfal",
+   "verified": true,
+   "avatar": "/tech-digest/av/9e8d5cdf9cf46bf5.jpg",
+   "time": "2026-11-25T15:15:00Z",
+   "text": "SAVE THIS IF YOU REVERSE ENGINEER ANYTHING. \n\nFrida lets you hook into any running app and see exactly what it's doing, with no source code.\n\n>⁠Inject scripts into live processes\n>⁠Trace function calls\n\nWorks on Windows, macOS, Linux, iOS and Android. \n\nCLOSED SOURCE JUST GOT A",
+   "truncated": true,
+   "replies": 5,
+   "reposts": 19,
+   "likes": 276,
+   "bookmarks": 369,
+   "views": 58780,
+   "engagement": 1431,
+   "velocity": 68.0,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "social": "Azeem 🛸 reposted",
+   "card": {
+    "url": "https://t.co/Hcr4luNrTQ",
+    "title": "GitHub - frida/frida: Main repo for hosting release binaries"
+   }
+  },
+  {
+   "id": "2125627723062141393",
+   "handle": "katelyn_lesse",
+   "name": "Katelyn Lesse",
+   "verified": true,
+   "avatar": "/tech-digest/av/90a46781b771ba1b.jpg",
+   "time": "2026-11-25T16:28:36Z",
+   "text": "this migration was the coolest thing ive ever seen an engineering team pull off. our api serves all of claude’s tokens, across our api customers and our own apps. and its nondeterministic! imagine swapping out a massively scaling distributed system, racing the clock to avoid",
+   "truncated": true,
+   "replies": 16,
+   "reposts": 24,
+   "likes": 724,
+   "bookmarks": 193,
+   "views": 54610,
+   "engagement": 1383,
+   "velocity": 69.8,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "AnthropicAI",
+    "name": "Anthropic",
+    "text": "We recently migrated our Messages API from Python to Rust.\n\nOn our engineering blog, we share how we used the existing service to verify the new one, with teams of Claude agents tracking down and fixing differences between the two versions.\n\nhttps://anthropic.com/research/migrating-api-to-rust…"
+   }
+  },
+  {
+   "id": "2125899647336272276",
+   "handle": "levelsio",
+   "name": "@levelsio",
+   "verified": true,
+   "avatar": "/tech-digest/av/6469740b44413a34.jpg",
+   "time": "2026-11-26T10:29:07Z",
+   "text": "A lot of business owners, founders and CEOs now need to have the difficult conversation with themselves that their business simply doesn't have a reason to exist anymore in this new era\n\nI think the types of businesses (and people) that succeed in a post-AGI era might just be",
+   "truncated": true,
+   "replies": 78,
+   "reposts": 31,
+   "likes": 424,
+   "bookmarks": 242,
+   "views": 35568,
+   "engagement": 1368,
+   "velocity": 757.3,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "quote": {
+    "handle": "brendantully00",
+    "name": "Brendan Tully",
+    "text": "N8N so much more capable - I have n8n server plugged in my claude which significantly reduces token usage especially when doing long or heavy data manipulation, claude spins up its own temporary n8n workflows when it needs. Had Claude move us off Zapier after they 5x-d the price"
+   }
+  },
+  {
+   "id": "2125579506446443001",
+   "handle": "unusual_whales",
+   "name": "unusual_whales",
+   "verified": true,
+   "avatar": "/tech-digest/av/941364aa516dcfcc.png",
+   "time": "2026-11-25T13:17:00Z",
+   "text": "Borrowing for AI infrastructure has exploded, the Fed warns.\n\nDebt issued to build AI computing infrastructure topped $680 billion by October, up from $130 billion in all of 2023, according to the Fed’s latest Financial Stability Report.\n\nThe Fed says the AI financing boom is now",
+   "truncated": true,
+   "replies": 81,
+   "reposts": 114,
+   "likes": 646,
+   "bookmarks": 98,
+   "views": 153879,
+   "engagement": 1330,
+   "velocity": 57.8,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ]
+  },
+  {
+   "id": "2125627281230205435",
+   "handle": "swyx",
+   "name": "swyx",
+   "verified": true,
+   "avatar": "/tech-digest/av/07e0dea6a2b23e3b.jpg",
+   "time": "2026-11-25T16:26:50Z",
+   "text": "\"Cost per task is a misleading metric; the scarce resource is human attention, not token cost.\"\n\nbeware the pareto frontier charts that make you believe you can reduce every model to 2 numbers; it can hide some AWFUL reliability issues👏",
+   "replies": 194,
+   "reposts": 33,
+   "likes": 327,
+   "bookmarks": 179,
+   "views": 20915,
+   "engagement": 1318,
+   "velocity": 66.4,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Eugene Yan reposted",
+   "quote": {
+    "handle": "eugeneyan",
+    "name": "Eugene Yan",
+    "text": "AI benchmarks are more realistic than ever. But they still have bugs (e.g., failing correct work) and mostly measure what's easy, not what matters. Here's my breakdown of 12 public evals:  how they're built, where they break, and what to measure instead.\n\nhttps://eugeneyan.com/writing/public-evals…",
+    "id": "2125627281230205435"
+   }
+  },
+  {
+   "id": "2125542621250515385",
+   "handle": "TheEconomist",
+   "name": "The Economist",
+   "verified": true,
+   "avatar": "/tech-digest/av/1514c017fa88b7a1.jpg",
+   "time": "2026-11-25T10:50:26Z",
+   "text": "He is the key to stopping AI from becoming the preserve of a few, argues the venture capitalist",
+   "replies": 23,
+   "reposts": 65,
+   "likes": 642,
+   "bookmarks": 156,
+   "views": 738286,
+   "engagement": 1286,
+   "velocity": 50.5,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "sarah guo reposted",
+   "card": {
+    "url": "https://t.co/CIb05BwwnT",
+    "title": "Nvidia was right to bring back Jensen Huang, writes Sarah Guo"
+   }
+  },
+  {
+   "id": "2125670324192874834",
+   "handle": "sarthakgh",
+   "name": "Sar Haribhakti",
+   "verified": true,
+   "avatar": "/tech-digest/av/c28cf9bc2e362bc8.jpg",
+   "time": "2026-11-25T19:17:52Z",
+   "text": "Some news: Today’s my last day at Ramp. I got to be a part of a culture that only moves faster (as well as more creatively and ambitiously) as the company grows. A rare feat, and a manifestation of what real AI adoption can enable for organizations. Grateful for my time! \n\nAs for",
+   "truncated": true,
+   "replies": 78,
+   "reposts": 5,
+   "likes": 754,
+   "bookmarks": 122,
+   "views": 66148,
+   "engagement": 1286,
+   "velocity": 75.7,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "DarioAmodei",
+    "name": "Dario Amodei",
+    "text": "No, I do not believe that we should “surrender human free will” to AI systems, and it’s absurd to suggest that I do. I have written hundreds of pages of essays and a constant theme in them is the need for AI to be governed by legitimate democratic processes. For millennia (going x.com/axios/status/2…"
+   }
+  },
+  {
+   "id": "2125816545897312752",
+   "handle": "AravSrinivas",
+   "name": "Aravind Srinivas",
+   "verified": true,
+   "avatar": "/tech-digest/av/f31d98e99381a09b.jpg",
+   "time": "2026-11-26T04:58:54Z",
+   "text": "Neon has doubled day over day usage on Perplexity (no default model routing), doing 100B+ tokens in a single day. It’s rare to see such an exponential growth for a model. We’ve merged in some harness improvements to address formatting issues that existed earlier. I personally",
+   "truncated": true,
+   "replies": 81,
+   "reposts": 50,
+   "likes": 791,
+   "bookmarks": 74,
+   "views": 33458,
+   "engagement": 1275,
+   "velocity": 174.4,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "AravSrinivas",
+    "name": "Aravind Srinivas",
+    "text": "Gemini 4 Neon has consumed 44.52 billion tokens inside Perplexity on Tuesday, 23.5% above all of full-day Monday (36.06B) with more than 3 hours left in the day. I really haven’t seen this fast day-over-day growth rate for a model inside Perplexity in a while. x.com/aravsrinivas/s…",
+    "id": "2125816545897312752"
+   }
+  },
+  {
+   "id": "2125616060481392838",
+   "handle": "claudeai",
+   "name": "Claude",
+   "verified": true,
+   "avatar": "/tech-digest/av/c0642ffd7598f3de.jpg",
+   "time": "2026-11-25T15:42:15Z",
+   "text": "The Seven Wonders of the Ancient World, drawn and set in motion.",
+   "replies": 14,
+   "reposts": 24,
+   "likes": 651,
+   "bookmarks": 166,
+   "views": 100566,
+   "engagement": 1225,
+   "velocity": 59.5,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "devteamdrew",
+    "name": "DreW",
+    "text": "The 7 Wonders of the World   \n\nDrawn and animated with @claudeai Fable 5.2 \n\npt.1"
+   }
+  },
+  {
+   "id": "2125818170611298346",
+   "handle": "Yuchenj_UW",
+   "name": "Yuchen Jin",
+   "verified": true,
+   "avatar": "/tech-digest/av/291275f09984a0ac.jpg",
+   "time": "2026-11-26T05:05:22Z",
+   "text": "Gemini Neon winning developers’ hearts and Opus 5.5 remaining the king, despite Codex being the best desktop app for coding, prove one thing:\n\nThe model is the product.",
+   "replies": 72,
+   "reposts": 22,
+   "likes": 837,
+   "bookmarks": 62,
+   "views": 35017,
+   "engagement": 1211,
+   "velocity": 168.1,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125544329229771047",
+   "handle": "TrelisResearch",
+   "name": "Trelis Research",
+   "verified": true,
+   "avatar": "/tech-digest/av/c0e3cbd24c73bdbb.jpg",
+   "time": "2026-11-25T10:57:13Z",
+   "text": "We are releasing a research-only model for Egyptian Arabic Text-to-Speech\n\nhttps://huggingface.co/Trelis/egyptian-arabic-tts-research…\n\nMany Arabic TTS models read Egyptian text like Modern Standard Arabic: ق said as q in everyday words, MSA case endings and MSA vowels.\n\nThis VoxCPM2 fine-tune speaks Cairene",
+   "truncated": true,
+   "links": [
+    {
+     "text": "https://huggingface.co/Trelis/egyptian-arabic-tts-research…",
+     "href": "https://t.co/D6nlLtNHkg"
+    }
+   ],
+   "replies": 12,
+   "reposts": 21,
+   "likes": 269,
+   "bookmarks": 290,
+   "views": 8689,
+   "engagement": 1205,
+   "velocity": 47.6,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Azeem 🛸 reposted",
+   "card": {
+    "url": "https://t.co/D6nlLtNHkg",
+    "title": "Trelis/egyptian-arabic-tts-research · Hugging Face"
+   }
+  },
+  {
+   "id": "2125496509349400771",
+   "handle": "AlecTPhD",
+   "name": "Alec",
+   "verified": true,
+   "avatar": "/tech-digest/av/17eddadf4f55623e.jpg",
+   "time": "2026-11-25T07:47:12Z",
+   "text": "Gemini 4 Neon is an exceptionally advanced science communicator. It reads to me as the perfect blend of precision and clarity. It also speaks to an underlying wisdom in its scientific understanding. I do not see this spark in Opus 5.5 models. In general, I have been finding",
+   "truncated": true,
+   "replies": 12,
+   "reposts": 35,
+   "likes": 655,
+   "bookmarks": 125,
+   "views": 24026,
+   "engagement": 1124,
+   "velocity": 39.4,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "0xDevShah",
+    "name": "Dev Shah",
+    "text": "having the hardest time with claude-opus-5.5. it is doing everything it can to prevent our swarm from making any progress on Erdos. opus-5.5 is an exceptional engineer brained model but in our runs it seems to lack the scientific judgment, foresight, and intuition that models x.com/0xDevShah/stat…"
+   }
+  },
+  {
+   "id": "2125620479461573034",
+   "handle": "emollick",
+   "name": "Ethan Mollick",
+   "verified": true,
+   "avatar": "/tech-digest/av/254dd1d6fb40bb61.jpg",
+   "time": "2026-11-25T15:59:49Z",
+   "text": "One imaginable outcome is that AI Labs, unwilling or unable (due to more careful government oversight) release new models to the public, become (regulated?) monopolies of intelligence: launching their own efforts in areas like finance & biotech where frontier intelligence wins.",
+   "replies": 126,
+   "reposts": 34,
+   "likes": 437,
+   "bookmarks": 114,
+   "views": 33883,
+   "engagement": 1099,
+   "velocity": 54.2,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "DKThomp",
+    "name": "Derek Thompson",
+    "text": "I want to think more about the combination of these several facts ...\n\n1. Frontier labs say their internal models are getting too powerful to release\n\n2. They also say their internal models are improving certain capabilities faster than ever—especially on coding, math, and",
+    "id": "2125334383490105601"
+   }
+  },
+  {
+   "id": "2125560020355916082",
+   "handle": "kevinnbass",
+   "name": "Kevin Bass",
+   "verified": true,
+   "avatar": "/tech-digest/av/0b3746248454089f.jpg",
+   "time": "2026-11-25T11:59:34Z",
+   "text": "Tarbell does not just shape public perception about AI.\n\nTarbell's reporting also shapes Congressional briefings.\n\nTarbell is funded by Coefficient Giving -- funded by Dustin Moskowitz's Good Ventures Foundation -- which sits on top of billions of dollars of Moskowitz's Series A",
+   "truncated": true,
+   "replies": 14,
+   "reposts": 161,
+   "likes": 468,
+   "bookmarks": 93,
+   "views": 51051,
+   "engagement": 1097,
+   "velocity": 45.1,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Yann LeCun reposted",
+   "quote": {
+    "handle": "kevinnbass",
+    "name": "Kevin Bass",
+    "text": "Coefficient Giving, founded by Anthropic investor Dustin Moskowitz, spent hundreds of millions on both journalism and policy outfits that shaped the Jensen Huang story.\n\nHere's how this works.\n\nDustin Moskowitz invested billions of dollars of his Anthropic stock into Good",
+    "id": "2125560020355916082"
+   }
+  },
+  {
+   "id": "2125562598380953757",
+   "handle": "HuggingPapers",
+   "name": "DailyPapers",
+   "verified": true,
+   "avatar": "/tech-digest/av/678a66bbcdc11e0a.jpg",
+   "time": "2026-11-25T12:09:49Z",
+   "text": "LoomFormer: Transformers that rewire their circuits at every token\n\nLoom attention interleaves vertical attention over earlier heads with horizontal attention over tokens, letting LoomPythia-2.8B match Pythia-12B on 300B tokens with ~2% extra FLOPs",
+   "replies": 14,
+   "reposts": 36,
+   "likes": 257,
+   "bookmarks": 245,
+   "views": 14317,
+   "engagement": 1092,
+   "velocity": 45.3,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "AK reposted",
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HX-D60SbcAEMBqb?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125846489662369851",
+   "handle": "GergelyOrosz",
+   "name": "Gergely Orosz",
+   "verified": true,
+   "avatar": "/tech-digest/av/f9d2f2995ec16e17.png",
+   "time": "2026-11-26T06:57:54Z",
+   "text": "Here’s a wild story about the impact of AI + software factories on a traditional company, founded in 1946 manufacturing specialized paint:\n\nThey replaced a web of inefficient agencies w a software factory built by a single dev, @JoshuaSWarren. The business LOVES the change. Wild",
+   "truncated": true,
+   "replies": 40,
+   "reposts": 26,
+   "likes": 219,
+   "bookmarks": 226,
+   "views": 24080,
+   "engagement": 1029,
+   "velocity": 193.2,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "photo",
+     "src": "https://pbs.twimg.com/media/HYCFsUXWkAA9JSw?format=jpg&name=small"
+    }
+   ]
+  },
+  {
+   "id": "2125703538995274106",
+   "handle": "thdxr",
+   "name": "dax",
+   "verified": true,
+   "avatar": "/tech-digest/av/b70cc1f54015383d.jpg",
+   "time": "2026-11-25T21:29:52Z",
+   "text": "you've probably gathered this from our work on rune that opencode desktop is becoming fully native\n\nwe want to continue to support js based plugins and this allows for that without embedding a full js runtime\n\nit even works on mobile - we have a demo where the agent can making",
+   "truncated": true,
+   "replies": 32,
+   "reposts": 12,
+   "likes": 592,
+   "bookmarks": 108,
+   "views": 27837,
+   "engagement": 1004,
+   "velocity": 67.9,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "opencode",
+    "name": "OpenCode",
+    "text": "we extracted the runtime powering codemode into a standalone project\n\nit's a simple package (no wasm) that can directly execute js and pause/resume it mid execution\n\na rust implementation is in the works so native apps can use js as a scripting language\n\nhttps://psychoscript.com"
+   }
+  },
+  {
+   "id": "2125636625824694738",
+   "handle": "bharat",
+   "name": "Bharat Mediratta",
+   "avatar": "/tech-digest/av/bd0fdf8393549d95.jpg",
+   "time": "2026-11-25T17:03:58Z",
+   "text": "This was my starter project at Anthropic. It’s hard to overstate just how impossible this would have been to pull off at this scale even as recently as a year ago. The models released this year have fundamentally changed the game I’ve been playing for the past three decades!",
+   "replies": 19,
+   "reposts": 16,
+   "likes": 575,
+   "bookmarks": 104,
+   "views": 45721,
+   "engagement": 957,
+   "velocity": 49.8,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "AnthropicAI",
+    "name": "Anthropic",
+    "text": "We recently migrated our Messages API from Python to Rust.\n\nOn our engineering blog, we share how we used the existing service to verify the new one, with teams of Claude agents tracking down and fixing differences between the two versions.\n\nhttps://anthropic.com/research/migrating-api-to-rust…"
+   }
+  },
+  {
+   "id": "2125653978965016691",
+   "handle": "jess_weng18",
+   "name": "Jess Weng",
+   "verified": true,
+   "avatar": "/tech-digest/av/e08dddc05d2a0c83.jpg",
+   "time": "2026-11-25T18:12:55Z",
+   "text": "I made a videogame that teaches you how to use @LangChain’s open source agent harness, Deep Agents (to celebrate reaching 50M downloads 🤩)\n\nHere's my playthrough, but there’s more educational content hidden in the game 👀\n\nSo play it yourself and give me your thoughts! I’m",
+   "truncated": true,
+   "replies": 22,
+   "reposts": 39,
+   "likes": 189,
+   "bookmarks": 213,
+   "views": 17058,
+   "engagement": 950,
+   "velocity": 52.6,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "social": "Harrison Chase reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125652955437416448/img/t-6mR2PQqS-Ihed9.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125578737609544083",
+   "handle": "relizarov",
+   "name": "Roman Elizarov",
+   "avatar": "/tech-digest/av/e4a7893a3f93d88a.jpg",
+   "time": "2026-11-25T13:13:57Z",
+   "text": "They unanimously fired Jensen Huang, then unanimously hired him back. I’ve been there. In the USSR, even complete reversals of policy were unanimous. Every large organization eventually becomes the Soviet Union.",
+   "replies": 11,
+   "reposts": 43,
+   "likes": 690,
+   "bookmarks": 48,
+   "views": 14294,
+   "engagement": 942,
+   "velocity": 40.9,
+   "topic": "chips",
+   "feeds": [
+    "following"
+   ]
+  },
+  {
+   "id": "2125681805189869791",
+   "handle": "grinich",
+   "name": "Michael Grinich",
+   "verified": true,
+   "avatar": "/tech-digest/av/563d83d1741f0815.jpg",
+   "time": "2026-11-25T20:03:30Z",
+   "text": "Google is making MCP mandatory for AI agents.\n\nREST will be deprecated Feb 1st. \n\nMCP has won. 🏆",
+   "replies": 46,
+   "reposts": 54,
+   "likes": 283,
+   "bookmarks": 148,
+   "views": 32427,
+   "engagement": 927,
+   "velocity": 57.1,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Kent C. Dodds 🐨 reposted",
+   "card": {
+    "url": "https://t.co/pGkqtbIjOJ",
+    "title": "Google Workspace Updates: Simplifying agent access while keeping organizations in control: MCP...",
+    "domain": "workspaceupdates.googleblog.com"
+   }
+  },
+  {
+   "id": "2125837181398950233",
+   "handle": "levie",
+   "name": "Aaron Levie",
+   "verified": true,
+   "avatar": "/tech-digest/av/1d5bceac6b4038d0.jpg",
+   "time": "2026-11-26T06:20:54Z",
+   "text": "Coding gives you a window into what the future will look like for a large amount of knowledge work. \n\nThe first step for most jobs is that we go from doing most of the research, typing, and value creation manually (even if it’s using digital tools) to soon coordinating the work",
+   "truncated": true,
+   "replies": 76,
+   "reposts": 21,
+   "likes": 195,
+   "bookmarks": 171,
+   "views": 26476,
+   "engagement": 902,
+   "velocity": 151.8,
+   "topic": "ai",
+   "feeds": [
+    "for_you"
+   ],
+   "quote": {
+    "handle": "NateSilver538",
+    "name": "Nate Silver",
+    "text": "We're in an insane moment right now, and it's because of AI. There's a weird duality because AI coding tools are also extraordinarily helpful to our business. But coding gives me a front-row seat to see how fast things are progressing. The growth in capabilities is very fast."
+   }
+  },
+  {
+   "id": "2125685667833520237",
+   "handle": "rauchg",
+   "name": "Guillermo Rauch",
+   "verified": true,
+   "avatar": "/tech-digest/av/76ab314159d32e61.jpg",
+   "time": "2026-11-25T20:18:51Z",
+   "text": "We made workflows 10x faster again. Generally speaking, workflows were plenty fast already!\n\nFor harness durability (@eve, libfx, pi, opencode…), this is a big deal, as it crushes latency in between turns.\n\nUpgrade to 𝚠𝚘𝚛𝚔𝚏𝚕𝚘𝚠@𝚕𝚊𝚝𝚎𝚜𝚝. No code changes.",
+   "replies": 63,
+   "reposts": 9,
+   "likes": 343,
+   "bookmarks": 133,
+   "views": 25827,
+   "engagement": 886,
+   "velocity": 55.5,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "vercel_dev",
+    "name": "Vercel Developers",
+    "text": "Workflow SDK is 10x faster, again.\n\n• Step-to-step latency is 12x lower\n• Durable agent turns are 3.8x faster\n• Idempotent steps run speculatively\n\nhttps://vercel.com/changelog/workflows-speculative-execution…"
+   }
+  },
+  {
+   "id": "2125684566614524175",
+   "handle": "adamwathan",
+   "name": "Adam Wathan",
+   "verified": true,
+   "avatar": "/tech-digest/av/f077de218fa5eb4e.jpg",
+   "time": "2026-11-25T20:14:28Z",
+   "text": "Did the insane thing of giving Grok Bot my banking credentials today to put together a ton of documents for my accountant.\n\nAbsolutely crushed it, was 100% worth the risk of losing every penny I have to my name.",
+   "replies": 62,
+   "reposts": 9,
+   "likes": 564,
+   "bookmarks": 46,
+   "views": 45042,
+   "engagement": 844,
+   "velocity": 52.6,
+   "topic": "ai",
+   "feeds": [
+    "following",
+    "for_you"
+   ]
+  },
+  {
+   "id": "2125669675216629846",
+   "handle": "joelhooks",
+   "name": "joel ⛈️",
+   "verified": true,
+   "avatar": "/tech-digest/av/93c9946f3944af31.jpg",
+   "time": "2026-11-25T19:15:18Z",
+   "text": "had a great chat with @kitlangton about his new programming language Blood, working with agents, and raising our aspirations of what’s possible as engineers",
+   "replies": 11,
+   "reposts": 22,
+   "likes": 201,
+   "bookmarks": 189,
+   "views": 20998,
+   "engagement": 834,
+   "velocity": 49.0,
+   "topic": "dev",
+   "feeds": [
+    "following"
+   ],
+   "social": "dax reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/media/HX_r8gmaIAAEYm4.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125653316969668884",
+   "handle": "tetranow",
+   "name": "Tetragrammaton",
+   "verified": true,
+   "avatar": "/tech-digest/av/a799e56f3eaf3458.jpg",
+   "time": "2026-11-25T18:10:18Z",
+   "text": "NEW EPISODE: \"If AI is an enabler that can put storytellers front and center and in a more meritocratic way, and allow people who wouldn't traditionally have access to make and release stuff, that's huge.\" -Gossip Goblin @Gossip_Goblin \n\n0:00 Gossip Goblin\n9:36 CGI Marvel Movies",
+   "truncated": true,
+   "replies": 13,
+   "reposts": 43,
+   "likes": 219,
+   "bookmarks": 156,
+   "views": 29349,
+   "engagement": 799,
+   "velocity": 44.1,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "social": "Rick Rubin reposted",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125643332248625152/img/Nx61_a_TCzJE9gE1.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125842768534593631",
+   "handle": "dhh",
+   "name": "DHH",
+   "verified": true,
+   "avatar": "/tech-digest/av/fd7cb1b74c8272ad.jpg",
+   "time": "2026-11-26T06:43:06Z",
+   "text": "Much of my HEY usage these days is just telling an agent to find this email, reply to that thread, or analyze an update. It's shocking how good the frontier models are at being executive assistants. Unthinkable to go back to email without AI!",
+   "replies": 93,
+   "reposts": 9,
+   "likes": 379,
+   "bookmarks": 66,
+   "views": 29172,
+   "engagement": 781,
+   "velocity": 140.1,
+   "topic": "ai",
+   "feeds": [
+    "following"
+   ],
+   "quote": {
+    "handle": "jasonfried",
+    "name": "Jason Fried",
+    "text": "The HEY connector for Claude is now officially approved and available:\nhttps://claude.ai/directory/hey"
+   }
+  },
+  {
+   "id": "2125621349569769917",
+   "handle": "shaneparrish",
+   "name": "Shane Parrish",
+   "verified": true,
+   "avatar": "/tech-digest/av/27d0ebd1fec80b24.jpg",
+   "time": "2026-11-25T16:03:16Z",
+   "text": "Why brilliant engineering teams ship things nobody wants",
+   "replies": 8,
+   "reposts": 26,
+   "likes": 203,
+   "bookmarks": 170,
+   "views": 21048,
+   "engagement": 781,
+   "velocity": 38.6,
+   "topic": "dev",
+   "feeds": [
+    "following",
+    "for_you"
+   ],
+   "media": [
+    {
+     "type": "video",
+     "src": "https://pbs.twimg.com/amplify_video_thumb/2125620852343377920/img/2F4kJULvjuUQ83au.jpg"
+    }
+   ]
+  },
+  {
+   "id": "2125735481984098540",
+   "handle": "shong0504",
+   "name": "Seungmin Hong",
+   "verified": true,
+   "avatar": "/tech-digest/av/af23303663695b7b.jpg",
+   "time": "2026-11-25T23:36:47Z",
+   "text": "I hate fundraising so much. The last 2 weeks might have genuinely been the worst 2 weeks of my life. How do founders do this?",
+   "replies": 97,
+   "reposts": 11,
+   "likes": 328,
+   "bookmarks": 70,
+   "views": 48223,
+   "engagement": 754,
+   "velocity": 59.5,
+   "topic": "startups",
+   "feeds": [
+    "following"
+   ]
+  }
+ ]
+}
